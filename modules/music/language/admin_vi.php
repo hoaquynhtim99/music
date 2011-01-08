@@ -17,7 +17,7 @@ $lang_translator['copyright'] = "@Copyright (C) 2010 VINADES.,JSC. All rights re
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
-$lang_module['4category_main'] = "4 thể loại trên trang chủ";
+$lang_module['4category_main'] = "Bốn thể loại trên trang chủ";
 
 $lang_module['check'] = "Kiểm tra";
 $lang_module['check_song'] = "Kiểm tra link bài hát";
