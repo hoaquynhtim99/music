@@ -16,6 +16,7 @@ $contents = "";
 $error = "";
 $category = get_category() ;
 $setting = setting_music();
+$allalbum = getallalbum();
 //lay gia tri
 $songdata['ten'] = filter_text_input( 'ten', 'post', '' );
 $songdata['tenthat'] = filter_text_input( 'tenthat', 'post', '' );
@@ -213,7 +214,15 @@ $contents .="
 					Album
 				</td>
 				<td style=\"background: #eee;\">
-				<input name=\"album\" style=\"width: 470px;\" value=\"".$songdata['album']."\" type=\"text\" />
+				<select name=\"album\">\n";
+					foreach ( $allalbum as $key => $title )
+					{
+						$i= "";
+						if ( $songdata['album'] == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
 				</td>
 			</tr>
 			<tr>

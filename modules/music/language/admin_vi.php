@@ -191,6 +191,8 @@ $lang_module['user_send_lyric'] = "Người gửi";
 $lang_module['user_recive_gift'] = "Người nhận";
 $lang_module['userplaylist'] = "Quản lý playlist";
 
+$lang_module['unknow'] = "Chưa biết";
+
 $lang_module['playlist_name'] = "Tên playlist";
 $lang_module['playlist_edit'] = "Sửa playlist";
 $lang_module['playlist_time'] = "Ngày tạo";
