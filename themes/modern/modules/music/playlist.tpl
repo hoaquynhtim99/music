@@ -1,16 +1,18 @@
 ﻿<!-- BEGIN: main -->
 <script type="text/javascript" src="{base_url}jquery.playlist.js"></script>
 <script type="text/javascript" src="{base_url}jwplayer.js"></script>
-<div id="listen_head">
-	<h2>{LANG.listen_playlist}</h2>
-</div>
+<div class="box-border-shadow m-bottom">
+	<div class="cat-box-header"> 
+		<div class="cat-nav"> 
+			<strong>{LANG.listen_playlist}</strong>
+		</div>
+	</div>
 <div id="listen_main">
 	<div class="playercontainer">
 		<!-- BEGIN: null -->
-			<h2>{LANG.playlist_null}</h2>
+			<strong>{LANG.playlist_null}</strong>
 		<!-- END: null -->
 		<div id="player">Loading the player a1binhdinh.com ...</div>
-		
 		<script type="text/javascript">
 			jwplayer("player").setup({
 			flashplayer: "{base_url}player.swf",
@@ -30,7 +32,6 @@
 			volume: 100,
 			height: 260,
 			width: 470,
-			skin: "{base_url}skewd.zip",
 			autostart: "true",
 			
 			events: {
@@ -41,6 +42,8 @@
 			
 			});
 		</script>
+		<div class="clear"></div>
 	</div>
+</div>
 </div>
 <!-- END: main -->

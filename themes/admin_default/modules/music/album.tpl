@@ -5,6 +5,7 @@
 			<td width="20px">{LANG.select}</td>
 			<td><a href="{ORDER_NAME}">{LANG.album_name}</a></td>
 			<td><a href="{ORDER_SINGER}">{LANG.singer}</a></td>
+			<td>{LANG.active}</td>
 			<td width="250px" align="center">{LANG.feature}</td>
 			<td width="100px" align="center">{LANG.add_song}</td>
 		</tr>
@@ -15,6 +16,8 @@
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
 			<td><a href="{URL}" target="_blank">{name}</a></td>
 			<td>{singer}</td>
+			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
+			</td>			
 			<td align="center">
 				<span class="edit_icon">
 					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
@@ -117,6 +120,25 @@
 					success: function(data)
 					{
 						alert(data);
+						window.location = '{URL_DEL_BACK}';
+					}
+				});
+			}
+		});
+		$('a[class="active"]').click(function(event)
+		{
+			event.preventDefault();
+			if (confirm("{LANG.active_confirm}"))
+			{
+				var href = $(this).attr('href');
+				$.ajax(
+				{
+					type: 'POST',
+					url: href,
+					data: '',
+					success: function(data)
+					{
+						//alert(data);
 						window.location = '{URL_DEL_BACK}';
 					}
 				});

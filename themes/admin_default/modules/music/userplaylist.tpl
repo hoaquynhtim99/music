@@ -3,9 +3,9 @@
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
-			<td>{LANG.user_comment}</td>
-			<td>{LANG.sort_content}</td>
-			<td>{LANG.song_name}</td>
+			<td>{LANG.playlist_name}</td>
+			<td>{LANG.singer}</td>
+			<td>{LANG.user_send_lyric}</td>
 			<td>{LANG.active}</td>
 			<td width="100px" align="center">{LANG.feature}</td>
 		</tr>
@@ -15,8 +15,8 @@
 		<tr>
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
 			<td>{name}</td>
-			<td>{body}</td>
-			<td>{song}</td>
+			<td>{singer}</td>
+			<td>{username}</td>
 			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
 			</td>
 			<td align="center">
@@ -69,7 +69,7 @@
 		
 		$('#delfilelist').click(function()
 		{
-			if (confirm("{LANG.comment_del_cofirm}"))
+			if (confirm("{LANG.playlist_del_confirm}"))
 			{
 				var listall = [];
 				$('input.filelist:checked').each(function()
@@ -78,7 +78,7 @@
 				});
 				if (listall.length < 1)
 				{
-					alert("{LANG.error_check_comment}");
+					alert("{LANG.error_check_playlist}");
 					return false;
 				}
 				$.ajax(
@@ -97,7 +97,7 @@
 		$('a[class="delfile"]').click(function(event)
 		{
 			event.preventDefault();
-			if (confirm("{LANG.comment_del_cofirm}"))
+			if (confirm("{LANG.playlist_del_confirm}"))
 			{
 				var href = $(this).attr('href');
 				$.ajax(

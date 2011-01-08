@@ -3,9 +3,9 @@
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
-			<td>{LANG.user_comment}</td>
-			<td>{LANG.sort_content}</td>
-			<td>{LANG.song_name}</td>
+			<td><a href="{ORDER_NAME}">{LANG.song_name}</a></td>
+			<td><a href="{ORDER_SINGER}">{LANG.singer}</a></td>
+			<td>{LANG.category}</td>
 			<td>{LANG.active}</td>
 			<td width="100px" align="center">{LANG.feature}</td>
 		</tr>
@@ -14,9 +14,9 @@
 	<tbody{class}>
 		<tr>
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
-			<td>{name}</td>
-			<td>{body}</td>
-			<td>{song}</td>
+			<td><a href="{URL}" target="_blank">{name}</a></td>
+			<td>{singer}</td>
+			<td>{category}</td>
 			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
 			</td>
 			<td align="center">
@@ -40,6 +40,10 @@
 					<a href='javascript:void(0);' id='checkall'>{LANG.checkall}</a>
 					&nbsp;&nbsp;
 					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
+					&nbsp;&nbsp;
+				</span>
+				<span class="add_icon">
+					<a class='addfile' href="{LINK_ADD}">{LANG.video_add}</a>
 					&nbsp;&nbsp;
 				</span>
 				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
@@ -69,7 +73,7 @@
 		
 		$('#delfilelist').click(function()
 		{
-			if (confirm("{LANG.comment_del_cofirm}"))
+			if (confirm("{LANG.video_del_confirm}"))
 			{
 				var listall = [];
 				$('input.filelist:checked').each(function()
@@ -78,7 +82,7 @@
 				});
 				if (listall.length < 1)
 				{
-					alert("{LANG.error_check_comment}");
+					alert("{LANG.video_error_check}");
 					return false;
 				}
 				$.ajax(
@@ -97,7 +101,7 @@
 		$('a[class="delfile"]').click(function(event)
 		{
 			event.preventDefault();
-			if (confirm("{LANG.comment_del_cofirm}"))
+			if (confirm("{LANG.video_del_confirm}"))
 			{
 				var href = $(this).attr('href');
 				$.ajax(

@@ -4,6 +4,7 @@
 		<tr>
 			<td width="20px">{LANG.select}</td>
 			<td>{LANG.error_user}</td>
+			<td>{LANG.error_what}</td>
 			<td>{LANG.content}</td>
 			<td width="150px" align="center">{LANG.feature}</td>
 		</tr>
@@ -13,8 +14,12 @@
 		<tr>
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
 			<td>{name}</td>
+			<td>{what}</td>
 			<td>{body}</td>
 			<td align="center">
+				<!-- BEGIN: check -->
+					<a onclick="checksong('{SONG}');" class='checkfile'>{LANG.check}</a>
+				<!-- END: check -->
 				<span class="delete_icon">
 					<a class='delfile' href="{URL_DEL_ONE}">{LANG.delete}</a>
 				</span>

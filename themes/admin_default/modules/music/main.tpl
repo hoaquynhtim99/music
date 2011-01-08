@@ -7,6 +7,7 @@
 			<td><a href="{ORDER_SINGER}">{LANG.singer}</a></td>
 			<td><a href="{ORDER_ALBUM}">Album</a></td>
 			<td>{LANG.category}</td>
+			<td>{LANG.active}</td>
 			<td width="100px" align="center">{LANG.feature}</td>
 		</tr>
 	</thead>
@@ -18,6 +19,8 @@
 			<td>{singer}</td>
 			<td>{album}</td>
 			<td>{category}</td>
+			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
+			</td>
 			<td align="center">
 				<span class="edit_icon">
 					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
@@ -111,6 +114,25 @@
 					success: function(data)
 					{
 						alert(data);
+						window.location = '{URL_DEL_BACK}';
+					}
+				});
+			}
+		});
+		$('a[class="active"]').click(function(event)
+		{
+			event.preventDefault();
+			if (confirm("{LANG.active_confirm}"))
+			{
+				var href = $(this).attr('href');
+				$.ajax(
+				{
+					type: 'POST',
+					url: href,
+					data: '',
+					success: function(data)
+					{
+						//alert(data);
 						window.location = '{URL_DEL_BACK}';
 					}
 				});

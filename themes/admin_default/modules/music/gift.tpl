@@ -6,6 +6,7 @@
 			<td>{LANG.user_send_gift}</td>
 			<td>{LANG.sort_content}</td>
 			<td>{LANG.song_name}</td>
+			<td>{LANG.active}</td>
 			<td width="100px" align="center">{LANG.feature}</td>
 		</tr>
 	</thead>
@@ -16,7 +17,13 @@
 			<td>{name}</td>
 			<td>{body}</td>
 			<td>{song}</td>
+			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
+			</td>
 			<td align="center">
+				<span class="edit_icon">
+					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
+				</span>
+				&nbsp;-&nbsp; 
 				<span class="delete_icon">
 					<a class='delfile' href="{URL_DEL_ONE}">{LANG.delete}</a>
 				</span>
@@ -101,6 +108,25 @@
 					success: function(data)
 					{
 						alert(data);
+						window.location = '{URL_DEL_BACK}';
+					}
+				});
+			}
+		});
+		$('a[class="active"]').click(function(event)
+		{
+			event.preventDefault();
+			if (confirm("{LANG.active_confirm}"))
+			{
+				var href = $(this).attr('href');
+				$.ajax(
+				{
+					type: 'POST',
+					url: href,
+					data: '',
+					success: function(data)
+					{
+						//alert(data);
 						window.location = '{URL_DEL_BACK}';
 					}
 				});
