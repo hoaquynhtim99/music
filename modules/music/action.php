@@ -50,8 +50,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `size` int(50) unsigned NOT NULL DEFAULT '0',
   `duration` int(50) unsigned NOT NULL DEFAULT '0',
   `server` int(255) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ten` (`ten`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
 //2. album
