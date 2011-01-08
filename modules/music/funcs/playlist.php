@@ -26,15 +26,21 @@ else
 	{
 		$songid = $nv_Request->get_int( $module_name . '_song'.$i.'' , 'cookie', 0 );
 
-		$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id =" . $songid ;
-		$query = $db->sql_query( $sql );
-		$row = $db->sql_fetchrow( $query ) ;
+		$row = getsongbyID( $songid ) ;
 			
 		$xtpl->assign( 'song_name', $i.". ".$row['tenthat'] );
 		$xtpl->assign( 'song_singer', $row['casithat'] );
-		$xtpl->assign( 'song_url', $row['duongdan'] );
-		$xtpl->parse( 'main.song' );
 		
+		if ( $row['server'] != 0 )
+		{
+			$xtpl->assign( 'song_url', $songURL . $row['duongdan'] );
+		}
+		else
+		{
+			$xtpl->assign( 'song_url', $row['duongdan'] );
+		}
+	
+		$xtpl->parse( 'main.song' );
 	}
 }
 

@@ -83,7 +83,7 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	{
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_album` 
 		(
-			`id`, `name`, `tname`, `casi`, `casithat`, `thumb`, `numview`, `upboi`, `describe`
+			`id`, `name`, `tname`, `casi`, `casithat`, `thumb`, `numview`, `upboi`, `describe`, `active`
 		) 
 		VALUES 
 		( 
@@ -95,7 +95,8 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 			" . $db->dbescape( $albumdata['thumb'] ) . ", 
 			1 , 
 			" . $db->dbescape( $albumdata['upboi'] ) . ",	
-			" . $db->dbescape( $albumdata['describe'] ) . "	
+			" . $db->dbescape( $albumdata['describe'] ) . "	,
+			1
 		)
 		"; 
 		if ( $db->sql_query_insert_id( $query ) ) 

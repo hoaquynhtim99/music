@@ -37,7 +37,7 @@ $xtpl = new XTemplate("addhotalbum.tpl", NV_ROOTDIR . "/themes/" . $global_confi
 $xtpl->assign('LANG', $lang_module);
 
 //lay du lieu
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY ID DESC LIMIT " . $first_page . ",100";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE active=1 ORDER BY ID DESC LIMIT " . $first_page . ",100";
 $result = $db->sql_query( $sql );
 while($rs = $db->sql_fetchrow($result))
 {

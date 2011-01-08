@@ -13,41 +13,65 @@ $category = get_category();
 $xtpl = new XTemplate( "listenone.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/" );
-$xtpl->assign( 'img_url',  NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file );
 
+$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_data . "/data/" );
+
+
+$xtpl->assign( 'img_url',  NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file );
+$xtpl->assign( 'URL_DOWN', $downURL );
+
+$user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" ;
+$user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;		
+if ( defined( 'NV_IS_USER' ) )
+{ 
+	$name = $user_info['username'];
+}
+elseif ( defined( 'NV_IS_ADMIN' ) )
+{
+	$name = $admin_info['username'];
+}
+else $name = '';
 $xtpl->assign( 'ads', getADS() );
 
 // lay bai hat
+$setting = setting_music();
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = ".$id ."";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = ".$id;
 $query = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $query );
-$xtpl->assign( 'URL_SENDMAIL',  NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE . "=sendmail&amp;id=". $id );
+
+// update bai hat
+$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET numview = numview+1 WHERE `id` =" . $id );
+
+$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/' . $row['id'] . '/' . $row['ten'] . '/' );
+
+$xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=sendmail&amp;id=". $id );
 $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
 $xtpl->assign( 'ID',  $id );
 $xtpl->assign( 'name', $row['tenthat'] );
 $xtpl->assign( 'singer', $row['casithat'] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
-$xtpl->assign( 'url_search_singer', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE . "=search/singer/" . $row['casi']);
+$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 
-$xtpl->assign( 'url_search_category', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE . "=search/category/" . $row['theloai']);
+$xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $row['theloai']);
 
-$xtpl->assign( 'url_search_album', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE . "=album/numview/" . $row['album']);
+$xtpl->assign( 'url_search_album', $mainURL . "=album/numview/" . $row['album']);
 
-$sqlalbum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `name` =\"".$row['album']."\" ";
-$queryalbum = $db->sql_query( $sqlalbum );
-$album_name = $db->sql_fetchrow( $queryalbum );
+$album_name = getalbumbyNAME( $row['album'] ) ;
 $xtpl->assign( 'album', $album_name['tname'] );
 $xtpl->assign( 'numview', $row['numview'] );
-$xtpl->assign( 'link', $row['duongdan'] );
+if ( $row['server'] != 0 )
+{
+	$xtpl->assign( 'link', $songURL . $row['duongdan'] );
+}
+else
+{
+	$xtpl->assign( 'link', $row['duongdan'] );
+}
 $xtpl->assign( 'URL_SONG', get_URL() );
 
-// update bai hat
-$i = $row['numview'] + 1 ;
-$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = " . $db->dbescape( $i ) . " WHERE `id` =" . $id . "");
-
 // loi bai hst
-$sqllyric = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE songid = ". $id ." ORDER BY id DESC";
+$sqllyric = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE songid = ". $id ." AND `active` = 1 ORDER BY id DESC";
 $querylyric = $db->sql_query( $sqllyric );
 $num_lyric = $db->sql_numrows($querylyric);
 
@@ -80,8 +104,51 @@ else
 {
 	$xtpl->parse( 'main.nolyric' );
 }
+//gui qua tang
+if ( ( $setting['who_gift'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+{
+	$xtpl->assign( 'USER_LOGIN', $user_login );
+    $xtpl->assign( 'USER_REGISTER', $user_register );		
+	$xtpl->parse( 'main.nogift' );
+}
+else
+{
+	$xtpl->assign( 'USER_NAME', ( $name == '' )? ( $lang_module['your_name'] ):( $name ) );
+	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
+	$xtpl->parse( 'main.gift' );
+}
+//gui loi bai hat
+if ( ( $setting['who_lyric'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+{
+	$xtpl->assign( 'USER_LOGIN', $user_login );
+    $xtpl->assign( 'USER_REGISTER', $user_register );		
+	$xtpl->parse( 'main.noaccesslyric' );
+}
+else
+{
+
+	$xtpl->assign( 'USER_NAME', $name );
+	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
+	$xtpl->parse( 'main.accesslyric' );
+}
+
+// binh luan
+if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+{
+	$xtpl->assign( 'USER_LOGIN', $user_login );
+    $xtpl->assign( 'USER_REGISTER', $user_register );		
+	$xtpl->parse( 'main.nocomment' );
+}
+else
+{
+	$xtpl->assign( 'USER_NAME', $name );
+	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
+	$xtpl->parse( 'main.comment' );
+}
+
+
 // tieu de trang
-$page_title = "Bài hát ". $row['tenthat'] . " - " .$row['casithat'] ;
+$page_title = $row['tenthat'] . " - " .$row['casithat'] ;
 $key_words =  $row['tenthat'] . " - " .$row['casithat'] ;
 
 $xtpl->parse( 'main' );
@@ -90,7 +157,4 @@ $contents = $xtpl->text( 'main' );
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
-
-
-
 ?>

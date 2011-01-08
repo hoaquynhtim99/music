@@ -1,7 +1,16 @@
 <?php
+
+/**
+ * @Project NUKEVIET 3.0
+ * @Author VINADES.,JSC (contact@vinades.vn)
+ * @copyright 2009
+ * @createdate 05/12/2010 09:47
+ */
+
 if (!defined('NV_SYSTEM')) die('Stop!!!'); 
 define('NV_IS_MOD_MUSIC', true); 
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
+//require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/audioinfo.class.php';
 // lay url
 
 function get_URL()
@@ -124,4 +133,18 @@ function getADS()
 	}
 	return $ads;
 }
+// lay 10 bai hat moi theo ten
+function gettopsongbyalbumNAME( $name )
+{
+	global $module_data, $db ;
+
+	$data = array() ;
+	$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE album = \"" . $name . "\" AND `active` = 1 ORDER BY id DESC LIMIT 0,10 " );
+
+	return $result ;
+}
+$setting = setting_music();
+$songURL = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/";
+$downURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE . "=down&id=";
+
 ?>

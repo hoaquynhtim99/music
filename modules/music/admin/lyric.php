@@ -7,7 +7,7 @@
  */
  
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
-$page_title = $lang_module['content_list'];
+$page_title = $lang_module['sub_lyric'];
 
 $contents = '' ;
 
@@ -36,19 +36,21 @@ while ( $ts * 100 < $output ) {$ts ++ ;}
 $xtpl = new XTemplate("lyric.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 
 $xtpl->assign('LANG', $lang_module);
-$xtpl->assign('URL_DEL_BACK', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=lyric" );
+$xtpl->assign('URL_DEL_BACK', $link );
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_lyric");
 
 //lay du lieu
 $result = mysql_query( $sql );
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
+$link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_lyric&id=";
+$link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=editlyric";
 
 while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('user', $rs['user']);
-	$xtpl->assign('body', strip_tags(substr($rs['body'], 1, 200)) );
+	$xtpl->assign('body', strip_tags(substr($rs['body'], 0, 200)) );
 	
 	// lay ra ten bai hat
 	$sql_song = "SELECT `tenthat` FROM ".NV_PREFIXLANG."_".$module_data." WHERE id=".$rs['songid'] ;
@@ -59,6 +61,12 @@ while($rs = $db->sql_fetchrow($result))
 	$class = ($i % 2) ? " class=\"second\"" : "";
 	$xtpl->assign('class', $class);
 	$xtpl->assign('URL_DEL_ONE', $link_del . "&where=_lyric&id=" . $rs['id']);
+	$xtpl->assign('URL_EDIT', $link_edit . "&id=" . $rs['id']);
+	
+	$str_ac = ($rs['active'] == 1) ? $lang_module['active_yes'] : $lang_module['active_no'];
+	$xtpl->assign('active', $str_ac);
+	$xtpl->assign('URL_ACTIVE', $link_active . $rs['id']);
+	
 	$xtpl->parse('main.row');
 }
 

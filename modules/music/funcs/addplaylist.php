@@ -30,7 +30,7 @@ if ( $contents == "" )
 	$numnext = $num + 1 ;
 	$nv_Request->set_Cookie( $module_name . '_song'.$numnext.'' , $id );
 	$nv_Request->set_Cookie( $module_name . '_numlist' , $numnext );
-	$contents = $lang_module['playlist_add_success'] ;
+	$contents = "OK_" . $lang_module['playlist_add_success'] ;
 } 
 
 include ( NV_ROOTDIR . "/includes/header.php" );

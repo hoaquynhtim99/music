@@ -12,31 +12,61 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 // lay du lieu
 $user = filter_text_input( 'user', 'post', '' );
 $body = filter_text_input( 'body', 'post', '', 1 );
-
+$where = filter_text_input( 'where', 'post', '' );
+$key = $nv_Request->get_int( 'id', 'post', 0 );
 
 // liem tra thoi gian
-$timeout = $nv_Request->get_int( $module_name . '_error' , 'cookie', 0 );
+$timeout = $nv_Request->get_int( $module_name . '_error_' . $where . "_" . $key, 'cookie', 0 );
 if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 {
-	$nv_Request->set_Cookie( $module_name . '_error' , NV_CURRENTTIME );
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` 
-	(
-		`id`, `user`, `body`
-	) 
-	VALUES 
-	( 
-		NULL, 
-		" . $db->dbescape( $user ) . ", 
-		" . $db->dbescape( $body ) . "
-	)
-	"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
-		$contents = $lang_module['send_error_suc'];
-	} 
-	else
+	$check = 0;
+	if ( $where == 'song' )
 	{
-		$contents = $lang_module['send_error_error'] ;
+		$song = getsongbyID( $key );
+		if ( $song['server'] == 0 )
+		{
+			$url = $song['duongdan'] ;
+		}
+		elseif ( $song['server'] == 1 )
+		{
+			$url = NV_MY_DOMAIN . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
+		}
+		if (  nv_check_url( $url ) )
+		{
+		   $ok = 1;
+		   $contents = $lang_module['send_error_not'];
+		}
+		else
+		{
+			$ok = 0;
+		}
+		$check = 1;
+	}
+	$nv_Request->set_Cookie( $module_name . '_error_' . $where . "_" . $key, NV_CURRENTTIME );
+	
+	if ( ($check == 0) || ( ($check == 1) && ($ok == 0) ) )
+	{
+		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` 
+		(
+			`id`, `user`, `body`, `where`, `key`
+		) 
+		VALUES 
+		( 
+			NULL, 
+			" . $db->dbescape( $user ) . ", 
+			" . $db->dbescape( $body ) . ",
+			" . $db->dbescape( $where ) . ",
+			" . $key . "
+		)
+		"; 
+		if ( $db->sql_query_insert_id( $query ) ) 
+		{ 
+			$contents = $lang_module['send_error_suc'];
+		} 
+		else
+		{
+			$contents = $lang_module['send_error_error'] ;
+		}
 	}
 }
 else

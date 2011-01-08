@@ -29,3 +29,41 @@ function res_get_gingername(res) {
 	}
 	return false;
 }
+
+//get ID3
+function getsonginfo() {
+	var link = document.getElementById('duongdan');
+	var button = document.getElementById('get_info');
+	button.disabled = true;
+	nv_ajax("post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=getsonginfo&link=' + encodeURIComponent(link.value), '', 'returnsonginfo');
+	return;
+}
+//check song
+function checksong(id) {
+	nv_ajax("post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=checklink&id=' + id, '', 'alertres');
+	return;
+}
+// alertres
+function alertres(res) {
+	alert(res);
+	return false;
+}
+// tra ve gia tri
+function returnsonginfo(res) {
+	var r_split = res.split("_");
+	var button = document.getElementById('get_info');
+	button.disabled = false;
+	if (r_split[0] != 'mp3') 
+	{
+		document.getElementById('duongdan').value = "";
+		alert(r_split[4]);
+		alert(res);
+	} 
+	else 
+	{
+		document.getElementById('bitrate').value = r_split[1] ;
+		document.getElementById('size').value = r_split[2] ;
+		document.getElementById('duration').value = r_split[3] ;
+	}
+	return false;
+}

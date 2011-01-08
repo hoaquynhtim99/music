@@ -15,6 +15,7 @@ $xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['templ
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'allalbum', $mainURL . "=album/numview" );
 $xtpl->assign( 'allsong', $mainURL . "=song/numview" );
+$xtpl->assign( 'URL_DOWN', $downURL );
 $category = get_category();
 
 // viet cac album hot nhat
@@ -27,7 +28,7 @@ while ( $row = $db->sql_fetchrow( $query ) )
 }
 foreach ( $hot_abid as $stt => $albumid)
 {
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `id` = ". $albumid ." ";
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `id` = ". $albumid ." AND `active`=1 ";
 	$query = $db->sql_query( $sql );
 	$hot_album = $db->sql_fetchrow( $query );
 	$xtpl->assign( 'url_album', $mainURL . "=listenlist/" .$hot_album['id'] . "/" . $hot_album['name'] );
@@ -38,12 +39,10 @@ foreach ( $hot_abid as $stt => $albumid)
 		$xtpl->assign( 'fasinger', $hot_album['casithat'] );
 		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $hot_album['casi']);
 
-		// lay bai hat cua album hot nhat
-		$first_album_song = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE album = \"".$hot_album['name']."\" ORDER BY id DESC LIMIT 0,10 ";
 		// viet 10 bai hat cua album HOT
-		$data = mysql_query($first_album_song);
+		$data = gettopsongbyalbumNAME( $hot_album['name'] );
 		$i = 1 ;
-		while ( $row = mysql_fetch_array($data) )
+		while ( $row = $db->sql_fetchrow($data) )
 		{
 			$xtpl->assign( 'STT', $i );
 			$xtpl->assign( 'name', $row['tenthat'] );
@@ -67,7 +66,7 @@ foreach ( $hot_abid as $stt => $albumid)
 $xtpl->parse( 'main.hotalbum' );
 
 // Lay album moi nhat
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY id DESC LIMIT 0,9 ";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `active` = 1 ORDER BY id DESC LIMIT 0,9 ";
 $query = $db->sql_query( $sql );
 $a = 1 ;
 while ($row = $db->sql_fetchrow( $query ))
@@ -83,8 +82,7 @@ while ($row = $db->sql_fetchrow( $query ))
 		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 		
 		// viet 10 bai hat cua album MOI
-		$first_nalbum_song = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE album = \"".$row['name']."\"  ORDER BY id DESC LIMIT 0,10 ";
-		$data = mysql_query($first_nalbum_song);
+		$data = gettopsongbyalbumNAME( $row['name'] );
 		$i = 1 ;
 		while ( $rows = $db->sql_fetchrow( $data ) )
 		{
@@ -125,7 +123,7 @@ $xtpl->assign( 'f4', $category[$fctegory[4]] );
 $i = 1 ;
 foreach ( $fctegory as $this_category )
 {
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `theloai` = ".$this_category." ORDER BY id DESC LIMIT 0,10";
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `theloai` = ".$this_category." AND `active` = 1 ORDER BY id DESC LIMIT 0,10";
 	$query = $db->sql_query( $sql );
 	while ($row = $db->sql_fetchrow( $query ))
 	{
@@ -135,7 +133,7 @@ foreach ( $fctegory as $this_category )
 		$xtpl->assign( 'singer', $row['casithat'] );
 		$xtpl->assign( 'category', $category[$row['theloai']] );
 		$xtpl->assign( 'who_upload', $row['upboi'] );
-		$xtpl->assign( 'url', $row['duongdan'] );
+		$xtpl->assign( 'url', $songURL . $row['duongdan'] );
 		$xtpl->assign( 'view', $row['numview'] );
 		$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'] );
 	

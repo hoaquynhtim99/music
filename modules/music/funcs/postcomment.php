@@ -14,6 +14,7 @@ $difftimeout = 360;
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 $body = filter_text_input( 'body', 'post', '', 1 );
 $where = filter_text_input( 'where', 'post', '', 1 );
+$setting = setting_music() ;
 
 if ( defined( 'NV_IS_USER' ) )
 {
@@ -37,7 +38,7 @@ $timeout = $nv_Request->get_int( $module_name . '_' . $op . '_' . $where . '_' .
 
 if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 {
-    $sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` (`id`, `name`, `body`, `dt`, `what`, `userid`) VALUES (NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $body ) . ", NULL , " . $db->dbescape( $id ) . ",  " . $userid . " )";
+    $sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` (`id`, `name`, `body`, `dt`, `what`, `userid`, `active`) VALUES (NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $body ) . ", UNIX_TIMESTAMP() , " . $db->dbescape( $id ) . ",  " . $userid . ", " . $setting['auto_comment']  . " )";
     $result = $db->sql_query( $sql );
     if ( $result )
     {

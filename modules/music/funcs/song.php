@@ -14,7 +14,7 @@ $category = get_category();
 
 $xtpl = new XTemplate( "song.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
-    
+$xtpl->assign( 'URL_DOWN', $downURL );
 // xu li
 
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'numview';
@@ -46,17 +46,17 @@ else
 	$first_page = ($now_page -1)*20;
 }	
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " ORDER BY " . $type . " DESC LIMIT ".$first_page.",20";
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data;
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 ORDER BY " . $type . " DESC LIMIT ".$first_page.",20";
+$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 ";
 
 // tinh so trang
-$num = mysql_query($sqlnum);
-$output = mysql_num_rows($num);
+$num = $db->sql_query($sqlnum);
+$output = $db->sql_numrows($num);
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
 // ket qua
-$result = mysql_query( $sql );
+$result = $db->sql_query( $sql );
 $xtpl->assign( 'num', $output);
 
 while($rs = $db->sql_fetchrow($result))
@@ -68,8 +68,11 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign( 'singer', $rs['casithat']);
 	$xtpl->assign( 'upload', $rs['upboi']);
 	$xtpl->assign( 'view', $rs['numview']);
-	$xtpl->assign( 'url', $rs['duongdan'] );
 	$xtpl->assign( 'url_view', $mainURL . "=listenone/" .$rs['id']. "/" . $rs['ten'] );
+		
+	$xtpl->assign( 'bitrate', $rs['bitrate']/1000);
+	$xtpl->assign( 'size', round ( ( $rs['size']/1024/1024 ), 2 ) );
+	$xtpl->assign( 'duration', (int)($rs['duration']/60) . ":" . $rs['duration']%60 );
 	
 	$xtpl->assign( 'url_listen', $mainURL . "=listenlist/" . $rs['id'] . "/" . $rs['ten'] );
 	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $rs['casi']);

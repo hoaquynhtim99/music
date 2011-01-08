@@ -7,16 +7,27 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-global $lang_module, $module_file, $module_info, $mainURL;
 
+global $lang_module, $module_data, $module_file, $module_info, $mainURL;
+$xtpl = new XTemplate( "block_playlisttool.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+$xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'img_url', NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file."/" );
+$xtpl->assign( 'URL', $mainURL . "=playlist" );
+$xtpl->assign( 'URL_CREAT', $mainURL . "=creatalbum" );
 
-$content = "
-<p align=\"center\">\n
-	<a title=\"". $lang_module['playlist_listen'] ."\" href=\"". $mainURL . "=playlist\">\n
-		<img style=\"cursor:pointer;\" height=\"40\" src=\"". NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file."/playlist.png\" width=\"40\" />\n
-	</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\n
-	<a title=\"". $lang_module['playlist_delete'] ."\" onclick=\"delplaylist();\">\n
-		<img style=\"cursor:pointer;\" height=\"40\" src=\"".NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file."/page_delete.png\" width=\"40\" />\n
-	</a>\n
-</p>\n";
+$xtpl->parse( 'main' );
+$content = $xtpl->text( 'main' );
+
+/*
+<script type=\"text/javascript\">
+$(document).ready(function() {
+	resultplaylist( 'OK_');
+	$(\"#playlist\").hide();
+    $(\"#showplaylist\").click(function () {
+      $(\"#playlist\").slideToggle(\"slow\");
+    });
+});
+</script>";
+*/
+
 ?>

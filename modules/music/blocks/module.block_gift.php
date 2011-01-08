@@ -23,10 +23,21 @@ while($gift =  mysql_fetch_array( $query ))
 	$xtpl->assign( 'url_listen', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
 	$xtpl->assign( 'from', $gift['who_send'] );
 	$xtpl->assign( 'to', $gift['who_receive'] );
-	$xtpl->assign( 'time', $gift['time'] );
+	$xtpl->assign( 'time', nv_date( "d/m/Y H:i", $gift['time'] ) );
 	
-	$bodymini = substr($gift['body'], 0, 120) ;
-	$bodyfull = substr($gift['body'], 120) ;
+	$sub = explode ( ' ', $gift['body'] ) ;
+	$bodymini = $bodyfull = '';
+	foreach ( $sub as $i => $value )
+	{
+		if ( $i < 25 ) 
+		{
+			$bodymini .= " " . $value;
+		}
+		else
+		{
+			$bodyfull .= " " . $value;
+		}
+	}
 	$xtpl->assign( 'message', $bodymini );
 	$xtpl->assign( 'fullmessage', $bodyfull );
 	$xtpl->assign( 'DIV', $i );

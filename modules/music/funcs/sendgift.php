@@ -14,7 +14,7 @@ $id = $nv_Request->get_int( 'id', 'post', 0 );
 $who_send = filter_text_input( 'who_send', 'post', '' );
 $who_receive = filter_text_input( 'who_receive', 'post', '' );
 $body = filter_text_input( 'body', 'post', '', 1 );
-
+$setting = setting_music() ;
 
 // liem tra thoi gian
 $timeout = $nv_Request->get_int( $module_name . '_gift' , 'cookie', 0 );
@@ -23,7 +23,7 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 	$nv_Request->set_Cookie( $module_name . '_gift' , NV_CURRENTTIME );
 	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_gift` 
 	(
-		`id`, `who_send`, `who_receive`, `songid`, `time`, `body`
+		`id`, `who_send`, `who_receive`, `songid`, `time`, `body`, `active`
 	) 
 	VALUES 
 	( 
@@ -31,8 +31,9 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 		" . $db->dbescape( $who_send ) . ", 
 		" . $db->dbescape( $who_receive ) . ", 
 		" . $db->dbescape( $id ) . ", 
-		NULL,
-		" . $db->dbescape( $body ) . "
+		UNIX_TIMESTAMP(),
+		" . $db->dbescape( $body ) . ",
+		" . $setting['auto_gift']  . "
 	)
 	"; 
 	if ( $db->sql_query_insert_id( $query ) ) 

@@ -28,6 +28,19 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('name', $rs['user']);
 	$xtpl->assign('body', $rs['body']);
+	if( $rs['where'] == 'song' )
+	{
+		$album = getsongbyID( $rs['key'] );
+		$xtpl->assign('what', $lang_module['song'] . ' ' . $album['tenthat']);
+
+		$xtpl->assign('SONG', $rs['key']);
+		$xtpl->parse('main.row.check');
+	}
+	else
+	{
+		$song = getalbumbyID( $rs['key'] );
+		$xtpl->assign('what', $lang_module['album'] . ' ' . $song['tname']);	
+	}
 	
 	$class = ($i % 2) ? " class=\"second\"" : "";
 	$xtpl->assign('class', $class);

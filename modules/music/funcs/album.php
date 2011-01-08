@@ -37,8 +37,10 @@ else
 
 $data = '';
 if ( $key != '' )
-$data = "WHERE name LIKE '%". $key ."%'";
-
+	$data = "WHERE name LIKE '%". $key ."%' AND `active` = 1";
+else
+	$data = "WHERE `active` = 1";
+	
 // xu li du lieu
 if ( $now_page == 1) 
 {

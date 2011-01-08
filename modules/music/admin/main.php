@@ -104,18 +104,19 @@ $xtpl = new XTemplate("main.tpl", NV_ROOTDIR . "/themes/" . $global_config['modu
 
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong");
-$xtpl->assign('URL_DEL_BACK', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name);
+$xtpl->assign('URL_DEL_BACK', $link );
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall");
 $xtpl->assign('ORDER_NAME', $link ."&order=ten" );
 $xtpl->assign('ORDER_SINGER', $link ."&order=casi" );
 $xtpl->assign('ORDER_ALBUM', $link ."&order=album" );
 
 //lay du lieu
-$result = mysql_query( $sql );
+$result = $db->sql_query( $sql );
 $num = $db->sql_numrows($result);
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong";
+$link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&id=";
 
 while($rs = $db->sql_fetchrow($result))
 {
@@ -126,7 +127,7 @@ while($rs = $db->sql_fetchrow($result))
 	
 	// lay ra ten album
 	$sql_album = "SELECT `tname` FROM ".NV_PREFIXLANG."_".$module_data."_album WHERE name=\"".$rs['album']."\"";
-	$result_album = mysql_query( $sql_album );
+	$result_album = $db->sql_query( $sql_album );
 	$album = $db->sql_fetchrow($result_album);
 	$xtpl->assign('album', $album['tname']);
 	$xtpl->assign('category', $category[ $rs['theloai'] ] );
@@ -135,6 +136,11 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign('class', $class);
 	$xtpl->assign('URL_DEL_ONE', $link_del . "&id=" . $rs['id']);
 	$xtpl->assign('URL_EDIT', $link_edit . "&id=" . $rs['id']);
+	
+	$str_ac = ($rs['active'] == 1) ? $lang_module['active_yes'] : $lang_module['active_no'];
+	$xtpl->assign('active', $str_ac);
+	$xtpl->assign('URL_ACTIVE', $link_active . $rs['id']);
+	
 	$xtpl->parse('main.row');
 }
 

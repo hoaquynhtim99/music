@@ -1,22 +1,35 @@
 <?php
+
+/**
+ * @Project NUKEVIET 3.0
+ * @Author VINADES.,JSC (contact@vinades.vn)
+ * @copyright 2009
+ * @createdate 05/12/2010 09:47
+ */
+
 if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_MODADMIN' ) ) die( 'Stop!!!' ); 
 
+$submenu['error'] = $lang_module['sub_error']; 
+$submenu['ads'] = $lang_module['sub_ads']; 
+$submenu['hotalbum'] = $lang_module['sub_hotalbum']; 
 $submenu['category'] = $lang_module['sub_category']; 
+$submenu['video_category'] = $lang_module['sub_videocategory']; 
 $submenu['album'] = $lang_module['sub_album']; 
 $submenu['addalbum'] = $lang_module['sub_add_album']; 
-$submenu['hotalbum'] = $lang_module['sub_hotalbum']; 
+$submenu['videoclip'] = $lang_module['video']; 
+$submenu['addvideo'] = $lang_module['video_add']; 
 $submenu['fourcategory'] = $lang_module['sub_fourcategory']; 
 $submenu['commentsong'] = $lang_module['sub_commentsong']; 
 $submenu['commentalbum'] = $lang_module['sub_commentalbum']; 
 $submenu['maincategory'] = $lang_module['sub_maincategory']; 
 $submenu['mainalbum'] = $lang_module['sub_mainalbum']; 
-$submenu['ads'] = $lang_module['sub_ads']; 
-$submenu['error'] = $lang_module['sub_error']; 
 $submenu['gift'] = $lang_module['sub_gift']; 
 $submenu['blockhotsinger'] = $lang_module['sub_blockhotsinger']; 
 $submenu['lyric'] = $lang_module['sub_lyric']; 
+$submenu['userplaylist'] = $lang_module['userplaylist']; 
+$submenu['setting'] = $lang_module['music_setting']; 
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'a'); 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep

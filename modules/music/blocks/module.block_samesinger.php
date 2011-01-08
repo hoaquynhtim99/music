@@ -30,7 +30,7 @@ $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE casi =\""
 $query = mysql_query( $sql );
 while($song =  mysql_fetch_array( $query ))
 {
-	$xtpl->assign( 'url_listen', $mainURL . "=listenone/=" .$song['id']. "/" . $song['ten'] );
+	$xtpl->assign( 'url_listen', $mainURL . "=listenone/" .$song['id']. "/" . $song['ten'] );
 	$xtpl->assign( 'song_name', $song['tenthat'] );
 	$xtpl->parse( 'main.loop' );
 }

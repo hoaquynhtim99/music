@@ -44,7 +44,7 @@ function resultgift(res) {
 }
 
 // gui bao loi cho quan tri
-function senderror() {
+function senderror(id, where) {
 	var user = document.getElementById('user');
 	var body  = strip_tags(document.getElementById('bodyerror').value);
 	if (user.value == "") {
@@ -54,7 +54,7 @@ function senderror() {
 		alert(nv_content);
 		document.getElementById('bodyerror').focus();
 	} else {
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=senderror&user=' + user.value + '&body=' + encodeURIComponent(body), '', 'resultgift');
+		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=senderror&id=' + id + '&where=' + where + '&user=' + user.value + '&body=' + encodeURIComponent(body), '', 'resultgift');
 	}
 	return;
 }
@@ -62,7 +62,7 @@ function senderror() {
 // them paylist
 function addplaylist(id) 
 {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=addplaylist&id=' + id, '', 'resultgift');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=addplaylist&id=' + id, '', 'resultplaylist');
 	return;
 }
 
@@ -105,12 +105,49 @@ function comment_result(res) {
 	nv_set_disable_false('buttoncontent');
 	return false;
 }
+// tra ve sau khi them playlist
+function resultplaylist(res) {
+	var r_split = res.split("_");
+	if (r_split[0] == 'OK') {
+		//$("a#add").addClass("added");
+		nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist', 'playlist', '');
+	} else alert(res);
+}
 // hien thi cac binh luan
 function show_comment(id, where, page) {
 	nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&id=' + id + '&where=' + where + '&page=' + page, 'size', '');
 }
+// luu album
+function saveplaylist(name, singer, message) {
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=savealbum&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), '', 'aftersavelist');
+}
+function aftersavelist(res){
+	var r_split = res.split("_");
+	if (r_split[0] == 1) {
+		//$("a#add").addClass("added");
+		window.location = r_split[1];
+	} else alert(res);
 
-
+}
+// xoa mot bai hat tu playlist
+function delsongfrlist(stt) {
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrlist&stt=' + stt, '', 'afterdelsong');
+}
+function afterdelsong(res)
+{
+	$("#song" + res).remove();
+}
+// xoa playlist
+function dellist(id) {
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=dellist&id=' + id, '', 'afterdellist');
+}
+function afterdellist(res)
+{
+	var r_split = res.split("_");
+	if (r_split[0] == "OK") {
+		$("#item" + r_split[1]).remove();
+	} else alert(res);
+}
 // an hien div
 function ShowHide(what)
 {

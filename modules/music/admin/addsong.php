@@ -15,7 +15,7 @@ if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
 $contents = "";
 $error = "";
 $category = get_category() ;
-
+$setting = setting_music();
 //lay gia tri
 $songdata['ten'] = filter_text_input( 'ten', 'post', '' );
 $songdata['tenthat'] = filter_text_input( 'tenthat', 'post', '' );
@@ -25,6 +25,9 @@ $songdata['album'] = filter_text_input( 'album', 'get,post', '' );
 $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
 $songdata['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
 $songdata['upboi'] = $nv_Request->get_string( 'upboi', 'post', '' );
+$songdata['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
+$songdata['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
+$songdata['size'] = $nv_Request->get_int( 'size', 'post', 0 );
 
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
@@ -47,14 +50,37 @@ else
 		$songdata['casithat'] = $row['casithat'];
 		$songdata['album'] = $row['album'];
 		$songdata['theloai'] = $row['theloai'];
-		$songdata['duongdan'] = $row['duongdan'];
+		
+		if( $row['server'] != 0 )
+		{
+			$songdata['duongdan'] = "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $row['duongdan'];
+		}
+		else
+		{
+			$songdata['duongdan'] = $row['duongdan'];
+		}
 		$songdata['upboi'] = $row['upboi'];
+		$songdata['bitrate'] = $row['bitrate'];
+		$songdata['duration'] = $row['duration'];
+		$songdata['size'] = $row['size'];
+		//$songdata['server'] = $row['server'];
 	}
 }
 
 //sua bai hat
 if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
 {
+	if (preg_match('/^(ht|f)tp:\/\//', $songdata['duongdan'])) 
+	{
+		//$data = $songdata['duongdan'];
+		$songdata['server'] = 0;
+	}
+	else
+	{
+		$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
+		$songdata['duongdan'] = substr( $songdata['duongdan'], $lu );
+		$songdata['server'] = 1;
+	}
 	foreach ( $songdata as $key => $data  )
 	{	
 		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
@@ -79,9 +105,20 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	}
 	if ( $error == "" )
 	{
+		if (preg_match('/^(ht|f)tp:\/\//', $songdata['duongdan'])) 
+		{
+			$data = $songdata['duongdan'];
+			$server = 0;
+		}
+		else
+		{
+			$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
+			$data = substr( $songdata['duongdan'], $lu );
+			$server = 1;
+		}
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 		(
-			`id`, `ten`, `tenthat`, `casi`, `casithat`, `album`, `theloai`, `duongdan`, `upboi`, `numview`
+			`id`, `ten`, `tenthat`, `casi`, `casithat`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`
 		) 
 		VALUES 
 		( 
@@ -92,9 +129,14 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 			" . $db->dbescape( $songdata['casithat'] ) . ", 
 			" . $db->dbescape( $songdata['album'] ) . ", 
 			" . $db->dbescape( $songdata['theloai'] ) . ", 
-			" . $db->dbescape( $songdata['duongdan'] ) . ", 
+			" . $db->dbescape( $data )  . ", 
 			" . $db->dbescape( $songdata['upboi'] ) . " ,
-			0
+			0,
+			1,
+			" . $db->dbescape( $songdata['bitrate'] ) . " ,
+			" . $db->dbescape( $songdata['size'] ) . " ,
+			" . $db->dbescape( $songdata['duration'] ) . ",
+			" . $server . "
 		)
 		"; 
 		if ( $db->sql_query_insert_id( $query ) ) 
@@ -196,16 +238,46 @@ $contents .="
 				</td>
 				<td style=\"background: #eee;\">
 				<input id=\"duongdan\" name=\"duongdan\" style=\"width: 370px;\" value=\"".$songdata['duongdan']."\" type=\"text\" />
-                <input name=\"select\" type=\"button\" value=\"".$lang_module['select']."\" />
+                <input name=\"select\" type=\"button\" value=\"".$lang_module['select']."\" /> =&gt;
+                <input id=\"get_info\" name=\"get_info\" type=\"button\" value=\"".$lang_module['get_info']."\" />
 				<script type=\"text/javascript\">			
 				$(\"input[name=select]\").click(function()
 				{
 					var area = \"duongdan\"; // return value area
-					var path = \"".NV_UPLOADS_DIR . "/" . $module_name."\";
+					var path = \"".NV_UPLOADS_DIR . "/" . $module_name."/" . $setting['root_contain'] . "\";
 					nv_open_browse_file(\"".NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path, "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no'."\");
 					return false;
 				});
 				</script>
+				<script type=\"text/javascript\">			
+				$(\"#get_info\").click(function () {
+                    getsonginfo();
+                });
+				</script>	
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				" . $lang_module['bitrate'] . "	
+				</td>
+				<td style=\"background: #eee;\">
+				<input id=\"bitrate\" name=\"bitrate\" style=\"width: 370px;\" value=\"".$songdata['bitrate']."\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				" . $lang_module['duration'] . "	
+				</td>
+				<td style=\"background: #eee;\">
+				<input id=\"duration\" name=\"duration\" style=\"width: 370px;\" value=\"".$songdata['duration']."\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				" . $lang_module['size'] . "	
+				</td>
+				<td style=\"background: #eee;\">
+				<input id=\"size\" name=\"size\" style=\"width: 370px;\" value=\"".$songdata['size']."\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>

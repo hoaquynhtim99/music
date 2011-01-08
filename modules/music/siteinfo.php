@@ -20,6 +20,15 @@ if ( $number > 0 )
     );
 }
 
+// So video
+list( $number ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) as number FROM `" . NV_PREFIXLANG . "_" . $mod_data . "_video`" ) );
+if ( $number > 0 )
+{
+    $siteinfo[] = array( 
+        'key' => $lang_siteinfo['siteinfo_numvideo'] , 'value' => $number 
+    );
+}
+
 // So album
 list( $number ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) as number FROM `" . NV_PREFIXLANG . "_" . $mod_data . "_album`" ) );
 if ( $number > 0 )

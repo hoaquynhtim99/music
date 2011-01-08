@@ -11,7 +11,7 @@ if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' )) die( 'Stop!!!' );
  
 $module_version = array( 
 "name" => "Music", // Tieu de module
-"modfuncs" => "main, listenone, listenlist, search, playlist, album, song" , // Cac function co block
+"modfuncs" => "main, listenone, listenlist, search, playlist, album, song, creatalbum, listenuserlist, allplaylist, viewvideo, video, searchvideo" , // Cac function co block
 "is_sysmod" => 0, // Co phai la module he thong hay khong
 "virtual" => 1, // Co cho phep ao hao module hay khong
 "version" => "3.0.01", // Phien ban cua modle
@@ -21,7 +21,9 @@ $module_version = array(
 "uploads_dir" => array(
 	$module_name, 
 	$module_name . "/data", 
+	$module_name . "/clipthumb", 
 	$module_name . "/thumb", 
+	$module_name . "/video", 
 	$module_name . "/ads", 
 	$module_name . "/tmp")
 );

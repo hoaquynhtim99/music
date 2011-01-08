@@ -20,8 +20,8 @@ $xtpl->assign( 'ID', $id );
 $xtpl->assign( 'WHERE', $where );
 
 // so binh luan
-$num = $db->sql_numrows( $db->sql_query( "SELECT *  FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE what = " . $id ) );
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . " WHERE what = ". $id ." ORDER BY id DESC LIMIT " . $page . ",8";
+$num = $db->sql_numrows( $db->sql_query( "SELECT *  FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE what = " . $id . " AND `active` = 1 " ) );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . " WHERE what = ". $id ." AND `active` = 1 ORDER BY id DESC LIMIT " . $page . ",8";
 $query = $db->sql_query( $sql );
 
 // phan trang binh luan
@@ -53,7 +53,7 @@ while ( $row = $db->sql_fetchrow( $query ) )
 		$xtpl->assign( 'avatar', NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/default.jpg");
 	}
 	$xtpl->assign( 'name', $row['name'] );
-	$xtpl->assign( 'date', $row['dt'] );
+	$xtpl->assign( 'date', nv_date( "d/m/Y H:i", $row['dt'] ) );
 	$xtpl->assign( 'body', $row['body'] );
 	$xtpl->parse( 'main.loop' );
 }
