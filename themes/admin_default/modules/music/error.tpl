@@ -110,7 +110,7 @@
 		$('a[class="delfile"]').click(function(event)
 		{
 			event.preventDefault();
-			if (confirm("{LANG.song_del_confirm}"))
+			if (confirm("{LANG.error_del_confirm}"))
 			{
 				var href = $(this).attr('href');
 				$.ajax(
