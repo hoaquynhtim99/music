@@ -176,6 +176,7 @@ $lang_module['err_ful_amessage'] = "Bạn chưa nhập lời nhắn";
 $lang_module['err_cre_album'] = "Bạn không thể tạo nhiều playlist trong một lúc được";
 $lang_module['ses_cre_album'] = "Bạn đã tạo playlist thành công";
 
+$lang_module['video'] = "Video";
 $lang_module['video_link'] = "Link video";
 $lang_module['video_hot'] = "Video hot";
 $lang_module['video_new'] = "Video mới";
