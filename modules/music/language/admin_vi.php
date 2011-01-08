@@ -20,6 +20,7 @@ $lang_translator['langtype'] = "lang_module";
 $lang_module['4category_main'] = "4 thể loại trên trang chủ";
 
 $lang_module['check'] = "Kiểm tra";
+$lang_module['check_song'] = "Kiểm tra link bài hát";
 
 $lang_module['active'] = "Hoạt động";
 $lang_module['active_yes'] = "Có";
@@ -52,6 +53,7 @@ $lang_module['category_main_del_confim'] = "Bạn có chắc chắc xóa thể l
 $lang_module['checkall'] = "Chọn tất cả";
 $lang_module['check_link_suc'] = "Link tồn tại";
 $lang_module['check_link_err'] = "Link bài hát này không tồn tại";
+$lang_module['check_link_err1'] = "Link chết nghẻo";
 $lang_module['content'] = "Nội dung";
 $lang_module['content_list'] = "Danh sách bài hát";
 $lang_module['delete'] = "Xóa";
@@ -69,6 +71,7 @@ $lang_module['edit_lyric'] = "Sửa lời bài hát";
 $lang_module['edit_gift'] = "Sửa quà tặng âm nhạc";
 
 $lang_module['error_save'] = "Xảy ra một lỗi nào đó khiến cho dữ liệu không thể lưu được, hãy kiểm tra lại";
+$lang_module['error_list'] = "Danh sách các báo lỗi";
 $lang_module['error_user'] = "Tên người gửi";
 $lang_module['error_check_song'] = "Bạn chưa chọn bài hát nào";
 $lang_module['error_check_album'] = "Bạn chưa chọn album nào";
@@ -140,6 +143,8 @@ $lang_module['siteinfo_commentsong'] = "Tổng số bình luận cho bài hát";
 $lang_module['siteinfo_commentalbum'] = "Tổng số bình luận cho album";
 $lang_module['siteinfo_error'] = "Tổng số báo lỗi";
 $lang_module['siteinfo_gift'] = "Tổng số quà tặng âm nhạc";
+
+$lang_module['state'] = "Tình trạng";
 
 $lang_module['set_who_comment'] = "Ai được bình luận";
 $lang_module['set_who_lyric'] = "Ai được gửi lời bài hát";

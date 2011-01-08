@@ -7,7 +7,7 @@
  * @Createdate 9-8-2010 14:43
  */
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
-$page_title = $lang_module['list_album'];
+$page_title = $lang_module['error_list'];
 $contents = '' ;
 
 
@@ -16,6 +16,7 @@ $xtpl = new XTemplate("error.tpl", NV_ROOTDIR . "/themes/" . $global_config['mod
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('URL_DEL_BACK', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=error");
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_error");
+$xtpl->assign('URL_CHECK', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=checksonglist");
 
 //lay du lieu
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data."_error ORDER BY id DESC" ;

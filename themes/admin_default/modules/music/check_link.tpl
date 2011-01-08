@@ -3,30 +3,31 @@
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
-			<td>{LANG.error_user}</td>
-			<td>{LANG.error_what}</td>
-			<td>{LANG.content}</td>
+			<td>{LANG.song}</td>
+			<td>{LANG.state}</td>
 			<td width="150px" align="center">{LANG.feature}</td>
 		</tr>
 	</thead>
-	<!-- BEGIN: row -->
+	<!-- BEGIN: loop -->
 	<tbody{class}>
 		<tr>
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
-			<td>{name}</td>
-			<td>{what}</td>
-			<td>{body}</td>
+			<td><a href='{URL}' target="_blank">{songname}</a></td>
+			<td>{result}</td>
 			<td align="center">
 				<!-- BEGIN: check -->
 					<a onclick="checksong('{SONG}');" class='checkfile'>{LANG.check}</a>
 				<!-- END: check -->
+				<span class="edit_icon">
+					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
+				</span>
 				<span class="delete_icon">
 					<a class='delfile' href="{URL_DEL_ONE}">{LANG.delete}</a>
 				</span>
 			</td>
 		</tr>
 	</tbody>
-	<!-- END: row -->
+	<!-- END: loop -->
 </table>
 <table class="tab1">
 	<tfoot>
@@ -37,9 +38,6 @@
 					&nbsp;&nbsp;
 					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
 					&nbsp;&nbsp;
-				</span>
-				<span>
-					<a id='checklink'>{LANG.check}</a>
 				</span>
 				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
 				</span>
@@ -66,23 +64,9 @@
 			});
 		});
 		
-		$('#checklink').click(function()
-		{
-			var listall = [];
-			$('input.filelist:checked').each(function()
-			{
-				listall.push($(this).val());
-			});
-			if (listall.length < 1)
-			{
-				alert("{LANG.error_check_error}");
-				return false;
-			}
-			window.location = '{URL_CHECK}' + '&listall=' + listall;
-		});
 		$('#delfilelist').click(function()
 		{
-			if (confirm("{LANG.error_del_confirm}"))
+			if (confirm("{LANG.song_del_confirm}"))
 			{
 				var listall = [];
 				$('input.filelist:checked').each(function()
@@ -91,7 +75,7 @@
 				});
 				if (listall.length < 1)
 				{
-					alert("{LANG.error_check_error}");
+					alert("{LANG.error_check_song}");
 					return false;
 				}
 				$.ajax(

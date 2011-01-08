@@ -10,16 +10,6 @@
 if (!defined('NV_SYSTEM')) die('Stop!!!'); 
 define('NV_IS_MOD_MUSIC', true); 
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
-//require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/audioinfo.class.php';
-// lay url
-
-function get_URL()
-{
-$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
-$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
-return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
-}
 
 // hien thi cac trang
 function new_page ( $ts, $now_page, $link)
