@@ -96,7 +96,7 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign('URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=casi&q=" . $rs['ten'] );
 	$xtpl->assign('URL_ALBUM', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album&type=singer&q=" . $rs['ten'] );
 
-	$xtpl->assign('url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&singer=".$rs['ten'] );
+	$xtpl->assign('url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&casi=".$rs['ten'] );
 	
 	$class = ($i % 2) ? " class=\"second\"" : "";
 	$xtpl->assign('class', $class);

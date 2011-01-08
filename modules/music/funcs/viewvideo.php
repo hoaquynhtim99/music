@@ -9,6 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
+$allsinger = getallsinger();
 $category = get_videocategory();
 $xtpl = new XTemplate( "viewvideo.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -44,14 +45,23 @@ $xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=videosendmail&amp;id=". $id );
 $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
 $xtpl->assign( 'ID',  $id );
 $xtpl->assign( 'name', $row['tname'] );
-$xtpl->assign( 'singer', $row['casithat'] );
+$xtpl->assign( 'singer', $allsinger[$row['casi']] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
 $xtpl->assign( 'view', $row['view'] );
 
 $xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $row['casi']);
 $xtpl->assign( 'url_search_category', $mainURL . "=searchvideo/category/" . $row['theloai']);
 
-$xtpl->assign( 'link', $row['duongdan'] );
+	
+if ( $row['server'] != 0 )
+{
+	$xtpl->assign( 'link', $songURL . "video/" . $row['duongdan'] );
+}
+else
+{
+	$xtpl->assign( 'link', $row['duongdan'] );
+}
+
 $xtpl->assign( 'URL_SONG', get_URL() );
 
 
@@ -72,8 +82,8 @@ else
 
 
 // tieu de trang
-$page_title = $row['tname'] . " - " .$row['casithat'] ;
-$key_words =  $row['tname'] . " - " .$row['casithat'] ;
+$page_title = $row['tname'] . " - " . $allsinger[$row['casi']] ;
+$key_words =  $row['tname'] . " - " . $allsinger[$row['casi']] ;
 
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );

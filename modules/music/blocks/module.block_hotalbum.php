@@ -1,6 +1,7 @@
 <?php
 global $lang_module, $module_data, $module_file, $module_info, $mainURL;
 $xtpl = new XTemplate( "block_hotalbum.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+$allsinger = getallsinger();
 $xtpl->assign( 'LANG', $lang_module );
 
 // lay id bai hat
@@ -10,7 +11,7 @@ while($song =  mysql_fetch_array( $source ))
 	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $song['casi']);	
 	$xtpl->assign( 'url_listen', $mainURL . "=listenlist/" .$song['id']. "/" . $song['name']);
 	$xtpl->assign( 'name', $song['tname'] );
-	$xtpl->assign( 'singer', $song['casithat'] );
+	$xtpl->assign( 'singer', $allsinger[$song['casi']] );
 	$xtpl->assign( 'view', $song['numview'] );
 	$xtpl->assign( 'img', $song['thumb'] );
 	$xtpl->parse( 'main.loop' );

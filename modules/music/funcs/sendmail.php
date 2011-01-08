@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-
+$allsinger = getallsinger();
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 if ( $id > 0 )
 {
@@ -63,7 +63,7 @@ if ( $id > 0 )
                 $message .= "".$lang_module['sendmail_welcome_1']." 
 							<strong>" . $global_config['site_name'] . "</strong>
 							".$lang_module['sendmail_welcome_2']."<br />
-							<br />".$lang_module['song']."<strong> " . $song['tenthat'] . "</strong> ".$lang_module['sendmail_singer_show']." <strong> ".$song['casithat']." </strong> ".$lang_module['show_2'].".<br/>
+							<br />".$lang_module['song']."<strong> " . $song['tenthat'] . "</strong> ".$lang_module['sendmail_singer_show']." <strong> " . $allsinger[$song['casi']] . " </strong> ".$lang_module['show_2'].".<br/>
 							<br />".$lang_module['message'].": " . $content . "<br />
 							<br /><strong>".$lang_module['sendmail_welcome_3'].": </strong><br />" . $link . "";
                 $from = array( 
@@ -92,7 +92,7 @@ if ( $id > 0 )
 			"checkss" => md5( $id . session_id() . $global_config['sitekey'] ), 
 			"v_name" => $name, 
 			"song" => $song['tenthat'], 
-			"singer" => $song['casithat'], 
+			"singer" => $allsinger[$song['casi']], 
 			"v_mail" => $youremail, 
 			"to_mail" => $to_mail, 
 			"content" => $content, 

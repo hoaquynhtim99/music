@@ -9,6 +9,7 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
+$allsinger = getallsinger();
 
 $xtpl = new XTemplate( "listenuserlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -53,9 +54,8 @@ for ( $i = 1; $i < $j; $i ++ )
 	{
 		$xtpl->assign( 'song_url', $datasong['duongdan'] );
 	}
-	//$xtpl->assign( 'song_url', $songURL . $datasong['duongdan'] );
 	$xtpl->assign( 'song_name', $datasong['tenthat'] );
-	$xtpl->assign( 'song_singer', $datasong['casithat'] );
+	$xtpl->assign( 'song_singer', $allsinger[$datasong['casi']] );
 	$xtpl->parse( 'main.song' );
 }
 

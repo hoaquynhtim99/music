@@ -14,14 +14,12 @@ if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
 //khoi tao
 $contents = "";
 $error = "";
-$category = get_category() ;
-$setting = setting_music();
-$allalbum = getallalbum();
 //lay gia tri
+
 $songdata['ten'] = filter_text_input( 'ten', 'post', '' );
 $songdata['tenthat'] = filter_text_input( 'tenthat', 'post', '' );
 $songdata['casi'] = filter_text_input( 'casi', 'get,post', '' );
-$songdata['casithat'] = filter_text_input( 'casithat', 'post', '' );
+$songdata['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
 $songdata['album'] = filter_text_input( 'album', 'get,post', '' );
 $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
 $songdata['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
@@ -29,6 +27,39 @@ $songdata['upboi'] = $nv_Request->get_string( 'upboi', 'post', '' );
 $songdata['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
 $songdata['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 $songdata['size'] = $nv_Request->get_int( 'size', 'post', 0 );
+
+
+if ( $songdata['casimoi'] != '')
+{
+	$songdata['casi'] = change_alias( $songdata['casimoi'] );
+	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` 
+	(
+		`id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`
+	) 
+	VALUES 
+	( 
+		NULL, 
+		" . $db->dbescape( $songdata['casi'] ) . ", 
+		" . $db->dbescape( $songdata['casimoi'] ) . ", 
+		'', 
+		'', 
+		0, 
+		0
+	)
+	"; 
+	if ( $db->sql_query_insert_id( $query ) ) 
+	{ 
+		$db->sql_freeresult();
+	} 
+	else 
+	{ 
+		$error = $lang_module['singer_new_added']; 
+	} 
+}
+$category = get_category() ;
+$setting = setting_music();
+$allalbum = getallalbum();
+$allsinger = getallsinger();
 
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
@@ -48,7 +79,6 @@ else
 		$songdata['ten'] = $row['ten'];
 		$songdata['tenthat'] = $row['tenthat'];
 		$songdata['casi'] = $row['casi'];
-		$songdata['casithat'] = $row['casithat'];
 		$songdata['album'] = $row['album'];
 		$songdata['theloai'] = $row['theloai'];
 		
@@ -64,16 +94,14 @@ else
 		$songdata['bitrate'] = $row['bitrate'];
 		$songdata['duration'] = $row['duration'];
 		$songdata['size'] = $row['size'];
-		//$songdata['server'] = $row['server'];
 	}
 }
 
 //sua bai hat
-if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
+if ( ($nv_Request->get_int( 'edit', 'post', 0 ) == 1) && ( $error == '' ) )
 {
 	if (preg_match('/^(ht|f)tp:\/\//', $songdata['duongdan'])) 
 	{
-		//$data = $songdata['duongdan'];
 		$songdata['server'] = 0;
 	}
 	else
@@ -97,11 +125,12 @@ if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
 }
 
 // them bai hat moi
-if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
+if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 {	
 	
 	foreach ( $songdata as $data => $null )
 	{
+		if ( $data == 'casimoi' ) continue;
 		if	($null == '') $error = $lang_module['error_song']; 
 	}
 	if ( $error == "" )
@@ -117,9 +146,13 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 			$data = substr( $songdata['duongdan'], $lu );
 			$server = 1;
 		}
+		
+		// update so bai hat
+		updatesinger( $songdata['casi'], 'numsong', '+1' );
+		
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 		(
-			`id`, `ten`, `tenthat`, `casi`, `casithat`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`
+			`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`
 		) 
 		VALUES 
 		( 
@@ -127,7 +160,6 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 			" . $db->dbescape( $songdata['ten'] ) . ", 
 			" . $db->dbescape( $songdata['tenthat'] ) . ", 
 			" . $db->dbescape( $songdata['casi'] ) . ", 
-			" . $db->dbescape( $songdata['casithat'] ) . ", 
 			" . $db->dbescape( $songdata['album'] ) . ", 
 			" . $db->dbescape( $songdata['theloai'] ) . ", 
 			" . $db->dbescape( $data )  . ", 
@@ -197,16 +229,23 @@ $contents .="
 				".$lang_module['singer']."	
 				</td>
 				<td style=\"background: #eee;\">
-				<input id=\"singername\" name=\"casithat\" style=\"width: 470px;\" value=\"".$songdata['casithat']."\" type=\"text\" />
-				<img height=\"16\" alt=\"\" onclick=\"get_alias('singername', 'res_get_gingername');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"".NV_BASE_SITEURL."images/refresh.png\">
+					<select name=\"casi\">\n";
+					foreach ( $allsinger as $key => $title )
+					{
+						$i= "";
+						if ( $songdata['casi'] == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['singer_short']."	
+				".$lang_module['singer_new']."	
 				</td>
 				<td style=\"background: #eee;\">
-				<input id=\"singer_sortname\" name=\"casi\" style=\"width: 470px;\" value=\"".$songdata['casi']."\" type=\"text\" />
+				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
@@ -316,15 +355,6 @@ if ( empty( $songdata['ten'] ) )
     $contents .= "<script type=\"text/javascript\">\n";
     $contents .= "$(\"#idtitle\").change(function () {
                     get_alias('idtitle', 'res_get_alias');
-                });";
-    $contents .= "</script>\n";
-}
-// Neu ten ngan gon ca si chua có thi tu dong tao ten
-if ( empty( $songdata['casi'] ) )
-{
-    $contents .= "<script type=\"text/javascript\">\n";
-    $contents .= "$(\"#singername\").change(function () {
-                    get_alias('singername', 'res_get_gingername');
                 });";
     $contents .= "</script>\n";
 }

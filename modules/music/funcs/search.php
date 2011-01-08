@@ -10,7 +10,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $category = get_category() ;
-
+$allsinger = getallsinger();
     
 // xu li
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'name';
@@ -101,7 +101,7 @@ while($rs = $db->sql_fetchrow($result))
 			while( $rsv = $db->sql_fetchrow($resultvideo) )
 			{
 				$xtpl->assign( 'videoname', $rsv['tname'] );
-				$xtpl->assign( 'videosinger', $rsv['casithat'] );
+				$xtpl->assign( 'videosinger', $allsinger[$rsv['casi']] );
 				$xtpl->assign( 'thumb', $rsv['thumb'] );
 				$xtpl->assign( 'videoview', $mainURL . "=viewvideo/" .$rsv['id']. "/" . $rsv['name']);
 				$xtpl->assign( 's_video', $mainURL . "=searchvideo/singer/" . $rsv['casi']);
@@ -115,7 +115,7 @@ while($rs = $db->sql_fetchrow($result))
 			while( $rsa = $db->sql_fetchrow($resultalbum) )
 			{
 				$xtpl->assign( 'albumname', $rsa['tname'] );
-				$xtpl->assign( 'albumsinger', $rsa['casithat'] );
+				$xtpl->assign( 'albumsinger', $allsinger[$rsa['casi']] );
 				$xtpl->assign( 'thumb', $rsa['thumb'] );
 				$xtpl->assign( 'albumview', $mainURL . "=listenlist/" .$rsa['id']. "/" . $rsa['name']);
 				$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $rsa['casi']);
@@ -130,7 +130,7 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign( 'ID', $rs['id']);
 	$xtpl->assign( 'num', $output);
 	$xtpl->assign( 'name', $rs['tenthat']);
-	$xtpl->assign( 'singer', $rs['casithat']);
+	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'upload', $rs['upboi']);
 	$xtpl->assign( 'category', $category[$rs['theloai']]);
 	$xtpl->assign( 'view', $rs['numview']);

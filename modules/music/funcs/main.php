@@ -9,7 +9,7 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
-
+$allsinger = getallsinger();
 // khoi tao tpl
 $xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -36,7 +36,7 @@ foreach ( $hot_abid as $stt => $albumid)
 	{
 		$xtpl->assign( 'fapic', $hot_album['thumb'] );
 		$xtpl->assign( 'faname', $hot_album['tname'] );
-		$xtpl->assign( 'fasinger', $hot_album['casithat'] );
+		$xtpl->assign( 'fasinger', $allsinger[$hot_album['casi']] );
 		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $hot_album['casi']);
 
 		// viet 10 bai hat cua album HOT
@@ -59,7 +59,7 @@ foreach ( $hot_abid as $stt => $albumid)
 		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $hot_album['casi']);
 		$xtpl->assign( 'albumpic', $hot_album['thumb'] );
 		$xtpl->assign( 'albumtitle', $hot_album['tname'] );
-		$xtpl->assign( 'singer', $hot_album['casithat'] );
+		$xtpl->assign( 'singer', $allsinger[$hot_album['casi']] );
 		$xtpl->parse( 'main.hotalbum.old' );
 	}
 }
@@ -78,7 +78,7 @@ while ($row = $db->sql_fetchrow( $query ))
 		// viet album moi nhat
 		$xtpl->assign( 'pic', $row['thumb'] );
 		$xtpl->assign( 'name', $row['tname'] );
-		$xtpl->assign( 'singer', $row['casithat'] );
+		$xtpl->assign( 'singer', $allsinger[$row['casi']] );
 		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 		
 		// viet 10 bai hat cua album MOI
@@ -99,7 +99,7 @@ while ($row = $db->sql_fetchrow( $query ))
 		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 		$xtpl->assign( 'albumpic', $row['thumb'] );
 		$xtpl->assign( 'albumtitle', $row['tname'] );
-		$xtpl->assign( 'singer', $row['casithat'] );		
+		$xtpl->assign( 'singer', $allsinger[$row['casi']] );		
 		$xtpl->parse( 'main.topalbum.old' );
 	}
 	$a ++ ;
@@ -130,7 +130,7 @@ foreach ( $fctegory as $this_category )
 		
 		$xtpl->assign( 'ID', $row['id'] );
 		$xtpl->assign( 'name', $row['tenthat'] );
-		$xtpl->assign( 'singer', $row['casithat'] );
+		$xtpl->assign( 'singer', $allsinger[$row['casi']] );
 		$xtpl->assign( 'category', $category[$row['theloai']] );
 		$xtpl->assign( 'who_upload', $row['upboi'] );
 		$xtpl->assign( 'url', $songURL . $row['duongdan'] );

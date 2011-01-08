@@ -10,6 +10,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
+$allsinger = getallsinger();
 
 $xtpl = new XTemplate( "album.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -69,7 +70,7 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign( 'num', $output);
 	$xtpl->assign( 'name', $rs['tname']);
 	$xtpl->assign( 'thumb', $rs['thumb']);
-	$xtpl->assign( 'singer', $rs['casithat']);
+	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'upload', $rs['upboi']);
 	$xtpl->assign( 'view', $rs['numview']);
 	

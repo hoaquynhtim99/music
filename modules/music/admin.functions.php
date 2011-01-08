@@ -151,6 +151,14 @@ function getallalbum( )
 	return $allalbum ;
 }
 
+// cap nhat ca si
+function updatesinger( $name, $what, $action )
+{
+	global $module_data, $db ;	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
+	return ;
+}
+
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 
 ?>

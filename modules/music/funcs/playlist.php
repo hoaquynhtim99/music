@@ -10,6 +10,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 
+$allsinger = getallsinger();
 $xtpl = new XTemplate( "playlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/" );
@@ -29,7 +30,7 @@ else
 		$row = getsongbyID( $songid ) ;
 			
 		$xtpl->assign( 'song_name', $i.". ".$row['tenthat'] );
-		$xtpl->assign( 'song_singer', $row['casithat'] );
+		$xtpl->assign( 'song_singer', $allsinger[$row['casi']] );
 		
 		if ( $row['server'] != 0 )
 		{

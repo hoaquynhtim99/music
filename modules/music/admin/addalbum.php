@@ -24,11 +24,40 @@ $error = "";
 $albumdata['name'] = filter_text_input( 'ten', 'post', '' );
 $albumdata['tname'] = filter_text_input( 'tenthat', 'post', '' );
 $albumdata['casi'] = filter_text_input( 'casi', 'get,post', '' );
-$albumdata['casithat'] = filter_text_input( 'casithat', 'post', '' );
+$albumdata['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
 $albumdata['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
 $albumdata['upboi'] = filter_text_input( 'upboi', 'post', '' );
 $albumdata['describe'] = $nv_Request->get_string( 'describe', 'post', '' );
 
+if ( $albumdata['casimoi'] != '')
+{
+	$albumdata['casi'] = change_alias( $albumdata['casimoi'] );
+	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` 
+	(
+		`id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`
+	) 
+	VALUES 
+	( 
+		NULL, 
+		" . $db->dbescape( $albumdata['casi'] ) . ", 
+		" . $db->dbescape( $albumdata['casimoi'] ) . ", 
+		'', 
+		'', 
+		0, 
+		0
+	)
+	"; 
+	if ( $db->sql_query_insert_id( $query ) ) 
+	{ 
+		$db->sql_freeresult();
+	} 
+	else 
+	{ 
+		$error = $lang_module['singer_new_added']; 
+	} 
+}
+
+$allsinger = getallsinger();
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
@@ -47,7 +76,6 @@ else
 		$albumdata['name'] = $row['name'];
 		$albumdata['tname'] = $row['tname'];
 		$albumdata['casi'] = $row['casi'];
-		$albumdata['casithat'] = $row['casithat'];
 		$albumdata['thumb'] = $row['thumb'];
 		$albumdata['upboi'] = $row['upboi'];
 		$albumdata['describe'] = $row['describe'];
@@ -55,7 +83,7 @@ else
 }
 
 //sua album
-if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
+if ( (($nv_Request->get_int( 'edit', 'post', 0 )) == 1) && ($error == '') )
 {
 	foreach ( $albumdata as $key => $data  )
 	{	
@@ -72,18 +100,20 @@ if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
 }
 
 // them album
-if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
+if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error == '') )
 {	
 	
 	foreach ( $albumdata as $data => $null )
 	{
+		if ( $data == 'casimoi' ) continue;
 		if	($null == ''& $data !="album") $error = $lang_module['error_album']; 
 	}
 	if ( $error == "" )
 	{
+		updatesinger( $albumdata['casi'], 'numalbum', '+1' );
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_album` 
 		(
-			`id`, `name`, `tname`, `casi`, `casithat`, `thumb`, `numview`, `upboi`, `describe`, `active`
+			`id`, `name`, `tname`, `casi`, `thumb`, `numview`, `upboi`, `describe`, `active`
 		) 
 		VALUES 
 		( 
@@ -91,7 +121,6 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 			" . $db->dbescape( $albumdata['name'] ) . ", 
 			" . $db->dbescape( $albumdata['tname'] ) . ", 
 			" . $db->dbescape( $albumdata['casi'] ) . ", 
-			" . $db->dbescape( $albumdata['casithat'] ) . ", 
 			" . $db->dbescape( $albumdata['thumb'] ) . ", 
 			1 , 
 			" . $db->dbescape( $albumdata['upboi'] ) . ",	
@@ -156,16 +185,23 @@ $contents .="
 				".$lang_module['singer']."	
 				</td>
 				<td style=\"background: #eee;\">
-				<input id=\"singername\" name=\"casithat\" style=\"width: 470px;\" value=\"".$albumdata['casithat']."\" type=\"text\" />
-				<img height=\"16\" alt=\"\" onclick=\"get_alias('singername', 'res_get_gingername');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"".NV_BASE_SITEURL."images/refresh.png\">
+					<select name=\"casi\">\n";
+					foreach ( $allsinger as $key => $title )
+					{
+						$i= "";
+						if ( $albumdata['casi'] == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['singer_short']."	
+				".$lang_module['singer_new']."	
 				</td>
 				<td style=\"background: #eee;\">
-				<input id=\"singer_sortname\" name=\"casi\" style=\"width: 470px;\" value=\"".$albumdata['casi']."\" type=\"text\" />
+				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
@@ -230,15 +266,6 @@ if ( empty( $albumdata['ten'] ) )
     $contents .= '$("#idtitle").change(function () {
                     get_alias(\'idtitle\', \'res_get_alias\');
                 });';
-    $contents .= "</script>\n";
-}
-// Neu ten ngan gon ca si chua có thi tu dong tao ten
-if ( empty( $albumdata['casi'] ) )
-{
-    $contents .= "<script type=\"text/javascript\">\n";
-    $contents .= "$(\"#singername\").change(function () {
-                    get_alias('singername', 'res_get_gingername');
-                });";
     $contents .= "</script>\n";
 }
 

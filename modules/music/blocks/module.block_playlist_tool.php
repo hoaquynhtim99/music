@@ -18,16 +18,4 @@ $xtpl->assign( 'URL_CREAT', $mainURL . "=creatalbum" );
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
 
-/*
-<script type=\"text/javascript\">
-$(document).ready(function() {
-	resultplaylist( 'OK_');
-	$(\"#playlist\").hide();
-    $(\"#showplaylist\").click(function () {
-      $(\"#playlist\").slideToggle(\"slow\");
-    });
-});
-</script>";
-*/
-
 ?>

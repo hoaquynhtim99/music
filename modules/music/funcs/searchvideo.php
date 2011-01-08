@@ -10,6 +10,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $category = get_videocategory() ;
+$allsinger = getallsinger();
 $data = '';
 
     
@@ -74,7 +75,7 @@ $xtpl->assign( 'num', $output);
 while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign( 'name', $rs['tname']);
-	$xtpl->assign( 'singer', $rs['casithat']);
+	$xtpl->assign( 'singer', $allsinger[$rs['casithat']]);
 	$xtpl->assign( 'view', $rs['view']);
 	$xtpl->assign( 'thumb', $rs['thumb']);
 	$xtpl->assign( 'creat', nv_date( "H:i d/m/Y", $rs['dt'] ) );

@@ -22,7 +22,6 @@ for ( $i = 1 ; $i <= $num ; $i ++ )
 	$song = getsongbyID( $id );
 	
 	$xtpl->assign( 'name', $song['tenthat'] );
-	//$xtpl->assign( 'singer', $song['casithat'] );
 	$xtpl->assign( 'url', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
 	
 	$xtpl->parse( 'main.loop' );

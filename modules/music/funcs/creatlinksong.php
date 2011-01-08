@@ -9,6 +9,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $id =  isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $name = isset( $array_op[2] ) ?  $array_op[2]  : 0;
+$allsinger = getallsinger();
 
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = " . $id . " AND `active` = 1 ";
 $query = $db->sql_query( $sql );
@@ -36,9 +37,9 @@ echo '
    <tracklist>
       <track>
          <title>' . $row['tenthat'] . '</title>
-         <creator>' . $row['casithat'] . '</creator>
+         <creator>' . $allsinger[$row['casi']] . '</creator>
          <info>' . $global_config['site_url'] . '</info>
-         <annotation>' . $row['casithat'] . '</annotation>
+         <annotation>' . $allsinger[$row['casi']] . '</annotation>
          <location>' . $link . '</location>
       </track>
    </tracklist>

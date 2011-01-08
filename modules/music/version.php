@@ -23,7 +23,7 @@ $module_version = array(
 	$module_name . "/data", 
 	$module_name . "/clipthumb", 
 	$module_name . "/thumb", 
-	$module_name . "/video", 
+	$module_name . "/data/video", 
 	$module_name . "/ads", 
 	$module_name . "/tmp"),
 	$module_name . "/singerthumb")

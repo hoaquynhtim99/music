@@ -34,6 +34,7 @@ else $name = '';
 $xtpl->assign( 'ads', getADS() );
 
 // lay bai hat
+$allsinger = getallsinger();
 $setting = setting_music();
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = ".$id;
@@ -49,7 +50,7 @@ $xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=sendmail&amp;id=". $id );
 $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
 $xtpl->assign( 'ID',  $id );
 $xtpl->assign( 'name', $row['tenthat'] );
-$xtpl->assign( 'singer', $row['casithat'] );
+$xtpl->assign( 'singer', $allsinger[$row['casi']] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
 $xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 
@@ -148,8 +149,8 @@ else
 
 
 // tieu de trang
-$page_title = $row['tenthat'] . " - " .$row['casithat'] ;
-$key_words =  $row['tenthat'] . " - " .$row['casithat'] ;
+$page_title = $row['tenthat'] . " - " .$allsinger[$row['casi']] ;
+$key_words =  $row['tenthat'] . " - " .$allsinger[$row['casi']] ;
 
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );

@@ -168,6 +168,8 @@ $lang_module['your_playlist'] = "Các playlist của bạn";
 
 $lang_module['spam'] = "Mã chống spam";
 
+$lang_module['unknow'] = "Chưa biết";
+
 $lang_module['err_ful_aname'] = "Bạn chưa nhập tên playlist";
 $lang_module['err_user_down'] = "Tính năng này chỉ dành riêng cho thành viên";
 $lang_module['err_ful_playlist'] = "Bạn chỉ được phép tạo tối đa";

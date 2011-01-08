@@ -94,4 +94,20 @@ function getalbumbyNAME( $name )
 	return $album ;
 }
 
+// lay tat ca ca si
+function getallsinger()
+{
+	global $module_data, $db, $lang_module ;
+
+	$allsinger = array() ;
+	$allsinger['ns'] = $lang_module['unknow'];
+	$result = $db->sql_query( " SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer ORDER BY ten ASC");
+	while ( $singer = $db->sql_fetchrow($result) )
+	{
+		$allsinger[$singer['ten']] = $singer['tenthat'];
+	}
+
+	return $allsinger ;
+}
+
 ?>

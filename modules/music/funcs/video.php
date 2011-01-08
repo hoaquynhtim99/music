@@ -11,6 +11,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $category = get_videocategory();
+$allsinger = getallsinger();
 
 $xtpl = new XTemplate( "video.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -35,7 +36,7 @@ $i = 1;
 while( $rs = $db->sql_fetchrow($result) )
 {
 		$xtpl->assign( 'name', $rs['tname']);
-		$xtpl->assign( 'singer', $rs['casithat']);
+		$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
 		$xtpl->assign( 'thumb', $rs['thumb']);
 		$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" .$rs['id']. "/" . $rs['name'] );
 
@@ -61,7 +62,7 @@ $i = 1;
 while( $rs = $db->sql_fetchrow($result) )
 {
 		$xtpl->assign( 'name', $rs['tname']);
-		$xtpl->assign( 'singer', $rs['casithat']);
+		$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
 		$xtpl->assign( 'thumb', $rs['thumb']);
 		$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" .$rs['id']. "/" . $rs['name'] );
 

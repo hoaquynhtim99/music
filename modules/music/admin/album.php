@@ -7,7 +7,7 @@
  */
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 $page_title = $lang_module['list_album'];
-
+$allsinger = getallsinger();
 if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
 {
 	$numshow = $nv_Request->get_int( 'numshow', 'post', 100 );
@@ -102,7 +102,7 @@ while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('name', $rs['tname']);
-	$xtpl->assign('singer', $rs['casithat']);
+	$xtpl->assign('singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'URL', $mainURL . "=listenlist/" . $rs['id'] . "/" . $rs['name'] );
 	$xtpl->assign('url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&album=".$rs['name'] );
 	$xtpl->assign('URL_ADD_TO_MAINALBUM', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=mainalbum&id=".$rs['id'] );

@@ -9,7 +9,7 @@
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 $page_title = $lang_module['list_album'];
 $contents = '' ;
-
+$allsinger = getallsinger();
 // lay du lieu 
 $stt = $nv_Request->get_int( 'stt', 'get', 0 );
 $now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
@@ -43,7 +43,7 @@ while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('name', $rs['tname']);
-	$xtpl->assign('singer', $rs['casithat']);
+	$xtpl->assign('singer', $allsinger[$rs['casi']] );
 	$xtpl->assign('url', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=hotalbum&stt=".$stt."&id=".$rs['id'] );
 	
 	$class = ($i % 2) ? " class=\"second\"" : "";

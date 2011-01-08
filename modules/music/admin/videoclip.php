@@ -21,6 +21,7 @@ if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
 // lay du lieu 
 $contents = '' ;
 $category = get_videocategory() ;
+$allsinger = getallsinger();
 $numshow = $nv_Request->get_int( 'numshow', 'get', 50 );
 
 $order = filter_text_input( 'order', 'get', 'id' );
@@ -120,7 +121,7 @@ while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('name', $rs['name']);
-	$xtpl->assign('singer', $rs['casithat']);
+	$xtpl->assign('singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'URL', $mainURL . "=viewvideo/" . $rs['id'] . "/" . $rs['name'] );
 	
 	$xtpl->assign('category', $category[ $rs['theloai'] ] );

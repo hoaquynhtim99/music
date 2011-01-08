@@ -40,7 +40,6 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `ten` varchar(255) NOT NULL,
   `tenthat` varchar(255) NOT NULL,
   `casi` varchar(255) NOT NULL,
-  `casithat` varchar(255) NOT NULL,
   `album` varchar(255) NOT NULL,
   `theloai` int(10) unsigned NOT NULL,
   `duongdan` varchar(255) NOT NULL,
@@ -60,7 +59,6 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `name` varchar(255) NOT NULL,
   `tname` varchar(255) CHARACTER SET ucs2 NOT NULL,
   `casi` varchar(255) NOT NULL,
-  `casithat` varchar(255) NOT NULL,
   `thumb` varchar(255) NOT NULL,
   `numview` mediumint(8) unsigned NOT NULL,
   `upboi` varchar(255) NOT NULL,
@@ -208,13 +206,13 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `name` varchar(50) NOT NULL,
   `tname` varchar(50) NOT NULL,
   `casi` varchar(50) NOT NULL,
-  `casithat` varchar(50) NOT NULL,
   `theloai` int(100) NOT NULL,
   `duongdan` varchar(255) NOT NULL,
   `thumb` varchar(255) NOT NULL,
   `view` mediumint(8) NOT NULL,
   `active` int(2) NOT NULL,
   `dt` int(11) NOT NULL,
+  `server` INT( 255 ) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 

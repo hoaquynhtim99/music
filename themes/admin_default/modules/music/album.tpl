@@ -51,7 +51,7 @@
 					&nbsp;&nbsp;
 				</span>
 				<span class="add_icon">
-					<a class='addfile' href="{LINK_ADD}">{LANG.song_add}</a>
+					<a class='addfile' href="{LINK_ADD}">{LANG.add_album}</a>
 					&nbsp;&nbsp;
 				</span>
 				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>

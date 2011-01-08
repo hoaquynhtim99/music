@@ -18,9 +18,15 @@ $setting = setting_music();
 // xoa
 if($id > 0)
 {
+	if ( $where == '_album' )
+	{
+		$album = getalbumbyID( $id );
+		updatesinger( $album['casi'], 'numalbum', '-1' );
+	}
 	if ( $where == '' )
 	{
 		$song = getsongbyID( $id );
+		updatesinger( $song['casi'], 'numsong', '-1' );
 		if ( $song['server'] == 1 )
 		{
 			unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );

@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-
+$allsinger = getallsinger();
 
 $xtpl = new XTemplate( "listenlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -45,7 +45,7 @@ $i = 1 ;
 while ($rowsong = $db->sql_fetchrow( $querysong ) )
 {
 	$xtpl->assign( 'song_name', $i.". ".$rowsong['tenthat'] );
-	$xtpl->assign( 'song_singer', $rowsong['casithat'] );
+	$xtpl->assign( 'song_singer', $allsinger[$rowsong['casi']] );
 	
 	if ( $rowsong['server'] != 0 )
 	{
@@ -60,7 +60,7 @@ while ($rowsong = $db->sql_fetchrow( $querysong ) )
 }
 $xtpl->assign( 'name', $row['tname'] );
 $xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $row['upboi']);
-$xtpl->assign( 'singer', $row['casithat'] );
+$xtpl->assign( 'singer', $allsinger[$row['casi']] );
 $xtpl->assign( 'numview', $row['numview'] );
 $xtpl->assign( 'who_post', $row['upboi'] );
 $xtpl->assign( 'album_thumb', $row['thumb'] );
@@ -81,8 +81,8 @@ else
 }
 
 // tieu de trang
-$page_title = "Album ". $row['tname'] . " - " .$row['casithat'] ;
-$key_words =  $row['tname'] . " - " .$row['casithat'] ;
+$page_title = "Album ". $row['tname'] . " - " . $allsinger[$row['casi']] ;
+$key_words =  $row['tname'] . " - " . $allsinger[$row['casi']] ;
 
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );

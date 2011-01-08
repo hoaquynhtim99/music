@@ -8,6 +8,8 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
+$allsinger = getallsinger();
+
 $xtpl = new XTemplate( "block_video_same_category.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
@@ -25,7 +27,7 @@ while( $video =  $db->sql_fetchrow( $query ) )
 	$xtpl->assign( 'thumb', $video['thumb'] );
 	$xtpl->assign( 'view', $video['view'] );
 	$xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $video['casi']);
-	$xtpl->assign( 'singer', $video['casithat'] );
+	$xtpl->assign( 'singer', $allsinger[$video['casi']] );
 	$xtpl->parse( 'main.loop' );
 }
 

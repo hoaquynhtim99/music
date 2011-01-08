@@ -8,7 +8,7 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-
+$allsinger = getallsinger();
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 if ( $id > 0 )
 {
@@ -63,7 +63,7 @@ if ( $id > 0 )
                 $message .= "".$lang_module['sendmail_welcome_1']." 
 							<strong>" . $global_config['site_name'] . "</strong>
 							".$lang_module['sendmail_welcome_2']."<br />
-							<br />".$lang_module['video']."<strong> " . $video['tname'] . "</strong> ".$lang_module['sendmail_singer_show']." <strong> ".$video['casithat']." </strong> ".$lang_module['show_2'].".<br/>
+							<br />".$lang_module['video']."<strong> " . $video['tname'] . "</strong> ".$lang_module['sendmail_singer_show']." <strong> " . $allsinger[$video['casi']] . " </strong> ".$lang_module['show_2'].".<br/>
 							<br />".$lang_module['message'].": " . $content . "<br />
 							<br /><strong>".$lang_module['sendmail_welcome_3'].": </strong><br />" . $link . "";
                 $from = array( 
@@ -92,7 +92,7 @@ if ( $id > 0 )
 			"checkss" => md5( $id . session_id() . $global_config['sitekey'] ), 
 			"v_name" => $name, 
 			"video" => $video['tname'], 
-			"singer" => $video['casithat'], 
+			"singer" => $allsinger[$video['casi']], 
 			"v_mail" => $youremail, 
 			"to_mail" => $to_mail, 
 			"content" => $content, 

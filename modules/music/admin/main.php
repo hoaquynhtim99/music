@@ -21,6 +21,7 @@ if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
 // lay du lieu 
 $contents = '' ;
 $category = get_category() ;
+$allsinger = getallsinger();
 $numshow = $nv_Request->get_int( 'numshow', 'get', 100 );
 
 $order = filter_text_input( 'order', 'get', 'id' );
@@ -122,7 +123,7 @@ while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('name', $rs['tenthat']);
-	$xtpl->assign('singer', $rs['casithat']);
+	$xtpl->assign('singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'URL', $mainURL . "=listenone/" . $rs['id'] . "/" . $rs['ten'] );
 	
 	// lay ra ten album

@@ -19,7 +19,7 @@ $xtpl->assign( 'URL_DOWN', $downURL );
 
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'numview';
 $now_page = isset( $array_op[2] ) ?  intval( $array_op[2] ) : 1;
-
+$allsinger = getallsinger();
 $link = $mainURL . "=song/". $type ;
 $xtpl->assign( 'hot', $mainURL . "=song/numview");
 $xtpl->assign( 'new', $mainURL . "=song/id" );
@@ -65,7 +65,7 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign( 'num', $output);
 	$xtpl->assign( 'name', $rs['tenthat']);
 	$xtpl->assign( 'category', $category[$rs['theloai']]);
-	$xtpl->assign( 'singer', $rs['casithat']);
+	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'upload', $rs['upboi']);
 	$xtpl->assign( 'view', $rs['numview']);
 	$xtpl->assign( 'url_view', $mainURL . "=listenone/" .$rs['id']. "/" . $rs['ten'] );

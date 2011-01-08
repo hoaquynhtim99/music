@@ -11,6 +11,8 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $userid = 0;
+$allsinger = getallsinger();
+
 if ( defined( 'NV_IS_USER' ) )
 {
 	$username = $user_info['username'];
@@ -51,7 +53,7 @@ else
 			
 			$xtpl->assign( 'stt', $i );
 			$xtpl->assign( 'songname', $song['tenthat'] );
-			$xtpl->assign( 'singer', $song['casithat'] );
+			$xtpl->assign( 'singer', $allsinger[$song['casi']] );
 			
 			$xtpl->parse( 'main.access.creatlist.loop' );
 		}
