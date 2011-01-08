@@ -13,10 +13,19 @@ if(!defined('NV_IS_MUSIC_ADMIN'))
 $result = false;
 $id = $nv_Request->get_int('id', 'post,get');
 $where = filter_text_input( 'where', 'get', '' );
+$setting = setting_music();
 
-// xoa cau hoi
+// xoa
 if($id > 0)
 {
+	if ( $where == '' )
+	{
+		$song = getsongbyID( $id );
+		if ( $song['server'] == 1 )
+		{
+			unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );
+		}
+	}
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where ."` WHERE `id`=" . $id;
     $result = $db->sql_query( $sql );
 }

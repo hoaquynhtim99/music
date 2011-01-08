@@ -16,12 +16,21 @@ $array_id = explode(',', $listall);
 $array_id = array_map("intval", $array_id);
 $result = false;
 $where = filter_text_input( 'where', 'get', '' );
+$setting = setting_music();
 
 // thuc hien lenh xoa
 foreach($array_id as $id)
 {
 	if($id > 0)
 	{
+		if ( $where == '' )
+		{
+			$song = getsongbyID( $id );
+			if ( $song['server'] == 1 )
+			{
+				unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );
+			}
+		}
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
 		$result = $db->sql_query( $sql );
 	}
