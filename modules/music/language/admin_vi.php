@@ -90,6 +90,7 @@ $lang_module['feature'] = "Chức năng";
 
 $lang_module['gift_del_confirm'] = "Bạn có chắc xóa quà tặng này";
 
+$lang_module['info'] = "Thông tin";
 
 $lang_module['hot_album'] = "Album HOT";
 $lang_module['hot_album_select'] = "Chọn một Album HOT";
@@ -117,6 +118,7 @@ $lang_module['save'] = "Lưu";
 $lang_module['search'] = "Tìm";
 
 $lang_module['search_music'] = "Tìm bài hát";
+$lang_module['search_singer'] = "Tìm một ca sĩ";
 $lang_module['search_video'] = "Tìm video";
 $lang_module['search_album'] = "Tìm album";
 $lang_module['search_note'] = "Để tìm chính xác các bạn nhập từ khóa không viết hoa, không có dấu";
@@ -172,6 +174,7 @@ $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
 $lang_module['sub_blockhotsinger'] = "Block ca sĩ hot";
 $lang_module['sub_lyric'] = "Quản lý lyric";
+$lang_module['sub_singer'] = "Quản lý ca sĩ";
 $lang_module['sub_videocategory'] = "Quản lý thể loại clip";
 
 $lang_module['song'] = "Bài hát";
@@ -202,6 +205,15 @@ $lang_module['error_file_type'] = "Bạn chỉ được chọn định dạng mp
 $lang_module['duration'] = "Độ dài";
 $lang_module['size'] = "Kích cỡ";
 $lang_module['get_info'] = "Lấy thông tin";
+
+$lang_module['singer_list'] = "Danh sách các ca sĩ";
+$lang_module['singer_add'] = "Thêm mới một ca sĩ";
+$lang_module['singer_add1'] = "Thêm ca sĩ";
+$lang_module['singer_edit'] = "Sửa ca sĩ";
+$lang_module['singer_info'] = "Thông tin ca sĩ";
+$lang_module['singer_name'] = "Tên của ca sĩ";
+$lang_module['singer_del_confirm'] = "Bạn có chắc xóa các ca sĩ này không?";
+$lang_module['singer_check_err'] = "Bạn phải chọn ít nhất một ca sĩ để xóa";
 
 $lang_module['video'] = "Video clip";
 $lang_module['video_add'] = "Thêm clip";
