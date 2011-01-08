@@ -1,6 +1,6 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
  * @Language Vietnamese
  * @Createdate Dec 3, 2010  11:30:02 AM 
@@ -105,7 +105,7 @@ $lang_module['list_album'] = "Danh sách các album";
 $lang_module['list_gift'] = "Danh sách các quà tặng";
 $lang_module['lyric_del_confirm'] = "Bạn có chắc xóa lời bài hát này";
 
-$lang_module['manager_category'] = "Quản lí thể loại";
+$lang_module['manager_category'] = "Quản lý thể loại";
 $lang_module['manager_category_info'] = "Lưu ý khi thêm thể loại bạn sẽ không thể xóa";
 $lang_module['music_setting'] = "Cấu hình module";
 
@@ -153,8 +153,8 @@ $lang_module['set_auto_gift'] = "Tự động đăng quà tặng";
 $lang_module['set_auto_album'] = "Tự cho đăng playlist";
 $lang_module['set_floder_file'] = "Thư mục chứa file";
 
-$lang_module['sub_category'] = "Quản lí thể loại";
-$lang_module['sub_album'] = "Quản lí album";
+$lang_module['sub_category'] = "Quản lý thể loại";
+$lang_module['sub_album'] = "Quản lý album";
 $lang_module['sub_add_album'] = "Thêm album";
 $lang_module['sub_hotalbum'] = "HOT Album";
 $lang_module['sub_fourcategory'] = "4 TL trang chủ";
@@ -166,8 +166,8 @@ $lang_module['sub_ads'] = "Quảng cáo";
 $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
 $lang_module['sub_blockhotsinger'] = "Block ca sĩ hot";
-$lang_module['sub_lyric'] = "Quản lí lyric";
-$lang_module['sub_videocategory'] = "Quản lí thể loại clip";
+$lang_module['sub_lyric'] = "Quản lý lyric";
+$lang_module['sub_videocategory'] = "Quản lý thể loại clip";
 
 $lang_module['song'] = "Bài hát";
 $lang_module['song_name'] = "Tên bài hát";
@@ -184,7 +184,7 @@ $lang_module['user_comment'] = "Người bình luận";
 $lang_module['user_send_gift'] = "Người tặng";
 $lang_module['user_send_lyric'] = "Người gửi";
 $lang_module['user_recive_gift'] = "Người nhận";
-$lang_module['userplaylist'] = "Quản lí playlist";
+$lang_module['userplaylist'] = "Quản lý playlist";
 
 $lang_module['playlist_name'] = "Tên playlist";
 $lang_module['playlist_edit'] = "Sửa playlist";
