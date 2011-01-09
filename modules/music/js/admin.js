@@ -1,7 +1,7 @@
 /**
- * @Project NUKEVIET 3.0
- * @Author PHAN TAN DUNG (phantandung92@vinades.vn)
- * @Createdate 1 - 31 - 2010 5 : 12
+ * @Project NUKEVIET-MUSIC
+ * @Author PHAN TAN DUNG (phantandung92@gmail.vn)
+ * @Createdate 1 - 1 - 2011 5 : 12
  */
 // Tao ten ngan gon
 function get_alias( id, func ) {
@@ -11,21 +11,12 @@ function get_alias( id, func ) {
 	}
 	return false;
 }
-// tra ve gia tri ten ngan gon cua bai hat
+// tra ve gia tri ten ngan gon
 function res_get_alias(res) {
 	if (res != "") {
 		document.getElementById('idalias').value = res;
 	} else {
 		document.getElementById('idalias').value = '';
-	}
-	return false;
-}
-// tra ve gia tri cua ten ngan gon ca si
-function res_get_gingername(res) {
-	if (res != "") {
-		document.getElementById('singer_sortname').value = res;
-	} else {
-		document.getElementById('singer_sortname').value = '';
 	}
 	return false;
 }
