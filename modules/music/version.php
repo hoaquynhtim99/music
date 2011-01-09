@@ -25,7 +25,7 @@ $module_version = array(
 	$module_name . "/thumb", 
 	$module_name . "/data/video", 
 	$module_name . "/ads", 
-	$module_name . "/tmp"),
+	$module_name . "/tmp",
 	$module_name . "/singerthumb")
-
+);
 ?>
