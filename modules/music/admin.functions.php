@@ -9,6 +9,8 @@
 
 if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_MODADMIN' ) ) die( 'Stop!!!' ); 
 
+$submenu['addsong'] = $lang_module['sub_addsong']; 
+$submenu['addlistsong'] = $lang_module['sub_addlistsong']; 
 $submenu['error'] = $lang_module['sub_error']; 
 $submenu['ads'] = $lang_module['sub_ads']; 
 $submenu['hotalbum'] = $lang_module['sub_hotalbum']; 
@@ -31,7 +33,7 @@ $submenu['lyric'] = $lang_module['sub_lyric'];
 $submenu['userplaylist'] = $lang_module['userplaylist']; 
 $submenu['setting'] = $lang_module['music_setting']; 
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong'); 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep

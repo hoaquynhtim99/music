@@ -57,13 +57,38 @@ function returnsonginfo(res) {
 	{
 		document.getElementById('duongdan').value = "";
 		alert(r_split[4]);
-		alert(res);
 	} 
 	else 
 	{
 		document.getElementById('bitrate').value = r_split[1] ;
 		document.getElementById('size').value = r_split[2] ;
 		document.getElementById('duration').value = r_split[3] ;
+	}
+	return false;
+}
+
+//get ID3
+function getsonginfo1(id) {
+	var link = document.getElementById('duongdan' + id);
+	var button = document.getElementById('get_info');
+	button.disabled = true;
+	nv_ajax("post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=getsonginfolist&id=' + id + '&link=' + encodeURIComponent(link.value), '', 'returnsonginfo1');
+	return;
+}
+function returnsonginfo1(res) {
+	var r_split = res.split("_");
+	var button = document.getElementById('get_info');
+	button.disabled = false;
+	if (r_split[1] != 'mp3') 
+	{
+		document.getElementById('duongdan' + r_split[0]).value = "";
+		alert(r_split[5]);
+	} 
+	else 
+	{
+		document.getElementById('bitrate' + r_split[0]).value = r_split[2] ;
+		document.getElementById('size' + r_split[0]).value = r_split[3] ;
+		document.getElementById('duration' + r_split[0]).value = r_split[4] ;
 	}
 	return false;
 }
