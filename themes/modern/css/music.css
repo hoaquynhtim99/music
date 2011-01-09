@@ -66,7 +66,7 @@ ul.tabs li a:hover {
 	background-image: url('../images/music/topalbumbg.png');
 }
 
-.tab_content .picright span {
+.tab_content .picright h2 {
 	margin: 0px;
 	padding: 0px;
 	color: #000000;
@@ -279,7 +279,7 @@ div.tool a.down {
 	margin-right: 5px;
 	cursor: pointer;
 }
-div.tool a.adds {
+div.tool a#add {
 	float: right;
 	width: 16px;
 	height: 16px;
@@ -890,7 +890,7 @@ a.listsong, div.listsong {
 	text-decoration: none;
 	font-weight: bold;
 }
-div.blockalbum {
+#blockalbum {
 	border-bottom-style: dotted;
 	border-bottom-width: 1px;
 	border-bottom-color: #666666;
@@ -898,18 +898,18 @@ div.blockalbum {
 	padding-bottom: 3px;
 	font-size: 11px;
 }
-div.blockalbum img {
+#blockalbum img {
 	padding: 3px 3px 7px 3px;
 	margin-right: 4px;
 	display: inline;
 	background-repeat: no-repeat;
 	background-image: url('../images/music/m_hotalbum.png');
 }
-div.blockalbum a {
+#blockalbum a {
 	float: left;
 }
 
-div.blockalbum a.black {
+#blockalbum a.black {
 	color: #000000;
 }
 #menuleft ul {

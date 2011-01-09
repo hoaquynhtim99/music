@@ -12,10 +12,10 @@
 		<!-- BEGIN: first -->
 	   <div class="picleft">&nbsp;</div>
 	   <a href="{url_album}" title="{faname} - {fasinger}">
-		   <img class="first" src="{fapic}" width="90" height="90" />
+		   <img border="0" class="first" src="{fapic}" width="90" height="90" />
 	   </a>
 	   <div class="picright">
-		   	<a href="{url_album}" title="{faname}"><span>{faname}</span></a>
+		   	<h2><a href="{url_album}" title="{faname}">{faname}</a></h2>
 		   	<p>{LANG.show}: <a href="{url_search_singer}" title="{fasinger}">{fasinger}</a></p>
 	   </div>
 	   <div class="first_a_song">
@@ -28,7 +28,7 @@
 	   <!-- BEGIN: old -->
 	   <div class="topalbum_item">
 		   <a href="{url_album}" title="{albumtitle}">			 
-			   <img class="item" src="{albumpic}" width="90" height="90" />
+			   <img border="0" class="item" src="{albumpic}" width="90" height="90" />
 		   </a>
 		   <a style="color:#000;" href="{url_album}" title="{albumtitle}">{albumtitle}</a>
 		   <a href="{url_search_singer}" title="{singer}">{singer}</a>
@@ -41,10 +41,10 @@
 		<!-- BEGIN: firstn -->
 	   <div class="picleft">&nbsp;</div>
 	   <a href="{url_album}">
-		   <img class="first" src="{pic}" width="90" height="90" />
+		   <img border="0" class="first" src="{pic}" width="90" height="90" />
 	   </a>
 	   <div class="picright">
-		   	<a href="{url_album}" title="{name}"><span>{name}</span></a>
+		   	<h2><a href="{url_album}" title="{name}">{name}</a></h2>
 		   	<p>{LANG.show}: <a href="{url_search_singer}" title="#">{singer}</a></p>
 	   </div>
 	   <div class="first_a_song">
@@ -57,7 +57,7 @@
 	   <!-- BEGIN: old -->
 	   <div class="topalbum_item">
 		   <a href="{url_album}" title="{albumtitle}">			 
-			   <img  class="item" src="{albumpic}" width="90" height="90" />
+			   <img  border="0" class="item" src="{albumpic}" width="90" height="90" />
 		   </a>
 		   <a style="color:#000;" href="{url_album}" title="{albumtitle}">{albumtitle}</a>
 		   <a href="{url_search_singer}" title="#">{singer}</a>
@@ -91,9 +91,9 @@
 		<div class="songitem">
 			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<div class="tool">
-				<a name="{ID}" class="add adds"></a>
-				<a href="{URL_DOWN}{ID}" onclick="window.open(this.href); return false;" class="down"></a>
-				<a href="{url_view}" class="play"></a>
+				<a name="{ID}" id="add" class="add"></a>
+				<a href="{URL_DOWN}{ID}" target="_blank" class="down"></a>
+				<a href="{url_view}" id="play" class="play"></a>
 			</div>
 			<p>
 				{LANG.show}: <a href="{url_search_singer}">{singer}</a><br />

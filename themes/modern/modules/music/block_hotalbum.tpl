@@ -1,8 +1,8 @@
 <!-- BEGIN: main -->
 <!-- BEGIN: loop -->
-<div class="blockalbum">
+<div id="blockalbum">
 <a href="{url_listen}">
-<img src="{img}" width="38px" height="38px" /></a>
+<img border="0" src="{img}" width="38px" height="38px" /></a>
 
 <div>
 	<a class="black" href="{url_listen}">{name}</a><br />
