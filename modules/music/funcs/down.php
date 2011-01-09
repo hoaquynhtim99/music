@@ -8,7 +8,6 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-//if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 
@@ -23,8 +22,12 @@ else
 {
 	if ( $id > 0 )
 	{
-		require_once ( NV_ROOTDIR . '/includes/class/download.class.php' );
 		$song = getsongbyID( $id ) ;
+		if ( $song['server'] == 0 )
+		{
+			Header("Location: " . $song['duongdan'] ); exit();
+		}
+		require_once ( NV_ROOTDIR . '/includes/class/download.class.php' );
 		$song_name = $song['ten'] . "-" . $song['casi'] . ".mp3" ;
 		$song_url = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
 		$x = explode ( "/", $song['duongdan'] );
