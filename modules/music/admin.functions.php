@@ -169,6 +169,42 @@ function updatealbum( $name, $action )
 	return ;
 }
 
+// xoa cac binh luan
+function delcomment( $delwwhat, $where )
+{
+	global $module_data, $db ;	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $delwwhat ."` WHERE `what`=" . $where;
+    $result = $db->sql_query( $sql );
+	return ;
+}
+
+// xoa cac loi bai hat
+function dellyric( $songid )
+{
+	global $module_data, $db ;	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $songid;
+    $result = $db->sql_query( $sql );
+	return ;
+}
+
+// xoa cac bao loi
+function delerror( $where, $key )
+{
+	global $module_data, $db ;	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `key` = " . $key;
+    $result = $db->sql_query( $sql );
+	return ;
+}
+
+// xoa cac qua tang am nhac
+function delgift( $songid )
+{
+	global $module_data, $db ;	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `songid` =" . $songid;
+    $result = $db->sql_query( $sql );
+	return ;
+}
+
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 
 ?>

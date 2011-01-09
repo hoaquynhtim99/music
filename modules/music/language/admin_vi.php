@@ -42,7 +42,7 @@ $lang_module['album_edit'] = "Sửa album";
 $lang_module['album_menu'] = "Album trên menu chính";
 $lang_module['album_name'] = "Tên album";
 $lang_module['album_info'] = "Thông tin về album";
-$lang_module['album_del_cofirm'] = "Bạn có chắc xóa các album này";
+$lang_module['album_del_cofirm'] = "Bạn có chắc xóa các album này nếu xóa các dữ liệu liên quan sẽ bị xóa";
 
 $lang_module['comment_del_cofirm'] = "Bạn có chắc xóa các bình luận này";
 $lang_module['comment_time'] = "Gửi lúc";
@@ -134,7 +134,7 @@ $lang_module['singer'] = "Ca sĩ";
 $lang_module['singer_new'] = "Nhập nhanh tên ca sĩ";
 $lang_module['singer_new_added'] = "Ca sĩ này đã tồn tại, bạn hãy chọn từ danh sách ca sĩ";
 $lang_module['song_add'] = "Thêm bài hát";
-$lang_module['song_del_confirm'] = "Bạn có chắc chắn xóa các bài hát này";
+$lang_module['song_del_confirm'] = "Bạn có chắc chắn xóa các bài hát này, nếu xóa các dữ liệu liên quan cũng sẽ bị xóa";
 $lang_module['playlist_del_confirm'] = "Bạn có chắc chắn xóa các playlist này";
 $lang_module['ads_del_confirm'] = "Bạn có chắc chắn xóa quảng cáo này";
 $lang_module['sort_content'] = "Nội dung ngắn gọn";

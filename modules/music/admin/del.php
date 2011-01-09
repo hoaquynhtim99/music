@@ -22,11 +22,14 @@ if($id > 0)
 	{
 		$album = getalbumbyID( $id );
 		updatesinger( $album['casi'], 'numalbum', '-1' );
+		delcomment('album', $album['id']);
+		delerror( 'album', $album['id'] );
 	}
 	if ( $where == '_video' )
 	{
 		$video = getvideobyID( $id );
 		updatesinger( $video['casi'], 'numvideo', '-1' );
+		delcomment('video', $video['id']);
 	}
 	if ( $where == '' )
 	{
@@ -36,6 +39,10 @@ if($id > 0)
 			updatealbum( $song['album'], '-1' );
 		}
 		updatesinger( $song['casi'], 'numsong', '-1' );
+		delcomment('song', $song['id']);
+		dellyric($song['id']);
+		delerror( 'song', $song['id'] );
+		delgift( $song['id'] );
 		if ( $song['server'] == 1 )
 		{
 			unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );

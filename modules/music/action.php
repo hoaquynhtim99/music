@@ -105,9 +105,10 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `id` int(100) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `body` text NOT NULL,
-  `dt` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `dt` int(11) NOT NULL DEFAULT '0',
   `what` varchar(255) NOT NULL,
   `userid` MEDIUMINT( 8 ) NOT NULL,
+  `active` int(2) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
