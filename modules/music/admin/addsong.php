@@ -32,29 +32,7 @@ $songdata['size'] = $nv_Request->get_int( 'size', 'post', 0 );
 if ( $songdata['casimoi'] != '')
 {
 	$songdata['casi'] = change_alias( $songdata['casimoi'] );
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` 
-	(
-		`id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`
-	) 
-	VALUES 
-	( 
-		NULL, 
-		" . $db->dbescape( $songdata['casi'] ) . ", 
-		" . $db->dbescape( $songdata['casimoi'] ) . ", 
-		'', 
-		'', 
-		0, 
-		0
-	)
-	"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
-		$db->sql_freeresult();
-	} 
-	else 
-	{ 
-		$error = $lang_module['singer_new_added']; 
-	} 
+	$error = newsinger( $songdata['casi'], $songdata['casimoi'] );
 }
 $category = get_category() ;
 $setting = setting_music();

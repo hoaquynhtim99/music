@@ -26,29 +26,7 @@ $videodata['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
 if ( $videodata['casimoi'] != '')
 {
 	$videodata['casi'] = change_alias( $videodata['casimoi'] );
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` 
-	(
-		`id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`
-	) 
-	VALUES 
-	( 
-		NULL, 
-		" . $db->dbescape( $videodata['casi'] ) . ", 
-		" . $db->dbescape( $videodata['casimoi'] ) . ", 
-		'', 
-		'', 
-		0, 
-		0
-	)
-	"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
-		$db->sql_freeresult();
-	} 
-	else 
-	{ 
-		$error = $lang_module['singer_new_added']; 
-	} 
+	$error = newsinger( $videodata['casi'], $videodata['casimoi'] );
 }
 $category = get_videocategory() ;
 $allsinger = getallsinger();
