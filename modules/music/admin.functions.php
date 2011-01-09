@@ -159,6 +159,14 @@ function updatesinger( $name, $what, $action )
 	return ;
 }
 
+// cap nhat album
+function updatealbum( $name, $action )
+{
+	global $module_data, $db ;	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET numsong = numsong" . $action . " WHERE `name` = '" . $name . "'" );
+	return ;
+}
+
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 
 ?>

@@ -93,7 +93,9 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign('ten', $rs['ten']);
 	$xtpl->assign('numsong', $rs['numsong']);
 	$xtpl->assign('numalbum', $rs['numalbum']);
+	$xtpl->assign('numvideo', $rs['numvideo']);
 	$xtpl->assign('URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=casi&q=" . $rs['ten'] );
+	$xtpl->assign('URL_VIDEO', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip&type_search=casi&q=" . $rs['ten'] );
 	$xtpl->assign('URL_ALBUM', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album&type=singer&q=" . $rs['ten'] );
 
 	$xtpl->assign('url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&casi=".$rs['ten'] );

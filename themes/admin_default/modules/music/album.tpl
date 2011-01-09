@@ -14,7 +14,7 @@
 	<tbody{class}>
 		<tr>
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
-			<td><a href="{URL}" target="_blank">{name}</a></td>
+			<td><a href="{URL}" target="_blank">{name}</a> <a href="{URL_SONG}">({numsong}) {LANG.song}</a></td>
 			<td>{singer}</td>
 			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
 			</td>			

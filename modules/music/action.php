@@ -64,6 +64,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `upboi` varchar(255) NOT NULL,
   `describe` mediumtext NOT NULL,
   `active` int(2) NOT NULL DEFAULT '0',
+  `numsong` INT( 255 ) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
@@ -254,6 +255,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 `introduction` TEXT NOT NULL ,
 `numsong` INT( 255 ) NOT NULL DEFAULT '0',
 `numalbum` INT( 255 ) NOT NULL DEFAULT '0',
+`numvideo` INT( 255 ) NOT NULL DEFAULT '0',
 UNIQUE (`ten`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
 

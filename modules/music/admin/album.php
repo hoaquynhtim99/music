@@ -103,7 +103,11 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign('id', $rs['id']);
 	$xtpl->assign('name', $rs['tname']);
 	$xtpl->assign('singer', $allsinger[$rs['casi']]);
+	$xtpl->assign('numsong', $rs['numsong'] );
 	$xtpl->assign( 'URL', $mainURL . "=listenlist/" . $rs['id'] . "/" . $rs['name'] );
+	
+	$xtpl->assign('URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=album&q=" . $rs['name'] );
+
 	$xtpl->assign('url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&album=".$rs['name'] );
 	$xtpl->assign('URL_ADD_TO_MAINALBUM', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=mainalbum&id=".$rs['id'] );
 	

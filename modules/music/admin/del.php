@@ -23,9 +23,18 @@ if($id > 0)
 		$album = getalbumbyID( $id );
 		updatesinger( $album['casi'], 'numalbum', '-1' );
 	}
+	if ( $where == '_video' )
+	{
+		$video = getvideobyID( $id );
+		updatesinger( $video['casi'], 'numvideo', '-1' );
+	}
 	if ( $where == '' )
 	{
 		$song = getsongbyID( $id );
+		if( $song['album'] != 'na' )
+		{
+			updatealbum( $song['album'], '-1' );
+		}
 		updatesinger( $song['casi'], 'numsong', '-1' );
 		if ( $song['server'] == 1 )
 		{

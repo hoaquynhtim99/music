@@ -70,6 +70,18 @@ function getalbumbyID( $id )
 	return $album ;
 }
 
+// lay video tu id
+function getvideobyID( $id )
+{
+	global $module_data, $db ;
+
+	$video = array() ;
+	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = " . $id );
+	$video = $db->sql_fetchrow($result);
+
+	return $video ;
+}
+
 // lay song tu id
 function getsongbyID( $id )
 {

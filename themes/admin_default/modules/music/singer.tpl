@@ -14,7 +14,7 @@
 		<tr>
 			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
 			<td>{ten}</td>
-			<td><a href="{URL_SONG}">({numsong}) {LANG.song}</a> - <a href="{URL_ALBUM}">({numalbum}) {LANG.album}</a></td>
+			<td><a href="{URL_SONG}">({numsong}) {LANG.song}</a> - <a href="{URL_ALBUM}">({numalbum}) {LANG.album}</a> - <a href="{URL_VIDEO}">({numvideo}) {LANG.video}</a></td>
 			</td>			
 			<td align="center">
 				<span class="edit_icon">

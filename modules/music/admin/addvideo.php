@@ -137,6 +137,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
 			$server = 1;
 		}
 	
+		updatesinger( $videodata['casi'], 'numvideo', '+1' );
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` 
 		(
 			`id`, `name`, `tname`, `casi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`

@@ -113,7 +113,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error == '') )
 		updatesinger( $albumdata['casi'], 'numalbum', '+1' );
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_album` 
 		(
-			`id`, `name`, `tname`, `casi`, `thumb`, `numview`, `upboi`, `describe`, `active`
+			`id`, `name`, `tname`, `casi`, `thumb`, `numview`, `upboi`, `describe`, `active`, `numsong`
 		) 
 		VALUES 
 		( 
@@ -125,7 +125,8 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error == '') )
 			1 , 
 			" . $db->dbescape( $albumdata['upboi'] ) . ",	
 			" . $db->dbescape( $albumdata['describe'] ) . "	,
-			1
+			1,
+			0
 		)
 		"; 
 		if ( $db->sql_query_insert_id( $query ) ) 

@@ -149,6 +149,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 		
 		// update so bai hat
 		updatesinger( $songdata['casi'], 'numsong', '+1' );
+		updatealbum( $songdata['album'], '+1' );
 		
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 		(
