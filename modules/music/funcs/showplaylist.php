@@ -15,7 +15,6 @@ $xtpl->assign( 'LANG', $lang_module );
 
 $num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
 
-// xuat
 for ( $i = 1 ; $i <= $num ; $i ++ )
 {
 	$id = $nv_Request->get_int( $module_name . '_song'.$i.'' , 'cookie', 0 );

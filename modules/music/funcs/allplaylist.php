@@ -55,13 +55,13 @@ $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist ".$dat
 $sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist ".$data." ";
 
 // tinh so trang
-$num = mysql_query($sqlnum);
-$output = mysql_num_rows($num);
+$num = $db->sql_query($sqlnum);
+$output = $db->sql_numrows($num);
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
 // ket qua
-$result = mysql_query( $sql );
+$result = $db->sql_query( $sql );
 $xtpl->assign( 'num', $output);
 
 while($rs = $db->sql_fetchrow($result))

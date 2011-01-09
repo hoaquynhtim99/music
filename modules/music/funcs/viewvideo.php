@@ -11,9 +11,12 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $allsinger = getallsinger();
 $category = get_videocategory();
+$setting = setting_music();
+
 $xtpl = new XTemplate( "viewvideo.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/" );
+$xtpl->assign( 'ads', getADS() );
 
 $xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_data . "/data/" );
 $xtpl->assign( 'thisurl',  $mainURL ."=video" );
@@ -29,17 +32,13 @@ elseif ( defined( 'NV_IS_ADMIN' ) )
 	$name = $admin_info['username'];
 }
 else $name = '';
-$xtpl->assign( 'ads', getADS() );
 
-// lay bai hat
-$setting = setting_music();
+// lay video
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
+$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = ".$id;
 $query = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $query );
-// update video
-$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id . "");
-
 
 $xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=videosendmail&amp;id=". $id );
 $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
@@ -52,7 +51,6 @@ $xtpl->assign( 'view', $row['view'] );
 $xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $row['casi']);
 $xtpl->assign( 'url_search_category', $mainURL . "=searchvideo/category/" . $row['theloai']);
 
-	
 if ( $row['server'] != 0 )
 {
 	$xtpl->assign( 'link', $songURL . "video/" . $row['duongdan'] );
@@ -61,10 +59,7 @@ else
 {
 	$xtpl->assign( 'link', $row['duongdan'] );
 }
-
 $xtpl->assign( 'URL_SONG', get_URL() );
-
-
 
 // binh luan
 if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
@@ -79,7 +74,6 @@ else
 	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 	$xtpl->parse( 'main.comment' );
 }
-
 
 // tieu de trang
 $page_title = $row['tname'] . " - " . $allsinger[$row['casi']] ;

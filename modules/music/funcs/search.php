@@ -72,8 +72,8 @@ else
 	$first_page = ($now_page -1)*20;
 }	
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " ".$data." AND `active` = 1 ORDER BY id DESC LIMIT ".$first_page.",20";
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " ".$data." AND `active` = 1 ";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ORDER BY id DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ";
 
 // tinh so trang
 $num = $db->sql_query($sqlnum);

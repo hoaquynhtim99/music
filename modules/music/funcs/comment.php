@@ -46,7 +46,7 @@ while ( $row = $db->sql_fetchrow( $query ) )
 	$avatar = $db->sql_fetchrow( $querya )  ;
 	if ( $avatar['photo'] != '' )
 	{
-		$xtpl->assign( 'avatar', NV_BASE_SITEURL . $avatar['photo'] );//NV_UPLOADS_DIR . '/' . $module_name
+		$xtpl->assign( 'avatar', NV_BASE_SITEURL . $avatar['photo'] );
 	}
 	else
 	{

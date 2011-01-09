@@ -13,6 +13,7 @@ $allsinger = getallsinger();
 $xtpl = new XTemplate( "listenlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL."modules/" . $module_data . "/data/" );
+$xtpl->assign( 'ads', getADS() );
 $user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" ;
 $user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;		
 if ( defined( 'NV_IS_USER' ) )
@@ -25,19 +26,15 @@ elseif ( defined( 'NV_IS_ADMIN' ) )
 }
 else $name = '';
 
-$xtpl->assign( 'ads', getADS() );
-
-// xu li thong tin
+// xu li
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-
 $xtpl->assign( 'ID',  $id );
 
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id = ".$id;
 $query = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $query );
 // update album
-$i = $row['numview'] + 1 ;
-$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = " . $db->dbescape( $i ) . " WHERE `id` =" . $id . "");
+$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = numview+1 WHERE `id` =" . $id );
 // cac bai hat cua album
 $sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album = \"".$row['name'] ."\" AND `active` = 1 ORDER BY id DESC";
 $querysong = $db->sql_query( $sqlsong );

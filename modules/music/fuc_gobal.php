@@ -121,5 +121,4 @@ function getallsinger()
 
 	return $allsinger ;
 }
-
 ?>

@@ -21,21 +21,7 @@ $timeout = $nv_Request->get_int( $module_name . '_gift' , 'cookie', 0 );
 if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 {
 	$nv_Request->set_Cookie( $module_name . '_gift' , NV_CURRENTTIME );
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_gift` 
-	(
-		`id`, `who_send`, `who_receive`, `songid`, `time`, `body`, `active`
-	) 
-	VALUES 
-	( 
-		NULL, 
-		" . $db->dbescape( $who_send ) . ", 
-		" . $db->dbescape( $who_receive ) . ", 
-		" . $db->dbescape( $id ) . ", 
-		UNIX_TIMESTAMP(),
-		" . $db->dbescape( $body ) . ",
-		" . $setting['auto_gift']  . "
-	)
-	"; 
+	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_gift` ( `id`, `who_send`, `who_receive`, `songid`, `time`, `body`, `active` ) VALUES ( NULL, " . $db->dbescape( $who_send ) . ", " . $db->dbescape( $who_receive ) . ", " . $db->dbescape( $id ) . ", UNIX_TIMESTAMP(), " . $db->dbescape( $body ) . ", " . $setting['auto_gift']  . " )"; 
 	if ( $db->sql_query_insert_id( $query ) ) 
 	{ 
 		$contents = $lang_module['send_gift_suc'];
@@ -49,8 +35,8 @@ else
 {
 	$contents = $lang_module['ready_send_gift'] ;
 }
+
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo $contents;
 include ( NV_ROOTDIR . "/includes/footer.php" );
-
 ?>

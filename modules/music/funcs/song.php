@@ -15,14 +15,13 @@ $category = get_category();
 $xtpl = new XTemplate( "song.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'URL_DOWN', $downURL );
-// xu li
+$xtpl->assign( 'hot', $mainURL . "=song/numview");
+$xtpl->assign( 'new', $mainURL . "=song/id" );
 
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'numview';
 $now_page = isset( $array_op[2] ) ?  intval( $array_op[2] ) : 1;
 $allsinger = getallsinger();
 $link = $mainURL . "=song/". $type ;
-$xtpl->assign( 'hot', $mainURL . "=song/numview");
-$xtpl->assign( 'new', $mainURL . "=song/id" );
 
 // active span
 if ( $type == 'id' )

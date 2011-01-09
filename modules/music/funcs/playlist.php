@@ -14,7 +14,6 @@ $allsinger = getallsinger();
 $xtpl = new XTemplate( "playlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/" );
-
 $xtpl->assign( 'ads',  getADS() );
 
 // lay thong tin playlist

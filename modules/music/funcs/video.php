@@ -17,7 +17,6 @@ $xtpl = new XTemplate( "video.tpl", NV_ROOTDIR . "/themes/" . $module_info['temp
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'url_viewhot', $mainURL . "=searchvideo/view" );
 $xtpl->assign( 'url_viewnew', $mainURL . "=searchvideo/id" );
-// xu li
 
 $sqlhot = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE `active` = 1 ORDER BY view DESC LIMIT 0,12";
 $sqlnew = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE `active` = 1 ORDER BY id DESC LIMIT 0,12";
@@ -29,7 +28,6 @@ foreach ( $category as $key => $value )
 	
 	$xtpl->parse( 'main.cate' );
 }
-
 // video moi
 $result = $db->sql_query( $sqlnew );
 $i = 1;

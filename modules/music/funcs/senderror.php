@@ -46,19 +46,7 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 	
 	if ( ($check == 0) || ( ($check == 1) && ($ok == 0) ) )
 	{
-		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` 
-		(
-			`id`, `user`, `body`, `where`, `key`
-		) 
-		VALUES 
-		( 
-			NULL, 
-			" . $db->dbescape( $user ) . ", 
-			" . $db->dbescape( $body ) . ",
-			" . $db->dbescape( $where ) . ",
-			" . $key . "
-		)
-		"; 
+		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` ( `id`, `user`, `body`, `where`, `key` ) VALUES ( NULL, " . $db->dbescape( $user ) . ", " . $db->dbescape( $body ) . ", " . $db->dbescape( $where ) . ", " . $key . " )"; 
 		if ( $db->sql_query_insert_id( $query ) ) 
 		{ 
 			$contents = $lang_module['send_error_suc'];

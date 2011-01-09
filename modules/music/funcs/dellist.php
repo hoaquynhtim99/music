@@ -11,7 +11,7 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'post', 0 );
-//$contents = $id;
+
 if($id > 0)
 {
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data ."_playlist` WHERE `id`=" . $id;

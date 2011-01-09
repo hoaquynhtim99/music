@@ -13,12 +13,10 @@ $category = get_category();
 $xtpl = new XTemplate( "listenone.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/" );
-
 $xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_data . "/data/" );
-
-
 $xtpl->assign( 'img_url',  NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file );
 $xtpl->assign( 'URL_DOWN', $downURL );
+$xtpl->assign( 'ads', getADS() );
 
 $user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" ;
 $user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;		
@@ -31,18 +29,13 @@ elseif ( defined( 'NV_IS_ADMIN' ) )
 	$name = $admin_info['username'];
 }
 else $name = '';
-$xtpl->assign( 'ads', getADS() );
 
 // lay bai hat
 $allsinger = getallsinger();
 $setting = setting_music();
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = ".$id;
-$query = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $query );
-
-// update bai hat
 $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET numview = numview+1 WHERE `id` =" . $id );
+$row = getsongbyID( $id );
 
 $xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/' . $row['id'] . '/' . $row['ten'] . '/' );
 

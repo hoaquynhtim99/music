@@ -16,8 +16,7 @@ $query = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $query );
 
 // update bai hat
-$i = $row['numview'] + 1 ;
-$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = " . $db->dbescape( $i ) . " WHERE `id` =" . $id . "");
+$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = numview+1 WHERE `id` =" . $id );
 
 if ( $row['server'] != 0 )
 {

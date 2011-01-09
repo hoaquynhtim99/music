@@ -13,7 +13,6 @@ $category = get_videocategory() ;
 $allsinger = getallsinger();
 $data = '';
 
-    
 // xu li
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'name';
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
@@ -33,7 +32,6 @@ else
 
 $xtpl = new XTemplate( "searchvideo.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
-
 
 if ( $type == "name" )
 {
@@ -70,12 +68,11 @@ while ( $ts * 20 < $output ) {$ts ++ ;}
 // ket qua
 $result = $db->sql_query( $sql );
 $xtpl->assign( 'num', $output);
-//$xtpl->assign( 'sql', $sql);
 
 while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign( 'name', $rs['tname']);
-	$xtpl->assign( 'singer', $allsinger[$rs['casithat']]);
+	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'view', $rs['view']);
 	$xtpl->assign( 'thumb', $rs['thumb']);
 	$xtpl->assign( 'creat', nv_date( "H:i d/m/Y", $rs['dt'] ) );

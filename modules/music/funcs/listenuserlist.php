@@ -17,11 +17,10 @@ $xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/"
 $img = rand( 1, 10 );
 $xtpl->assign( 'playlist_img',  NV_BASE_SITEURL ."modules/" . $module_data . "/data/img(" . $img . ").jpg" );
 $xtpl->assign( 'URL_PL', get_URL() );
-
 $xtpl->assign( 'ads',  getADS() );
 
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-
+$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view` = view+1 WHERE `id` =" . $id );
 
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE id = " . $id;
 $query = $db->sql_query( $sql );
@@ -37,9 +36,6 @@ $xtpl->assign( 'numview',  $row['view'] );
 $xtpl->assign( 'date',   nv_date( "d/m/Y H:i", $row['time'] ) );
 $xtpl->assign( 'message',  $row['message'] );
 $xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $row['username']);
-// update luot xem
-$j = $row['view'] + 1 ;
-$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view` = " .  $j  . " WHERE `id` =" . $id);
 
 $song = explode ( "/", $row['songdata'] );
 $j = count( $song );
@@ -62,9 +58,7 @@ for ( $i = 1; $i < $j; $i ++ )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
-
 ?>

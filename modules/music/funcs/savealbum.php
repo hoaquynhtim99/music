@@ -39,7 +39,6 @@ $timeout = $nv_Request->get_int( $module_name . '_' . $userid, 'cookie', 0 );
 
 if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 {
-
 	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` (`id`, `userid`, `username`, `name`, `keyname`, `singer`, `message`, `songdata`, `time`, `view`, `active`) VALUES ( NULL, " . $userid . ", \"" . $username  . "\", \"" .  $name  . "\", \"" .  $keyname  . "\", \"" .  $singer  . "\", \"" .  $message  . "\", \"" . $songdata . "\", UNIX_TIMESTAMP() , 0, " . $setting['auto_album'] . ")"; 
 			
 	$aaaa = $db->sql_query( $query ) ;
@@ -54,5 +53,4 @@ else
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo ( $aaaa ) ;
 include ( NV_ROOTDIR . "/includes/footer.php" );
-
 ?>
