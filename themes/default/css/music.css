@@ -293,29 +293,42 @@ div.tool {
 	float: right;
 	margin-top: 15px;
 }
-div.tool a#play {
+div.tool a.play {
 	float: right;
 	background-image: url('../images/music/arrowicon.png');
 	background-repeat: no-repeat;
-	width: 20px;
-	height: 30px;
-	background-position: 0px 7px;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
 }
-div.tool a#down {
+div.tool a.down {
 	float: right;
-	background-image: url('../images/music/icondown.gif');
+	background-image: url('../images/music/icondown.png');
 	background-repeat: no-repeat;
-	width: 20px;
-	height: 30px;
-	background-position: 0px 9px;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	cursor: pointer;
 }
-div.tool a#add {
+div.tool a.adds {
 	float: right;
+	width: 16px;
+	height: 16px;
+	cursor: pointer;
+}
+.addedtolist {
+	background-repeat: no-repeat;
+	background-image: url('../images/music/added.png');
+}
+.add {
 	background-image: url('../images/music/addmusic1.png');
 	background-repeat: no-repeat;
-	width: 28px;
-	height: 30px;
-	cursor: pointer;
+}
+ul.tool li a.addedtolist1 {
+	background-position: 0px 4px;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/added.png');
+	position: relative;
 }
 #listen_head {
 	float: left;

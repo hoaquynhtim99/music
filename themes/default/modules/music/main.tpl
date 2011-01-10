@@ -84,7 +84,7 @@
 		<div class="songitem">
 			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<div class="tool">
-				<a onclick="addplaylist('{ID}');"  class="add"></a>
+				<a name="{ID}"  class="add adds"></a>
 				<a target="_blank" href="{url}" class="down"></a>
 				<a href="{url_view}" class="play"></a>
 			</div>
@@ -144,6 +144,16 @@ $(document).ready(function() {
 		return false;
 	});
 
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("a.adds").click(function() {
+		$(this).removeClass("add"); 
+		$(this).addClass("addedtolist"); 
+		var songid = $(this).attr("name");
+		addplaylist(songid);
+	});
 });
 </script>
 <!-- END: main -->
