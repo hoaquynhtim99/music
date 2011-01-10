@@ -7,30 +7,21 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
+global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op;
 $xtpl = new XTemplate( "block_video_same_category.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $allsinger = getallsinger();
 
-// lay id video
-$videoid = get_URL() ;
-$videoidarray = explode( '/', $videoid );
-$num_url = count( $videoidarray ) - 3 ;
+$videoid = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
-$videoid = $videoidarray[$num_url] ;
-if ( $num_url <= 3 ) 
-{ 
-	$num_url = count( $videoidarray ) - 2 ;
-	$videoid = $videoidarray[$num_url] ;
-}
-$source = $db->sql_query("SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE `id` =" . $videoid );
-$data = $db->sql_fetchrow($source);
+$data = getvideobyID( $videoid );
 $theloai = $data['theloai'];
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE theloai =\"".$theloai."\" ORDER BY id DESC LIMIT 0,6";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE `active` = 1 AND theloai =\"".$theloai."\" ORDER BY id DESC LIMIT 0,6";
 $query = $db->sql_query( $sql );
 while( $video =  $db->sql_fetchrow( $query ) )
 {
+	if ( $data['id'] == $video['id'] ) continue;
 	$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" .$video['id']. "/" . $video['name'] );
 	$xtpl->assign( 'video_name', $video['tname'] );
 	$xtpl->assign( 'thumb', $video['thumb'] );
@@ -42,5 +33,4 @@ while( $video =  $db->sql_fetchrow( $query ) )
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
 ?>

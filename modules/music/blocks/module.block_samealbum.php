@@ -7,30 +7,20 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-global $lang_module, $module_data, $module_file, $module_info, $mainURL ;
+global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op;
 $xtpl = new XTemplate( "block_samealbum.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
-// lay id bai hat
-$songid = get_URL() ;
-$songidarray = explode( '/', $songid );
-$num_url = count( $songidarray ) - 3 ;
+$songid = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
-$songid = $songidarray[$num_url] ;
-if ( $num_url <= 3 ) 
-{ 
-	$num_url = count( $songidarray ) - 2 ;
-	$songid = $songidarray[$num_url] ;
-}
-
-$source = mysql_query("SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `id` =".$songid."");
-$data = mysql_fetch_array($source);
+$data = getsongbyID( $songid );
 $casi = $data['album'];
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album =\"".$casi."\" ORDER BY id DESC LIMIT 0,10";
-$query = mysql_query( $sql );
-while($song =  mysql_fetch_array( $query ))
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 AND album =\"".$casi."\" ORDER BY id DESC LIMIT 0,10";
+$query = $db->sql_query( $sql );
+while($song =  $db->sql_fetchrow( $query ))
 {
+	if ( $data['id'] == $song['id'] ) continue;
 	$xtpl->assign( 'url_listen', $mainURL . "=listenone/" .$song['id']. "/" . $song['ten'] );
 	$xtpl->assign( 'song_name', $song['tenthat'] );
 	$xtpl->parse( 'main.loop' );
@@ -38,5 +28,4 @@ while($song =  mysql_fetch_array( $query ))
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
 ?>
