@@ -31,6 +31,10 @@ if($id > 0)
 		$video = getvideobyID( $id );
 		updatesinger( $video['casi'], 'numvideo', '-1' );
 		delcomment('video', $video['id']);
+		if ( $video['server'] == 1 )
+		{
+			unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" . $video['duongdan'] );
+		}
 	}
 	if ( $where == '_singer' )
 	{
