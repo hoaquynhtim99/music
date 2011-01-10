@@ -140,21 +140,6 @@ function new_page_admin ( $ts, $now_page, $link)
 	return $page;
 }
 
-// lay tat ca album
-function getallalbum( )
-{
-	global $module_data, $lang_module, $db ;
-
-	$allalbum = array() ;
-	$result = $db->sql_query( " SELECT `name`, `tname` FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY name ASC" );
-	$allalbum['na'] = $lang_module['unknow'];
-	while ( $row = $db->sql_fetchrow($result) )
-	{
-		$allalbum[$row['name']] = $row['tname'];
-	}
-	return $allalbum ;
-}
-
 // cap nhat ca si
 function updatesinger( $name, $what, $action )
 {
@@ -222,6 +207,26 @@ function newsinger( $name, $tname )
 		$error = $lang_module['singer_new_added']; 
 	} 
 	return $error;
+}
+
+// cap nhat bai hat khi xoa, sua album
+function updateSwhendelA( $albumname, $newname )
+{
+	global $module_data, $db ;
+
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album` = '" . $newname . "' WHERE `album` = '" . $albumname . "'");
+	return;
+}
+
+// cap nhat bai hat, album ,video khi xoa, sua ca si
+function updatewhendelS( $singername, $newname )
+{
+	global $module_data, $db ;
+
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `casi` = '" . $newname . "' WHERE `casi` = '" . $singername . "'");
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `casi` = '" . $newname . "' WHERE `casi` = '" . $singername . "'");
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `casi` = '" . $newname . "' WHERE `casi` = '" . $singername . "'");
+	return;
 }
 
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';

@@ -29,12 +29,18 @@ foreach($array_id as $id)
 			updatesinger( $album['casi'], 'numalbum', '-1' );
 			delcomment('album', $album['id']);
 			delerror( 'album', $album['id'] );
+			updateSwhendelA( $album['name'], 'na' );
 		}
 		if ( $where == '_video' )
 		{
 			$video = getvideobyID( $id );
 			updatesinger( $video['casi'], 'numvideo', '-1' );
 			delcomment('video', $video['id']);
+		}
+		if ( $where == '_singer' )
+		{
+			$singer = getsingerbyID( $id );
+			updatewhendelS( $singer['ten'], 'ns' );
 		}
 		if ( $where == '' )
 		{

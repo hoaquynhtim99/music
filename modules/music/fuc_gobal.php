@@ -121,4 +121,32 @@ function getallsinger()
 
 	return $allsinger ;
 }
+
+// lay ca si tu id
+function getsingerbyID( $id )
+{
+	global $module_data, $db;
+
+	$singer = array() ;
+	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $id);
+	$singer = $db->sql_fetchrow($result);
+
+	return $singer ;
+}
+
+// lay tat ca album
+function getallalbum( )
+{
+	global $module_data, $lang_module, $db ;
+
+	$allalbum = array() ;
+	$result = $db->sql_query( " SELECT `name`, `tname` FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY name ASC" );
+	$allalbum['na'] = $lang_module['unknow'];
+	while ( $row = $db->sql_fetchrow($result) )
+	{
+		$allalbum[$row['name']] = $row['tname'];
+	}
+	return $allalbum ;
+}
+
 ?>

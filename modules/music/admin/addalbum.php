@@ -69,6 +69,7 @@ if ( (($nv_Request->get_int( 'edit', 'post', 0 )) == 1) && ($error == '') )
 	}
 	if ( $query ) 
 	{
+		updateSwhendelA( $row['name'], $albumdata['name'] );
 		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=album"); die();
 	}
 	else
