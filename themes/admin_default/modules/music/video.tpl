@@ -3,7 +3,7 @@
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
-			<td><a href="{ORDER_NAME}">{LANG.song_name}</a></td>
+			<td><a href="{ORDER_NAME}">{LANG.video_name}</a></td>
 			<td><a href="{ORDER_SINGER}">{LANG.singer}</a></td>
 			<td>{LANG.category}</td>
 			<td>{LANG.active}</td>

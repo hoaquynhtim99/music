@@ -221,6 +221,7 @@ $lang_module['singer_check_err'] = "Bạn phải chọn ít nhất một ca sĩ 
 
 $lang_module['video'] = "Video clip";
 $lang_module['video_add'] = "Thêm clip";
+$lang_module['video_listadd'] = "Thêm nhiều clip";
 $lang_module['video_name'] = "Tên video clip";
 $lang_module['video_name_short'] = "Tên gọn clip";
 $lang_module['video_edit'] = "Sửa video";

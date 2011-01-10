@@ -22,6 +22,7 @@ $submenu['singer'] = $lang_module['sub_singer'];
 $submenu['addsinger'] = $lang_module['singer_add']; 
 $submenu['videoclip'] = $lang_module['video']; 
 $submenu['addvideo'] = $lang_module['video_add']; 
+$submenu['addlistvideo'] = $lang_module['video_listadd']; 
 $submenu['fourcategory'] = $lang_module['sub_fourcategory']; 
 $submenu['commentalbum'] = $lang_module['sub_commentalbum']; 
 $submenu['commentsong'] = $lang_module['sub_commentsong']; 
@@ -34,7 +35,7 @@ $submenu['lyric'] = $lang_module['sub_lyric'];
 $submenu['userplaylist'] = $lang_module['userplaylist']; 
 $submenu['setting'] = $lang_module['music_setting']; 
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong', 'commentvideo'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong', 'commentvideo', 'addlistvideo'); 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep

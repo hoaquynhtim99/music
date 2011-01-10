@@ -120,7 +120,7 @@ $link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_O
 while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
-	$xtpl->assign('name', $rs['name']);
+	$xtpl->assign('name', $rs['tname']);
 	$xtpl->assign('singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'URL', $mainURL . "=viewvideo/" . $rs['id'] . "/" . $rs['name'] );
 	

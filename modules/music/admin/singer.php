@@ -90,7 +90,7 @@ $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_
 while($rs = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $rs['id']);
-	$xtpl->assign('ten', $rs['ten']);
+	$xtpl->assign('ten', $rs['tenthat']);
 	$xtpl->assign('numsong', $rs['numsong']);
 	$xtpl->assign('numalbum', $rs['numalbum']);
 	$xtpl->assign('numvideo', $rs['numvideo']);
