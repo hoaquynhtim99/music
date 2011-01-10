@@ -13,7 +13,7 @@
 		</div>
 	</div>
 	<div style="padding: 10px;">
-		<p><strong>Danh sách các bài hát trong playlist của bạn</strong></p>
+		<p><strong>{LANG.playlist_song}</strong></p>
 		<!-- BEGIN: loop -->
 		<div id="song{stt}" class="listsong">&nbsp;&nbsp;{songname} - {singer}<div onclick="delsongfrlist('{stt}');" class="tools"></div></div>
 		<!-- END: loop -->
@@ -74,7 +74,7 @@
 			<div id="item{id}" class="resuirt">
 				<div onclick="dellist('{id}');" class="tools"></div>
 				<a href="{url_view}" class="namealbum">
-				<img width="90px" height="90px" border="0" src="{playlist_img}" />
+				<img class="album" width="90px" height="90px" border="0" src="{playlist_img}" />
 				<div id="album">
 					<p><strong>{name}</strong></a></p>
 					<p>{LANG.show_1}: {singer}</p>
