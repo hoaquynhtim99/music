@@ -31,9 +31,15 @@ elseif ( $where == 'album' )
     $page_title = $lang_module['edit_comment_album'];
 	$back = "commentalbum" ;
 }
+elseif ( $where == 'video' )
+{
+	$whatcomment = $lang_module['video_name'] ;
+    $page_title = $lang_module['video_comment_edit'];
+	$back = "commentvideo" ;
+}
 else die('Stop!!!');
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE `id` = ".$id."";
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE `id` = " . $id;
 $resuilt = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $resuilt );
 $comment['name'] = $row['name'];
@@ -49,6 +55,11 @@ if ( $where == 'song' )
 elseif ( $where == 'album' )
 {
 	$tmp = getalbumbyID( $row['what'] );
+	$comment['what'] = $tmp['tname'];
+}
+elseif ( $where == 'video' )
+{
+	$tmp = getvideobyID( $row['what'] );
 	$comment['what'] = $tmp['tname'];
 }
 

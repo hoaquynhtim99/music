@@ -169,6 +169,7 @@ $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";
 $lang_module['sub_hotalbum'] = "HOT Album";
 $lang_module['sub_fourcategory'] = "4 TL trang chủ";
 $lang_module['sub_commentsong'] = "Bình luận bài hát";
+$lang_module['sub_commentvideo'] = "Bình luận video";
 $lang_module['sub_commentalbum'] = "Bình luận Album";
 $lang_module['sub_maincategory'] = "Thể loại trang chủ";
 $lang_module['sub_mainalbum'] = "Album trang chủ";
@@ -225,6 +226,8 @@ $lang_module['video_name_short'] = "Tên gọn clip";
 $lang_module['video_edit'] = "Sửa video";
 $lang_module['video_info'] = "Thông tin video clip";
 $lang_module['video_list'] = "Danh sách video clip";
+$lang_module['video_list_comment'] = "Danh sách các bình luận video";
 $lang_module['video_del_confirm'] = "Bạn có chắc xóa video này";
 $lang_module['video_error_check'] = "Bạn chưa chọn video nào";
+$lang_module['video_comment_edit'] = "Sửa bình luận video";
 ?>
