@@ -9,10 +9,10 @@
 		<!-- BEGIN: first -->
 	   <div class="picleft">&nbsp;</div>
 	   <a href="{url_album}" title="{faname} - {fasinger}">
-		   <img border="0" class="first" src="{fapic}" width="100" height="100" />
+		   <img class="first" src="{fapic}" width="100" height="100" />
 	   </a>
 	   <div class="picright">
-		   	<a href="{url_album}" title="{faname}"><h2>{faname}</h2></a>
+		   	<a href="{url_album}" title="{faname}"><span>{faname}</span></a>
 		   	<p>{LANG.show}: <a href="{url_search_singer}" title="{fasinger}">{fasinger}</a></p>
 	   </div>
 	   <div class="first_a_song">
@@ -25,7 +25,7 @@
 	   <!-- BEGIN: old -->
 	   <div class="topalbum_item">
 		   <a href="{url_album}" title="{albumtitle}">			 
-			   <img border="0" class="item" src="{albumpic}" width="100" height="100" />
+			   <img class="item" src="{albumpic}" width="100" height="100" />
 		   </a>
 		   <a style="color:#000;" href="{url_album}" title="{albumtitle}">{albumtitle}</a>
 		   <a href="{url_search_singer}" title="{singer}">{singer}</a>
@@ -38,10 +38,10 @@
 		<!-- BEGIN: firstn -->
 	   <div class="picleft">&nbsp;</div>
 	   <a href="{url_album}">
-		   <img border="0" class="first" src="{pic}" width="100" height="100" />
+		   <img class="first" src="{pic}" width="100" height="100" />
 	   </a>
 	   <div class="picright">
-		   	<a href="{url_album}" title="{name}"><h2>{name}</h2></a>
+		   	<a href="{url_album}" title="{name}"><span>{name}</span></a>
 		   	<p>{LANG.show}: <a href="{url_search_singer}" title="#">{singer}</a></p>
 	   </div>
 	   <div class="first_a_song">
@@ -54,7 +54,7 @@
 	   <!-- BEGIN: old -->
 	   <div class="topalbum_item">
 		   <a href="{url_album}" title="{albumtitle}">			 
-			   <img border="0" class="item" src="{albumpic}" width="100" height="100" />
+			   <img  class="item" src="{albumpic}" width="100" height="100" />
 		   </a>
 		   <a style="color:#000;" href="{url_album}" title="{albumtitle}">{albumtitle}</a>
 		   <a href="{url_search_singer}" title="#">{singer}</a>
@@ -63,7 +63,7 @@
 	</div> 
 	<!-- END: topalbum -->
 </div>
-<div id="topalbum_foot">
+<div class="topalbum_foot">
 	<a style="float:right;margin-bottom:5px;margin-right:10px;color:#000;" href="{allalbum}" >» {LANG.view_all}</a>
 </div>
 <p>&nbsp;</p>
@@ -84,9 +84,9 @@
 		<div class="songitem">
 			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<div class="tool">
-				<a onclick="addplaylist('{ID}');" id="add" class="add"></a>
-				<a target="_blank" href="{url}" id="down" class="down"></a>
-				<a href="{url_view}" id="play" class="play"></a>
+				<a onclick="addplaylist('{ID}');"  class="add"></a>
+				<a target="_blank" href="{url}" class="down"></a>
+				<a href="{url_view}" class="play"></a>
 			</div>
 			<p>
 				{LANG.show}: <a class="singer" href="{url_search_singer}">{singer}</a><br />
@@ -100,7 +100,7 @@
 	</div>
 	<!-- END: topsong -->
 </div>
-<div id="topalbum_foot">
+<div class="topalbum_foot">
 	<a style="float:right;margin-bottom:5px;margin-right:10px;color:#000;" href="{allsong}">» {LANG.view_all}</a>
 </div>
 <!-- END: oldsong -->

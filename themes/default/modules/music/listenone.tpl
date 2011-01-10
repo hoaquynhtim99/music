@@ -148,7 +148,7 @@ $(document).ready(function() {
 <form id="addCommentForm" method="post" action="">
 <div>
 <label for="name">{LANG.your_name}</label>
-<input type="text" name="name" id="name" value="".$name."" />
+<input style="width:400px;" type="text" name="name" id="name" value="".$name."" />
 <label for="body">{LANG.content}</label>
 <textarea name="body" id="commentbody" cols="20" rows="5"></textarea>
 <p style="padding-right:50px;float:left;" align="center">

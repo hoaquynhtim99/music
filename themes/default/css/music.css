@@ -3,10 +3,12 @@
 	padding: 0 0 0 15px;
 	float: left;
 	list-style: none;
-	height: 28px; /*--Set height of tabs--*/;
+	height: 28px; /*--Set height of tabs--*/
 	width: 495px;
 	background-repeat: repeat-x;
-	background-image: url('../images/h3.header.jpg');
+	background-image: url('../images/music/title.png');
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
 }
 ul.tabs li {
 	float: left;
@@ -78,7 +80,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	background-repeat: repeat-x;
 	background-image: url('../images/music/topalbumbg.png');
 }
-.tab_content .picright h2 {
+.tab_content .picright span{
 	color: #000000;
 }
 .tab_content a:hover {
@@ -143,9 +145,11 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 #topsong_head {
 	float: left;
 	background-repeat: repeat-x;
-	background-image: url('../images/h3.header.jpg');
 	width: 510px;
 	height: 28px;
+	background-image: url('../images/music/title.png');
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
 }
 #topsong_head h2 {
 	color: #FFFFFF;
@@ -497,7 +501,7 @@ ul.tool li a:hover {
 	background-repeat: repeat;
 }
 html ul.tool li.active, html ul.tool li.active a:hover {
-	background-color: #2a5263;
+	background-color: #dadfe4;
 }
 .tool_container {
 	clear: both;
@@ -896,7 +900,6 @@ a.listsong {
 }
 #giftcontainer .item {
 	width: 100%;
-	border-bottom-style: dotted;
 	border-bottom-width: 1px;
 	border-bottom-color: #999999;
 	padding-bottom: 3px;
@@ -918,16 +921,16 @@ a.listsong {
 }
 #giftcontainer .item a.showmess {
 	cursor: pointer;
-	color: #0066CC;
-	font-size: 10px;
+	font-size: 11px;
+	padding-bottom:10px;
 }
 #giftcontainer .item p span {
 	font-size: 9px;
 	color: #000000;
 }
-#menuleft {
+div.menuleft {
 }
-#menuleft ul li {
+div.menuleft ul li {
 	padding: 2px 0px 2px 3px;
 	color: #000000;
 	border-bottom-style: solid;
@@ -937,10 +940,13 @@ a.listsong {
 	position: relative;
 	width: 98%;
 }
-#menuleft ul li a {
+div.menuleft ul li a {
+	display:block;
+	padding:5px 3px 3px 25px;
+	background:#ffffff url('../images/music/icon_music.gif') no-repeat 9px 7px;
 	color: #666666;
 }
-#menuleft ul li a:hover {
+div.menuleft ul li a:hover {
 	color: #000000;
 }
 #searchcontent {
@@ -1016,12 +1022,13 @@ a.listsong {
 	background-image: url('../images/music/search_icon.png');
 	color: #666666;
 	font-size: 11px;
+	font-weight: bold;
 	padding-left: 40px;
 	padding-top: 5px;
 }
 #searchblock form {
 	float: left;
-	width: 294px;
+	width: 290px;
 	height: 37px;
 	background-repeat: no-repeat;
 	background-image: url('../images/music/search_bg.png');
@@ -1128,7 +1135,7 @@ a.listsong {
 	text-decoration: none;
 	font-weight: bold;
 }
-#blockalbum {
+div.blockalbum {
 	border-bottom-style: dotted;
 	border-bottom-width: 1px;
 	border-bottom-color: #666666;
@@ -1136,17 +1143,20 @@ a.listsong {
 	padding-bottom: 5px;
 	font-size: 11px;
 }
-#blockalbum img {
+div.blockalbum img {
 	border: 1px solid #000000;
 	margin-right: 4px;
 	display: inline;
 	background-color: #666666;
 }
-#blockalbum a {
+div.blockalbum a {
 	float: left;
 }
-#blockalbum a.black {
+div.blockalbum a.black {
 	color: #000000;
+}
+div.blockalbum a.black:hover{
+	color: #0884ed;
 }
 ul.topsong li a {
 	/*--Subtract 1px from the height of the unordered list--*/;/*--Vertically aligns the text within the tab--*/ /*--Pull the list item down 1px--*/;color: #66CCFF;
@@ -1156,4 +1166,36 @@ ul.topsong li a {
 }
 #searchcontent h1 span.active a, #searchcontent h1 span:hover a {
 	color: #333333;
+}
+/*playlist tool*/
+#playlisttool {
+	padding-left: 28px;
+	float: left;
+	margin-bottom: -7px;
+}
+#playlisttool a {
+	float: left;
+	width: 25px;
+	height: 28px;
+	margin: 2px 7px 2px 7px;
+}
+#playlisttool a.showplaylist {
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: -50px 0px;
+}
+#playlisttool a.saveplaylist{
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: -75px 0px;
+}
+#playlisttool a.listenplaylist{
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: 0px 0px;
+}
+#playlisttool a.delplaylist{
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: -125px 0px;
 }
