@@ -1,4 +1,16 @@
-﻿ul.tabs {
+﻿#tabss{
+	margin: 0;
+	padding: 0 0 0 15px;
+	float: left;
+	list-style: none;
+	height: 28px;
+	width: 495px;
+	background-repeat: repeat-x;
+	background-image: url('../images/music/title.png');
+	-moz-border-radius: 10px 10px 0px 0px;
+	-webkit-border-radius: 10px 10px 0px 0px;
+}
+ul.tabs {
 	margin: 0;
 	padding: 0 0 0 15px;
 	float: left;

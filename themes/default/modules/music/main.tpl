@@ -1,5 +1,5 @@
 ﻿<!-- BEGIN: main -->
-<ul class="tabs">
+<ul id="tabss" class="tabs">
 	<li><a href="#tab1">{LANG.album_hotest}</a></li>
 	<li><a href="#tab2">{LANG.album_newest}</a></li>
 </ul>
