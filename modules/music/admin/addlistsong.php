@@ -40,29 +40,7 @@ $upboi = $nv_Request->get_string( 'upboi', 'post', '' );
 if ( $casimoi != '')
 {
 	$casi = change_alias( $casimoi );
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` 
-	(
-		`id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`
-	) 
-	VALUES 
-	( 
-		NULL, 
-		" . $db->dbescape( $casi ) . ", 
-		" . $db->dbescape( $casimoi ) . ", 
-		'', 
-		'', 
-		0, 
-		0
-	)
-	"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
-		$db->sql_freeresult();
-	} 
-	else 
-	{ 
-		$error = $lang_module['singer_new_added']; 
-	} 
+	$error = newsinger( $casi, $casimoi );
 }
 $category = get_category() ;
 $setting = setting_music();
