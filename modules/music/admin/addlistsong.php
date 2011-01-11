@@ -60,6 +60,14 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 	
 	if ( $error == "" )
 	{
+		if ( defined( 'NV_IS_USER' ) )
+		{
+			$userid = $user_info['userid'];
+		}
+		elseif ( defined( 'NV_IS_ADMIN' ) )
+		{
+			$userid = $admin_info['userid'];
+		}
 		$ok = false;
 		for ( $i = 1; $i <= $numsong; $i ++)
 		{
@@ -81,7 +89,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			
 			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 			(
-				`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`
+				`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `uerid`
 			) 
 			VALUES 
 			( 
@@ -98,7 +106,8 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				" . $db->dbescape( $songdata[$i]['bitrate'] ) . " ,
 				" . $db->dbescape( $songdata[$i]['size'] ) . " ,
 				" . $db->dbescape( $songdata[$i]['duration'] ) . ",
-				" . $server . "
+				" . $server . ",
+				" . $userid . "
 			)
 			"; 
 			if ( $db->sql_query_insert_id( $query ) ) 

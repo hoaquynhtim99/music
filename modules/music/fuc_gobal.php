@@ -149,4 +149,29 @@ function getallalbum( )
 	return $allalbum ;
 }
 
+// Them moi mot ca si
+function newsinger( $name, $tname )
+{
+	$error = '';
+	global $module_data, $lang_module, $db ;	
+	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
+	if ( $db->sql_query_insert_id( $query ) ) 
+	{ 
+		$db->sql_freeresult();
+	} 
+	else 
+	{ 
+		$error = $lang_module['singer_new_added']; 
+	} 
+	return $error;
+}
+
+// cap nhat ca si
+function updatesinger( $name, $what, $action )
+{
+	global $module_data, $db ;	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
+	return ;
+}
+
 ?>

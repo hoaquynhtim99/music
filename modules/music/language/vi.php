@@ -34,6 +34,8 @@ $lang_module['album_creat'] = "Tạo một playlist mới";
 $lang_module['category'] = "THỂ LOẠI";
 $lang_module['category_2'] = "Thể loại";
 
+$lang_module['cancel'] = "Hủy bỏ";
+
 $lang_module['content'] = "Nội dung";
 $lang_module['comment'] = "Bình luận";
 $lang_module['comment_success'] = "Bình luận thành công";
@@ -106,6 +108,8 @@ $lang_module['read_more'] = "Xem thêm";
 $lang_module['results'] = "kết quả";
 
 $lang_module['save'] = "Lưu";
+
+$lang_module['singer'] = "Ca sĩ";
 
 $lang_module['send'] = "Gửi";
 $lang_module['song'] = "bài hát";
@@ -183,5 +187,26 @@ $lang_module['video_link'] = "Link video";
 $lang_module['video_hot'] = "Video hot";
 $lang_module['video_new'] = "Video mới";
 
-
+$lang_module['upload'] = "Hoàn tất";
+$lang_module['upload_inviad'] = "Định dạng không hợp lệ";
+$lang_module['upload_rule'] = "Quy định upload";
+$lang_module['upload_rule1'] = "Không upload nhạc cấm";
+$lang_module['upload_rule2'] = "Không upload nhạc xuyên tạc";
+$lang_module['upload_rule3'] = "Kích thước file tối đa là 30 MB";
+$lang_module['upload_guide'] = "Hướng dẫn upload";
+$lang_module['upload_guide1'] = "Nhập tên bài hát (Tiếng Việt có dấu) vào ô tên bài hát.";
+$lang_module['upload_guide2'] = "Nếu ca sĩ thể hiện bài hát có trong danh sách bạn hãy chọn từ danh sách hoặc nhập vào tên ca sĩ (có dấu) cho ca sĩ mới.";
+$lang_module['upload_guide3'] = "Chọn thể loại của bài hát từ danh sách.";
+$lang_module['upload_guide4'] = "Cuối cùng nhấn nút \"Thêm\" để thêm bài hát vào danh sách upload.";
+$lang_module['upload_note'] = "Một số lưu ý.";
+$lang_module['upload_note1'] = "Bạn có thể upload nhiều bài hát cùng một lúc.";
+$lang_module['upload_note2'] = "Các bài hát sai quy định sẽ bị sửa hoặc xóa mà không cần báo trước.";
+$lang_module['upload_quicksinger'] = "Nhập nhanh tên ca sĩ.";
+$lang_module['upload_s'] = "Thành công";
+$lang_module['upload_song'] = "Upload bài hát";
+$lang_module['upload_f'] = "Thất bại";
+$lang_module['upload_ready'] = "Sẵn sàng";
+$lang_module['upload_prosess'] = "Đang tải dữ liệu";
+$lang_module['upload_notsong'] = "Bạn chưa nhập tên bài hát";
+$lang_module['upload_allow_notsinger'] = "Bạn có đồng ý chọn tên ca sĩ không biết";
 ?>

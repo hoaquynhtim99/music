@@ -140,14 +140,6 @@ function new_page_admin ( $ts, $now_page, $link)
 	return $page;
 }
 
-// cap nhat ca si
-function updatesinger( $name, $what, $action )
-{
-	global $module_data, $db ;	
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
-	return ;
-}
-
 // cap nhat album
 function updatealbum( $name, $action )
 {
@@ -190,23 +182,6 @@ function delgift( $songid )
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `songid` =" . $songid;
     $result = $db->sql_query( $sql );
 	return ;
-}
-
-// Them moi mot ca si
-function newsinger( $name, $tname )
-{
-	$error = '';
-	global $module_data, $lang_module, $db ;	
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
-		$db->sql_freeresult();
-	} 
-	else 
-	{ 
-		$error = $lang_module['singer_new_added']; 
-	} 
-	return $error;
 }
 
 // cap nhat bai hat khi xoa, sua album

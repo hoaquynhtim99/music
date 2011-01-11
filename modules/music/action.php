@@ -50,6 +50,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `size` int(50) unsigned NOT NULL DEFAULT '0',
   `duration` int(50) unsigned NOT NULL DEFAULT '0',
   `server` int(255) NOT NULL DEFAULT '0',
+  `userid` MEDIUMINT( 8 ) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
@@ -326,6 +327,7 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (6, 'who_gift', 0, ''),
 (7, 'auto_gift', 0, ''),
 (8, 'auto_album', 0, ''),
-(9, 'who_download', 0, '')";
+(9, 'who_download', 0, ''),
+(10, 'upload_max', 2, '')";
 
 ?>

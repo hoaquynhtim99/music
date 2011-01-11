@@ -29,32 +29,19 @@ ul.tabs li a {
 }
 ul.tabs li a:hover {
 }
-html ul.tabs li.active, html ul.tabs li.active a:hover  {
-	/*--Makes sure that the active tab does not listen to the hover properties--*/
-	background-repeat: no-repeat;
-	background-image: url('../images/music/tabs-2.png');
-}
 .tab_container {
 	overflow: hidden;
 	width: 100%;
-	background-repeat: repeat-y;
-	background-image: url('../images/music/bg.png');
 	clear: both;
 }
+
 .tab_content {
 	float: left;
 	margin: 0px;
 	padding: 0px;
 	width: 100%;
 }
-#topalbum_foot {
-	display: block;
-	float: left;
-	width: 100%;
-	padding: 0px;
-	margin: 0px;
-	background-color: #dedede;
-}
+
 .tab_content .picleft {
 	float: left;
 	width: 5px;
@@ -63,21 +50,22 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	background-image: url('../images/music/topalbumbg.png');
 }
 .tab_content img.first {
-	padding: 1px;
-	border: 1px solid #000000;
-	background-color: #999999;
+	padding: 6px 6px 9px 6px;
 	margin: 0px;
 	float: left;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/m_album.png');
 }
 .tab_content .picright {
 	margin: 0px;
 	padding: 7px 0px 0px 5px;
 	float: left;
-	width: 385px;
+	width: 386px;
 	height: 48px;
 	background-repeat: repeat-x;
 	background-image: url('../images/music/topalbumbg.png');
 }
+
 .tab_content .picright h2 {
 	margin: 0px;
 	padding: 0px;
@@ -96,10 +84,10 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	line-height: 24px;
 	border-style: none none dotted none;
 	border-width: 1px;
-	border-color: #C1D6FF;
+	border-color: #CCCCCC;
 	padding: 0px;
 	margin: 0px 4px 0px 0px;
-	color: #000000;
+	color: #333333;
 }
 .tab_content .first_a_song {
 	float: right;
@@ -114,7 +102,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	border-style: none;
 	background-position: 0px 9px;
 	text-indent: 10px;
-	color: #0066CC;
+	color: #b93d00;
 }
 .tab_content .topalbum_item {
 	width: 104px;
@@ -124,43 +112,31 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	height: 180px;
 }
 .tab_content .topalbum_item img.item {
-	padding: 1px;
-	border: 1px solid #000000;
-	background-color: #999999;
+	padding: 6px 6px 9px 6px;
 	margin: 5px 0px 7px 0px;
 	float: left;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/m_album.png');
 }
+
 .tab_content .topalbum_item a {
+
 	width: 100%;
+
 	display: block;
+
 	line-height: 22px;
+
 }
+
 .topsong_container {
 	overflow: hidden;
 	float: left;
 	width: 100%;
-	background-repeat: repeat-y;
-	background-image: url('../images/music/bg.png');
 }
 .topsong_content {
-	margin: 0px 0px 0px 7px;
+	margin: 0px 0px 0px 3px;
 	color: #000000;
-}
-#topsong_head {
-	float: left;
-	background-repeat: repeat-x;
-	background-image: url('../images/block-header-g1.png');
-	width: 100%;
-	height: 33px;
-}
-#topsong_head h2 {
-	color: #000000;
-	float: left;
-	margin: 0px;
-	line-height: 37px;
-	text-indent: 10px;
-	font-size: 16px;
-	font-weight: bold;
 }
 ul.topsong {
 	margin: 0px;
@@ -186,11 +162,6 @@ ul.topsong li {
 	text-align: center;
 	font-weight: bold;
 }
-html ul.topsong li.active, html ul.topsong li.active a:hover {
-	/*--Makes sure that the active tab does not listen to the hover properties--*/
-	background-repeat: no-repeat;
-	background-image: url('../images/music/tabs-2.png');
-}
 .topsong_content .songitem {
 	color: #000000;
 	background-repeat: no-repeat;
@@ -199,7 +170,7 @@ html ul.topsong li.active, html ul.topsong li.active a:hover {
 	border-style: none none dotted none;
 	border-width: 1px;
 	border-color: #333333;
-	margin: 4px 7px 0px 8px;
+	margin: 4px 7px 0px 3px;
 }
 .topsong_content .songitem a {
 	color: #000000;
@@ -212,66 +183,70 @@ html ul.topsong li.active, html ul.topsong li.active a:hover {
 	color: #666666;
 	font-size: 11px;
 }
-.topsong_content .songitem a.singer {
-	color: #0066CC;
-}
 .topsong_content .songitem a.songname {
 	font-size: 12px;
 }
 #hotsinger {
 	float: left;
 	width: 100%;
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
 }
 #hotsinger .toph, #hotsinger .bottom {
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
 	width: 90%;
 	display: block;
 	padding-right: 0px;
 	float: left;
-	margin-top: 6px;
+	margin-top: 3px;
 	margin-bottom: 6px;
 	margin-left: 23px;
 }
 #hotsinger .toph img {
-	padding: 10px 0px 0px 0px;
-	margin: 10px auto 10px auto;
+	border-style: solid solid none solid;
+	border-width: 1px;
+	border-color: #E2E2E2;
+	background-position: 0px 135px;
+	padding: 2px 2px 14px 2px;
+	margin: 5px auto 5px auto;
 	display: block;
+	float: left;
+	background-image: url('../images/music/bottom_bg.gif');
+	background-repeat: no-repeat;
 }
 #hotsinger .toph a.hssong {
 	padding: 2px 0px 2px 6px;
-	background-position: 10px 4px;
+	background-position: 1px 4px;
 	margin: 0px;
 	border-style: solid none none none;
 	border-width: 1px;
-	border-color: #0d191e;
+	border-color: #CCCCCC;
 	background-repeat: no-repeat;
 	background-image: url('../images/music/listmusic.png');
-	width: 213px;
+	width: 212px;
 	line-height: 22px;
-	text-indent: 33px;
+	text-indent: 26px;
 	float: left;
 	color: #000000;
 }
 #hotsinger .toph a.end {
 	border-bottom-width: 1px;
 	border-bottom-style: solid;
-	border-bottom-color: #0d191e;
+	border-bottom-color: #CCCCCC;
 }
-
 #hotsinger .toph a.hssong:hover {
-	background-color: #999999;
+	background-color: #E4E4E4;
 }
 #hotsinger .bottom .itemhs
 {
 	float: left;
 	width: 125px;
-	margin-left: 23px;
-	margin-top: 8px;
+	margin-left: 20px;
 }
-l
+#hotsinger .bottom .itemhs img
+{
+	padding: 3px 3px 9px 3px;
+	float: left;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/singger_bg.png');
+}
 #hotsinger .bottom .itemhs a
 {
 	color: #000000;
@@ -291,59 +266,29 @@ div.tool a#play {
 	float: right;
 	background-image: url('../images/music/arrowicon.png');
 	background-repeat: no-repeat;
-	width: 20px;
-	height: 30px;
-	background-position: 0px 7px;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
 }
-div.tool a#down {
+div.tool a.down {
 	float: right;
-	background-image: url('../images/music/icondown.gif');
+	background-image: url('../images/music/icondown.png');
 	background-repeat: no-repeat;
-	width: 20px;
-	height: 30px;
-	background-position: 0px 9px;
+	width: 16px;
+	height: 16px;
+	margin-right: 5px;
+	cursor: pointer;
 }
 div.tool a#add {
 	float: right;
-	background-image: url('../images/music/addmusic1.png');
-	background-repeat: no-repeat;
-	width: 28px;
-	height: 30px;
+	width: 16px;
+	height: 16px;
 	cursor: pointer;
 }
-#listen_head {
-	float: left;
-	width: 100%;
-	background-repeat: repeat-x;
-	background-image: url('../images/block-header-g1.png');
-	height: 33px;
-	margin: 10px 0px 0px 0px;
-	line-height: 33px;
-	font-size: 16px;
-}
-#listen_head h2 {
-	color: #000000;
-	width: 96%;
-	padding: 0px 0px 6px 0px;
-	border-style: none none dotted none;
-	border-width: 1px;
-	border-color: #666666;
-	margin: 0px auto 0px auto;
-	font-size: 16px;
-	font-weight: bold;
-}
 #listen_main{
-	float: left;
-	width: 480px;
-	padding: 0px 10px 0px 10px;
+	width: 488px;
+	padding: 0px 5px 0px 5px;
 	margin: 0px;
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
-}
-#listen_main h2 {
-	padding: 10px 0px 0px 0px;
-	font-size: 14px;
-	color: #000000;
 }
 #listen_main p {
 	padding: 5px 0px 5px 0px;
@@ -354,7 +299,7 @@ object , embed{
 }
 
 .jw_playlist_playlist {
-	border: 1px solid #333333;
+	border: 1px solid #999999;
 	padding: 6px;
 	width: 458px;
 	height: 200px;
@@ -381,7 +326,7 @@ object , embed{
 }
 
 .jw_playlist_item {
-	padding: 6px 0px 6px 10px;
+	padding: 6px 0px 6px 18px;
 	cursor: pointer;
 }
 
@@ -404,101 +349,77 @@ object , embed{
 	border-color: #666666;
 }
 .odd {
+	background-color: #EFEFEF;
 }
 .playing {
 	background-repeat: no-repeat;
 	background-image: url('../images/music/arrowicon.png');
-	background-color: #666666;
-	background-position: 0px 5px;
+	background-position: 0px 6px;
 }
 #listen_main .playercontainer {
-	float: left;
 	width: 475px;
 	padding: 5px 0px 5px 5px;
-	margin: 0px;
 	background-repeat: repeat;
 	background-image: url('../images/music/bg.png');
+	margin-left: 3px;
 }
 .jw_playlist_item:hover {
 	background-repeat: no-repeat;
 	background-image: url('../images/music/arrowicon.png');
-	background-color: #666666;
-	background-position: 0px 5px;
+	background-color: #C0C0C0;
+	background-position: 0px 6px;
 }
 ul.tool {
 	margin: 0px;
-	background-color: #999999;
-	width: 470px;
+	width: 100%;
 	float: left;
-	height: 30px;
+	height: 27px;
 	list-style-type: none;
-	padding: 0px 5px 0px 5px;
+	padding: 0px;
 }
 ul.tool li {
-	width: 20%;
+	border: 1px solid #CCCCCC;
 	float: left;
-	height: 30px;
+	height: 25px;
 	position: relative;
+	margin-right: 4px;
+	padding-right: 10px;
+	padding-left: 10px;
 }
-ul.tool li.add {
-	width: 20%;
-	float: left;
-	height: 30px;
+ul.tool li a.add {
 	position: relative;
 	background-image: url('../images/music/addmusic1.png');
 	background-repeat: no-repeat;
-	background-position: 3px 2px;
+	background-position: 0px 4px;
 }
 ul.tool li a {
-	line-height: 30px;
+	line-height: 25px;
 	float: left;
-	color: #000000;
-	font-weight: bold;
-	width: 100%;
-	text-align: center;
+	text-indent: 20px;
 }
-ul.tool li.down {
-	width: 20%;
-	float: left;
-	height: 30px;
+ul.tool li a.down {
 	position: relative;
 	background-repeat: no-repeat;
-	background-image: url('../images/music/icodown.png');
-	background-position: 3px 4px;
+	background-image: url('../images/music/icondown.png');
+	background-position: 0px 4px;
 }
-ul.tool li.give {
-	width: 20%;
-	float: left;
-	height: 30px;
+ul.tool li a.give {
 	position: relative;
 	background-repeat: no-repeat;
-	background-position: 3px 5px;
+	background-position: 0px 4px;
 	background-image: url('../images/music/icomem.png');
 }
-ul.tool li.lyric {
-	width: 20%;
-	float: left;
-	height: 30px;
+ul.tool li a.lyric {
 	position: relative;
 	background-image: url('../images/music/icoly.png');
 	background-repeat: no-repeat;
-	background-position: 3px 5px;
+	background-position: 0px 4px;
 }
-ul.tool li.error {
-	width: 20%;
-	float: left;
-	height: 30px;
+ul.tool li a.error {
 	position: relative;
 	background-repeat: no-repeat;
-	background-position: 2px 5px;
+	background-position: 0px 4px;
 	background-image: url('../images/music/ibaoxau.png');
-}
-ul.tool li a:hover {
-	background-image: url('../images/music/bg.png');
-	background-repeat: repeat;
-}
-html ul.tool li.active, html ul.tool li.active a:hover {
-	background-color: #2a5263;
 }
 .tool_container {
 	clear: both;
@@ -506,11 +427,7 @@ html ul.tool li.active, html ul.tool li.active a:hover {
 }
 #tab1 .sendtool {
 	float: left;
-	width: 484px;
-	height: 30px;
-	padding-left: 20px;
-	background-image: url('../images/music/bg.png');
-	margin: 0px -7px 0px 0px;
+	margin-left: 10px;
 }
 #tab1 .sendtool a.facebook {
 
@@ -538,19 +455,11 @@ html ul.tool li.active, html ul.tool li.active a:hover {
 }
 
 #tab1 form {
-
 	float: left;
-
-	color: #000000;
-
+	color: #333333;
 	width: 485px;
-
 	margin: 0px;
-
-	background-image: url('../images/music/bg.png');
-
 	padding: 10px 0px 10px 20px;
-
 }
 
 #tab1 form p {
@@ -567,34 +476,33 @@ html ul.tool li.active, html ul.tool li.active a:hover {
 	margin-left: 0px;
 }
 #tab1 form textarea {
-	width: 430px;
+	width: 440px;
 	border: 1px solid #999999;
 	background-color: inherit;
 	color: #666666;
-	padding: 5px;
+	padding: 0px 5px 5px 5px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	float: right;
 	margin-right: 33px;
 }
-#tab1 form input.submit {
+.submitbutton {
+	border: 1px solid #CCCCCC;
 	width: 60px;
 	margin: 5px auto 5px auto;
-	color: #FFFFFF;
-	background-color: #1E003C;
-	border-style: none;
-	border-width: 0px;
-	float: none;
-}
-#main .commentcontainer .comment,
-#addCommentContainer{
-	padding: 2px 5px 5px 2px;
-	width: 462px;
-	color: #000000;
-	margin-bottom: 8px;
-	background-image: url('../images/music/bg.png');
-	background-repeat: repeat;
+	color: #204f87;
 	float: left;
+	background-repeat: repeat-x;
+	background-image: url('../images/music/tag_bg.gif');
+	cursor: pointer;
+}
+#main .commentcontainer .comment{
+	background-color: #E4E4E4;
+	margin-bottom: 3px;
+	padding: 3px;
+}
+#addCommentContainer{
+	padding-left: 3px;
 }
 .comment .avatar{
 	/*
@@ -631,20 +539,14 @@ html ul.tool li.active, html ul.tool li.active a:hover {
 }
 #addCommentContainer input[type=text],
 #addCommentContainer textarea{
-	width: 370px;
-	padding: 3px 0px 3px 0px;
+	width: 400px;
+	padding: 3px;
 	border: 1px solid #999999;
 	background-color: inherit;
-	color: #666666;
 	float: right;
-	margin-right: 33px;
-	margin-left: 0px;
+	margin-right: 20px;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-}
-
-#addCommentContainer textarea{
-	width: 400px;
 }
 
 label{
@@ -660,61 +562,27 @@ label span.error{
 /* The styles below are only necessary for the styling of the demo page: */
 
 #main{
-	padding: 0px;
-	margin: 0;
-	width: 100%;
-	float: left;
-	background-image: url('../images/music/bg.png');
-	color: #000000;
-}
-#buttoncontent {
-	padding: 5px 0px 5px 0px;
-	width: 60px;
-	color: #FFFFFF;
-	background-color: #1E003C;
-	border-style: none;
-	border-width: 0px;
-	float: none;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	cursor: pointer;
 }
 #main .commentcontainer {
-	padding: 5px;
-	float: left;
-	width: 470px;
-	margin: 5px 5px 5px 10px;
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
+	padding-left: 3px;
+	padding-right: 3px;
 }
 #addCommentContainer label {
 	line-height: 25px;
 	float: left;
 	font-size: 11px;
-	font-family: Arial, Helvetica, sans-serif;
-	width: 100%;
 }
 #main .commentcontainerbo {
-	padding: 5px;
-	float: left;
-	width: 470px;
-	margin: 5px 10px 5px 10px;
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
 }
 #tab3 form {
 	float: left;
-	color: #000000;
-	width: 485px;
-	margin: 0px;
-	background-image: url('../images/music/bg.png');
-	padding: 10px 0px 10px 20px;
+	margin-left: 20px;
 }
 #tab3 form p {
-	line-height: 25px;
+	line-height: 22px;
 }
 #tab3 form input {
-	width: 370px;
+	width: 360px;
 	padding: 3px 0px 3px 0px;
 	border: 1px solid #999999;
 	background-color: inherit;
@@ -735,20 +603,21 @@ label span.error{
 	margin-right: 33px;
 }
 #tab3 form a.submit {
+	border: 1px solid #CCCCCC;
 	padding: 5px 10px 5px 10px;
 	width: 60px;
-	margin: 5px auto 5px auto;
-	color: #FFFFFF;
-	background-color: #1E003C;
-	float: none;
+	margin: 5px 0px 5px 20px;
+	color: #0053A6;
+	float: left;
+	background-repeat: repeat-x;
+	background-image: url('../images/music/tag_bg.gif');
+	cursor: pointer;
+	height: 25px;
+	line-height: 60px;
 }
 #playlistcotainer {
 	padding: 10px;
 	float: left;
-	width: 483px;
-	border-style: none solid solid solid;
-	border-width: 1px;
-	border-color: #666666;
 	overflow: hidden;
 }
 #playlistcotainer .playlistitem {
@@ -761,7 +630,7 @@ label span.error{
 }
 #playlistcotainer .playlistitem span {
 	font-size: 11px;
-	color: #C0C0C0;
+	color: #999999;
 }
 #playlistcotainer .playlistitem a.next {
 	float: right;
@@ -792,44 +661,32 @@ a.show_lyric {
 	float: left;
 	width: 100%;
 	display: none;
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
 	color: #000000;
 }
 #sendlyric form input, #sendlyric form textarea {
+	padding: 0px 5px 0px 5px;
 	border: 1px solid #000000;
-	float: right;
-	width: 430px;
-	margin-right: 33px;
+	float: left;
+	width: 450px;
 	background-color: inherit;
 	color: #000000;
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
-}
-#sendlyric form input.send {
-	padding: 5px 10px 5px 10px;
-	border: 0px none #000000;
-	width: 60px;
-	margin-right: 200px;
-	background-color: #370037;
-	color: #FFFFFF;
-	cursor: pointer;
+	margin-left: 15px;
 }
 #album_info {
 	padding: 5px;
 	float: left;
 	width: 470px;
 	margin: 5px 10px 5px 0px;
-	background-repeat: repeat;
-	background-image: url('../images/music/bg.png');
 	color: #000000;
 }
 #album_info img {
 	float: left;
 	margin: 10px 10px 5px 0px;
-	padding: 2px;
-	background-color: #666666;
-	border: 1px solid #666666;
+	padding: 6px 6px 9px 6px;
+	background-image: url('../images/music/m_album.png');
+	background-repeat: no-repeat;
 }
 #album_info span {
 	line-height: 20px;
@@ -837,7 +694,7 @@ a.show_lyric {
 #album_info p {
 	text-align: justify;
 }
-a.listsong {
+a.listsong, div.listsong {
 	width: 95%;
 	border-style: none none dotted none;
 	border-width: 1px;
@@ -908,26 +765,11 @@ a.listsong {
 	color: #000000;
 	width: 500px;
 }
-#searchcontent h1 {
-	float: left;
-	width: 500px;
-	height: 33px;
-	line-height: 37px;
-	font-size: 14px;
-	font-weight: bold;
-	background-repeat: repeat-x;
-	background-image: url('../images/block-header-g1.png');
-	text-indent: 10px;
-	margin-top: 15px;
-	margin-bottom: 0px;
-}
 #searchcontent .resuirt {
 	margin: 0px;
 	float: left;
-	width: 480px;
+	width: 478px;
 	padding: 10px;
-	background-image: url('../images/music/bg.png');
-	background-repeat: repeat;
 }
 .gray {
 	background-color: #CCCCCC;
@@ -938,12 +780,12 @@ a.listsong {
 	background-repeat: no-repeat;
 	background-image: url('../images/music/listmusic.png');
 	padding: 7px 0px 7px 24px;
-	width: 95%;
+	width: 450px;
 	background-position: 3px 4px;
 }
 #searchcontent .itemsearch p {
 	float: left;
-	width: 70%;
+	width: 380px;
 	height: 16px;
 	line-height: 16px;
 	padding: 0px;
@@ -958,55 +800,34 @@ a.listsong {
 #searchcontent .itemsearch .tool {
 	float: right;
 }
-#searchblock {
-	float: left;
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-#searchblock .search_info {
-	background-position: 5px;
-	float: left;
-	border: 1px solid #999999;
-	width: 395px;
-	margin-right: 17px;
-	background-repeat: no-repeat;
-	background-image: url('../images/music/search_icon.png');
-	color: #666666;
-	font-size: 11px;
-	padding-left: 100px;
-	padding-top: 5px;
-}
 #searchblock form {
-	float: left;
-	width: 294px;
-	height: 37px;
+	padding: 6px 0px 0px 6px;
+	width: 494px;
+	height: 25px;
 	background-repeat: no-repeat;
 	background-image: url('../images/music/search_bg.png');
-	padding-top: 10px;
-	padding-bottom: 10px;
-	padding-left: 10px;
-	margin-top: 5px;
-	margin-left: 0px;
+	margin-bottom: 10px;
 }
 #searchblock form .sed {
+	margin: -3px 8px 0px 0px;
 	float: right;
-	width: 38px;
-	height: 20px;
+	width: 60px;
+	height: 25px;
 	background-repeat: no-repeat;
-	background-image: url('../images/music/search_but.png');
+	background-image: url('../images/music/search_sub.gif');
 	border-style: none;
 	border-width: 0px;
 	border-color: inherit;
 	color: #FFFFFF;
 	font-weight: bold;
-	margin: 3px 8px 0px -8px;
 	cursor: pointer;
+	line-height: 25px;
 }
-#searchcontent .resuirt img {
-	border: 1px solid #666666;
+#searchcontent .resuirt img.album {
 	float: left;
-	padding: 2px;
-	background-color: #666666;
+	padding: 6px 6px 9px 6px;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/m_album.png');
 }
 #album {
 	float: left;
@@ -1015,7 +836,7 @@ a.listsong {
 #boder {
 	float: left;
 	height: 1px;
-	width: 500px;
+	width: 100%;
 	padding: 0px;
 	margin: 0px;
 	border-bottom-style: solid;
@@ -1026,35 +847,18 @@ a.listsong {
 	padding: 10px 0px 10px 10px;
 	margin: 0px;
 	float: left;
-	width: 490px;
+	width: 488px;
 	background-repeat: repeat;
 	background-image: url('../images/music/bg.png');
 	font-size: 12px;
 	font-weight: bold;
 }
-#searchcontent h1 span {
-	float: right;
-	font-weight: normal;
-	height: 25px;
-	margin-top: 10px;
-	padding: 0px 6px 0px 6px;
-	border-style: none;
-	border-width: 1px;
-	line-height: 25px;
-}
-#searchcontent h1 span.active, #searchcontent h1 span:hover {
-	border-style: solid solid none solid;
-	border-width: 1px;
-	border-color: #999999;
-	background-image: url('../images/music/bg.png');
-	background-repeat: repeat;
-}
 #numpage {
 	float: left;
 	text-align: center;
 	width: 100%;
-	margin-top: 10px;
-	margin-bottom: 10px;
+	margin-top: 5px;
+	margin-bottom: 5px;
 }
 #numpage p {
 	font-family: Arial, Helvetica, sans-serif;
@@ -1090,19 +894,21 @@ a.listsong {
 	border-bottom-style: dotted;
 	border-bottom-width: 1px;
 	border-bottom-color: #666666;
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
 	font-size: 11px;
 }
 #blockalbum img {
-	border: 1px solid #000000;
+	padding: 3px 3px 7px 3px;
 	margin-right: 4px;
 	display: inline;
-	background-color: #666666;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/m_hotalbum.png');
 }
 #blockalbum a {
 	float: left;
 }
+
 #blockalbum a.black {
 	color: #000000;
 }
@@ -1120,4 +926,155 @@ a.listsong {
 	color: #000000;
 	font-size: 14px;
 	font-weight: bold;
+}
+#searchblock form input {
+	border-style: none solid none none;
+	border-width: 1px;
+	border-color: #999999;
+}
+#searchblock form select {
+	border-style: none;
+}
+ul.tool li.active {
+	background-repeat: repeat-x;
+	background-image: url('../images/music/tag_bg.gif');
+}
+#boderfull {
+	border: 1px solid #D3D3D3;
+}
+#sendlyric p {
+	float: left;
+	width: 400px;
+	color: #666666;
+	font-style: italic;
+	padding-left: 20px;
+}
+.header-block1 .active {
+	background-repeat: repeat-x;
+	background-image: url('../images/block-header-g1.png');
+}
+.addedtolist {
+	background-repeat: no-repeat;
+	background-image: url('../images/music/added.png');
+}
+.add {
+	background-image: url('../images/music/addmusic1.png');
+	background-repeat: no-repeat;
+}
+ul.tool li a.addedtolist1 {
+	background-position: 0px 4px;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/added.png');
+	position: relative;
+}
+#playlisttool {
+	padding-left: 28px;
+	float: left;
+	margin-bottom: -7px;
+}
+#playlisttool a {
+	float: left;
+	width: 25px;
+	height: 28px;
+	margin: 2px 7px 2px 7px;
+}
+#playlisttool a.showplaylist {
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: -50px 0px;
+}
+#playlisttool a.saveplaylist{
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: -75px 0px;
+}
+#playlisttool a.listenplaylist{
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: 0px 0px;
+}
+#playlisttool a.delplaylist{
+	background-repeat: no-repeat;
+	background-image: url('../images/music/tool.png');
+	background-position: -125px 0px;
+}
+div.tools {
+	float: right;
+	height: 16px;
+	width: 16px;
+	cursor: pointer;
+	margin-right: 5px;
+	background-repeat: no-repeat;
+	background-position: -34px -2689px;
+	background-image: url('../images/music/icon.gif');
+	margin-top: 4px;
+}
+div.tools:hover {
+	background-repeat: no-repeat;
+	background-position: -34px -2673px;
+	background-image: url('../images/music/icon.gif');
+}
+#videocate {
+	width: 608px;
+	background-color: #DFF4FF;
+	padding: 5px;
+}
+.frontmin {
+	font-size: 11px;
+	color: #FF9900;
+}
+#videos {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #CCCCCC;
+	width: 99%;
+	margin-left: 5px;
+	padding-top: 5px;
+}
+#videos:hover {
+	background-color: #F8F8F8;
+}
+#videoitem {
+	padding: 3px 3px 10px 3px;
+	float: left;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/videobg.png');
+	width: 128px;
+}
+#subsearch {
+	padding-top: 10px;
+	padding-bottom: 5px;
+	float: left;
+}
+#subsearch img {
+	float: left;
+	padding: 0px;
+	margin: 0px 0px 6px 0px;
+	background-image: inherit;
+}
+#salbum {
+	float: left;
+	width: 110px;
+}
+#salbum img.item {
+	padding: 6px 6px 9px 6px;
+	margin: 5px 0px 7px 0px;
+	float: left;
+	background-repeat: no-repeat;
+	background-image: url('../images/music/m_album.png');
+}
+#videoblockitem {
+	border-bottom-style: solid;
+	border-bottom-width: 1px;
+	border-bottom-color: #CCCCCC;
+	float: left;
+	width: 100%;
+	padding: 4px 0px 2px 0px;
+}
+#videoblockitem img {
+	background-repeat: no-repeat;
+	background-image: url('../images/music/block_video_img.png');
+	padding: 3px 3px 7px 3px;
+	float: left;
+	margin-right: 3px;
 }

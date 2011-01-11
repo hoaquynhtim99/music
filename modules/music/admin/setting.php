@@ -27,6 +27,13 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 	$data['who_gift'] = $nv_Request->get_int( 'who_gift', 'post', 0 );
 	$data['auto_gift'] = $nv_Request->get_int( 'auto_gift', 'post', 0 );
 	$data['auto_album'] = $nv_Request->get_int( 'auto_album', 'post', 0 );
+	$data['who_upload'] = $nv_Request->get_int( 'who_upload', 'post', 0 );
+	$data['auto_upload'] = $nv_Request->get_int( 'auto_upload', 'post', 0 );
+	$data['upload_max'] = $nv_Request->get_int( 'upload_max', 'post', 0 );
+	if ( ( $data['upload_max'] * ( 1024 * 1024 ) ) > $global_config['nv_max_size'] )
+	{
+		$data['upload_max'] = $global_config['nv_max_size'] / ( 1024 * 1024 );
+	}
 
 	foreach ( $data as $key => $value  )
 	{	
@@ -37,7 +44,7 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 		}
 		else
 		{
-		$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `value` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `value` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
 		}
 	}
 	if ( $query ) 
@@ -107,6 +114,23 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 </tr>
 </tbody>
 <tr>
+    <td><strong>" . $lang_module['set_who_upload'] . "</strong></td>
+    <td>
+		<select name=\"who_upload\">
+			<option value=\"1\"" . ( $setting['who_upload'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
+			<option value=\"0\"" . ( $setting['who_upload'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
+		</select>
+    </td>
+</tr>
+<tbody class=\"second\">
+<tr>
+    <td><strong>" . $lang_module['set_auto_upload'] . "</strong></td>
+    <td>
+        <input type=\"checkbox\" value=\"1\" name=\"auto_upload\" " . ( ( $setting['auto_upload'] ) ? "checked=\"checked\"" : "" ) . ">
+    </td>
+</tr>
+</tbody>
+<tr>
     <td><strong>" . $lang_module['set_floder_file'] . "</strong></td>
     <td>
 		<input name=\"root_contain\" type=\"text\" value=\"". $setting['root_contain'] . "\" />
@@ -129,6 +153,15 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 		</select>
     </td>
 </tr>
+</tbody>
+<tr>
+    <td><strong>" . $lang_module['set_uploadmax'] . "</strong></td>
+    <td>
+		<input name=\"upload_max\" type=\"text\" value=\"". $setting['upload_max'] . "\" />
+    </td>
+</tr>
+<tbody class=\"second\">
+
 </table>
 <div style=\"text-align: center;\" colspan=\"2\">
 <input type=\"submit\" value=\" " . $lang_module['save'] . " \" name=\"Submit1\">
