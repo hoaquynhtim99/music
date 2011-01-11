@@ -328,6 +328,8 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (7, 'auto_gift', 0, ''),
 (8, 'auto_album', 0, ''),
 (9, 'who_download', 0, ''),
-(10, 'upload_max', 2, '')";
+(10, 'upload_max', 2, ''),
+(11, 'who_upload', 0, ''),
+(12, 'auto_upload', 0, '')";
 
 ?>
