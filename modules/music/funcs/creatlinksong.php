@@ -38,10 +38,7 @@ echo '
 		<creator>' . $allsinger[$row['casi']] . '</creator>
 		<location>' . $link . '</location>
 		<info>' . $global_config['site_url'] . '</info>
-		<image>http://static.gonct.info/generals/logo-player.jpg</image>
-		<jwplayer:adv.enable>true</jwplayer:adv.enable>
-		<jwplayer:adv.link>http://www.nhaccuatui.com/clickqc/wrawpjhwx/wefdkmgois</jwplayer:adv.link>
-		<jwplayer:adv.file>http://static.gonct.info/imgqc/2011/01/nokia_npinner_20110110_1-634303382986093750.swf?bid=wrawpjhwx&skey=wefdkmgois&view=no</jwplayer:adv.file>
+		<image>' . $global_config['site_url'] ."/modules/" . $module_data . "/data/logo.png</image>
 		</track>
 	</trackList>
 </playlist>';
