@@ -3,7 +3,7 @@
 	padding: 0 0 0 0px;
 	float: left;
 	list-style: none;
-	height: 33px; /*--Set height of tabs--*/;
+	height: 33px; 	
 	width: 100%;
 	background-repeat: repeat-x;
 	background-image: url('../images/block-header-g1.png');
@@ -12,8 +12,8 @@ ul.tabs li {
 	float: left;
 	margin: 5px 0 0px 0;
 	padding: 0;
-	height: 21px; /*--Subtract 1px from the height of the unordered list--*/;
-	line-height: 21px; /*--Vertically aligns the text within the tab--*/ /*--Pull the list item down 1px--*/;
+	height: 21px; 
+	line-height: 21px;
 	overflow: hidden;
 	width: 123px;
 	background-repeat: no-repeat;
@@ -152,8 +152,8 @@ ul.topsong li {
 	float: left;
 	margin: -2px 0 0px 0;
 	padding: 0;
-	height: 21px; /*--Subtract 1px from the height of the unordered list--*/;
-	line-height: 21px; /*--Vertically aligns the text within the tab--*/ /*--Pull the list item down 1px--*/;
+	height: 21px; 
+	line-height: 21px;
 	overflow: hidden;
 	position: relative;
 	width: 123px;
@@ -505,11 +505,6 @@ ul.tool li a.error {
 	padding-left: 3px;
 }
 .comment .avatar{
-	/*
-	/	The avatar is positioned absolutely, 
-	/	and offset outside the comment div
-	/*/
-
 	padding: 0px;
 	margin: 0px 3px 0px 5px;
 	height: 50px;
@@ -558,9 +553,6 @@ label span.error{
 	position:relative;
 	right:-10px;
 }
-
-/* The styles below are only necessary for the styling of the demo page: */
-
 #main{
 }
 #main .commentcontainer {
@@ -999,19 +991,31 @@ ul.tool li a.addedtolist1 {
 	background-position: -125px 0px;
 }
 div.tools {
-	float: right;
-	height: 16px;
-	width: 16px;
 	cursor: pointer;
+}
+div.tools a.del {
+	float: right;
+	height: 22px;
+	width: 22px;
 	margin-right: 5px;
 	background-repeat: no-repeat;
-	background-position: -34px -2689px;
+	background-position: 0px -697px;
 	background-image: url('../images/music/icon.gif');
-	margin-top: 4px;
+	margin-top: 2px;
 }
-div.tools:hover {
+div.tools a.edit {
+	float: right;
+	height: 22px;
+	width: 22px;
+	margin-right: 5px;
 	background-repeat: no-repeat;
-	background-position: -34px -2673px;
+	background-position: 0px -750px;
+	background-image: url('../images/music/icon.gif');
+	margin-top: 2px;
+}
+div.tools a.del:hover {
+	background-repeat: no-repeat;
+	background-position: 0px -722px;
 	background-image: url('../images/music/icon.gif');
 }
 #videocate {
@@ -1126,4 +1130,31 @@ div.tools:hover {
 #px_button input{
 	margin-right: 6px;
 	padding: 5px;
+}
+div.tools a.edit:hover {
+	background-repeat: no-repeat;
+	background-position: 0px -774px;
+	background-image: url('../images/music/icon.gif');
+}
+div.tools a.play {
+	float: right;
+	height: 22px;
+	width: 22px;
+	margin-right: 5px;
+	background-repeat: no-repeat;
+	background-position: 0px -52px;
+	background-image: url('../images/music/icon.gif');
+	margin-top: 2px;
+}
+div.tools a.play:hover {
+	background-repeat: no-repeat;
+	background-position: 0px -609px;
+	background-image: url('../images/music/icon.gif');
+}
+div.sucess {
+	background-color: #CCFFCC;
+	border: 3px solid #99CCFF;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 5px;
 }

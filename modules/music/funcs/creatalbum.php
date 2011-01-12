@@ -71,6 +71,7 @@ else
 		$xtpl->assign( 'id', $row['id'] );
 		$xtpl->assign( 'view', $row['view'] );
 		$xtpl->assign( 'url_view', $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'] );
+		$xtpl->assign( 'url_edit', $mainURL . "=editplaylist/" . $row['id'] );
 		$xtpl->parse( 'main.access.list' );
 	}
 	$xtpl->parse( 'main.access' );

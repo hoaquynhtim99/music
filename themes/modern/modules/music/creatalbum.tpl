@@ -15,7 +15,11 @@
 	<div style="padding: 10px;">
 		<p><strong>{LANG.playlist_song}</strong></p>
 		<!-- BEGIN: loop -->
-		<div id="song{stt}" class="listsong">&nbsp;&nbsp;{songname} - {singer}<div onclick="delsongfrlist('{stt}');" class="tools"></div></div>
+			<div style="padding-right:15px;" class="tools">
+				<a class="del" onclick="delsongfrlist('{stt}');" title="{LANG.del}"></a>
+			</div>
+		<div id="song{stt}" class="listsong">&nbsp;&nbsp;{songname} - {singer}
+		</div>
 		<!-- END: loop -->
 	</div>
 	<div id="album_info">
@@ -72,11 +76,15 @@
 			<h2 class="album">{LANG.there_are} {num} playlist</h2>
 			<!-- BEGIN: list -->
 			<div id="item{id}" class="resuirt">
-				<div onclick="dellist('{id}');" class="tools"></div>
+				<div class="tools">
+					<a class="del" onclick="dellist('{id}');" title="{LANG.playlist_delete}"></a>
+					<a href="{url_edit}" class="edit" title="{LANG.playlist_edit}"></a>
+					<a href="{url_view}" class="play" title="{LANG.playlist_listen1}"></a>
+				</div>
 				<a href="{url_view}" class="namealbum">
-				<img class="album" width="90px" height="90px" border="0" src="{playlist_img}" />
+				<img class="album" width="90px" height="90px" border="0" src="{playlist_img}" /></a>
 				<div id="album">
-					<p><strong>{name}</strong></a></p>
+					<a href="{url_view}"><p><strong>{name}</strong></a></p>
 					<p>{LANG.show_1}: {singer}</p>
 					<p>{LANG.playlist_creat}: {date} | {LANG.view}: {view}</p>
 				</div>

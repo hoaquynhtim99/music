@@ -21,6 +21,8 @@ $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
 $lang_module['add_playlist_info'] = "Bạn dùng thẻ &lt;br /&gt; để xuống dòng";
 
+$lang_module['del'] = "Xóa";
+
 $lang_module['all_album'] = "Tất cả album";
 $lang_module['all_song'] = "Tất cả bài hát";
 
@@ -80,12 +82,14 @@ $lang_module['topics'] = "CHỦ ĐỀ";
 $lang_module['upload'] = "Up bởi";
 
 $lang_module['playlist_listen'] = "Nghe playlist";
+$lang_module['playlist_listen1'] = "Nghe playlist này";
 $lang_module['playlist_info'] = "Thông tin về playlist";
 $lang_module['playlist_creat'] = "Ngày tạo";
 $lang_module['playlist_save'] = "Quản lí playlist";
 $lang_module['playlist_song'] = "Danh sách các bài hát trong playlist của bạn";
 $lang_module['playlist_showhide'] = "Ẩn hiện playlist";
 $lang_module['playlist_delete'] = "Xóa playlist";
+$lang_module['playlist_edit'] = "Sửa playlist";
 $lang_module['playlist_full'] = "Xin lỗi bạn chỉ được thêm tối đa 20 bài hát vào playlist";
 $lang_module['playlist_null'] = "Xin lỗi playlist của bạn hiện chưa có bài hát nào";
 $lang_module['playlist_added'] = "Xin lỗi bạn đã thêm bài hát này vào playlist rồi.";
@@ -94,6 +98,11 @@ $lang_module['playlist_del_success'] = "Bạn đã xóa tất cả bài hát tro
 $lang_module['playlist_hotest'] = "Playlist hot nhất";
 $lang_module['playlist_newest'] = "Playlist mới nhất";
 $lang_module['playlist_all'] = "Tất cả playlist";
+$lang_module['playlist_edit_sucess'] = "Bạn đã sửa thành công, bạn có thể ";
+$lang_module['playlist_edit_sucess1'] = "nghe ";
+$lang_module['playlist_edit_sucess2'] = "playlist này hoặc ";
+$lang_module['playlist_edit_sucess3'] = "quay lại ";
+$lang_module['playlist_edit_sucess4'] = "trang quản lí playlist";
 
 $lang_module['prev'] = "Trang trước";
 
