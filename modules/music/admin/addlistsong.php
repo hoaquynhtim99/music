@@ -89,7 +89,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			
 			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 			(
-				`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `uerid`
+				`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
 			) 
 			VALUES 
 			( 
