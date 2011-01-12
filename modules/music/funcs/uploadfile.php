@@ -18,7 +18,7 @@ $size = $_FILES['uploadfile']['size'];
 $songname = filter_text_input( 'song', 'get,post', '' );
 $singer = filter_text_input( 'singer', 'get,post', '' );
 $newsinger = filter_text_input( 'newsinger', 'get,post', '' );
-$category = 1;
+$category = $nv_Request->get_int( 'category', 'get,post', 0 );
 if ( defined( 'NV_IS_USER' ) )
 {
     $name = $user_info['username'];
