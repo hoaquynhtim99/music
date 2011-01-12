@@ -32,6 +32,7 @@ $lang_module['add_album'] = "Thêm Album mới";
 
 $lang_module['ads_name'] = "Tên quảng cáo";
 $lang_module['ads_title'] = "Quảng cáo trên player";
+$lang_module['ads_url'] = "Url khi ấn vào quảng cáo";
 
 $lang_module['add_hot_album'] = "Thêm vào";
 $lang_module['add_to_main_album'] = "Thêm danh mục menu";

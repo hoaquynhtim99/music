@@ -17,6 +17,7 @@ $contents = "";
 $error = "";
 $name = filter_text_input( 'name', 'post', '' );
 $link = $nv_Request->get_string( 'link', 'post', '' );
+$url = $nv_Request->get_string( 'url', 'post', '' );
 
 // xu li
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY stt";
@@ -40,14 +41,15 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	{
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_ads` 
 		(
-			`id`, `stt`, `link`, `name`
+			`id`, `stt`, `link`, `name`, `url`
 		) 
 		VALUES 
 		( 
 		NULL, 
 		" . $db->dbescape( $numadd ) . ", 
 		" . $db->dbescape( $link ) . ", 
-		" . $db->dbescape( $name ) . "
+		" . $db->dbescape( $name ) . ",
+		" . $db->dbescape( $url ) . "
 		)
 		"; 
 		if ( $db->sql_query_insert_id( $query ) ) 
@@ -127,6 +129,12 @@ $contents .= "</tbody>
 					return false;
 				});
 				</script>
+			</td>
+		</tr>
+		<tr>
+			<td style=\"background: #eee;\">".$lang_module['ads_url']."</td>
+			<td style=\"background: #eee;\">
+				<input style=\"width:400px;\" type=\"text\" name=\"url\" id=\"url\" value=\"" . $url . "\" />
 			</td>
 		</tr>
 		<tr>

@@ -18,17 +18,12 @@
 			flashplayer: "{base_url}player.swf",
 			playlist: [
 			<!-- BEGIN: song -->
-			{ file: "{song_url}", image: "{ads}", title: "{song_name} - ", description: " {song_singer}" },
+			{ file: "{song_url}", image: "{base_url}logo.png", title: "{song_name} - ", description: " {song_singer}", "adv.enable": "true",
+			"adv.link": "{ads.url}",
+			"adv.file": "{ads.link}?bid=wrawpjhwx" },
 			<!-- END: song -->
 			],
-			"playlist.position": "bottom",
-			"playlist.size": 1,
 			controlbar: "bottom",
-			"logo.file": "{base_url}logo.png",
-			"logo.position": "top-right",
-			"logo.hide": "false",
-			"logo.link": "{NV_MY_DOMAIN}",
-			"logo.linktarget": "_top",
 			volume: 100,
 			height: 260,
 			width: 470,

@@ -108,7 +108,7 @@ function getADS()
 {
 	global $module_data, $db;
 	
-	$ads = 0 ;
+	$ads = array() ;
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads";
 	$query = $db->sql_query( $sql );
 	$num = $db->sql_numrows($query);
@@ -117,7 +117,8 @@ function getADS()
 	{
 		if ( $rand == $row['stt'] )
 		{
-			$ads = $row['link'];
+			$ads['link'] = $row['link'];
+			$ads['url'] = $row['url'];
 			break ;
 		}
 	}

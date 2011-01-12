@@ -25,13 +25,11 @@
 		<script type="text/javascript">
 			jwplayer("player").setup({
 			flashplayer: "{base_url}player.swf",
-			file: "{link}", image: "{ads}" ,
+			file: "{link}",
 			controlbar: "bottom",
-			"logo.file": "{base_url}logo.png",
-			"logo.position": "top-right",
-			"logo.hide": "false",
-			"logo.link": "{NV_MY_DOMAIN}",
-			"logo.linktarget": "_top",
+			"adv.enable": "true",
+			"adv.link": "{ads.url}",
+			"adv.file": "{ads.link}?bid=wrawpjhwx",
 			volume: 100,
 			height: 260,
 			width: 470,

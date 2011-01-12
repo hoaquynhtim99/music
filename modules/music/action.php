@@ -98,6 +98,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `stt` int(100) unsigned NOT NULL,
   `link` varchar(255) NOT NULL,
   `name` varchar(100) NOT NULL,
+  `url` VARCHAR( 255 ) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 

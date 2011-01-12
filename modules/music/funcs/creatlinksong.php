@@ -30,18 +30,21 @@ else
 if ( $name == $row['ten'] )
 {
 echo '
-<playlist version="1" xmlns="http://xspf.org/ns/0/">
-   <title>' . $global_config['site_url'] . '</title>
-   <info>' . $global_config['site_url'] . '</info>
-   <tracklist>
-      <track>
-         <title>' . $row['tenthat'] . '</title>
-         <creator>' . $allsinger[$row['casi']] . '</creator>
-         <info>' . $global_config['site_url'] . '</info>
-         <annotation>' . $allsinger[$row['casi']] . '</annotation>
-         <location>' . $link . '</location>
-      </track>
-   </tracklist>
-</playlist>	';
+<?xml version="1.0" encoding="utf-8"?>
+<playlist version="1" xmlns:jwplayer="http://developer.longtailvideo.com/">
+	<trackList>
+		<track> 
+		<title>' . $row['tenthat'] . '</title>
+		<creator>' . $allsinger[$row['casi']] . '</creator>
+		<location>' . $link . '</location>
+		<info>' . $global_config['site_url'] . '</info>
+		<image>http://static.gonct.info/generals/logo-player.jpg</image>
+		<jwplayer:adv.enable>true</jwplayer:adv.enable>
+		<jwplayer:adv.link>http://www.nhaccuatui.com/clickqc/wrawpjhwx/wefdkmgois</jwplayer:adv.link>
+		<jwplayer:adv.file>http://static.gonct.info/imgqc/2011/01/nokia_npinner_20110110_1-634303382986093750.swf?bid=wrawpjhwx&skey=wefdkmgois&view=no</jwplayer:adv.file>
+		</track>
+	</trackList>
+</playlist>';
+
 }
 ?>
