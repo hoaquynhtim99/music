@@ -15,10 +15,11 @@
 	<div style="padding: 10px;">
 		<p><strong>{LANG.playlist_song}</strong></p>
 		<!-- BEGIN: loop -->
-			<div style="padding-right:15px;" class="tools">
+		<div id="song{stt}" class="listsong">
+			<div class="tools">
 				<a class="del" onclick="delsongfrlist('{stt}');" title="{LANG.del}"></a>
-			</div>
-		<div id="song{stt}" class="listsong">&nbsp;&nbsp;{songname} - {singer}
+			</div>		
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="{url_view}">{songname}</a> - <a href="{url_search_singer}">{singer}</a>
 		</div>
 		<!-- END: loop -->
 	</div>

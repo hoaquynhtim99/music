@@ -106,13 +106,18 @@ function new_page ( $ts, $now_page, $link)
 // lay quang cao
 function getADS()
 {
-	global $module_data, $db;
+	global $module_data, $global_config, $db;
 	
 	$ads = array() ;
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads";
 	$query = $db->sql_query( $sql );
 	$num = $db->sql_numrows($query);
 	$rand = rand( 1, $num );
+	if( $num == 0 )
+	{
+		$ads['link'] = NV_BASE_SITEURL . "modules/" . $module_data . "/data/default.swf";
+		$ads['url'] = $global_config['site_url'];
+	}
 	while ( $row = $db->sql_fetchrow( $query ))
 	{
 		if ( $rand == $row['stt'] )

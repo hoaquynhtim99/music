@@ -207,7 +207,7 @@
 
 <form action="{DATA_ACTION}" method="post" enctype="multipart/form-data">
 <input id="yourInputFileId" name="uploadfile" type="file" />
-<input class="submitbutton" type="submit" value="{LANG.upload}" id="pxUpload" />
+<input class="submitbutton" type="submit" value="{LANG.upload_ok}" id="pxUpload" />
 <input class="submitbutton" type="reset" value="{LANG.cancel}" id="pxClear" />
 </form>
 <script type="text/javascript">

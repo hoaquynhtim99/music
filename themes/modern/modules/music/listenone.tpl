@@ -21,17 +21,29 @@
 	<p>Album: <a href="{url_search_album}">{album}
 	</a></p>
 	<div class="playercontainer">
+	<a href="{ads.url}" onclick="window.open(this.href); return false;"><div style="float:left;background:black;cursor:pointer;width:470px;height:236px;">
+	<!--[if !IE]> -->
+    <object type="application/x-shockwave-flash" data="{ads.link}" width="470" height="236">
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="479" height="236"
+        codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
+        <param name="movie" value="{ads.link}" />
+    <!--><!--dgx-->
+        <param name="loop" value="true" />
+        <param name="wmode" value="transparent" />
+        <param name="menu" value="false" />
+    </object>
+    <!-- <![endif]-->
+	</div></a>
 		<div id="player">Loading the player...</div>
 		<script type="text/javascript">
 			jwplayer("player").setup({
 			flashplayer: "{base_url}player.swf",
 			file: "{link}",
 			controlbar: "bottom",
-			"adv.enable": "true",
-			"adv.link": "{ads.url}",
-			"adv.file": "{ads.link}?bid=wrawpjhwx",
 			volume: 100,
-			height: 260,
+			height: 24,
 			width: 470,
 			autostart: "true",
 			events: {

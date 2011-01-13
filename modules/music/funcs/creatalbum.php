@@ -54,6 +54,8 @@ else
 			$xtpl->assign( 'stt', $i );
 			$xtpl->assign( 'songname', $song['tenthat'] );
 			$xtpl->assign( 'singer', $allsinger[$song['casi']] );
+			$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
+			$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $song['casi'] );
 			
 			$xtpl->parse( 'main.access.creatlist.loop' );
 		}

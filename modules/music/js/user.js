@@ -137,6 +137,10 @@ function delsongfrlist(stt) {
 function delsongfrplaylist(id, plid) {
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrplaylist&id=' + id + '&plid=' + plid, '', 'afterdelsong');
 }
+// xoa mot bai
+function delsong(id) {
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsong&id=' + id , '', 'afterdelsong');
+}
 function afterdelsong(res)
 {
 	$("#song" + res).remove();
