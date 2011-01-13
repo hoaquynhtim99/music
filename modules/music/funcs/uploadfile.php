@@ -64,6 +64,6 @@ if ( move_uploaded_file ( $_FILES['uploadfile']['tmp_name'], $file ) )
 else 
 {
 	echo '<div id="output">failed</div>';
-	echo '<div id="message">' . $category . ' ' . $_FILES['uploadfile']['tmp_name'] . '</div>';
+	echo '<div id="message"></div>';
 }
 ?>
