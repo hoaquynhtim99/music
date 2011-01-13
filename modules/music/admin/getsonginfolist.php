@@ -23,7 +23,9 @@ $data = $nv_Request->get_string( 'link', 'post', '' );
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 if ( !preg_match('/^(ht|f)tp:\/\//', $data) ) 
 {
-	$data = NV_ROOTDIR . $data ; 
+	$lu = strlen( NV_BASE_SITEURL  );
+	$duongdan = substr( $data, $lu );
+	$data = NV_ROOTDIR . "/" . $duongdan ; 
 }
 
 $au = GetAllMP3info($data);
