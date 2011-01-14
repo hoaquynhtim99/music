@@ -140,7 +140,7 @@ else
 }
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
-if ( $id == 0 )
+if ( $userid != 0 ) if ( $id == 0 )
 $contents .= new_page( $ts, $now_page, $link);
 
 include ( NV_ROOTDIR . "/includes/header.php" );
