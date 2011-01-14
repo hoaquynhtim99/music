@@ -99,18 +99,15 @@ else
 	$xtpl->parse( 'main.nolyric' );
 }
 //gui qua tang
-if ( $setting['who_gift'] != 1 )
+if ( ( $setting['who_gift'] == 0 ) &&  !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
 {
-	if ( ( $setting['who_gift'] == 0 ) and ( !defined( 'NV_IS_USER' ) || !defined( 'NV_IS_ADMIN' )) )
-	{
-		$xtpl->assign( 'USER_LOGIN', $user_login );
-		$xtpl->assign( 'USER_REGISTER', $user_register );		
-		$xtpl->parse( 'main.nogift' );
-	}
-	else
-	{
-		$xtpl->parse( 'main.stopgift' );	
-	}
+	$xtpl->assign( 'USER_LOGIN', $user_login );
+	$xtpl->assign( 'USER_REGISTER', $user_register );		
+	$xtpl->parse( 'main.nogift' );
+}
+elseif ( $setting['who_gift'] == 2 )
+{
+	$xtpl->parse( 'main.stopgift' );	
 }
 else
 {
@@ -119,18 +116,15 @@ else
 	$xtpl->parse( 'main.gift' );
 }
 //gui loi bai hat
-if ( $setting['who_lyric'] != 1 )
+if ( ( $setting['who_lyric'] == 0 ) &&  !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
 {
-	if ( ( $setting['who_lyric'] == 0 ) and ( !defined( 'NV_IS_USER' ) || !defined( 'NV_IS_ADMIN' )) )
-	{
-		$xtpl->assign( 'USER_LOGIN', $user_login );
-		$xtpl->assign( 'USER_REGISTER', $user_register );		
-		$xtpl->parse( 'main.noaccesslyric' );
-	}
-	else
-	{
-		$xtpl->parse( 'main.stoplyric' );	
-	}
+	$xtpl->assign( 'USER_LOGIN', $user_login );
+	$xtpl->assign( 'USER_REGISTER', $user_register );		
+	$xtpl->parse( 'main.noaccesslyric' );
+}
+elseif ( $setting['who_lyric'] == 2 )
+{
+	$xtpl->parse( 'main.stoplyric' );	
 }
 else
 {
@@ -141,18 +135,15 @@ else
 }
 
 // binh luan
-if ( $setting['who_comment'] != 1 )
+if ( ( $setting['who_comment'] == 0 ) && !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
 {
-	if ( ( $setting['who_comment'] == 0 ) and (!defined( 'NV_IS_USER' ) || !defined( 'NV_IS_ADMIN' )) )
-	{
-		$xtpl->assign( 'USER_LOGIN', $user_login );
-		$xtpl->assign( 'USER_REGISTER', $user_register );		
-		$xtpl->parse( 'main.nocomment' );
-	}
-	else
-	{
-		$xtpl->parse( 'main.stopcomment' );	
-	}
+	$xtpl->assign( 'USER_LOGIN', $user_login );
+	$xtpl->assign( 'USER_REGISTER', $user_register );		
+	$xtpl->parse( 'main.nocomment' );
+}
+elseif ( $setting['who_comment'] == 2 )
+{
+	$xtpl->parse( 'main.stopcomment' );	
 }
 else
 {
