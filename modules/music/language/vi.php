@@ -40,7 +40,7 @@ $lang_module['album_creat'] = "Tạo một playlist mới";
 $lang_module['category'] = "THỂ LOẠI";
 $lang_module['category_2'] = "Thể loại";
 
-$lang_module['cancel'] = "Hủy bỏ";
+$lang_module['cancel'] = "Làm lại";
 
 $lang_module['content'] = "Nội dung";
 $lang_module['comment'] = "Bình luận";
@@ -208,7 +208,7 @@ $lang_module['song_del'] = "Xóa bài hát này";
 $lang_module['song_edit_back'] = "Trở lại trang quản lí bài hát";
 $lang_module['song_edit_listen'] = "nghe bài hát này";
 
-$lang_module['upload_ok'] = "Hoàn tất";
+$lang_module['upload_ok'] = "Tải lên";
 $lang_module['upload_wait_accept'] = "Đang kiểm duyệt";
 $lang_module['upload_inviad'] = "Định dạng không hợp lệ";
 $lang_module['upload_rule'] = "Quy định upload";
