@@ -125,6 +125,14 @@ else
 			$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'] );
 			$xtpl->assign( 'url_edit', $mainURL . "=managersong/" . $row['id'] );
 			
+			if( $row['active'] == 0 )
+			{
+				$xtpl->parse( 'main.access.song.noacept' );
+			}
+			else
+			{
+				$xtpl->parse( 'main.access.song.acept' );
+			}
 			$xtpl->parse( 'main.access.song' );
 		}
 	}

@@ -203,6 +203,7 @@ $lang_module['song_edit_back'] = "Trở lại trang quản lí bài hát";
 $lang_module['song_edit_listen'] = "nghe bài hát này";
 
 $lang_module['upload_ok'] = "Hoàn tất";
+$lang_module['upload_wait_accept'] = "Đang kiểm duyệt";
 $lang_module['upload_inviad'] = "Định dạng không hợp lệ";
 $lang_module['upload_rule'] = "Quy định upload";
 $lang_module['upload_rule1'] = "Không upload nhạc cấm";
