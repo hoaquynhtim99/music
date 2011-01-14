@@ -17,6 +17,10 @@ $lang_translator['copyright'] = "@Copyright (C) 2010 VINADES.,JSC. All rights re
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
+$lang_module['menu1'] = "Nhạc";
+$lang_module['menu3'] = "Bài hát của bạn";
+$lang_module['menu4'] = "Playlist của bạn";
+
 $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
 $lang_module['add_playlist_info'] = "Bạn dùng thẻ &lt;br /&gt; để xuống dòng";
