@@ -101,7 +101,7 @@ else
 //gui qua tang
 if ( $setting['who_gift'] != 1 )
 {
-	if ( ( $setting['who_gift'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	if ( ( $setting['who_gift'] == 0 ) and ( !defined( 'NV_IS_USER' ) || !defined( 'NV_IS_ADMIN' )) )
 	{
 		$xtpl->assign( 'USER_LOGIN', $user_login );
 		$xtpl->assign( 'USER_REGISTER', $user_register );		
@@ -121,7 +121,7 @@ else
 //gui loi bai hat
 if ( $setting['who_lyric'] != 1 )
 {
-	if ( ( $setting['who_lyric'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	if ( ( $setting['who_lyric'] == 0 ) and ( !defined( 'NV_IS_USER' ) || !defined( 'NV_IS_ADMIN' )) )
 	{
 		$xtpl->assign( 'USER_LOGIN', $user_login );
 		$xtpl->assign( 'USER_REGISTER', $user_register );		
@@ -143,7 +143,7 @@ else
 // binh luan
 if ( $setting['who_comment'] != 1 )
 {
-	if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	if ( ( $setting['who_comment'] == 0 ) and (!defined( 'NV_IS_USER' ) || !defined( 'NV_IS_ADMIN' )) )
 	{
 		$xtpl->assign( 'USER_LOGIN', $user_login );
 		$xtpl->assign( 'USER_REGISTER', $user_register );		
