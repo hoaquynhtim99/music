@@ -11,9 +11,16 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 
-if( ( $setting['who_download'] == 0 ) and !defined( 'NV_IS_USER' )  and !defined( 'NV_IS_ADMIN' ))
+if( $setting['who_download'] != 1 )
 {
-	$contents = $lang_module['err_user_down'];
+	if( ( $setting['who_download'] == 0 ) and !defined( 'NV_IS_USER' )  and !defined( 'NV_IS_ADMIN' ))
+	{
+		$contents = $lang_module['err_user_down'];
+	}
+	else
+	{
+		$contents = $lang_module['setting_stop'];
+	}
 	include ( NV_ROOTDIR . "/includes/header.php" );
 	echo nv_site_theme( $contents );
 	include ( NV_ROOTDIR . "/includes/footer.php" );

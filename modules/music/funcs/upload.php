@@ -20,11 +20,18 @@ $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'DATA_URL', NV_BASE_SITEURL ."themes/" . $module_info ['template'] . "/images/" . $module_file . "/" );
 $xtpl->assign( 'DATA_ACTION', $mainURL . "=uploadfile" );
 
-if ( ( $setting['who_upload'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+if ( $setting['who_upload'] != 1 )
 {
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-    $xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.noaccess' );
+	if ( ( $setting['who_upload'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	{
+		$xtpl->assign( 'USER_LOGIN', $user_login );
+		$xtpl->assign( 'USER_REGISTER', $user_register );		
+		$xtpl->parse( 'main.noaccess' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.stopaccess' );	
+	}
 }
 else
 {

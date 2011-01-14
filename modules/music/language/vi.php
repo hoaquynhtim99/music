@@ -158,6 +158,8 @@ $lang_module['send_error_not'] = "Xin lỗi, bài hát này hiện đang tồn t
 
 $lang_module['song_name'] = "Tên bài hát";
 
+$lang_module['setting_stop'] = "Chức năng này đang tạm đóng đề nâng cấp, chúng tôi sẽ cố gắng mở lại trong thời gian sớm nhất";
+
 $lang_module['there_are'] = "Có tất cả";
 $lang_module['resuitvideo'] = "Kết quả video";
 $lang_module['resuitalbum'] = "Kết quả album";

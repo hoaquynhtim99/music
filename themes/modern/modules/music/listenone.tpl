@@ -100,6 +100,9 @@
 		<!-- BEGIN: nogift -->
 		<p style="width:100%;float:left;" align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: nogift -->
+		<!-- BEGIN: stopgift -->
+		<p style="width:100%;float:left;" align="center"><em>{LANG.setting_stop}</em></p>
+		<!-- END: stopgift -->
 	</div> 
 	<div id="tab2" class="tab_content">
 		<div id="playlistcotainer">
@@ -148,6 +151,9 @@
 		<!-- BEGIN: noaccesslyric -->
 		<p style="width:100%;float:left;" align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: noaccesslyric -->
+		<!-- BEGIN: stoplyric -->
+		<p style="width:100%;float:left;" align="center"><em>{LANG.setting_stop}</em></p>
+		<!-- END: stoplyric -->
 	</div> 
 	<div id="tab3" class="tab_content">
 		<form action="#" method="post">
@@ -213,6 +219,9 @@ $(document).ready(function() {
 		<!-- BEGIN: nocomment -->
 		<p align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: nocomment -->
+		<!-- BEGIN: stopcomment -->
+		<p align="center"><em>{LANG.setting_stop}</em></p>
+		<!-- END: stopcomment -->
 	</div>
 	<div class="clear"></div>
 </div>

@@ -64,9 +64,16 @@ $xtpl->assign( 'URL_SONG', get_URL() );
 // binh luan
 if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
 {
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-    $xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.nocomment' );
+	if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	{
+		$xtpl->assign( 'USER_LOGIN', $user_login );
+		$xtpl->assign( 'USER_REGISTER', $user_register );		
+		$xtpl->parse( 'main.nocomment' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.stopcomment' );	
+	}
 }
 else
 {

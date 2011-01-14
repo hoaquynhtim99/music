@@ -104,6 +104,9 @@
 		<!-- BEGIN: nocomment -->
 		<p align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: nocomment -->
+		<!-- BEGIN: stopcomment -->
+		<p align="center"><em>{LANG.setting_stop}</em></p>
+		<!-- END: stopcomment -->
 	</div>
 	<div class="clear"></div>
 </div>

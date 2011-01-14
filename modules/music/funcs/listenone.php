@@ -99,11 +99,18 @@ else
 	$xtpl->parse( 'main.nolyric' );
 }
 //gui qua tang
-if ( ( $setting['who_gift'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+if ( $setting['who_gift'] != 1 )
 {
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-    $xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.nogift' );
+	if ( ( $setting['who_gift'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	{
+		$xtpl->assign( 'USER_LOGIN', $user_login );
+		$xtpl->assign( 'USER_REGISTER', $user_register );		
+		$xtpl->parse( 'main.nogift' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.stopgift' );	
+	}
 }
 else
 {
@@ -112,11 +119,18 @@ else
 	$xtpl->parse( 'main.gift' );
 }
 //gui loi bai hat
-if ( ( $setting['who_lyric'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+if ( $setting['who_lyric'] != 1 )
 {
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-    $xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.noaccesslyric' );
+	if ( ( $setting['who_lyric'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	{
+		$xtpl->assign( 'USER_LOGIN', $user_login );
+		$xtpl->assign( 'USER_REGISTER', $user_register );		
+		$xtpl->parse( 'main.noaccesslyric' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.stoplyric' );	
+	}
 }
 else
 {
@@ -127,11 +141,18 @@ else
 }
 
 // binh luan
-if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+if ( $setting['who_comment'] != 1 )
 {
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-    $xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.nocomment' );
+	if ( ( $setting['who_comment'] == 0 ) and !defined( 'NV_IS_USER' ) and !defined( 'NV_IS_ADMIN' ) )
+	{
+		$xtpl->assign( 'USER_LOGIN', $user_login );
+		$xtpl->assign( 'USER_REGISTER', $user_register );		
+		$xtpl->parse( 'main.nocomment' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.stopcomment' );	
+	}
 }
 else
 {

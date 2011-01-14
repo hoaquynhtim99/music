@@ -158,6 +158,7 @@ $lang_module['set_who_gift'] = "Ai được gửi quà tặng";
 $lang_module['set_uploadmax'] = "Dung lượng tối đa được upload (Tính bằng MB)";
 $lang_module['set_user'] = "Thành viên";
 $lang_module['set_all'] = "Tất cả";
+$lang_module['set_no'] = "Tắt";
 $lang_module['set_auto_comment'] = "Tự động đăng bình luận";
 $lang_module['set_auto_upload'] = "Tự động cho đăng các bài hát upload";
 $lang_module['set_auto_lyric'] = "Tự động đăng lời bài hát";

@@ -65,6 +65,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     <td style=\"width: 170px;\"><strong>" . $lang_module['set_who_comment'] . "</strong></td>
     <td>
 		<select name=\"who_comment\">
+			<option value=\"2\"" . ( $setting['who_comment'] == 2 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_no'] . "</option>\n
 			<option value=\"1\"" . ( $setting['who_comment'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
 			<option value=\"0\"" . ( $setting['who_comment'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
 		</select>
@@ -83,6 +84,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     <td><strong>" . $lang_module['set_who_lyric'] . "</strong></td>
     <td>
 		<select name=\"who_lyric\">
+			<option value=\"2\"" . ( $setting['who_lyric'] == 2 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_no'] . "</option>\n
 			<option value=\"1\"" . ( $setting['who_lyric'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
 			<option value=\"0\"" . ( $setting['who_lyric'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
 		</select>
@@ -100,6 +102,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     <td><strong>" . $lang_module['set_who_gift'] . "</strong></td>
     <td>
 		<select name=\"who_gift\">
+			<option value=\"2\"" . ( $setting['who_gift'] == 2 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_no'] . "</option>\n
 			<option value=\"1\"" . ( $setting['who_gift'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
 			<option value=\"0\"" . ( $setting['who_gift'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
 		</select>
@@ -117,6 +120,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     <td><strong>" . $lang_module['set_who_upload'] . "</strong></td>
     <td>
 		<select name=\"who_upload\">
+			<option value=\"2\"" . ( $setting['who_upload'] == 2 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_no'] . "</option>\n
 			<option value=\"1\"" . ( $setting['who_upload'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
 			<option value=\"0\"" . ( $setting['who_upload'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
 		</select>
@@ -148,6 +152,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     <td><strong>" . $lang_module['set_who_download'] . "</strong></td>
     <td>
 		<select name=\"who_download\">
+			<option value=\"2\"" . ( $setting['who_download'] == 2 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_no'] . "</option>\n
 			<option value=\"1\"" . ( $setting['who_download'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_all'] . "</option>\n
 			<option value=\"0\"" . ( $setting['who_download'] == 0 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_user'] . "</option>\n
 		</select>
