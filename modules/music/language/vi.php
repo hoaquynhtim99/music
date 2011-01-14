@@ -229,4 +229,10 @@ $lang_module['upload_ready'] = "Sẵn sàng";
 $lang_module['upload_prosess'] = "Đang tải dữ liệu";
 $lang_module['upload_notsong'] = "Bạn chưa nhập tên bài hát";
 $lang_module['upload_allow_notsinger'] = "Bạn có đồng ý chọn tên ca sĩ không biết";
+$lang_module['upload_visittor'] = "Khách";
+$lang_module['upload_ok4'] = "Ấn vào";
+$lang_module['upload_ok1'] = "đây";
+$lang_module['upload_ok2'] = "để nghe hoặc";
+$lang_module['upload_ok3'] = "về trang chủ";
+$lang_module['upload_nook'] = "Bài hát đang chờ kiểm duyệt";
 ?>

@@ -9,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$setting = setting_music();
+
 
 $uploaddir = NV_ROOTDIR . '/uploads/' . $module_data . '/' . $setting['root_contain'] . '/upload/'; 
 $file = $uploaddir . basename( $_FILES['uploadfile']['name'] ); 
@@ -28,6 +28,11 @@ elseif ( defined( 'NV_IS_ADMIN' ) )
 {
     $name = $admin_info['username'];
     $userid = $admin_info['userid'];
+}
+else
+{
+    $name = $lang_module['upload_visittor'];
+	$userid = 0;
 }
 
 if ( $newsinger != $lang_module['upload_quicksinger'] )
@@ -59,7 +64,15 @@ if ( move_uploaded_file ( $_FILES['uploadfile']['tmp_name'], $file ) )
 	$db->sql_freeresult();
 	updatesinger( $singer, 'numsong', '+1' );
 	echo '<div id="output">success</div>';
-	echo '<div id="message"></div>';
+	if ( $setting['auto_upload'] == 1 )
+	{
+		$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " ORDER BY id DESC LIMIT 0,1" );
+		$song = $db->sql_fetchrow($result);
+		echo '<div id="message">' . $lang_module['upload_ok4'] . ' <a href="' . $mainURL . '=listenone/' . $song['id'] . '/' . $song['ten'] . '" target="_blank">' . $lang_module['upload_ok1'] . '</a> ' . $lang_module['upload_ok2'] . ' <a href="' . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '">' . $lang_module['upload_ok3'] . '</a></div>';
+	}else
+	{
+		echo '<div id="message">' . $lang_module['upload_nook'] . '</div>';
+	}
 } 
 else 
 {

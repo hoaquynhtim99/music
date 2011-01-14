@@ -14,6 +14,7 @@ $user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LA
 
 $allsinger = getallsinger();
 $category = get_category();
+
 $xtpl = new XTemplate( "upload.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'DATA_URL', NV_BASE_SITEURL ."themes/" . $module_info ['template'] . "/images/" . $module_file . "/" );

@@ -7,7 +7,7 @@
 	</div>
 	<div style="padding:5px;">
 <!-- BEGIN: noaccess -->
-<p align="center"><strong>{LANG.you_must}<a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
+<p align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 <!-- END: noaccess -->
 <!-- BEGIN: access -->
 <strong>{LANG.upload_rule}</strong>
@@ -118,7 +118,7 @@
 								$(id + "_text").css("background-color", "#FF0000");
 								up_output = config.errorOutput;
 							}
-							up_output += '<br />' + $(this).contents().find("#message").text();
+							up_output += '<br />' + $(this).contents().find("#message").html();
 							$(id + "_text .status").html(up_output);
 							$(e).remove();
 							$(config.buttonClear).removeAttr("disabled");
