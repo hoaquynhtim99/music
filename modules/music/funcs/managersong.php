@@ -57,6 +57,7 @@ else
 			}
 			foreach ( $songdata as $key => $data  )
 			{	
+				if ( $key == 'casimoi' ) continue;
 				$resuit = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
 			}
 			if ( $resuit )
