@@ -17,7 +17,7 @@
 		<!-- BEGIN: loop -->
 		<div id="song{stt}" class="listsong">
 			<div class="tools">
-				<a class="del" onclick="delsongfrlist('{stt}');" title="{LANG.del}"></a>
+				<a class="del" onclick="delsongfrlist('{stt}', '{LANG.cofirm_del}');" title="{LANG.del}"></a>
 			</div>		
 			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="{url_view}">{songname}</a> - <a href="{url_search_singer}">{singer}</a>
 		</div>
@@ -78,7 +78,7 @@
 			<!-- BEGIN: list -->
 			<div id="item{id}" class="resuirt">
 				<div class="tools">
-					<a class="del" onclick="dellist('{id}');" title="{LANG.playlist_delete}"></a>
+					<a class="del" onclick="dellist('{id}', '{LANG.cofirm_del}');" title="{LANG.playlist_delete}"></a>
 					<a href="{url_edit}" class="edit" title="{LANG.playlist_edit}"></a>
 					<a href="{url_view}" class="play" title="{LANG.playlist_listen1}"></a>
 				</div>

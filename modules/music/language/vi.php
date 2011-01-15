@@ -41,6 +41,7 @@ $lang_module['category'] = "THỂ LOẠI";
 $lang_module['category_2'] = "Thể loại";
 
 $lang_module['cancel'] = "Làm lại";
+$lang_module['cofirm_del'] = "Bạn có chắc chắn xóa không?";
 
 $lang_module['content'] = "Nội dung";
 $lang_module['comment'] = "Bình luận";
