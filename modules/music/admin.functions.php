@@ -11,31 +11,24 @@ if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_
 
 $submenu['addsong'] = $lang_module['sub_addsong']; 
 $submenu['addlistsong'] = $lang_module['sub_addlistsong']; 
-$submenu['error'] = $lang_module['sub_error']; 
-$submenu['ads'] = $lang_module['sub_ads']; 
-$submenu['hotalbum'] = $lang_module['sub_hotalbum']; 
 $submenu['category'] = $lang_module['sub_category']; 
-$submenu['video_category'] = $lang_module['sub_videocategory']; 
 $submenu['album'] = $lang_module['sub_album']; 
 $submenu['addalbum'] = $lang_module['sub_add_album']; 
-$submenu['singer'] = $lang_module['sub_singer']; 
-$submenu['addsinger'] = $lang_module['singer_add']; 
 $submenu['videoclip'] = $lang_module['video']; 
 $submenu['addvideo'] = $lang_module['video_add']; 
 $submenu['addlistvideo'] = $lang_module['video_listadd']; 
-$submenu['fourcategory'] = $lang_module['sub_fourcategory']; 
-$submenu['commentalbum'] = $lang_module['sub_commentalbum']; 
-$submenu['commentsong'] = $lang_module['sub_commentsong']; 
-$submenu['commentvideo'] = $lang_module['sub_commentvideo']; 
-$submenu['maincategory'] = $lang_module['sub_maincategory']; 
-$submenu['mainalbum'] = $lang_module['sub_mainalbum']; 
-$submenu['gift'] = $lang_module['sub_gift']; 
-$submenu['blockhotsinger'] = $lang_module['sub_blockhotsinger']; 
+$submenu['video_category'] = $lang_module['sub_videocategory']; 
+$submenu['singer'] = $lang_module['sub_singer']; 
+$submenu['addsinger'] = $lang_module['singer_add']; 
+$submenu['error'] = $lang_module['sub_error']; 
+$submenu['ads'] = $lang_module['sub_ads']; 
 $submenu['lyric'] = $lang_module['sub_lyric']; 
+$submenu['gift'] = $lang_module['sub_gift']; 
+$submenu['comment'] = $lang_module['sub_comment'];
 $submenu['userplaylist'] = $lang_module['userplaylist']; 
-$submenu['setting'] = $lang_module['music_setting']; 
+$submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong', 'commentvideo', 'addlistvideo'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong', 'commentvideo', 'addlistvideo', 'comment', 'globalsetting'); 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep
@@ -161,5 +154,4 @@ function updatewhendelS( $singername, $newname )
 }
 
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
-
 ?>
