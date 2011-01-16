@@ -35,6 +35,7 @@ foreach($array_id as $id)
 		{
 			$video = getvideobyID( $id );
 			updatesinger( $video['casi'], 'numvideo', '-1' );
+			updateauthor( $video['nhacsi'], 'numvideo', '-1' );
 			delcomment('video', $video['id']);
 			if ( $video['server'] == 1 )
 			{
@@ -46,6 +47,11 @@ foreach($array_id as $id)
 			$singer = getsingerbyID( $id );
 			updatewhendelS( $singer['ten'], 'ns' );
 		}
+		if ( $where == '_author' )
+		{
+			$singer = getauthorbyID( $id );
+			updatewhendelA( $singer['ten'], 'na' );
+		}
 		if ( $where == '' )
 		{
 			$song = getsongbyID( $id );
@@ -54,6 +60,7 @@ foreach($array_id as $id)
 				updatealbum( $song['album'], '-1' );
 			}
 			updatesinger( $song['casi'], 'numsong', '-1' );
+			updateauthor( $song['nhacsi'], 'numsong', '-1' );
 			delcomment('song', $song['id']);
 			dellyric($song['id']);
 			delerror( 'song', $song['id'] );

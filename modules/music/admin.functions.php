@@ -154,6 +154,27 @@ function updatewhendelS( $singername, $newname )
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `casi` = '" . $newname . "' WHERE `casi` = '" . $singername . "'");
 	return;
 }
+// cap nhat bai hat, album ,video khi xoa, sua nhac si
+function updatewhendelA( $singername, $newname )
+{
+	global $module_data, $db ;
+
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `nhacsi` = '" . $newname . "' WHERE `nhacsi` = '" . $singername . "'");
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `nhacsi` = '" . $newname . "' WHERE `nhacsi` = '" . $singername . "'");
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `nhacsi` = '" . $newname . "' WHERE `nhacsi` = '" . $singername . "'");
+	return;
+}
+// lay nhac si tu id
+function getauthorbyID( $id )
+{
+	global $module_data, $db;
+
+	$author = array() ;
+	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_author WHERE id=" . $id);
+	$author = $db->sql_fetchrow($result);
+
+	return $author ;
+}
 
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 ?>

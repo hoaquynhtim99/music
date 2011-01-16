@@ -57,7 +57,7 @@ if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
 	}
 	if ( $query ) 
 	{
-		updatewhendelS( $row['ten'], $albumdata['ten'] );
+		updatewhendelA( $row['ten'], $albumdata['ten'] );
 		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=author"); die();
 	}
 	else
