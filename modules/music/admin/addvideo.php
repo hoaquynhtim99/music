@@ -19,6 +19,8 @@ $videodata['name'] = filter_text_input( 'name', 'post', '' );
 $videodata['tname'] = filter_text_input( 'tname', 'post', '' );
 $videodata['casi'] = filter_text_input( 'casi', 'post', '' );
 $videodata['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
+$videodata['nhacsi'] = filter_text_input( 'nhacsi', 'post', '' );
+$videodata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '' );
 $videodata['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
 $videodata['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
 $videodata['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
@@ -28,8 +30,14 @@ if ( $videodata['casimoi'] != '')
 	$videodata['casi'] = change_alias( $videodata['casimoi'] );
 	$error = newsinger( $videodata['casi'], $videodata['casimoi'] );
 }
+if ( $videodata['nhacsimoi'] != '')
+{
+	$videodata['nhacsi'] = change_alias( $videodata['nhacsimoi'] );
+	$error = newauthor( $videodata['nhacsi'], $videodata['nhacsimoi'] );
+}
 $category = get_videocategory() ;
 $allsinger = getallsinger();
+$allauthor = getallauthor();
 $setting = setting_music();
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
@@ -49,6 +57,7 @@ else
 		$videodata['name'] = $row['name'];
 		$videodata['tname'] = $row['tname'];
 		$videodata['casi'] = $row['casi'];
+		$videodata['nhacsi'] = $row['nhacsi'];
 		$videodata['theloai'] = $row['theloai'];
 		$videodata['duongdan'] = $row['duongdan'];
 		$videodata['thumb'] = $row['thumb'];	
@@ -99,6 +108,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
 	foreach ( $videodata as $data => $null )
 	{
 		if ( $data == 'casimoi' ) continue;
+		if ( $data == 'nhacsimoi' ) continue;
 		if	($null == '') $error = $lang_module['error_video']; 
 	}
 	if ( $error == "" )
@@ -116,9 +126,10 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
 		}
 	
 		updatesinger( $videodata['casi'], 'numvideo', '+1' );
+		updateauthor( $videodata['nhacsi'], 'numvideo', '+1' );
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` 
 		(
-			`id`, `name`, `tname`, `casi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`
+			`id`, `name`, `tname`, `casi`, `nhacsi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`
 		) 
 		VALUES 
 		( 
@@ -126,6 +137,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
 			" . $db->dbescape( $videodata['name'] ) . ", 
 			" . $db->dbescape( $videodata['tname'] ) . ", 
 			" . $db->dbescape( $videodata['casi'] ) . ", 
+			" . $db->dbescape( $videodata['nhacsi'] ) . ", 
 			" . $db->dbescape( $videodata['theloai'] ) . ", 
 			" . $db->dbescape( $data )  . ", 
 			" . $db->dbescape( $videodata['thumb'] ) . " ,
@@ -209,6 +221,30 @@ $contents .="
 				</td>
 				<td style=\"background: #eee;\">
 				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author']."	
+				</td>
+				<td style=\"background: #eee;\">
+					<select name=\"nhacsi\">\n";
+					foreach ( $allauthor as $key => $title )
+					{
+						$i= "";
+						if ( $videodata['nhacsi'] == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author_new']."	
+				</td>
+				<td style=\"background: #eee;\">
+				<input id=\"singer_sortname\" name=\"nhacsimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
