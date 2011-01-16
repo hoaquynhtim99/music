@@ -19,6 +19,16 @@ $lang_translator['langtype'] = "lang_module";
 
 $lang_module['4category_main'] = "Bốn thể loại trên trang chủ";
 
+$lang_module['author_add'] = "Thêm nhạc sĩ";
+$lang_module['author_info'] = "Thông tin nhạc sĩ";
+$lang_module['author_edit'] = "Sửa thông tin nhạc sĩ";
+$lang_module['author_list'] = "Danh sách các nhạc sĩ";
+$lang_module['author_name'] = "Tên nhạc sĩ";
+$lang_module['author_search'] = "Tìm một nhạc sĩ";
+$lang_module['author_sort_name'] = "Tên gọn nhạc sĩ";
+$lang_module['author_del_confirm'] = "Bạn có chắn chắn xóa không";
+$lang_module['author_check_err'] = "Bạn chưa chọn nhạc sĩ nào";
+
 $lang_module['check'] = "Kiểm tra";
 $lang_module['check_song'] = "Kiểm tra link bài hát";
 
@@ -169,6 +179,7 @@ $lang_module['set_floder_file'] = "Thư mục chứa file";
 
 $lang_module['sub_category'] = "Quản lý thể loại";
 $lang_module['sub_album'] = "Quản lý album";
+$lang_module['sub_author'] = "Quản lý nhạc sĩ";
 $lang_module['sub_add_album'] = "Thêm album";
 $lang_module['sub_addsong'] = "Thêm bài hát";
 $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";

@@ -31,6 +31,7 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_singer`";
+$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author`";
 
 $sql_create_module = $sql_drop_module;
 
@@ -259,6 +260,18 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 `numsong` INT( 255 ) NOT NULL DEFAULT '0',
 `numalbum` INT( 255 ) NOT NULL DEFAULT '0',
 `numvideo` INT( 255 ) NOT NULL DEFAULT '0',
+UNIQUE (`ten`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
+
+//21 nhac si
+$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author` (
+`id` MEDIUMINT( 8 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`ten` VARCHAR( 50 ) NOT NULL ,
+`tenthat` VARCHAR( 50 ) NOT NULL ,
+`thumb` VARCHAR( 255 ) NOT NULL ,
+`introduction` TEXT NOT NULL ,
+`numsong` MEDIUMINT( 8 ) NOT NULL DEFAULT '0',
+`numvideo` MEDIUMINT( 8 ) NOT NULL DEFAULT '0',
 UNIQUE (`ten`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
 

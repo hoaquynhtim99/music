@@ -28,5 +28,6 @@ $module_version = array(
 	$module_name . "/ads", 
 	$module_name . "/tmp",
 	$module_name . "/singerthumb")
+	$module_name . "/authorthumb")
 );
 ?>
