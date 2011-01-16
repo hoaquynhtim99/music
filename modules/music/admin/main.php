@@ -78,6 +78,7 @@ $contents .= "</select>";
 $contents .= "<select name=\"type_search\">";
 $contents .= "<option"; ($type_search == 'ten')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"ten\" >" . $lang_module['search_with_name'] . "</option>\n";
 $contents .= "<option"; ($type_search == 'casi')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"casi\" >" . $lang_module['search_with_singer'] . "</option>\n";
+$contents .= "<option"; ($type_search == 'nhacsi')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"nhacsi\" >" . $lang_module['search_with_author'] . "</option>\n";
 $contents .= "<option"; ($type_search == 'album')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"album\" >" . $lang_module['search_with_album'] . "</option>\n";
 $contents .= "</select>";
 

@@ -20,6 +20,8 @@ $songdata['ten'] = filter_text_input( 'ten', 'post', '' );
 $songdata['tenthat'] = filter_text_input( 'tenthat', 'post', '' );
 $songdata['casi'] = filter_text_input( 'casi', 'get,post', '' );
 $songdata['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
+$songdata['nhacsi'] = filter_text_input( 'nhacsi', 'get,post', '' );
+$songdata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'get,post', '' );
 $songdata['album'] = filter_text_input( 'album', 'get,post', '' );
 $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
 $songdata['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
@@ -28,16 +30,21 @@ $songdata['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
 $songdata['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 $songdata['size'] = $nv_Request->get_int( 'size', 'post', 0 );
 
-
 if ( $songdata['casimoi'] != '')
 {
 	$songdata['casi'] = change_alias( $songdata['casimoi'] );
 	$error = newsinger( $songdata['casi'], $songdata['casimoi'] );
 }
+if ( $songdata['nhacsimoi'] != '')
+{
+	$songdata['nhacsi'] = change_alias( $songdata['nhacsimoi'] );
+	$error = newauthor( $songdata['nhacsi'], $songdata['nhacsimoi'] );
+}
 $category = get_category() ;
 $setting = setting_music();
 $allalbum = getallalbum();
 $allsinger = getallsinger();
+$allauthor = getallauthor();
 
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
@@ -57,6 +64,7 @@ else
 		$songdata['ten'] = $row['ten'];
 		$songdata['tenthat'] = $row['tenthat'];
 		$songdata['casi'] = $row['casi'];
+		$songdata['nhacsi'] = $row['nhacsi'];
 		$songdata['album'] = $row['album'];
 		$songdata['theloai'] = $row['theloai'];
 		
@@ -116,6 +124,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 	foreach ( $songdata as $data => $null )
 	{
 		if ( $data == 'casimoi' ) continue;
+		if ( $data == 'nhacsimoi' ) continue;
 		if	($null == '') $error = $lang_module['error_song']; 
 	}
 	if ( $error == "" )
@@ -134,11 +143,12 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 		
 		// update so bai hat
 		updatesinger( $songdata['casi'], 'numsong', '+1' );
+		updateauthor( $songdata['nhacsi'], 'numsong', '+1' );
 		updatealbum( $songdata['album'], '+1' );
 		
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 		(
-			`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
+			`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
 		) 
 		VALUES 
 		( 
@@ -146,6 +156,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			" . $db->dbescape( $songdata['ten'] ) . ", 
 			" . $db->dbescape( $songdata['tenthat'] ) . ", 
 			" . $db->dbescape( $songdata['casi'] ) . ", 
+			" . $db->dbescape( $songdata['nhacsi'] ) . ", 
 			" . $db->dbescape( $songdata['album'] ) . ", 
 			" . $db->dbescape( $songdata['theloai'] ) . ", 
 			" . $db->dbescape( $data )  . ", 
@@ -233,6 +244,30 @@ $contents .="
 				</td>
 				<td style=\"background: #eee;\">
 				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author']."	
+				</td>
+				<td style=\"background: #eee;\">
+					<select name=\"nhacsi\">\n";
+					foreach ( $allauthor as $key => $title )
+					{
+						$i= "";
+						if ( $songdata['nhacsi'] == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author_new']."	
+				</td>
+				<td style=\"background: #eee;\">
+				<input name=\"nhacsimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>

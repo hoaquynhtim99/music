@@ -19,6 +19,8 @@ $lang_translator['langtype'] = "lang_module";
 
 $lang_module['4category_main'] = "Bốn thể loại trên trang chủ";
 
+$lang_module['author'] = "Nhạc sĩ";
+$lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
 $lang_module['author_add'] = "Thêm nhạc sĩ";
 $lang_module['author_info'] = "Thông tin nhạc sĩ";
 $lang_module['author_edit'] = "Sửa thông tin nhạc sĩ";
@@ -138,6 +140,7 @@ $lang_module['search_per_page'] = "Số kết quả";
 $lang_module['search_with_name'] = "Tìm theo tên";
 $lang_module['search_with_singer'] = "Tìm theo ca sĩ";
 $lang_module['search_with_album'] = "Tìm theo album";
+$lang_module['search_with_author'] = "Tìm theo nhạc sĩ";
 
 $lang_module['select'] = "Chọn";
 $lang_module['select_category'] = "Chọn thể loại";

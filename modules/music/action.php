@@ -41,6 +41,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `ten` varchar(255) NOT NULL,
   `tenthat` varchar(255) NOT NULL,
   `casi` varchar(255) NOT NULL,
+  `nhacsi` VARCHAR( 50 ) NOT NULL DEFAULT 'na', 
   `album` varchar(255) NOT NULL,
   `theloai` int(10) unsigned NOT NULL,
   `duongdan` varchar(255) NOT NULL,

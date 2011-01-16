@@ -121,7 +121,20 @@ function getallsinger()
 
 	return $allsinger ;
 }
+// lay tat ca nhac si
+function getallauthor()
+{
+	global $module_data, $db, $lang_module ;
 
+	$allsinger = array() ;
+	$allsinger['na'] = $lang_module['unknow'];
+	$result = $db->sql_query( " SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC");
+	while ( $singer = $db->sql_fetchrow($result) )
+	{
+		$allsinger[$singer['ten']] = $singer['tenthat'];
+	}
+	return $allsinger ;
+}
 // lay ca si tu id
 function getsingerbyID( $id )
 {
@@ -166,11 +179,32 @@ function newsinger( $name, $tname )
 	return $error;
 }
 
+// Them moi mot nhac si
+function newauthor( $name, $tname )
+{
+	$error = '';
+	global $module_data, $lang_module, $db ;	
+	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
+	if ( $db->sql_query_insert_id( $query ) ) 
+	{ 
+		$db->sql_freeresult();
+	} 
+	return;
+}
+
 // cap nhat ca si
 function updatesinger( $name, $what, $action )
 {
 	global $module_data, $db ;	
 	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
+	return ;
+}
+
+// cap nhat nhac si
+function updateauthor( $name, $what, $action )
+{
+	global $module_data, $db ;	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_author` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
 	return ;
 }
 
