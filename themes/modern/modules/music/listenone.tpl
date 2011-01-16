@@ -18,7 +18,7 @@
 	<strong>{name}</strong>
 	<p>{LANG.show}: <a href="{url_search_singer}">{singer}</a></p>
 	<p>{LANG.category_2}:<a href="{url_search_category}"> {category}&nbsp;</a> | {LANG.view}: {numview}</p>
-	<p>Album: <a href="{url_search_album}">{album}
+	<p>{LANG.author}: {author}. Album: <a href="{url_search_album}">{album}
 	</a></p>
 	<div class="playercontainer">
 	<div style="float:left;background:black;cursor:pointer;width:470px;height:236px;">

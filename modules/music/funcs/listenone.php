@@ -32,7 +32,8 @@ else $name = '';
 
 // lay bai hat
 $allsinger = getallsinger();
-$setting = setting_music();
+$allauthor = getallauthor();
+
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET numview = numview+1 WHERE `id` =" . $id );
 $row = getsongbyID( $id );
@@ -44,6 +45,7 @@ $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
 $xtpl->assign( 'ID',  $id );
 $xtpl->assign( 'name', $row['tenthat'] );
 $xtpl->assign( 'singer', $allsinger[$row['casi']] );
+$xtpl->assign( 'author', $allauthor[$row['nhacsi']] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
 $xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 

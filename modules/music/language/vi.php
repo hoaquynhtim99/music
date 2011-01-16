@@ -21,6 +21,8 @@ $lang_module['menu1'] = "Nhạc";
 $lang_module['menu3'] = "Bài hát của bạn";
 $lang_module['menu4'] = "Playlist của bạn";
 
+$lang_module['author'] = "Sáng tác";
+
 $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
 $lang_module['add_playlist_info'] = "Bạn dùng thẻ &lt;br /&gt; để xuống dòng";
