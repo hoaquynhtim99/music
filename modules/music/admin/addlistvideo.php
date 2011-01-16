@@ -29,6 +29,8 @@ for ( $i = 1; $i <= 20; $i ++ )
 
 $casi = filter_text_input( 'casi', 'post', '' );
 $casimoi = filter_text_input( 'casimoi', 'post', '' );
+$nhacsi = filter_text_input( 'nhacsi', 'post', '' );
+$nhacsimoi = filter_text_input( 'nhacsimoi', 'post', '' );
 $theloai = $nv_Request->get_int( 'theloai', 'post', 0 );
 
 if ( $casimoi != '')
@@ -36,9 +38,15 @@ if ( $casimoi != '')
 	$casi = change_alias( $casimoi );
 	$error = newsinger( $casi, $casimoi );
 }
+if ( $nhacsimoi != '')
+{
+	$nhacsi = change_alias( $nhacsimoi );
+	$error = newsinger( $nhacsi, $nhacsimoi );
+}
 $category = get_videocategory() ;
 $setting = setting_music();
 $allsinger = getallsinger();
+$allauthor = getallauthor();
 
 $page_title = $lang_module['video_listadd'];
 
@@ -70,10 +78,11 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			
 			// update so video
 			updatesinger( $casi, 'numvideo', '+1' );
+			updateauthor( $nhacsi, 'numvideo', '+1' );
 			
 			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` 
 			(
-				`id`, `name`, `tname`, `casi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`
+				`id`, `name`, `tname`, `casi`, `nhacsi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`
 			) 
 			VALUES 
 			( 
@@ -81,6 +90,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				" . $db->dbescape( $videodata[$i]['name'] ) . ", 
 				" . $db->dbescape( $videodata[$i]['tname'] ) . ", 
 				" . $db->dbescape( $casi ) . ", 
+				" . $db->dbescape( $nhacsi ) . ", 
 				" . $db->dbescape( $theloai ) . ", 
 				" . $db->dbescape( $data )  . ", 
 				" . $db->dbescape( $videodata[$i]['thumb'] ) . " ,
@@ -153,6 +163,30 @@ $contents .="
 				</td>
 				<td style=\"background: #eee;\">
 				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author']."	
+				</td>
+				<td style=\"background: #eee;\">
+					<select name=\"nhacsi\">\n";
+					foreach ( $allauthor as $key => $title )
+					{
+						$i= "";
+						if ( $nhacsi == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author_new']."	
+				</td>
+				<td style=\"background: #eee;\">
+				<input name=\"nhacsimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>

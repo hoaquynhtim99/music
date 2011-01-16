@@ -33,6 +33,8 @@ for ( $i = 1; $i <= 20; $i ++ )
 
 $casi = filter_text_input( 'casi', 'post', '' );
 $casimoi = filter_text_input( 'casimoi', 'post', '' );
+$nhacsi = filter_text_input( 'nhacsi', 'post', '' );
+$nhacsimoi = filter_text_input( 'nhacsimoi', 'post', '' );
 $album = filter_text_input( 'album', 'post', '' );
 $theloai = $nv_Request->get_int( 'theloai', 'post', 0 );
 $upboi = $nv_Request->get_string( 'upboi', 'post', '' );
@@ -42,10 +44,16 @@ if ( $casimoi != '')
 	$casi = change_alias( $casimoi );
 	$error = newsinger( $casi, $casimoi );
 }
+if ( $nhacsimoi != '')
+{
+	$nhacsi = change_alias( $nhacsimoi );
+	$error = newauthor( $nhacsi, $nhacsimoi );
+}
 $category = get_category() ;
 $setting = setting_music();
 $allalbum = getallalbum();
 $allsinger = getallsinger();
+$allauthor = getallauthor();
 
 $page_title = $lang_module['sub_addlistsong'];
 
@@ -53,7 +61,7 @@ $page_title = $lang_module['sub_addlistsong'];
 if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 {	
 	
-	if	( ( $casi == '' ) || ( $album == '' ) || ( $theloai == '' ) || ( $upboi == '' ) || ( $numsong == 0 )) 
+	if	( ( $nhacsi == '' ) || ( $casi == '' ) || ( $album == '' ) || ( $theloai == '' ) || ( $upboi == '' ) || ( $numsong == 0 )) 
 	{
 		$error = $lang_module['error_song']; 
 	}
@@ -85,11 +93,12 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			
 			// update so bai hat
 			updatesinger( $casi, 'numsong', '+1' );
+			updateauthor( $nhacsi, 'numsong', '+1' );
 			updatealbum( $album, '+1' );
 			
 			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 			(
-				`id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
+				`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
 			) 
 			VALUES 
 			( 
@@ -97,6 +106,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				" . $db->dbescape( $songdata[$i]['ten'] ) . ", 
 				" . $db->dbescape( $songdata[$i]['tenthat'] ) . ", 
 				" . $db->dbescape( $casi ) . ", 
+				" . $db->dbescape( $nhacsi ) . ", 
 				" . $db->dbescape( $album ) . ", 
 				" . $db->dbescape( $theloai ) . ", 
 				" . $db->dbescape( $data )  . ", 
@@ -174,6 +184,30 @@ $contents .="
 				</td>
 				<td style=\"background: #eee;\">
 				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author']."	
+				</td>
+				<td style=\"background: #eee;\">
+					<select name=\"nhacsi\">\n";
+					foreach ( $allauthor as $key => $title )
+					{
+						$i= "";
+						if ( $nhacsi == $key )
+						$i = "selected=\"selected\"";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+					}
+					$contents .= "</select>
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+				".$lang_module['author_new']."	
+				</td>
+				<td style=\"background: #eee;\">
+				<input name=\"nhacsimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
