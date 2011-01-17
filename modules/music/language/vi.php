@@ -55,7 +55,7 @@ $lang_module['down_info'] = "Nhất chuột phải chọn save link để tải 
 $lang_module['enter_name'] = "Nhập tên bạn";
 
 $lang_module['give_error'] = "Báo lỗi";
-$lang_module['give_error_info'] = "Để giúp cùng tôt quản lí tốt hơn chất lượng các bài hát bạn hãy gửi ngay thông tin khi gặp vấn đề nào đó về bài hát hoặc album này";
+$lang_module['give_error_info'] = "Để giúp chúng tôi quản lý tốt hơn chất lượng các bài hát bạn hãy gửi ngay thông tin khi gặp vấn đề nào đó về bài hát hoặc album này";
 
 $lang_module['hotest_song'] = "Bài hát HOT nhất";
 $lang_module['hot_singer'] = "Ca sĩ HOT";
@@ -86,13 +86,13 @@ $lang_module['songof'] = "Các ca khúc do";
 
 $lang_module['topics'] = "CHỦ ĐỀ";
 
-$lang_module['upload'] = "Up bởi";
+$lang_module['upload'] = "Tải lên bởi";
 
 $lang_module['playlist_listen'] = "Nghe playlist";
 $lang_module['playlist_listen1'] = "Nghe playlist này";
 $lang_module['playlist_info'] = "Thông tin về playlist";
 $lang_module['playlist_creat'] = "Ngày tạo";
-$lang_module['playlist_save'] = "Quản lí playlist";
+$lang_module['playlist_save'] = "Quản lý playlist";
 $lang_module['playlist_song'] = "Danh sách các bài hát trong playlist của bạn";
 $lang_module['playlist_showhide'] = "Ẩn hiện playlist";
 $lang_module['playlist_delete'] = "Xóa playlist";
@@ -109,7 +109,7 @@ $lang_module['playlist_edit_sucess'] = "Bạn đã sửa thành công, bạn có
 $lang_module['playlist_edit_sucess1'] = "nghe ";
 $lang_module['playlist_edit_sucess2'] = "playlist này hoặc ";
 $lang_module['playlist_edit_sucess3'] = "quay lại ";
-$lang_module['playlist_edit_sucess4'] = "trang quản lí playlist";
+$lang_module['playlist_edit_sucess4'] = "trang quản lý playlist";
 
 $lang_module['prev'] = "Trang trước";
 
@@ -208,7 +208,7 @@ $lang_module['video_new'] = "Video mới";
 $lang_module['song_edit'] = "Sửa bài hát này";
 $lang_module['song_listen'] = "Nghe bài hát này";
 $lang_module['song_del'] = "Xóa bài hát này";
-$lang_module['song_edit_back'] = "Trở lại trang quản lí bài hát";
+$lang_module['song_edit_back'] = "Trở lại trang quản lý bài hát";
 $lang_module['song_edit_listen'] = "nghe bài hát này";
 
 $lang_module['upload_ok'] = "Tải lên";
