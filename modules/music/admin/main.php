@@ -108,6 +108,7 @@ $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong");
 $xtpl->assign('URL_DEL_BACK', $link );
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall");
+$xtpl->assign('URL_ACTIVE_LIST', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=listactive&where=" );
 $xtpl->assign('ORDER_NAME', $link ."&order=ten" );
 $xtpl->assign('ORDER_SINGER', $link ."&order=casi" );
 $xtpl->assign('ORDER_ALBUM', $link ."&order=album" );

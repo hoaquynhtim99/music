@@ -107,6 +107,7 @@ $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addvideo");
 $xtpl->assign('URL_DEL_BACK', $link );
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_video");
+$xtpl->assign('URL_ACTIVE_LIST', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=listactive&where=_video" );
 $xtpl->assign('ORDER_NAME', $link ."&order=name" );
 $xtpl->assign('ORDER_SINGER', $link ."&order=casi" );
 

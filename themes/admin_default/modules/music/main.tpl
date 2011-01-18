@@ -48,8 +48,8 @@
 					<a class='addfile' href="{LINK_ADD}">{LANG.song_add}</a>
 					&nbsp;&nbsp;
 				</span>
-				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
-				</span>
+				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a></span>
+				<span><a id='activelist' href="javascript:void(0);">{LANG.active1}</a></span>
 			</td>
 		</tr>
 	</tfoot>
@@ -91,6 +91,33 @@
 				{
 					type: 'POST',
 					url: '{URL_DEL}',
+					data: 'listall=' + listall,
+					success: function(data)
+					{
+						alert(data);
+						window.location = '{URL_DEL_BACK}';
+					}
+				});
+			}
+		});
+		$('#activelist').click(function()
+		{
+			if (confirm("{LANG.active_confirm}"))
+			{
+				var listall = [];
+				$('input.filelist:checked').each(function()
+				{
+					listall.push($(this).val());
+				});
+				if (listall.length < 1)
+				{
+					alert("{LANG.error_check_song}");
+					return false;
+				}
+				$.ajax(
+				{
+					type: 'POST',
+					url: '{URL_ACTIVE_LIST}',
 					data: 'listall=' + listall,
 					success: function(data)
 					{

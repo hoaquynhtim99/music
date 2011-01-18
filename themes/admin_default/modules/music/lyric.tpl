@@ -44,6 +44,7 @@
 				</span>
 				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
 				</span>
+				<span><a id='activelist' href="javascript:void(0);">{LANG.active1}</a></span>
 			</td>
 		</tr>
 	</tfoot>
@@ -67,6 +68,33 @@
 			});
 		});
 		
+		$('#activelist').click(function()
+		{
+			if (confirm("{LANG.active_confirm}"))
+			{
+				var listall = [];
+				$('input.filelist:checked').each(function()
+				{
+					listall.push($(this).val());
+				});
+				if (listall.length < 1)
+				{
+					alert("{LANG.error_check_lyric}");
+					return false;
+				}
+				$.ajax(
+				{
+					type: 'POST',
+					url: '{URL_ACTIVE_LIST}',
+					data: 'listall=' + listall,
+					success: function(data)
+					{
+						alert(data);
+						window.location = '{URL_DEL_BACK}';
+					}
+				});
+			}
+		});
 		$('#delfilelist').click(function()
 		{
 			if (confirm("{LANG.lyric_del_confirm}"))

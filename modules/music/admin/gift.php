@@ -36,6 +36,7 @@ while ( $ts * 100 < $output ) {$ts ++ ;}
 $xtpl = new XTemplate("gift.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('URL_DEL_BACK', $link);
+$xtpl->assign('URL_ACTIVE_LIST', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=listactive&where=_gift" );
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_gift");
 
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_gift ORDER BY ID DESC LIMIT ".$first_page.",100";

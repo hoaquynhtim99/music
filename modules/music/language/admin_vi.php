@@ -35,10 +35,13 @@ $lang_module['check'] = "Kiểm tra";
 $lang_module['check_song'] = "Kiểm tra link bài hát";
 
 $lang_module['active'] = "Hoạt động";
+$lang_module['active1'] = "Thay đổi hoạt động";
 $lang_module['active_yes'] = "Có";
 $lang_module['active_no'] = "Không";
 $lang_module['active_confirm'] ="Bạn muốn thay đổi hoạt động?";
+$lang_module['active_error'] ="Hệ thống không thực hiện được yêu cầu của bạn";
 $lang_module['active_succer'] ="Đã thay đổi hoạt động thành";
+$lang_module['active_succer1'] ="Đã thay đổi hoạt động thành công";
 
 $lang_module['add_album'] = "Thêm Album mới";
 
