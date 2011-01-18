@@ -26,8 +26,9 @@ while ( $row = $db->sql_fetchrow( $query ) )
 {
 	$hot_abid[$row['stt']] = $row['albumid'];
 }
-foreach ( $hot_abid as $stt => $albumid)
+foreach ( $hot_abid as $stt => $albumid )
 {
+	if ( $albumid == 0 ) continue;
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `id` = ". $albumid ." AND `active`=1 ";
 	$query = $db->sql_query( $sql );
 	$hot_album = $db->sql_fetchrow( $query );
@@ -110,15 +111,15 @@ $xtpl->parse( 'main.topalbum' );
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_4category ORDER BY id ";
 $query = $db->sql_query( $sql );
 $fctegory = array() ;
-while ($row = $db->sql_fetchrow( $query ))
+while ( $row = $db->sql_fetchrow( $query ) )
 {
 	$fctegory[$row['id']] = $row['cid'] ;
 }
 	
-$xtpl->assign( 'f1', $category[$fctegory[1]] );
-$xtpl->assign( 'f2', $category[$fctegory[2]] );
-$xtpl->assign( 'f3', $category[$fctegory[3]] );
-$xtpl->assign( 'f4', $category[$fctegory[4]] );
+$xtpl->assign( 'f1', ( $fctegory[1] == 0 )? ( '' ):( $category[$fctegory[1]] ) );
+$xtpl->assign( 'f2', ( $fctegory[2] == 0 )? ( '' ):( $category[$fctegory[2]] ) );
+$xtpl->assign( 'f3', ( $fctegory[3] == 0 )? ( '' ):( $category[$fctegory[3]] ) );
+$xtpl->assign( 'f4', ( $fctegory[4] == 0 )? ( '' ):( $category[$fctegory[4]] ) );
 	
 $i = 1 ;
 foreach ( $fctegory as $this_category )
