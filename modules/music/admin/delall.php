@@ -39,7 +39,7 @@ foreach($array_id as $id)
 			delcomment('video', $video['id']);
 			if ( $video['server'] == 1 )
 			{
-				unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" . $video['duongdan'] );
+				unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" . $video['duongdan'] );
 			}
 		}
 		if ( $where == '_singer' )
@@ -67,7 +67,7 @@ foreach($array_id as $id)
 			delgift( $song['id'] );
 			if ( $song['server'] == 1 )
 			{
-				unlink( NV_DOCUMENT_ROOT . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );
+				unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );
 			}
 		}
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
