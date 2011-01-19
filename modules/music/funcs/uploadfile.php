@@ -68,8 +68,17 @@ if ( move_uploaded_file ( $_FILES['uploadfile']['tmp_name'], $file ) )
 	$duongdan = substr( $file, $lu );
 	
 	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $db->dbescape( change_alias( $singer ) ) . ", " . $db->dbescape( change_alias( $author ) ) . ", 'na', " . $db->dbescape( $category ) . ", " . $db->dbescape( $duongdan )  . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", 1, " . $userid . " ) "; 
-	$db->sql_query_insert_id( $query );
-	$db->sql_freeresult();
+	if ( $db->sql_query_insert_id( $query ) )
+	{
+		$db->sql_freeresult();
+	}
+	else
+	{
+		@unlink( $file );
+		echo '<div id="output">failed</div>';
+		echo '<div id="message"></div>';
+		exit;
+	}
 	updatesinger( $singer, 'numsong', '+1' );
 	echo '<div id="output">success</div>';
 	if ( $setting['auto_upload'] == 1 )
