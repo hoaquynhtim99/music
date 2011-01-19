@@ -17,7 +17,7 @@
 <ul>
     <li>{LANG.upload_rule1}</li>
     <li>{LANG.upload_rule2}</li>
-    <li>{LANG.upload_rule3}</li>
+    <li>{LANG.upload_rule3} {MAXUPLOAD}MB</li>
 </ul>
 <strong>{LANG.upload_guide}</strong>
 <ul>

@@ -19,6 +19,7 @@ $xtpl = new XTemplate( "upload.tpl", NV_ROOTDIR . "/themes/" . $module_info['tem
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'DATA_URL', NV_BASE_SITEURL ."themes/" . $module_info ['template'] . "/images/" . $module_file . "/" );
 $xtpl->assign( 'DATA_ACTION', $mainURL . "=uploadfile" );
+$xtpl->assign( 'MAXUPLOAD', $setting['upload_max'] );
 
 if ( ( $setting['who_upload'] == 0 ) && !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
 {
