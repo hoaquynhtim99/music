@@ -88,14 +88,7 @@
 				'<div class="status">{LANG.upload_ready}...</div></div>';
 			
 			$("#px_display").append(display);
-			$("#pxupload" + itr + "_input").hide();
-			$("#song" + itr).hide();
-			$("#singer" + itr).hide();
-			$("#newsinger" + itr).hide();
-			$("#author" + itr).hide();
-			$("#newauthor" + itr).hide();
-			$("#category" + itr).hide();
-			$("#add" + itr).hide();
+			$("#pxupload" + itr).hide();
 			px.appendForm();
 		}
 		$(config.buttonUpload).click(function(){
@@ -177,11 +170,11 @@
 				var inputId = "pxupload" + itr + "_input";
 				var contents = '<form method="post" id="'+ formId +'" action="'+ px.formAction +'" enctype="multipart/form-data" target="'+ iframeId +'">' +
 				
-				'<input style="width:400px;" id="song' + itr + '" name="song" type="text" value="{LANG.song_name}"/>' +
+				'<input style="width:400px;" id="song' + itr + '" name="song" type="text" value="{LANG.song_name}"/><br /><br />{LANG.singer}:<br />' +
 				'<select style="width:404px;" name="singer" id="singer' + itr + '">{singerdata}' +
-				'<input style="width:400px;" id="newsinger' + itr + '" name="newsinger" type="text" value="{LANG.upload_quicksinger}"/>' +
+				'<input style="width:400px;" id="newsinger' + itr + '" name="newsinger" type="text" value="{LANG.upload_quicksinger}"/><br /><br />{LANG.author}:<br />' +
 				'<select style="width:404px;" name="author" id="author' + itr + '">{authordata}' +
-				'<input style="width:400px;" id="newauthor' + itr + '" name="newauthor" type="text" value="{LANG.upload_quickauthor}"/>' +
+				'<input style="width:400px;" id="newauthor' + itr + '" name="newauthor" type="text" value="{LANG.upload_quickauthor}"/><br /><br />{LANG.category_2}:<br />' +
 				'<select style="width:200px;" name="category" id="category' + itr + '">{category}' +
 				'<input type="file" name="'+ config.inputName +'" id="'+ inputId +'" size="'+ config.inputSize +'" />' +
 				
