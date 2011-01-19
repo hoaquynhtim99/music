@@ -38,6 +38,7 @@ if ( $page > 0 )
 	$xtpl->parse( 'main.prev' );					
 }
 // xuat binh luan
+require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/emotions.php';
 while ( $row = $db->sql_fetchrow( $query ) )
 {
 
@@ -52,9 +53,10 @@ while ( $row = $db->sql_fetchrow( $query ) )
 	{
 		$xtpl->assign( 'avatar', NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/default.jpg");
 	}
+	$data = m_emotions_replace( $row['body'] );
 	$xtpl->assign( 'name', $row['name'] );
 	$xtpl->assign( 'date', nv_date( "d/m/Y H:i", $row['dt'] ) );
-	$xtpl->assign( 'body', $row['body'] );
+	$xtpl->assign( 'body', $data );
 	$xtpl->parse( 'main.loop' );
 }
 

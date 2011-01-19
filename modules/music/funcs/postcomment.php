@@ -12,7 +12,7 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 $difftimeout = 360;
 $id = $nv_Request->get_int( 'id', 'post', 0 );
-$body = filter_text_input( 'body', 'post', '', 1 );
+$body = $nv_Request->get_string( 'body', 'post', '' );
 $where = filter_text_input( 'where', 'post', '', 1 );
 $setting = setting_music() ;
 
