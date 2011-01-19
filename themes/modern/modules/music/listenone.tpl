@@ -68,7 +68,7 @@
 	<div id="tab1" class="tab_content">
 		<div class="sendtool">
 			<a target="_blank" href="http://www.facebook.com/sharer.php?u={URL_SONG}&t={name}-{singer}" class="facebook">Facebook   </a>
-			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{URL_SENDMAIL}','{TITLE}','500','400','no');return false">{LANG.sendtomail}</a>
+			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{URL_SENDMAIL}','{TITLE}','500','450','no');return false">{LANG.sendtomail}</a>
 		</div>
 		<form action="#" method="post">
 			<p>{LANG.link_song}:
@@ -91,7 +91,7 @@
 			<p>{LANG.who_recive}:
 			<input id="who_receive" type="text" value="" /> </p>
 			<p>{LANG.message}:</p>
-			<textarea id="body" name="message" rows="5"></textarea>
+			<textarea id="body" name="message" rows="2"></textarea>
 			<p align="center">
 			<input style="width: 50px" onclick="sendgift('{ID}');" class="submitbutton" type="button" value="{LANG.send}" />
 			</p>
@@ -158,10 +158,23 @@
 	<div id="tab3" class="tab_content">
 		<form action="#" method="post">
 			<p><strong>{LANG.give_error}</strong>: {LANG.give_error_info}</p>
+			<p>&nbsp;
+			<select id="root_error" name="root_error" style=";float:right;width: 346px;margin-right:34px;">
+				<option value="">{LANG.error_choose}</option>
+				<option value="check">{LANG.error_s_1}</option>
+				<option>{LANG.error_s_2}</option>
+				<option>{LANG.error_s_3}</option>
+				<option>{LANG.error_s_4}</option>
+				<option>{LANG.error_s_5}</option>
+				<option>{LANG.error_s_6}</option>
+				<option>{LANG.error_s_7}</option>
+				<option>{LANG.error_s_8}</option>
+				<option>{LANG.error_s_9}</option>
+			</select></p>	
 			<p>{LANG.enter_name}:
-			<input id="user" type="text" value="" /> </p>
-			<p>{LANG.content}:</p>
-			<textarea id="bodyerror" name="message" rows="5"></textarea>
+			<input id="user" type="text" value="{USER_NAME}" {NO_CHANGE}/> </p>
+			<p style="width:460px">{LANG.give_error_diff}</p>
+			<textarea id="bodyerror" name="message" rows="1"></textarea>
 			<p align="center">
 			<input style="width: 50px" class="submitbutton" onclick="senderror('{ID}', 'song');" type="button" value="{LANG.send}" />
 			</p>

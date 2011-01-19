@@ -45,16 +45,17 @@ function resultgift(res) {
 
 // gui bao loi cho quan tri
 function senderror(id, where) {
+	var root_error = document.getElementById('root_error').value;
 	var user = document.getElementById('user');
 	var body  = strip_tags(document.getElementById('bodyerror').value);
 	if (user.value == "") {
 		alert(nv_fullname);
 		user.focus();
-	} else if (body == "") {
+	} else if ( (body == "") && ( root_error == "" ) ) {
 		alert(nv_content);
 		document.getElementById('bodyerror').focus();
 	} else {
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=senderror&id=' + id + '&where=' + where + '&user=' + user.value + '&body=' + encodeURIComponent(body), '', 'resultgift');
+		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=senderror&id=' + id + '&where=' + where + '&user=' + user.value + '&root_error=' + root_error + '&body=' + encodeURIComponent(body), '', 'resultgift');
 	}
 	return;
 }

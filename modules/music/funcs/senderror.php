@@ -13,6 +13,7 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 $user = filter_text_input( 'user', 'post', '' );
 $body = filter_text_input( 'body', 'post', '', 1 );
 $where = filter_text_input( 'where', 'post', '' );
+$root_error = filter_text_input( 'root_error', 'post', '' );
 $key = $nv_Request->get_int( 'id', 'post', 0 );
 
 // liem tra thoi gian
@@ -20,7 +21,7 @@ $timeout = $nv_Request->get_int( $module_name . '_error_' . $where . "_" . $key,
 if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 {
 	$check = 0;
-	if ( $where == 'song' )
+	if ( ( $where == 'song' ) && ( $root_error == "check" ) )
 	{
 		$song = getsongbyID( $key );
 		if ( $song['server'] == 0 )
@@ -29,7 +30,7 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 		}
 		elseif ( $song['server'] == 1 )
 		{
-			$url = NV_MY_DOMAIN . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
+			$url = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
 		}
 		if (  nv_check_url( $url ) )
 		{
@@ -46,7 +47,7 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 	
 	if ( ($check == 0) || ( ($check == 1) && ($ok == 0) ) )
 	{
-		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` ( `id`, `user`, `body`, `where`, `key` ) VALUES ( NULL, " . $db->dbescape( $user ) . ", " . $db->dbescape( $body ) . ", " . $db->dbescape( $where ) . ", " . $key . " )"; 
+		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` ( `id`, `user`, `body`, `where`, `key` ) VALUES ( NULL, " . $db->dbescape( $user ) . ", " . $db->dbescape( $root_error . " | " . $body ) . ", " . $db->dbescape( $where ) . ", " . $key . " )"; 
 		if ( $db->sql_query_insert_id( $query ) ) 
 		{ 
 			$contents = $lang_module['send_error_suc'];

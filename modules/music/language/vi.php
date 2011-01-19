@@ -54,7 +54,26 @@ $lang_module['comment_timeouts'] = "Xin lỗi bạn vừa mới bình luận r�
 $lang_module['down_info'] = "Nhất chuột phải chọn save link để tải về";
 $lang_module['enter_name'] = "Nhập tên bạn";
 
+$lang_module['error_s_1'] = "Ca khúc không play được";
+$lang_module['error_s_2'] = "Ca khúc có chất lượng kém";
+$lang_module['error_s_3'] = "Ca khúc bị méo tiếng";
+$lang_module['error_s_4'] = "Ca khúc bị đứng nửa chừng";
+$lang_module['error_s_5'] = "Không nghe được âm thanh";
+$lang_module['error_s_6'] = "Tên ca khúc không lành mạnh";
+$lang_module['error_s_7'] = "Nội dung ca khúc không lành mạnh";
+$lang_module['error_s_8'] = "Lời bài hát không đúng";
+$lang_module['error_s_9'] = "Ca khúc có bình luận không lành mạnh";
+$lang_module['error_a_1'] = "Album không play được";
+$lang_module['error_a_2'] = "Album có ca khúc chất lượng kém";
+$lang_module['error_a_3'] = "Album có ca khúc bị méo tiếng";
+$lang_module['error_a_4'] = "Album bị đứng nửa chừng";
+$lang_module['error_a_5'] = "Album có ca khúc không nghe được âm thanh";
+$lang_module['error_a_6'] = "Album có lời nhắn không lành mạnh";
+$lang_module['error_a_7'] = "Nội dung album không lành mạnh";
+$lang_module['error_a_8'] = "Nội dung bình luận album không lành mạnh";
+$lang_module['error_choose'] = "-- Chọn nguyên nhân --";
 $lang_module['give_error'] = "Báo lỗi";
+$lang_module['give_error_diff'] = "Nếu không phải một trong các nguyên nhân trên bạn vui lòng nhập nguyên nhân vào ô dưới đây.";
 $lang_module['give_error_info'] = "Để giúp chúng tôi quản lý tốt hơn chất lượng các bài hát bạn hãy gửi ngay thông tin khi gặp vấn đề nào đó về bài hát hoặc album này";
 
 $lang_module['hotest_song'] = "Bài hát HOT nhất";

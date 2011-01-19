@@ -82,10 +82,22 @@
 		<div id="tab3" class="tab_content">
 			<form action="#" method="post">
 				<p><strong>{LANG.give_error}</strong>: {LANG.give_error_info}</p>
+				<p>&nbsp;
+				<select id="root_error" name="root_error" style=";float:right;width: 346px;margin-right:34px;">
+					<option value="">{LANG.error_choose}</option>
+					<option>{LANG.error_a_1}</option>
+					<option>{LANG.error_a_2}</option>
+					<option>{LANG.error_a_3}</option>
+					<option>{LANG.error_a_4}</option>
+					<option>{LANG.error_a_5}</option>
+					<option>{LANG.error_a_6}</option>
+					<option>{LANG.error_a_7}</option>
+					<option>{LANG.error_a_8}</option>
+				</select></p>	
 				<p>{LANG.enter_name}:
-				<input id="user" type="text" value="" /> </p>
-				<p>{LANG.content}:</p>
-				<textarea id="bodyerror" name="message" rows="5"></textarea>
+				<input id="user" type="text" value="{USER_NAME}" {NO_CHANGE}/> </p>
+				<p style="width:460px">{LANG.give_error_diff}</p>
+				<textarea id="bodyerror" name="message" rows="1"></textarea>
 				<p align="center">
 				<a onclick="senderror('{ID}', 'album');" class="submitbutton">{LANG.send}</a></p>
 			</form>

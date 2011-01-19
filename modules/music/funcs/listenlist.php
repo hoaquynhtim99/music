@@ -25,6 +25,8 @@ elseif ( defined( 'NV_IS_ADMIN' ) )
 	$name = $admin_info['username'];
 }
 else $name = '';
+$xtpl->assign( 'USER_NAME', $name );
+$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 
 // xu li
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;

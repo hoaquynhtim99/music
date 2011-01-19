@@ -19,7 +19,7 @@ if ( $song['server'] == 0 )
 }
 elseif ( $song['server'] == 1 )
 {
-	$url = NV_MY_DOMAIN . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
+	$url = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
 }
 if (  nv_check_url( $url ) )
 {
