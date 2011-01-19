@@ -246,6 +246,7 @@ $lang_module['upload_note'] = "Một số lưu ý.";
 $lang_module['upload_note1'] = "Bạn có thể upload nhiều bài hát cùng một lúc.";
 $lang_module['upload_note2'] = "Các bài hát sai quy định sẽ bị sửa hoặc xóa mà không cần báo trước.";
 $lang_module['upload_quicksinger'] = "Nhập nhanh tên ca sĩ.";
+$lang_module['upload_quickauthor'] = "Nhập nhanh tên nhạc sĩ.";
 $lang_module['upload_s'] = "Thành công";
 $lang_module['upload_song'] = "Upload bài hát";
 $lang_module['upload_f'] = "Thất bại";

@@ -18,6 +18,8 @@ $size = $_FILES['uploadfile']['size'];
 $songname = filter_text_input( 'song', 'get,post', '' );
 $singer = filter_text_input( 'singer', 'get,post', '' );
 $newsinger = filter_text_input( 'newsinger', 'get,post', '' );
+$author = filter_text_input( 'author', 'get,post', '' );
+$newauthor = filter_text_input( 'newauthor', 'get,post', '' );
 $category = $nv_Request->get_int( 'category', 'get,post', 0 );
 if ( defined( 'NV_IS_USER' ) )
 {
@@ -41,6 +43,12 @@ if ( $newsinger != $lang_module['upload_quicksinger'] )
 	$singer = $newsinger;
 }
 
+if ( $newauthor != $lang_module['upload_quickauthor'] )
+{
+	newauthor( change_alias( $newauthor ), $newauthor );
+	$author = $newauthor;
+}
+
 if ( $size > ( $setting['upload_max'] * ( 1024 * 1024 ) ) )
 {
 	echo "error file size is too big";
@@ -59,7 +67,7 @@ if ( move_uploaded_file ( $_FILES['uploadfile']['tmp_name'], $file ) )
 	$lu = strlen( NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
 	$duongdan = substr( $file, $lu );
 	
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $db->dbescape( change_alias( $singer ) ) . ", 'na', " . $db->dbescape( $category ) . ", " . $db->dbescape( $duongdan )  . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", 1, " . $userid . " ) "; 
+	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $db->dbescape( change_alias( $singer ) ) . ", " . $db->dbescape( change_alias( $author ) ) . ", 'na', " . $db->dbescape( $category ) . ", " . $db->dbescape( $duongdan )  . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", 1, " . $userid . " ) "; 
 	$db->sql_query_insert_id( $query );
 	$db->sql_freeresult();
 	updatesinger( $singer, 'numsong', '+1' );

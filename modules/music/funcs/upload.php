@@ -13,6 +13,7 @@ $user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_
 $user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;		
 
 $allsinger = getallsinger();
+$allauthor = getallauthor();
 $category = get_category();
 
 $xtpl = new XTemplate( "upload.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
@@ -39,11 +40,18 @@ else
 		$singerdata .= "<option value=\"" . $name . "\" >" . $fullname . "</option>";
 	}
 	$categoryd = '';
+	$authordata = '';
+	foreach ( $allauthor as $name => $fullname )
+	{
+		$authordata .= "<option value=\"" . $name . "\" >" . $fullname . "</option>";
+	}
+	$categoryd = '';
 	foreach ( $category as $key => $title )
 	{
 		$categoryd .= "<option value=\"" . $key . "\" >" . $title . "</option>";
 	}
 	$xtpl->assign( 'singerdata', $singerdata . "</select>" );
+	$xtpl->assign( 'authordata', $authordata . "</select>" );
 	$xtpl->assign( 'category', $categoryd . "</select>" );
 	$xtpl->parse( 'main.access' );
 }
