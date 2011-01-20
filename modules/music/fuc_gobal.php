@@ -6,8 +6,7 @@
  * @copyright 2009
  * @createdate 05/12/2010 09:47
  */
-
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 // lay url
 function get_URL()
