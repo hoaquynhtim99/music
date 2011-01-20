@@ -115,6 +115,7 @@ $lang_module['playlist_creat'] = "Ngày tạo";
 $lang_module['playlist_save'] = "Quản lý playlist";
 $lang_module['playlist_song'] = "Danh sách các bài hát trong playlist của bạn";
 $lang_module['playlist_showhide'] = "Ẩn hiện playlist";
+$lang_module['playlist_delete_confirm'] = "Bạn có chắc chắn xóa tất cả các bài hát trong playlist không?";
 $lang_module['playlist_delete'] = "Xóa playlist";
 $lang_module['playlist_edit'] = "Sửa playlist";
 $lang_module['playlist_full'] = "Xin lỗi bạn chỉ được thêm tối đa 20 bài hát vào playlist";

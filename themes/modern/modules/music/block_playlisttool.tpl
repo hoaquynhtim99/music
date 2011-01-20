@@ -15,10 +15,14 @@ $(document).ready(function() {
     $("a.showplaylist").click(function () {
       $("#playlist").slideToggle("slow");
     });
-	//
     $("a.delplaylist").click(function () {
-      $("#playlist").slideUp( 'fast', function() { $("#playlist").empty(); delplaylist();} );
-      //$("#playlist").empty(); 
+		if ( confirm( '{LANG.playlist_delete_confirm}' ) )
+		{
+			$("#playlist").slideUp( 'fast', function() 
+				{ $("#playlist").empty(); delplaylist();
+				} 
+			);
+		}
     });
 });
 </script>
