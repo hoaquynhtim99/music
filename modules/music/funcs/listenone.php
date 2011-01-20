@@ -151,6 +151,8 @@ elseif ( $setting['who_comment'] == 2 )
 }
 else
 {
+	require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/emotions.php';
+	$xtpl->assign( 'EMOTIONS', show_emotions() );
 	$xtpl->assign( 'USER_NAME', $name );
 	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 	$xtpl->parse( 'main.comment' );

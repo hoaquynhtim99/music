@@ -153,7 +153,15 @@
 						<input type="text" name="name" id="name" value="{USER_NAME}" {NO_CHANGE} />
 						<textarea name="body" id="commentbody" cols="20" rows="5"></textarea>
 						<label for="body">{LANG.content}:</label>
+						<div>
 						<input style="width: 50px;float:right;margin-right:20px;" class="submitbutton" type="button" id="buttoncontent" value="{LANG.send}" onclick="sendcommment( '{ID}' , 'album' );" />
+						<input id="showemotion" style="width: 130px;float:right;margin-right:20px;" class="submitbutton" type="button"  value="{LANG.emotion}" />
+						<div class="clear"></div>
+						<div style="position:relative;">
+						<div id="emotion">{EMOTIONS}</div>
+						<script type="text/javascript" src="{base_url}showemotion.js"></script>
+						</div>
+						</div>
 					</div>
 				</form>
 			</div>

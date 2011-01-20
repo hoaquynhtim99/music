@@ -95,7 +95,15 @@
 						<input style="width: 500px;" type="text" name="name" id="name" value="{USER_NAME}" {NO_CHANGE} />
 						<textarea style="width: 500px;" name="body" id="commentbody" cols="20" rows="5"></textarea>
 						<label for="body">{LANG.content}:</label>
-						<input style="width: 50px;float:right;margin-right:479px;" class="submitbutton" type="button" id="buttoncontent" value="{LANG.send}" onclick="sendcommment( '{ID}' , 'video' );" />
+						<div>
+						<input style="width: 50px;float:left;margin-left:86px" class="submitbutton" type="button" id="buttoncontent" value="{LANG.send}" onclick="sendcommment( '{ID}' , 'video' );" />
+						<input id="showemotion" style="width: 130px;float:left;margin-left:6px" class="submitbutton" type="button"  value="{LANG.emotion}" />
+						<div class="clear"></div>
+						<div style="position:relative;">
+						<div id="emotion">{EMOTIONS}</div>
+						<script type="text/javascript" src="{base_url}showemotion.js"></script>
+						</div>
+						</div>
 					</div>
 				</form>
 			</div>

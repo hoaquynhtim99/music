@@ -84,6 +84,7 @@ $lang_module['link_song'] = "Link bài hát";
 $lang_module['blog_song'] = "Chèn blog";
 $lang_module['forum_song'] = "Forum";
 
+$lang_module['emotion'] = "Biểu tượng cảm xúc";
 
 $lang_module['listen_all_album'] = "Nghe toàn bộ album";
 $lang_module['listen_all_song_of'] = "Nghe toàn bộ ca khúc";

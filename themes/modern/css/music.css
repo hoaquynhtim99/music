@@ -1158,3 +1158,11 @@ div.sucess {
 	vertical-align: middle;
 	padding-top: 5px;
 }
+#emotion {
+	background-color: #D7EBFF;
+	border: 2px solid #99CCFF;
+	position: absolute;
+	bottom: 0px;
+	left: 30px;
+	display: none;
+}
