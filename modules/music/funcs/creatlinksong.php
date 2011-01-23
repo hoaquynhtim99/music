@@ -24,6 +24,18 @@ if ( $where == 'song' )
 	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = numview+1 WHERE `id` =" . $id );
 	$globaldata[] = $song;
 }
+elseif ( $where == 'video' )
+{
+	$song = getvideobyID( $id );
+	if ( $song['name'] != $name ) die('Stop!!!');
+	if ( $song['server'] != 0 )
+	{
+		$song['duongdan'] =  $global_config['site_url'] . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'];
+	}
+	$song['casi'] = $allsinger[$song['casi']];
+	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
+	$globaldata[] = $song;
+}
 elseif ( $where == 'album' )
 {
 	$albumdata = getalbumbyID( $id );

@@ -47,6 +47,7 @@ $xtpl->assign( 'name', $row['tname'] );
 $xtpl->assign( 'singer', $allsinger[$row['casi']] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
 $xtpl->assign( 'view', $row['view'] );
+$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/video/' . $row['id'] . '/' . $row['name'] . '/' );
 
 $xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $row['casi']);
 $xtpl->assign( 'url_search_category', $mainURL . "=searchvideo/category/" . $row['theloai']);
