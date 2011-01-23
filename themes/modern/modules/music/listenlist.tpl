@@ -69,7 +69,11 @@
 			</div>
 			<form action="#" method="post">
 				<p>Link Album:
-				<input id="songforum" onClick="SelectAll('songforum');" type="text" value="{URL_ALBUM}" readonly="readonly" /> </p>
+				<input id="albumlink" onClick="SelectAll('albumlink');" type="text" value="{URL_ALBUM}" readonly="readonly" /> </p>
+				<p>{LANG.blog_song}:
+				<input id="blogsong" onClick="SelectAll('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /> </p>
+				<p>{LANG.forum_song}:
+				<input id="songforum" onClick="SelectAll('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={creat_link_url}[/FLASH]" readonly="readonly" /> </p>
 			</form>
 			<script type="text/javascript">
 				function SelectAll(id)

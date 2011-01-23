@@ -12,6 +12,7 @@ $allsinger = getallsinger();
 
 $xtpl = new XTemplate( "listenlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_data . "/data/" );
 $xtpl->assign( 'base_url', NV_BASE_SITEURL."modules/" . $module_data . "/data/" );
 $xtpl->assign( 'ads', getADS() );
 $user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" ;
@@ -32,7 +33,7 @@ $xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $xtpl->assign( 'ID',  $id );
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id = ".$id;
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id = " . $id;
 $query = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $query );
 // update album
@@ -57,6 +58,7 @@ while ($rowsong = $db->sql_fetchrow( $querysong ) )
 	$xtpl->parse( 'main.song' );
 	$i ++ ;
 }
+$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/album/' . $row['id'] . '/' . $row['name'] . '/' );
 $xtpl->assign( 'name', $row['tname'] );
 $xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $row['upboi']);
 $xtpl->assign( 'singer', $allsinger[$row['casi']] );

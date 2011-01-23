@@ -40,7 +40,7 @@ $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET numview = numview+1 WHERE `id` =" . $id );
 $row = getsongbyID( $id );
 
-$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/' . $row['id'] . '/' . $row['ten'] . '/' );
+$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/song/' . $row['id'] . '/' . $row['ten'] . '/' );
 
 $xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=sendmail&amp;id=". $id );
 $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
@@ -50,9 +50,7 @@ $xtpl->assign( 'singer', $allsinger[$row['casi']] );
 $xtpl->assign( 'author', $allauthor[$row['nhacsi']] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
 $xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
-
 $xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $row['theloai']);
-
 $xtpl->assign( 'url_search_album', $mainURL . "=album/numview/" . $row['album']);
 
 $album_name = getalbumbyNAME( $row['album'] ) ;
