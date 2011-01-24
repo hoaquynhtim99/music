@@ -41,7 +41,8 @@ $lang_module['album_creat'] = "Tạo một playlist mới";
 
 $lang_module['category'] = "THỂ LOẠI";
 $lang_module['category_2'] = "Thể loại";
-
+$lang_module['active_yes'] = "Có";
+$lang_module['active_no'] = "Không";
 $lang_module['cancel'] = "Làm lại";
 $lang_module['cofirm_del'] = "Bạn có chắc chắn xóa không?";
 
