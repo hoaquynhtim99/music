@@ -42,14 +42,7 @@ $j = count( $song );
 for ( $i = 1; $i < $j; $i ++ )
 {
 	$datasong = getsongbyID( $song[$i] );
-	if ( $datasong['server'] != 0 )
-	{
-		$xtpl->assign( 'song_url', $songURL . $datasong['duongdan'] );
-	}
-	else
-	{
-		$xtpl->assign( 'song_url', $datasong['duongdan'] );
-	}
+	$xtpl->assign( 'song_url', outputURL ( $datasong['server'], $datasong['duongdan'] ) );
 	$xtpl->assign( 'song_name', $datasong['tenthat'] );
 	$xtpl->assign( 'song_singer', $allsinger[$datasong['casi']] );
 	$xtpl->parse( 'main.song' );

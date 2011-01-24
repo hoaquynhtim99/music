@@ -51,15 +51,7 @@ $xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_con
 
 $xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $row['casi']);
 $xtpl->assign( 'url_search_category', $mainURL . "=searchvideo/category/" . $row['theloai']);
-
-if ( $row['server'] != 0 )
-{
-	$xtpl->assign( 'link', $songURL . "video/" . $row['duongdan'] );
-}
-else
-{
-	$xtpl->assign( 'link', $row['duongdan'] );
-}
+$xtpl->assign( 'link', outputURL ( $row['server'], $row['duongdan'] ) );
 $xtpl->assign( 'URL_SONG', get_URL() );
 
 // binh luan

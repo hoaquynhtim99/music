@@ -44,15 +44,7 @@ while ( $rowsong = $db->sql_fetchrow( $querysong ) )
 {
 	$xtpl->assign( 'song_name', $i.". ".$rowsong['tenthat'] );
 	$xtpl->assign( 'song_singer', $allsinger[$rowsong['casi']] );
-	
-	if ( $rowsong['server'] != 0 )
-	{
-		$xtpl->assign( 'song_url', $songURL . $rowsong['duongdan'] );
-	}
-	else
-	{
-		$xtpl->assign( 'song_url', $rowsong['duongdan'] );
-	}
+	$xtpl->assign( 'song_url', outputURL ( $rowsong['server'], $rowsong['duongdan'] ) );
 	$xtpl->parse( 'main.song' );
 	$i ++ ;
 }

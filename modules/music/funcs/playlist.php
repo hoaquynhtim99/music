@@ -30,15 +30,7 @@ else
 			
 		$xtpl->assign( 'song_name', $i.". ".$row['tenthat'] );
 		$xtpl->assign( 'song_singer', $allsinger[$row['casi']] );
-		
-		if ( $row['server'] != 0 )
-		{
-			$xtpl->assign( 'song_url', $songURL . $row['duongdan'] );
-		}
-		else
-		{
-			$xtpl->assign( 'song_url', $row['duongdan'] );
-		}
+		$xtpl->assign( 'song_url', outputURL ( $row['server'], $row['duongdan'] ) );
 	
 		$xtpl->parse( 'main.song' );
 	}
