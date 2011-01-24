@@ -79,17 +79,9 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 		$ok = false;
 		for ( $i = 1; $i <= $numsong; $i ++)
 		{
-			if (preg_match('/^(ht|f)tp:\/\//', $songdata[$i]['duongdan'])) 
-			{
-				$data = $songdata[$i]['duongdan'];
-				$server = 0;
-			}
-			else
-			{
-				$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
-				$data = substr( $songdata[$i]['duongdan'], $lu );
-				$server = 1;
-			}
+			$check_url = creatURL ( $songdata[$i]['duongdan'] );
+			$data = $check_url['duongdan'];
+			$server = $check_url['server'];
 			
 			// update so bai hat
 			updatesinger( $casi, 'numsong', '+1' );

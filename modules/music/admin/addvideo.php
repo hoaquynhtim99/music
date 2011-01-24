@@ -76,16 +76,9 @@ else
 //sua video
 if ( (($nv_Request->get_int( 'edit', 'post', 0 )) == 1) && ($error =='') )
 {
-	if (preg_match('/^(ht|f)tp:\/\//', $videodata['duongdan'])) 
-	{
-		$videodata['server'] = 0;
-	}
-	else
-	{
-		$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" );
-		$videodata['duongdan'] = substr( $videodata['duongdan'], $lu );
-		$videodata['server'] = 1;
-	}
+	$check_url = creatURL ( $videodata['duongdan'] );
+	$videodata['duongdan'] = $check_url['duongdan'];
+	$videodata['server'] = $check_url['server'];
 
 	foreach ( $videodata as $key => $data  )
 	{	
@@ -113,17 +106,9 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
 	}
 	if ( $error == "" )
 	{
-		if (preg_match('/^(ht|f)tp:\/\//', $videodata['duongdan'])) 
-		{
-			$data = $videodata['duongdan'];
-			$server = 0;
-		}
-		else
-		{
-			$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" );
-			$data = substr( $videodata['duongdan'], $lu );
-			$server = 1;
-		}
+		$check_url = creatURL ( $videodata['duongdan'] );
+		$data = $check_url['duongdan'];
+		$server = $check_url['server'];
 	
 		updatesinger( $videodata['casi'], 'numvideo', '+1' );
 		updateauthor( $videodata['nhacsi'], 'numvideo', '+1' );
