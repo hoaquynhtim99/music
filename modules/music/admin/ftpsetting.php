@@ -61,27 +61,16 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 		}
 	}
 }
-$ftpdata = array();
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id ASC";
-$resuilt = $db->sql_query( $sql );
 $newid = 1;
 $lastid = 0;
-while ( $row = $db->sql_fetchrow( $resuilt ) )
+$ftpdata = getFTP();
+foreach ( $ftpdata as $data )
 {
-	if ( $newid <= $row['id'] ) 
+	if ( $newid <= $data['id'] ) 
 	{
-		$newid = $row['id'] + 1;
-		$lastid = $row['id'];
+		$newid = $data['id'] + 1;
+		$lastid = $data['id'];
 	}
-	$ftpdata[$row['id']] = array(
-			"id" => $row['id'],
-			"host" => $row['host'],
-			"user" => $row['user'],
-			"pass" => $row['pass'],
-			"fulladdress" => $row['fulladdress'],
-			"subpart" => $row['subpart'],
-			"active" => ( $row['active'] == 1 )? $lang_module['active_yes'] : $lang_module['active_no']
-		);
 }
 if($error)
 {

@@ -252,5 +252,25 @@ function delgift( $songid )
     $result = $db->sql_query( $sql );
 	return ;
 }
-
+// Lay thong tin ftp cua host nhac
+function getFTP()
+{
+	global $module_data, $db, $lang_module ;
+	$ftpdata = array();
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id ASC";
+	$resuilt = $db->sql_query( $sql );
+	while ( $row = $db->sql_fetchrow( $resuilt ) )
+	{
+		$ftpdata[$row['id']] = array(
+			"id" => $row['id'],
+			"host" => $row['host'],
+			"user" => $row['user'],
+			"pass" => $row['pass'],
+			"fulladdress" => $row['fulladdress'],
+			"subpart" => $row['subpart'],
+			"active" => ( $row['active'] == 1 )? $lang_module['active_yes'] : $lang_module['active_no']
+		);
+	}
+	return $ftpdata;
+}
 ?>
