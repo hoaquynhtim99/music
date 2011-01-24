@@ -32,6 +32,7 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_singer`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author`";
+$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp`";
 
 $sql_create_module = $sql_drop_module;
 
@@ -275,6 +276,18 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 `numsong` MEDIUMINT( 8 ) NOT NULL DEFAULT '0',
 `numvideo` MEDIUMINT( 8 ) NOT NULL DEFAULT '0',
 UNIQUE (`ten`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
+
+//21 FTP
+$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp` (
+ `id` INT( 50 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+ `host` VARCHAR( 30 ) NOT NULL ,
+ `user` VARCHAR( 30 ) NOT NULL ,
+ `pass` VARCHAR( 30 ) NOT NULL ,
+ `fulladdress` VARCHAR( 255 ) NOT NULL ,
+ `subpart` VARCHAR( 255 ) NOT NULL ,
+ `active` int(2) NOT NULL,
+ UNIQUE (`host`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
 
 //1. them vao hot album

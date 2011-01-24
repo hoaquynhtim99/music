@@ -104,6 +104,14 @@ $lang_module['error_video'] = "Bạn chưa điền đủ thông tin cho video cl
 
 $lang_module['feature'] = "Chức năng";
 
+$lang_module['ftpsetting'] = "Cấu hình FTP";
+$lang_module['ftp_host'] = "Tên host";
+$lang_module['ftp_del_confirm'] = "Bạn có chắc chắn xóa host này không? Nếu xóa tất cả các dữ liệu liên quan sẽ bị tạm ngưng hoạt động";
+$lang_module['ftp_user'] = "Tài khoản";
+$lang_module['ftp_pass'] = "Mật khẩu";
+$lang_module['ftp_full_address'] = "Địa chỉ đầu";
+$lang_module['ftp_sub_address'] = "Địa chỉ sau";
+
 $lang_module['gift_del_confirm'] = "Bạn có chắc xóa quà tặng này";
 
 $lang_module['info'] = "Thông tin";

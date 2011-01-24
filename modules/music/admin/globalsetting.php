@@ -1,6 +1,6 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET-MUSIC
  * @Author VINADES.,JSC (contact@vinades.vn)
  * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
  * @Createdate 9-8-2010 14:43
@@ -33,6 +33,11 @@ $contents = '
 <table class="tab1">
     <caption>
         <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=blockhotsinger">' . $lang_module['sub_blockhotsinger'] . '</a>
+    </caption>
+</table>
+<table class="tab1">
+    <caption>
+        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=ftpsetting">' . $lang_module['ftpsetting'] . '</a>
     </caption>
 </table>
 <table class="tab1">
