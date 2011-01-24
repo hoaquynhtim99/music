@@ -33,16 +33,14 @@ $xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $xtpl->assign( 'ID',  $id );
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id = " . $id;
-$query = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $query );
+$row = getalbumbyID( $id );
 // update album
 $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = numview+1 WHERE `id` =" . $id );
 // cac bai hat cua album
-$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album = \"".$row['name'] ."\" AND `active` = 1 ORDER BY id DESC";
+$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album = \"" . $row['name'] . "\" AND `active` = 1 ORDER BY id DESC";
 $querysong = $db->sql_query( $sqlsong );
 $i = 1 ;
-while ($rowsong = $db->sql_fetchrow( $querysong ) )
+while ( $rowsong = $db->sql_fetchrow( $querysong ) )
 {
 	$xtpl->assign( 'song_name', $i.". ".$rowsong['tenthat'] );
 	$xtpl->assign( 'song_singer', $allsinger[$rowsong['casi']] );
