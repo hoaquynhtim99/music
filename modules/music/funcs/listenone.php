@@ -56,14 +56,7 @@ $xtpl->assign( 'url_search_album', $mainURL . "=album/numview/" . $row['album'])
 $album_name = getalbumbyNAME( $row['album'] ) ;
 $xtpl->assign( 'album', $album_name['tname'] );
 $xtpl->assign( 'numview', $row['numview'] );
-if ( $row['server'] != 0 )
-{
-	$xtpl->assign( 'link', $songURL . $row['duongdan'] );
-}
-else
-{
-	$xtpl->assign( 'link', $row['duongdan'] );
-}
+$xtpl->assign( 'link', outputURL ( $row['server'], $row['duongdan'] ) );
 $xtpl->assign( 'URL_SONG', get_URL() );
 
 // loi bai hst
