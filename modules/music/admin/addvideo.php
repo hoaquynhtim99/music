@@ -61,15 +61,7 @@ else
 		$videodata['theloai'] = $row['theloai'];
 		$videodata['duongdan'] = $row['duongdan'];
 		$videodata['thumb'] = $row['thumb'];	
-		
-		if( $row['server'] != 0 )
-		{
-			$videodata['duongdan'] = "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" . $row['duongdan'];
-		}
-		else
-		{
-			$videodata['duongdan'] = $row['duongdan'];
-		}
+		$videodata['duongdan'] = outputURL ( $row['server'], $row['duongdan'] );
 	}
 }
 
