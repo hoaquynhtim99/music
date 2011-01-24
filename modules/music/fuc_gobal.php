@@ -339,7 +339,6 @@ function outputURL ( $server, $inputurl )
 		$ftpdata = getFTP();
 		foreach ( $ftpdata as $id => $data )
 		{
-			$this_host = $data['fulladdress'] . $data['subpart'];
 			if ( $id == $server )
 			{
 				$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
