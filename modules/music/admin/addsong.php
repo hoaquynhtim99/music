@@ -66,16 +66,8 @@ else
 		$songdata['casi'] = $row['casi'];
 		$songdata['nhacsi'] = $row['nhacsi'];
 		$songdata['album'] = $row['album'];
-		$songdata['theloai'] = $row['theloai'];
-		
-		if( $row['server'] != 0 )
-		{
-			$songdata['duongdan'] = "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $row['duongdan'];
-		}
-		else
-		{
-			$songdata['duongdan'] = $row['duongdan'];
-		}
+		$songdata['theloai'] = $row['theloai'];	
+		$songdata['duongdan'] = outputURL ( $row['server'], $row['duongdan'] );
 		$songdata['upboi'] = $row['upboi'];
 		$songdata['bitrate'] = $row['bitrate'];
 		$songdata['duration'] = $row['duration'];

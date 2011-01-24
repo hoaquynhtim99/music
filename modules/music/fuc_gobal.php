@@ -278,10 +278,10 @@ function creatURL ( $inputurl )
 {
 	global $module_name, $setting;
 	//$setting = setting_music();
-	$ftpdata = getFTP();
 	$songdata = array();
 	if ( preg_match( '/^(ht|f)tp:\/\//', $inputurl ) ) 
 	{
+		$ftpdata = getFTP();
 		$str_inurl = str_split( $inputurl );
 		$no_ftp = true;
 		foreach ( $ftpdata as $id => $data )
@@ -320,5 +320,34 @@ function creatURL ( $inputurl )
 		$songdata['server'] = 1;
 	}
 	return $songdata;
+}
+// xuat duong dan day du
+function outputURL ( $server, $inputurl )
+{
+	global $module_name, $setting;
+	$output = "";
+	if( $server == 0 )
+	{
+		$output = $inputurl;
+	}
+	elseif( $server == 1 )
+	{
+		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $inputurl;
+	}
+	else
+	{
+		$ftpdata = getFTP();
+		foreach ( $ftpdata as $id => $data )
+		{
+			$this_host = $data['fulladdress'] . $data['subpart'];
+			if ( $id == $server )
+			{
+				$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+				break;
+			}
+		}
+
+	}
+	return $output;
 }
 ?>
