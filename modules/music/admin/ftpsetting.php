@@ -61,8 +61,8 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 		}
 	}
 }
-$newid = 1;
-$lastid = 0;
+$newid = 2;
+$lastid = 1;
 $ftpdata = getFTP();
 foreach ( $ftpdata as $data )
 {
