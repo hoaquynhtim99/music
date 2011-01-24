@@ -86,16 +86,9 @@ else
 //sua bai hat
 if ( ($nv_Request->get_int( 'edit', 'post', 0 ) == 1) && ( $error == '' ) )
 {
-	if (preg_match('/^(ht|f)tp:\/\//', $songdata['duongdan'])) 
-	{
-		$songdata['server'] = 0;
-	}
-	else
-	{
-		$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
-		$songdata['duongdan'] = substr( $songdata['duongdan'], $lu );
-		$songdata['server'] = 1;
-	}
+	$check_url = creatURL ( $songdata['duongdan'] );
+	$songdata['duongdan'] = $check_url['duongdan'];
+	$songdata['server'] = $check_url['server'];
 	foreach ( $songdata as $key => $data  )
 	{	
 		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
@@ -129,18 +122,9 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 	}
 	if ( $error == "" )
 	{
-		if (preg_match('/^(ht|f)tp:\/\//', $songdata['duongdan'])) 
-		{
-			$data = $songdata['duongdan'];
-			$server = 0;
-		}
-		else
-		{
-			$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
-			$data = substr( $songdata['duongdan'], $lu );
-			$server = 1;
-		}
-		
+		$check_url = creatURL ( $songdata['duongdan'] );
+		$data = $check_url['duongdan'];
+		$server = $check_url['server'];
 		// update so bai hat
 		updatesinger( $songdata['casi'], 'numsong', '+1' );
 		updateauthor( $songdata['nhacsi'], 'numsong', '+1' );

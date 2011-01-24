@@ -273,4 +273,52 @@ function getFTP()
 	}
 	return $ftpdata;
 }
+// tao duong dan tu mot chuoi
+function creatURL ( $inputurl )
+{
+	global $module_name, $setting;
+	//$setting = setting_music();
+	$ftpdata = getFTP();
+	$songdata = array();
+	if ( preg_match( '/^(ht|f)tp:\/\//', $inputurl ) ) 
+	{
+		$str_inurl = str_split( $inputurl );
+		$no_ftp = true;
+		foreach ( $ftpdata as $id => $data )
+		{
+			$this_host = $data['fulladdress'] . $data['subpart'];
+			$str_check = str_split( $this_host );
+			$check_ok = false;
+			foreach ( $str_check as $stt => $char )
+			{
+				if ( $char != $str_inurl[$stt] ) 
+				{
+					$check_ok = false;
+					break;
+				}
+				$check_ok = true;
+			}
+			if ( $check_ok )
+			{
+				$lu = strlen( $this_host );
+				$songdata['duongdan'] = substr( $inputurl, $lu );
+				$songdata['server'] = $id;
+				$no_ftp = false;
+				break;
+			}
+		}
+		if ( $no_ftp )
+		{
+			$songdata['duongdan'] = $inputurl;
+			$songdata['server'] = 0;
+		}
+	}
+	else
+	{
+		$lu = strlen( NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" );
+		$songdata['duongdan'] = substr( $inputurl, $lu );
+		$songdata['server'] = 1;
+	}
+	return $songdata;
+}
 ?>
