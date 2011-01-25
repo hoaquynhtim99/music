@@ -2,8 +2,8 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @copyright 2009
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @copyright Freeware
  * @createdate 05/12/2010 09:47
  */
 
@@ -361,6 +361,6 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (10, 'upload_max', 2, ''),
 (11, 'who_upload', 0, ''),
 (12, 'auto_upload', 0, ''),
-(12, 'default_server', 1, '')";
+(13, 'default_server', 1, '')";
 
 ?>
