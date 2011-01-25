@@ -286,6 +286,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
  `pass` VARCHAR( 30 ) NOT NULL ,
  `fulladdress` VARCHAR( 255 ) NOT NULL ,
  `subpart` VARCHAR( 255 ) NOT NULL ,
+ `ftppart` VARCHAR( 255 ) NOT NULL,
  `active` int(2) NOT NULL,
  UNIQUE (`host`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";

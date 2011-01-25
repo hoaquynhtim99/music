@@ -30,14 +30,15 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 			"user" => filter_text_input( 'user' . $i . '', 'post', '' ),
 			"pass" => filter_text_input( 'pass' . $i . '', 'post', '' ),
 			"fulladdress" => $nv_Request->get_string( 'fulladdress' . $i . '', 'post', '' ),
-			"subpart" => $nv_Request->get_string( 'subpart' . $i . '', 'post', '' )
+			"subpart" => $nv_Request->get_string( 'subpart' . $i . '', 'post', '' ),
+			"ftppart" => $nv_Request->get_string( 'ftppart' . $i . '', 'post', '' )
 		);
 	}
 	foreach ( $ftpdata as $i => $data  )
 	{
 		if ( $i > $lastid )
 		{
-			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ( `id`, `host`, `user`, `pass`, `fulladdress`, `subpart`, `active` ) VALUES ( " . $i . ", " . $db->dbescape( $data['host'] ) . ", " . $db->dbescape( $data['user'] ) . ", " . $db->dbescape( $data['pass'] ) . ", " . $db->dbescape( $data['fulladdress'] ) . ", " . $db->dbescape( $data['subpart'] ) . ", 1 ) "; 
+			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ( `id`, `host`, `user`, `pass`, `fulladdress`, `subpart`, `ftppart`, `active` ) VALUES ( " . $i . ", " . $db->dbescape( $data['host'] ) . ", " . $db->dbescape( $data['user'] ) . ", " . $db->dbescape( $data['pass'] ) . ", " . $db->dbescape( $data['fulladdress'] ) . ", " . $db->dbescape( $data['subpart'] ) . ", " . $db->dbescape( $data['ftppart'] ) . ", 1 ) "; 
 			if ( $db->sql_query_insert_id( $query ) ) 
 			{ 
 				$db->sql_freeresult();
@@ -91,6 +92,7 @@ $contents .= "<table class=\"tab1\">
     <td style=\"width:110px;\">" . $lang_module['ftp_user'] . "</td>
     <td style=\"width:110px;\">" . $lang_module['ftp_pass'] . "</td>
     <td style=\"width:110px;\">" . $lang_module['ftp_full_address'] . "</td>
+    <td style=\"width:110px;\">" . $lang_module['ftp_floder'] . "</td>
     <td style=\"width:110px;\">" . $lang_module['ftp_sub_address'] . "</td>
 	<td width=\"40px\" align=\"center\">" . $lang_module['active'] . "</td>
 	<td width=\"50px\" align=\"center\">" . $lang_module['feature'] . "</td>
@@ -115,6 +117,9 @@ foreach ( $ftpdata as $j => $data )
 		</td>
 		<td style=\"width:110px;\">
 			<input style=\"width:110px;\" name=\"subpart" . $j . "\" type=\"text\" value=\"". $data['subpart'] . "\" />
+		</td>
+		<td style=\"width:110px;\">
+			<input style=\"width:110px;\" name=\"ftppart" . $j . "\" type=\"text\" value=\"". $data['ftppart'] . "\" />
 		</td>
 		<td style=\"width:110px;\" align=\"center\"><a href=\"" . $link_active . $data['id'] . "\" class=\"active\">". $data['active'] . "</a>
 		<td style=\"width:110px;\" align=\"center\">
@@ -142,6 +147,9 @@ $contents .=
 	</td>
 	<td style=\"width:110px;\">
 		<input style=\"width:110px;\" name=\"subpart" . $newid . "\" type=\"text\" />
+	</td>
+	<td style=\"width:110px;\">
+		<input style=\"width:110px;\" name=\"ftppart" . $newid . "\" type=\"text\" />
 	</td>
 	<td style=\"width:110px;\">
 	</td>

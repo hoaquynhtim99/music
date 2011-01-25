@@ -268,6 +268,7 @@ function getFTP()
 			"pass" => $row['pass'],
 			"fulladdress" => $row['fulladdress'],
 			"subpart" => $row['subpart'],
+			"ftppart" => $row['ftppart'],
 			"active" => ( $row['active'] == 1 )? $lang_module['active_yes'] : $lang_module['active_no']
 		);
 	}

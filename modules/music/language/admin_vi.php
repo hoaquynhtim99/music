@@ -109,8 +109,9 @@ $lang_module['ftp_host'] = "Tên host";
 $lang_module['ftp_del_confirm'] = "Bạn có chắc chắn xóa host này không? Nếu xóa tất cả các dữ liệu liên quan sẽ bị tạm ngưng hoạt động";
 $lang_module['ftp_user'] = "Tài khoản";
 $lang_module['ftp_pass'] = "Mật khẩu";
-$lang_module['ftp_full_address'] = "Địa chỉ đầu";
-$lang_module['ftp_sub_address'] = "Địa chỉ sau";
+$lang_module['ftp_full_address'] = "Địa chỉ tới thư mục chứa file";
+$lang_module['ftp_sub_address'] = "Đường dẫn FTP";
+$lang_module['ftp_floder'] = "Thư mục chứa file";
 
 $lang_module['gift_del_confirm'] = "Bạn có chắc xóa quà tặng này";
 
