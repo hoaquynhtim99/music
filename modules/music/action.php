@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET-MUSIC
  * @Author VINADES.,JSC (contact@vinades.vn)
  * @copyright 2009
  * @createdate 05/12/2010 09:47
@@ -359,6 +359,7 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (9, 'who_download', 0, ''),
 (10, 'upload_max', 2, ''),
 (11, 'who_upload', 0, ''),
-(12, 'auto_upload', 0, '')";
+(12, 'auto_upload', 0, ''),
+(12, 'default_server', 1, '')";
 
 ?>

@@ -30,6 +30,7 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 	$data['who_upload'] = $nv_Request->get_int( 'who_upload', 'post', 0 );
 	$data['auto_upload'] = $nv_Request->get_int( 'auto_upload', 'post', 0 );
 	$data['upload_max'] = $nv_Request->get_int( 'upload_max', 'post', 0 );
+	$data['default_server'] = $nv_Request->get_int( 'default_server', 'post', 0 );
 	if ( ( $data['upload_max'] * ( 1024 * 1024 ) ) > $global_config['nv_max_size'] )
 	{
 		$data['upload_max'] = $global_config['nv_max_size'] / ( 1024 * 1024 );
@@ -165,8 +166,24 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 		<input name=\"upload_max\" type=\"text\" value=\"". $setting['upload_max'] . "\" />
     </td>
 </tr>
-<tbody class=\"second\">
+</tbody>
+<tr>
+    <td><strong>" . $lang_module['set_default_server'] . "</strong></td>
+    <td>
+		<select name=\"default_server\">
+			<option value=\"1\"" . ( $setting['default_server'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_root_server'] . "</option>\n";
+			$ftpdata = getFTP();
+			foreach ( $ftpdata as $id => $data )
+			{
+				$contents .="
+				<option value=\"" . $id . "\"" . ( $setting['default_server'] == $id ? " selected=\"selected\"" : "" ) . ">" . $data['fulladdress'] . "</option>\n";
 
+			}
+		$contents .="
+		</select>
+    </td>
+</tr>
+</tbody>
 </table>
 <div style=\"text-align: center;\" colspan=\"2\">
 <input type=\"submit\" value=\" " . $lang_module['save'] . " \" name=\"Submit1\">
