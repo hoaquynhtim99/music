@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES., JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES ., JSC. All rights reserved
- * @Createdate Dec 3, 2010  11:32:04 AM 
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 08:31 PM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
@@ -35,8 +35,8 @@ else $name = '';
 
 // lay video
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = ".$id;
+updateHIT_VIEW( $id, '_video' );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = " . $id;
 $query = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $query );
 

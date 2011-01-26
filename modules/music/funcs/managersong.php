@@ -1,9 +1,9 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES., JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES ., JSC. All rights reserved
- * @Createdate Dec 3, 2010  11:32:04 AM 
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 12:01 PM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
@@ -12,6 +12,7 @@ $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $userid = 0;
 $allsinger = getallsinger();
+$allauthor = getallauthor();
 $category = get_category();
 
 if ( defined( 'NV_IS_USER' ) )
@@ -48,6 +49,8 @@ else
 			$song['ten'] = $songdata['ten'] = change_alias( $songdata['tenthat'] );
 			$song['casi'] = $songdata['casi'] = filter_text_input( 'singer', 'post', '' );
 			$songdata['casimoi'] = filter_text_input( 'newsinger', 'post', '' );
+			$song['nhacsi'] = $songdata['nhacsi'] = filter_text_input( 'singer', 'post', '' );
+			$songdata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '' );
 			$song['theloai'] = $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
 			if ( $songdata['casimoi'] != '')
 			{
@@ -55,9 +58,16 @@ else
 				newsinger( $songdata['casi'], $songdata['casimoi'] );
 				updatesinger( $songdata['casi'], 'numsong', '+1' );
 			}
+			if ( $songdata['nhacsimoi'] != '')
+			{
+				$song['nhacsi'] = $songdata['nhacsi'] = change_alias( $songdata['nhacsimoi'] );
+				newauthor( $songdata['nhacsi'], $songdata['nhacsimoi'] );
+				updateauthor( $songdata['nhacsi'], 'numsong', '+1' );
+			}
 			foreach ( $songdata as $key => $data  )
 			{	
 				if ( $key == 'casimoi' ) continue;
+				if ( $key == 'nhacsimoi' ) continue;
 				$resuit = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
 			}
 			if ( $resuit )
@@ -72,6 +82,7 @@ else
 		
 		$cate = '';
 		$singer = '';
+		$author = '';
 		foreach( $category as $key => $data )
 		{
 			$cate .= "<option " . ( ( $key == $song['theloai'] )? ( "selected=\"selected\"" ):( "" ) ) . " value=\"" . $key . "\">" . $data . "</option>";
@@ -80,7 +91,11 @@ else
 		{
 			$singer .= "<option " . ( ( $key == $song['casi'] )? ( "selected=\"selected\"" ):( "" ) ) . " value=\"" . $key . "\">" . $data . "</option>";
 		}
-		
+		foreach( $allauthor as $key => $data )
+		{
+			$author .= "<option " . ( ( $key == $song['nhacsi'] )? ( "selected=\"selected\"" ):( "" ) ) . " value=\"" . $key . "\">" . $data . "</option>";
+		}
+		$xtpl->assign( 'AUTHOR', $author );
 		$xtpl->assign( 'SINGER', $singer );
 		$xtpl->assign( 'CATEGORY', $cate );
 		$xtpl->assign( 'SONG', $song );

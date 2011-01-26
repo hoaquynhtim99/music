@@ -1,9 +1,9 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET-MUSIC
  * @Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 25-12-2010 14:43
+ * @Copyright (C) 2011
+ * @Createdate 26-01-2011 14:43
  */
  
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
@@ -21,6 +21,11 @@ if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
 // lay du lieu 
 $contents = '' ;
 $category = get_category() ;
+if ( count ( $category ) == 0 ) 
+{
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" ) ;  
+	die();	
+}
 $allsinger = getallsinger();
 $numshow = $nv_Request->get_int( 'numshow', 'get', 100 );
 

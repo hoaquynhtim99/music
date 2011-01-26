@@ -33,6 +33,7 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_singer`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp`";
+$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_topsong`";
 
 $sql_create_module = $sql_drop_module;
 
@@ -54,6 +55,9 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `duration` int(50) unsigned NOT NULL DEFAULT '0',
   `server` int(255) NOT NULL DEFAULT '0',
   `userid` MEDIUMINT( 8 ) NOT NULL DEFAULT '0',
+  `dt` INT( 11 ) NOT NULL DEFAULT '0',
+  `binhchon` INT( 11 ) NOT NULL DEFAULT '0',
+  `hit` VARCHAR( 50 ) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
@@ -221,6 +225,8 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `active` int(2) NOT NULL,
   `dt` int(11) NOT NULL,
   `server` INT( 255 ) NOT NULL DEFAULT '0',
+  `binhchon` INT( 11 ) NOT NULL DEFAULT '0',
+  `hit` VARCHAR( 50 ) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
@@ -278,7 +284,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 UNIQUE (`ten`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
 
-//21 FTP
+//22 FTP
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp` (
  `id` INT( 50 ) UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
  `host` VARCHAR( 30 ) NOT NULL ,
@@ -290,6 +296,15 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
  `active` int(2) NOT NULL,
  UNIQUE (`host`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10";
+
+//22 FTP
+$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_topsong` (
+ `id` INT( 11 ) NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+ `songid` INT( 255 ) NOT NULL DEFAULT '0',
+ `dt` INT( 11 ) NOT NULL DEFAULT '0',
+ `hit` INT( 11 ) NOT NULL DEFAULT '0',
+ UNIQUE (`songid`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
 //1. them vao hot album
 $i = 1 ;

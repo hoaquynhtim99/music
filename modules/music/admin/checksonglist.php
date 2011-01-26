@@ -1,9 +1,9 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 2-9-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 08:39 AM
  */
 if(!defined('NV_IS_MUSIC_ADMIN'))
 {
@@ -25,7 +25,6 @@ $result = false;
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delsr";
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong";
 
-
 foreach($array_id as $id)
 {
 	if($id > 0)
@@ -41,14 +40,8 @@ foreach($array_id as $id)
 		$xtpl->assign('URL_EDIT', $link_edit . "&id=" . $song['id']);
 		$xtpl->assign( 'URL', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
 
-		if ( $song['server'] == 0 )
-		{
-			$url = $song['duongdan'] ;
-		}
-		elseif ( $song['server'] == 1 )
-		{
-			$url = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
-		}
+		$url = outputURL ( $song['server'], $song['duongdan'] ) ;
+		if ( $song['server'] == 1 ) { $url = NV_MY_DOMAIN . $url ; }
 		if (  nv_check_url( $url ) )
 		{
 			$xtpl->assign('result', $lang_module['check_link_suc']);
@@ -57,7 +50,6 @@ foreach($array_id as $id)
 		{
 			$xtpl->assign('result', $lang_module['check_link_err1']);
 		}
-		
 		$xtpl->parse('main.loop');
 	}
 }

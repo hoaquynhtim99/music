@@ -561,7 +561,6 @@ class FTP {
 	function _isError() {
 		return ($this->error_no != NULL) && ($this->error_no !== 0);
 	}
-
 }
 /* end */
 ?>

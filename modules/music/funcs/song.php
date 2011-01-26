@@ -77,7 +77,12 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $rs['casi']);
 	$xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $rs['upboi']);
 	$xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $rs['theloai']);
-	
+	$checkhit = explode ( "-", $rs['hit'] );
+	$checkhit = $checkhit[0];
+	if ( $checkhit >= 20 )
+	{
+		$xtpl->parse( 'main.loop.hit' );
+	}
 	$xtpl->parse( 'main.loop' );
 }
 $xtpl->parse( 'main' );

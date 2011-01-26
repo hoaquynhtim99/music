@@ -1,11 +1,11 @@
 <?php
+
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES., JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES ., JSC. All rights reserved
- * @Createdate Dec 3, 2010  11:32:04 AM 
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 09:41 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-
 ?>

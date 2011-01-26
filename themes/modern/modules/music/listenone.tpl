@@ -15,6 +15,9 @@
 		</div>
 	</div>
 <div id="listen_main">
+	<!-- BEGIN: hit -->
+	<div style="margin:10px 10px 0px 0px;" class="hitsong"></div>
+	<!-- END: hit -->
 	<strong>{name}</strong>
 	<p>{LANG.show}: <a href="{url_search_singer}">{singer}</a></p>
 	<p>{LANG.category_2}:<a href="{url_search_category}"> {category}&nbsp;</a> | {LANG.view}: {numview}</p>
@@ -69,6 +72,7 @@
 		<div class="sendtool">
 			<a target="_blank" href="http://www.facebook.com/sharer.php?u={URL_SONG}&t={name}-{singer}" class="facebook">Facebook   </a>
 			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{URL_SENDMAIL}','{TITLE}','500','450','no');return false">{LANG.sendtomail}</a>
+			<a class="votesong" href="javascript:void(0);" onclick="votethissong('{ID}');"><strong>{LANG.song_vote}</strong></a><div id="vote">({VOTE})</div>
 		</div>
 		<form action="#" method="post">
 			<p>{LANG.link_song}:

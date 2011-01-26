@@ -1,22 +1,18 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 2-9-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 09:05 AM
  */
-if(!defined('NV_IS_MUSIC_ADMIN'))
-{
-	die('Stop!!!');
-}
-// tao gia tri
+if(!defined('NV_IS_MUSIC_ADMIN')) { die('Stop!!!'); }
+
 $result = false;
 $id = $nv_Request->get_int('id', 'post,get');
 $where = filter_text_input( 'where', 'get', '' );
 $setting = setting_music();
 
-// xoa
-if($id > 0)
+if( $id > 0 )
 {
 	if ( $where == '_album' )
 	{
@@ -32,10 +28,7 @@ if($id > 0)
 		updatesinger( $video['casi'], 'numvideo', '-1' );
 		updateauthor( $video['nhacsi'], 'numvideo', '-1' );
 		delcomment('video', $video['id']);
-		if ( $video['server'] == 1 )
-		{
-			unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video/" . $video['duongdan'] );
-		}
+		unlinkSV ( $video['server'], $video['duongdan'] );
 	}
 	if ( $where == '_singer' )
 	{
@@ -46,6 +39,10 @@ if($id > 0)
 	{
 		$author = getauthorbyID( $id );
 		updatewhendelA( $author['ten'], 'na' );
+	}
+	if ( $where == '_ftp' )
+	{
+		updatewhendelFTP( $id, 0 );
 	}
 	if ( $where == '' )
 	{
@@ -60,16 +57,12 @@ if($id > 0)
 		dellyric($song['id']);
 		delerror( 'song', $song['id'] );
 		delgift( $song['id'] );
-		if ( $song['server'] == 1 )
-		{
-			unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] );
-		}
+		unlinkSV ( $song['server'], $song['duongdan'] );
 	}
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where ."` WHERE `id`=" . $id;
     $result = $db->sql_query( $sql );
 }
 
-// tra ve gia tri
 if($result)
 {
 	echo $lang_module['del_success'];

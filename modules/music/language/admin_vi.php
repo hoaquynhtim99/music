@@ -3,17 +3,14 @@
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
  * @Language Vietnamese
- * @Createdate Dec 3, 2010  11:30:02 AM 
+ * @Createdate Jan 26, 2011  11:30:02 AM 
  */
  
-if ( ! defined( 'NV_MAINFILE' ) )
-{
-    die( 'Stop!!!' );
-}
+if ( ! defined( 'NV_MAINFILE' ) ) { die( 'Stop!!!' ); }
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "04/03/2010, 15:22";
-$lang_translator['copyright'] = "@Copyright (C) 2010 VINADES.,JSC. All rights reserved";
+$lang_translator['copyright'] = "@Copyright (C) 2011";
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
@@ -201,7 +198,7 @@ $lang_module['sub_add_album'] = "Thêm album";
 $lang_module['sub_addsong'] = "Thêm bài hát";
 $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";
 $lang_module['sub_hotalbum'] = "HOT Album";
-$lang_module['sub_fourcategory'] = "4 TL trang chủ";
+$lang_module['sub_fourcategory'] = "Bốn thể loại trên trang chính";
 $lang_module['sub_comment'] = "Quản lý bình luận";
 $lang_module['sub_commentsong'] = "Bình luận bài hát";
 $lang_module['sub_commentvideo'] = "Bình luận video";

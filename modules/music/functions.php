@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @copyright 2009
- * @createdate 05/12/2010 09:47
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @copyright 2011
+ * @createdate 26/01/2011 10:10 AM
  */
 
 if (!defined('NV_SYSTEM')) die('Stop!!!'); 
@@ -139,8 +139,33 @@ function gettopsongbyalbumNAME( $name )
 
 	return $result ;
 }
+// update bai hat
+function updateHIT_VIEW( $id, $where )
+{
+	global $module_data, $db ;
+
+	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET numview = numview+1 WHERE `id` =" . $id );
+	if ( $where == '' ) $data = getsongbyID( $id );
+	else $data = getvideobyID( $id ); 
+	
+	$hitdata = explode ( "-", $data['hit'] );
+	$hittime =  $hitdata[1];
+	$hitnum = $hitdata[0];
+	if ( ( NV_CURRENTTIME - $hittime ) > 864000 )
+	{
+		$hit = "0-" . NV_CURRENTTIME;
+		$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET hit = " . $db->dbescape( $hit ) . " WHERE `id` =" . $id );
+	}
+	else
+	{
+		$newhit = $hitnum + 1;
+		$hit = $newhit . "-" . $hittime;
+		$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET hit = " . $db->dbescape( $hit ) . " WHERE `id` =" . $id );
+	}
+	return;
+}
+
 $setting = setting_music();
-$songURL = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/";
 $downURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=down&amp;id=";
 
 ?>

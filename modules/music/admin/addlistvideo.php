@@ -44,6 +44,11 @@ if ( $nhacsimoi != '')
 	$error = newsinger( $nhacsi, $nhacsimoi );
 }
 $category = get_videocategory() ;
+if ( count ( $category ) == 0 ) 
+{
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=video_category" ) ;  
+	die();	
+}
 $setting = setting_music();
 $allsinger = getallsinger();
 $allauthor = getallauthor();
@@ -62,6 +67,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 	if ( $error == "" )
 	{
 		$ok = false;
+		$hit = "0-" . NV_CURRENTTIME;
 		for ( $i = 1; $i <= $numvideo; $i ++)
 		{
 			$check_url = creatURL ( $videodata[$i]['duongdan'] );
@@ -74,7 +80,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			
 			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` 
 			(
-				`id`, `name`, `tname`, `casi`, `nhacsi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`
+				`id`, `name`, `tname`, `casi`, `nhacsi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`, `binhchon`, `hit`
 			) 
 			VALUES 
 			( 
@@ -89,7 +95,9 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				0,
 				1,
 				UNIX_TIMESTAMP() ,
-				" . $server . "
+				" . $server . ",
+				0,
+				" . $db->dbescape( $hit ) . "
 			)
 			"; 
 			if ( $db->sql_query_insert_id( $query ) ) 

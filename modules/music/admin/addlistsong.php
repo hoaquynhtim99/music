@@ -50,6 +50,11 @@ if ( $nhacsimoi != '')
 	$error = newauthor( $nhacsi, $nhacsimoi );
 }
 $category = get_category() ;
+if ( count ( $category ) == 0 ) 
+{
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" ) ;  
+	die();	
+}
 $setting = setting_music();
 $allalbum = getallalbum();
 $allsinger = getallsinger();
@@ -77,6 +82,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			$userid = $admin_info['userid'];
 		}
 		$ok = false;
+		$hit = "0-" . NV_CURRENTTIME;
 		for ( $i = 1; $i <= $numsong; $i ++)
 		{
 			$check_url = creatURL ( $songdata[$i]['duongdan'] );
@@ -90,7 +96,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			
 			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 			(
-				`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
+				`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit`
 			) 
 			VALUES 
 			( 
@@ -109,7 +115,10 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				" . $db->dbescape( $songdata[$i]['size'] ) . " ,
 				" . $db->dbescape( $songdata[$i]['duration'] ) . ",
 				" . $server . ",
-				" . $userid . "
+				" . $userid . ",
+				UNIX_TIMESTAMP(),
+				0,
+				" . $db->dbescape( $hit ) . "
 			)
 			"; 
 			if ( $db->sql_query_insert_id( $query ) ) 

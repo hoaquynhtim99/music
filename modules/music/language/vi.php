@@ -6,14 +6,11 @@
  * @Createdate jan 1, 2011  11:30:02 AM 
  */
  
-if ( ! defined( 'NV_MAINFILE' ) )
-{
-    die( 'Stop!!!' );
-}
+if ( ! defined( 'NV_MAINFILE' ) ) { die( 'Stop!!!' ); }
 
 $lang_translator['author'] = "PHAN TAN DUNG (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "01/01/2011, 15:22";
-$lang_translator['copyright'] = "@Copyright (C) 2010 VINADES.,JSC. All rights reserved";
+$lang_translator['copyright'] = "@Copyright (C) 2011";
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
@@ -148,6 +145,11 @@ $lang_module['results'] = "kết quả";
 $lang_module['save'] = "Lưu";
 
 $lang_module['singer'] = "Ca sĩ";
+
+$lang_module['song_vote'] = "Bình chọn";
+$lang_module['song_vote_success'] = "Bình chọn thành công";
+$lang_module['song_vote_err'] = "Bạn phải đăng nhập trước khi bình chọn";
+$lang_module['song_vote_timeout'] = "Xin lỗi bạn chỉ được bình chọn một bài hát một lần trong ngày, bạn vừa bình chọn cho bài hát này rồi";
 
 $lang_module['send'] = "Gửi";
 $lang_module['song'] = "bài hát";

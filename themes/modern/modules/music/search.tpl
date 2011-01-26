@@ -13,6 +13,9 @@
 					<a href="{URL_DOWN}{ID}" target="_blank" class="down"></a>
 					<a href="{url_listen}" id="play" class="play"></a>
 				</div>
+				<!-- BEGIN: hit -->
+				<div  style="margin:8px 5px -20px -30px;float:right" class="hitsong"></div>
+				<!-- END: hit -->
 				<a href="{url_listen}" class="title">{name}</a>
 				<p>{LANG.show}: <a href="{url_search_singer}">{singer}</a> | {LANG.upload}: <a href="{url_search_upload}">{upload}</a></p>
 				<p>{LANG.category_2}: <a href="{url_search_category}">{category}</a> | {LANG.view}: {view} | {bitrate}kb/s | {duration} | {size} MB</p>

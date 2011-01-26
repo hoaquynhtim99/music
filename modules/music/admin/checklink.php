@@ -1,9 +1,9 @@
 <?php
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 2-9-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright 2011
+ * @Createdate 26/01/2011 08:33 AM
  */
 if(!defined('NV_IS_MUSIC_ADMIN'))
 {
@@ -13,14 +13,8 @@ $setting = setting_music();
 $id = $nv_Request->get_int('id', 'post', 0);
 
 $song = getsongbyID( $id );
-if ( $song['server'] == 0 )
-{
-	$url = $song['duongdan'] ;
-}
-elseif ( $song['server'] == 1 )
-{
-	$url = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
-}
+$url = outputURL ( $song['server'], $song['duongdan'] ) ;
+if ( $song['server'] == 1 ) { $url = NV_MY_DOMAIN . $url ; }
 if (  nv_check_url( $url ) )
 {
    $a = $lang_module['check_link_suc'];

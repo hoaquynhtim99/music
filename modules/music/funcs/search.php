@@ -146,7 +146,12 @@ while($rs = $db->sql_fetchrow($result))
 	
 	// phan cach cac div chan le
 	if ( ($i % 2) == 0 ) $xtpl->assign( 'gray', 'gray'); else $xtpl->assign( 'gray', '');
-	
+	$checkhit = explode ( "-", $rs['hit'] );
+	$checkhit = $checkhit[0];
+	if ( $checkhit >= 20 )
+	{
+		$xtpl->parse( 'main.loop.hit' );
+	}
 	$xtpl->parse( 'main.loop' );
 	$i ++ ;
 }

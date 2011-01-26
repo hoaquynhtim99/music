@@ -2,9 +2,9 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 7-17-2010 14:43
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 08:52 AM
  */
 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) { die( 'Stop!!!' ); }
@@ -73,56 +73,57 @@ foreach ( $ftpdata as $data )
 		$lastid = $data['id'];
 	}
 }
-if($error)
+if( $error )
 {
-	$contents .= "<div class=\"quote\" style=\"width: 780px;\">\n
-					<blockquote class=\"error\">
-						<span>".$error."</span>
-					</blockquote>
-				</div>\n
-				<div class=\"clear\">
-				</div>";
+	$contents .= "
+	<div class=\"quote\" style=\"width: 780px;\">
+		<blockquote class=\"error\">
+		<span>".$error."</span>
+		</blockquote>
+	</div>
+	<div class=\"clear\">
+	</div>";
 }
 
-$contents .= "<form method=\"post\">";
-$contents .= "<table class=\"tab1\">
-<thead>
-<tr>
-    <td style=\"width:100px;\">" . $lang_module['ftp_host'] . "</td>
-    <td style=\"width:110px;\">" . $lang_module['ftp_user'] . "</td>
-    <td style=\"width:110px;\">" . $lang_module['ftp_pass'] . "</td>
-    <td style=\"width:110px;\">" . $lang_module['ftp_full_address'] . "</td>
-    <td style=\"width:110px;\">" . $lang_module['ftp_floder'] . "</td>
-    <td style=\"width:110px;\">" . $lang_module['ftp_sub_address'] . "</td>
-	<td width=\"40px\" align=\"center\">" . $lang_module['active'] . "</td>
-	<td width=\"50px\" align=\"center\">" . $lang_module['feature'] . "</td>
-</tr>
+$contents .= "<form method=\"post\">\n";
+$contents .= "<table class=\"tab1\">\n
+<thead>\n
+<tr>\n
+    <td style=\"width:60px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_host'] . "<span></td>\n
+    <td style=\"width:60px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_user'] . "<span></td>\n
+    <td style=\"width:60px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_pass'] . "<span></td>\n
+    <td style=\"width:110px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_full_address'] . "<span></td>\n
+    <td style=\"width:100px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_floder'] . "<span></td>\n
+    <td style=\"width:100px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_sub_address'] . "<span></td>\n
+	<td width=\"40px\" align=\"center\"><span style=\"font-size:11px;\">" . $lang_module['active'] . "<span></td>\n
+	<td width=\"40px\" align=\"center\"><span style=\"font-size:11px;\">" . $lang_module['feature'] . "<span></td>\n
+</tr>\n
 </thead>";
 foreach ( $ftpdata as $j => $data )
 {
 	$contents .=
 	"<tbody class=\"second\">
 	<tr>
-		<td style=\"width:100px;\">
-			<input style=\"width:100px;\" name=\"host" . $j . "\" type=\"text\" value=\"" . $data['host'] . "\" />
+		<td style=\"width:60px;\">
+			<input style=\"width:60px;\" name=\"host" . $j . "\" type=\"text\" value=\"" . $data['host'] . "\" />
+		</td>
+		<td style=\"width:60px;\">
+			<input style=\"width:60px;\" name=\"user" . $j . "\" type=\"text\" value=\"". $data['user'] . "\" />
+		</td>
+		<td style=\"width:60px;\">
+			<input style=\"width:60px;\" name=\"pass" . $j . "\" type=\"password\" value=\"". $data['pass'] . "\" />
 		</td>
 		<td style=\"width:110px;\">
-			<input style=\"width:110px;\" name=\"user" . $j . "\" type=\"text\" value=\"". $data['user'] . "\" />
+			<input name=\"fulladdress" . $j . "\" type=\"text\" value=\"". $data['fulladdress'] . "\" />
 		</td>
 		<td style=\"width:110px;\">
-			<input style=\"width:110px;\" name=\"pass" . $j . "\" type=\"password\" value=\"". $data['pass'] . "\" />
+			<input style=\"width:100px;\" name=\"subpart" . $j . "\" type=\"text\" value=\"". $data['subpart'] . "\" />
 		</td>
 		<td style=\"width:110px;\">
-			<input style=\"width:110px;\" name=\"fulladdress" . $j . "\" type=\"text\" value=\"". $data['fulladdress'] . "\" />
+			<input style=\"width:100px;\" name=\"ftppart" . $j . "\" type=\"text\" value=\"". $data['ftppart'] . "\" />
 		</td>
-		<td style=\"width:110px;\">
-			<input style=\"width:110px;\" name=\"subpart" . $j . "\" type=\"text\" value=\"". $data['subpart'] . "\" />
-		</td>
-		<td style=\"width:110px;\">
-			<input style=\"width:110px;\" name=\"ftppart" . $j . "\" type=\"text\" value=\"". $data['ftppart'] . "\" />
-		</td>
-		<td style=\"width:110px;\" align=\"center\"><a href=\"" . $link_active . $data['id'] . "\" class=\"active\">". $data['active'] . "</a>
-		<td style=\"width:110px;\" align=\"center\">
+		<td align=\"center\"><a href=\"" . $link_active . $data['id'] . "\" class=\"active\">". $data['active'] . "</a>
+		<td align=\"center\">
 			<span class=\"delete_icon\">
 				<a class=\"delfile\" href=\"" . $link_del . $data['id'] . "\">" . $lang_module['delete'] . "</a>
 			</span>
@@ -133,27 +134,27 @@ foreach ( $ftpdata as $j => $data )
 $contents .=
 "<tbody class=\"second\">
 <tr>
+	<td style=\"width:60px;\">
+		<input style=\"width:60px;\" name=\"host" . $newid . "\" type=\"text\" />
+	</td>
+	<td style=\"width:60px;\">
+		<input style=\"width:60px;\" name=\"user" . $newid . "\" type=\"text\" />
+	</td>
+	<td style=\"width:60px;\">
+		<input style=\"width:60px;\" name=\"pass" . $newid . "\" type=\"password\" />
+	</td>
+	<td style=\"width:110px;\">
+		<input name=\"fulladdress" . $newid . "\" type=\"text\" />
+	</td>
+	<td style=\"width:110px;\">
+		<input style=\"width:100px;\" name=\"subpart" . $newid . "\" type=\"text\" />
+	</td>
 	<td style=\"width:100px;\">
-		<input style=\"width:100px;\" name=\"host" . $newid . "\" type=\"text\" />
+		<input style=\"width:100px;\" name=\"ftppart" . $newid . "\" type=\"text\" />
 	</td>
-	<td style=\"width:110px;\">
-		<input style=\"width:110px;\" name=\"user" . $newid . "\" type=\"text\" />
+	<td>
 	</td>
-	<td style=\"width:110px;\">
-		<input style=\"width:110px;\" name=\"pass" . $newid . "\" type=\"password\" />
-	</td>
-	<td style=\"width:110px;\">
-		<input style=\"width:110px;\" name=\"fulladdress" . $newid . "\" type=\"text\" />
-	</td>
-	<td style=\"width:110px;\">
-		<input style=\"width:110px;\" name=\"subpart" . $newid . "\" type=\"text\" />
-	</td>
-	<td style=\"width:110px;\">
-		<input style=\"width:110px;\" name=\"ftppart" . $newid . "\" type=\"text\" />
-	</td>
-	<td style=\"width:110px;\">
-	</td>
-	<td style=\"width:110px;\">
+	<td>
 	</td>
 </tr>
 </tbody>

@@ -453,6 +453,24 @@ ul.tool li a.error {
 	background-image: url('../images/music/sendtomail.png');
 	margin-left: 20px;
 }
+a.votesong {
+	float: left;
+	line-height: 30px;
+	text-indent: 25px;
+	background-repeat: no-repeat;
+	background-position: 0px 5px;
+	background-image: url('../images/music/like.png');
+	margin-left: 20px;
+}
+#vote {
+	float: left;
+	line-height: 30px;
+	text-indent: 25px;
+	margin-left: -15px;
+	margin-top: 0px;
+	font-weight: bold;
+	font-size: 13px;
+}
 
 #tab1 form {
 	float: left;
@@ -1165,4 +1183,68 @@ div.sucess {
 	bottom: 0px;
 	left: 30px;
 	display: none;
+}
+.hitsong {
+	background-image: url('../images/music/icon.gif');
+	background-repeat: no-repeat;
+	background-position: 0px -1899px;
+	float: right;
+	width: 33px;
+	height: 23px;
+}
+#xbh {
+}
+#xbh .item {
+	float: left;
+	width: 90%;
+	border-bottom-style: dotted;
+	border-bottom-width: 1px;
+	border-bottom-color: #808080;
+	padding-left: 20px;
+}
+#xbh .item .bg {
+	float: left;
+	width: 16px;
+	height: 16px;
+	background-repeat: no-repeat;
+	margin-left: -20px;
+	margin-top: 10px;
+}
+.rating1 {
+	background-image: url('../images/music/skin.gif');
+}
+#xbh .item a.singer {
+	color: #3399FF;
+}
+.rating2 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -46px;
+}
+.rating3 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -92px;
+}
+.rating5 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -184px;
+}
+.rating6 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -230px;
+}
+.rating7 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -276px;
+}
+.rating8 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -322px;
+}
+.rating9 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -368px;
+}
+.rating10 {
+	background-image: url('../images/music/skin.gif');
+	background-position: 0px -384px;
 }

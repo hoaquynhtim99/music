@@ -1,5 +1,5 @@
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET-MUSIC
  * @Author PHAN TAN DUNG (phantandung92@gmail.com)
  * @Createdate 26 - 12 - 2010 5 : 12
  */
@@ -151,6 +151,18 @@ function afterdelsong(res)
 function dellist(id, mess) {
 	if( confirm( mess ) )
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=dellist&id=' + id, '', 'afterdellist');
+}
+// binh chon bai hat
+function votethissong( id ) {
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=vote&id=' + id, '', 'aftervote');
+}
+function aftervote(res)
+{
+	var r_split = res.split("_");
+	if (r_split[0] == "OK") {
+		$("#vote").html( "(" + r_split[1] + ")" );
+	} 
+	alert(r_split[2]);
 }
 function afterdellist(res)
 {

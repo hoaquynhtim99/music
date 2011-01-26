@@ -2,9 +2,9 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @copyright 2009
- * @createdate 05/12/2010 09:47
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @copyright 2011
+ * @createdate 26/01/2011 09:17 AM
  */
 if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
@@ -346,8 +346,30 @@ function outputURL ( $server, $inputurl )
 				break;
 			}
 		}
-
 	}
 	return $output;
+}
+function unlinkSV ( $server, $url )
+{
+	global $module_name, $setting;
+	if ( $server == 1 )
+	{
+		@unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $url );
+	}
+	elseif ( $server != 0 )
+	{
+		$ftpdata = getFTP();
+		require_once ( NV_ROOTDIR . "/modules/" . $module_name . "/class/ftp.class.php" );
+		$ftp = new FTP();
+		if ( $ftp->connect( $ftpdata[$server]['host'] ) ) 
+		{
+			if ( $ftp->login( $ftpdata[$server]['user'], $ftpdata[$server]['pass'] ) ) 
+			{
+				$ftp->delete( $ftpdata[$server]['ftppart']  . $ftpdata[$server]['subpart'] . $url );
+			} 
+			$ftp->disconnect();
+		} 
+	}
+	return;
 }
 ?>

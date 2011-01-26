@@ -11,16 +11,18 @@
 	<div class="topsong_content">
 	<!-- BEGIN: loop -->
 		<div class="songitem">
-			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<div class="tool">
 				<a name="{ID}" id="add" class="add"></a>
 				<a href="{URL_DOWN}{ID}" target="_blank" class="down"></a>
 				<a href="{url_view}" id="play" class="play"></a>
 			</div>
+			<!-- BEGIN: hit -->
+			<div  style="margin:8px -10px -20px -30px;float:right" class="hitsong"></div>
+			<!-- END: hit -->
+			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<p>
-				{LANG.show}: <a class="singer" href="{url_search_singer}">{singer}</a><br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{LANG.upload}: 
-				<a class="singer" href="{url_search_upload}">{upload}</a> | 
+				{LANG.show}: <a class="singer" href="{url_search_singer}">{singer}</a> | {LANG.upload}: <a class="singer" href="{url_search_upload}">{upload}</a><br />
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 				<a class="singer" href="{url_search_category}">{category}</a> | {LANG.view}: {view}	| {bitrate}kb/s | {duration} | {size} MB
 			</p>
 		</div>

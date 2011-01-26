@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @copyright 2009
- * @createdate 05/12/2010 09:47
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright 2011
+ * @createdate 26/01/2011 10:08 AM
  */
 
 if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_MODADMIN' ) ) die( 'Stop!!!' ); 
@@ -175,6 +175,14 @@ function getauthorbyID( $id )
 
 	return $author ;
 }
+// cap nhat bai hat, video khi xoa, sua host nhac
+function updatewhendelFTP( $server, $active )
+{
+	global $module_data, $db ;
 
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `active` = " . $active . " WHERE `server` = " . $server );
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `active` = " . $active . " WHERE `server` = " . $server );
+	return;
+}
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 ?>

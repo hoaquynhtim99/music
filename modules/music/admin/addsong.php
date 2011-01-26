@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 7-17-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011
  */
 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
@@ -41,6 +41,11 @@ if ( $songdata['nhacsimoi'] != '')
 	$error = newauthor( $songdata['nhacsi'], $songdata['nhacsimoi'] );
 }
 $category = get_category() ;
+if ( count ( $category ) == 0 ) 
+{
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" ) ;  
+	die();	
+}
 $setting = setting_music();
 $allalbum = getallalbum();
 $allsinger = getallsinger();
@@ -114,6 +119,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 	}
 	if ( $error == "" )
 	{
+		$hit = "0-" . NV_CURRENTTIME;
 		$check_url = creatURL ( $songdata['duongdan'] );
 		$data = $check_url['duongdan'];
 		$server = $check_url['server'];
@@ -124,7 +130,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 		
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 		(
-			`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`
+			`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit`
 		) 
 		VALUES 
 		( 
@@ -143,7 +149,10 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			" . $db->dbescape( $songdata['size'] ) . " ,
 			" . $db->dbescape( $songdata['duration'] ) . ",
 			" . $server . ",
-			" . $userid . "
+			" . $userid . ",
+			UNIX_TIMESTAMP(),
+			0,
+			" . $db->dbescape( $hit ) . "
 		)
 		"; 
 		if ( $db->sql_query_insert_id( $query ) ) 

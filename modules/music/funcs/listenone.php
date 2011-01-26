@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES., JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES ., JSC. All rights reserved
- * @Createdate Dec 3, 2010  11:32:04 AM 
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright 2011
+ * @Createdate 20/01/2011
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
@@ -32,15 +32,21 @@ else $name = '';
 $xtpl->assign( 'USER_NAME', $name );
 $xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 
-// lay bai hat
 $allsinger = getallsinger();
 $allauthor = getallauthor();
-
+// lay bai hat
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET numview = numview+1 WHERE `id` =" . $id );
+updateHIT_VIEW( $id, '' );
 $row = getsongbyID( $id );
 
 $xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/song/' . $row['id'] . '/' . $row['ten'] . '/' );
+
+$checkhit = explode ( "-", $row['hit'] );
+$checkhit = $checkhit[0];
+if ( $checkhit >= 20 )
+{
+	$xtpl->parse( 'main.hit' );
+}
 
 $xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=sendmail&amp;id=". $id );
 $xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
@@ -49,6 +55,7 @@ $xtpl->assign( 'name', $row['tenthat'] );
 $xtpl->assign( 'singer', $allsinger[$row['casi']] );
 $xtpl->assign( 'author', $allauthor[$row['nhacsi']] );
 $xtpl->assign( 'category', $category[ $row['theloai'] ] );
+$xtpl->assign( 'VOTE', $row['binhchon'] );
 $xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
 $xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $row['theloai']);
 $xtpl->assign( 'url_search_album', $mainURL . "=album/numview/" . $row['album']);
@@ -123,7 +130,6 @@ elseif ( $setting['who_lyric'] == 2 )
 }
 else
 {
-
 	$xtpl->assign( 'USER_NAME', $name );
 	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 	$xtpl->parse( 'main.accesslyric' );
@@ -148,7 +154,6 @@ else
 	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 	$xtpl->parse( 'main.comment' );
 }
-
 
 // tieu de trang
 $page_title = $row['tenthat'] . " - " .$allsinger[$row['casi']] ;

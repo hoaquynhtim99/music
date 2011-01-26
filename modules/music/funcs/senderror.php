@@ -24,14 +24,8 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 	if ( ( $where == 'song' ) && ( $root_error == "check" ) )
 	{
 		$song = getsongbyID( $key );
-		if ( $song['server'] == 0 )
-		{
-			$url = $song['duongdan'] ;
-		}
-		elseif ( $song['server'] == 1 )
-		{
-			$url = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
-		}
+		$url = outputURL ( $song['server'], $song['duongdan'] ) ;
+		if ( $song['server'] == 1 ) { $url = NV_MY_DOMAIN . $url ; }
 		if (  nv_check_url( $url ) )
 		{
 		   $ok = 1;
