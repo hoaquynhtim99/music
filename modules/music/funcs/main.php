@@ -133,7 +133,7 @@ foreach ( $fctegory as $this_category )
 		$xtpl->assign( 'singer', $allsinger[$row['casi']] );
 		$xtpl->assign( 'category', $category[$row['theloai']] );
 		$xtpl->assign( 'who_upload', $row['upboi'] );
-		$xtpl->assign( 'url', $songURL . $row['duongdan'] );
+		//$xtpl->assign( 'url', $songURL . $row['duongdan'] );
 		$xtpl->assign( 'view', $row['numview'] );
 		$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'] );
 	

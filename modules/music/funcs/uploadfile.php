@@ -163,7 +163,7 @@ else
 	else
 	{
 		echo '<div id="output">failed</div>';
-		echo '<div id="message">'. $url_return .'</div>';
+		echo '<div id="message"></div>';
 	}
 }	
 ?>
