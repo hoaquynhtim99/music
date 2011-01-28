@@ -30,5 +30,4 @@ while( $data =  $db->sql_fetchrow( $query ) )
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
 ?>

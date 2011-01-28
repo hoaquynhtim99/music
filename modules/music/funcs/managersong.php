@@ -29,7 +29,7 @@ elseif ( defined( 'NV_IS_ADMIN' ) )
 $xtpl = new XTemplate( "managersong.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 // khong duoc vao
-if($userid == 0)
+if( $userid == 0 )
 {
 	$xtpl->assign( 'USER_LOGIN', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" );
     $xtpl->assign( 'USER_REGISTER', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" );		
@@ -49,7 +49,7 @@ else
 			$song['ten'] = $songdata['ten'] = change_alias( $songdata['tenthat'] );
 			$song['casi'] = $songdata['casi'] = filter_text_input( 'singer', 'post', '' );
 			$songdata['casimoi'] = filter_text_input( 'newsinger', 'post', '' );
-			$song['nhacsi'] = $songdata['nhacsi'] = filter_text_input( 'singer', 'post', '' );
+			$song['nhacsi'] = $songdata['nhacsi'] = filter_text_input( 'nhacsi', 'post', '' );
 			$songdata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '' );
 			$song['theloai'] = $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
 			if ( $songdata['casimoi'] != '')
