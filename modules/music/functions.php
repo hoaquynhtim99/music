@@ -143,8 +143,9 @@ function gettopsongbyalbumNAME( $name )
 function updateHIT_VIEW( $id, $where )
 {
 	global $module_data, $db ;
-
-	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET numview = numview+1 WHERE `id` =" . $id );
+	( $where == "_video" )? ( $key = "view" ) : ( $key = "numview" );
+	
+	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET " . $key . " = " . $key . "+1 WHERE `id` =" . $id );
 	if ( $where == '' ) $data = getsongbyID( $id );
 	else $data = getvideobyID( $id ); 
 	
