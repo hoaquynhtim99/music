@@ -1,24 +1,24 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 9-8-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 09:09 AM
  */
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['hot_singer'];
 $contents = '' ;
-
+$allsinger = getallsinger();
 if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 {
 	$data = array();
 	for ( $i = 1 ; $i <= 3 ; $i ++ )
 	{	
 		$data['stt'] = $nv_Request->get_int( 'stt'.$i.'', 'post', '' );
-		$data['fullname'] = filter_text_input( 'fullname'.$i.'', 'post', '' );
 		$data['name'] = filter_text_input( 'name'.$i.'', 'post', '' );
+		$data['fullname'] = $allsinger[$data['name']];
 		$data['thumb'] = filter_text_input( 'thumb'.$i.'', 'post', '' );
 		$data['large_thumb'] = filter_text_input( 'large_thumb'.$i.'', 'post', '' );
 		
@@ -49,7 +49,6 @@ while ( $row = $db->sql_fetchrow( $resuilt ) )
 	$i ++ ;
 }
 
-
 $contents .="
 <form method=\"post\" name=\"add_pic\">
 	<table class=\"tab1\">
@@ -66,18 +65,18 @@ $contents .="
 			</td></tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['hot_singer_fullname']."
+					<strong>".$lang_module['hot_singer_name']."</strong>
 				</td>
 				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"fullname1\" style=\"width: 470px;\" value=\"".$fullname[1]."\" type=\"text\">
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					<strong>".$lang_module['hot_singer_name']."</strong>: ".$lang_module['hot_singer_name_info']."
-				</td>
-				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"name1\" style=\"width: 470px;\" value=\"".$name[1]."\" type=\"text\">
+				<select name=\"name1\">\n";
+				foreach ( $allsinger as $key => $title )
+				{
+					$i= "";
+					if ( $name[1] == $key )
+					$i = "selected=\"selected\"";
+					$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+				}
+				$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
@@ -133,18 +132,18 @@ $contents .="
 			</td></tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['hot_singer_fullname']."
+					<strong>".$lang_module['hot_singer_name']."</strong>
 				</td>
 				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"fullname2\" style=\"width: 470px;\" value=\"".$fullname[2]."\" type=\"text\">
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					<strong>".$lang_module['hot_singer_name']."</strong>: ".$lang_module['hot_singer_name_info']."
-				</td>
-				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"name2\" style=\"width: 470px;\" value=\"".$name[2]."\" type=\"text\">
+				<select name=\"name2\">\n";
+				foreach ( $allsinger as $key => $title )
+				{
+					$i= "";
+					if ( $name[2] == $key )
+					$i = "selected=\"selected\"";
+					$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+				}
+				$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
@@ -200,18 +199,18 @@ $contents .="
 			</td></tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['hot_singer_fullname']."
+					<strong>".$lang_module['hot_singer_name']."</strong>
 				</td>
 				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"fullname3\" style=\"width: 470px;\" value=\"".$fullname[3]."\" type=\"text\">
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					<strong>".$lang_module['hot_singer_name']."</strong>: ".$lang_module['hot_singer_name_info']."
-				</td>
-				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"name3\" style=\"width: 470px;\" value=\"".$name[3]."\" type=\"text\">
+				<select name=\"name3\">\n";
+				foreach ( $allsinger as $key => $title )
+				{
+					$i= "";
+					if ( $name[3] == $key )
+					$i = "selected=\"selected\"";
+					$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+				}
+				$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
@@ -254,15 +253,15 @@ $contents .="
 				<tr>
 					<td align=\"center\" colspan=\"2\">
 						<input type=\"hidden\" name=\"save\" value=\"1\" />
-						<input type=\"submit\" value=\"SAVE\" />
+						<input type=\"submit\" value=\"".$lang_module['save']."\" />
 					</td>
 				</tr>
 			</thead>
 		</tbody>
 	</table>";
 
-include (NV_ROOTDIR . "/includes/header.php");
+include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme($contents);
-include (NV_ROOTDIR . "/includes/footer.php");
+include ( NV_ROOTDIR . "/includes/footer.php" );
 
 ?>

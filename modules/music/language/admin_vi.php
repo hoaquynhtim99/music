@@ -119,11 +119,9 @@ $lang_module['hot_album_select'] = "Chọn một Album HOT";
 $lang_module['hot_album_add'] = "chọn album";
 $lang_module['hot_singer'] = "Ca sĩ HOT";
 $lang_module['hot_singer_info'] = "Thông tin ca sĩ";
-$lang_module['hot_singer_fullname'] = "Tên đầy đủ";
 $lang_module['hot_singer_simg'] = "Ảnh nhỏ";
 $lang_module['hot_singer_limg'] = "Ảnh lớn";
-$lang_module['hot_singer_name'] = "Tên";
-$lang_module['hot_singer_name_info'] = "Hãy chắc rằng tên ca sĩ này có một album";
+$lang_module['hot_singer_name'] = "Chọn ca sĩ";
 
 $lang_module['fillin'] = "Điền thông tin";
 $lang_module['link'] = "Đường dẫn";
