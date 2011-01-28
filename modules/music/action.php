@@ -376,6 +376,7 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (10, 'upload_max', 2, ''),
 (11, 'who_upload', 0, ''),
 (12, 'auto_upload', 0, ''),
-(13, 'default_server', 1, '')";
+(13, 'default_server', 1, ''),
+(14, 'playlist_max', 2, '')";
 
 ?>

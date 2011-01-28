@@ -31,6 +31,7 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 	$data['auto_upload'] = $nv_Request->get_int( 'auto_upload', 'post', 0 );
 	$data['upload_max'] = $nv_Request->get_int( 'upload_max', 'post', 0 );
 	$data['default_server'] = $nv_Request->get_int( 'default_server', 'post', 0 );
+	$data['playlist_max'] = $nv_Request->get_int( 'playlist_max', 'post', 0 );
 	if ( ( $data['upload_max'] * ( 1024 * 1024 ) ) > $global_config['nv_max_size'] )
 	{
 		$data['upload_max'] = $global_config['nv_max_size'] / ( 1024 * 1024 );
@@ -184,6 +185,12 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     </td>
 </tr>
 </tbody>
+<tr>
+    <td><strong>" . $lang_module['set_playlist_max'] . "</strong></td>
+    <td>
+		<input name=\"playlist_max\" type=\"text\" value=\"". $setting['playlist_max'] . "\" />
+    </td>
+</tr>
 </table>
 <div style=\"text-align: center;\" colspan=\"2\">
 <input type=\"submit\" value=\" " . $lang_module['save'] . " \" name=\"Submit1\">

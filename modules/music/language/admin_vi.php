@@ -190,6 +190,7 @@ $lang_module['set_auto_lyric'] = "Tự động đăng lời bài hát";
 $lang_module['set_auto_gift'] = "Tự động đăng quà tặng";
 $lang_module['set_auto_album'] = "Tự cho đăng playlist";
 $lang_module['set_floder_file'] = "Thư mục chứa file";
+$lang_module['set_playlist_max'] = "Số playlist tối đa của một thành viên";
 
 $lang_module['sub_category'] = "Quản lý thể loại";
 $lang_module['sub_album'] = "Quản lý album";

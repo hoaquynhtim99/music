@@ -61,6 +61,7 @@ else
 			$xtpl->parse( 'main.access.creatlist.loop' );
 		}
 		$xtpl->assign( 'num', $numlist );
+		$xtpl->assign( 'playlist_max', $setting['playlist_max'] );
 		$xtpl->parse( 'main.access.creatlist' );
 	}
 	while ( $row = $db->sql_fetchrow( $query ) )
@@ -70,7 +71,6 @@ else
 		$xtpl->assign( 'name', $row['name'] );
 		$xtpl->assign( 'singer', $row['singer'] );
 		$xtpl->assign( 'date', nv_date( "d/m/Y H:i", $row['time'] ) );
-		$xtpl->assign( 'num', $numlist );
 		$xtpl->assign( 'id', $row['id'] );
 		$xtpl->assign( 'view', $row['view'] );
 		$xtpl->assign( 'url_view', $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'] );
