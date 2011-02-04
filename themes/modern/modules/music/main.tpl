@@ -12,7 +12,7 @@
 		<!-- BEGIN: first -->
 	   <div class="picleft">&nbsp;</div>
 	   <a href="{url_album}" title="{faname} - {fasinger}">
-		   <img border="0" class="first" src="{fapic}" width="90" height="90" />
+		   <img  class="first" src="{fapic}" width="90" height="90" alt="" />
 	   </a>
 	   <div class="picright">
 		   	<h2><a href="{url_album}" title="{faname}">{faname}</a></h2>
@@ -28,7 +28,7 @@
 	   <!-- BEGIN: old -->
 	   <div class="topalbum_item">
 		   <a href="{url_album}" title="{albumtitle}">			 
-			   <img border="0" class="item" src="{albumpic}" width="90" height="90" />
+			   <img  class="item" src="{albumpic}" width="90" height="90" alt=""/>
 		   </a>
 		   <a style="color:#000;" href="{url_album}" title="{albumtitle}">{albumtitle}</a>
 		   <a href="{url_search_singer}" title="{singer}">{singer}</a>
@@ -41,7 +41,7 @@
 		<!-- BEGIN: firstn -->
 	   <div class="picleft">&nbsp;</div>
 	   <a href="{url_album}">
-		   <img border="0" class="first" src="{pic}" width="90" height="90" />
+		   <img  class="first" src="{pic}" width="90" height="90"  alt="" />
 	   </a>
 	   <div class="picright">
 		   	<h2><a href="{url_album}" title="{name}">{name}</a></h2>
@@ -57,7 +57,7 @@
 	   <!-- BEGIN: old -->
 	   <div class="topalbum_item">
 		   <a href="{url_album}" title="{albumtitle}">			 
-			   <img  border="0" class="item" src="{albumpic}" width="90" height="90" />
+			   <img   class="item" src="{albumpic}" width="90" height="90"  alt=""/>
 		   </a>
 		   <a style="color:#000;" href="{url_album}" title="{albumtitle}">{albumtitle}</a>
 		   <a href="{url_search_singer}" title="#">{singer}</a>
@@ -91,9 +91,9 @@
 		<div class="songitem">
 			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<div class="tool">
-				<a name="{ID}" id="add" class="add"></a>
-				<a href="{URL_DOWN}{ID}" target="_blank" class="down"></a>
-				<a href="{url_view}" id="play" class="play"></a>
+				<a name="{ID}" class="adds add"></a>
+				<a href="{URL_DOWN}{ID}" onclick="window.open(this.href); return false;"onkeypress="window.open(this.href); return false;" class="down"></a>
+				<a href="{url_view}" class="play"></a>
 			</div>
 			<p>
 				{LANG.show}: <a href="{url_search_singer}">{singer}</a><br />
@@ -143,7 +143,7 @@ $(document).ready(function() {
 </script>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("a#add").click(function() {
+	$("a.adds").click(function() {
 		$(this).removeClass("add"); 
 		$(this).addClass("addedtolist"); 
 		var songid = $(this).attr("name");

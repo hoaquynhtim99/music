@@ -3,6 +3,7 @@
 
 <div>
 	<form action="{search_action}" method="post">
+		<fieldset>
 		<input class="txt" type="text" name="key" style="width: 306px" />
 		<select name="type" style="width: 102px">	
 			<option selected="selected" value="name">{LANG.search_with_name}</option>
@@ -12,6 +13,7 @@
 		</select>
 		<input type="hidden" name="block_sed" value="1" />
 		<input class="sed" type="submit" value="{LANG.search}" />
+		</fieldset>
 	</form>
 	</div>
 </div>

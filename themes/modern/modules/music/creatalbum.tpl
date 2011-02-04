@@ -47,9 +47,9 @@
 			var singer = document.getElementById('singer').value;
 			var message  = strip_tags(document.getElementById('message').value);
 			var num = {num};
-			if ( num >= {playlist_max})
+			if ( num > 7)
 			{
-				alert('{LANG.err_ful_playlist} {playlist_max} playlist');
+				alert('{LANG.err_ful_playlist} ' + 7 + ' playlist');
 			}else
 			{
 				if( name == '')

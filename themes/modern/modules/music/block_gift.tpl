@@ -10,7 +10,7 @@
 {fullmessage}
 </div>
 <p>{LANG.request}: <b>{from}</b><br />
-{LANG.who_recive}: <b>{to}</b><p>
+{LANG.who_recive}: <b>{to}</b></p>
 </div>
 <!-- END: loop -->
 </div>
