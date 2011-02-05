@@ -29,7 +29,7 @@
 	<div style="float:left;">
 	<!-- BEGIN: new2 -->
 	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
+		<a href="{url_view}"><img width="128px" height="72px" src="{thumb}"alt="" /><div style="height:6px;">&nbsp;</div>
 		{name}</a><br />
 		<a class="frontmin" href="{url_search_singer}">{singer}</a>
 	</div>
@@ -38,7 +38,7 @@
 	<div style="float:left;">
 	<!-- BEGIN: new3 -->
 	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
+		<a href="{url_view}"><img width="128px" height="72px" src="{thumb}" alt=""/><div style="height:6px;">&nbsp;</div>
 		{name}</a><br />
 		<a class="frontmin" href="{url_search_singer}">{singer}</a>
 	</div>
@@ -57,7 +57,7 @@
 	<div style="float:left;">
 	<!-- BEGIN: hot1 -->
 	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
+		<a href="{url_view}"><img width="128px" height="72px"  src="{thumb}" alt="" /><div style="height:6px;">&nbsp;</div>
 		{name}</a><br />
 		<a class="frontmin" href="{url_search_singer}">{singer}</a>
 	</div>
@@ -66,7 +66,7 @@
 	<div style="float:left;">
 	<!-- BEGIN: hot2 -->
 	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
+		<a href="{url_view}"><img width="128px" height="72px" alt="" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
 		{name}</a><br />
 		<a class="frontmin" href="{url_search_singer}">{singer}</a>
 	</div>
@@ -75,7 +75,7 @@
 	<div style="float:left;">
 	<!-- BEGIN: hot3 -->
 	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
+		<a href="{url_view}"><img width="128px" height="72px" alt="" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
 		{name}</a><br />
 		<a class="frontmin" href="{url_search_singer}">{singer}</a>
 	</div>

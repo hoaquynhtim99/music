@@ -5,13 +5,13 @@
 			<h3><span>{LANG.search_song}</span></h3> 
 		</div> 
 		<div class="resuirt">
-			<p><strong>{LANG.search_find} {num} {LANG.results}.</p></strong>
+			<p><strong>{LANG.search_find} {num} {LANG.results}.</strong></p>
 			<!-- BEGIN: loop -->
 			<div class="itemsearch {gray}">
 				<div class="tool">
-					<a name="{ID}" id="add" class="add"></a>
-					<a href="{URL_DOWN}{ID}" target="_blank" class="down"></a>
-					<a href="{url_listen}" id="play" class="play"></a>
+					<a name="{ID}" class="adds add"></a>
+					<a href="{URL_DOWN}{ID}" onclick="window.open(this.href); return false;" class="down"></a>
+					<a href="{url_listen}" class="play"></a>
 				</div>
 				<!-- BEGIN: hit -->
 				<div  style="margin:8px 5px -20px -30px;float:right" class="hitsong"></div>
@@ -26,7 +26,7 @@
 					<h4><strong>{LANG.resuitvideo}</strong></h4>
 					<!-- BEGIN: loop -->
 						<div style="margin-left:18px" id="videoitem">
-							<a href="{videoview}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
+							<a href="{videoview}"><img width="128px" height="72px" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
 							{videoname}</a><br />
 							<a href="{s_video}" class="frontmin" >{videosinger}</a>
 						</div>
@@ -41,7 +41,7 @@
 				<!-- BEGIN: loop -->
 				   <div style="margin-left:8px" id="salbum">
 					   <a href="{albumview}" title="{albumname}">			 
-						   <img border="0" class="item" src="{thumb}" width="90" height="90" />
+						   <img class="item" src="{thumb}" width="90" height="90" alt="" />
 					   </a>
 					   <a style="color:#000;" href="{albumview}" title="{albumname}">{albumname}</a><br />
 					   <a href="{url_search_singer}" title="{albumsinger}">{albumsinger}</a>
@@ -61,7 +61,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("a#add").click(function() {
+	$("a#adds").click(function() {
 		$(this).removeClass("add"); 
 		$(this).addClass("addedtolist"); 
 		var songid = $(this).attr("name");

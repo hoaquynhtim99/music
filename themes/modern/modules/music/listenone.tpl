@@ -1,11 +1,6 @@
 <!-- BEGIN: main -->
 <!--<meta name="verify-v1" content="nPO+sJiorgxine7U88iTPkF/yVTxi3t9QOi9Wi8z60w=" />-->
-<link rel="image_src" href="{base_url}ember.jpg" />
 <link rel="video_src" href="{playerurl}player.swf?playlistfile={creat_link_url}" />
-
-<meta name="video_height" content="60" /> 
-<meta name="video_width" content="400" /> 
-<meta name="video_type" content="application/x-shockwave-flash" />
 
 <script type="text/javascript" src="{base_url}jwplayer.js"></script>
 <div class="box-border-shadow m-bottom">
@@ -70,19 +65,20 @@
 <div style="width:498px;" id="boderfull" class="tab_container">
 	<div id="tab1" class="tab_content">
 		<div class="sendtool">
-			<a target="_blank" href="http://www.facebook.com/sharer.php?u={URL_SONG}&t={name}-{singer}" class="facebook">Facebook   </a>
+			<a onclick="window.open(this.href); return false;"onkeypress="window.open(this.href); return false;" href="http://www.facebook.com/sharer.php?u={URL_SONG}&amp;t={name}-{singer}" class="facebook">Facebook   </a>
 			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{URL_SENDMAIL}','{TITLE}','500','450','no');return false">{LANG.sendtomail}</a>
 			<a class="votesong" href="javascript:void(0);" onclick="votethissong('{ID}');"><strong>{LANG.song_vote}</strong></a><div id="vote">({VOTE})</div>
 		</div>
 		<form action="#" method="post">
+			<fieldset>
 			<p>{LANG.link_song}:
-			<input id="linksong" onClick="SelectAll('linksong');" type="text" value="{URL_SONG}" readonly="readonly" /> </p>
+			<input id="linksong" onclick="Select_all('linksong');" type="text" value="{URL_SONG}" readonly="readonly" /> </p>
 			<p>{LANG.blog_song}:
-			<input id="blogsong" onClick="SelectAll('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /> </p>
+			<input id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /> </p>
 			<p>{LANG.forum_song}:
-			<input id="songforum" onClick="SelectAll('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={creat_link_url}[/FLASH]" readonly="readonly" /> </p>
+			<input id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={creat_link_url}[/FLASH]" readonly="readonly" /> </p>
 			<script type="text/javascript">
-				function SelectAll(id)
+				function Select_all(id)
 				{
 					document.getElementById(id).focus();
 					document.getElementById(id).select();
@@ -95,23 +91,24 @@
 			<p>{LANG.who_recive}:
 			<input id="who_receive" type="text" value="" /> </p>
 			<p>{LANG.message}:</p>
-			<textarea id="body" name="message" rows="2"></textarea>
-			<p align="center">
+			<textarea id="body" name="message" rows="2" cols="auto"></textarea>
+			<p style="text-align:center">
 			<input style="width: 50px" onclick="sendgift('{ID}');" class="submitbutton" type="button" value="{LANG.send}" />
 			</p>
 		<!-- END: gift -->
+		</fieldset>
 		</form>
 		<!-- BEGIN: nogift -->
-		<p style="width:100%;float:left;" align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
+		<p style="width:100%;float:left;text-align:center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: nogift -->
 		<!-- BEGIN: stopgift -->
-		<p style="width:100%;float:left;" align="center"><em>{LANG.setting_stop}</em></p>
+		<p style="width:100%;float:left;text-align:center"><em>{LANG.setting_stop}</em></p>
 		<!-- END: stopgift -->
 	</div> 
 	<div id="tab2" class="tab_content">
 		<div id="playlistcotainer">
 			<!-- BEGIN: nolyric -->
-				<p align="center">{LANG.no_lyric}</p>
+				<p style="text-align:center">{LANG.no_lyric}</p>
 			<!-- END: nolyric -->
 			<!-- BEGIN: lyric -->
 			<div id="list{thisdiv}" class="playlistitem">
@@ -147,21 +144,22 @@
 			<p>{LANG.add_playlist_info}</p>
 			<form method="post">
 				<input style="width: 250px" type="text" id="user_lyric" value="{USER_NAME}" onfocus="if(this.value=='{USER_NAME}')this.value=''" onblur="if(this.value=='')this.value='{USER_NAME}'" {NO_CHANGE}/>
-				<textarea rows="10" id="body_lyric" ></textarea>
+				<textarea rows="10" cols="auto" id="body_lyric" ></textarea>
 				<input style="width: 50px;float:right;margin-right:20px;" onclick="sendlyric('{ID}');" class="submitbutton" type="button" value="{LANG.send}" />
 			</form>
 		</div>
 		<!-- END: accesslyric -->
 		<!-- BEGIN: noaccesslyric -->
-		<p style="width:100%;float:left;" align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
+		<p style="width:100%;float:left;text-align:center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: noaccesslyric -->
 		<!-- BEGIN: stoplyric -->
-		<p style="width:100%;float:left;" align="center"><em>{LANG.setting_stop}</em></p>
+		<p style="width:100%;float:left;text-align:center"><em>{LANG.setting_stop}</em></p>
 		<!-- END: stoplyric -->
 	</div> 
 	<div id="tab3" class="tab_content">
 		<form action="#" method="post">
-			<p><strong>{LANG.give_error}</strong>: {LANG.give_error_info}</p>
+		<fieldset>
+		<p><strong>{LANG.give_error}</strong>: {LANG.give_error_info}</p>
 			<p>&nbsp;
 			<select id="root_error" name="root_error" style=";float:right;width: 346px;margin-right:34px;">
 				<option value="">{LANG.error_choose}</option>
@@ -178,18 +176,19 @@
 			<p>{LANG.enter_name}:
 			<input id="user" type="text" value="{USER_NAME}" {NO_CHANGE}/> </p>
 			<p style="width:460px">{LANG.give_error_diff}</p>
-			<textarea id="bodyerror" name="message" rows="1"></textarea>
-			<p align="center">
+			<textarea id="bodyerror" name="message" rows="1"cols="auto"></textarea>
+			<p style="text-align:center">
 			<input style="width: 50px" class="submitbutton" onclick="senderror('{ID}', 'song');" type="button" value="{LANG.send}" />
 			</p>
+		</fieldset>
 		</form>
 	</div> 
 	<div id="tab4" class="tab_content">
 	</div> 
 	<div id="tab5" class="tab_content">
-		<p align="center">
-		<a href="{URL_DOWN}{ID}" target="_blank">
-			<img border="0" src="{img_url}/Down.png" /></a><br />
+		<p style="text-align:center">
+		<a href="{URL_DOWN}{ID}" onclick="window.open(this.href);">
+			<img src="{img_url}/Down.png" alt=""/></a><br />
 		</p>
 	</div> 
 </div>
@@ -221,7 +220,7 @@ $(document).ready(function() {
 		<!-- BEGIN: comment -->
 		<div class="commentcontainerbo">
 			<div id="addCommentContainer">
-				<form id="addCommentForm" method="post" action="">
+				<form id="addCommentForm" method="post" action="#">
 					<div>
 						<label for="name">{LANG.your_name}:</label>
 						<input type="text" name="name" id="name" value="{USER_NAME}" {NO_CHANGE} />
@@ -242,10 +241,10 @@ $(document).ready(function() {
 		</div>
 		<!-- END: comment -->
 		<!-- BEGIN: nocomment -->
-		<p align="center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
+		<p style="text-align:center"><strong>{LANG.you_must} <a href="{USER_LOGIN}">{LANG.loginsubmit}</a> / <a href="{USER_REGISTER}">{LANG.register}</a> {LANG.to_access}</strong></p>
 		<!-- END: nocomment -->
 		<!-- BEGIN: stopcomment -->
-		<p align="center"><em>{LANG.setting_stop}</em></p>
+		<p style="text-align:center"><em>{LANG.setting_stop}</em></p>
 		<!-- END: stopcomment -->
 	</div>
 	<div class="clear"></div>

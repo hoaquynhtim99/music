@@ -2,7 +2,7 @@
 <!-- BEGIN: loop -->
 <div class="blockalbum">
 <a href="{url_listen}">
-<img border="0" src="{img}" width="38px" height="38px" /></a>
+<img src="{img}" width="38px" height="38px" alt="" /></a>
 
 <div>
 	<a class="black" href="{url_listen}">{name}</a><br />
