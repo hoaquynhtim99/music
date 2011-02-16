@@ -42,9 +42,9 @@
 			var singer = document.getElementById('singer').value;
 			var message  = strip_tags(document.getElementById('message').value);
 			var num = {num};
-			if ( num > 7)
+			if ( num > {playlist_max})
 			{
-				alert('{LANG.err_ful_playlist} ' + 7 + ' playlist');
+				alert('{LANG.err_ful_playlist} ' + {playlist_max} + ' playlist');
 			}else
 			{
 				if( name == '')

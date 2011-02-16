@@ -70,8 +70,8 @@ else
 	preg_match( "/^(.*)\.[a-zA-Z0-9]+$/", $userfile['name'], $f );
 	$fn = string_to_filename( $f[1] );
 	$filename = $fn . "." . getextension( $userfile['name'] );
-	if ( $setting['default_server'] == 1 )
-	{
+	//if ( $setting['default_server'] == 1 )
+	//{
 		$currentpath = NV_ROOTDIR . '/uploads/' . $module_data . '/' . $setting['root_contain'] . '/upload/'; 
         $filename2 = $filename;
         $i = 1;
@@ -87,9 +87,9 @@ else
 			$url_return = NV_BASE_SITEURL . '/uploads/' . $module_data . '/' . $setting['root_contain'] . '/upload/' . $filename;
 		}
 		else @unlink( $_FILES['uploadfile']['tmp_name'] );
-	}
-	else
-	{
+	//}
+	//else
+	/*{
 		$hostid = $setting['default_server'];
 		$ftpdata = getFTP();
 		$this_host = $ftpdata[$hostid]['host'];
@@ -120,7 +120,7 @@ else
 			$ftp->disconnect();
 		} 
 		@unlink( $userfile['tmp_name'] );
-	}
+	}*/
 	if ( $upload_success )
 	{
 		if ( $newsinger != $lang_module['upload_quicksinger'] )
