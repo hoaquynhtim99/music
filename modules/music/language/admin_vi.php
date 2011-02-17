@@ -25,7 +25,7 @@ $lang_module['author_list'] = "Danh sách các nhạc sĩ";
 $lang_module['author_name'] = "Tên nhạc sĩ";
 $lang_module['author_search'] = "Tìm một nhạc sĩ";
 $lang_module['author_sort_name'] = "Tên gọn nhạc sĩ";
-$lang_module['author_del_confirm'] = "Bạn có chắn chắn xóa không";
+$lang_module['author_del_confirm'] = "Bạn có chắc chắn xóa không";
 $lang_module['author_check_err'] = "Bạn chưa chọn nhạc sĩ nào";
 
 $lang_module['check'] = "Kiểm tra";
