@@ -46,7 +46,7 @@ $lang_module['cofirm_del'] = "Bạn có chắc chắn xóa không?";
 $lang_module['content'] = "Nội dung";
 $lang_module['comment'] = "Bình luận";
 $lang_module['comment_success'] = "Bình luận thành công";
-$lang_module['comment_error'] = "Lỗi, bình luận cảu bạn không thực hiện được";
+$lang_module['comment_error'] = "Lỗi, bình luận của bạn không thực hiện được";
 $lang_module['comment_timeouts'] = "Xin lỗi bạn vừa mới bình luận rồi.";
 
 $lang_module['down_info'] = "Nhất chuột phải chọn save link để tải về";
