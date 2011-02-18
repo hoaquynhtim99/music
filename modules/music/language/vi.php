@@ -49,7 +49,7 @@ $lang_module['comment_success'] = "Bình luận thành công";
 $lang_module['comment_error'] = "Lỗi, bình luận của bạn không thực hiện được";
 $lang_module['comment_timeouts'] = "Xin lỗi bạn vừa mới bình luận rồi.";
 
-$lang_module['down_info'] = "Nhất chuột phải chọn save link để tải về";
+$lang_module['down_info'] = "Nhấn chuột phải chọn save link để tải về";
 $lang_module['enter_name'] = "Nhập tên bạn";
 
 $lang_module['error_s_1'] = "Ca khúc không play được";
