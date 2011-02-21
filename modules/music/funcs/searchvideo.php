@@ -21,13 +21,13 @@ if ( ($type == "id") || ($type == "view") )
 	$now_page = isset( $array_op[2] ) ?  $array_op[2]  : 1;
 	$order = $type;
 	$data = 'WHERE';
-	$link = $mainURL . "=search/" . $type ;
+	$link = $mainURL . "=searchvideo/" . $type ;
 }
 else
 {
 	$now_page = isset( $array_op[3] ) ?  $array_op[3]  : 1;
 	$order = "id";
-	$link = $mainURL . "=search/" . $type . "/" . $key ;
+	$link = $mainURL . "=searchvideo/" . $type . "/" . $key ;
 }
 
 $xtpl = new XTemplate( "searchvideo.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
