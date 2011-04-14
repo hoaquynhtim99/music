@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
@@ -21,5 +22,9 @@ $db->sql_query( $sql );
 if ( $where == '_ftp' ) { updatewhendelFTP( $id, $active ); }
 
 $str = ($active == 1) ? $lang_module['active_yes'] : $lang_module['active_no'];
+
+nv_del_moduleCache( $module_name );
+
 echo $lang_module['active_succer']. " \"". $str . " \"";
+
 ?>

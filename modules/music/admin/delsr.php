@@ -23,6 +23,8 @@ if($id > 0)
     $db->sql_query( $sqle );
 }
 
+nv_del_moduleCache( $module_name );
+
 // tra ve gia tri
 if($result)
 {

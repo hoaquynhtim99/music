@@ -31,6 +31,7 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 {
     $sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET `title` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "";
     $db->sql_query( $sql );
+	nv_del_moduleCache( $module_name );
     Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=music&" . NV_OP_VARIABLE . "=category" );
     exit();  
 }
@@ -45,6 +46,7 @@ if ( $nv_Request->get_int( 'add', 'post' ) == 1 )
 		if ( $db->sql_query_insert_id( $query ) ) 
 		{ 
 			$db->sql_freeresult(); 
+			nv_del_moduleCache( $module_name );
 			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=music&" . NV_OP_VARIABLE . "=category" ); die(); 
 		} 
 		else { $error = $lang_module['error_save']; } 

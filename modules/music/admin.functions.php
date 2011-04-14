@@ -35,7 +35,7 @@ $allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'ad
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep
-function changeorder($old, $new, $wherechange)
+function changeorder( $old, $new, $wherechange )
 {
 	global $module_data ;
 	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_".$wherechange."`

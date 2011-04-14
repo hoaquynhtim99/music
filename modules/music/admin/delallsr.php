@@ -29,6 +29,8 @@ foreach($array_id as $id)
 	}
 }
 
+nv_del_moduleCache( $module_name );
+
 // tra ve gia tri
 if($result)
 {

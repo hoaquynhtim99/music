@@ -167,7 +167,7 @@ function getallalbum( )
 function newsinger( $name, $tname )
 {
 	$error = '';
-	global $module_data, $lang_module, $db ;	
+	global $module_data, $lang_module, $db, $module_name ;	
 	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
 	if ( $db->sql_query_insert_id( $query ) ) 
 	{ 
@@ -176,7 +176,10 @@ function newsinger( $name, $tname )
 	else 
 	{ 
 		$error = $lang_module['singer_new_added']; 
-	} 
+	}
+	
+	nv_del_moduleCache( $module_name );
+	
 	return $error;
 }
 
@@ -184,12 +187,15 @@ function newsinger( $name, $tname )
 function newauthor( $name, $tname )
 {
 	$error = '';
-	global $module_data, $lang_module, $db ;	
+	global $module_data, $lang_module, $db, $module_name ;	
 	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
 	if ( $db->sql_query_insert_id( $query ) ) 
 	{ 
 		$db->sql_freeresult();
-	} 
+	}
+	
+	nv_del_moduleCache( $module_name );
+	
 	return;
 }
 

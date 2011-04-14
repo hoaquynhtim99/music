@@ -1,11 +1,13 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011
  * @Createdate 26/01/2011 09:05 AM
  */
-if(!defined('NV_IS_MUSIC_ADMIN')) { die('Stop!!!'); }
+ 
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) { die('Stop!!!'); }
 
 $result = false;
 $id = $nv_Request->get_int('id', 'post,get');
@@ -63,7 +65,9 @@ if( $id > 0 )
     $result = $db->sql_query( $sql );
 }
 
-if($result)
+nv_del_moduleCache( $module_name );
+
+if ( $result )
 {
 	echo $lang_module['del_success'];
 }
@@ -71,4 +75,5 @@ else
 {
 	echo $lang_module['del_error'];
 }
+
 ?>
