@@ -133,6 +133,8 @@ $lang_module['manager_category'] = "Manager category";
 $lang_module['manager_category_info'] = "Note! You can not delete any category";
 $lang_module['music_setting'] = "Module config";
 
+$lang_module['no_any_album'] = "No in any album";
+
 $lang_module['order'] = "Order";
 $lang_module['save'] = "Save";
 $lang_module['search'] = "Search";
@@ -262,4 +264,10 @@ $lang_module['video_list_comment'] = "List comments videoclip";
 $lang_module['video_del_confirm'] = "Are you sure you want to delete this video";
 $lang_module['video_error_check'] = "You have not selected any videos";
 $lang_module['video_comment_edit'] = "Edit comment videoclip";
+
+$lang_module['nhaccuatui_get'] = "Add song from nhaccuatui.com";
+
+$lang_module['nct_title'] = "Add song from nhaccuatui.com";
+$lang_module['nct_list_song'] = "List link";
+
 ?>

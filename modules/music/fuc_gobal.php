@@ -9,12 +9,12 @@
 if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 // lay url
-function get_URL()
+function get_URL( )
 {
-$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0, strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
-$port = ($_SERVER["SERVER_PORT"] == "80") ? "" : (":".$_SERVER["SERVER_PORT"]);
-return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
+	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+	$protocol = substr( strtolower( $_SERVER["SERVER_PROTOCOL"] ), 0, strpos( strtolower( $_SERVER["SERVER_PROTOCOL"] ), "/" ) ) .  $s;
+	$port = ( $_SERVER["SERVER_PORT"] == "80" ) ? "" : ( ":" . $_SERVER["SERVER_PORT"] );
+	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
 }
 
 $mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE ;
@@ -23,7 +23,7 @@ function get_category()
 {
 	global $module_data, $db ;
 	$category = array() ;
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category " );
+	$result = $db->sql_query( "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category" );
 	while($rs = $db->sql_fetchrow($result))
 	{
 		$category[ $rs['id'] ] = $rs[ 'title' ] ;
@@ -322,6 +322,7 @@ function creatURL ( $inputurl )
 	}
 	return $songdata;
 }
+
 // xuat duong dan day du
 function outputURL ( $server, $inputurl )
 {
@@ -342,13 +343,28 @@ function outputURL ( $server, $inputurl )
 		{
 			if ( $id == $server )
 			{
-				$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
-				break;
+				if ( $data['host'] == "nhaccuatui" )
+				{
+					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+					$output = nv_get_URL_content( $output );
+					$output = explode ( 'flashvars="autostart=true&amp;file=', $output );
+					$output = explode ( '"', $output[1] );
+					$output =  nv_get_URL_content ( $output[0] );
+					$output = explode ( "<location><![CDATA[", $output );
+					$output = explode ( "]]></location>", $output[1] );
+					$output =  $output[0];
+				}
+				else
+				{
+					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+					break;
+				}
 			}
 		}
 	}
 	return $output;
 }
+
 function unlinkSV ( $server, $url )
 {
 	global $module_name, $setting;
@@ -372,4 +388,51 @@ function unlinkSV ( $server, $url )
 	}
 	return;
 }
+
+/**
+ * nv_get_URL_content()
+ * 
+ * @param mixed $target_url
+ * @return
+ */
+function nv_get_URL_content( $target_url )
+{	
+	$error = 0;
+		
+	$content = @file( $target_url );
+	
+	if( $content === false )
+	{
+		$error = 1;
+	}
+	
+	//	Phuong phap thu 2
+	if( $error == 1 )
+	{
+		if( function_exists('curl_init') )
+		{
+			$ch = curl_init();
+			curl_setopt( $ch, CURLOPT_URL, $target_url );
+			curl_setopt( $ch, CURLOPT_HEADER, 0 );
+			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+			curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0' );
+			$content = curl_exec( $ch );
+			$errormsg = curl_error( $ch );
+			curl_close( $ch );
+			
+			if ( $errormsg != "" )
+			{
+				return false;
+			}
+		}
+	}
+	
+	if( ! is_array( $content ) )
+	{
+		$content = explode( "\n", $content );
+	}
+	
+	return implode ( "", $content );
+}
+
 ?>

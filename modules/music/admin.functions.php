@@ -11,6 +11,7 @@ if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_
 
 $submenu['addsong'] = $lang_module['sub_addsong']; 
 $submenu['addlistsong'] = $lang_module['sub_addlistsong']; 
+$submenu['getnhaccuatui'] = $lang_module['nhaccuatui_get']; 
 $submenu['category'] = $lang_module['sub_category']; 
 $submenu['album'] = $lang_module['sub_album']; 
 $submenu['addalbum'] = $lang_module['sub_add_album']; 
@@ -30,7 +31,7 @@ $submenu['comment'] = $lang_module['sub_comment'];
 $submenu['userplaylist'] = $lang_module['userplaylist']; 
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong', 'commentvideo', 'addlistvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'blockhotsinger', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'addlistsong', 'commentvideo', 'addlistvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getnhaccuatui'); 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep

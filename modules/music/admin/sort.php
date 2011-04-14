@@ -14,20 +14,20 @@ if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
 $new = $nv_Request->get_int('new', 'post', 0);
 $old = $nv_Request->get_int('old', 'post', 0);
 
-if($old != $new)
+if ( $old != $new )
 {
-	changeorder($old, 0, 'main_category');
+	changeorder( $old, 0, 'main_category' );
 
 	if($old < $new)
 	{
-		for($i = $old; $i < $new; $i++)
+		for( $i = $old; $i < $new; $i++ )
 		{
-			changeorder($i + 1, $i, 'main_category');
+			changeorder( $i + 1, $i, 'main_category' );
 		}
 	}
 	else
 	{
-		for($i = $old; $i > $new; $i--)
+		for( $i = $old; $i > $new; $i-- )
 		{
 			changeorder($i - 1, $i, 'main_category');
 		}
@@ -36,4 +36,5 @@ if($old != $new)
 }
 
 echo $lang_module['update_success'];
+
 ?>

@@ -1,8 +1,9 @@
 <?php
+
 /**
  * @Project NUKEVIET 3.0
  * @Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2011 Freeware
  * @Createdate 25-12-2010 14:43
  */
  

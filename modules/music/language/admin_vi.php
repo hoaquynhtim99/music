@@ -133,6 +133,8 @@ $lang_module['manager_category'] = "Quản lý thể loại";
 $lang_module['manager_category_info'] = "Lưu ý khi thêm thể loại bạn sẽ không thể xóa";
 $lang_module['music_setting'] = "Cấu hình module";
 
+$lang_module['no_any_album'] = "Không thuộc album nào";
+
 $lang_module['order'] = "Thứ tự";
 $lang_module['save'] = "Lưu";
 $lang_module['search'] = "Tìm";
@@ -262,4 +264,10 @@ $lang_module['video_list_comment'] = "Danh sách các bình luận video";
 $lang_module['video_del_confirm'] = "Bạn có chắc xóa video này";
 $lang_module['video_error_check'] = "Bạn chưa chọn video nào";
 $lang_module['video_comment_edit'] = "Sửa bình luận video";
+
+$lang_module['nhaccuatui_get'] = "Thêm nhạc từ nhaccuatui";
+
+$lang_module['nct_title'] = "Thêm bài hát từ nhaccuatui.com";
+$lang_module['nct_list_song'] = "Danh sách các link nhạc";
+
 ?>
