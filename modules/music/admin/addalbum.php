@@ -69,6 +69,7 @@ if ( (($nv_Request->get_int( 'edit', 'post', 0 )) == 1) && ($error == '') )
 	}
 	if ( $query ) 
 	{
+		nv_del_moduleCache( $module_name );
 		updateSwhendelA( $row['name'], $albumdata['name'] );
 		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=album"); die();
 	}
@@ -111,6 +112,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error == '') )
 		if ( $db->sql_query_insert_id( $query ) ) 
 		{ 
 			$db->sql_freeresult();
+			nv_del_moduleCache( $module_name );
 			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=album"); die();
 		} 
 		else 

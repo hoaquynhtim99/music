@@ -42,6 +42,7 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 			if ( $db->sql_query_insert_id( $query ) ) 
 			{ 
 				$db->sql_freeresult();
+				nv_del_moduleCache( $module_name );
 			}
 			else
 			{
@@ -59,6 +60,7 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 					break;				
 				}
 			}
+			nv_del_moduleCache( $module_name );
 		}
 	}
 }
