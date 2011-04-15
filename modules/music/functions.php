@@ -7,8 +7,10 @@
  * @createdate 26/01/2011 10:10 AM
  */
 
-if (!defined('NV_SYSTEM')) die('Stop!!!'); 
+if ( ! defined('NV_SYSTEM') ) die('Stop!!!');
+ 
 define('NV_IS_MOD_MUSIC', true); 
+
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 
 // hien thi cac trang
@@ -109,24 +111,24 @@ function getADS()
 	global $module_data, $global_config, $db;
 	
 	$ads = array() ;
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads";
-	$query = $db->sql_query( $sql );
-	$num = $db->sql_numrows($query);
-	$rand = rand( 1, $num );
-	if( $num == 0 )
+	
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY RAND() LIMIT 1";
+    $result = nv_db_cache( $sql, 'id' );
+    
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			$ads['link'] = $row['link'];
+			$ads['url'] = $row['url'];		
+		}
+	}
+	else
 	{
 		$ads['link'] = NV_BASE_SITEURL . "modules/" . $module_data . "/data/default.swf";
 		$ads['url'] = $global_config['site_url'];
 	}
-	while ( $row = $db->sql_fetchrow( $query ))
-	{
-		if ( $rand == $row['stt'] )
-		{
-			$ads['link'] = $row['link'];
-			$ads['url'] = $row['url'];
-			break ;
-		}
-	}
+	
 	return $ads;
 }
 // lay 10 bai hat moi theo ten

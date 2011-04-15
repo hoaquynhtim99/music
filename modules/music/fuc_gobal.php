@@ -22,11 +22,19 @@ $mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DAT
 function get_category()
 {
 	global $module_data, $db ;
+	
 	$category = array() ;
-	$result = $db->sql_query( "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category" );
-	while($rs = $db->sql_fetchrow($result))
-	{
-		$category[ $rs['id'] ] = $rs[ 'title' ] ;
+	
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category";
+	
+    $result = nv_db_cache( $sql, 'id' );
+    
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			$category[ $row['id'] ] = $row[ 'title' ] ;
+		}
 	}
 	return $category ;
 }
@@ -34,28 +42,48 @@ function get_category()
 function get_videocategory()
 {
 	global $module_data, $db ;
+	
 	$category = array() ;
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category " );
-	while($rs = $db->sql_fetchrow($result))
-	{
-		$category[ $rs['id'] ] = $rs[ 'title' ] ;
+	
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category";
+    $result = nv_db_cache( $sql, 'id' );
+    
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			$category[$row['id']] = $row['title'] ;
+		}
 	}
+	
 	return $category ;
 }
 
 // cau hinh module
 function setting_music()
 {
-	global $module_data, $db ;
-	$setting = array() ;
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_setting " );
-	while($rs = $db->sql_fetchrow($result))
-	{
-		if( $rs['key'] == "root_contain" )
-			$setting[ $rs['key'] ] = $rs[ 'char' ] ;
-		else
-			$setting[ $rs['key'] ] = $rs[ 'value' ] ;
+	global $module_data, $db;
+	
+	$setting = array();
+	
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_setting";
+	$result = nv_db_cache( $sql, 'id' );
+	 
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			if( $row['key'] == "root_contain" )
+			{
+				$setting[$row['key']] = $row['char'] ;
+			}
+			else
+			{
+				$setting[$row['key']] = $row['value'] ;
+			}
+		}
 	}
+
 	return $setting ;
 }
 
@@ -114,10 +142,16 @@ function getallsinger()
 
 	$allsinger = array() ;
 	$allsinger['ns'] = $lang_module['unknow'];
-	$result = $db->sql_query( " SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer ORDER BY ten ASC");
-	while ( $singer = $db->sql_fetchrow($result) )
-	{
-		$allsinger[$singer['ten']] = $singer['tenthat'];
+	
+	$sql = "SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer ORDER BY ten ASC";
+	$result = nv_db_cache( $sql, 'ten' );
+	 
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			$allsinger[$row['ten']] = $row['tenthat'];
+		}
 	}
 
 	return $allsinger ;
@@ -129,11 +163,17 @@ function getallauthor()
 
 	$allsinger = array() ;
 	$allsinger['na'] = $lang_module['unknow'];
-	$result = $db->sql_query( " SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC");
-	while ( $singer = $db->sql_fetchrow($result) )
-	{
-		$allsinger[$singer['ten']] = $singer['tenthat'];
+	$sql = "SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC";
+	$result = nv_db_cache( $sql, 'ten' );
+	 
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			$allsinger[$row['ten']] = $row['tenthat'];
+		}
 	}
+
 	return $allsinger ;
 }
 // lay ca si tu id
@@ -154,12 +194,19 @@ function getallalbum( )
 	global $module_data, $lang_module, $db ;
 
 	$allalbum = array() ;
-	$result = $db->sql_query( " SELECT `name`, `tname` FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY name ASC" );
 	$allalbum['na'] = $lang_module['unknow'];
-	while ( $row = $db->sql_fetchrow($result) )
-	{
-		$allalbum[$row['name']] = $row['tname'];
+	
+	$sql = "SELECT `name`, `tname` FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY name ASC";
+	$result = nv_db_cache( $sql, 'name' );
+	 
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{
+			$allalbum[$row['name']] = $row['tname'];
+		}
 	}
+
 	return $allalbum ;
 }
 
@@ -264,19 +311,23 @@ function getFTP()
 	global $module_data, $db, $lang_module ;
 	$ftpdata = array();
 	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id ASC";
-	$resuilt = $db->sql_query( $sql );
-	while ( $row = $db->sql_fetchrow( $resuilt ) )
-	{
-		$ftpdata[$row['id']] = array(
-			"id" => $row['id'],
-			"host" => $row['host'],
-			"user" => $row['user'],
-			"pass" => $row['pass'],
-			"fulladdress" => $row['fulladdress'],
-			"subpart" => $row['subpart'],
-			"ftppart" => $row['ftppart'],
-			"active" => ( $row['active'] == 1 )? $lang_module['active_yes'] : $lang_module['active_no']
-		);
+	$result = nv_db_cache( $sql, 'id' );
+	 
+    if ( ! empty( $result ) )
+    {
+        foreach ( $result as $row )
+		{		
+			$ftpdata[$row['id']] = array(
+				"id" => $row['id'],
+				"host" => $row['host'],
+				"user" => $row['user'],
+				"pass" => $row['pass'],
+				"fulladdress" => $row['fulladdress'],
+				"subpart" => $row['subpart'],
+				"ftppart" => $row['ftppart'],
+				"active" => ( $row['active'] == 1 )? $lang_module['active_yes'] : $lang_module['active_no']
+			);
+		}
 	}
 	return $ftpdata;
 }

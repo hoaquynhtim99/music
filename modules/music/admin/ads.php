@@ -55,6 +55,7 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 		if ( $db->sql_query_insert_id( $query ) ) 
 		{ 
 			$db->sql_freeresult();
+			nv_del_moduleCache( $module_name );
 			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&". NV_OP_VARIABLE ."=ads" ); die();
 		} 
 		else 

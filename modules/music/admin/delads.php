@@ -14,20 +14,22 @@ $result = false;
 $id = $nv_Request->get_int('id', 'post,get');
 
 // xoa quang cao
-if($id > 0)
+if( $id > 0 )
 {
 	// xoa khoi thu muc upload
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads WHERE `id` = ". $id;
 	$query = $db->sql_query( $sql );
 	$ads = $db->sql_fetchrow( $query );
 	unlink( NV_DOCUMENT_ROOT . $ads['link'] );
+	
 	// xoa khoi database
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ads` WHERE `id`=" . $id;
     $result = $db->sql_query( $sql );
+	nv_del_moduleCache( $module_name );
 }
 
 // tra ve gia tri
-if($result)
+if( $result )
 {
 	echo $lang_module['del_success'];
 }
