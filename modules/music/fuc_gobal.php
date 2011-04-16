@@ -411,6 +411,30 @@ function outputURL ( $server, $inputurl )
 					$output = explode ( "]]></location>", $output[1] );
 					$output =  $output[0];
 				}
+				elseif ( $data['host'] == "zing" )
+				{
+					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+					$output = nv_get_URL_content( $output );
+					$output = explode ( '<input type="hidden" id="_strNoAuto" value="', $output );
+					$output = explode ( '"', $output[1] );
+					$output =  nv_get_URL_content ( $output[0] );
+					$output = explode ( "<urlSource>", $output );
+					$output = explode ( "</urlSource>", $output[1] );
+					$output =  nv_unhtmlspecialchars ( $output[0] );
+				}
+				elseif ( $data['host'] == "nhacvui" )
+				{
+					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+					$output = nv_get_URL_content( $output );
+					$output = explode ( '[FLASH]', $output );
+					$output = explode ( 'playlistfile=', $output[1] );
+					$output = explode ( '[/FLASH]"', $output[1] );
+					$output =  rawurldecode ( $output[0] );
+					$output =  nv_get_URL_content ( $output );
+					$output = explode ( "<location><![CDATA[", $output );
+					$output = explode ( "]]></location>", $output[1] );
+					$output =  $output[0];
+				}
 				else
 				{
 					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;

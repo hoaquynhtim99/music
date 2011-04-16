@@ -265,6 +265,10 @@ $lang_module['video_del_confirm'] = "Are you sure you want to delete this video"
 $lang_module['video_error_check'] = "You have not selected any videos";
 $lang_module['video_comment_edit'] = "Edit comment videoclip";
 
+$lang_module['zing_get'] = "Add song from mp3.zing.vn";
+
+$lang_module['nhacvui_get'] = "Add song from nhac.vui.vn";
+
 $lang_module['nhaccuatui_get'] = "Add song from nhaccuatui.com";
 
 $lang_module['nct_title'] = "Add song from nhaccuatui.com";
