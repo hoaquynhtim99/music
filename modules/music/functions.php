@@ -13,6 +13,33 @@ define('NV_IS_MOD_MUSIC', true);
 
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
 
+// Menu Site
+$nv_vertical_menu = array(); 
+$nv_vertical_menu[] = array( 
+	$lang_module['menu1'], //
+	NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name, //
+	0, //
+	'submenu' => array() //
+);
+$nv_vertical_menu[] = array( 
+	$lang_module['video'], 
+	NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=video", 
+	0, 
+	'submenu' => array() 
+);
+$nv_vertical_menu[] = array( 
+	$lang_module['menu4'], 
+	NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=creatalbum", 
+	0, 
+	'submenu' => array() 
+);
+$nv_vertical_menu[] = array( 
+	$lang_module['menu3'], 
+	NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=managersong", 
+	0, 
+	'submenu' => array() 
+);
+
 // hien thi cac trang
 function new_page ( $ts, $now_page, $link)
 {
