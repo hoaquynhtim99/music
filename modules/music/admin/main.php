@@ -30,16 +30,26 @@ $allsinger = getallsinger();
 $numshow = $nv_Request->get_int( 'numshow', 'get', 100 );
 
 $order = filter_text_input( 'order', 'get', 'id' );
-if ( $order == 'id' ) $sort = "ORDER BY " . $order  . " DESC" ; else $sort = "ORDER BY " . $order  . " ASC" ;
+if ( $order == 'id' ) $sort = "ORDER BY a." . $order  . " DESC" ; else $sort = "ORDER BY a." . $order  . " ASC" ;
 
 $now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
 $where_search = $nv_Request->get_int( 'where_search', 'get', 0 );
 $type_search = filter_text_input( 'type_search', 'get', 'ten' );
 $q = filter_text_input( 'q', 'get', '' );
 
-if ( $where_search == 0 ) $theloai = "" ;
-else $theloai = "theloai = ". $where_search ." AND";
+if ( $where_search == 0 )
+{  
+	$theloai = "" ;
+	$theloai1 = "" ;
+}
+else
+{ 
+	$theloai = "theloai = ". $where_search ." AND";
+	$theloai1 = "a.theloai = ". $where_search ." AND";
+}
+
 $where = $type_search." LIKE '%". $q ."%'";
+$where1 = "a." . $type_search." LIKE '%". $q ."%'";
 
 // xu li du lieu
 if ( $now_page == 0 ) 
@@ -49,11 +59,12 @@ if ( $now_page == 0 )
 }
 else 
 {
-	$first_page = ($now_page -1)*$numshow;
+	$first_page = ( $now_page -1 ) * $numshow;
 }	
 
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE ".$theloai." ".$where." " . $sort . " LIMIT ".$first_page.",".$numshow."";
+$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, a.theloai AS theloai, a.casi AS casi, a.album AS album, a.active AS active, b.tname AS albumname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `". NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.name WHERE " . $theloai1 . " " . $where1 . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
+
 $sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE ".$theloai." ".$where."";
 
 $link = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&numshow=" . $numshow . "&where_search=" . $where_search . "&type_search=" . $type_search . "&q=" . $q . "&order=" . $order ;
@@ -133,11 +144,7 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign('singer', $allsinger[$rs['casi']]);
 	$xtpl->assign( 'URL', $mainURL . "=listenone/" . $rs['id'] . "/" . $rs['ten'] );
 	
-	// lay ra ten album
-	$sql_album = "SELECT `tname` FROM ".NV_PREFIXLANG."_".$module_data."_album WHERE name=\"".$rs['album']."\"";
-	$result_album = $db->sql_query( $sql_album );
-	$album = $db->sql_fetchrow($result_album);
-	$xtpl->assign('album', $album['tname']);
+	$xtpl->assign('album', $rs['albumname']);
 	$xtpl->assign('category', $category[ $rs['theloai'] ] );
 
 	$class = ($i % 2) ? " class=\"second\"" : "";
@@ -158,8 +165,8 @@ $contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto
 $contents .= new_page_admin( $ts, $now_page, $link);
 $contents .= "</div>\n";
 
-include (NV_ROOTDIR . "/includes/header.php");
-echo nv_admin_theme($contents);
-include (NV_ROOTDIR . "/includes/footer.php");
+include ( NV_ROOTDIR . "/includes/header.php" );
+echo nv_admin_theme( $contents );
+include ( NV_ROOTDIR . "/includes/footer.php" );
 
 ?>
