@@ -262,7 +262,7 @@ div.tool {
 	float: right;
 	margin-top: 15px;
 }
-div.tool a.play {
+div.tool a#play {
 	float: right;
 	background-image: url('../images/music/arrowicon.png');
 	background-repeat: no-repeat;

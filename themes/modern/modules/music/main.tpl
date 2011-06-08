@@ -92,7 +92,7 @@
 			<a class="songname" title="{name}" href="{url_view}">{name}</a>
 			<div class="tool">
 				<a name="{ID}" class="adds add"></a>
-				<a href="{URL_DOWN}{ID}" onclick="window.open(this.href); return false;"onkeypress="window.open(this.href); return false;" class="down"></a>
+				<a href="{URL_DOWN}{ID}" class="down"></a>
 				<a href="{url_view}" class="play"></a>
 			</div>
 			<p>

@@ -265,4 +265,8 @@ $lang_module['upload_ok1'] = "here";
 $lang_module['upload_ok2'] = "to listen or";
 $lang_module['upload_ok3'] = "return home";
 $lang_module['upload_nook'] = "Songs awaiting moderation";
+
+$lang_module['err_module_title'] = "Error: Not exist";
+$lang_module['err_module_content'] = "Contents you want have expired or does not exist";
+
 ?>

@@ -18,10 +18,13 @@ if ( $where == 'song' )
 {
 	$song = getsongbyID( $id );
 	if ( $song['ten'] != $name ) die('Stop!!!');
-	if ( $song['server'] != 0 )
+	
+	$song['duongdan'] = outputURL ( $song['server'], $song['duongdan'] );
+	if ( $song['server'] == 1 )
 	{
-		$song['duongdan'] =  $global_config['site_url'] . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'];
+		$song['duongdan'] =  NV_MY_DOMAIN . $song['duongdan'];
 	}
+	
 	$song['casi'] = $allsinger[$song['casi']];
 	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = numview+1 WHERE `id` =" . $id );
 	$globaldata[] = $song;
@@ -30,10 +33,13 @@ elseif ( $where == 'video' )
 {
 	$song = getvideobyID( $id );
 	if ( $song['name'] != $name ) die('Stop!!!');
-	if ( $song['server'] != 0 )
+	
+	$song['duongdan'] = outputURL ( $song['server'], $song['duongdan'] );
+	if ( $song['server'] == 1 )
 	{
-		$song['duongdan'] =  $global_config['site_url'] . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'];
+		$song['duongdan'] =  NV_MY_DOMAIN . $song['duongdan'];
 	}
+	
 	$song['casi'] = $allsinger[$song['casi']];
 	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
 	$globaldata[] = $song;
@@ -47,10 +53,12 @@ elseif ( $where == 'album' )
 	$querysong = $db->sql_query( $sqlsong );
 	while ( $song = $db->sql_fetchrow( $querysong ) )
 	{
-		if ( $song['server'] != 0 )
+		$song['duongdan'] = outputURL ( $song['server'], $song['duongdan'] );
+		if ( $song['server'] == 1 )
 		{
-			$song['duongdan'] =  $global_config['site_url'] . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'];
+			$song['duongdan'] =  NV_MY_DOMAIN . $song['duongdan'];
 		}
+		
 		$song['casi'] = $allsinger[$song['casi']];
 		$globaldata[] = $song;
 	}

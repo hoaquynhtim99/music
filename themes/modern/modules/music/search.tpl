@@ -10,7 +10,7 @@
 			<div class="itemsearch {gray}">
 				<div class="tool">
 					<a name="{ID}" class="adds add"></a>
-					<a href="{URL_DOWN}{ID}" onclick="window.open(this.href); return false;" class="down"></a>
+					<a href="{URL_DOWN}{ID}" class="down"></a>
 					<a href="{url_listen}" class="play"></a>
 				</div>
 				<!-- BEGIN: hit -->
@@ -61,7 +61,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("a#adds").click(function() {
+	$("a.adds").click(function() {
 		$(this).removeClass("add"); 
 		$(this).addClass("addedtolist"); 
 		var songid = $(this).attr("name");

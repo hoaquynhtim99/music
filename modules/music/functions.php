@@ -11,7 +11,7 @@ if ( ! defined('NV_SYSTEM') ) die('Stop!!!');
  
 define('NV_IS_MOD_MUSIC', true); 
 
-require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
+require_once NV_ROOTDIR . "/modules/" . $module_name . '/global.functions.php';
 
 // Menu Site
 $nv_vertical_menu = array(); 
@@ -138,17 +138,25 @@ function getADS()
 	global $module_data, $global_config, $db;
 	
 	$ads = array() ;
+	$ads['link'] = array();
+	$ads['url'] = array();
 	
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY RAND() LIMIT 1";
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY RAND()";
     $result = nv_db_cache( $sql, 'id' );
     
     if ( ! empty( $result ) )
     {
+		$i = 0;
         foreach ( $result as $row )
 		{
-			$ads['link'] = $row['link'];
-			$ads['url'] = $row['url'];		
+			$ads['link'][] = $row['link'];
+			$ads['url'][] = $row['url'];	
+			$i ++;
 		}
+		
+		$j = rand( 0, $i - 1 );
+		$ads['link'] = $ads['link'][$j];
+		$ads['url'] = $ads['url'][$j];
 	}
 	else
 	{
@@ -193,6 +201,20 @@ function updateHIT_VIEW( $id, $where )
 		$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET hit = " . $db->dbescape( $hit ) . " WHERE `id` =" . $id );
 	}
 	return;
+}
+
+/**
+ * module_info_die()
+ * 
+ * @return
+ */
+function module_info_die ( )
+{
+    global $lang_module;
+	
+	nv_info_die( $lang_module['err_module_title'], $lang_module['err_module_title'], $lang_module['err_module_content'] );
+	
+	return false;
 }
 
 $setting = setting_music();

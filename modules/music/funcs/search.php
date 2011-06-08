@@ -24,13 +24,13 @@ if ($nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 )
 	$key =  ( filter_text_input( 'key', 'post', '' ) == '' ) ? '-' : change_alias( filter_text_input( 'key', 'post', '' ) );
 	if ( $type == 'album' )
 	{
-		Header( "Location: " . $mainURL . "=album/id/" . $key ) ;  die();	
+		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=album/id/" . $key, true ) ) ;  die();	
 	}
 	if ( $type == 'playlist' )
 	{
-		Header( "Location: " . $mainURL . "=allplaylist/id/" . $key ) ;  die();	
+		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=allplaylist/id/" . $key, true ) ) ;  die();	
 	}
-		Header( "Location: " . $mainURL . "=search/" . $type . "/" . $key ) ;  die();
+		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=search/" . $type . "/" . $key, true ) ) ;  die();
 }
 
 $xtpl = new XTemplate( "search.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );

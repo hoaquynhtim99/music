@@ -9,160 +9,118 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$category = get_category();
-$xtpl = new XTemplate( "listenone.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_data . "/data/" );
-$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_data . "/data/" );
-$xtpl->assign( 'img_url',  NV_BASE_SITEURL ."themes/" . $module_info['template'] ."/images/".$module_file );
-$xtpl->assign( 'URL_DOWN', $downURL );
-$xtpl->assign( 'ads', getADS() );
+// Get song id
+$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
+$alias = isset( $array_op[2] ) ? $array_op[2]  : "";
 
-$user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" ;
-$user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;		
-if ( defined( 'NV_IS_USER' ) )
-{ 
-	$name = $user_info['username'];
-}
-elseif ( defined( 'NV_IS_ADMIN' ) )
+if ( ! $id ) module_info_die();
+
+$sql = "SELECT a.id AS id, a.ten AS ten, a.album AS album, a.tenthat AS tenthat, a.casi AS casi, a.nhacsi AS nhacsi, a.theloai AS theloai, a.duongdan AS duongdan, a.upboi AS upboi, a.numview AS numview, a.server AS server, a.binhchon AS binhchon, a.hit AS hit, b.name AS name, b.tname AS tname FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.name WHERE a.id=" . $id . " AND a.active=1";
+$result = $db->sql_query( $sql );
+$check_exit = $db->sql_numrows( $result );
+$row = $db->sql_fetchrow( $result );
+
+if ( $check_exit != 1 or $row['ten'] != $alias )
 {
-	$name = $admin_info['username'];
+	module_info_die();
 }
-else $name = '';
-$xtpl->assign( 'USER_NAME', $name );
-$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 
+// Update
+updateHIT_VIEW( $id, '' );
+
+// Global data
+$category = get_category();
 $allsinger = getallsinger();
 $allauthor = getallauthor();
-// lay bai hat
-$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-updateHIT_VIEW( $id, '' );
-$row = getsongbyID( $id );
 
-$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/song/' . $row['id'] . '/' . $row['ten'] . '/' );
-
+// Info user
+$name = ( defined( 'NV_IS_USER' ) ) ? $user_info['username'] : "";
+	
+// Check HIT song
 $checkhit = explode ( "-", $row['hit'] );
 $checkhit = $checkhit[0];
-if ( $checkhit >= 20 )
-{
-	$xtpl->parse( 'main.hit' );
-}
 
-$xtpl->assign( 'URL_SENDMAIL',  $mainURL . "=sendmail&amp;id=". $id );
-$xtpl->assign( 'TITLE',  $lang_module['sendtomail'] );
-$xtpl->assign( 'ID',  $id );
-$xtpl->assign( 'name', $row['tenthat'] );
-$xtpl->assign( 'singer', $allsinger[$row['casi']] );
-$xtpl->assign( 'author', $allauthor[$row['nhacsi']] );
-$xtpl->assign( 'category', $category[ $row['theloai'] ] );
-$xtpl->assign( 'VOTE', $row['binhchon'] );
-$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
-$xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $row['theloai']);
-$xtpl->assign( 'url_search_album', $mainURL . "=album/numview/" . $row['album']);
+// All data
+$gdata = array();	// Global data
+$sdata = array();	// Song data
+$cdata = array();	// Check data
+$ldata = array(); 	// Lyric data
 
-$album_name = getalbumbyNAME( $row['album'] ) ;
-$xtpl->assign( 'album', $album_name['tname'] );
-$xtpl->assign( 'numview', $row['numview'] );
-$xtpl->assign( 'link', outputURL ( $row['server'], $row['duongdan'] ) );
-$xtpl->assign( 'URL_SONG', get_URL() );
+$cdata = array(
+	"no_change" => ( $name == '' ) ? "" : " readonly=\"readonly\"",  //
+	"checkhit" => $checkhit,  //
+	"url_login" => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login",  //
+	"url_register" => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register"  //
+);
 
-// loi bai hst
+$gdata = array(
+	"username" => $name,  //
+	"data_url" => NV_BASE_SITEURL . "modules/" . $module_data . "/data/",  //
+	"full_data_url" => $global_config['site_url'] ."/modules/" . $module_data . "/data/",  //
+	"img_url" =>  NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/",  //
+	"download_url" =>  $downURL,  //
+	"ads_data" =>  getADS(),  //
+	"user_name" =>  $name,  //
+	"creat_link_url" =>  NV_MY_DOMAIN . nv_url_rewrite ( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ),  //
+	"selfurl_base" =>  $client_info['selfurl'],  //
+	"selfurl_encode" =>  rawurlencode ( $client_info['selfurl'] )  //
+);
+
+$sdata = array(
+	"send_mail_url" => $mainURL . "=sendmail&amp;id=". $id,  //
+	"send_mail_title" => $lang_module['sendtomail'],  //
+	
+	"song_id" => $id,  //
+	"song_name" => $row['tenthat'],  //
+	"song_singer" => $allsinger[$row['casi']],  //
+	"song_author" => $allauthor[$row['nhacsi']],  //
+	"song_cat" => $category[ $row['theloai'] ],  //
+	"song_vote" => $row['binhchon'],  //
+	"song_numview" => $row['numview'],  //
+	"song_link" => outputURL ( $row['server'], $row['duongdan'] ),  //
+	
+	"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
+	"url_search_category" => $mainURL . "=search/category/" . $row['theloai'],  //
+	"url_search_album" => $mainURL . "=album/numview/" . $row['album'],  //
+	
+	"album_name" => $row['tname']  //
+);
+
+// Lyric data
 $sqllyric = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE songid = ". $id ." AND `active` = 1 ORDER BY id DESC";
 $querylyric = $db->sql_query( $sqllyric );
 $num_lyric = $db->sql_numrows($querylyric);
 
-if ( $num_lyric >= 1 )
-{
-	$i = 1 ;
-	while ( $rowlyric = $db->sql_fetchrow( $querylyric ) )
-	{	
-		if ( ($num_lyric > 1) && ( $i < $num_lyric ))
-		{
-			$nextdiv = $i + 1 ;
-			$xtpl->assign( 'nextdiv', $nextdiv );
-			$xtpl->parse( 'main.lyric.next' );			
-		}
-		if ( $i > 1 )
-		{
-			$prevdiv = $i - 1 ;
-			$xtpl->assign( 'prevdiv', $prevdiv );
-			$xtpl->parse( 'main.lyric.prev' );					
-		}
+$ldata = array(
+	"number" => $num_lyric,  //
+	"data" => array(),  //
+);
 
-		$xtpl->assign( 'uesrlyric', $rowlyric['user'] );		
-		$xtpl->assign( 'lyriccontent', $rowlyric['body'] );		
-		$xtpl->assign( 'thisdiv', $i );
-		$xtpl->parse( 'main.lyric' );
-		$i ++ ;
-	}
-}
-else
-{
-	$xtpl->parse( 'main.nolyric' );
-}
-//gui qua tang
-if ( ( $setting['who_gift'] == 0 ) &&  !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
-{
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-	$xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.nogift' );
-}
-elseif ( $setting['who_gift'] == 2 )
-{
-	$xtpl->parse( 'main.stopgift' );	
-}
-else
-{
-	$xtpl->assign( 'USER_NAME', ( $name == '' )? ( $lang_module['your_name'] ):( $name ) );
-	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
-	$xtpl->parse( 'main.gift' );
-}
-//gui loi bai hat
-if ( ( $setting['who_lyric'] == 0 ) &&  !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
-{
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-	$xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.noaccesslyric' );
-}
-elseif ( $setting['who_lyric'] == 2 )
-{
-	$xtpl->parse( 'main.stoplyric' );	
-}
-else
-{
-	$xtpl->assign( 'USER_NAME', $name );
-	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
-	$xtpl->parse( 'main.accesslyric' );
+while ( $rowlyric = $db->sql_fetchrow( $querylyric ) )
+{	
+	$ldata['data'][] = array(
+		"user" => $rowlyric['user'],  //
+		"content" => $rowlyric['body']  //
+	);
 }
 
-// binh luan
-if ( ( $setting['who_comment'] == 0 ) && !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
-{
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-	$xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.nocomment' );
-}
-elseif ( $setting['who_comment'] == 2 )
-{
-	$xtpl->parse( 'main.stopcomment' );	
-}
-else
-{
-	require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/emotions.php';
-	$xtpl->assign( 'EMOTIONS', show_emotions() );
-	$xtpl->assign( 'USER_NAME', $name );
-	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
-	$xtpl->parse( 'main.comment' );
-}
+// Page title
+$page_title = $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
+$key_words =  $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
 
-// tieu de trang
-$page_title = $row['tenthat'] . " - " .$allsinger[$row['casi']] ;
-$key_words =  $row['tenthat'] . " - " .$allsinger[$row['casi']] ;
+// My Head
+$my_head .= '
+<link rel="image_src" href="http://image.mp3.zdn.vn/thumb/140_140/avatars/6/f/6fcc316073b3fb561e21570ea8b664cb_1305702077.jpg" />
+<link rel="video_src" href="http://static.mp3.zing.vn/skins/mp3_main/flash/player_mp3_zing.swf?xmlURL=&file=http://mp3.zing.vn/xml/song-data/ZncmyLmNVRDQXxNykbxyDGLG&autoplay=true&autostart=true" />
+<meta name="video_width" content="360" />
+<meta name="video_height" content="84" />
+<meta name="video_type" content="application/x-shockwave-flash" />
+';
 
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
+$contents = nv_music_listenone ( $gdata, $sdata, $cdata, $ldata );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>

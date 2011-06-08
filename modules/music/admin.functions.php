@@ -187,5 +187,6 @@ function updatewhendelFTP( $server, $active )
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `active` = " . $active . " WHERE `server` = " . $server );
 	return;
 }
-require_once NV_ROOTDIR . "/modules/" . $module_name . '/fuc_gobal.php';
+require_once NV_ROOTDIR . "/modules/" . $module_name . '/global.functions.php';
+
 ?>

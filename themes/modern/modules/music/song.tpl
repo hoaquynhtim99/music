@@ -12,8 +12,8 @@
 	<!-- BEGIN: loop -->
 		<div class="songitem">
 			<div class="tool">
-				<a name="{ID}" id="add" class="add"></a>
-				<a href="{URL_DOWN}{ID}" target="_blank" class="down"></a>
+				<a name="{ID}" class="adds add"></a>
+				<a href="{URL_DOWN}{ID}" class="down"></a>
 				<a href="{url_view}" id="play" class="play"></a>
 			</div>
 			<!-- BEGIN: hit -->
@@ -34,7 +34,7 @@
 </div>
 <script type="text/javascript">
 $(document).ready(function() {
-	$("a#add").click(function() {
+	$("a.adds").click(function() {
 		$(this).removeClass("add"); 
 		$(this).addClass("addedtolist"); 
 		var songid = $(this).attr("name");

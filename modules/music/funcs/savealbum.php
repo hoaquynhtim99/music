@@ -43,7 +43,7 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 			
 	$aaaa = $db->sql_query( $query ) ;
 	$nv_Request->set_Cookie( $module_name . '_' . $userid, NV_CURRENTTIME );
-	$aaaa .= "_" . $mainURL . "=creatalbum";
+	$aaaa .= "_" . nv_url_rewrite ( $main_header_URL . "=creatalbum", true );
 }
 else
 {
