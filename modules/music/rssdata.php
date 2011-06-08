@@ -80,7 +80,7 @@ if ( $xml !== false )
 	$rssarray[$video_key] = array( 
 		'catid' => $video_key, 
 		'parentid' => 0, 
-		'title' => $lang_rss['rss_music'], 
+		'title' => $lang_rss['rss_video'], 
 		'alias' => change_alias ( $lang_rss['rss_video'] ), 
 		'numsubcat' => $num_this_rss, 
 		'subcatid' => 0, 
