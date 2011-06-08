@@ -6,7 +6,9 @@
  * @copyright 2011
  * @createdate 26/01/2011 09:17 AM
  */
+ 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
 
 $xtpl = new XTemplate( "block_hotsinger.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
@@ -51,11 +53,8 @@ while ( $row = $db->sql_fetchrow( $query ) )
 	$i ++ ;	
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_hot_singer ORDER BY `stt` ASC";
-$query = $db->sql_query( $sql );
-
 $i = 1 ;
-while($row = $db->sql_fetchrow( $query ))
+while( $row = $db->sql_fetchrow( $query ) )
 {
 	$xtpl->assign( 'STT', $i );
 	$xtpl->assign( 'name', $row['fullname'] );

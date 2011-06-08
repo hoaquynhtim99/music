@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
@@ -7,14 +8,16 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
 $allsinger = getallsinger();
 
 $xtpl = new XTemplate( "block_video_same_category.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE `active` = 1 ORDER BY view DESC LIMIT 0,8";
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `active` = 1 ORDER BY `view` DESC LIMIT 0,8";
 $query = $db->sql_query( $sql );
+
 while( $video =  $db->sql_fetchrow( $query ) )
 {
 	$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" . $video['id'] . "/" . $video['name'] );
@@ -28,4 +31,5 @@ while( $video =  $db->sql_fetchrow( $query ) )
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
+
 ?>

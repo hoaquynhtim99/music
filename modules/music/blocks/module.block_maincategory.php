@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
@@ -7,6 +8,7 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 global $lang_module, $module_data, $module_file, $module_info, $db;
 
 $xtpl = new XTemplate( "block_maincategory.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
@@ -19,7 +21,7 @@ $query = $db->sql_query( $sql );
 while( $song =  $db->sql_fetchrow( $query ) )
 {
 	$xtpl->assign( 'name', $category[$song['cid']] );
-	$xtpl->assign( 'url', $mainURL . "=search/category/" .$song['cid'] );
+	$xtpl->assign( 'url', $mainURL . "=search/category/" . $song['cid'] );
 	$xtpl->parse( 'main.loop' );
 }
 
