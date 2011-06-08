@@ -269,4 +269,6 @@ $lang_module['upload_nook'] = "Songs awaiting moderation";
 $lang_module['err_module_title'] = "Error: Not exist";
 $lang_module['err_module_content'] = "Contents you want have expired or does not exist";
 
+$lang_module['share_descreption'] = "Song %s singer %s, author %s, listen music, download music, send music gifts in  %s. Wish you have happy moments";
+
 ?>

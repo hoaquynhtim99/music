@@ -107,11 +107,12 @@ while ( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 // Page title
 $page_title = $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
 $key_words =  $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
+$description = sprintf ( $lang_module['share_descreption'], $row['tenthat'], $allsinger[$row['casi']], $allauthor[$row['nhacsi']], NV_MY_DOMAIN );
 
 // My Head
 $my_head .= '
-<link rel="image_src" href="http://image.mp3.zdn.vn/thumb/140_140/avatars/6/f/6fcc316073b3fb561e21570ea8b664cb_1305702077.jpg" />
-<link rel="video_src" href="http://static.mp3.zing.vn/skins/mp3_main/flash/player_mp3_zing.swf?xmlURL=&file=http://mp3.zing.vn/xml/song-data/ZncmyLmNVRDQXxNykbxyDGLG&autoplay=true&autostart=true" />
+<link rel="image_src" href="' . NV_MY_DOMAIN . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/logo.png" />
+<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_data . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite ( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ) . '" />
 <meta name="video_width" content="360" />
 <meta name="video_height" content="84" />
 <meta name="video_type" content="application/x-shockwave-flash" />

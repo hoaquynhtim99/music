@@ -228,4 +228,6 @@ $lang_module['upload_nook'] = "Bài hát đang chờ kiểm duyệt";
 $lang_module['err_module_title'] = "Lỗi: Không tồn tại";
 $lang_module['err_module_content'] = "Nội dung bạn cần đã hết hoặc không tồn tại";
 
+$lang_module['share_descreption'] = "Bài hát %s trình bày %s, sáng tác %s, nghe nhạc, tải nhạc, gửi quà tặng âm nhạc tại %s. Chúc các bạn có những phút giây vui vẻ";
+
 ?>
