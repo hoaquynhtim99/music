@@ -9,15 +9,24 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$where =  isset( $array_op[1] ) ? $array_op[1]:0;
+$where =  isset( $array_op[1] ) ? $array_op[1] : 0;
 $id =  isset( $array_op[2] ) ? intval( $array_op[2] ) : 0;
 $name = isset( $array_op[3] ) ?  $array_op[3]  : 0;
+
+if ( empty ( $id ) or empty ( $name ) )
+{
+	module_info_die();
+}
+
 $allsinger = getallsinger();
 $globaldata = array();
 if ( $where == 'song' )
 {
 	$song = getsongbyID( $id );
-	if ( $song['ten'] != $name ) die('Stop!!!');
+	if ( $song['ten'] != $name )
+	{
+		module_info_die();
+	}
 	
 	$song['duongdan'] = outputURL ( $song['server'], $song['duongdan'] );
 	if ( $song['server'] == 1 )
@@ -32,7 +41,10 @@ if ( $where == 'song' )
 elseif ( $where == 'video' )
 {
 	$song = getvideobyID( $id );
-	if ( $song['name'] != $name ) die('Stop!!!');
+	if ( $song['name'] != $name )
+	{
+		module_info_die();
+	}
 	
 	$song['duongdan'] = outputURL ( $song['server'], $song['duongdan'] );
 	if ( $song['server'] == 1 )
@@ -47,7 +59,11 @@ elseif ( $where == 'video' )
 elseif ( $where == 'album' )
 {
 	$albumdata = getalbumbyID( $id );
-	if ( $albumdata['name'] != $name ) die('Stop!!!');
+	if ( $albumdata['name'] != $name )
+	{
+		module_info_die();
+	}
+	
 	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = numview+1 WHERE `id` =" . $id );
 	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album = \"" . $albumdata['name'] . "\" AND `active` = 1 ORDER BY id DESC";
 	$querysong = $db->sql_query( $sqlsong );
@@ -65,6 +81,8 @@ elseif ( $where == 'album' )
 }
 else die('Stop!!!');
 
+header ("Content-Type:text/xml");
+
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo "\n";
 echo '<playlist version="1" xmlns:jwplayer="http://developer.longtailvideo.com/">';
@@ -79,7 +97,7 @@ echo
 		<creator>' . $song['casi'] . '</creator>
 		<location>' . $song['duongdan'] . '</location>
 		<info>' . $global_config['site_url'] . '</info>
-		<image>' . $global_config['site_url'] . '/modules/' . $module_data . '/data/logo.png</image>
+		<image>' . $global_config['site_url'] . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/logo.png</image>
 	</track>';
 }
 echo "\n";
