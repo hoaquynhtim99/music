@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung
@@ -7,8 +8,11 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
+
+// Global data
 $allsinger = getallsinger();
 $category = get_category();
 
@@ -155,4 +159,5 @@ $contents = $xtpl->text( 'main' );
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>

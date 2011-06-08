@@ -405,38 +405,98 @@ function outputURL ( $server, $inputurl )
 			{
 				if ( $data['host'] == "nhaccuatui" )
 				{
-					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
-					$output = nv_get_URL_content( $output );
-					$output = explode ( 'flashvars="autostart=true&amp;file=', $output );
-					$output = explode ( '"', $output[1] );
-					$output =  nv_get_URL_content ( $output[0] );
-					$output = explode ( "<location><![CDATA[", $output );
-					$output = explode ( "]]></location>", $output[1] );
-					$output =  $output[0];
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					
+					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+					{
+						if ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > 432000 )
+						{
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+						}
+					}
+					
+					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					{
+						$output = unserialize( $cache );
+					}
+					else
+					{
+						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+						$output = nv_get_URL_content( $output );
+						$output = explode ( 'flashvars="autostart=true&amp;file=', $output );
+						$output = explode ( '"', $output[1] );
+						$output =  nv_get_URL_content ( $output[0] );
+						$output = explode ( "<location><![CDATA[", $output );
+						$output = explode ( "]]></location>", $output[1] );
+						$output =  $output[0];
+						
+						$cache = serialize( $output );
+						nv_set_cache( $cache_file, $cache );
+					}
 				}
 				elseif ( $data['host'] == "zing" )
 				{
-					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
-					$output = nv_get_URL_content( $output );
-					$output = explode ( '<input type="hidden" id="_strNoAuto" value="', $output );
-					$output = explode ( '"', $output[1] );
-					$output =  nv_get_URL_content ( $output[0] );
-					$output = explode ( "<urlSource>", $output );
-					$output = explode ( "</urlSource>", $output[1] );
-					$output =  nv_unhtmlspecialchars ( $output[0] );
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					
+					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+					{
+						if ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > 432000 )
+						{
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+						}
+					}
+					
+					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					{
+						$output = unserialize( $cache );
+					}
+					else
+					{
+						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+						$output = nv_get_URL_content( $output );
+						$output = explode ( '<input type="hidden" id="_strNoAuto" value="', $output );
+						$output = explode ( '"', $output[1] );
+						$output =  nv_get_URL_content ( $output[0] );
+						$output = explode ( "<urlSource>", $output );
+						$output = explode ( "</urlSource>", $output[1] );
+						$output =  nv_unhtmlspecialchars ( $output[0] );
+						
+						$cache = serialize( $output );
+						nv_set_cache( $cache_file, $cache );
+					}
 				}
 				elseif ( $data['host'] == "nhacvui" )
 				{
-					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
-					$output = nv_get_URL_content( $output );
-					$output = explode ( '[FLASH]', $output );
-					$output = explode ( 'playlistfile=', $output[1] );
-					$output = explode ( '[/FLASH]"', $output[1] );
-					$output =  rawurldecode ( $output[0] );
-					$output =  nv_get_URL_content ( $output );
-					$output = explode ( "<location><![CDATA[", $output );
-					$output = explode ( "]]></location>", $output[1] );
-					$output =  $output[0];
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					
+					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+					{
+						if ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > 432000 )
+						{
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+						}
+					}
+					
+					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					{
+						$output = unserialize( $cache );
+					}
+					else
+					{
+						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+						$output = nv_get_URL_content( $output );
+						$output = explode ( '[FLASH]', $output );
+						$output = explode ( 'playlistfile=', $output[1] );
+						$output = explode ( '[/FLASH]"', $output[1] );
+						$output =  rawurldecode ( $output[0] );
+						$output =  nv_get_URL_content ( $output );
+						$output = explode ( "<location><![CDATA[", $output );
+						$output = explode ( "]]></location>", $output[1] );
+						$output =  $output[0];
+						
+						$cache = serialize( $output );
+						nv_set_cache( $cache_file, $cache );
+					}
 				}
 				else
 				{
