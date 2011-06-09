@@ -1,13 +1,6 @@
 ﻿<!-- BEGIN: main -->
-<!--<meta name="verify-v1" content="nPO+sJiorgxine7U88iTPkF/yVTxi3t9QOi9Wi8z60w=" />-->
-<link rel="image_src" href="{base_url}ember.jpg" />
-
-<meta name="video_height" content="60" /> 
-<meta name="video_width" content="400" /> 
-<meta name="video_type" content="application/x-shockwave-flash" />
-
-<script type="text/javascript" src="{base_url}jquery.playlist.js"></script>
-<script type="text/javascript" src="{base_url}jwplayer.js"></script>
+<script type="text/javascript" src="{GDATA.base_url}jquery.playlist.js"></script>
+<script type="text/javascript" src="{GDATA.base_url}jwplayer.js"></script>
 <div class="box-border-shadow m-bottom">
 	<div class="cat-box-header"> 
 		<div class="cat-nav"> 
@@ -15,17 +8,17 @@
 		</div>
 	</div>
 <div id="listen_main">
-	<strong>{name} - {singer}</strong>
-	<p>{LANG.who_post}:<a href="{url_search_upload}"> {who_post}&nbsp;</a> | {LANG.view}: {numview} | {LANG.playlist_creat}: {date}</p>
+	<strong>{GDATA.pl_name} - {GDATA.pl_singer}</strong>
+	<p>{LANG.who_post}:<a href="{GDATA.pl_url_search_upload}"> {GDATA.pl_who_post}&nbsp;</a> | {LANG.view}: {GDATA.pl_numview} | {LANG.playlist_creat}: {GDATA.pl_date}</p>
 	<div class="playercontainer">
 		<div style="float:left;background:black;cursor:pointer;width:470px;height:236px;">
 		<!--[if !IE]> -->
-		<object onclick="window.open('{ads.url}'); return false;" type="application/x-shockwave-flash" data="{ads.link}" width="470" height="236">
+		<object onclick="window.open('{GDATA.ads.url}'); return false;" type="application/x-shockwave-flash" data="{GDATA.ads.link}" width="470" height="236">
 		<!-- <![endif]-->
 		<!--[if IE]>
-		<object onclick="window.open('{ads.url}'); return false;" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="479" height="236"
+		<object onclick="window.open('{GDATA.ads.url}'); return false;" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="479" height="236"
 			codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
-			<param name="movie" value="{ads.link}" />
+			<param name="movie" value="{GDATA.ads.link}" />
 		<!--><!--dgx-->
 			<param name="loop" value="true" />
 			<param name="wmode" value="transparent" />
@@ -36,10 +29,10 @@
 		<div id="player">Loading the player ...</div>	
 		<script type="text/javascript">
 			jwplayer("player").setup({
-			flashplayer: "{base_url}player.swf",
+			flashplayer: "{GDATA.base_url}player.swf",
 			playlist: [
 			<!-- BEGIN: song -->
-			{ file: "{song_url}", image: "{base_url}logo.png", title: "{song_name} - ", description: " {song_singer}", },
+			{ file: "{SDATA.song_url}", image: "{GDATA.base_url}logo.png", title: "{SDATA.song_name} - ", description: " {SDATA.song_singer}" },
 			<!-- END: song -->
 			],
 			controlbar: "bottom",
@@ -64,11 +57,11 @@
 	<div style="width:498px;" id="boderfull" class="tab_container">
 		<div id="tab1" class="tab_content">
 			<div class="sendtool">
-				<a target="_blank" href="http://www.facebook.com/sharer.php?u={URL_PL}&t={name}-{singer}" class="facebook">Facebook</a>
+				<a target="_blank" href="http://www.facebook.com/sharer.php?u={GDATA.selfurl_encode}&t={GDATA.pl_name}-{GDATA.pl_singer}" class="facebook">Facebook</a>
 			</div>
 			<form action="#" method="post">
 				<p>Link Playlist:
-				<input id="songforum" onClick="SelectAll('songforum');" type="text" value="{URL_PL}" /> </p>
+				<input id="songforum" onClick="SelectAll('songforum');" type="text" value="{GDATA.selfurl_base}" /> </p>
 			</form>
 			<script type="text/javascript">
 				function SelectAll(id)
@@ -86,11 +79,11 @@
 </div>
 </div>
 <div id="album_info">
-	<img border="0" src="{playlist_img}" width="90px" height="90px" />
-	<p><span><strong>{name} - {singer}</strong><br />
-	{LANG.who_create}: {who_post}<br />
-	{LANG.view}: {numview}</span><br />
-	{LANG.message}: {message}</p>
+	<img border="0" src="{GDATA.playlist_img}" width="90px" height="90px" />
+	<p><span><strong>{GDATA.pl_name} - {GDATA.pl_singer}</strong><br />
+	{LANG.who_create}: {GDATA.pl_who_post}<br />
+	{LANG.view}: {GDATA.pl_numview}</span><br />
+	{LANG.message}: {GDATA.pl_message}</p>
 </div>	
 <div class="clear"> </div>
 </div>

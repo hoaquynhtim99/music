@@ -114,4 +114,30 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 	return $xtpl->text( 'main' );
 }
 
+/**
+ * nv_music_listen_playlist()
+ * 
+ * @param mixed $gdata
+ * @param mixed $sdata
+ * @return
+ */
+function nv_music_listen_playlist ( $gdata, $sdata )
+{
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    
+	$xtpl = new XTemplate( "listenuserlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	
+	$xtpl->assign( 'GDATA', $gdata );
+
+	foreach ( $sdata as $song )
+	{
+		$xtpl->assign( 'SDATA', $song );
+		$xtpl->parse( 'main.song' );
+	}
+
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
 ?>
