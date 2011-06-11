@@ -191,6 +191,8 @@ $lang_module['set_auto_gift'] = "Automatically publish gift";
 $lang_module['set_auto_album'] = "Automatically publish gift";
 $lang_module['set_floder_file'] = "The file folder";
 $lang_module['set_playlist_max'] = "Maximum number of playlists of a member";
+$lang_module['set_time_del_cache'] = "Time to reset the cache of music link";
+$lang_module['set_time_del_cache_info'] = " (minutes). Enter 0 if not delete this cache";
 
 $lang_module['sub_category'] = "Category manager";
 $lang_module['sub_album'] = "Album manager";

@@ -170,6 +170,9 @@ $lang_module['set_auto_gift'] = "Tự động đăng quà tặng";
 $lang_module['set_auto_album'] = "Tự cho đăng playlist";
 $lang_module['set_floder_file'] = "Thư mục chứa file";
 $lang_module['set_playlist_max'] = "Số playlist tối đa của một thành viên";
+$lang_module['set_time_del_cache'] = "Thời gian xác lập lại bộ nhớ tạm của link nhạc";
+$lang_module['set_time_del_cache_info'] = " (phút). Nhập 0 nếu không xóa bộ nhớ tạm này";
+
 $lang_module['sub_category'] = "Quản lý thể loại";
 $lang_module['sub_album'] = "Quản lý album";
 $lang_module['sub_author'] = "Quản lý nhạc sĩ";

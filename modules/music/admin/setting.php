@@ -16,7 +16,7 @@ $page_title = $lang_module['music_setting'];
 $contents = '';
 $setting = setting_music();
 
-if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
+if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
 	$data['root_contain'] = md5(filter_text_input( 'root_contain', 'post', '' ));
 	$data['who_comment'] = $nv_Request->get_int( 'who_comment', 'post', 0 );
@@ -32,6 +32,10 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 	$data['upload_max'] = $nv_Request->get_int( 'upload_max', 'post', 0 );
 	$data['default_server'] = $nv_Request->get_int( 'default_server', 'post', 0 );
 	$data['playlist_max'] = $nv_Request->get_int( 'playlist_max', 'post', 0 );
+	$data['del_cache_time_out'] = $nv_Request->get_int( 'del_cache_time_out', 'post', 0 );
+	
+	$data['del_cache_time_out'] = $data['del_cache_time_out'] * 60;
+	
 	if ( ( $data['upload_max'] * ( 1024 * 1024 ) ) > $global_config['nv_max_size'] )
 	{
 		$data['upload_max'] = $global_config['nv_max_size'] / ( 1024 * 1024 );
@@ -52,7 +56,7 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 	if ( $query ) 
 	{
 		nv_del_moduleCache( $module_name );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=setting" ); die();
+		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op ); die();
 	}
 	else
 	{
@@ -161,7 +165,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 		</select>
     </td>
 </tr>
-</tbody>
+<tbody class=\"second\">
 <tr>
     <td><strong>" . $lang_module['set_uploadmax'] . "</strong></td>
     <td>
@@ -185,11 +189,19 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 		</select>
     </td>
 </tr>
-</tbody>
+<tbody class=\"second\">
 <tr>
     <td><strong>" . $lang_module['set_playlist_max'] . "</strong></td>
     <td>
 		<input name=\"playlist_max\" type=\"text\" value=\"". $setting['playlist_max'] . "\" />
+    </td>
+</tr>
+</tbody>
+<tr>
+    <td><strong>" . $lang_module['set_time_del_cache'] . "</strong></td>
+    <td>
+		<input maxlength=\"4\" name=\"del_cache_time_out\" type=\"text\" value=\"". ( $setting['del_cache_time_out'] / 60 ) . "\" />
+		" . $lang_module['set_time_del_cache_info'] . "
     </td>
 </tr>
 </table>
@@ -199,8 +211,8 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 </div>
 </form>";
 
-
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>
