@@ -12,21 +12,6 @@ define( 'NV_ADMIN', true );
 require_once ( str_replace( '\\\\', '/', dirname( __file__ ) ) . '/mainfile.php' );
 require_once ( NV_ROOTDIR . "/includes/core/admin_functions.php" );
 
-// Get module news version
-require_once ( NV_ROOTDIR . "/modules/music/version.php" );
-$new_version = $module_version['version'];
-
-define ( 'NV_MUSIC_TABLE', $db_config['prefix'] . "_" . NV_LANG_DATA . "_music" );
-
-// Get old module version
-$result = $db->sql_query( "SELECT `char` FROM `" . NV_MUSIC_TABLE . "_setting` WHERE `key`='version'" );
-list ( $old_version ) = $db->sql_fetchrow( $result );
-
-if ( empty ( $old_version ) ) $old_version = "3.1.00";
-
-$is_exit = false;
-$break_update = false;
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -94,7 +79,21 @@ a:hover {
 
 if ( defined( "NV_IS_GODADMIN" ) )
 {
-    
+	// Get module news version
+	require_once ( NV_ROOTDIR . "/modules/music/version.php" );
+	$new_version = $module_version['version'];
+
+	define ( 'NV_MUSIC_TABLE', $db_config['prefix'] . "_" . NV_LANG_DATA . "_music" );
+
+	// Get old module version
+	$result = $db->sql_query( "SELECT `char` FROM `" . NV_MUSIC_TABLE . "_setting` WHERE `key`='version'" );
+	list ( $old_version ) = $db->sql_fetchrow( $result );
+
+	if ( empty ( $old_version ) ) $old_version = "3.1.00";
+
+	$is_exit = false;
+	$break_update = false;
+
     if ( nv_version_compare( $new_version, "3.1.00" ) < 0 )
     {
 		echo ('
