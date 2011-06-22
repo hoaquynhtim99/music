@@ -1252,3 +1252,44 @@ div.sucess {
 	background-image: url('../images/music/skin.gif');
 	background-position: 0px -138px;
 }
+
+/* Vertical Menu */
+#ver_menu {
+    padding-bottom: 6px;
+    text-indent: 24px;
+}
+
+#ver_menu a {
+	background-image:url('../images/music/bull.png');
+	background-repeat:no-repeat;
+	background-position:left center;
+    color: #333;
+    display: block;
+    font: bold 11px / 24px tahoma, arial, sans-serif;
+    height: 25px;
+    text-decoration: none;
+}
+
+#ver_menu a.current {
+    color: #333;
+}
+
+#ver_menu a.sub_normal {
+    color: #333;
+    padding-right: 5px;
+    text-align: right
+}
+
+#ver_menu a.sub_current {
+    color: #cb0000;
+    padding-right: 5px;
+    text-align: right
+}
+
+#ver_menu a.current:hover {
+    color: #0943ae;
+}
+
+#ver_menu a:hover {
+    color: #cb0000;
+}
