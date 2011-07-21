@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET 3.0
  * @Author Phan Tan Dung (phantandung@gmail.com)
@@ -9,6 +10,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
+
 $category = get_category() ;
 $allsinger = getallsinger();
     
@@ -18,19 +20,25 @@ $now_page = isset( $array_op[3] ) ?  $array_op[3]  : 1;
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
 
 // xu li thong tin submit
-if ($nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 )
+if ( $nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 )
 {
 	$type = filter_text_input( 'type', 'post', 'name' );
 	$key =  ( filter_text_input( 'key', 'post', '' ) == '' ) ? '-' : change_alias( filter_text_input( 'key', 'post', '' ) );
+	
 	if ( $type == 'album' )
 	{
-		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=album/id/" . $key, true ) ) ;  die();	
+		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=album/id/" . $key, true ) ) ;  
+		die();	
 	}
+	
 	if ( $type == 'playlist' )
 	{
-		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=allplaylist/id/" . $key, true ) ) ;  die();	
+		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=allplaylist/id/" . $key, true ) ) ;  
+		die();	
 	}
-		Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=search/" . $type . "/" . $key, true ) ) ;  die();
+	
+	Header( "Location: " . nv_url_rewrite ( $main_header_URL . "=search/" . $type . "/" . $key, true ) ) ;  
+	die();
 }
 
 $xtpl = new XTemplate( "search.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );

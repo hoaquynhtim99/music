@@ -26,10 +26,7 @@ if ( $xml !== false )
 		'catid' => 1, 
 		'parentid' => 0, 
 		'title' => $lang_rss['rss_gift'], 
-		'alias' => change_alias ( $lang_rss['rss_gift'] ), 
-		'numsubcat' => 0, 
-		'subcatid' => 0, 
-		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_data . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_gift'] )  // 
+		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_name . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_gift'] )  // 
 	);
 	
 	// Playlist RSS
@@ -37,10 +34,7 @@ if ( $xml !== false )
 		'catid' => 2, 
 		'parentid' => 0, 
 		'title' => $lang_rss['rss_play_list'], 
-		'alias' => change_alias ( $lang_rss['rss_play_list'] ), 
-		'numsubcat' => 0, 
-		'subcatid' => 0, 
-		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_data . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_play_list'] )  // 
+		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_name . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_play_list'] )  // 
 	);
 	
 	// Music RSS
@@ -51,10 +45,7 @@ if ( $xml !== false )
 		'catid' => 3, 
 		'parentid' => 0, 
 		'title' => $lang_rss['rss_music'], 
-		'alias' => change_alias ( $lang_rss['rss_music'] ), 
-		'numsubcat' => $num_this_rss, 
-		'subcatid' => 0, 
-		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_data . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_music'] )  // 
+		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_name . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_music'] )  // 
 	);
 	
 	while ( list( $catid, $title ) = $db->sql_fetchrow( $result2 ) )
@@ -64,10 +55,7 @@ if ( $xml !== false )
 			'catid' => $next_key, 
 			'parentid' => 3, 
 			'title' => $title, 
-			'alias' => change_alias ( $title . "-" . $catid ), 
-			'numsubcat' => $num_this_rss, 
-			'subcatid' => 0, 
-			'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_data . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_music'] ) . "/" . change_alias ( $title )  // 
+			'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_name . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_music'] ) . "/" . change_alias ( $title )  // 
 		);
 	}
 	
@@ -81,10 +69,7 @@ if ( $xml !== false )
 		'catid' => $video_key, 
 		'parentid' => 0, 
 		'title' => $lang_rss['rss_video'], 
-		'alias' => change_alias ( $lang_rss['rss_video'] ), 
-		'numsubcat' => $num_this_rss, 
-		'subcatid' => 0, 
-		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_data . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_video'] )  // 
+		'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_name . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_video'] )  // 
 	);
 	
 	while ( list( $catid, $title ) = $db->sql_fetchrow( $result2 ) )
@@ -94,10 +79,7 @@ if ( $xml !== false )
 			'catid' => $next_key, 
 			'parentid' => $video_key, 
 			'title' => $title, 
-			'alias' => change_alias ( $title . "-" . $catid ), 
-			'numsubcat' => $num_this_rss, 
-			'subcatid' => 0, 
-			'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_data . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_video'] ) . "/" . change_alias ( $title )  // 
+			'link' => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $mod_name . "&amp;" . NV_OP_VARIABLE . "=rss/" . change_alias ( $lang_rss['rss_video'] ) . "/" . change_alias ( $title )  // 
 		);
 	}
 }
