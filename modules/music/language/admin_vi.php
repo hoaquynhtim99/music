@@ -246,4 +246,35 @@ $lang_module['nct_list_song'] = "Danh sách các link nhạc";
 $lang_module['zing_title'] = "Thêm bài hát từ mp3.zing.vn V3";
 $lang_module['nhacvui_title'] = "Thêm bài hát từ nhac.vui.vn";
 
+$lang_module['revision'] = "Cập nhật module";
+$lang_module['revision_nosuport'] = "Module không hỗ trợ cập nhật cho các phiên bản có revision dưới 141";
+$lang_module['revision_nochange'] = "Không có bản cập nhật mới";
+$lang_module['revision_error'] = "Lỗi cập nhật!!!!!!!!!!!!!!";
+$lang_module['revision_error_cache_file'] = "Lỗi hệ thống không tìm thấy file ghi thông tin cập nhật";
+$lang_module['revision_list_file'] = "Hệ thống cập nhật được thông tin các file thay đổi như sau";
+$lang_module['revision_add_files'] = "File mới";
+$lang_module['revision_mod_files'] = "File thay đổi";
+$lang_module['revision_del_files'] = "File xoá";
+$lang_module['revision_msg_download'] = "Để tiến hành cập nhật bạn cần click vào nút Tiến hành download file để hệ thống tiến hành download các file cần thiết, quá trình download nhanh hay chậm tuỳ thuộc vào số lượng file và mạng của bạn, vui lòng chờ đến khi có thông báo thực hiện bước kế tiếp";
+$lang_module['revision_download_files'] = "Tiến hành download file";
+$lang_module['revision_download_error'] = "download file lỗi";
+$lang_module['revision_config_ftp'] = "Bạn cần cấu hình chức năng Cấu hình FTP trong menu Cấu hình để hệ thống có thể tạo và di chuyển các file.";
+$lang_module['autoupdate_get_error'] = "Thông báo: Hệ thống không kiểm tra được thông tin cập nhật phiên bản NukeViet";
+$lang_module['autoupdate_error_dir_update'] = "Lỗi gói cập nhật bạn tải về không đúng chuẩn, vui lòng kiểm tra lại thư mục: install/updatemusic";
+$lang_module['autoupdate_check_file'] = "Kiểm tra bản cập nhật";
+$lang_module['autoupdate_form_upload'] = "Hệ thống phát hiện có phiên bản nâng cấp hệ thống, hãy click vào kiểm tra bản cập nhật để tiếp tục quá trình.";
+$lang_module['autoupdate_change'] = "Hệ thống kiểm tra thấy bạn đã thay đổi các file sau đây so với bản gốc";
+$lang_module['autoupdate_overwrite'] = "Nếu bạn muốn ghi đè các file này, Hãy click vào nút tiến hành nâng cấp";
+$lang_module['autoupdate_click_update'] = "Hãy click vào nút tiến hành nâng cấp";
+$lang_module['autoupdate_backupfile'] = "Nếu bạn tiếp tục quá trình nâng cấp, hệ thống sẽ tạo tệp tin sao lưu dự phòng các file thay đổi tại";
+$lang_module['autoupdate_backupfile_error'] = "Quá trình nâng cấp bị lỗi: Hệ thống không tạo tệp tin sao lưu dự phòng, bạn kiểm tra lại việc chmode thư mục";
+$lang_module['autoupdate'] = "Nâng cấp hệ thống";
+$lang_module['autoupdate_confirm'] = "Bạn có chắc chắn nâng cấp hệ thống";
+$lang_module['autoupdate_error_create_folder'] = "Quá trình nâng cấp bị lỗi: Hệ thống không tạo được các thư mục sau";
+$lang_module['autoupdate_error_move_file'] = "Quá trình nâng cấp bị lỗi: Hệ thống không di chuyển được các file sau";
+$lang_module['autoupdate_complete_file'] = "Thông báo: Hệ thống đã thực hiện quá trình di chuyển file thành công";
+$lang_module['autoupdate_complete'] = "Thực hiện quá trình nâng cấp thành công.";
+$lang_module['autoupdate_complete_error_del_file'] = "Thực hiện quá trình nâng cấp thành công. Bạn cần tiến hành xóa thư mục install/update trên máy chủ";
+$lang_module['autoupdate_error_data'] = "Và gặp các lỗi về việc cập nhật CSDL";
+
 ?>

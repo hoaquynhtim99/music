@@ -45,6 +45,11 @@ $contents = '
         <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=setting">' . $lang_module['music_setting'] . '</a>
     </caption>
 </table>
+<table class="tab1">
+    <caption>
+        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=revision">' . $lang_module['revision'] . '</a>
+    </caption>
+</table>
 ' ;
  
 include (NV_ROOTDIR . "/includes/header.php");
