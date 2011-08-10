@@ -5,7 +5,6 @@
 	<a href="{URL_CREAT}" title="{LANG.playlist_save}" class="saveplaylist"></a>
 	<a title="{LANG.playlist_listen}" href="{URL}" class="listenplaylist"></a>
 	<a title="{LANG.playlist_delete}" class="delplaylist"></a>
-	
 </div>
 <div class="clear"></div>
 <script type="text/javascript">

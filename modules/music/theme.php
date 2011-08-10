@@ -140,4 +140,80 @@ function nv_music_listen_playlist ( $gdata, $sdata )
 	return $xtpl->text( 'main' );
 }
 
+/**
+ * nv_music_album()
+ * 
+ * @param mixed $g_array
+ * @param mixed $array
+ * @return
+ */
+function nv_music_album ( $g_array, $array )
+{
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    
+	$xtpl = new XTemplate( "album.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'GDATA', $g_array );
+	
+	// active span
+	if ( $g_array['type'] == 'id' )
+	{
+		$xtpl->assign( 'active_1', 'class="active"' );
+		$xtpl->assign( 'active_2', '' );
+	}
+	else
+	{
+		$xtpl->assign( 'active_1', '' );
+		$xtpl->assign( 'active_2', 'class="active"' );
+	}
+	
+	foreach( $array as $row )
+	{
+		$xtpl->assign( 'ROW', $row );
+		$xtpl->parse( 'main.loop' );
+	}
+	
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
+/**
+ * nv_music_allplaylist()
+ * 
+ * @param mixed $g_array
+ * @param mixed $array
+ * @return
+ */
+function nv_music_allplaylist ( $g_array, $array )
+{
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    
+	$xtpl = new XTemplate( "allplaylist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'GDATA', $g_array );
+	
+	// active span
+	if ( $g_array['type'] == 'id' )
+	{
+		$xtpl->assign( 'active_1', 'class="active"' );
+		$xtpl->assign( 'active_2', '' );
+	}
+	else
+	{
+		$xtpl->assign( 'active_1', '' );
+		$xtpl->assign( 'active_2', 'class="active"' );
+	}
+	
+	foreach( $array as $row )
+	{
+		$xtpl->assign( 'ROW', $row );
+		$xtpl->parse( 'main.loop' );
+	}
+	
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
 ?>

@@ -810,6 +810,8 @@ div.menuleft ul li a:hover {
 #searchcontent .itemsearch .tool {
 	float: right;
 }
+
+/* SEARCH BLOCK  */
 #searchblock form {
 	padding: 6px 0px 0px 6px;
 	width: 494px;
@@ -833,17 +835,27 @@ div.menuleft ul li a:hover {
 	cursor: pointer;
 	line-height: 25px;
 }
+#searchblock form input {
+	border-style: none solid none none;
+	border-width: 1px;
+	border-color: #999999;
+}
+#searchblock form select {
+	border-style: none;
+}
+
+/* RESULT SEARCH */
 #searchcontent .resuirt img.album {
 	float: left;
 	padding: 6px 6px 9px 6px;
 	background-repeat: no-repeat;
 	background-image: url('../images/music/m_album.png');
 }
-#album {
+#album, .album {
 	float: left;
 	padding-left: 10px;
 }
-#boder {
+#boder, .boder {
 	float: left;
 	height: 1px;
 	width: 100%;
@@ -936,14 +948,6 @@ div.blockalbum a.black {
 	color: #000000;
 	font-size: 14px;
 	font-weight: bold;
-}
-#searchblock form input {
-	border-style: none solid none none;
-	border-width: 1px;
-	border-color: #999999;
-}
-#searchblock form select {
-	border-style: none;
 }
 ul.tool li.active {
 	background-repeat: repeat-x;
@@ -1085,7 +1089,7 @@ div.tools a.del:hover {
 	background-repeat: no-repeat;
 	background-image: url('../images/music/m_album.png');
 }
-#videoblockitem {
+#videoblockitem, .videoblockitem {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #CCCCCC;
@@ -1093,7 +1097,7 @@ div.tools a.del:hover {
 	width: 100%;
 	padding: 4px 0px 2px 0px;
 }
-#videoblockitem img {
+#videoblockitem img, .videoblockitem img {
 	background-repeat: no-repeat;
 	background-image: url('../images/music/block_video_img.png');
 	padding: 3px 3px 7px 3px;
@@ -1192,9 +1196,12 @@ div.sucess {
 	width: 33px;
 	height: 23px;
 }
-#xbh {
+
+
+/*  block rating */
+.xbh {
 }
-#xbh .item {
+.xbh .item {
 	float: left;
 	width: 90%;
 	border-bottom-style: dotted;
@@ -1202,7 +1209,7 @@ div.sucess {
 	border-bottom-color: #808080;
 	padding-left: 20px;
 }
-#xbh .item .bg {
+.xbh .item .bg {
 	float: left;
 	width: 16px;
 	height: 16px;
@@ -1210,11 +1217,11 @@ div.sucess {
 	margin-left: -20px;
 	margin-top: 10px;
 }
+.xbh .item a.singer {
+	color: #3399FF;
+}
 .rating1 {
 	background-image: url('../images/music/skin.gif');
-}
-#xbh .item a.singer {
-	color: #3399FF;
 }
 .rating2 {
 	background-image: url('../images/music/skin.gif');

@@ -97,7 +97,7 @@ function m_emotions_replace( $data )
 			else $p .= $x[0][$u];
 		}
 
-		$data = str_replace( $x, "<img src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/emoticons/" . $a . ".gif\" />", $data );
+		$data = str_replace( $x, "<img style=\"vertical-align:middle\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/emoticons/" . $a . ".gif\" />", $data );
 	}
 	return $data;
 }

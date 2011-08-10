@@ -16,8 +16,8 @@ $xtpl->assign( 'LANG', $lang_module );
 
 $allsinger = getallsinger();
 
-$source = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` ORDER BY numview DESC LIMIT 0,8" );
-while( $song =  $db->sql_fetchrow( $source ) )
+$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` ORDER BY `numview` DESC LIMIT 0,8" );
+while( $song =  $db->sql_fetchrow( $result ) )
 {
 	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $song['casi']);	
 	$xtpl->assign( 'url_listen', $mainURL . "=listenlist/" . $song['id'] . "/" . $song['name']);

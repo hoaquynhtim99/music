@@ -15,8 +15,8 @@ $xtpl = new XTemplate( "block_hotalbum.tpl", NV_ROOTDIR . "/themes/" . $module_i
 $xtpl->assign( 'LANG', $lang_module );
 
 //
-$source = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active` = 1 ORDER BY `view` DESC LIMIT 0,8" );
-while( $song =  $db->sql_fetchrow( $source ) )
+$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active` = 1 ORDER BY `view` DESC LIMIT 0,8" );
+while( $song =  $db->sql_fetchrow( $result ) )
 {
 	$xtpl->assign( 'url_search_singer', '');	
 	$xtpl->assign( 'url_listen', $mainURL . "=listenuserlist/" . $song['id'] . "/" . $song['keyname'] );

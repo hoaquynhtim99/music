@@ -11,8 +11,15 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $module_file, $module_info, $mainURL;
 
-$content = "
-<p><a href=\"" . $mainURL . "=upload\">
-<img style=\"border-width: 0px;\" height=\"80\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/uploadicon.jpg\" width=\"234\" alt=\"\" /></a></p>";
+$xtpl = new XTemplate( "block_upload.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+$xtpl->assign( 'LANG', $lang_module );
+
+$xtpl->assign( 'URL_UPLOAD', $mainURL . "=upload" );
+$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+$xtpl->assign( 'TEMPLATE', $module_info['template'] );
+$xtpl->assign( 'MODULE_FILE', $module_file );
+
+$xtpl->parse( 'main' );
+$content = $xtpl->text( 'main' );
 
 ?>

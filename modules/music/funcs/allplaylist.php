@@ -11,34 +11,22 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
-
-$xtpl = new XTemplate( "allplaylist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
     
 // xu li
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'view';
 $now_page = isset( $array_op[3] ) ?  intval( $array_op[3] ) : 1;
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
-
 $link = $mainURL . "=allplaylist/". $type ."/" . $key ;
-$xtpl->assign( 'hot', $mainURL . "=allplaylist/view/" . $key );
-$xtpl->assign( 'new', $mainURL . "=allplaylist/id/" . $key );
 
-// active span
-if ( $type == 'id' )
-{
-	$xtpl->assign( 'active_1', 'class="active"' );
-	$xtpl->assign( 'active_2', '' );
-}
-else
-{
-	$xtpl->assign( 'active_1', '' );
-	$xtpl->assign( 'active_2', 'class="active"' );
-}
+$g_array = array(
+	"hot" => $mainURL . "=allplaylist/view/" . $key,  //
+	"new" => $mainURL . "=allplaylist/id/" . $key,  //
+	"type" => $type  //
+);
 
 $data = '';
 if ( $key != '' )
-	$data = "WHERE keyname LIKE '%". $key ."%' AND `active` = 1";
+	$data = "WHERE `keyname` LIKE '%". $db->dblikeescape( $key ) ."%' AND `active` = 1";
 else
 	$data = "WHERE `active` = 1";
 	
@@ -49,11 +37,11 @@ if ( $now_page == 1)
 }
 else 
 {
-	$first_page = ($now_page -1)*20;
+	$first_page = ( $now_page -1 ) * 20;
 }	
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist ".$data." ORDER BY " . $type . " DESC LIMIT ".$first_page.",20";
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist ".$data." ";
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist " . $data . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist " . $data;
 
 // tinh so trang
 $num = $db->sql_query($sqlnum);
@@ -63,28 +51,24 @@ while ( $ts * 20 < $output ) {$ts ++ ;}
 
 // ket qua
 $result = $db->sql_query( $sql );
-$xtpl->assign( 'num', $output);
+$g_array['num'] = $output;
 
-while($rs = $db->sql_fetchrow($result))
+$array = array();
+while( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'num', $output);
-	$xtpl->assign( 'name', $rs['name']);
-	
-	$img = rand( 1, 10);
-	$xtpl->assign( 'thumb', NV_BASE_SITEURL ."modules/" . $module_data . "/data/img(" . $img . ").jpg");
-	
-	$xtpl->assign( 'singer', $rs['singer']);
-	$xtpl->assign( 'upload', $rs['username']);
-	$xtpl->assign( 'view', $rs['view']);
-	
-	$xtpl->assign( 'url_listen', $mainURL . "=listenuserlist/".$rs['id'] . "/" . $rs['keyname'] );
-	$xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $rs['username']);
-	
-	$xtpl->parse( 'main.loop' );
+	$array[] = array(
+		"name" => $row['name'],  //
+		"thumb" => NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/randimg/img(" . rand( 1, 10 ) . ").jpg",  //
+		"singer" => $row['singer'],  //
+		"upload" => $row['username'],  //
+		"view" => $row['view'],  //
+		"url_listen" => $mainURL . "=listenuserlist/".$row['id'] . "/" . $row['keyname'],  //
+		"url_search_upload" => $mainURL . "=search/upload/" . $row['username']  //
+	);	
 }
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
-$contents .= new_page( $ts, $now_page, $link);
+
+$contents = nv_music_allplaylist ( $g_array, $array );
+$contents .= new_page( $ts, $now_page, $link );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
