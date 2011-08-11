@@ -6,6 +6,7 @@
  * @Copyright (C) 2010 VINADES., JSC. All rights reserved
  * @Createdate 3-6-2010 0:14
  */
+
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
@@ -56,6 +57,7 @@ else
 {
 	$contents = $lang_module['ready_send_error'] ;
 }
+
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo $contents;
 include ( NV_ROOTDIR . "/includes/footer.php" );

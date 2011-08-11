@@ -8,6 +8,7 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 $allsinger = getallsinger();
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 if ( $id > 0 )
@@ -142,6 +143,7 @@ function sendmail_themme ( $sendmail )
     $xtpl->parse( 'main' );
     return $xtpl->text( 'main' );
 }
+
 $contents = sendmail_themme( $sendmail );
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo $contents;

@@ -425,11 +425,26 @@ function outputURL ( $server, $inputurl )
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
 						$output = explode ( 'flashvars="autostart=true&amp;file=', $output );
-						$output = explode ( '"', $output[1] );
-						$output =  nv_get_URL_content ( $output[0] );
-						$output = explode ( "<location><![CDATA[", $output );
-						$output = explode ( "]]></location>", $output[1] );
-						$output =  $output[0];
+						
+						if( isset( $output[1] ) )
+						{
+							$output = explode ( '"', $output[1] );
+							$output =  nv_get_URL_content ( $output[0] );
+							$output = explode ( "<location><![CDATA[", $output );
+							if( isset( $output[1] ) )
+							{
+								$output = explode ( "]]></location>", $output[1] );
+								$output =  $output[0];
+							}
+							else
+							{
+								$output = "";
+							}
+						}
+						else
+						{
+							$output = "";
+						}
 						
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
@@ -456,12 +471,28 @@ function outputURL ( $server, $inputurl )
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
 						$output = explode ( '<input type="hidden" id="_strNoAuto" value="', $output );
-						$output = explode ( '"', $output[1] );
-						$output =  nv_get_URL_content ( $output[0] );
-						$output = explode ( "<urlSource>", $output );
-						$output = explode ( "</urlSource>", $output[1] );
-						$output =  nv_unhtmlspecialchars ( $output[0] );
 						
+						if( isset( $output[1] ) )
+						{
+							$output = explode ( '"', $output[1] );
+							$output =  nv_get_URL_content ( $output[0] );
+							$output = explode ( "<urlSource>", $output );
+							
+							if( isset( $output[1] ) )
+							{
+								$output = explode ( "</urlSource>", $output[1] );
+								$output =  nv_unhtmlspecialchars ( $output[0] );
+							}
+							else
+							{
+								$output = "";
+							}
+						}
+						else
+						{
+							$output = "";
+						}
+ 
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
 					}
@@ -487,13 +518,37 @@ function outputURL ( $server, $inputurl )
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
 						$output = explode ( '[FLASH]', $output );
-						$output = explode ( 'playlistfile=', $output[1] );
-						$output = explode ( '[/FLASH]"', $output[1] );
-						$output =  rawurldecode ( $output[0] );
-						$output =  nv_get_URL_content ( $output );
-						$output = explode ( "<location><![CDATA[", $output );
-						$output = explode ( "]]></location>", $output[1] );
-						$output =  $output[0];
+						
+						if( isset( $output[1] ) )
+						{
+							$output = explode ( 'playlistfile=', $output[1] );
+							
+							if( isset( $output[1] ) )
+							{
+								$output = explode ( '[/FLASH]"', $output[1] );
+								$output =  rawurldecode ( $output[0] );
+								$output =  nv_get_URL_content ( $output );
+								$output = explode ( "<location><![CDATA[", $output );
+								
+								if( isset( $output[1] ) )
+								{
+									$output = explode ( "]]></location>", $output[1] );
+									$output =  $output[0];
+								}
+								else
+								{
+									$output = "";
+								}
+							}
+							else
+							{
+								$output = "";
+							}
+						}
+						else
+						{
+							$output = "";
+						}
 						
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
