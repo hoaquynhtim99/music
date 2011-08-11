@@ -302,7 +302,7 @@ object , embed{
 	border: 1px solid #999999;
 	padding: 6px;
 	width: 458px;
-	height: 200px;
+	max-height: 200px;
 	overflow-y: auto;
 	overflow-x: hidden;
 	display: block;
