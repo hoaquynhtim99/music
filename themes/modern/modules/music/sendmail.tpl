@@ -6,7 +6,7 @@
         {SENDMAIL.script}
 		<!-- BEGIN: close -->
         <script type="text/javascript">
-            var howLong = 10000;
+            var howLong = 3000;
             setTimeout("self.close()", howLong);
         </script>
         <!-- END: close -->
@@ -156,13 +156,14 @@
 				<input type="hidden" name="id" value="{SENDMAIL.id}" />
 				<input type="submit" value="{LANG.send}" />
             </div>
-        </form><!-- END: content -->
-        <!-- BEGIN: result -->
-        <div>{RESULT.err_name}</div>
-        <div>{RESULT.err_email}</div>
-        <div>{RESULT.err_yourmail}</div>
-        <div style="text-align: center;">{RESULT.send_success}</div>
-        <!-- END: result -->
+        </form>
+	<!-- END: content -->
+	<!-- BEGIN: result -->
+	<div>{RESULT.err_name}</div>
+	<div>{RESULT.err_email}</div>
+	<div>{RESULT.err_yourmail}</div>
+	<div style="text-align: center;">{RESULT.send_success}</div>
+	<!-- END: result -->
     </body>
 </html>
 <!-- END: main -->

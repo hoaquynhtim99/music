@@ -19,28 +19,28 @@
 	<div style="height:10px;">&nbsp;</div>
 	<div style="float:left;">
 	<!-- BEGIN: new1 -->
-	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" border="0" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
-		{name}</a><br />
-		<a class="frontmin" href="{url_search_singer}">{singer}</a>
+	<div style="margin-left:16px" class="videoitem">
+		<a href="{ROW.url_view}"><img width="128" height="72" style="border-width:0px" src="{ROW.thumb}"/></a><div style="height:6px;">&nbsp;</div>
+		<a href="{ROW.url_view}">{ROW.name}</a><br />
+		<a class="frontmin" href="{ROW.url_search_singer}">{ROW.singer}</a>
 	</div>
 	<!-- END: new1 -->
 	</div>
 	<div style="float:left;">
 	<!-- BEGIN: new2 -->
-	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" src="{thumb}"alt="" /><div style="height:6px;">&nbsp;</div>
-		{name}</a><br />
-		<a class="frontmin" href="{url_search_singer}">{singer}</a>
+	<div style="margin-left:16px" class="videoitem">
+		<a href="{ROW.url_view}"><img width="128" height="72" src="{ROW.thumb}" alt="" /></a><div style="height:6px;">&nbsp;</div>
+		<a href="{ROW.url_view}">{ROW.name}</a><br />
+		<a class="frontmin" href="{ROW.url_search_singer}">{ROW.singer}</a>
 	</div>
 	<!-- END: new2 -->
 	</div>
 	<div style="float:left;">
 	<!-- BEGIN: new3 -->
-	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" src="{thumb}" alt=""/><div style="height:6px;">&nbsp;</div>
-		{name}</a><br />
-		<a class="frontmin" href="{url_search_singer}">{singer}</a>
+	<div style="margin-left:16px" class="videoitem">
+		<a href="{ROW.url_view}"><img width="128" height="72" src="{ROW.thumb}" alt=""/></a><div style="height:6px;">&nbsp;</div>
+		<a href="{ROW.url_view}">{ROW.name}</a><br />
+		<a class="frontmin" href="{ROW.url_search_singer}">{ROW.singer}</a>
 	</div>
 	<!-- END: new3 -->
 	</div>
@@ -56,28 +56,28 @@
 	<div style="height:10px;">&nbsp;</div>
 	<div style="float:left;">
 	<!-- BEGIN: hot1 -->
-	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px"  src="{thumb}" alt="" /><div style="height:6px;">&nbsp;</div>
-		{name}</a><br />
-		<a class="frontmin" href="{url_search_singer}">{singer}</a>
+	<div style="margin-left:16px" class="videoitem">
+		<a href="{ROW.url_view}"><img width="128" height="72"  src="{ROW.thumb}" alt="" /></a><div style="height:6px;">&nbsp;</div>
+		<a href="{ROW.url_view}">{ROW.name}</a><br />
+		<a class="frontmin" href="{ROW.url_search_singer}">{ROW.singer}</a>
 	</div>
 	<!-- END: hot1 -->
 	</div>
 	<div style="float:left;">
 	<!-- BEGIN: hot2 -->
-	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" alt="" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
-		{name}</a><br />
-		<a class="frontmin" href="{url_search_singer}">{singer}</a>
+	<div style="margin-left:16px" class="videoitem">
+		<a href="{ROW.url_view}"><img width="128" height="72" alt="" src="{ROW.thumb}" /></a><div style="height:6px;">&nbsp;</div>
+		<a href="{ROW.url_view}">{ROW.name}</a><br />
+		<a class="frontmin" href="{ROW.url_search_singer}">{ROW.singer}</a>
 	</div>
 	<!-- END: hot2 -->
 	</div>
 	<div style="float:left;">
 	<!-- BEGIN: hot3 -->
-	<div style="margin-left:16px" id="videoitem">
-		<a href="{url_view}"><img width="128px" height="72px" alt="" src="{thumb}" /><div style="height:6px;">&nbsp;</div>
-		{name}</a><br />
-		<a class="frontmin" href="{url_search_singer}">{singer}</a>
+	<div style="margin-left:16px" class="videoitem">
+		<a href="{ROW.url_view}"><img width="128" height="72" alt="" src="{ROW.thumb}" /></a><div style="height:6px;">&nbsp;</div>
+		<a href="{ROW.url_view}">{ROW.name}</a><br />
+		<a class="frontmin" href="{ROW.url_search_singer}">{ROW.singer}</a>
 	</div>
 	<!-- END: hot3 -->
 	</div>

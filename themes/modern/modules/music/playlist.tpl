@@ -27,13 +27,13 @@
 		</object>
 		<!-- <![endif]-->
 		</div>
-		<div id="player">Loading the player a1binhdinh.com ...</div>
+		<div id="player">Loading the player ...</div>
 		<script type="text/javascript">
 			jwplayer("player").setup({
 			flashplayer: "{base_url}player.swf",
 			playlist: [
 			<!-- BEGIN: song -->
-			{ file: "{song_url}", image: "{base_url}logo.png", title: "{song_name} - ", description: " {song_singer}"},
+			{ file: "{ROW.song_url}", title: "{ROW.stt}. {ROW.song_name} - ", description: " {ROW.song_singer}"},
 			<!-- END: song -->
 			],
 			controlbar: "bottom",
@@ -46,7 +46,6 @@
 			jwplayer().playlistNext();
 			}
 			}
-			
 			});
 		</script>
 		<div class="clear"></div>

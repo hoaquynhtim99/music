@@ -1049,7 +1049,7 @@ div.tools a.del:hover {
 	font-size: 11px;
 	color: #FF9900;
 }
-#videos {
+#videos, .videos {
 	border-bottom-style: solid;
 	border-bottom-width: 1px;
 	border-bottom-color: #CCCCCC;
@@ -1057,10 +1057,10 @@ div.tools a.del:hover {
 	margin-left: 5px;
 	padding-top: 5px;
 }
-#videos:hover {
+#videos:hover, .videos:hover {
 	background-color: #F8F8F8;
 }
-#videoitem {
+#videoitem, .videoitem {
 	padding: 3px 3px 10px 3px;
 	float: left;
 	background-repeat: no-repeat;
@@ -1078,16 +1078,16 @@ div.tools a.del:hover {
 	margin: 0px 0px 6px 0px;
 	background-image: inherit;
 }
-#salbum {
+#salbum, div.salbum {
 	float: left;
 	width: 110px;
 }
-#salbum img.item {
-	padding: 6px 6px 9px 6px;
-	margin: 5px 0px 7px 0px;
-	float: left;
-	background-repeat: no-repeat;
-	background-image: url('../images/music/m_album.png');
+#salbum img.item, div.salbum img.item {
+	padding: 6px 6px 9px 6px !important;
+	margin: 5px 0px 7px 0px !important;
+	float: left !important;
+	background-repeat: no-repeat !important;
+	background-image: url('../images/music/m_album.png') !important;
 }
 #videoblockitem, .videoblockitem {
 	border-bottom-style: solid;

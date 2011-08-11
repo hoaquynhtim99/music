@@ -13,15 +13,11 @@ $allsinger = getallsinger();
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 if ( $id > 0 )
 {
-        $result = "";
+        $result_send = "";
         $check = false;
         $checkss = $nv_Request->get_string( 'checkss', 'post', '' );
-        if ( defined( 'NV_IS_ADMIN' ) )
-        {
-            $name = $admin_info['username'];
-            $youremail = $admin_info['email'];
-        }
-        elseif ( defined( 'NV_IS_USER' ) )
+
+        if ( defined( 'NV_IS_USER' ) )
         {
             $name = $user_info['username'];
             $youremail = $user_info['email'];
@@ -33,10 +29,9 @@ if ( $id > 0 )
         }
         $to_mail = $content = "";
 		
-		$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = ".$id ."";
-		$query = $db->sql_query( $sql );
-		$song = $db->sql_fetchrow( $query );
-
+		$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = " . $id . " AND `active`=1";
+		$result = $db->sql_query( $sql );
+		$song = $db->sql_fetchrow( $result );
 		
 		if ( $nv_Request->get_int( 'send', 'post', 0 ) == 1 )
 		{
@@ -80,14 +75,15 @@ if ( $id > 0 )
                     $success = $lang_module['send_mail_err'];
                 }
             }
-            $result = array( 
+            $result_send = array( 
                 "err_name" => $err_name, 
 				"err_email" => $err_email, 
 				"err_yourmail" => $err_youremail, 
 				"send_success" => $success, 
 				"check" => $check 
             );
-			}
+		}
+		
         $sendmail = array( 
             "id" => $id, 
 			"checkss" => md5( $id . session_id() . $global_config['sitekey'] ), 
@@ -97,57 +93,14 @@ if ( $id > 0 )
 			"v_mail" => $youremail, 
 			"to_mail" => $to_mail, 
 			"content" => $content, 
-			"result" => $result, 
+			"result" => $result_send, 
 			"action" => "" . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=sendmail&amp;id=" . $id 
         );
 		
-function sendmail_themme ( $sendmail )
-{
-    global $module_name, $module_info, $module_file, $global_config, $lang_module, $lang_global;
-    $script = nv_html_site_js();
-    $script .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/jquery/jquery.validate.js\"></script>\n";
-    $script .= "<script type=\"text/javascript\">\n";
-    $script .= "          $(document).ready(function(){\n";
-    $script .= "            $(\"#sendmailForm\").validate();\n";
-    $script .= "          });\n";
-    $script .= "</script>\n";
-    if ( NV_LANG_INTERFACE == 'vi' )
-    {
-        $script .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/mudim.js\"></script>";
-    }
-    $sendmail['script'] = $script;
-    $xtpl = new XTemplate( "sendmail.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-    $xtpl->assign( 'SENDMAIL', $sendmail );
-    $xtpl->assign( 'LANG', $lang_module );
-    $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
-    $xtpl->assign( 'GFX_NUM', NV_GFX_NUM );
-    if ( $global_config['gfx_chk'] > 0 )
-    {
-        $xtpl->assign( 'CAPTCHA_REFRESH', $lang_global['captcharefresh'] );
-        $xtpl->assign( 'CAPTCHA_REFR_SRC', NV_BASE_SITEURL . "images/refresh.png" );
-        $xtpl->assign( 'N_CAPTCHA', $lang_global['securitycode'] );
-        $xtpl->assign( 'GFX_WIDTH', NV_GFX_WIDTH );
-        $xtpl->assign( 'GFX_HEIGHT', NV_GFX_HEIGHT );
-        $xtpl->parse( 'main.content.captcha' );
-    }
-    $xtpl->parse( 'main.content' );
-    if ( ! empty( $sendmail['result'] ) )
-    {
-        $xtpl->assign( 'RESULT', $sendmail['result'] );
-        $xtpl->parse( 'main.result' );
-        if ( $sendmail['result']['check'] == true )
-        {
-            $xtpl->parse( 'main.close' );
-        }
-    }
-    $xtpl->parse( 'main' );
-    return $xtpl->text( 'main' );
-}
-
-$contents = sendmail_themme( $sendmail );
-include ( NV_ROOTDIR . "/includes/header.php" );
-echo $contents;
-include ( NV_ROOTDIR . "/includes/footer.php" );
+	$contents = nv_sendmail_themme( $sendmail );
+	include ( NV_ROOTDIR . "/includes/header.php" );
+	echo $contents;
+	include ( NV_ROOTDIR . "/includes/footer.php" );
 }
 Header( "Location: " . $global_config['site_url'] );
 exit();

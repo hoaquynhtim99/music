@@ -29,7 +29,7 @@
 		<div id="player">Loading the player ...</div>	
 		<script type="text/javascript">
 			jwplayer("player").setup({
-			flashplayer: "{base_url}player.swf",
+			flashplayer: "{base_url}player.swf",			
 			playlist: [
 			<!-- BEGIN: song -->
 			{ file: "{SONG.song_url}", title: "{SONG.stt}. {SONG.song_name} - ", description: " {SONG.song_singer}", },

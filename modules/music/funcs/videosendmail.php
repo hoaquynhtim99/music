@@ -8,7 +8,9 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 $allsinger = getallsinger();
+
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 if ( $id > 0 )
 {
@@ -86,7 +88,8 @@ if ( $id > 0 )
 				"send_success" => $success, 
 				"check" => $check 
             );
-			}
+		}
+		
         $sendmail = array( 
             "id" => $id, 
 			"checkss" => md5( $id . session_id() . $global_config['sitekey'] ), 
@@ -100,53 +103,12 @@ if ( $id > 0 )
 			"action" => "" . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=videosendmail&amp;id=" . $id 
         );
 		
-function sendmail_themme ( $sendmail )
-{
-    global $module_name, $module_info, $module_file, $global_config, $lang_module, $lang_global;
-    $script = nv_html_site_js();
-    $script .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/jquery/jquery.validate.js\"></script>\n";
-    $script .= "<script type=\"text/javascript\">\n";
-    $script .= "          $(document).ready(function(){\n";
-    $script .= "            $(\"#sendmailForm\").validate();\n";
-    $script .= "          });\n";
-    $script .= "</script>\n";
-    if ( NV_LANG_INTERFACE == 'vi' )
-    {
-        $script .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/mudim.js\"></script>";
-    }
-    $sendmail['script'] = $script;
-    $xtpl = new XTemplate( "videosendmail.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-    $xtpl->assign( 'SENDMAIL', $sendmail );
-    $xtpl->assign( 'LANG', $lang_module );
-    $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
-    $xtpl->assign( 'GFX_NUM', NV_GFX_NUM );
-    if ( $global_config['gfx_chk'] > 0 )
-    {
-        $xtpl->assign( 'CAPTCHA_REFRESH', $lang_global['captcharefresh'] );
-        $xtpl->assign( 'CAPTCHA_REFR_SRC', NV_BASE_SITEURL . "images/refresh.png" );
-        $xtpl->assign( 'N_CAPTCHA', $lang_global['securitycode'] );
-        $xtpl->assign( 'GFX_WIDTH', NV_GFX_WIDTH );
-        $xtpl->assign( 'GFX_HEIGHT', NV_GFX_HEIGHT );
-        $xtpl->parse( 'main.content.captcha' );
-    }
-    $xtpl->parse( 'main.content' );
-    if ( ! empty( $sendmail['result'] ) )
-    {
-        $xtpl->assign( 'RESULT', $sendmail['result'] );
-        $xtpl->parse( 'main.result' );
-        if ( $sendmail['result']['check'] == true )
-        {
-            $xtpl->parse( 'main.close' );
-        }
-    }
-    $xtpl->parse( 'main' );
-    return $xtpl->text( 'main' );
+	$contents = nv_sendmail_video_themme( $sendmail );
+	include ( NV_ROOTDIR . "/includes/header.php" );
+	echo $contents;
+	include ( NV_ROOTDIR . "/includes/footer.php" );
 }
-$contents = sendmail_themme( $sendmail );
-include ( NV_ROOTDIR . "/includes/header.php" );
-echo $contents;
-include ( NV_ROOTDIR . "/includes/footer.php" );
-}
+
 Header( "Location: " . $global_config['site_url'] );
 exit();
 

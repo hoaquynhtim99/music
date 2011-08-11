@@ -217,6 +217,7 @@ function module_info_die ( )
 	return false;
 }
 
+global $downURL, $setting;
 $setting = setting_music();
 $downURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE . "=down&amp;id=";
 

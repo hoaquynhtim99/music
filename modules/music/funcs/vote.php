@@ -13,7 +13,7 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 $difftimeout = 86400;
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 
-if ( !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
+if ( ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
 {
 	echo "ERR_no_" . $lang_module['song_vote_err'];
 }

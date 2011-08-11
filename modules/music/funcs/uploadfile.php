@@ -10,35 +10,42 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $userfile = $_FILES['uploadfile']; 
+
+if( empty( $userfile ) )
+{
+    Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+    exit();
+}
+
 $songname = filter_text_input( 'song', 'get,post', '' );
 $singer = filter_text_input( 'singer', 'get,post', '' );
 $newsinger = filter_text_input( 'newsinger', 'get,post', '' );
 $author = filter_text_input( 'author', 'get,post', '' );
 $newauthor = filter_text_input( 'newauthor', 'get,post', '' );
 $category = $nv_Request->get_int( 'category', 'get,post', 0 );
+
 $maxsize = $setting['upload_max'] * ( 1024 * 1024 );
+
 if ( defined( 'NV_IS_USER' ) )
 {
     $name = $user_info['username'];
     $userid = $user_info['userid'];
-}
-elseif ( defined( 'NV_IS_ADMIN' ) )
-{
-    $name = $admin_info['username'];
-    $userid = $admin_info['userid'];
 }
 else
 {
     $name = $lang_module['upload_visittor'];
 	$userid = 0;
 }
+
 require_once ( NV_ROOTDIR . "/modules/" . $module_name . '/class/getid3/getid3.php' );
 require_once ( NV_ROOTDIR . "/modules/" . $module_name . '/class/getid3/getid3.functions.php' );
+
 $au = GetAllMP3info( $_FILES['uploadfile']['tmp_name'] );
 $filetype = $au['fileformat'];
 $bitrate = $au['bitrate'];
 $filesize = $au['filesize'];
 $duration = $au['playtime_seconds'];
+
 if ( ( $filetype != "mp3" ) || ( $filesize > $maxsize ) )
 {
 	@unlink( $_FILES['uploadfile']['tmp_name'] );
@@ -50,6 +57,7 @@ else
 	$url_return = "";
 	$upload_success = false;
 	$saved = false;
+	
 	function getextension( $filename )
 	{
 		if ( strpos( $filename, '.' ) === false ) return '';
@@ -57,6 +65,7 @@ else
 		$filename = explode( '.', $filename );
 		return array_pop( $filename );
 	}
+	
 	function string_to_filename( $word )
 	{
 		$utf8_lookup = false;
@@ -67,11 +76,13 @@ else
 		$word = preg_replace( '/\s+/', '-', $word );
 		return strtolower( preg_replace( '/\W-/', '', $word ) );
 	}
+	
 	preg_match( "/^(.*)\.[a-zA-Z0-9]+$/", $userfile['name'], $f );
 	$fn = string_to_filename( $f[1] );
+	
 	$filename = $fn . "." . getextension( $userfile['name'] );
-	//if ( $setting['default_server'] == 1 )
-	//{
+	if ( $setting['default_server'] == 1 )
+	{
 		$currentpath = NV_ROOTDIR . '/uploads/' . $module_data . '/' . $setting['root_contain'] . '/upload/'; 
         $filename2 = $filename;
         $i = 1;
@@ -87,11 +98,12 @@ else
 			$url_return = NV_BASE_SITEURL . '/uploads/' . $module_data . '/' . $setting['root_contain'] . '/upload/' . $filename;
 		}
 		else @unlink( $_FILES['uploadfile']['tmp_name'] );
-	//}
-	//else
-	/*{
+	}
+	else
+	{
 		$hostid = $setting['default_server'];
 		$ftpdata = getFTP();
+		
 		$this_host = $ftpdata[$hostid]['host'];
 		$this_user = $ftpdata[$hostid]['user'];
 		$this_pass = $ftpdata[$hostid]['pass'];
@@ -103,6 +115,7 @@ else
             $filename2 = preg_replace( '/(.*)(\.[a-zA-Z0-9]+)$/', '\1_' . $i . '\2', $filename );
             $i++;
         }
+		
         $filename = $filename2;
 		require_once ( NV_ROOTDIR . "/modules/" . $module_name . "/class/ftp.class.php" );
 		$ftp = new FTP();
@@ -120,7 +133,8 @@ else
 			$ftp->disconnect();
 		} 
 		@unlink( $userfile['tmp_name'] );
-	}*/
+	}
+	
 	if ( $upload_success )
 	{
 		if ( $newsinger != $lang_module['upload_quicksinger'] )
@@ -128,15 +142,18 @@ else
 			newsinger( change_alias( $newsinger ), $newsinger );
 			$singer = $newsinger;
 		}
+		
 		if ( $newauthor != $lang_module['upload_quickauthor'] )
 		{
 			newauthor( change_alias( $newauthor ), $newauthor );
 			$author = $newauthor;
 		}
+		
 		$hit = "0-" . NV_CURRENTTIME;
 		$check_url = creatURL ( $url_return );
 		$duongdan = $check_url['duongdan'];
-		$server = $check_url['server'];		
+		$server = $check_url['server'];
+		
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $db->dbescape( change_alias( $singer ) ) . ", " . $db->dbescape( change_alias( $author ) ) . ", 'na', " . $db->dbescape( $category ) . ", " . $db->dbescape( $duongdan )  . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", " . $server . ", " . $userid . ", UNIX_TIMESTAMP() , 0, " . $db->dbescape( $hit ) . " ) "; 
 		if ( $db->sql_query_insert_id( $query ) )
 		{
@@ -153,7 +170,7 @@ else
 		{
 			$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " ORDER BY id DESC LIMIT 0,1" );
 			$song = $db->sql_fetchrow($result);
-			echo '<div id="message">' . $lang_module['upload_ok4'] . ' <a href="' . $mainURL . '=listenone/' . $song['id'] . '/' . $song['ten'] . '" target="_blank">' . $lang_module['upload_ok1'] . '</a> ' . $lang_module['upload_ok2'] . ' <a href="' . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '">' . $lang_module['upload_ok3'] . '</a></div>';
+			echo '<div id="message">' . $lang_module['upload_ok4'] . ' <a href="' . nv_url_rewrite( $mainURL . '=listenone/' . $song['id'] . '/' . $song['ten'], true ) . '" target="_blank">' . $lang_module['upload_ok1'] . '</a> ' . $lang_module['upload_ok2'] . ' <a href="' . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) . '">' . $lang_module['upload_ok3'] . '</a></div>';
 		}
 		else
 		{

@@ -78,7 +78,7 @@
 			if ($.trim(config.imageLoader) != ''){
 				imageLoader = '<img src="'+ config.imageLoader +'" alt="uploader" />';
 			}
-			var singeropinion = '{singerdata}';
+			var singeropinion = '{GDATA.singerdata}';
 			
 			var display = '<div class="uploadData" id="pxupload'+ itr +'_text" title="pxupload'+ itr +'">' + 
 				'<div class="close">&nbsp;</div>' +
@@ -171,11 +171,11 @@
 				var contents = '<form method="post" id="'+ formId +'" action="'+ px.formAction +'" enctype="multipart/form-data" target="'+ iframeId +'">' +
 				
 				'<input style="width:400px;" id="song' + itr + '" name="song" type="text" value="{LANG.song_name}"/><br /><br />{LANG.singer}:<br />' +
-				'<select style="width:404px;" name="singer" id="singer' + itr + '">{singerdata}' +
+				'<select style="width:404px;" name="singer" id="singer' + itr + '">{GDATA.singerdata}' +
 				'<input style="width:400px;" id="newsinger' + itr + '" name="newsinger" type="text" value="{LANG.upload_quicksinger}"/><br /><br />{LANG.author}:<br />' +
-				'<select style="width:404px;" name="author" id="author' + itr + '">{authordata}' +
+				'<select style="width:404px;" name="author" id="author' + itr + '">{GDATA.authordata}' +
 				'<input style="width:400px;" id="newauthor' + itr + '" name="newauthor" type="text" value="{LANG.upload_quickauthor}"/><br /><br />{LANG.category_2}:<br />' +
-				'<select style="width:200px;" name="category" id="category' + itr + '">{category}' +
+				'<select style="width:200px;" name="category" id="category' + itr + '">{GDATA.category}' +
 				'<input type="file" name="'+ config.inputName +'" id="'+ inputId +'" size="'+ config.inputSize +'" />' +
 				
 				

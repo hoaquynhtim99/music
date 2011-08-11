@@ -30,20 +30,17 @@ else
 	$link = $mainURL . "=searchvideo/" . $type . "/" . $key ;
 }
 
-$xtpl = new XTemplate( "searchvideo.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-
 if ( $type == "name" )
 {
-	$data = "WHERE name LIKE '%". $key ."%' AND";
+	$data = "WHERE `name` LIKE '%". $db->dblikeescape( $key ) ."%' AND";
 }
 elseif ( $type == "singer" )
 {
-	$data = "WHERE casi LIKE '%". $key ."%' AND";
+	$data = "WHERE `casi` LIKE '%". $db->dblikeescape( $key ) ."%' AND";
 }
 elseif ( $type == "category" )
 {
-	$data = "WHERE theloai =". $key . " AND";
+	$data = "WHERE `theloai` =". $key . " AND";
 }
 
 // xu li du lieu
@@ -60,30 +57,32 @@ $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video ".$data."
 $sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video ".$data." `active` = 1 ";
 
 // tinh so trang
-$num = $db->sql_query($sqlnum);
-$output = $db->sql_numrows($num);
+$num = $db->sql_query( $sqlnum );
+$output = $db->sql_numrows( $num );
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
 // ket qua
 $result = $db->sql_query( $sql );
-$xtpl->assign( 'num', $output);
 
-while($rs = $db->sql_fetchrow($result))
+$g_array = array();
+$g_array['num'] = $output;
+
+$array = array();
+while( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'name', $rs['tname']);
-	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
-	$xtpl->assign( 'view', $rs['view']);
-	$xtpl->assign( 'thumb', $rs['thumb']);
-	$xtpl->assign( 'creat', nv_date( "H:i d/m/Y", $rs['dt'] ) );
-
-	$xtpl->assign( 'url_listen', $mainURL . "=viewvideo/".$rs['id'] . "/" . $rs['name'] );
-	$xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $rs['casi']);
-		
-	$xtpl->parse( 'main.loop' );
+	$array[] = array(
+		"name" => $row['tname'],  //
+		"singer" => $allsinger[$row['casi']],  //
+		"view" => $row['view'],  //
+		"thumb" => $row['thumb'],  //
+		"creat" => $row['dt'],  //
+		"url_listen" => $mainURL . "=viewvideo/".$row['id'] . "/" . $row['name'],  //
+		"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi']  //
+	);
 }
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
+
+$contents = nv_music_searchvideo( $g_array, $array );
 $contents .= new_page( $ts, $now_page, $link);
 
 include ( NV_ROOTDIR . "/includes/header.php" );

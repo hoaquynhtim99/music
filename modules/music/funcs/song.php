@@ -12,28 +12,13 @@ $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $category = get_category();
 
-$xtpl = new XTemplate( "song.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'URL_DOWN', $downURL );
-$xtpl->assign( 'hot', $mainURL . "=song/numview");
-$xtpl->assign( 'new', $mainURL . "=song/id" );
-
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'numview';
 $now_page = isset( $array_op[2] ) ?  intval( $array_op[2] ) : 1;
 $allsinger = getallsinger();
 $link = $mainURL . "=song/". $type ;
 
-// active span
-if ( $type == 'id' )
-{
-	$xtpl->assign( 'active_1', 'class="active"' );
-	$xtpl->assign( 'active_2', '' );
-}
-else
-{
-	$xtpl->assign( 'active_1', '' );
-	$xtpl->assign( 'active_2', 'class="active"' );
-}
+$g_array = array();
+$g_array['type'] = $type;
 
 // xu li du lieu
 if ( $now_page == 1) 
@@ -49,45 +34,42 @@ $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` 
 $sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 ";
 
 // tinh so trang
-$num = $db->sql_query($sqlnum);
-$output = $db->sql_numrows($num);
+$num = $db->sql_query( $sqlnum );
+$output = $db->sql_numrows( $num );
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
 // ket qua
 $result = $db->sql_query( $sql );
-$xtpl->assign( 'num', $output);
+$g_array['num'] = $output;
 
-while($rs = $db->sql_fetchrow($result))
+$array = array();
+while( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'ID', $rs['id']);
-	$xtpl->assign( 'num', $output);
-	$xtpl->assign( 'name', $rs['tenthat']);
-	$xtpl->assign( 'category', $category[$rs['theloai']]);
-	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
-	$xtpl->assign( 'upload', $rs['upboi']);
-	$xtpl->assign( 'view', $rs['numview']);
-	$xtpl->assign( 'url_view', $mainURL . "=listenone/" .$rs['id']. "/" . $rs['ten'] );
-		
-	$xtpl->assign( 'bitrate', $rs['bitrate']/1000);
-	$xtpl->assign( 'size', round ( ( $rs['size']/1024/1024 ), 2 ) );
-	$xtpl->assign( 'duration', (int)($rs['duration']/60) . ":" . $rs['duration']%60 );
-	
-	$xtpl->assign( 'url_listen', $mainURL . "=listenlist/" . $rs['id'] . "/" . $rs['ten'] );
-	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $rs['casi']);
-	$xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $rs['upboi']);
-	$xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $rs['theloai']);
-	$checkhit = explode ( "-", $rs['hit'] );
+	$checkhit = explode ( "-", $row['hit'] );
 	$checkhit = $checkhit[0];
-	if ( $checkhit >= 20 )
-	{
-		$xtpl->parse( 'main.loop.hit' );
-	}
-	$xtpl->parse( 'main.loop' );
+	
+	$array[] = array(
+		"id" => $row['id'],  //
+		"name" => $row['tenthat'],  //
+		"category" => $category[$row['theloai']],  //
+		"singer" => $allsinger[$row['casi']],  //
+		"upload" => $row['upboi'],  //
+		"view" => $row['numview'],  //
+		"url_view" => $mainURL . "=listenone/" .$row['id']. "/" . $row['ten'],  //
+		"bitrate" => $row['bitrate'],  //
+		"size" => $row['size'],  //
+		"duration" => $row['duration'],  //
+		"url_listen" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['ten'],  //
+		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
+		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'],  //
+		"url_search_category" => $mainURL . "=search/category/" . $row['theloai'],  //
+		"checkhit" => $checkhit  //
+	);
 }
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
-$contents .= new_page( $ts, $now_page, $link);
+
+$contents = nv_music_song ( $g_array, $array );
+$contents .= new_page( $ts, $now_page, $link );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

@@ -41,34 +41,32 @@ if ( $nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 )
 	die();
 }
 
-$xtpl = new XTemplate( "search.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'URL_DOWN', $downURL );
-$xtpl->assign( 'allvideo', $mainURL . "=searchvideo/" . $type . "/" . $key);
-$xtpl->assign( 'allalbum', $mainURL . "=album/id/" . $key);
+$g_array = array();
+$g_array['type'] = $type;
+$g_array['key'] = $key;
 
 $link = $mainURL . "=search/" . $type . "/" . $key ;
 $data = '';
 
 if ( $type == "name" )
 {
-	$data = "WHERE ten LIKE '%". $key ."%'";
-	$video = "WHERE name LIKE '%". $key ."%'";
+	$data = "WHERE `ten` LIKE '%". $db->dblikeescape( $key ) ."%'";
+	$video = "WHERE `name` LIKE '%". $db->dblikeescape( $key ) ."%'";
 }
 elseif ( $type == "singer" )
 {
-	$data = "WHERE casi LIKE '%". $key ."%'";
-	$video = "WHERE casi LIKE '%". $key ."%'";
+	$data = "WHERE `casi` LIKE '%". $db->dblikeescape( $key ) ."%'";
+	$video = "WHERE `casi` LIKE '%". $db->dblikeescape( $key ) ."%'";
 }
 elseif ( $type == "category" )
 {
-	$data = "WHERE theloai =". $key ;
-	$video = "WHERE theloai =". $key ;
+	$data = "WHERE `theloai` =". $key ;
+	$video = "WHERE `theloai` =". $key ;
 }
 elseif ( $type == "upload" )
 {
-	$data = "WHERE upboi =\"". $key."\"" ;
-	$video = "WHERE id = 0" ;
+	$data = "WHERE `upboi` =\"". $key."\"" ;
+	$video = "WHERE `id` = 0" ;
 }
 // xu li du lieu
 if ( $now_page == 1) 
@@ -84,87 +82,89 @@ $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " A
 $sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ";
 
 // tinh so trang
-$num = $db->sql_query($sqlnum);
-$output = $db->sql_numrows($num);
+$num = $db->sql_query( $sqlnum );
+$output = $db->sql_numrows( $num );
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
 // ket qua
 $result = $db->sql_query( $sql );
-$xtpl->assign( 'num', $output);
 
-$i = 1 ;
-while($rs = $db->sql_fetchrow($result))
+$g_array['num'] = $output;
+$g_array['now_page'] = $now_page;
+
+$array_song = array();
+$array_album = array();
+$array_video = array();
+
+if( $now_page == 1 )
 {
-	if ( ( $i == 4 ) && ( $now_page == 1 ))
-	{
-		$sqlvideo = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video " . $video . " AND `active` = 1 ORDER BY id DESC LIMIT 0,3";
-		$sqlalbum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album " . $video . " AND `active` = 1 ORDER BY id DESC LIMIT 0,4";
+	$sqlvideo = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video " . $video . " AND `active` = 1 ORDER BY id DESC LIMIT 0,3";
+	$sqlalbum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album " . $video . " AND `active` = 1 ORDER BY id DESC LIMIT 0,4";
 		
-		$resultvideo = $db->sql_query( $sqlvideo );
-		$resultalbum = $db->sql_query( $sqlalbum );
+	$resultvideo = $db->sql_query( $sqlvideo );
+	$resultalbum = $db->sql_query( $sqlalbum );
 	
-		if ( $db->sql_numrows($resultvideo) > 0 )
+	if ( $db->sql_numrows( $resultvideo ) > 0 )
+	{
+		while( $rsv = $db->sql_fetchrow( $resultvideo ) )
 		{
-			while( $rsv = $db->sql_fetchrow($resultvideo) )
-			{
-				$xtpl->assign( 'videoname', $rsv['tname'] );
-				$xtpl->assign( 'videosinger', $allsinger[$rsv['casi']] );
-				$xtpl->assign( 'thumb', $rsv['thumb'] );
-				$xtpl->assign( 'videoview', $mainURL . "=viewvideo/" .$rsv['id']. "/" . $rsv['name']);
-				$xtpl->assign( 's_video', $mainURL . "=searchvideo/singer/" . $rsv['casi']);
-
-				$xtpl->parse( 'main.loop.sub.video.loop' );
-			}
-			$xtpl->parse( 'main.loop.sub.video' );
+			$array_video[] = array(
+				"videoname" => $rsv['tname'],  //
+				"videosinger" => $allsinger[$rsv['casi']],  //
+				"thumb" => $rsv['thumb'],  //
+				"videoview" => $mainURL . "=viewvideo/" .$rsv['id']. "/" . $rsv['name'],  //
+				"s_video" => $mainURL . "=searchvideo/singer/" . $rsv['casi']  //
+			);
 		}
-		if ( $db->sql_numrows($resultalbum) > 0 )
-		{
-			while( $rsa = $db->sql_fetchrow($resultalbum) )
-			{
-				$xtpl->assign( 'albumname', $rsa['tname'] );
-				$xtpl->assign( 'albumsinger', $allsinger[$rsa['casi']] );
-				$xtpl->assign( 'thumb', $rsa['thumb'] );
-				$xtpl->assign( 'albumview', $mainURL . "=listenlist/" .$rsa['id']. "/" . $rsa['name']);
-				$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $rsa['casi']);
-
-				$xtpl->parse( 'main.loop.sub.album.loop' );
-			}
-			$xtpl->parse( 'main.loop.sub.album' );
-		}
-		$xtpl->parse( 'main.loop.sub' );
 	}
-	
-	$xtpl->assign( 'ID', $rs['id']);
-	$xtpl->assign( 'num', $output);
-	$xtpl->assign( 'name', $rs['tenthat']);
-	$xtpl->assign( 'singer', $allsinger[$rs['casi']]);
-	$xtpl->assign( 'upload', $rs['upboi']);
-	$xtpl->assign( 'category', $category[$rs['theloai']]);
-	$xtpl->assign( 'view', $rs['numview']);
-	
-	$xtpl->assign( 'bitrate', $rs['bitrate']/1000);
-	$xtpl->assign( 'size', round ( ( $rs['size']/1024/1024 ), 2 ) );
-	$xtpl->assign( 'duration', (int)($rs['duration']/60) . ":" . $rs['duration']%60 );
-	
-	$xtpl->assign( 'url_listen', $mainURL . "=listenone/".$rs['id'] . "/" . $rs['ten'] );
-	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $rs['casi']);
-	$xtpl->assign( 'url_search_category', $mainURL . "=search/category/" . $rs['theloai']);
-	$xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $rs['upboi']);
-	
-	// phan cach cac div chan le
-	if ( ($i % 2) == 0 ) $xtpl->assign( 'gray', 'gray'); else $xtpl->assign( 'gray', '');
-	$checkhit = explode ( "-", $rs['hit'] );
+	if ( $db->sql_numrows( $resultalbum ) > 0 )
+	{
+		while( $rsa = $db->sql_fetchrow( $resultalbum ) )
+		{
+			$array_album[] = array(
+				"albumname" => $rsa['tname'],  //
+				"albumsinger" => $allsinger[$rsa['casi']],  //
+				"thumb" => $rsa['thumb'],  //
+				"albumview" => $mainURL . "=listenlist/" .$rsa['id']. "/" . $rsa['name'],  //
+				"url_search_singer" => $mainURL . "=search/singer/" . $rsa['casi']  //
+			);
+		}
+	}
+}
+
+while( $row = $db->sql_fetchrow( $result ) )
+{
+	$checkhit = explode ( "-", $row['hit'] );
 	$checkhit = $checkhit[0];
 	if ( $checkhit >= 20 )
 	{
-		$xtpl->parse( 'main.loop.hit' );
+		$checkhit = true;
 	}
-	$xtpl->parse( 'main.loop' );
-	$i ++ ;
+	else
+	{
+		$checkhit = false;
+	}
+	
+	$array_song[] = array(
+		"id" => $row['id'],  //
+		"name" => $row['tenthat'],  //
+		"singer" => $allsinger[$row['casi']],  //
+		"upload" => $row['upboi'],  //
+		"category" => $category[$row['theloai']],  //
+		"view" => $row['numview'],  //
+		"bitrate" => $row['bitrate'],  //
+		"size" => $row['size'],  //
+		"duration" => $row['duration'],  //
+		"url_listen" => $mainURL . "=listenone/".$row['id'] . "/" . $row['ten'],  //
+		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
+		"url_search_category" => $mainURL . "=search/category/" . $row['theloai'],  //
+		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'],  //
+		"checkhit" => $checkhit  //
+	);
 }
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
+
+$contents = nv_music_search( $g_array, $array_song, $array_album, $array_video );
 $contents .= new_page( $ts, $now_page, $link);
 
 include ( NV_ROOTDIR . "/includes/header.php" );
