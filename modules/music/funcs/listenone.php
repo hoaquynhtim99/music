@@ -72,6 +72,7 @@ $sdata = array(
 	
 	"song_id" => $id,  //
 	"song_name" => $row['tenthat'],  //
+	"song_sname" => $row['ten'],  //
 	"song_singer" => $allsinger[$row['casi']],  //
 	"song_author" => $allauthor[$row['nhacsi']],  //
 	"song_cat" => $category[ $row['theloai'] ],  //
@@ -108,15 +109,6 @@ while ( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 $page_title = $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
 $key_words =  $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
 $description = sprintf ( $lang_module['share_descreption'], $row['tenthat'], $allsinger[$row['casi']], $allauthor[$row['nhacsi']], NV_MY_DOMAIN );
-
-// My Head
-$my_head .= '
-<link rel="image_src" href="' . NV_MY_DOMAIN . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/logo.png" />
-<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_data . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite ( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ) . '" />
-<meta name="video_width" content="360" />
-<meta name="video_height" content="84" />
-<meta name="video_type" content="application/x-shockwave-flash" />
-';
 
 $contents = nv_music_listenone ( $gdata, $sdata, $cdata, $ldata );
 

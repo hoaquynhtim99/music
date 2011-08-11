@@ -19,7 +19,7 @@ if ( $num == 0 ) $contents = $lang_module['playlist_null'] ;
 // kiem tra bai hat da them vao chua
 for ( $i = 1 ; $i <= $num ; $i ++ )
 {
-	$nv_Request->set_Cookie( $module_name . '_song'.$i.'' , 0 );
+	$nv_Request->set_Cookie( $module_name . '_song' . $i, 0 );
 }
 
 // neu chua thi them vao

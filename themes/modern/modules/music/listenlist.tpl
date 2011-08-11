@@ -1,7 +1,4 @@
 <!-- BEGIN: main -->
-<!--<meta name="verify-v1" content="nPO+sJiorgxine7U88iTPkF/yVTxi3t9QOi9Wi8z60w=" />-->
-
-
 <script type="text/javascript" src="{base_url}jquery.playlist.js"></script>
 <script type="text/javascript" src="{base_url}jwplayer.js"></script>
 <div class="box-border-shadow m-bottom">
@@ -11,8 +8,8 @@
 		</div>
 	</div>
 <div id="listen_main">
-	<strong>{name} - {singer}</strong>
-	<p>{LANG.who_post}:<a href="{url_search_upload}"> {who_post}&nbsp;</a> | {LANG.view}: {numview}</p>
+	<strong>{ALBUM.name} - {ALBUM.singer}</strong>
+	<p>{LANG.who_post}:<a title="{ALBUM.who_post}" href="{ALBUM.url_search_upload}"> {ALBUM.who_post}&nbsp;</a> | {LANG.view}: {ALBUM.numview}</p>
 	<div class="playercontainer">
 		<div style="float:left;background:black;cursor:pointer;width:470px;height:236px;">
 		<!--[if !IE]> -->
@@ -29,13 +26,13 @@
 		</object>
 		<!-- <![endif]-->
 		</div>
-		<div id="player">Loading the player a1binhdinh.com ...</div>	
+		<div id="player">Loading the player ...</div>	
 		<script type="text/javascript">
 			jwplayer("player").setup({
 			flashplayer: "{base_url}player.swf",
 			playlist: [
 			<!-- BEGIN: song -->
-			{ file: "{song_url}", image: "{base_url}logo.png", title: "{song_name} - ", description: " {song_singer}", },
+			{ file: "{SONG.song_url}", title: "{SONG.stt}. {SONG.song_name} - ", description: " {SONG.song_singer}", },
 			<!-- END: song -->
 			],
 			controlbar: "bottom",
@@ -55,21 +52,21 @@
 </div>
 </div>
 <ul class="tool">
-	<li class="active"><a  title="" class="give" href="#tab1">{LANG.send_to}</a></li>
-	<li class="active"><a  title=""class="error" href="#tab3">{LANG.give_error}</a></li>
+	<li class="active"><a title="" class="give" href="#tab1">{LANG.send_to}</a></li>
+	<li class="active"><a title=""class="error" href="#tab3">{LANG.give_error}</a></li>
 </ul>
 	<div style="width:498px;" id="boderfull" class="tab_container">
 		<div id="tab1" class="tab_content">
 			<div class="sendtool">
-				<a onclick="window.open(this.href); return false;"onkeypress="window.open(this.href); return false;" href="http://www.facebook.com/sharer.php?u={URL_ALBUM}&amp;t={name}-{singer}" class="facebook">Facebook   </a>
+				<a onclick="this.target='_blank';" href="http://www.facebook.com/sharer.php?u={ALBUM.URL_ALBUM}&amp;t={ALBUM.name}-{ALBUM.singer}" class="facebook">Facebook   </a>
 			</div>
 			<form action="#" method="post">
 				<p>Link Album:
-				<input id="albumlink" onclick="select_all('albumlink')" type="text" value="{URL_ALBUM}" readonly="readonly" /> </p>
+				<input id="albumlink" onclick="select_all('albumlink')" type="text" value="{ALBUM.URL_ALBUM}" readonly="readonly" /> </p>
 				<p>{LANG.blog_song}:
-				<input id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /> </p>
+				<input id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{playerurl}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={ALBUM.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{playerurl}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={ALBUM.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /> </p>
 				<p>{LANG.forum_song}:
-				<input id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={creat_link_url}[/FLASH]" readonly="readonly" /> </p>
+				<input id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{playerurl}player.swf?playlistfile={ALBUM.creat_link_url}[/FLASH]" readonly="readonly" /> </p>
 			</form>
 			<script type="text/javascript">
 				function Select_all(id)
@@ -129,11 +126,11 @@
 </div>
 </div>
 <div id="album_info">
-	<img src="{album_thumb}" width="90px" height="90px" alt="" />
-	<p><span><strong>{name} - {singer}</strong><br />
-	{LANG.who_create}: {who_post}<br />
-	{LANG.view}: {numview}</span><br />
-	{LANG.message}: {describe}</p>
+	<img src="{ALBUM.album_thumb}" width="90" height="90" alt="{ALBUM.name}" />
+	<p><span><strong>{ALBUM.name} - {ALBUM.singer}</strong><br />
+	{LANG.who_create}: {ALBUM.who_post}<br />
+	{LANG.view}: {ALBUM.numview}</span><br />
+	{LANG.message}: {ALBUM.describe}</p>
 </div>	
 <div class="clear"> </div>
 </div>

@@ -37,17 +37,10 @@ $page_title = "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row
 $key_words =  "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'] ;
 $description =  "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'] ;
 
-// My Head
-$my_head .= '
-<link rel="image_src" href="' . NV_MY_DOMAIN . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/randimg/img(' . rand( 1, 10 ) . ').jpg" />
-<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_data . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite ( $main_header_URL . "=creatlinksong/playlist/" . $id . "/" . $playlist_alias, true ) . '" />
-<meta name="video_width" content="360" />
-<meta name="video_height" content="130" />
-<meta name="video_type" content="application/x-shockwave-flash" />
-';
-
 // Playlist data
 $gdata = array(
+	"id" => $id,  // 
+	"playlist_alias" => $playlist_alias,  // 
 	"base_url" => NV_BASE_SITEURL ."modules/" . $module_data . "/data/",  // 
 	"playlist_img" => NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/randimg/img(" . rand( 1, 10 ) . ").jpg",  // 
 	"selfurl_base" =>  $client_info['selfurl'],  //

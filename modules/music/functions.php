@@ -135,7 +135,7 @@ function new_page ( $ts, $now_page, $link)
 // lay quang cao
 function getADS()
 {
-	global $module_data, $global_config, $db;
+	global $module_data, $global_config, $db, $module_file;
 	
 	$ads = array() ;
 	$ads['link'] = array();
@@ -160,7 +160,7 @@ function getADS()
 	}
 	else
 	{
-		$ads['link'] = NV_BASE_SITEURL . "modules/" . $module_data . "/data/default.swf";
+		$ads['link'] = NV_BASE_SITEURL . "modules/" . $module_file . "/data/default.swf";
 		$ads['url'] = $global_config['site_url'];
 	}
 	

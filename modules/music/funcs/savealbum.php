@@ -8,7 +8,7 @@
  */
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-$contents = "";
+
 $difftimeout = 180;
 
 // lay du lieu
@@ -16,15 +16,16 @@ $name = filter_text_input( 'name', 'post', '' );
 $keyname = change_alias($name);
 $singer = filter_text_input( 'singer', 'post', '' );
 $message = $nv_Request->get_string( 'message', 'post', '' );
+
 if ( defined( 'NV_IS_USER' ) )
 {
 	$username = $user_info['username'];
 	$userid = $user_info['userid'];
 }
-elseif ( defined( 'NV_IS_ADMIN' ) )
+else
 {
-	$username = $admin_info['username'];
-	$userid = $admin_info['userid'];
+	$username = "";
+	$userid = 0;
 }
 
 $num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
@@ -53,4 +54,5 @@ else
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo ( $aaaa ) ;
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>

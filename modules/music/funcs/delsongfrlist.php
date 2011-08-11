@@ -26,7 +26,6 @@ for ( $i = $stt; $i <= $num; $i ++ )
 $numprev = $num - 1 ;
 $nv_Request->set_Cookie( $module_name . '_numlist' , $numprev );
 
-
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo $contents;
 include ( NV_ROOTDIR . "/includes/footer.php" );

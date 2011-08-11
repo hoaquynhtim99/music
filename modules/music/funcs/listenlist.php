@@ -8,81 +8,72 @@
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 $allsinger = getallsinger();
 
-$xtpl = new XTemplate( "listenlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_data . "/data/" );
-$xtpl->assign( 'base_url', NV_BASE_SITEURL."modules/" . $module_data . "/data/" );
-$xtpl->assign( 'ads', getADS() );
 $user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" ;
-$user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;		
+$user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;
+
+$name = '';
 if ( defined( 'NV_IS_USER' ) )
 { 
 	$name = $user_info['username'];
 }
-elseif ( defined( 'NV_IS_ADMIN' ) )
-{
-	$name = $admin_info['username'];
-}
-else $name = '';
-$xtpl->assign( 'USER_NAME', $name );
-$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
 
 // xu li
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-$xtpl->assign( 'ID',  $id );
 
 $row = getalbumbyID( $id );
+
+$g_array = array(
+	"name" => $name,  //
+	"user_login" => $user_login,  //
+	"user_register" => $user_register,  //
+	"id" => $id,  //
+	"sname" => $row['name']  //
+);
+
+$album_array = array(
+	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
+	"name" => $row['tname'], //
+	"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
+	"singer" => $allsinger[$row['casi']], //
+	"numview" => $row['numview'], //
+	"who_post" => $row['upboi'], //
+	"album_thumb" => $row['thumb'], //
+	"describe" => $row['describe'], //
+	"URL_ALBUM" => get_URL() //
+);
+
+if( empty( $row ) )
+{
+    Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+    exit();
+}
+
 // update album
-$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = numview+1 WHERE `id` =" . $id );
+$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview`=`numview`+1 WHERE `id` =" . $id );
+
 // cac bai hat cua album
-$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album = \"" . $row['name'] . "\" AND `active` = 1 ORDER BY id DESC";
-$querysong = $db->sql_query( $sqlsong );
-$i = 1 ;
-while ( $rowsong = $db->sql_fetchrow( $querysong ) )
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `album`='" . $row['name'] . "' AND `active` = 1 ORDER BY `id` DESC";
+$result = $db->sql_query( $sql );
+
+$song_array = array();
+while ( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'song_name', $i.". ".$rowsong['tenthat'] );
-	$xtpl->assign( 'song_singer', $allsinger[$rowsong['casi']] );
-	$xtpl->assign( 'song_url', outputURL ( $rowsong['server'], $rowsong['duongdan'] ) );
-	$xtpl->parse( 'main.song' );
-	$i ++ ;
-}
-$xtpl->assign( 'creat_link_url',  $global_config['site_url'] . '/' . $global_config['site_lang'] . '/' . $module_data . '/creatlinksong/album/' . $row['id'] . '/' . $row['name'] . '/' );
-$xtpl->assign( 'name', $row['tname'] );
-$xtpl->assign( 'url_search_upload', $mainURL . "=search/upload/" . $row['upboi']);
-$xtpl->assign( 'singer', $allsinger[$row['casi']] );
-$xtpl->assign( 'numview', $row['numview'] );
-$xtpl->assign( 'who_post', $row['upboi'] );
-$xtpl->assign( 'album_thumb', $row['thumb'] );
-$xtpl->assign( 'describe', $row['describe'] );
-$xtpl->assign( 'URL_ALBUM', get_URL() );
-// binh luan
-if ( ( $setting['who_comment'] == 0 ) && !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
-{
-	$xtpl->assign( 'USER_LOGIN', $user_login );
-	$xtpl->assign( 'USER_REGISTER', $user_register );		
-	$xtpl->parse( 'main.nocomment' );
-}
-elseif ( $setting['who_comment'] == 2 )
-{
-	$xtpl->parse( 'main.stopcomment' );	
-}
-else
-{
-	require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/emotions.php';
-	$xtpl->assign( 'EMOTIONS', show_emotions() );
-	$xtpl->assign( 'USER_NAME', $name );
-	$xtpl->assign( 'NO_CHANGE', ( $name == '' )? '':'readonly="readonly"' );
-	$xtpl->parse( 'main.comment' );
+	$song_array[] = array(
+		"song_name" => $row['tenthat'],  //
+		"song_singer" => $allsinger[$row['casi']],  //
+		"song_url" => outputURL ( $row['server'], $row['duongdan'] )  //
+	);
 }
 
 // tieu de trang
-$page_title = "Album ". $row['tname'] . " - " . $allsinger[$row['casi']] ;
-$key_words =  $row['tname'] . " - " . $allsinger[$row['casi']] ;
+$page_title = "Album " . $album_array['name'] . NV_TITLEBAR_DEFIS . $album_array['singer'];
+$key_words =  $album_array['name'] . " - " . $album_array['singer'];
+$description = sprintf ( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
 
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
+$contents = nv_music_listenlist( $g_array, $album_array, $song_array );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

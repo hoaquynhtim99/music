@@ -13,18 +13,22 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 // lay du lieu
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 
-if($id > 0)
+if( ! defined( 'NV_IS_USER' ) )
 {
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data ."_playlist` WHERE `id`=" . $id;
+	die( $lang_module['del_error'] );
+}
+
+if( $id > 0 )
+{
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data ."_playlist` WHERE `id`=" . $id . " AND `userid`=" . $user_info['userid'];
     $result = $db->sql_query( $sql );
 }
-if($result)
+
+if( ! empty( $result ) )
 {
-	echo "OK_" . $id;
+	die( "OK_" . $id );
 }
-else
-{
-	echo $lang_module['del_error'];
-}
+
+die( $lang_module['del_error'] );
 
 ?>

@@ -9,9 +9,12 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+if ( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
 
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 $song = getsongbyID ( $id );
+
+if( $song['userid'] != $user_info['userid'] ) die( 'Wrong URL' );
 
 updatesinger( $song['casi'], 'numsong', '-1' );
 delcomment('song', $song['id']);
@@ -20,7 +23,11 @@ delerror( 'song', $song['id'] );
 delgift( $song['id'] );
 updatealbum( $song['album'], '-1' );
 unlinkSV ( $song['server'], $song['duongdan'] );
+
 $sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
-$result = $db->sql_query( $sql );
-echo $id;
+$db->sql_query( $sql );
+nv_del_moduleCache( $module_name );
+
+echo "OK_" . $id;
+
 ?>

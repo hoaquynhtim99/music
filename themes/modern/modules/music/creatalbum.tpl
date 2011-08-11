@@ -15,11 +15,11 @@
 	<div style="padding: 10px;">
 		<p><strong>{LANG.playlist_song}</strong></p>
 		<!-- BEGIN: loop -->
-		<div id="song{stt}" class="listsong">
+		<div id="song{SONG.stt}" class="listsong">
 			<div class="tools">
-				<a class="del" onclick="delsongfrlist('{stt}', '{LANG.cofirm_del}');" title="{LANG.del}"></a>
+				<a class="del" onclick="delsongfrlist('{SONG.stt}', '{LANG.cofirm_del}');" title="{LANG.del}"></a>
 			</div>		
-			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="{url_view}">{songname}</a> - <a href="{url_search_singer}">{singer}</a>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a style="color: #000" href="{SONG.url_view}">{SONG.songname}</a> - <a href="{SONG.url_search_singer}">{SONG.singer}</a>
 		</div>
 		<!-- END: loop -->
 	</div>
@@ -46,10 +46,10 @@
 			var name = document.getElementById('name').value;
 			var singer = document.getElementById('singer').value;
 			var message  = strip_tags(document.getElementById('message').value);
-			var num = {num};
-			if ( num > {playlist_max})
+			var num = {GDATA.num};
+			if ( num > {GDATA.playlist_max})
 			{
-				alert('{LANG.err_ful_playlist} ' + {playlist_max} + ' playlist');
+				alert('{LANG.err_ful_playlist} ' + {GDATA.playlist_max} + ' playlist');
 			}else
 			{
 				if( name == '')
@@ -74,22 +74,21 @@
 			<div class="header-block1"> 
 				<h3><span>{LANG.your_playlist}</span></h3> 
 			</div> 
-			<h2 class="album">{LANG.there_are} {num} playlist</h2>
+			<h2 class="album">{LANG.there_are} {GDATA.num} playlist</h2>
 			<!-- BEGIN: list -->
-			<div id="item{id}" class="resuirt">
+			<div id="item{PLIST.id}" class="resuirt">
 				<div class="tools">
-					<a class="del" onclick="dellist('{id}', '{LANG.cofirm_del}');" title="{LANG.playlist_delete}"></a>
-					<a href="{url_edit}" class="edit" title="{LANG.playlist_edit}"></a>
-					<a href="{url_view}" class="play" title="{LANG.playlist_listen1}"></a>
+					<a class="del" onclick="dellist('{PLIST.id}', '{LANG.cofirm_del}');" title="{LANG.playlist_delete}"></a>
+					<a href="{PLIST.url_edit}" class="edit" title="{LANG.playlist_edit}"></a>
+					<a href="{PLIST.url_view}" class="play" title="{LANG.playlist_listen1}"></a>
 				</div>
-				<a href="{url_view}" class="namealbum">
-				<img class="album" width="90px" height="90px" border="0" src="{playlist_img}" /></a>
-				<div id="album">
-					<a href="{url_view}"><p><strong>{name}</strong></a></p>
-					<p>{LANG.show_1}: {singer}</p>
-					<p>{LANG.playlist_creat}: {date} | {LANG.view}: {view}</p>
+				<a title="{PLIST.name}" href="{PLIST.url_view}" class="namealbum"> <img class="album" width="90" height="90" style="border-width:0px" src="{PLIST.playlist_img}" /></a>
+				<div class="album">
+					<a title="{PLIST.name}" href="{PLIST.url_view}"><p><strong>{PLIST.name}</strong></a></p>
+					<p>{LANG.show_1}: {PLIST.singer}</p>
+					<p>{LANG.playlist_creat}: {PLIST.date} | {LANG.view}: {PLIST.view}</p>
 				</div>
-				<div id="boder"></div>
+				<div class="boder"></div>
 			</div>
 			<!-- END: list -->
 			<div class="clear"></div>

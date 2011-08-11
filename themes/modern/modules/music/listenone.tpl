@@ -225,7 +225,7 @@ $(document).ready(function() {
 						<textarea name="body" id="commentbody" cols="20" rows="5"></textarea>
 						<label for="body">{LANG.content}:</label>
 						<div>
-						<input style="width: 50px;float:right;margin-right:20px;" class="submitbutton" type="button" id="buttoncontent" value="{LANG.send}" onclick="sendcommment( '{ID}' , 'song' );" />
+						<input style="width: 50px;float:right;margin-right:20px;" class="submitbutton" type="button" id="buttoncontent" value="{LANG.send}" onclick="sendcommment( '{SDATA.song_id}' , 'song' );" />
 						<input id="showemotion" style="width: 130px;float:right;margin-right:20px;" class="submitbutton" type="button"  value="{LANG.emotion}" />
 						<div class="clear"></div>
 						<div style="position:relative;">
@@ -251,10 +251,6 @@ $(document).ready(function() {
 <script type="text/javascript">
 $(document).ready(function() {
 	show_comment( '{SDATA.song_id}' , 'song', 0 );
-});
-</script>
-<script type="text/javascript">
-$(document).ready(function() {
 	$("a#add").click(function() {
 		$(this).removeClass("add"); 
 		$(this).addClass("addedtolist1"); 

@@ -9,9 +9,9 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$page_title = $module_info['custom_title'];
+$page_title = $lang_module['album_creat'] . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
 $key_words = $module_info['keywords'];
-$userid = 0;
+
 $allsinger = getallsinger();
 
 if ( defined( 'NV_IS_USER' ) )
@@ -19,68 +19,73 @@ if ( defined( 'NV_IS_USER' ) )
 	$username = $user_info['username'];
 	$userid = $user_info['userid'];
 }
-elseif ( defined( 'NV_IS_ADMIN' ) )
-{
-	$username = $admin_info['username'];
-	$userid = $admin_info['userid'];
-}
-
-$xtpl = new XTemplate( "creatalbum.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-// khong duoc vao
-if($userid == 0)
-{
-	$xtpl->assign( 'USER_LOGIN', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" );
-    $xtpl->assign( 'USER_REGISTER', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" );		
-	$xtpl->parse( 'main.noaccess' );
-}
-//duoc vao
 else
 {
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE `active` = 1 AND userid = " . $userid . " ORDER BY id DESC";
-	$query = $db->sql_query( $sql );
-	$numlist = $db->sql_numrows( $query );
-	
-	$img = rand( 1, 10);
-	$xtpl->assign( 'img',  NV_BASE_SITEURL ."modules/" . $module_data . "/data/img(" . $img . ").jpg" );
+	$username = "";
+	$userid = 0;
+}
 
+$g_array = array(
+	"username" => $username,  //
+	"userid" => $userid  //
+);
+
+if( $userid )
+{
+	$array = array( "song" => array(), "playlist" => array() );
+	
+	// Get song
 	$numsong = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
 	if ( $numsong > 0 )
 	{
+		$list_song = array();
 		for ( $i = 1; $i <= $numsong; $i ++ )
 		{
-			$songid = $nv_Request->get_int( $module_name . '_song'. $i , 'cookie', 0 );
-			$song = getsongbyID( $songid );
-			
-			$xtpl->assign( 'stt', $i );
-			$xtpl->assign( 'songname', $song['tenthat'] );
-			$xtpl->assign( 'singer', $allsinger[$song['casi']] );
-			$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
-			$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $song['casi'] );
-			
-			$xtpl->parse( 'main.access.creatlist.loop' );
+			$list_song[] = $nv_Request->get_int( $module_name . '_song'. $i , 'cookie', 0 );
 		}
-		$xtpl->assign( 'num', $numlist );
-		$xtpl->assign( 'playlist_max', $setting['playlist_max'] );
-		$xtpl->parse( 'main.access.creatlist' );
+		$list_song = implode( ",", $list_song );
+		
+		if( ! empty( $list_song ) )
+		{
+			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `active` = 1 AND `id` IN(" . $list_song . ") ORDER BY `ten` ASC";
+			$result = $db->sql_query( $sql );
+			$i = 1;
+			while( $row = $db->sql_fetchrow( $result ) )
+			{
+				$array['song'][] = array(
+					"stt" => $i,  //
+					"songname" => $row['tenthat'],  //
+					"singer" => $allsinger[$row['casi']],  //
+					"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'],  //
+					"url_search_singer" => $mainURL . "=search/singer/" . $row['casi']  //
+				);
+				$i ++;
+			}
+		}
 	}
-	while ( $row = $db->sql_fetchrow( $query ) )
+	
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active` = 1 AND `userid` = " . $userid . " ORDER BY `id` DESC";
+	$result = $db->sql_query( $sql );
+	$numlist = $db->sql_numrows( $result );
+	$g_array['num'] = $numlist;
+	$g_array['playlist_max'] = $setting['playlist_max'];
+	
+	while ( $row = $db->sql_fetchrow( $result ) )
 	{
-		$img = rand( 1, 10);
-		$xtpl->assign( 'playlist_img',  NV_BASE_SITEURL ."modules/" . $module_data . "/data/img(" . $img . ").jpg" );
-		$xtpl->assign( 'name', $row['name'] );
-		$xtpl->assign( 'singer', $row['singer'] );
-		$xtpl->assign( 'date', nv_date( "d/m/Y H:i", $row['time'] ) );
-		$xtpl->assign( 'id', $row['id'] );
-		$xtpl->assign( 'view', $row['view'] );
-		$xtpl->assign( 'url_view', $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'] );
-		$xtpl->assign( 'url_edit', $mainURL . "=editplaylist/" . $row['id'] );
-		$xtpl->parse( 'main.access.list' );
+		$array['playlist'][] = array(
+			"playlist_img" => "",  //
+			"name" => $row['name'],  //
+			"singer" => $row['singer'],  //
+			"date" => $row['time'],  //
+			"id" => $row['id'],  //
+			"view" => $row['view'],  //
+			"url_view" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'],  //
+			"url_edit" => $mainURL . "=editplaylist/" . $row['id']  //
+		);
 	}
-	$xtpl->parse( 'main.access' );
 }
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
+
+$contents = nv_music_creatalbum( $g_array, $array );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

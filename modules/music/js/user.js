@@ -135,7 +135,8 @@ function delsongfrlist(stt, mess) {
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrlist&stt=' + stt, '', 'afterdelsong');
 }
 // xoa mot bai hat tu playlist da luu
-function delsongfrplaylist(id, plid) {
+function delsongfrplaylist(id, plid, mess) {
+	if ( confirm( mess ) )
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrplaylist&id=' + id + '&plid=' + plid, '', 'afterdelsong');
 }
 // xoa mot bai
@@ -145,8 +146,18 @@ function delsong(id, mess) {
 }
 function afterdelsong(res)
 {
-	$("#song" + res).remove();
+	var r_split = res.split("_");
+
+	if( r_split[0] == "OK" )
+	{
+		$("#song" + r_split[1]).remove();
+	}
+	else
+	{
+		alert( res );
+	}
 }
+
 // xoa playlist
 function dellist(id, mess) {
 	if( confirm( mess ) )

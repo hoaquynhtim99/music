@@ -14,17 +14,16 @@ $difftimeout = 360;
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 $body = $nv_Request->get_string( 'body', 'post', '' );
 $where = filter_text_input( 'where', 'post', '', 1 );
-$setting = setting_music() ;
+
+if( ! in_array( $where, array( "song", "album", "video" ) ) )
+{
+	die( "ERR_" . $lang_module['comment_error'] );
+}
 
 if ( defined( 'NV_IS_USER' ) )
 {
     $name = $user_info['username'];
     $userid = $user_info['userid'];
-}
-elseif ( defined( 'NV_IS_ADMIN' ) )
-{
-    $name = $admin_info['username'];
-    $userid = $admin_info['userid'];
 }
 else
 {
@@ -38,11 +37,11 @@ $timeout = $nv_Request->get_int( $module_name . '_' . $op . '_' . $where . '_' .
 
 if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 {
-    $sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` (`id`, `name`, `body`, `dt`, `what`, `userid`, `active`) VALUES (NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $body ) . ", UNIX_TIMESTAMP() , " . $db->dbescape( $id ) . ",  " . $userid . ", " . $setting['auto_comment']  . " )";
+    $sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` (`id`, `name`, `body`, `dt`, `what`, `userid`, `active`) VALUES (NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $body ) . ", " . NV_CURRENTTIME . " , " . $db->dbescape( $id ) . ",  " . $userid . ", " . $setting['auto_comment']  . " )";
     $result = $db->sql_query( $sql );
     if ( $result )
     {
-        $nv_Request->set_Cookie( $module_name . '_' . $op . '_' . $where . '_' . $id, NV_CURRENTTIME );
+		$nv_Request->set_Cookie( $module_name . '_' . $op . '_' . $where . '_' . $id, NV_CURRENTTIME );
         $contents = "OK_" . $id . "_" . $where . "_" . $lang_module['comment_success'];
     }
     else

@@ -16,17 +16,17 @@
 	<div class="clear"></div>
 	<div style="padding: 10px;">
 	<!-- BEGIN: loop -->
-	<div id="song{songid}">
+	<div id="song{ROW.songid}">
 		<div style="padding-right:15px;" class="tools">
-			<a class="del" onclick="delsongfrplaylist('{songid}', '{INFO.id}');" title="{LANG.del}"></a>
+			<a class="del" onclick="delsongfrplaylist('{ROW.songid}', '{INFO.id}', '{LANG.cofirm_del}');" title="{LANG.del}"></a>
 		</div>
-		<div class="listsong">&nbsp;&nbsp;<a href="{url_view}" style="color: #000;">{songname}</a> - <a href="{url_search_singer}">{songsinger}</a>
+		<div class="listsong">&nbsp;&nbsp;<a href="{ROW.url_view}" style="color: #000;">{ROW.songname}</a> - <a href="{ROW.url_search_singer}">{ROW.songsinger}</a>
 		</div>
 	</div>
 	<!-- END: loop -->
 	</div>
 	<div id="album_info">
-		<img border="0" src="{img}" width="90px" height="90px" />
+		<img style="border-width:0px" src="{img}" width="90" height="90" />
 		<form id="editplaylist" style="float:right;width:50%" method="post" action="{ACTION}">
 			<p style="float:right;width:50%;height:6px;">&nbsp;</p>
 			<input style="width: 220px" type="text" name="name" id="name" value="{INFO.name}" />

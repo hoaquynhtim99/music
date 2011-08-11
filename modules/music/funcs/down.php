@@ -10,8 +10,15 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $id = $nv_Request->get_int( 'id', 'get', 0 );
+
+if( empty( $id ) )
+{
+    Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+    exit();
+}
+
 $contents = "";
-if ( ( $setting['who_download'] == 0 ) &&  !defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
+if ( ( $setting['who_download'] == 0 ) &&  ! defined( 'NV_IS_USER' ) && !defined( 'NV_IS_ADMIN' ) )
 {
 	$contents = $lang_module['err_user_down'];
 }
@@ -19,6 +26,7 @@ elseif ( $setting['who_download'] == 2 )
 {
 	$contents = $lang_module['setting_stop'];	
 }
+
 if ( $contents != "" )
 {
 	include ( NV_ROOTDIR . "/includes/header.php" );
@@ -30,11 +38,19 @@ else
 	if ( $id > 0 )
 	{
 		$song = getsongbyID( $id ) ;
+		
+		if( empty( $song['active'] ) )
+		{
+			Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+			exit();
+		}
+		
 		if ( $song['server'] != 1 )
 		{
 			$duongdan = outputURL ( $song['server'], $song['duongdan'] );
 			Header("Location: " . $duongdan ); exit();
 		}
+		
 		require_once ( NV_ROOTDIR . '/includes/class/download.class.php' );
 		$song_name = change_alias ( $song['tenthat'] ) . "-" . $song['casi'] . ".mp3" ;
 		$song_url = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $song['duongdan'] ;
