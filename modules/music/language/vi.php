@@ -24,7 +24,7 @@ $lang_module['menu4'] = "Playlist của bạn";
 $lang_module['author'] = "Sáng tác";
 $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
-$lang_module['add_playlist_info'] = "Bạn dùng thẻ <br /> để xuống dòng";
+$lang_module['add_playlist_info'] = "Bạn dùng thẻ &lt;br /&gt; để xuống dòng";
 $lang_module['del'] = "Xóa";
 $lang_module['all_album'] = "Tất cả album";
 $lang_module['all_song'] = "Tất cả bài hát";
@@ -234,5 +234,8 @@ $lang_module['gift_wiew'] = "Xem";
 $lang_module['share_descreption_album'] = "Album %s trình bày %s, nghe nhạc, tải nhạc, gửi quà tặng âm nhạc tại %s. Chúc các bạn có những phút giây vui vẻ";
 $lang_module['your_song'] = "Các bài hát của bạn";
 $lang_module['share_descreption_video'] = "Video %s trình bày %s, sáng tác %s, nghe nhạc, tải nhạc, gửi quà tặng âm nhạc tại %s. Chúc các bạn có những phút giây vui vẻ";
+$lang_module['email_receive'] = "Email nhận";
+$lang_module['email_receive_null'] = "Lỗi: Bạn chưa nhập địa chỉ email";
+$lang_module['gift_message'] = "<p>Chào <strong>%s</strong>,</p><p>Bạn vừa nhận được một quà tặng âm nhạc được gửi từ %s thông qua website %s.</p><p>Lời nhắn:</p><p>%s</p><p>Bạn có thể nghe bài hát của mình tại: %s</p>";
 
 ?>

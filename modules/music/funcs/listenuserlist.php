@@ -61,15 +61,18 @@ $listsong_id = explode ( "/", $row['songdata'] );
 $listsong_id = array_filter ( $listsong_id );
 $listsong_id = implode ( ",", $listsong_id );
 
-$sql = "SELECT `tenthat`, `casi`, `server`, `duongdan` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . $listsong_id . ") AND `active`=1";
+$sql = "SELECT `id`, `ten`, `tenthat`, `casi` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . $listsong_id . ") AND `active`=1";
 $result = $db->sql_query( $sql );
+$gdata['numsong'] = $db->sql_numrows( $result );
 
-while ( list( $tenthat, $casi, $server, $duongdan ) = $db->sql_fetchrow( $result ) )
+while ( list( $id, $ten, $tenthat, $casi ) = $db->sql_fetchrow( $result ) )
 {
 	$sdata[] = array(
-		"song_url" => outputURL ( $server, $duongdan ),  //
+		"id" => $id,  //
 		"song_name" => $tenthat,  //
-		"song_singer" => $allsinger[$casi]  //
+		"song_singer" => $allsinger[$casi],  //
+		"url_search_singer" => $mainURL . "=search/singer/" . $casi,  //
+		"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $id . "/" . $ten, true )  //
 	);
 }
 

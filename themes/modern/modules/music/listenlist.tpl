@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
-<script type="text/javascript" src="{base_url}jquery.playlist.js"></script>
 <script type="text/javascript" src="{base_url}jwplayer.js"></script>
+<script type="text/javascript" src="{base_url}player.js"></script>
 <div class="box-border-shadow m-bottom">
 	<div class="cat-box-header"> 
 		<div class="cat-nav"> 
@@ -28,25 +28,36 @@
 		</div>
 		<div id="player">Loading the player ...</div>	
 		<script type="text/javascript">
+			var nv_num_song = {ALBUM.numsong};
+			var nv_current_song = 1;
 			jwplayer("player").setup({
 			flashplayer: "{base_url}player.swf",			
-			playlist: [
-			<!-- BEGIN: song -->
-			{ file: "{SONG.song_url}", title: "{SONG.stt}. {SONG.song_name} - ", description: " {SONG.song_singer}", },
-			<!-- END: song -->
-			],
 			controlbar: "bottom",
 			volume: 100,
 			height: 24,
 			width: 470,
-			autostart: "true",
+			autostart: true,
 			events: {
-			onallComplete: function(event) {
-			//jwplayer().playlistNext();
-			}
+				onReady: function(){nv_start_player('player')},
+				onComplete: function(){nv_complete_song('player')}
 			}
 			});
 		</script>
+		<div class="clear"></div>
+		<div id="playlist-container">
+			<!-- BEGIN: song -->
+			<div class="item" id="song-wrap-{SONG.stt}">
+				<strong>{SONG.stt}. </strong><a id="song-{SONG.stt}" class="nv-song-item" title="" name="{SONG.song_url}" href="javascript:void(0);" onclick="play_song('player', this);return false;">{SONG.song_name}</a> - <a onclick="this.target='_blank';" href="{SONG.url_search_singer}" title="">{SONG.song_singer}</a>
+				<div class="fr">
+					<div class="tool" style="margin-top:4px">
+						<a name="{SONG.id}" class="adds add"></a>
+						<a href="{URL_DOWN}{SONG.id}" class="down"></a>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- END: song -->
+		</div>
 		<div class="clear"></div>
 	</div>
 </div>
@@ -179,6 +190,16 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	show_comment( '{ID}' , 'album', 0 );
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("a.adds").click(function() {
+		$(this).removeClass("add"); 
+		$(this).addClass("addedtolist"); 
+		var songid = $(this).attr("name");
+		addplaylist(songid);
+	});
 });
 </script>
 <!-- END: main -->

@@ -66,7 +66,7 @@ elseif ( $where == 'album' )
 	}
 	
 	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = numview+1 WHERE `id` =" . $id );
-	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE album = \"" . $albumdata['name'] . "\" AND `active` = 1 ORDER BY id DESC";
+	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `id` IN(" . $albumdata['listsong'] . ") AND `active` = 1 ORDER BY id DESC";
 	$querysong = $db->sql_query( $sqlsong );
 	while ( $song = $db->sql_fetchrow( $querysong ) )
 	{

@@ -1,4 +1,6 @@
-﻿ul.tabs {
+﻿.strong{ font-weight:bold}
+
+ul.tabs {
 	margin: 0;
 	padding: 0 0 0 0px;
 	float: left;
@@ -298,7 +300,8 @@ object , embed{
 	float: left;
 }
 
-.jw_playlist_playlist {
+/* PLAYLIST */
+#playlist-container {
 	border: 1px solid #999999;
 	padding: 6px;
 	width: 458px;
@@ -306,56 +309,12 @@ object , embed{
 	overflow-y: auto;
 	overflow-x: hidden;
 	display: block;
-	float: left;
 	margin-top: 10px;
 }
+#playlist-container .item{ width:100%;border-bottom: 1px #999999 solid;line-height:25px}
+#playlist-container .iteming{ font-weight:bold}
 
-.jw_playlist_image {
-	width: 75px;
-	height: auto;
-}
-
-.jw_playlist_image_div {
-	border: 1px solid #000000;
-	padding: 0 5px;
-	margin: 0 5px;
-	float: left;
-	background-color: white;
-	visibility: hidden;
-	display: none;
-}
-
-.jw_playlist_item {
-	padding: 6px 0px 6px 18px;
-	cursor: pointer;
-}
-
-.clear {
-	clear:both;
-	height: 0;
-}
-
-.jw_playlist_title {
-	float: left;
-	color: #000000;
-}
-.jw_playlist_description {
-	float: left;
-	color: #333333;
-}
-.even {
-	border-style: dotted none dotted none;
-	border-width: 1px;
-	border-color: #666666;
-}
-.odd {
-	background-color: #EFEFEF;
-}
-.playing {
-	background-repeat: no-repeat;
-	background-image: url('../images/music/arrowicon.png');
-	background-position: 0px 6px;
-}
+/* LISTEN MAIN */
 #listen_main .playercontainer {
 	width: 475px;
 	padding: 5px 0px 5px 5px;

@@ -7,6 +7,7 @@
 // gui qua tang
 function sendgift(id) {
 	var who_send = document.getElementById('who_send');
+	var email_receive = document.getElementById('email_receive');
 	var who_receive = document.getElementById('who_receive');
 	var body  = strip_tags(document.getElementById('body').value);
 	if (who_send.value == "") {
@@ -16,7 +17,7 @@ function sendgift(id) {
 		alert(nv_content);
 		document.getElementById('body').focus();
 	} else {
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=sendgift&id=' + id + '&who_send=' + who_send.value + '&who_receive=' + who_receive.value + '&body=' + encodeURIComponent(body), '', 'resultgift');
+		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=sendgift&id=' + id + '&who_send=' + who_send.value + '&who_receive=' + who_receive.value + '&email_receive=' + email_receive.value + '&body=' + encodeURIComponent(body), '', 'resultgift');
 	}
 	return;
 }

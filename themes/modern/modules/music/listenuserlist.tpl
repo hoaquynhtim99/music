@@ -1,6 +1,6 @@
 ﻿<!-- BEGIN: main -->
-<script type="text/javascript" src="{GDATA.base_url}jquery.playlist.js"></script>
 <script type="text/javascript" src="{GDATA.base_url}jwplayer.js"></script>
+<script type="text/javascript" src="{GDATA.base_url}player.js"></script>
 <div class="box-border-shadow m-bottom">
 	<div class="cat-box-header"> 
 		<div class="cat-nav"> 
@@ -28,25 +28,36 @@
 		</div>
 		<div id="player">Loading the player ...</div>	
 		<script type="text/javascript">
+			var nv_num_song = {GDATA.numsong};
+			var nv_current_song = 1;
 			jwplayer("player").setup({
-			flashplayer: "{GDATA.base_url}player.swf",
-			playlist: [
-			<!-- BEGIN: song -->
-			{ file: "{SDATA.song_url}", image: "{GDATA.base_url}logo.png", title: "{SDATA.song_name} - ", description: " {SDATA.song_singer}" },
-			<!-- END: song -->
-			],
+			flashplayer: "{GDATA.base_url}player.swf",			
 			controlbar: "bottom",
 			volume: 100,
 			height: 24,
 			width: 470,
-			autostart: "true",
+			autostart: true,
 			events: {
-			onComplete: function(event) {
-			//jwplayer().playlistNext();
-			}
+				onReady: function(){nv_start_player('player')},
+				onComplete: function(){nv_complete_song('player')}
 			}
 			});
 		</script>
+		<div class="clear"></div>
+		<div id="playlist-container">
+			<!-- BEGIN: song -->
+			<div class="item" id="song-wrap-{SDATA.stt}">
+				<strong>{SDATA.stt}. </strong><a id="song-{SDATA.stt}" class="nv-song-item" title="" name="{SDATA.song_url}" href="javascript:void(0);" onclick="play_song('player', this);return false;">{SDATA.song_name}</a> - <a onclick="this.target='_blank';" href="{SDATA.url_search_singer}" title="">{SDATA.song_singer}</a>
+				<div class="fr">
+					<div class="tool" style="margin-top:4px">
+						<a name="{SDATA.id}" class="adds add"></a>
+						<a href="{URL_DOWN}{SDATA.id}" class="down"></a>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+			<!-- END: song -->
+		</div>
 		<div class="clear"></div>
 	</div>
 </div>
@@ -87,5 +98,14 @@
 </div>	
 <div class="clear"> </div>
 </div>
-
+<script type="text/javascript">
+$(document).ready(function() {
+	$("a.adds").click(function() {
+		$(this).removeClass("add"); 
+		$(this).addClass("addedtolist"); 
+		var songid = $(this).attr("name");
+		addplaylist(songid);
+	});
+});
+</script>
 <!-- END: main -->

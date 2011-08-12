@@ -36,9 +36,11 @@ if( ! empty( $num ) )
 	while( $row = $db->sql_fetchrow( $result ) )
 	{
 		$array[] = array(
+			"id" => $row['id'],  //
 			"song_name" => $row['tenthat'],  //
 			"song_singer" => $allsinger[$row['casi']],  //
-			"song_url" => outputURL ( $row['server'], $row['duongdan'] )  //
+			"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
+			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true )  //
 		);
 	}
 }

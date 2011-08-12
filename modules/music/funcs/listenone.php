@@ -78,7 +78,7 @@ $sdata = array(
 	"song_cat" => $category[ $row['theloai'] ],  //
 	"song_vote" => $row['binhchon'],  //
 	"song_numview" => $row['numview'],  //
-	"song_link" => outputURL ( $row['server'], $row['duongdan'] ),  //
+	"song_link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ),  //
 	
 	"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
 	"url_search_category" => $mainURL . "=search/category/" . $row['theloai'],  //

@@ -18,11 +18,7 @@
 			height: 360,
 			width: 605,
 			autostart: "true",
-			events: {
-			onComplete: function(event) {
-			jwplayer().playlistNext();
-			}
-			}
+			repeat: "list"
 			});
 		</script>
 		<div class="clear"></div>

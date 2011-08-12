@@ -35,6 +35,7 @@ $g_array = array(
 
 $album_array = array(
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
+	"playlist" => nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
 	"name" => $row['tname'], //
 	"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
 	"singer" => $allsinger[$row['casi']], //
@@ -58,13 +59,17 @@ $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `n
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $row['listsong'] . ") AND `active` = 1 ORDER BY `id` DESC";
 $result = $db->sql_query( $sql );
 
+$album_array['numsong'] = $db->sql_numrows( $result );
+
 $song_array = array();
 while ( $row = $db->sql_fetchrow( $result ) )
 {
 	$song_array[] = array(
+		"id" => $row['id'],  //
 		"song_name" => $row['tenthat'],  //
 		"song_singer" => $allsinger[$row['casi']],  //
-		"song_url" => outputURL ( $row['server'], $row['duongdan'] )  //
+		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
+		"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true )  //
 	);
 }
 

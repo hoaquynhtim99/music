@@ -132,7 +132,7 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
  */
 function nv_music_listen_playlist ( $gdata, $sdata )
 {
-    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $main_header_URL, $my_head;
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $main_header_URL, $my_head, $downURL;
 
 	// My Head
 	$my_head .= '
@@ -145,13 +145,17 @@ function nv_music_listen_playlist ( $gdata, $sdata )
     
 	$xtpl = new XTemplate( "listenuserlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'URL_DOWN', $downURL );
 	
 	$xtpl->assign( 'GDATA', $gdata );
 
+	$i = 1;
 	foreach ( $sdata as $song )
 	{
+		$song['stt'] = $i;
 		$xtpl->assign( 'SDATA', $song );
 		$xtpl->parse( 'main.song' );
+		$i ++;
 	}
 
 	$xtpl->parse( 'main' );
@@ -374,7 +378,7 @@ function nv_music_editplaylist( $g_array, $array, $row )
  */
 function nv_music_listenlist( $g_array, $album_array, $song_array )
 {
-    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL;
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL, $downURL;
 	// My Head
 	$my_head .= '
 	<link rel="image_src" href="' . NV_MY_DOMAIN . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/logo.png" />
@@ -388,6 +392,7 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
 	$xtpl->assign( 'GDATA', $g_array );
+	$xtpl->assign( 'URL_DOWN', $downURL );
 	$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'base_url', NV_BASE_SITEURL . "modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'ads', getADS() );
@@ -510,7 +515,7 @@ function nv_music_managersong( $g_array, $array_song, $data_song )
  */
 function nv_music_playlist( $g_array, $array )
 {
-    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL;
     
 	$xtpl = new XTemplate( "playlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
@@ -518,7 +523,8 @@ function nv_music_playlist( $g_array, $array )
 	$xtpl->assign( 'GDATA', $g_array );
 	$xtpl->assign( 'base_url', NV_BASE_SITEURL ."modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'ads',  getADS() );
-
+	$xtpl->assign( 'URL_DOWN', $downURL );
+	
 	if( empty( $g_array['num'] ) )
 	{
 		$xtpl->parse( 'main.null' );

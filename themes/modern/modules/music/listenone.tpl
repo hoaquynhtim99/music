@@ -1,5 +1,4 @@
 <!-- BEGIN: main -->
-
 <script type="text/javascript" src="{GDATA.data_url}jwplayer.js"></script>
 <div class="box-border-shadow m-bottom">
 	<div class="cat-box-header"> 
@@ -41,13 +40,9 @@
 			volume: 100,
 			height: 24,
 			width: 470,
-			autostart: "true",
-			events: {
-			onComplete: function(event) {
-			jwplayer().playlistNext();
-			}
-			}
-			});
+			repeat: "list",
+			autostart: "true"
+		});
 		</script>
 		<div class="clear"></div>
 	</div>
@@ -88,6 +83,8 @@
 			<input id="who_send" type="text" value="{GDATA.username}" {CDATA.no_change} /> </p>
 			<p>{LANG.who_recive}:
 			<input id="who_receive" type="text" value="" /> </p>
+			<p>{LANG.email_receive}:
+			<input id="email_receive" type="text" value="" /> </p>
 			<p>{LANG.message}:</p>
 			<textarea id="body" name="message" rows="2" cols="auto"></textarea>
 			<p style="text-align:center">
