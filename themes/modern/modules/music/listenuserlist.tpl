@@ -11,12 +11,12 @@
 	<strong>{GDATA.pl_name} - {GDATA.pl_singer}</strong>
 	<p>{LANG.who_post}:<a href="{GDATA.pl_url_search_upload}"> {GDATA.pl_who_post}&nbsp;</a> | {LANG.view}: {GDATA.pl_numview} | {LANG.playlist_creat}: {GDATA.pl_date}</p>
 	<div class="playercontainer">
-		<div style="float:left;background:black;cursor:pointer;width:470px;height:236px;">
+		<div style="float:left;background:black;cursor:pointer;width:470px;height:120px;">
 		<!--[if !IE]> -->
-		<object onclick="window.open('{GDATA.ads.url}'); return false;" type="application/x-shockwave-flash" data="{GDATA.ads.link}" width="470" height="236">
+		<object onclick="window.open('{GDATA.ads.url}'); return false;" type="application/x-shockwave-flash" data="{GDATA.ads.link}" width="470" height="120">
 		<!-- <![endif]-->
 		<!--[if IE]>
-		<object onclick="window.open('{GDATA.ads.url}'); return false;" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="479" height="236"
+		<object onclick="window.open('{GDATA.ads.url}'); return false;" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="479" height="120"
 			codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
 			<param name="movie" value="{GDATA.ads.link}" />
 		<!--><!--dgx-->
