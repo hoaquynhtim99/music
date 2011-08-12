@@ -20,19 +20,21 @@ if ( $op == "viewvideo" )
 
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE `active` = 1 AND `id`!=" . $videoid . " AND `casi` =( SELECT `casi` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $videoid . " LIMIT 1 ) ORDER BY id DESC LIMIT 0,5";
 	$query = $db->sql_query( $sql );
-
-	while( $video =  $db->sql_fetchrow( $query ) )
+	if( $db->sql_numrows( $query ) )
 	{
-		if ( $data['id'] == $video['id'] ) continue;
-		$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" .$video['id']. "/" . $video['name'] );
-		$xtpl->assign( 'video_name', $video['tname'] );
-		$xtpl->assign( 'thumb', $video['thumb'] );
-		$xtpl->assign( 'view', $video['view'] );
-		$xtpl->parse( 'main.loop' );
-	}
+		while( $video =  $db->sql_fetchrow( $query ) )
+		{
+			if ( $data['id'] == $video['id'] ) continue;
+			$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" .$video['id']. "/" . $video['name'] );
+			$xtpl->assign( 'video_name', $video['tname'] );
+			$xtpl->assign( 'thumb', $video['thumb'] );
+			$xtpl->assign( 'view', $video['view'] );
+			$xtpl->parse( 'main.loop' );
+		}
 
-	$xtpl->parse( 'main' );
-	$content = $xtpl->text( 'main' );
+		$xtpl->parse( 'main' );
+		$content = $xtpl->text( 'main' );
+	}
 }
 
 ?>

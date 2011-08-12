@@ -20,15 +20,18 @@ if ( $op == "listenone" )
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 AND `id`!=" . $songid . " AND album =( SELECT `album` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $songid . " LIMIT 1 ) ORDER BY id DESC LIMIT 0,10";
 
 	$query = $db->sql_query( $sql );
-	while($song =  $db->sql_fetchrow( $query ))
+	if( $db->sql_numrows( $query ) )
 	{
-		$xtpl->assign( 'url_listen', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
-		$xtpl->assign( 'song_name', $song['tenthat'] );
-		$xtpl->parse( 'main.loop' );
-	}
+		while( $song =  $db->sql_fetchrow( $query ) )
+		{
+			$xtpl->assign( 'url_listen', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
+			$xtpl->assign( 'song_name', $song['tenthat'] );
+			$xtpl->parse( 'main.loop' );
+		}
 
-	$xtpl->parse( 'main' );
-	$content = $xtpl->text( 'main' );
+		$xtpl->parse( 'main' );
+		$content = $xtpl->text( 'main' );
+	}
 }
 
 ?>

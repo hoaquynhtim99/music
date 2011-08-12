@@ -187,6 +187,35 @@ function updatewhendelFTP( $server, $active )
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `active` = " . $active . " WHERE `server` = " . $server );
 	return;
 }
+
+// xuat duong dan nguoc lai
+function admin_outputURL ( $server, $inputurl )
+{
+	global $module_name, $setting;
+	$output = "";
+	if( $server == 0 )
+	{
+		$output = $inputurl;
+	}
+	elseif( $server == 1 )
+	{
+		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $inputurl;
+	}
+	else
+	{
+		$ftpdata = getFTP();
+		foreach ( $ftpdata as $id => $data )
+		{
+			if ( $id == $server )
+			{
+				$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+				break;
+			}
+		}
+	}
+	return $output;
+}
+
 require_once NV_ROOTDIR . "/modules/" . $module_name . '/global.functions.php';
 
 ?>

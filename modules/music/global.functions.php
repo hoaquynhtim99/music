@@ -339,7 +339,7 @@ function getFTP()
 function creatURL ( $inputurl )
 {
 	global $module_name, $setting;
-	//$setting = setting_music();
+
 	$songdata = array();
 	if ( preg_match( '/^(ht|f)tp:\/\//', $inputurl ) ) 
 	{
@@ -517,6 +517,7 @@ function outputURL ( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
+						
 						$output = explode ( '[FLASH]', $output );
 						
 						if( isset( $output[1] ) )

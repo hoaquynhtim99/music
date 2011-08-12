@@ -29,6 +29,7 @@ $songdata['upboi'] = $nv_Request->get_string( 'upboi', 'post', '' );
 $songdata['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
 $songdata['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 $songdata['size'] = $nv_Request->get_int( 'size', 'post', 0 );
+$songdata['lyric'] = filter_text_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
 
 if ( $songdata['casimoi'] != '')
 {
@@ -61,10 +62,10 @@ if ( $id == 0 )
 else
 {
     $page_title = $lang_module['edit_song'];
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` = ".$id."";
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` = " . $id;
 	$resuilt = $db->sql_query( $sql );
 	$row = $db->sql_fetchrow( $resuilt );
-	if ( !$nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
+	if ( ! $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 	{
 		$songdata['ten'] = $row['ten'];
 		$songdata['tenthat'] = $row['tenthat'];
@@ -72,23 +73,56 @@ else
 		$songdata['nhacsi'] = $row['nhacsi'];
 		$songdata['album'] = $row['album'];
 		$songdata['theloai'] = $row['theloai'];	
-		$songdata['duongdan'] = outputURL ( $row['server'], $row['duongdan'] );
+		$songdata['duongdan'] = admin_outputURL ( $row['server'], $row['duongdan'] );
 		$songdata['upboi'] = $row['upboi'];
 		$songdata['bitrate'] = $row['bitrate'];
 		$songdata['duration'] = $row['duration'];
 		$songdata['size'] = $row['size'];
+		
+		$sql = "SELECT `body` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $id;
+		$result = $db->sql_query( $sql );
+		list( $songdata['lyric'] ) = $db->sql_fetchrow( $result );
+		$songdata['lyric'] = nv_br2nl( $songdata['lyric'] );
 	}
 }
 
 //sua bai hat
-if ( ($nv_Request->get_int( 'edit', 'post', 0 ) == 1) && ( $error == '' ) )
+if ( ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 ) && ( $error == '' ) )
 {
 	$check_url = creatURL ( $songdata['duongdan'] );
 	$songdata['duongdan'] = $check_url['duongdan'];
 	$songdata['server'] = $check_url['server'];
+	
+	$songdata['lyric'] = ! empty( $songdata['lyric'] ) ? nv_nl2br( $songdata['lyric'], "<br />" ) : "";
 	foreach ( $songdata as $key => $data  )
 	{	
-		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
+		if( $key == "lyric" )
+		{
+			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $id;
+			$result = $db->sql_query( $sql );
+			list( $lyric_id ) = $db->sql_fetchrow( $result );
+			
+			if( $lyric_id )
+			{
+				$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` SET `body`=" . $db->dbescape( $data ) . " WHERE `id`=" . $lyric_id;
+				$db->sql_query( $sql );
+			}
+			else
+			{
+				$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES(
+					NULL,
+					" . $id . ",
+					" . $admin_info['userid'] . ",
+					" . $db->dbescape( $data ) . ",
+					1, " . NV_CURRENTTIME . "
+				)";
+				$db->sql_query( $sql );
+			}
+		}
+		else
+		{
+			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `" . $key . "`=" . $db->dbescape( $data ) . " WHERE `id` =" . $id);
+		}
 	}
 	if ( $query ) 
 	{
@@ -101,7 +135,7 @@ if ( ($nv_Request->get_int( 'edit', 'post', 0 ) == 1) && ( $error == '' ) )
 }
 
 // them bai hat moi
-if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
+if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) && ( $error == '' ) )
 {	
 	if ( defined( 'NV_IS_USER' ) )
 	{
@@ -155,9 +189,26 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 			" . $db->dbescape( $hit ) . "
 		)
 		"; 
-		if ( $db->sql_query_insert_id( $query ) ) 
+		
+		$result_song_id = $db->sql_query_insert_id( $query );
+		
+		if ( $result_song_id ) 
 		{ 
 			$db->sql_freeresult();
+			
+			if( ! empty( $songdata['lyric'] ) )
+			{
+				$songdata['lyric'] = ! empty( $songdata['lyric'] ) ? nv_nl2br( $songdata['lyric'], "<br />" ) : "";
+				$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES(
+					NULL,
+					" . $result_song_id . ",
+					" . $admin_info['username'] . ",
+					" . $db->dbescape( $songdata['lyric'] ) . ",
+					1, " . NV_CURRENTTIME . "
+				)";
+				$db->sql_query( $sql );
+			}
+			
 			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name); die();
 		} 
 		else 
@@ -179,6 +230,9 @@ if($error)
 				<div class=\"clear\">
 				</div>";
 }
+
+if ( ! empty( $songdata['lyric'] ) ) $songdata['lyric'] = nv_htmlspecialchars( $songdata['lyric'] );
+
 // noi dung trsng
 $contents .="
 <form method=\"post\" name=\"add_pic\">
@@ -341,6 +395,14 @@ $contents .="
 				</td>
 				<td style=\"background: #eee;\">
 				<input name=\"upboi\" style=\"width: 470px;\" value=\"".$songdata['upboi']."\" type=\"text\" />
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+					" . $lang_module['add_lyric'] . "
+				</td>
+				<td style=\"background: #eee;\">
+				<textarea name=\"lyric\" style=\"width: 470px;height:150px\" />" . $songdata['lyric'] . "</textarea>
 				</td>
 			</tr>
 			<tr>
