@@ -20,10 +20,20 @@ $now_page = isset( $array_op[3] ) ?  $array_op[3]  : 1;
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
 
 // xu li thong tin submit
-if ( $nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 )
+if ( ( $nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 ) or ( $nv_Request->isset_request( 'q', 'get' ) ) )
 {
 	$type = filter_text_input( 'type', 'post', 'name' );
 	$key =  ( filter_text_input( 'key', 'post', '' ) == '' ) ? '-' : change_alias( filter_text_input( 'key', 'post', '' ) );
+	$q = filter_text_input( 'key', 'post', '' );
+	
+	if( ( $key == "-" ) and ( $nv_Request->isset_request( 'q', 'get' ) ) )
+	{
+		$q = filter_text_input( 'q', 'get', '' );
+		$key = ( filter_text_input( 'q', 'get', '' ) == '' ) ? '-' : change_alias( filter_text_input( 'q', 'get', '' ) );
+	}
+	
+	$nv_Request->set_session( 'music_search_type', $type );
+	$nv_Request->set_session( 'music_search_key', $q );
 	
 	if ( $type == 'album' )
 	{
