@@ -41,8 +41,8 @@
 			width: 470,
 			autostart: "true",
 			events: {
-			onComplete: function(event) {
-			jwplayer().playlistNext();
+			onallComplete: function(event) {
+			//jwplayer().playlistNext();
 			}
 			}
 			});

@@ -26,7 +26,7 @@ while ( $row = $db->sql_fetchrow( $result ) )
 	$rowalbum =  $db->sql_fetchrow( $queryalbum );
 	$xtpl->assign( 'url_album', $mainURL . "=listenlist/" .$rowalbum['id']. "/" . $rowalbum['name']);
 
-	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `album`=\"".$rowalbum['name']."\" ORDER BY `id` DESC LIMIT 0,10";
+	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `id` IN(" . $rowalbum['listsong'] . ") ORDER BY `id` DESC LIMIT 0,10";
 	$querysong = $db->sql_query( $sqlsong );
 	
 	$j = 1 ;

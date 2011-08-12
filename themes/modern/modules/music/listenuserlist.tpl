@@ -42,7 +42,7 @@
 			autostart: "true",
 			events: {
 			onComplete: function(event) {
-			jwplayer().playlistNext();
+			//jwplayer().playlistNext();
 			}
 			}
 			});
