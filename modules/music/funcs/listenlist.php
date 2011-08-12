@@ -55,7 +55,7 @@ if( empty( $row ) )
 $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview`=`numview`+1 WHERE `id` =" . $id );
 
 // cac bai hat cua album
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `album`='" . $row['name'] . "' AND `active` = 1 ORDER BY `id` DESC";
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $row['listsong'] . ") AND `active` = 1 ORDER BY `id` DESC";
 $result = $db->sql_query( $sql );
 
 $song_array = array();

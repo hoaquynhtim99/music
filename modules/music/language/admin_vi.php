@@ -278,5 +278,6 @@ $lang_module['autoupdate_complete_error_del_file'] = "Thực hiện quá trình 
 $lang_module['autoupdate_error_data'] = "Và gặp các lỗi về việc cập nhật CSDL";
 
 $lang_module['add_lyric'] = "Lời bài hát";
+$lang_module['complete'] = "Hoàn tất";
 
 ?>

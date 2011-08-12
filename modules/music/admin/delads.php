@@ -1,17 +1,21 @@
 <?php
+
 /**
  * @Project NUKEVIET 3.0
  * @Author VINADES.,JSC (contact@vinades.vn)
  * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
  * @Createdate 2-9-2010 14:43
  */
-if(!defined('NV_IS_MUSIC_ADMIN'))
+ 
+if( ! defined('NV_IS_MUSIC_ADMIN') )
 {
 	die('Stop!!!');
 }
+
 // tao gia tri
 $result = false;
 $id = $nv_Request->get_int('id', 'post,get');
+if( empty( $id ) ) die( "Stop!!!" );
 
 // xoa quang cao
 if( $id > 0 )
@@ -37,4 +41,5 @@ else
 {
 	echo $lang_module['del_error'];
 }
+
 ?>

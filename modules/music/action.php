@@ -72,6 +72,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `describe` mediumtext NOT NULL,
   `active` int(2) NOT NULL DEFAULT '0',
   `numsong` INT( 255 ) NOT NULL DEFAULT '0',
+  `listsong` mediumtext NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
@@ -378,7 +379,7 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (13, 'default_server', 1, ''),
 (14, 'playlist_max', 2, ''),
 (15, 'del_cache_time_out', 259200, ''),
-(16, 'version', 0, '3.1.02'),
+(16, 'version', 0, '3.2.01'),
 (17, 'revision', 143, '')";
 
 ?>

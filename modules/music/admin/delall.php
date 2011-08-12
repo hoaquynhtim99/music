@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung
@@ -6,7 +7,7 @@
  * @Createdate 26/01/2011 09:34 AM
  */
  
-if(!defined('NV_IS_MUSIC_ADMIN')) { die('Stop!!!'); }
+if( ! defined('NV_IS_MUSIC_ADMIN') ) { die('Stop!!!'); }
 
 // tao gia tri
 $listall = $nv_Request->get_string('listall', 'post,get');
@@ -15,6 +16,8 @@ $array_id = array_map("intval", $array_id);
 $result = false;
 $where = filter_text_input( 'where', 'get', '' );
 $setting = setting_music();
+
+if( empty( $listall ) ) die( "Stop!!!" );
 
 // thuc hien lenh xoa
 foreach($array_id as $id)
@@ -78,4 +81,5 @@ else
 {
 	echo $lang_module['del_error'];
 }
+
 ?>

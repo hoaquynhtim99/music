@@ -14,6 +14,8 @@ $id = $nv_Request->get_int('id', 'post,get');
 $where = filter_text_input( 'where', 'get', '' );
 $setting = setting_music();
 
+if( empty( $id ) ) die( "Stop!!!" );
+
 if( $id > 0 )
 {
 	if ( $where == '_album' )
