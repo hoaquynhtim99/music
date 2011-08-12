@@ -1,12 +1,12 @@
 <?php
 
 /**
-* @Project NUKEVIET 3.0
-* @Author VINADES.,JSC (contact@vinades.vn)
-* @Copyright (C) 2010 VINADES.,JSC. All rights reserved
-* @Language Tiếng Việt
-* @Createdate Jun 04, 2011, 04:52:52 PM
-*/
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung
+ * @Copyright (C) 2011
+ * Language Tiếng Việt
+ * @Createdate 26/01/2011 09:41 AM
+ */
 
  if (! defined('NV_ADMIN') or ! defined('NV_MAINFILE')){
  die('Stop!!!');

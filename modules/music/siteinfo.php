@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES. All rights reserved
- * @Createdate Apr 20, 2010 10:47:41 AM
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung
+ * @Copyright (C) 2011
+ * @Createdate 26/01/2011 09:41 AM
  */
 
 if ( ! defined( 'NV_IS_FILE_SITEINFO' ) ) die( 'Stop!!!' );
