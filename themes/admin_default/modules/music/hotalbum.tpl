@@ -10,7 +10,13 @@
 	<!-- BEGIN: row -->
 	<tbody{class}>
 		<tr>
-			<td align="center">{STT}</td>
+			<td align="center">
+                <select name="weight" id="weight{ID}" onchange="nv_chang_hotalbum_weight({ID});">
+                    <!-- BEGIN: stt -->
+                    <option value="{pos}"{selected}>{pos}</option>
+                    <!-- END: stt -->
+                </select>
+			</td>
 			<td>{album}</td>
 			<td>
 				<span class="add_icon">

@@ -83,3 +83,25 @@ function returnsonginfo1(res) {
 	}
 	return false;
 }
+
+//  ---------------------------------------
+function nv_chang_hotalbum_weight( id )
+{
+   var nv_timer = nv_settimeout_disable( 'weight' + id, 5000 );
+   var newpos = document.getElementById( 'weight' + id ).options[document.getElementById( 'weight' + id ).selectedIndex].value;
+   nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=hotalbum&changeweight=1&id=' + id + '&new=' + newpos + '&num=' + nv_randomPassword( 8 ), '', 'nv_chang_hotalbum_weight_result' );
+   return;
+}
+
+//  ---------------------------------------
+
+function nv_chang_hotalbum_weight_result( res )
+{
+   if ( res != 'OK' )
+   {
+      alert( nv_is_change_act_confirm[2] );
+   }
+   clearTimeout( nv_timer );
+   window.location.href = window.location.href;
+   return;
+}
