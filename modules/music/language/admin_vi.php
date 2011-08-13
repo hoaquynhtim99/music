@@ -279,5 +279,6 @@ $lang_module['autoupdate_error_data'] = "Và gặp các lỗi về việc cập 
 
 $lang_module['add_lyric'] = "Lời bài hát";
 $lang_module['complete'] = "Hoàn tất";
+$lang_module['error_exist_album'] = "Lỗi: Album này đã tồn tại";
 
 ?>

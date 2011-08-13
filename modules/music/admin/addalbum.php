@@ -73,7 +73,7 @@ if ( ( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 ) and ( $error == '' )
 {
 	foreach ( $albumdata as $key => $data  )
 	{	
-		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `" . $key . "` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id );
+		$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `" . $key . "` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id );
 	}
 	if ( $query ) 
 	{
@@ -105,9 +105,17 @@ if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) and ( $error == '' ) )
 {	
 	foreach ( $albumdata as $data => $null )
 	{
-		if ( $data == 'casimoi' ) continue;
-		if	($null == ''& $data !="album") $error = $lang_module['error_album']; 
+		if ( in_array( $data, array('casimoi', 'listsong') ) ) continue;
+		if	( $null == '' & $data != "album" ) $error = $lang_module['error_album']; 
 	}
+	
+	list( $existalbum ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $albumdata['name'] ) ) );
+	
+	if( $existalbum )
+	{
+		$error = $lang_module['error_exist_album'];
+	}
+	
 	if ( $error == "" )
 	{
 		updatesinger( $albumdata['casi'], 'numalbum', '+1' );
