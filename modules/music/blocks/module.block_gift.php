@@ -13,6 +13,7 @@ global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
 
 $xtpl = new XTemplate( "block_gift.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'GIFT_LINK', $mainURL . "=gift" );
 
 $sql = "SELECT a.songid, a.who_send, a.who_receive, a.body, a.time, b.ten, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id ORDER BY a.id DESC LIMIT 0,6";
 $query = $db->sql_query( $sql );

@@ -237,5 +237,6 @@ $lang_module['share_descreption_video'] = "Video %s trình bày %s, sáng tác %
 $lang_module['email_receive'] = "Email nhận";
 $lang_module['email_receive_null'] = "Lỗi: Bạn chưa nhập địa chỉ email";
 $lang_module['gift_message'] = "<p>Chào <strong>%s</strong>,</p><p>Bạn vừa nhận được một quà tặng âm nhạc được gửi từ %s thông qua website %s.</p><p>Lời nhắn:</p><p>%s</p><p>Bạn có thể nghe bài hát của mình tại: %s</p>";
+$lang_module['gift_list'] = "Danh sách quà tặng âm nhạc";
 
 ?>

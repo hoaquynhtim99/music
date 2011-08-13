@@ -976,4 +976,42 @@ function nv_music_viewvideo( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
+/**
+ * nv_music_gift()
+ * 
+ * @param mixed $array
+ * @param mixed $generate_page
+ * @return
+ */
+function nv_music_gift( $array, $generate_page )
+{
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    
+	$xtpl = new XTemplate( "gift.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	
+	if( empty( $array ) )
+	{
+		$xtpl->parse( 'empty' );
+		return $xtpl->text( 'empty' );
+	}
+	
+	foreach( $array as $row )
+	{
+		$row['time'] = nv_date( "d/m/Y h:i:s A", $row['time'] );
+		$xtpl->assign( 'ROW', $row );
+		$xtpl->parse( 'main.loop' );
+	}
+	
+	if( ! empty( $generate_page ) )
+	{
+		$xtpl->assign( 'generate_page', $generate_page );
+		$xtpl->parse( 'main.generate_page' );
+	}
+	
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
 ?>

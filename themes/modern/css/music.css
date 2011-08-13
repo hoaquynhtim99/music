@@ -1259,3 +1259,16 @@ div.sucess {
 #ver_menu a:hover {
     color: #cb0000;
 }
+
+/* Gift page */
+.hr{ width:100%; border-bottom:1px #999999 solid;margin-top:5px;margin-bottom:5px}
+.gift-item{}
+.gift-item a{ display:block;font-weight:bold;margin-left:5px;padding-left:20px;background-image:url('../images/music/icon.gif');background-position:-32px -531px;background-repeat:no-repeat}
+.gift-item ul{ list-style-type:none;margin:0px;padding:0px}
+.gift-item ul li{ line-height:25px;padding-left:20px;background-repeat:no-repeat;background-image:url('../images/music/icon.gif');}
+.gift-item ul li.recieve{background-position:-28px -118px;}
+.gift-item ul li.from{background-position:-32px -342px;}
+.gift-item ul li.message{background-position:-28px -1090px;}
+
+/* Gennerrate page */
+.generate_page{ padding:5px 0px 5px 0px; text-align:center;font-weight:bold}

@@ -16,5 +16,10 @@
 		</p>
 	</div>
 	<!-- END: loop -->
+	<div class="clear"></div>
+	<div class="fr">
+		<a href="{GIFT_LINK}" title="{LANG.view_all}">{LANG.view_all}</a>
+	</div>
+	<div class="clear"></div>
 </div>
 <!-- END: main -->
