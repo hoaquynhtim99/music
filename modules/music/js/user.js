@@ -172,7 +172,7 @@ function aftervote(res)
 {
 	var r_split = res.split("_");
 	if (r_split[0] == "OK") {
-		$("#vote").html( "(" + r_split[1] + ")" );
+		document.getElementById("vote").innerHTML = "(" + r_split[1] + ")";
 	} 
 	alert(r_split[2]);
 }
