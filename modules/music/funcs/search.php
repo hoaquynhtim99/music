@@ -89,11 +89,11 @@ else
 }	
 
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ORDER BY id DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ";
+$sqlnum = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ";
 
 // tinh so trang
 $num = $db->sql_query( $sqlnum );
-$output = $db->sql_numrows( $num );
+list( $output ) = $db->sql_fetchrow( $num );
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
