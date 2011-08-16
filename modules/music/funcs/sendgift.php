@@ -38,7 +38,7 @@ if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 		
 		$link = "<a href=\"" . NV_MY_DOMAIN . nv_url_rewrite( $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] ) . "\">" . NV_MY_DOMAIN . nv_url_rewrite( $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] ) . "</a>";
 		
-		$subject = $lang_module['sendmail_welcome'] . " <strong>" . $who_send . "</strong>";
+		$subject = $lang_module['sendmail_welcome'] . " \"" . $who_send . "\"";
 		$message = sprintf( $lang_module['gift_message'], $who_receive, $who_send, NV_MY_DOMAIN, $body, $link );
 		nv_sendmail( array( $global_config['site_name'], $global_config['site_email'] ), $email_receive, $subject, $message );
 		
