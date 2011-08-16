@@ -151,7 +151,8 @@ function afterdelsong(res)
 
 	if( r_split[0] == "OK" )
 	{
-		$("#song" + r_split[1]).remove();
+		element = document.getElementById("song" + r_split[1]);
+		element.parentNode.removeChild(element);
 	}
 	else
 	{
@@ -180,7 +181,8 @@ function afterdellist(res)
 {
 	var r_split = res.split("_");
 	if (r_split[0] == "OK") {
-		$("#item" + r_split[1]).remove();
+		element = document.getElementById("item" + r_split[1]);
+		element.parentNode.removeChild(element);
 	} else alert(res);
 }
 // an hien div

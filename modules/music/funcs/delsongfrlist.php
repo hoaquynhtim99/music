@@ -12,7 +12,7 @@ if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 // lay du lieu
 $stt = $nv_Request->get_int( 'stt', 'post', 0 );
-$contents = $stt;
+$contents = "OK_" . $stt;
 // lay so bai hat
 $num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
 

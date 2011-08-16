@@ -52,7 +52,7 @@ $array = array(
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ),  //
 	"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'],  //
 	"url_search_category" => $mainURL . "=searchvideo/category/" . $row['theloai'],  //
-	"link" => outputURL ( $row['server'], $row['duongdan'] ),  //
+	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ),  //
 	"URL_SONG" => get_URL()  //
 );
 
