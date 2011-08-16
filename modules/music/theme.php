@@ -381,7 +381,7 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL, $downURL;
 	// My Head
 	$my_head .= '
-	<link rel="image_src" href="' . NV_MY_DOMAIN . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/logo.png" />
+	<link rel="image_src" href="' . NV_MY_DOMAIN . $album_array['album_thumb'] . '" />
 	<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_file . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite ( $main_header_URL . "=creatlinksong/album/" . $g_array['id'] . "/" . $g_array['sname'], true ) . '" />
 	<meta name="video_width" content="360" />
 	<meta name="video_height" content="100" />
