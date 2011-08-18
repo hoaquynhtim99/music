@@ -9,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $module_file, $module_info, $mainURL;
+global $module_file, $module_info, $mainURL, $lang_module;
 
 $xtpl = new XTemplate( "block_upload.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
