@@ -27,14 +27,14 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	
 	$array['album'] = filter_text_input( 'album', 'post', '' );
 	$array['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
-	//$array['upboi'] = filter_text_input( 'upboi', 'post', 0 );
 	$array['upboi'] = $admin_info['username'];
 		
 	$array['alias'] = ( $array['alias'] == "" ) ? change_alias( $array['title'] ) : change_alias( $array['alias'] );
 		
+	$list_song = array();
+		
 	foreach ( $array['link'] as $link )
 	{
-
 		$array_meta_tag = get_meta_tags( $link );
 		
 		$array['title'] = $array_meta_tag['title']? $array_meta_tag['title'] : "";
@@ -46,8 +46,6 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 		$alias = ! empty ( $title ) ? change_alias( $title ) : "";
 		
 		$singer = ! empty ( $array['title'][1] ) ? $array['title'][1] : "ns";
-		
-		//die ($title);
 		
 		if ( ! empty ( $title ) )
 		{
@@ -92,11 +90,31 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 				" . $db->dbescape( $hit ) . "
 			)"; 
 			
-			if ( $db->sql_query_insert_id( $query ) )
+			$song_id = $db->sql_query_insert_id( $query );
+			
+			if ( $song_id )
 			{
+				$list_song[] = $song_id;
 				$db->sql_freeresult();
 			}
 		}
+	}
+	
+	if( ! empty( $list_song ) and ! empty( $array['album'] ) )
+	{
+		$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name` =" . $db->dbescape( $array['album'] );
+		$result = $db->sql_query( $sql );
+		list( $data_song ) = $db->sql_fetchrow( $result );
+		$data_song = explode( ",", $data_song );
+		foreach( $list_song as $songid )
+		{
+			$data_song[] = $songid;
+		}
+		
+		$data_song = array_filter( $data_song );
+		
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ",", $data_song ) ) . " WHERE `name`=" . $db->dbescape( $array['album'] );
+		$db->sql_query( $sql );
 	}
 	
 	nv_insert_logs( NV_LANG_DATA, $module_name, "Add song from nhaccuatui" , "List song", $admin_info['userid'] );
