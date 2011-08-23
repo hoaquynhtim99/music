@@ -202,7 +202,7 @@ if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) && ( $error == '' ) )
 				$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES(
 					NULL,
 					" . $result_song_id . ",
-					" . $admin_info['username'] . ",
+					" . $db->dbescape( $admin_info['username'] ) . ",
 					" . $db->dbescape( $songdata['lyric'] ) . ",
 					1, " . NV_CURRENTTIME . "
 				)";
