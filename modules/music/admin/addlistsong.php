@@ -61,6 +61,7 @@ $allsinger = getallsinger();
 $allauthor = getallauthor();
 
 $page_title = $lang_module['sub_addlistsong'];
+$list_song = array();
 
 // them bai hat moi
 if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
@@ -121,8 +122,12 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				" . $db->dbescape( $hit ) . "
 			)
 			"; 
-			if ( $db->sql_query_insert_id( $query ) ) 
+			
+			$song_id = $db->sql_query_insert_id( $query );
+			
+			if ( $song_id ) 
 			{ 
+				$list_song[] = $song_id;
 				$db->sql_freeresult();
 				$ok = true;
 			} 
@@ -133,15 +138,35 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ( $error == '' ) )
 				break;
 			} 
 		}
+		
 		if ( $ok )
 		{
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name); die();
+			if( ! empty( $list_song ) and ! empty( $album ) )
+			{
+				$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name` =" . $db->dbescape( $album );
+				$result = $db->sql_query( $sql );
+				list( $data_song ) = $db->sql_fetchrow( $result );
+				$data_song = explode( ",", $data_song );
+				foreach( $list_song as $songid )
+				{
+					$data_song[] = $songid;
+				}
+				
+				$data_song = array_filter( $data_song );
+				
+				$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ",", $data_song ) ) . " WHERE `name`=" . $db->dbescape( $album );
+				$db->sql_query( $sql );
+			}
+			
+			nv_del_moduleCache( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name ); exit();
 		}
 	}
 
 }
+
 // hien bao loi
-if($error)
+if( $error )
 {
 	$contents .= "<div class=\"quote\" style=\"width: 780px;\">\n
 					<blockquote class=\"error\">
