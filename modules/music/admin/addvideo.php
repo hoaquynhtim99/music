@@ -83,6 +83,7 @@ if ( (($nv_Request->get_int( 'edit', 'post', 0 )) == 1) && ($error =='') )
 	}
 	if ( $query ) 
 	{
+		nv_del_moduleCache( $module_name );
 		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" ); die();
 	}
 	else
@@ -134,6 +135,7 @@ if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
 		"; 
 		if ( $db->sql_query_insert_id( $query ) ) 
 		{ 
+			nv_del_moduleCache( $module_name );
 			$db->sql_freeresult();
 			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" ); die();
 		} 

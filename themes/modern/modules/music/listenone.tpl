@@ -12,7 +12,15 @@
 	<!-- END: hit -->
 	<strong>{name}</strong>
 	<p>{LANG.show}: <a href="{SDATA.url_search_singer}">{SDATA.song_singer}</a></p>
-	<p>{LANG.category_2}:<a href="{SDATA.url_search_category}"> {SDATA.song_cat}&nbsp;</a> | {LANG.view}: {SDATA.song_numview}</p>
+	<p>{LANG.category_2}:
+		<a href="{SDATA.url_search_category}"> {SDATA.song_cat}&nbsp;</a>
+		<!-- BEGIN: cat -->
+		<!-- BEGIN: loop -->
+		 / <a href="{CAT.url}" title="{CAT.title}">{CAT.title}&nbsp;</a>
+		<!-- END: loop -->
+		<!-- END: cat -->
+		| {LANG.view}: {SDATA.song_numview}
+	</p>
 	<p>{LANG.author}: {SDATA.song_author}. Album: <a href="{SDATA.url_search_album}">{SDATA.album_name}
 	</a></p>
 	<div class="playercontainer">

@@ -15,7 +15,7 @@ $alias = isset( $array_op[2] ) ? $array_op[2]  : "";
 
 if ( ! $id ) module_info_die();
 
-$sql = "SELECT a.id AS id, a.ten AS ten, a.album AS album, a.tenthat AS tenthat, a.casi AS casi, a.nhacsi AS nhacsi, a.theloai AS theloai, a.duongdan AS duongdan, a.upboi AS upboi, a.numview AS numview, a.server AS server, a.binhchon AS binhchon, a.hit AS hit, b.name AS name, b.tname AS tname FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.name WHERE a.id=" . $id . " AND a.active=1";
+$sql = "SELECT a.id AS id, a.ten AS ten, a.album AS album, a.tenthat AS tenthat, a.casi AS casi, a.nhacsi AS nhacsi, a.theloai AS theloai, a.listcat AS listcat, a.duongdan AS duongdan, a.upboi AS upboi, a.numview AS numview, a.server AS server, a.binhchon AS binhchon, a.hit AS hit, b.name AS name, b.tname AS tname FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.name WHERE a.id=" . $id . " AND a.active=1";
 $result = $db->sql_query( $sql );
 $check_exit = $db->sql_numrows( $result );
 $row = $db->sql_fetchrow( $result );
@@ -66,6 +66,24 @@ $gdata = array(
 	"selfurl_encode" =>  rawurlencode ( $client_info['selfurl'] )  //
 );
 
+if( ! empty( $row['listcat'] ) )
+{
+	$row['listcat'] = explode( ",", $row['listcat'] );
+	$listcat = array();
+	
+	foreach( $row['listcat'] as $cat )
+	{
+		$listcat[] = array(
+			"title" => $category[$cat],  //
+			"url" => $mainURL . "=search/category/" . $cat  //
+		);
+	}
+}
+else
+{
+	$listcat = array();
+}
+
 $sdata = array(
 	"send_mail_url" => $mainURL . "=sendmail&amp;id=". $id,  //
 	"send_mail_title" => $lang_module['sendtomail'],  //
@@ -76,6 +94,7 @@ $sdata = array(
 	"song_singer" => $allsinger[$row['casi']],  //
 	"song_author" => $allauthor[$row['nhacsi']],  //
 	"song_cat" => $category[ $row['theloai'] ],  //
+	"song_listcat" => $listcat,  //
 	"song_vote" => $row['binhchon'],  //
 	"song_numview" => $row['numview'],  //
 	"song_link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ),  //

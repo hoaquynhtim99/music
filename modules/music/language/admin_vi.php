@@ -55,7 +55,10 @@ $lang_module['album_info'] = "Thông tin về album";
 $lang_module['album_del_cofirm'] = "Bạn có chắc xóa các album này nếu xóa các dữ liệu liên quan sẽ bị xóa";
 $lang_module['comment_del_cofirm'] = "Bạn có chắc xóa các bình luận này";
 $lang_module['comment_time'] = "Gửi lúc";
+
 $lang_module['category'] = "Thể loại";
+$lang_module['category_base'] = "Thể loại chính";
+$lang_module['category_sub'] = "Thể loại con";
 $lang_module['category_main'] = "Thể loại trên menu trái";
 $lang_module['category_main_del_confim'] = "Bạn có chắc chắc xóa thể loại này";
 $lang_module['checkall'] = "Chọn tất cả";
@@ -88,9 +91,6 @@ $lang_module['error_check_lyric'] = "Bạn chưa chọn lời bài hát nào";
 $lang_module['error_full_info'] = "Chưa đủ thông tin";
 $lang_module['error_name_ads'] = "Lỗi: Bạn chưa điền tên quảng cáo";
 $lang_module['error_link_ads'] = "Lỗi: Bạn chưa chọn quảng cáo";
-$lang_module['error_song'] = "Bạn chưa điền đủ thông tin cho bài hát";
-$lang_module['error_album'] = "Bạn chưa điền đủ thông tin cho Album";
-$lang_module['error_video'] = "Bạn chưa điền đủ thông tin cho video clip";
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";
 $lang_module['ftp_host'] = "Tên host";
@@ -177,6 +177,7 @@ $lang_module['sub_category'] = "Quản lý thể loại";
 $lang_module['sub_album'] = "Quản lý album";
 $lang_module['sub_author'] = "Quản lý nhạc sĩ";
 $lang_module['sub_add_album'] = "Thêm album";
+$lang_module['sub_edit_album'] = "Sửa album";
 $lang_module['sub_addsong'] = "Thêm bài hát";
 $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";
 $lang_module['sub_hotalbum'] = "HOT Album";
@@ -280,5 +281,7 @@ $lang_module['autoupdate_error_data'] = "Và gặp các lỗi về việc cập 
 $lang_module['add_lyric'] = "Lời bài hát";
 $lang_module['complete'] = "Hoàn tất";
 $lang_module['error_exist_album'] = "Lỗi: Album này đã tồn tại";
+
+$lang_module['getaid_title'] = "Lấy album";
 
 ?>

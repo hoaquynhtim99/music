@@ -19,8 +19,8 @@ $query = $db->sql_query( $sql );
 
 while( $song =  $db->sql_fetchrow( $query ) )
 {	
-	$xtpl->assign( 'url_listen', $mainURL . "=listenone/" .$song['id']. "/" . $song['ten'] );
-	$xtpl->assign( 'name', $song['tenthat'] );
+	$song['url_listen'] = $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'];
+	$xtpl->assign( 'ROW', $song );
 	
 	$xtpl->parse( 'main.loop' );
 }

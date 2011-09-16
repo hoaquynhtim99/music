@@ -39,6 +39,16 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 	$xtpl->assign( 'GDATA', $gdata );
 	$xtpl->assign( 'CDATA', $cdata );
 	
+	if( ! empty( $sdata['song_listcat'] ) )
+	{
+		foreach( $sdata['song_listcat'] as $cat )
+		{
+			$xtpl->assign( 'CAT', $cat );
+			$xtpl->parse( 'main.cat.loop' );
+		}
+		$xtpl->parse( 'main.cat' );
+	}
+	
 	if ( $cdata['checkhit'] >= 20 )
 	{
 		$xtpl->parse( 'main.hit' );

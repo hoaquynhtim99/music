@@ -25,11 +25,11 @@ $songdata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'get,post', '' );
 $songdata['album'] = filter_text_input( 'album', 'get,post', '' );
 $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
 $songdata['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
-$songdata['upboi'] = $nv_Request->get_string( 'upboi', 'post', '' );
 $songdata['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
 $songdata['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 $songdata['size'] = $nv_Request->get_int( 'size', 'post', 0 );
 $songdata['lyric'] = filter_text_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
+$songdata['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
 
 if ( $songdata['casimoi'] != '')
 {
@@ -78,6 +78,16 @@ else
 		$songdata['bitrate'] = $row['bitrate'];
 		$songdata['duration'] = $row['duration'];
 		$songdata['size'] = $row['size'];
+		$songdata['listcat'] = $row['listcat'];
+		
+		if( ! empty( $songdata['listcat'] ) )
+		{
+			$songdata['listcat'] = explode( ",", $songdata['listcat'] );
+		}
+		else
+		{
+			$songdata['listcat'] = array();
+		}
 		
 		$sql = "SELECT `body` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $id;
 		$result = $db->sql_query( $sql );
@@ -121,6 +131,7 @@ if ( ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 ) && ( $error == '' ) )
 		}
 		else
 		{
+			if( $key == 'listcat' ) $data = implode( ",", $data ); 
 			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `" . $key . "`=" . $db->dbescape( $data ) . " WHERE `id` =" . $id);
 		}
 	}
@@ -137,20 +148,14 @@ if ( ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 ) && ( $error == '' ) )
 // them bai hat moi
 if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) && ( $error == '' ) )
 {	
-	if ( defined( 'NV_IS_USER' ) )
-	{
-		$userid = $user_info['userid'];
-	}
-	elseif ( defined( 'NV_IS_ADMIN' ) )
-	{
-		$userid = $admin_info['userid'];
-	}
 	foreach ( $songdata as $data => $null )
 	{
 		if ( $data == 'casimoi' ) continue;
 		if ( $data == 'nhacsimoi' ) continue;
-		if	($null == '') $error = $lang_module['error_song']; 
+		if ( $data == 'listcat' ) continue;
+		if ( $null == '' ) $error = $lang_module['error_song']; 
 	}
+	
 	if ( $error == "" )
 	{
 		$hit = "0-" . NV_CURRENTTIME;
@@ -164,7 +169,7 @@ if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) && ( $error == '' ) )
 		
 		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
 		(
-			`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit`
+			`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `listcat`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit`
 		) 
 		VALUES 
 		( 
@@ -175,15 +180,16 @@ if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) && ( $error == '' ) )
 			" . $db->dbescape( $songdata['nhacsi'] ) . ", 
 			" . $db->dbescape( $songdata['album'] ) . ", 
 			" . $db->dbescape( $songdata['theloai'] ) . ", 
+			" . $db->dbescape( implode( ",", $songdata['listcat'] ) ) . ", 
 			" . $db->dbescape( $data )  . ", 
-			" . $db->dbescape( $songdata['upboi'] ) . " ,
+			" . $db->dbescape( $admin_info['username'] ) . " ,
 			0,
 			1,
 			" . $db->dbescape( $songdata['bitrate'] ) . " ,
 			" . $db->dbescape( $songdata['size'] ) . " ,
 			" . $db->dbescape( $songdata['duration'] ) . ",
 			" . $server . ",
-			" . $userid . ",
+			" . $admin_info['userid'] . ",
 			UNIX_TIMESTAMP(),
 			0,
 			" . $db->dbescape( $hit ) . "
@@ -314,20 +320,13 @@ $contents .="
 					Album
 				</td>
 				<td style=\"background: #eee;\">
-				<select name=\"album\">\n";
-					foreach ( $allalbum as $key => $title )
-					{
-						$i= "";
-						if ( $songdata['album'] == $key )
-						$i = "selected=\"selected\"";
-						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
-					}
-					$contents .= "</select>
-				</td>
+				<input name=\"album\" id=\"album\" style=\"width: 470px;\" type=\"text\" readonly=\"readonly\" value=\"" . $songdata['album'] . "\"/>
+				<input type=\"button\" name=\"selectalbum\" value=\"" . $lang_module['select'] . "\"/>";
+$contents .= "</td>
 			</tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['category']."
+					".$lang_module['category_base']."
 				</td>
 				<td style=\"background: #eee;\">
 					<select name=\"theloai\">\n";
@@ -339,6 +338,21 @@ $contents .="
 						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
 					}
 					$contents .= "</select>
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">
+					".$lang_module['category_sub']."
+				</td>
+				<td style=\"background: #eee;max-height:250px;overflow:auto\">";
+				
+					foreach ( $category as $key => $title )
+					{
+						$checked = in_array( $key, $songdata['listcat'] ) ? " checked=\"checked\"" : "";
+						$contents .= "<input name=\"listcat[]\" type=\"checkbox\"" . $checked . " value=\"" . $key . "\" />" . $title . "<br />\n";
+					}
+					
+					$contents .= "
 				</td>
 			</tr>
 			<tr>
@@ -391,14 +405,6 @@ $contents .="
 			</tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['who_up']."
-				</td>
-				<td style=\"background: #eee;\">
-				<input name=\"upboi\" style=\"width: 470px;\" value=\"".$songdata['upboi']."\" type=\"text\" />
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">
 					" . $lang_module['add_lyric'] . "
 				</td>
 				<td style=\"background: #eee;\">
@@ -427,6 +433,15 @@ if ( empty( $songdata['ten'] ) )
                 });";
     $contents .= "</script>\n";
 }
+
+$contents .= "
+<script type=\"text/javascript\">\n
+	$(\"input[name=selectalbum]\").click( function() {
+		nv_open_browse_file( \"" . NV_BASE_ADMINURL . "index.php?\" + nv_name_variable + \"=" . $module_name . "&\" + nv_fc_variable + \"=getalbumid&area=album\", \"NVImg\", \"850\", \"600\", \"resizable=no,scrollbars=no,toolbar=no,location=no,status=no\" );
+		return false;
+	});
+</script>\n
+";
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );

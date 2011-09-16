@@ -102,7 +102,7 @@ if ( ( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 ) and ( $error == '' )
 
 // them album
 if ( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) and ( $error == '' ) )
-{	
+{
 	foreach ( $albumdata as $data => $null )
 	{
 		if ( in_array( $data, array('casimoi', 'listsong') ) ) continue;
@@ -335,6 +335,68 @@ $(document).ready(function()
 	});
 });
 </script>';
+
+$page_title = $lang_module['sub_album'];
+
+$id = $nv_Request->get_int( 'id', 'get', 0 );
+$error = "";
+
+if( $id )
+{
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $id;
+	$result = $db->sql_query( $sql );
+	$check = $db->sql_numrows( $result );
+		
+	if ( $check != 1 )
+	{
+		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	}
+		
+	$row = $db->sql_fetchrow( $result );
+		
+	$array_old = $array = array(
+		"name" => $row['name'],  //
+		"tname" => $row['tname'],  //
+		"casi" => $row['casi'],  //
+		"thumb" => $row['thumb'],  //
+		"describe" => nv_editor_br2nl( $row['describe'] ),  //
+		"listsong" => $row['listsong'] ? explode( $row['listsong'] ) : array()  //
+	);
+
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
+	$table_caption = $lang_module['sub_edit_album'];
+}
+else
+{
+	$array = array(
+		"name" => '',  //
+		"tname" => '',  //
+		"casi" => '',  //
+		"thumb" => '',  //
+		"describe" => '',  //
+		"listsong" => ''  //
+	);
+
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+	$table_caption = $lang_module['sub_add_album'];
+}
+
+if ( $nv_Request->isset_request( 'submit', 'post' ) )
+{
+	$array['name'] = filter_text_input( 'name', 'post', '', 1, 255 );
+	$array['tname'] = filter_text_input( 'tname', 'post', '', 1, 255 );
+	$array['casi'] = filter_text_input( 'casi', 'post', '', 1, 255 );
+	$array['thumb'] = filter_text_input( 'thumb', 'post', '', 1, 255 );
+}
+
+$xtpl = new XTemplate( "album_content.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
+$xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'GLANG', $lang_global );
+$xtpl->assign( 'TABLE_CAPTION', $table_caption );
+$xtpl->assign( 'FORM_ACTION', $form_action );
+
+$xtpl->parse('main');
+//$contents = $xtpl->text('main');
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
