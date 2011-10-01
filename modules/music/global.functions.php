@@ -636,4 +636,209 @@ function nv_get_URL_content( $target_url )
 	return implode ( "", $content );
 }
 
+function nvm_new_song( $array )
+{
+	global $module_data, $db;
+	
+	$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
+	$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
+	$array['casi'] = ! isset( $array['casi'] ) ? "ns" : $array['casi'];
+	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? "na" : $array['nhacsi'];
+	$array['album'] = ! isset( $array['album'] ) ? "" : $array['album'];
+	$array['theloai'] = ! isset( $array['theloai'] ) ? "1" : $array['theloai'];
+	$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
+	$array['data'] = ! isset( $array['data'] ) ? "" : $array['data'];
+	$array['username'] = ! isset( $array['username'] ) ? "N/A" : $array['username'];
+	$array['bitrate'] = ! isset( $array['bitrate'] ) ? "0" : $array['bitrate'];
+	$array['size'] = ! isset( $array['size'] ) ? "0" : $array['size'];
+	$array['duration'] = ! isset( $array['duration'] ) ? "0" : $array['duration'];
+	$array['server'] = ! isset( $array['server'] ) ? "1" : $array['server'];
+	$array['userid'] = ! isset( $array['userid'] ) ? "1" : $array['userid'];
+	$array['hit'] = ! isset( $array['hit'] ) ? "0-" . NV_CURRENTTIME : $array['hit'];
+	$array['lyric'] = ! isset( $array['lyric'] ) ? "" : $array['lyric'];
+	
+	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` VALUES (
+		NULL, 
+		" . $db->dbescape( $array['ten'] ) . ", 
+		" . $db->dbescape( $array['tenthat'] ) . ", 
+		" . $db->dbescape( $array['casi'] ) . ", 
+		" . $db->dbescape( $array['nhacsi'] ) . ", 
+		" . $db->dbescape( $array['album'] ) . ", 
+		" . $db->dbescape( $array['theloai'] ) . ", 
+		" . $db->dbescape( implode( ",", $array['listcat'] ) ) . ", 
+		" . $db->dbescape( $array['data'] )  . ", 
+		" . $db->dbescape( $array['username'] ) . " ,
+		0,
+		1,
+		" . $db->dbescape( $array['bitrate'] ) . " ,
+		" . $db->dbescape( $array['size'] ) . " ,
+		" . $db->dbescape( $array['duration'] ) . ",
+		" . $array['server'] . ",
+		" . $array['userid'] . ",
+		" . NV_CURRENTTIME . ",
+		0,
+		" . $db->dbescape( $array['hit'] ) . "
+	)";
+	
+	$_songid = $db->sql_query_insert_id( $sql );
+	
+	if( $_songid )
+	{
+		// Cap nhat so bai hat cua ca si, nhac si va album
+		updatesinger( $array['casi'], 'numsong', '+1' );
+		updateauthor( $array['nhacsi'], 'numsong', '+1' );
+		updatealbum( $array['album'], '+1' );
+
+		// Them bai hat vao danh sach nhac cua album moi
+		if( ! empty( $array['album'] ) )
+		{
+			$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $array['album'] );
+			$result = $db->sql_query( $sql );
+			list( $list_song ) = $db->sql_fetchrow( $result );
+			
+			$list_song = explode( ',', $list_song );
+			$list_song[] = $_songid;
+			$list_song = array_unique( $list_song );
+			$list_song = array_filter( $list_song );
+			
+			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ',', $list_song ) ) . " WHERE `name`=" . $db->dbescape( $array['album'] );
+			$db->sql_query( $sql );
+		}
+		
+		// Them loi bai hat moi
+		if( ! empty( $array['lyric'] ) )
+		{
+			$array['lyric'] = nv_nl2br( $array['lyric'], "<br />" );
+			
+			$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES(
+				NULL,
+				" . $_songid . ",
+				" . $db->dbescape( $array['username'] ) . ",
+				" . $db->dbescape( $array['lyric'] ) . ",
+				1, 
+				" . NV_CURRENTTIME . "
+			)";
+			$db->sql_query( $sql );
+		}
+		
+		$db->sql_freeresult();
+	}
+	
+	return $_songid;
+}
+
+function nvm_edit_song( $array_old, $array )
+{
+	global $module_data, $db;
+	
+	$array_old['casi'] = ! isset( $array_old['casi'] ) ? "ns" : $array_old['casi'];
+	$array_old['nhacsi'] = ! isset( $array_old['nhacsi'] ) ? "na" : $array_old['nhacsi'];
+	$array_old['theloai'] = ! isset( $array_old['theloai'] ) ? "1" : $array_old['theloai'];
+	$array_old['lyric'] = ! isset( $array_old['lyric'] ) ? "" : $array_old['lyric'];
+	
+	$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
+	$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
+	$array['casi'] = ! isset( $array['casi'] ) ? "ns" : $array['casi'];
+	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? "na" : $array['nhacsi'];
+	$array['album'] = ! isset( $array['album'] ) ? "" : $array['album'];
+	$array['theloai'] = ! isset( $array['theloai'] ) ? "1" : $array['theloai'];
+	$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
+	$array['duongdan'] = ! isset( $array['duongdan'] ) ? "" : $array['duongdan'];
+	$array['bitrate'] = ! isset( $array['bitrate'] ) ? "0" : $array['bitrate'];
+	$array['size'] = ! isset( $array['size'] ) ? "0" : $array['size'];
+	$array['duration'] = ! isset( $array['duration'] ) ? "0" : $array['duration'];
+	$array['server'] = ! isset( $array['server'] ) ? "1" : $array['server'];
+	$array['userid'] = ! isset( $array['userid'] ) ? "1" : $array['userid'];
+	$array['username'] = ! isset( $array['username'] ) ? "N/A" : $array['username'];
+	$array['lyric'] = ! isset( $array['lyric'] ) ? "" : $array['lyric'];
+	$array['id'] = ! isset( $array['id'] ) ? "0" : $array['id'];
+	
+	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET 
+		`ten`=" . $db->dbescape( $array['ten'] ) . ", 
+		`tenthat`=" . $db->dbescape( $array['tenthat'] ) . ", 
+		`casi`=" . $db->dbescape( $array['casi'] ) . ", 
+		`nhacsi`=" . $db->dbescape( $array['nhacsi'] ) . ", 
+		`album`=" . $db->dbescape( $array['album'] ) . ", 
+		`theloai`=" . $db->dbescape( $array['theloai'] ) . ", 
+		`listcat`=" . $db->dbescape( implode( ",", $array['listcat'] ) ) . ", 
+		`duongdan`=" . $db->dbescape( $array['duongdan'] )  . ", 
+		`bitrate`=" . $db->dbescape( $array['bitrate'] ) . " ,
+		`size`=" . $db->dbescape( $array['size'] ) . " ,
+		`duration`=" . $db->dbescape( $array['duration'] ) . ",
+		`server`=" . $array['server'] . "
+		WHERE `id`=" . $array['id'];
+	
+	$check_update = $db->sql_query( $sql );
+	
+	if( $check_update )
+	{
+		// Cap nhat so bai hat cua ca si
+		if( $array_old['casi'] != $array['casi'] )
+		{
+			updatesinger( $array_old['casi'], 'numsong', '-1' );
+			updatesinger( $array['casi'], 'numsong', '+1' );
+		}
+		
+		// Cap nhat so bai hat cua nhac si
+		if( $array_old['nhacsi'] != $array['nhacsi'] )
+		{
+			updateauthor( $array_old['nhacsi'], 'numsong', '-1' );
+			updateauthor( $array['nhacsi'], 'numsong', '+1' );
+		}
+		
+		// Cap nhat so bai hat cua album
+		if( $array_old['album'] != $array['album'] )
+		{
+			updatealbum( $array_old['album'], '-1' );
+			updatealbum( $array['album'], '+1' );
+			
+			// Them bai hat vao danh sach bai hat cua album moi
+			$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $array['album'] );
+			$result = $db->sql_query( $sql );
+			list( $list_song ) = $db->sql_fetchrow( $result );
+			
+			$list_song = explode( ',', $list_song );
+			$list_song[] = $array['id'];
+			$list_song = array_unique( $list_song );
+			$list_song = array_filter( $list_song );
+			
+			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ',', $list_song ) ) . " WHERE `name`=" . $db->dbescape( $array['album'] );
+			$db->sql_query( $sql );
+		}
+
+		// Xu ly loi bai hat
+		if( $array['lyric'] != $array_old['lyric'] )
+		{
+			$array['lyric'] = nv_nl2br( $array['lyric'], "<br />" );
+			
+			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $array['id'] . " AND `user`=" . $db->dbescape( $array['username'] );
+			$result = $db->sql_query( $sql );
+			list( $lyric_id ) = $db->sql_fetchrow( $result );
+			
+			// Cap nhat loi bai hat			
+			if( $lyric_id )
+			{
+				$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` SET `body`=" . $db->dbescape( $array['lyric'] ) . " WHERE `id`=" . $lyric_id;
+				$db->sql_query( $sql );
+			}
+			// Them loi bai hat
+			else
+			{
+				$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES(
+					NULL,
+					" . $array['id'] . ",
+					" . $db->dbescape( $array['username'] ) . ",
+					" . $db->dbescape( $array['lyric'] ) . ",
+					1, " . NV_CURRENTTIME . "
+				)";
+				$db->sql_query( $sql );
+			}
+		}
+		
+		$db->sql_freeresult();
+	}
+	
+	return $check_update;
+}
+
 ?>

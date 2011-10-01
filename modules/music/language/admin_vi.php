@@ -8,9 +8,7 @@
  * @Createdate 26/01/2011 09:41 AM
  */
 
- if (! defined('NV_ADMIN') or ! defined('NV_MAINFILE')){
- die('Stop!!!');
-}
+if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 $lang_translator['author'] ="Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] ="04/03/2010, 15:22";
@@ -195,10 +193,17 @@ $lang_module['sub_blockhotsinger'] = "Block ca sĩ hot";
 $lang_module['sub_lyric'] = "Quản lý lyric";
 $lang_module['sub_singer'] = "Quản lý ca sĩ";
 $lang_module['sub_videocategory'] = "Quản lý thể loại clip";
+
 $lang_module['song'] = "Bài hát";
 $lang_module['song_name'] = "Tên bài hát";
 $lang_module['song_name_short'] = "Tên gọn";
 $lang_module['song_info'] = "Thông tin về bài hát";
+$lang_module['song_manager'] = "Quản lý bài hát";
+$lang_module['song_error_ten'] = "Tên ngắn gọn còn trống kìa";
+$lang_module['song_error_tenthat'] = "Tên đầy đủ còn trống kìa";
+$lang_module['song_error_theloai'] = "Bài hát chưa có thể loại kìa";
+$lang_module['song_error_duongdan'] = "Chưa có đường dẫn đến bài hát kìa";
+
 $lang_module['thumb'] = "Ảnh hiển thị";
 $lang_module['uncheckall'] = "Bỏ chọn";
 $lang_module['update_success'] = "Cập nhật thành công";
