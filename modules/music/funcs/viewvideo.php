@@ -13,7 +13,6 @@ $allsinger = getallsinger();
 $category = get_videocategory();
 $setting = setting_music();
 
-
 $user_login = $mainURL . "=login" ;
 $user_register = $mainURL . "=register" ;
 
@@ -47,13 +46,13 @@ $array = array(
 	"thumb" => $row['thumb'],  //
 	"sname" => $row['name'],  //
 	"singer" => $allsinger[$row['casi']],  //
-	"category" => $category[$row['theloai']],  //
+	"category" => $category[$row['theloai']]['title'],  //
 	"view" => $row['view'],  //
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ),  //
 	"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'],  //
 	"url_search_category" => $mainURL . "=searchvideo/category/" . $row['theloai'],  //
 	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ),  //
-	"URL_SONG" => get_URL()  //
+	"URL_SONG" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=viewvideo/' . $row['id'] . '/' . $row['name'], true )  //
 );
 
 // tieu de trang
