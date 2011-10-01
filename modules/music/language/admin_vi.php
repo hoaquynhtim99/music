@@ -121,7 +121,7 @@ $lang_module['link'] = "Đường dẫn";
 $lang_module['list_album'] = "Danh sách các album";
 $lang_module['list_gift'] = "Danh sách các quà tặng";
 $lang_module['lyric_del_confirm'] = "Bạn có chắc xóa lời bài hát này";
-$lang_module['manager_category'] = "Quản lý thể loại";
+$lang_module['manager_category'] = "Quản lý thể loại bài hát";
 $lang_module['manager_category_info'] = "Lưu ý khi thêm thể loại bạn sẽ không thể xóa";
 $lang_module['music_setting'] = "Cấu hình module";
 $lang_module['no_any_album'] = "Không thuộc album nào";
@@ -179,7 +179,7 @@ $lang_module['set_playlist_max'] = "Số playlist tối đa của một thành v
 $lang_module['set_time_del_cache'] = "Thời gian xác lập lại bộ nhớ tạm của link nhạc";
 $lang_module['set_time_del_cache_info'] = " (phút). Nhập 0 nếu không xóa bộ nhớ tạm này";
 
-$lang_module['sub_category'] = "Quản lý thể loại";
+$lang_module['sub_category'] = "Quản lý thể loại bài hát";
 $lang_module['sub_album'] = "Quản lý album";
 $lang_module['sub_author'] = "Quản lý nhạc sĩ";
 $lang_module['sub_add_album'] = "Thêm album";
