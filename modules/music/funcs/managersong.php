@@ -130,7 +130,7 @@ if( ! empty( $userid ) )
 				"duration" => $row['duration'],  //
 				"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
 				"url_search_category" => $mainURL . "=search/category/" . $row['theloai'],  //
-				"category" => $category[$row['theloai']],  //
+				"category" => $category[$row['theloai']]['title'],  //
 				"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'],  //
 				"url_edit" => $mainURL . "=managersong/" . $row['id'],  //
 				"active" => $row['active']  //

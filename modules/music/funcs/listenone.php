@@ -74,7 +74,7 @@ if( ! empty( $row['listcat'] ) )
 	foreach( $row['listcat'] as $cat )
 	{
 		$listcat[] = array(
-			"title" => $category[$cat],  //
+			"title" => $category[$cat]['title'],  //
 			"url" => $mainURL . "=search/category/" . $cat  //
 		);
 	}
@@ -93,7 +93,7 @@ $sdata = array(
 	"song_sname" => $row['ten'],  //
 	"song_singer" => $allsinger[$row['casi']],  //
 	"song_author" => $allauthor[$row['nhacsi']],  //
-	"song_cat" => $category[ $row['theloai'] ],  //
+	"song_cat" => $category[$row['theloai']]['title'],  //
 	"song_listcat" => $listcat,  //
 	"song_vote" => $row['binhchon'],  //
 	"song_numview" => $row['numview'],  //

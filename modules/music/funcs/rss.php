@@ -84,7 +84,7 @@ if ( $xml !== false and $module_info['rss'] )
 			{
 				foreach ( $category as $catid => $cat )
 				{
-					if ( change_alias ( $cat ) == $cat_in )
+					if ( change_alias ( $cat['title'] ) == $cat_in )
 					{
 						$sql_cat .= " AND a.theloai=" . $catid;
 						break;

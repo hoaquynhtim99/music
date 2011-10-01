@@ -291,7 +291,7 @@ $contents .= "</td>
 						$i= "";
 						if ( $array['theloai'] == $key )
 						$i = "selected=\"selected\"";
-						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title['title'] . "</option>\n";
 					}
 					$contents .= "</select>
 				</td>
@@ -305,7 +305,7 @@ $contents .= "</td>
 					foreach ( $category as $key => $title )
 					{
 						$checked = in_array( $key, $array['listcat'] ) ? " checked=\"checked\"" : "";
-						$contents .= "<input name=\"listcat[]\" type=\"checkbox\"" . $checked . " value=\"" . $key . "\" />" . $title . "<br />\n";
+						$contents .= "<input name=\"listcat[]\" type=\"checkbox\"" . $checked . " value=\"" . $key . "\" />" . $title['title'] . "<br />\n";
 					}
 					
 					$contents .= "

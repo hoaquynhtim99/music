@@ -6,10 +6,13 @@
  * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
  * @Createdate 9-8-2010 14:43
  */
+ 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+
 $page_title = $lang_module['4category_main'];
 $contents = '' ;
 $category = get_category() ;
+
 // lay du lieu 
 $ok = $nv_Request->get_int( 'save', 'post', 0 );
 $ca = array();
@@ -59,7 +62,7 @@ $contents .= "
 							$i= "";
 							if ( $cid == $key )
 							$i = "selected=\"selected\"";
-							$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+							$contents .= "<option ". $i ." value=\"".$key."\" >" . $title['title'] . "</option>\n";
 						}
 						$contents .= "
 					</select>

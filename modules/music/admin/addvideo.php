@@ -245,7 +245,7 @@ $contents .="
 						$i= "";
 						if ( $videodata['theloai'] == $key )
 						$i = "selected=\"selected\"";
-						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title['title'] . "</option>\n";
 					}
 					$contents .= "</select>
 				</td>

@@ -1,19 +1,15 @@
 <!-- BEGIN: main -->
 <form action="{FORM_ACTION}" method="post">
 <table class="tab1">
-	<caption>{TABLE_CAPTION}</caption>
 	<tbody>
 		<tr>
-            <td>
+            <td style="width:150px">
 				{LANG.hot_album_add}
             </td>
             <td>
-				<select name="album">
-					<!-- BEGIN: album -->
-					<option value="{album_name}"{album_selected}>{album_title}</option>
-					<!-- END: album -->
-				</select>
-            </td>
+				<input style="width:350px;" type="text" name="album" id="album" value="" readonly="readonly" />
+				<input type="button" name="selectalbum" value="{LANG.select}"/>
+			</td>
 		</tr>
 	</tbody>
 	<tbody class="second">
@@ -33,7 +29,22 @@
 	<tbody>
 		<tr>
 			<td>
-				{LANG.nct_list_song}
+				{LANG.category_sub}
+			</td>
+            <td>
+				<div style="max-height:250px;overflow:auto">
+					<!-- BEGIN: listcat -->
+					<input name="listcat[]" type="checkbox" value="{catid}" />{cat_title}<br />
+					<!-- END: listcat -->
+				</div>
+            </td>
+		</tr>
+	</tbody>
+	<tbody>
+		<tr>
+			<td class="atop">
+				{LANG.nct_list_song}<br />
+				<strong>[<a href="javascript:void(0);" id="aaddlink">{LANG.song_add}</a>]</strong>
 			</td>
             <td>
 				<div id="listsong">
@@ -53,9 +64,15 @@
 </table>
 </form>
 <script type="text/javascript">
-$('input[name=addsong]').click( function()
+$('input[name=addsong], #aaddlink').click( function()
 {
 	$('#listsong').append('<input style="width:600px;" type="text" name="song[]" value="" />');
 });
+</script>
+<script type="text/javascript">
+	$("input[name=selectalbum]").click( function(){
+		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=getalbumid&area=album", "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+		return false;
+	});
 </script>
 <!-- END: main -->

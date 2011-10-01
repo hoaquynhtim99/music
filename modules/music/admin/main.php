@@ -86,7 +86,7 @@ foreach ( $category as $id => $title )
 {	
 	$a = '';
 	if ($id == $where_search) $a = "selected=\"selected\"";
-	$contents .= "<option ".$a." value=\"".$id."\" >" . $title . "</option>\n";
+	$contents .= "<option ".$a." value=\"".$id."\" >" . $title['title'] . "</option>\n";
 }
 $contents .= "</select>";
 
@@ -145,7 +145,7 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->assign( 'URL', $mainURL . "=listenone/" . $rs['id'] . "/" . $rs['ten'] );
 	
 	$xtpl->assign('album', $rs['albumname']);
-	$xtpl->assign('category', $category[ $rs['theloai'] ] );
+	$xtpl->assign('category', $category[$rs['theloai']]['title'] );
 
 	$class = ($i % 2) ? " class=\"second\"" : "";
 	$xtpl->assign('class', $class);

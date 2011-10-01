@@ -120,10 +120,10 @@ while ( $row = $db->sql_fetchrow( $query ) )
 	$fctegory[$row['id']] = $row['cid'] ;
 }
 	
-$xtpl->assign( 'f1', ( $fctegory[1] == 0 )? ( '' ):( $category[$fctegory[1]] ) );
-$xtpl->assign( 'f2', ( $fctegory[2] == 0 )? ( '' ):( $category[$fctegory[2]] ) );
-$xtpl->assign( 'f3', ( $fctegory[3] == 0 )? ( '' ):( $category[$fctegory[3]] ) );
-$xtpl->assign( 'f4', ( $fctegory[4] == 0 )? ( '' ):( $category[$fctegory[4]] ) );
+$xtpl->assign( 'f1', ( $fctegory[1] == 0 )? ( '' ):( $category[$fctegory[1]]['title'] ) );
+$xtpl->assign( 'f2', ( $fctegory[2] == 0 )? ( '' ):( $category[$fctegory[2]]['title'] ) );
+$xtpl->assign( 'f3', ( $fctegory[3] == 0 )? ( '' ):( $category[$fctegory[3]]['title'] ) );
+$xtpl->assign( 'f4', ( $fctegory[4] == 0 )? ( '' ):( $category[$fctegory[4]]['title'] ) );
 	
 $i = 1 ;
 foreach ( $fctegory as $this_category )
@@ -135,9 +135,8 @@ foreach ( $fctegory as $this_category )
 		$xtpl->assign( 'ID', $row['id'] );
 		$xtpl->assign( 'name', $row['tenthat'] );
 		$xtpl->assign( 'singer', $allsinger[$row['casi']] );
-		$xtpl->assign( 'category', $category[$row['theloai']] );
+		$xtpl->assign( 'category', $category[$row['theloai']]['title'] );
 		$xtpl->assign( 'who_upload', $row['upboi'] );
-		//$xtpl->assign( 'url', $songURL . $row['duongdan'] );
 		$xtpl->assign( 'view', $row['numview'] );
 		$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'] );
 	

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET MUSIC
  * @Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011 Freeware
  * @Createdate 25-12-2010 14:43
@@ -9,9 +9,8 @@
  
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) { die( 'Stop!!!' ); }
 
-$page_title = $lang_module['nhacvui_title'];
+$page_title = $lang_module['nhacvui_get'];
 
-$all_album = getallalbum( );
 $all_singer = getallsinger( );
 $all_cat = get_category( );
 if ( empty ( $all_cat ) )
@@ -23,134 +22,94 @@ if ( empty ( $all_cat ) )
 if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
     $array['link'] = $nv_Request->get_typed_array( 'song', 'post', 'string' );
-	
 	$array['album'] = filter_text_input( 'album', 'post', '' );
 	$array['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
-	$array['upboi'] = $admin_info['username'];
-		
-	$array['alias'] = ( $array['alias'] == "" ) ? change_alias( $array['title'] ) : change_alias( $array['alias'] );
-		
-	$list_song = array();
-		
+	$array['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
+
+	$list_song = array();	
+
 	foreach ( $array['link'] as $link )
 	{
-
 		$data = nv_get_URL_content( $link );
-		preg_match( "/\<title\>(.*)\<\/title\>/", $data , $array['keywords'] );
-		$array['keywords'] = explode ( ",", $array['keywords'][1] );
-		$array['keywords'] = explode ( "ca sĩ", $array['keywords'][2] );
-		$array['keywords'] = array_map ( "trim", $array['keywords'] );
 
-		$title = ! empty ( $array['keywords'][0] ) ? $array['keywords'][0] : "";
-		$alias = ! empty ( $title ) ? change_alias( $title ) : "";
+		$title = "";
+		$singer = "ns";
+		$author = "na";
 		
-		$singer = ! empty ( $array['keywords'][1] ) ? $array['keywords'][1] : "ns";
+		$_title = explode( '<span class="orgranText12">', $data );
+		if( isset( $_title[1] ) )
+		{
+			$_title = explode( '</span>', $_title[1] );
+			$title = trim( $_title[0] );
+		}
+		
+		if( ! empty( $title ) )
+		{
+			$_title = explode( '<h3 class="nghenhac-baihat">Ca sĩ: ', $data );
+			if( isset( $_title[1] ) )
+			{
+				$_title = explode( '|', $_title[1] );
+				$_title = trim( $_title[0] );
+				$_title = strip_tags( $_title );
+				$singer = empty( $_title ) ? "ns" : $_title;
+			}
+		}
 		
 		if ( ! empty ( $title ) )
 		{
-			if ( ! in_array ( $singer, $all_singer ) )
+			if ( ! in_array ( $singer, $all_singer ) and ( $singer != 'ns' ) and ! empty( $singer ) )
 			{
 				newsinger( change_alias ( $singer ), $singer );
 			}
 			
-			$hit = "0-" . NV_CURRENTTIME;
 			$check_url = creatURL ( $link );
-			$data = $check_url['duongdan'];
-			$server = $check_url['server'];
 			
-			// update so bai hat
-			updatesinger( change_alias ( $singer ), 'numsong', '+1' );
-			updatealbum( $array['album'], '+1' );
-			
-			$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` 
-			(
-				`id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit`
-			) 
-			VALUES 
-			( 
-				NULL, 
-				" . $db->dbescape( $alias ) . ", 
-				" . $db->dbescape( $title ) . ", 
-				" . $db->dbescape( change_alias ( $singer ) ) . ", 
-				" . $db->dbescape( "na" ) . ", 
-				" . $db->dbescape( $array['album'] ) . ", 
-				" . $db->dbescape( $array['theloai'] ) . ", 
-				" . $db->dbescape( $data )  . ", 
-				" . $db->dbescape( $array['upboi'] ) . " ,
-				0,
-				1,
-				" . $db->dbescape( 0 ) . " ,
-				" . $db->dbescape( 0 ) . " ,
-				" . $db->dbescape( 0 ) . ",
-				" . $server . ",
-				" . $admin_info['userid'] . ",
-				UNIX_TIMESTAMP(),
-				0,
-				" . $db->dbescape( $hit ) . "
-			)"; 
-			
-			$song_id = $db->sql_query_insert_id( $query );
-			
-			if ( $song_id )
+			$array_data['ten'] = change_alias ( $title );
+			$array_data['tenthat'] = $title;
+			$array_data['casi'] = change_alias ( $singer );
+			$array_data['album'] = $array['album'];
+			$array_data['theloai'] = $array['theloai'];
+			$array_data['listcat'] = $array['listcat'];
+			$array_data['data'] = $check_url['duongdan'];
+			$array_data['username'] = $admin_info['username'];
+			$array_data['server'] = $check_url['server'];
+			$array_data['userid'] = $admin_info['userid'];
+
+			$result_song_id = nvm_new_song( $array_data );
+
+			if ( $result_song_id )
 			{
 				$list_song[] = $song_id;
 				$db->sql_freeresult();
 			}
 		}
 	}
-	
-	if( ! empty( $list_song ) and ! empty( $array['album'] ) )
-	{
-		$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name` =" . $db->dbescape( $array['album'] );
-		$result = $db->sql_query( $sql );
-		list( $data_song ) = $db->sql_fetchrow( $result );
-		$data_song = explode( ",", $data_song );
-		foreach( $list_song as $songid )
-		{
-			$data_song[] = $songid;
-		}
 		
-		$data_song = array_filter( $data_song );
-		
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ",", $data_song ) ) . " WHERE `name`=" . $db->dbescape( $array['album'] );
-		$db->sql_query( $sql );
-	}
-	
-	nv_insert_logs( NV_LANG_DATA, $module_name, "Add song from nhaccuatui" , "List song", $admin_info['userid'] );
+	nv_insert_logs( NV_LANG_DATA, $module_name, $lang_module['nhacvui_get'], "List song", $admin_info['userid'] );
 	nv_del_moduleCache( $module_name );
 	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
 	exit();
 }
 else
 {
-	$array['album'] = "NO";
-	$array['theloai'] = "NO";
+	$array['album'] = "";
+	$array['theloai'] = "";
 }
 
 $xtpl = new XTemplate( "nhaccuatui.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'GLANG', $lang_global );
 $xtpl->assign( 'TABLE_CAPTION', $page_title );
+$xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
 $xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
-
-foreach ( $all_album as $name => $title )
-{
-	$album_selected = ( $array['album'] == $name ) ? " selected=\"selected\"" : "";
-	
-	$xtpl->assign( 'album_name', $name );
-	$xtpl->assign( 'album_title', $title );
-	$xtpl->assign( 'album_selected', $album_selected );
-	$xtpl->parse( 'main.album' );
-}
 
 foreach ( $all_cat as $id => $cat )
 {
-	$selected = ( $array['theloai'] == $id ) ? " selected=\"selected\"" : "";
-	
 	$xtpl->assign( 'catid', $id );
-	$xtpl->assign( 'cat_title', $cat );
-	$xtpl->assign( 'selected', $selected );
+	$xtpl->assign( 'cat_title', $cat['title'] );
+	$xtpl->assign( 'selected', ( $array['theloai'] == $id ) ? " selected=\"selected\"" : "" );
 	$xtpl->parse( 'main.catid' );
+	$xtpl->parse( 'main.listcat' );
 }
 
 $xtpl->parse( 'main' );

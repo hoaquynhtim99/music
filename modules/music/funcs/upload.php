@@ -39,7 +39,7 @@ if( ( $setting['who_upload'] == 1 ) or ( ( $setting['who_upload'] == 0 ) and def
 	$categoryd = '';
 	foreach ( $category as $key => $title )
 	{
-		$categoryd .= "<option value=\"" . $key . "\" >" . $title . "</option>";
+		$categoryd .= "<option value=\"" . $key . "\" >" . $title['title'] . "</option>";
 	}
 	
 	$g_array['singerdata'] = $singerdata . "</select>";

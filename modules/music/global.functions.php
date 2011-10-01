@@ -3,24 +3,15 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @copyright 2011
+ * @copyright 2011 Free Ware
  * @createdate 26/01/2011 09:17 AM
  */
+ 
 if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
-
-// lay url
-function get_URL( )
-{
-	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-	$protocol = substr( strtolower( $_SERVER["SERVER_PROTOCOL"] ), 0, strpos( strtolower( $_SERVER["SERVER_PROTOCOL"] ), "/" ) ) .  $s;
-	$port = ( $_SERVER["SERVER_PORT"] == "80" ) ? "" : ( ":" . $_SERVER["SERVER_PORT"] );
-	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port . $_SERVER['REQUEST_URI'];
-}
 
 global $mainURL, $main_header_URL;
 $mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE ;
 $main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE ;
-
 
 // lay thong tin the loai
 function get_category()
@@ -29,7 +20,7 @@ function get_category()
 	
 	$category = array() ;
 	
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category";
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category ORDER BY `weight` ASC";
 	
     $result = nv_db_cache( $sql, 'id' );
     
@@ -37,7 +28,12 @@ function get_category()
     {
         foreach ( $result as $row )
 		{
-			$category[ $row['id'] ] = $row[ 'title' ] ;
+			$category[$row['id']] = array(
+				'id'  => $row['id'], //
+				'title'  => $row['title'], //
+				'keywords'  => $row['keywords'], //
+				'description'  => $row['description'] //
+			);
 		}
 	}
 	return $category ;
@@ -49,14 +45,19 @@ function get_videocategory()
 	
 	$category = array() ;
 	
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category";
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category ORDER BY `weight` ASC";
     $result = nv_db_cache( $sql, 'id' );
     
     if ( ! empty( $result ) )
     {
         foreach ( $result as $row )
 		{
-			$category[$row['id']] = $row['title'] ;
+			$category[$row['id']] = array(
+				'id'  => $row['id'], //
+				'title'  => $row['title'], //
+				'keywords'  => $row['keywords'], //
+				'description'  => $row['description'] //
+			);
 		}
 	}
 	
@@ -190,28 +191,6 @@ function getsingerbyID( $id )
 	$singer = $db->sql_fetchrow($result);
 
 	return $singer ;
-}
-
-// lay tat ca album
-function getallalbum( )
-{
-	global $module_data, $lang_module, $db ;
-
-	$allalbum = array() ;
-	$allalbum['na'] = $lang_module['unknow'];
-	
-	$sql = "SELECT `name`, `tname` FROM " . NV_PREFIXLANG . "_" . $module_data . "_album ORDER BY name ASC";
-	$result = nv_db_cache( $sql, 'name' );
-	 
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
-		{
-			$allalbum[$row['name']] = $row['tname'];
-		}
-	}
-
-	return $allalbum ;
 }
 
 // Them moi mot ca si
@@ -528,7 +507,9 @@ function outputURL ( $server, $inputurl )
 							{
 								$output = explode ( '[/FLASH]"', $output[1] );
 								$output =  rawurldecode ( $output[0] );
+								$output = str_replace( "nhac.vui.vn", "hcm.nhac.vui.vn", $output );
 								$output =  nv_get_URL_content ( $output );
+													
 								$output = explode ( "<location><![CDATA[", $output );
 								
 								if( isset( $output[1] ) )
