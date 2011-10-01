@@ -43,7 +43,7 @@ $album_array = array(
 	"who_post" => $row['upboi'], //
 	"album_thumb" => $row['thumb'], //
 	"describe" => $row['describe'], //
-	"URL_ALBUM" => get_URL() //
+	"URL_ALBUM" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ) //
 );
 
 if( empty( $row ) )

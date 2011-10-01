@@ -360,7 +360,7 @@ if( $id )
 		"casi" => $row['casi'],  //
 		"thumb" => $row['thumb'],  //
 		"describe" => nv_editor_br2nl( $row['describe'] ),  //
-		"listsong" => $row['listsong'] ? explode( $row['listsong'] ) : array()  //
+		"listsong" => $row['listsong'] ? explode( ',', $row['listsong'] ) : array()  //
 	);
 
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
