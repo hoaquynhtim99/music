@@ -227,6 +227,9 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category` (
   `id` int(255) NOT NULL AUTO_INCREMENT,
   `title` varchar(50) NOT NULL,
+  `keywords` mediumtext NOT NULL,
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `weight` smallint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
