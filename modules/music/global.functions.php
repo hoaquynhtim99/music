@@ -424,7 +424,7 @@ function outputURL ( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-						$output = explode ( 'flashvars="autostart=true&amp;file=', $output );
+						$output = explode ( '&autostart=true&file=', $output );
 						
 						if( isset( $output[1] ) )
 						{
