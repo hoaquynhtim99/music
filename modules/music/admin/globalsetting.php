@@ -32,11 +32,6 @@ $contents = '
 </table>
 <table class="tab1">
     <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=blockhotsinger">' . $lang_module['sub_blockhotsinger'] . '</a>
-    </caption>
-</table>
-<table class="tab1">
-    <caption>
         <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=ftpsetting">' . $lang_module['ftpsetting'] . '</a>
     </caption>
 </table>
@@ -55,4 +50,5 @@ $contents = '
 include (NV_ROOTDIR . "/includes/header.php");
 echo nv_admin_theme($contents);
 include (NV_ROOTDIR . "/includes/footer.php");
+
 ?>

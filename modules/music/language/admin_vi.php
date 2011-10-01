@@ -16,6 +16,14 @@ $lang_translator['copyright'] ="@Copyright (C) 2011";
 $lang_translator['info'] ="";
 $lang_translator['langtype'] ="lang_module";
 
+$lang_module['weight'] = "Thứ tự";
+$lang_module['title'] = "Tiêu đề";
+$lang_module['submit'] = "Lưu lại";
+$lang_module['status'] = "Hoạt động";
+$lang_module['description'] = "Mô tả";
+$lang_module['keywords'] = "Từ khóa";
+$lang_module['keywords_info'] = "phân cách bởi dấu phảy";
+
 $lang_module['4category_main'] = "Bốn thể loại trên trang chủ";
 $lang_module['author'] = "Nhạc sĩ";
 $lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
@@ -77,6 +85,7 @@ $lang_module['edit_comment_song'] = "Sửa bình luận bài hát";
 $lang_module['edit_comment_album'] = "Sửa bình luận album";
 $lang_module['edit_lyric'] = "Sửa lời bài hát";
 $lang_module['edit_gift'] = "Sửa quà tặng âm nhạc";
+
 $lang_module['error_save'] = "Xảy ra một lỗi nào đó khiến cho dữ liệu không thể lưu được, hãy kiểm tra lại";
 $lang_module['error_list'] = "Danh sách các báo lỗi";
 $lang_module['error_user'] = "Tên người gửi";
@@ -89,6 +98,9 @@ $lang_module['error_check_lyric'] = "Bạn chưa chọn lời bài hát nào";
 $lang_module['error_full_info'] = "Chưa đủ thông tin";
 $lang_module['error_name_ads'] = "Lỗi: Bạn chưa điền tên quảng cáo";
 $lang_module['error_link_ads'] = "Lỗi: Bạn chưa chọn quảng cáo";
+$lang_module['error_title'] = "Lỗi: Tiêu đề không được để trống";
+$lang_module['error_update'] = "Lỗi: Không thể cập nhật dữ liệu";
+
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";
 $lang_module['ftp_host'] = "Tên host";
@@ -103,11 +115,7 @@ $lang_module['info'] = "Thông tin";
 $lang_module['hot_album'] = "Album HOT";
 $lang_module['hot_album_select'] = "Chọn một Album HOT";
 $lang_module['hot_album_add'] = "chọn album";
-$lang_module['hot_singer'] = "Ca sĩ HOT";
-$lang_module['hot_singer_info'] = "Thông tin ca sĩ";
-$lang_module['hot_singer_simg'] = "Ảnh nhỏ";
-$lang_module['hot_singer_limg'] = "Ảnh lớn";
-$lang_module['hot_singer_name'] = "Chọn ca sĩ";
+
 $lang_module['fillin'] = "Điền thông tin";
 $lang_module['link'] = "Đường dẫn";
 $lang_module['list_album'] = "Danh sách các album";
@@ -189,7 +197,6 @@ $lang_module['sub_mainalbum'] = "Album trang chủ";
 $lang_module['sub_ads'] = "Quảng cáo";
 $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
-$lang_module['sub_blockhotsinger'] = "Block ca sĩ hot";
 $lang_module['sub_lyric'] = "Quản lý lyric";
 $lang_module['sub_singer'] = "Quản lý ca sĩ";
 $lang_module['sub_videocategory'] = "Quản lý thể loại clip";
@@ -288,5 +295,10 @@ $lang_module['complete'] = "Hoàn tất";
 $lang_module['error_exist_album'] = "Lỗi: Album này đã tồn tại";
 
 $lang_module['getaid_title'] = "Lấy album";
+
+$lang_module['cat_lits'] = "Danh sách thể loại bài hát";
+$lang_module['cat_edit'] = "Sửa thể loại bài hát";
+$lang_module['cat_add'] = "Thêm thể loại bài hát";
+$lang_module['cat_error_exist'] = "Lỗi: Thể loại bài hát này đã có";
 
 ?>

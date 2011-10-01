@@ -21,7 +21,6 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_video`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_error`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_gift`";
-$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_hot_singer`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_lyric`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_main_album`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_main_category`";
@@ -77,15 +76,18 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `addtime` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
+) ENGINE=MyISAM";
 
 //3. The loai
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category` (
   `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
+  `title` varchar(255) NOT NULL DEFAULT '',
+  `keywords` mediumtext NOT NULL,
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `weight` smallint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
+) ENGINE=MyISAM";
 
 //4. Album HOT
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` (
@@ -184,17 +186,6 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `order` int(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `albumid` (`albumid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
-
-//14. block ca si hot
-$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_hot_singer` (
-  `id` int(5) NOT NULL AUTO_INCREMENT,
-  `stt` int(5) NOT NULL,
-  `fullname` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `thumb` varchar(255) NOT NULL,
-  `large_thumb` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
 
 //15. playlist
@@ -339,27 +330,6 @@ while ( $i <= 4 )
 	VALUES 
 	(
 	'".$i."',  '0'
-	)";
-	$i ++ ;
-}
-
-// them vao ca si hot
-$i = 1 ;
-while ( $i <= 3 )
-{
-	$sql_create_module[] ="
-	INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_hot_singer` 
-	(
-	`id` ,
-	`stt`,
-	`fullname`,
-	`name`,
-	`thumb`,
-	`large_thumb`
-	)
-	VALUES 
-	(
-	'".$i."',  '".$i."' , '', '' ,'' ,''
 	)";
 	$i ++ ;
 }
