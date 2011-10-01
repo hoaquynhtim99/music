@@ -536,6 +536,55 @@ function outputURL ( $server, $inputurl )
 						nv_set_cache( $cache_file, $cache );
 					}
 				}
+				elseif ( $data['host'] == "nhacso" )
+				{
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					
+					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+					{
+						if ( ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						{
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+						}
+					}
+					
+					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					{
+						$output = unserialize( $cache );
+					}
+					else
+					{
+						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+						$output = nv_get_URL_content( $output );
+						
+						$output = explode ( 'embedPlaylistjs.swf?xmlPath=', $output );
+						
+						if( isset( $output[1] ) )
+						{
+							$output = explode ( '&amp;', $output[1] );
+							$output =  nv_get_URL_content ( $output[0] );
+
+							$output = explode ( "<mp3link><![CDATA[", $output );
+								
+							if( isset( $output[1] ) )
+							{
+								$output = explode ( "]]></mp3link>", $output[1] );
+								$output =  trim( $output[0] );
+							}
+							else
+							{
+								$output = "";
+							}
+						}
+						else
+						{
+							$output = "";
+						}
+						
+						$cache = serialize( $output );
+						nv_set_cache( $cache_file, $cache );
+					}
+				}
 				else
 				{
 					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;

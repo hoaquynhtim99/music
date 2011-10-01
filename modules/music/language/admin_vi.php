@@ -260,6 +260,7 @@ $lang_module['nct_title'] = "Thêm bài hát từ nhaccuatui.com";
 $lang_module['nct_list_song'] = "Danh sách các link nhạc";
 $lang_module['zing_title'] = "Thêm bài hát từ mp3.zing.vn V3";
 $lang_module['nhacvui_title'] = "Thêm bài hát từ nhac.vui.vn";
+$lang_module['nhacso_get'] = "Thêm bài hát từ nhacso.net";
 
 $lang_module['add_lyric'] = "Lời bài hát";
 $lang_module['complete'] = "Hoàn tất";

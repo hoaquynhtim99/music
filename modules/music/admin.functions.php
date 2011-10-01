@@ -13,6 +13,7 @@ $submenu['addsong'] = $lang_module['sub_addsong'];
 $submenu['getnhaccuatui'] = $lang_module['nhaccuatui_get']; 
 $submenu['getzing'] = $lang_module['zing_get']; 
 $submenu['getnhacvui'] = $lang_module['nhacvui_get']; 
+$submenu['getnhacso'] = $lang_module['nhacso_get']; 
 $submenu['album'] = $lang_module['sub_album']; 
 $submenu['addalbum'] = $lang_module['sub_add_album']; 
 $submenu['videoclip'] = $lang_module['video']; 
@@ -31,7 +32,7 @@ $submenu['category'] = $lang_module['sub_category'];
 $submenu['video_category'] = $lang_module['sub_videocategory']; 
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getnhaccuatui', 'getzing', 'getnhacvui', 'findsongtoalbum', 'getalbumid'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getnhaccuatui', 'getzing', 'getnhacvui', 'findsongtoalbum', 'getalbumid', 'getnhacso'); 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
 // sap xep
