@@ -15,6 +15,7 @@ $xtpl = new XTemplate( "block_tabs_song_center.tpl", NV_ROOTDIR . "/themes/" . $
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'LOAD_URL', $main_header_URL . "=" . $op . "&loadblocktabsong=" );
 $xtpl->assign( 'URL_DOWN', $downURL );
+$xtpl->assign( 'ALL_NEW_SONG', $mainURL . "=song/id" );
 
 // Lay du lieu
 $sql = "SELECT a.id, a.cid, b.title FROM `" . NV_PREFIXLANG . "_" . $module_data . "_4category` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_category` AS b ON a.cid=b.id ORDER BY a.id ASC";

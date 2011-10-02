@@ -61,7 +61,7 @@
 			<p>&nbsp;</p>
 		</div>
 	</div>
-	<a style="float:right;margin-bottom:5px;margin-right:10px;color:#000;" href="{allsong}">» {LANG.view_all}</a>
+	<a style="float:right;margin-bottom:5px;margin-right:10px;color:#000;" href="{ALL_NEW_SONG}" title="{LANG.view_all}">» {LANG.view_all}</a>
 	<div class="clear"></div>
 </div>
 <div class="clear"></div>
