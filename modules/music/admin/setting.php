@@ -33,6 +33,7 @@ if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	$data['default_server'] = $nv_Request->get_int( 'default_server', 'post', 0 );
 	$data['playlist_max'] = $nv_Request->get_int( 'playlist_max', 'post', 0 );
 	$data['del_cache_time_out'] = $nv_Request->get_int( 'del_cache_time_out', 'post', 0 );
+	$data['num_blocktab'] = $nv_Request->get_int( 'num_blocktab', 'post', 0 );
 	
 	$data['del_cache_time_out'] = $data['del_cache_time_out'] * 60;
 	
@@ -197,6 +198,7 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     </td>
 </tr>
 </tbody>
+<tbody>
 <tr>
     <td><strong>" . $lang_module['set_time_del_cache'] . "</strong></td>
     <td>
@@ -204,6 +206,15 @@ $contents .= "<table summary=\"\" class=\"tab1\">
 		" . $lang_module['set_time_del_cache_info'] . "
     </td>
 </tr>
+</tbody>
+<tbody class=\"second\">
+<tr>
+    <td><strong>" . $lang_module['setting_num_blocktab'] . "</strong></td>
+    <td>
+		<input maxlength=\"4\" name=\"num_blocktab\" type=\"text\" value=\"". $setting['num_blocktab'] . "\" />
+    </td>
+</tr>
+</tbody>
 </table>
 <div style=\"text-align: center;\" colspan=\"2\">
 <input type=\"submit\" value=\" " . $lang_module['save'] . " \" name=\"Submit1\">

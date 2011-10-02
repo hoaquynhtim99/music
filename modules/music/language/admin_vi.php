@@ -143,6 +143,7 @@ $lang_module['search_with_author'] = "Tìm theo nhạc sĩ";
 
 $lang_module['select'] = "Chọn";
 $lang_module['select_category'] = "Chọn thể loại";
+$lang_module['setting_num_blocktab'] = "Block tabs: Số bài hát/Trang";
 
 $lang_module['singer'] = "Ca sĩ";
 $lang_module['singer_new'] = "Nhập nhanh tên ca sĩ";

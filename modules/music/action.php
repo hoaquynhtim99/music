@@ -341,8 +341,8 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (12, 'auto_upload', 0, ''),
 (13, 'default_server', 1, ''),
 (14, 'playlist_max', 2, ''),
-(15, 'del_cache_time_out', 259200, ''),
-(16, 'version', 0, '3.2.01'),
-(17, 'revision', 143, '')";
+(15, 'del_cache_time_out', 21600, ''),
+(16, 'num_blocktab', 10, '')
+";
 
 ?>

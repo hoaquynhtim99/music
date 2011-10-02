@@ -69,63 +69,6 @@
 <a style="float:right;margin-bottom:5px;margin-right:10px;color:#000;" href="{allalbum}" >» {LANG.view_all}</a>
 <div class="clear"> </div> 
 </div>
-
-<!-- BEGIN: oldsong -->
-<div class="box-border-shadow m-bottom">
-<div class="cat-box-header"> 
-<div class="cat-nav">  
-<strong>{LANG.newest_song}</strong> 
-</div>
-</div>
-<ul id="casong" class="list-tab top-option clearfix"> 
-<li><a href="#topsong1">{f1}</a></li> 
-<li><a href="#topsong2">{f2}</a></li> 
-<li><a href="#topsong3">{f3}</a></li> 
-<li><a href="#topsong4">{f4}</a></li> 
-<li></li> 
-</ul> 
-<div class="topsong_container">
-	<!-- BEGIN: topsong -->
-	<div id="topsong{DIV}" class="topsong_content">
-		<!-- BEGIN: loop -->
-		<div class="songitem">
-			<a class="songname" title="{name}" href="{url_view}">{name}</a>
-			<div class="tool">
-				<a name="{ID}" class="adds add"></a>
-				<a href="{URL_DOWN}{ID}" class="down"></a>
-				<a href="{url_view}" class="play"></a>
-			</div>
-			<p>
-				{LANG.show}: <a href="{url_search_singer}">{singer}</a><br />
-				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{LANG.upload}: 
-				<a href="{url_search_upload}">{who_upload}</a> | 
-				<a href="{url_search_category}">{category}</a> | {LANG.view}:	{view}	
-			</p>
-		</div>
-		<!-- END: loop -->
-		<p>&nbsp;</p>
-	</div>
-	<!-- END: topsong -->
-</div>
-<a style="float:right;margin-bottom:5px;margin-right:10px;color:#000;" href="{allsong}">» {LANG.view_all}</a>
-<div class="clear"></div>
-</div>
-<!-- END: oldsong -->
-<script type="text/javascript">
-$(document).ready(function() {
-	$(".topsong_content").hide(); 
-	$("ul#casong li:first").addClass("ui-tabs-selected").show(); 
-	$(".topsong_content:first").show(); 
-	$("ul#casong li").click(function() {
-		$("ul#casong li").removeClass("ui-tabs-selected"); 
-		$(this).addClass("ui-tabs-selected"); 
-		$(".topsong_content").hide(); 
-		var activeTab = $(this).find("a").attr("href"); 
-		$(activeTab).fadeIn(); 
-		return false;
-	});
-});
-</script>
 <script type="text/javascript">
 $(document).ready(function() {
 	$(".tab_content").hide();

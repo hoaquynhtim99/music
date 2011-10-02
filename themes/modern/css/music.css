@@ -1272,3 +1272,7 @@ div.sucess {
 
 /* Gennerrate page */
 .generate_page{ padding:5px 0px 5px 0px; text-align:center;font-weight:bold}
+
+/* BLOCK TAB SONG */
+#new-song-block-tab{position:relative}
+#new-song-block-tab li.loader{position:absolute;top:1px;right:0px;width:25px;height:25px;background-image:url('../images/music/loader.gif')}
