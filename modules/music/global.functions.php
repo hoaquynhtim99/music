@@ -78,7 +78,7 @@ function setting_music()
     {
         foreach ( $result as $row )
 		{
-			if( $row['key'] == "root_contain" )
+			if( in_array( $row['key'], array( "root_contain", "description" ) ) )
 			{
 				$setting[$row['key']] = $row['char'] ;
 			}

@@ -34,6 +34,7 @@ if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	$data['playlist_max'] = $nv_Request->get_int( 'playlist_max', 'post', 0 );
 	$data['del_cache_time_out'] = $nv_Request->get_int( 'del_cache_time_out', 'post', 0 );
 	$data['num_blocktab'] = $nv_Request->get_int( 'num_blocktab', 'post', 0 );
+	$data['description'] = filter_text_input( 'description', 'post', '', 1, 255 );
 	
 	$data['del_cache_time_out'] = $data['del_cache_time_out'] * 60;
 	
@@ -47,6 +48,10 @@ if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 		if ( $key == "root_contain" )
 		{
 			@rename( NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'], NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $value );
+			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+		}
+		elseif( $key == "description" )
+		{
 			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
 		}
 		else
@@ -191,29 +196,37 @@ $contents .= "<table summary=\"\" class=\"tab1\">
     </td>
 </tr>
 <tbody class=\"second\">
-<tr>
-    <td><strong>" . $lang_module['set_playlist_max'] . "</strong></td>
-    <td>
-		<input name=\"playlist_max\" type=\"text\" value=\"". $setting['playlist_max'] . "\" />
-    </td>
-</tr>
+	<tr>
+		<td><strong>" . $lang_module['set_playlist_max'] . "</strong></td>
+		<td>
+			<input name=\"playlist_max\" type=\"text\" value=\"". $setting['playlist_max'] . "\" />
+		</td>
+	</tr>
 </tbody>
 <tbody>
-<tr>
-    <td><strong>" . $lang_module['set_time_del_cache'] . "</strong></td>
-    <td>
-		<input maxlength=\"4\" name=\"del_cache_time_out\" type=\"text\" value=\"". ( $setting['del_cache_time_out'] / 60 ) . "\" />
-		" . $lang_module['set_time_del_cache_info'] . "
-    </td>
-</tr>
+	<tr>
+		<td><strong>" . $lang_module['set_time_del_cache'] . "</strong></td>
+		<td>
+			<input maxlength=\"4\" name=\"del_cache_time_out\" type=\"text\" value=\"". ( $setting['del_cache_time_out'] / 60 ) . "\" />
+			" . $lang_module['set_time_del_cache_info'] . "
+		</td>
+	</tr>
 </tbody>
 <tbody class=\"second\">
-<tr>
-    <td><strong>" . $lang_module['setting_num_blocktab'] . "</strong></td>
-    <td>
-		<input maxlength=\"4\" name=\"num_blocktab\" type=\"text\" value=\"". $setting['num_blocktab'] . "\" />
-    </td>
-</tr>
+	<tr>
+		<td><strong>" . $lang_module['setting_num_blocktab'] . "</strong></td>
+		<td>
+			<input maxlength=\"4\" name=\"num_blocktab\" type=\"text\" value=\"". $setting['num_blocktab'] . "\" />
+		</td>
+	</tr>
+</tbody>
+<tbody>
+	<tr>
+		<td><strong>" . $lang_module['setting_description'] . "</strong></td>
+		<td>
+			<input style=\"width:350px\" maxlength=\"255\" name=\"description\" type=\"text\" value=\"". $setting['description'] . "\" />
+		</td>
+	</tr>
 </tbody>
 </table>
 <div style=\"text-align: center;\" colspan=\"2\">

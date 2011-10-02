@@ -342,7 +342,8 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (13, 'default_server', 1, ''),
 (14, 'playlist_max', 2, ''),
 (15, 'del_cache_time_out', 21600, ''),
-(16, 'num_blocktab', 10, '')
+(16, 'num_blocktab', 10, ''),
+(17, 'description', 0, 'The Professional Module Music For Nukeviet 3.x, Developed By Phan Tan Dung - phantandung92@gmail.com' )
 ";
 
 ?>

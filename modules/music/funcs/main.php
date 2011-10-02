@@ -9,7 +9,9 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
+// Thong tin trang
 $page_title = $module_info['custom_title'];
+$description = $setting['description'];
 $key_words = $module_info['keywords'];
 
 // Global data
