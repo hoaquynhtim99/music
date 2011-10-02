@@ -57,7 +57,7 @@ if ( count ( $category ) == 0 )
 	die();	
 }
 
-$array_refused = $array = array();
+$array = array();
 
 $sql = "SELECT `id`, `cid` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_4category` ORDER BY `id` ASC";
 $result = $db->sql_query( $sql );
@@ -72,8 +72,6 @@ while ( list ( $id, $cid ) = $db->sql_fetchrow( $result ) )
 		"title" => $category[$cid]['title'],  //
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""  //
 	);
-	
-	$array_refused[] = $cid;
 	
 	$i ++;
 }
@@ -99,11 +97,8 @@ foreach ( $array as $row )
 
 foreach( $category as $cat )
 {
-	if( ! in_array( $cat['id'], $array_refused ) )
-	{
-		$xtpl->assign( 'CAT', $cat );
-		$xtpl->parse( 'main.cat' );
-	}
+	$xtpl->assign( 'CAT', $cat );
+	$xtpl->parse( 'main.cat' );
 }
 
 $xtpl->parse( 'main' );
