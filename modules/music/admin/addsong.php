@@ -150,7 +150,9 @@ if ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 		
 		if ( $check ) 
 		{
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name); die();
+			nv_del_moduleCache( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name); 
+			die();
 		}
 		else
 		{
@@ -194,7 +196,9 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 		
 		if ( $result_song_id ) 
 		{ 
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name ); die();
+			nv_del_moduleCache( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name ); 
+			die();
 		}
 		else 
 		{ 
