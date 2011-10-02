@@ -11,6 +11,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 // Set page title, keywords, description
 $page_title = $mod_title = $lang_module['gift_list'] . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
+$description = $setting['description'];
 $key_words = $module_info['keywords'];
 
 $allsinger = getallsinger();

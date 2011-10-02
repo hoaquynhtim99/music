@@ -13,7 +13,7 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 {
     function nv_music_gift_block ( $block_config )
     {
-        global $module_array_cat, $module_info, $lang_module, $site_mods, $db;
+        global $module_array_cat, $module_info, $lang_module, $site_mods, $db, $module_name;
         $module = $block_config['module'];
 		$data = $site_mods[$module]['module_data'];
 		$file = $site_mods[$module]['module_file'];
@@ -25,9 +25,9 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 			
 			$sql = "SELECT a.who_send, a.who_receive, a.time, a.body, b.id AS songid, b.ten AS songalias, b.tenthat AS songtitle, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $data . "_gift` as a INNER JOIN `" . NV_PREFIXLANG . "_" . $data . "` AS b ON a.songid =b.id RIGHT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS c ON b.casi=c.ten WHERE a.active=1 ORDER BY a.time DESC LIMIT 0,3";
 			
-			$query = $db->sql_query( $sql );
+			$list = nv_db_cache( $sql, 0, $module_name );
 		
-			if( $db->sql_numrows( $query ) )
+			if( ! empty( $list ) )
 			{
 				if ( file_exists( NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $file . "/block_music_gift.tpl" ) )
 				{
@@ -42,7 +42,7 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 				$xtpl->assign( 'LANG', $lang_block );
 				
 				$i = 1;
-				while( $row =  $db->sql_fetchrow( $query ) )
+				foreach( $list as $row )
 				{
 					$row['linksong'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . '&amp;' . NV_OP_VARIABLE . "=listenone/" . $row['songid'] . "/" . $row['songalias'];
 					$row['search_singer'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . '&amp;' . NV_OP_VARIABLE . "=search/singer/" . $row['singeralias'];
