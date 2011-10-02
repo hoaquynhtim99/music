@@ -41,6 +41,16 @@
 	<div class="topsong_container">
 		<div id="tabssongarea" class="topsong_content">
 			<!-- BEGIN: songdata -->
+			<script type="text/javascript">
+			$(document).ready(function() {
+				$("a.adds").click(function() {
+					$(this).removeClass("add"); 
+					$(this).addClass("addedtolist"); 
+					var songid = $(this).attr("name");
+					addplaylist(songid);
+				});
+			});
+			</script>
 			<!-- BEGIN: loop -->
 			<div class="songitem">
 				<a class="songname" title="{name}" href="{url_view}">{name}</a>
