@@ -25,7 +25,6 @@ $lang_module['keywords'] = "Từ khóa";
 $lang_module['keywords_info'] = "phân cách bởi dấu phảy";
 $lang_module['dt'] = "Tạo lúc";
 
-$lang_module['4category_main'] = "Bốn thể loại trên trang chủ";
 $lang_module['author'] = "Nhạc sĩ";
 $lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
 $lang_module['author_add'] = "Thêm nhạc sĩ";
@@ -141,8 +140,10 @@ $lang_module['search_with_name'] = "Tìm theo tên";
 $lang_module['search_with_singer'] = "Tìm theo ca sĩ";
 $lang_module['search_with_album'] = "Tìm theo album";
 $lang_module['search_with_author'] = "Tìm theo nhạc sĩ";
+
 $lang_module['select'] = "Chọn";
 $lang_module['select_category'] = "Chọn thể loại";
+
 $lang_module['singer'] = "Ca sĩ";
 $lang_module['singer_new'] = "Nhập nhanh tên ca sĩ";
 $lang_module['singer_new_added'] = "Ca sĩ này đã tồn tại, bạn hãy chọn từ danh sách ca sĩ";
@@ -189,7 +190,7 @@ $lang_module['sub_edit_album'] = "Sửa album";
 $lang_module['sub_addsong'] = "Thêm bài hát";
 $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";
 $lang_module['sub_hotalbum'] = "HOT Album";
-$lang_module['sub_fourcategory'] = "Bốn thể loại trên trang chính";
+$lang_module['sub_fourcategory'] = "Block Tags Music";
 $lang_module['sub_comment'] = "Quản lý bình luận";
 $lang_module['sub_commentsong'] = "Bình luận bài hát";
 $lang_module['sub_commentvideo'] = "Bình luận video";

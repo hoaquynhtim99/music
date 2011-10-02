@@ -102,7 +102,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `cid` mediumint(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8";
+) ENGINE=MyISAM";
 
 //6. quang cao tren player
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads` (
@@ -304,7 +304,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `dt` int(11) NOT NULL DEFAULT '0',
   `hit` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE `songid` (`songid`)
+  UNIQUE KEY `songid` (`songid`)
 ) ENGINE=MyISAM";
 
 //1. them vao hot album
@@ -321,23 +321,6 @@ while ( $i <= 9 )
 	VALUES 
 	(
 	'".$i."',  '0',  '".$i."'
-	)";
-	$i ++ ;
-}
-
-// them vao 4 the loai
-$i = 1 ;
-while ( $i <= 4 )
-{
-	$sql_create_module[] ="
-	INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_4category` 
-	(
-	`id` ,
-	`cid`
-	)
-	VALUES 
-	(
-	'".$i."',  '0'
 	)";
 	$i ++ ;
 }
