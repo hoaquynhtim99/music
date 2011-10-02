@@ -3,18 +3,18 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Free Ware
  * Language Tiếng Việt
  * @Createdate 26/01/2011 09:41 AM
  */
 
 if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
-$lang_translator['author'] ="Phan Tan Dung (phantandung92@gmail.com)";
-$lang_translator['createdate'] ="04/03/2010, 15:22";
-$lang_translator['copyright'] ="@Copyright (C) 2011";
-$lang_translator['info'] ="";
-$lang_translator['langtype'] ="lang_module";
+$lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
+$lang_translator['createdate'] = "04/03/2010, 15:22";
+$lang_translator['copyright'] = "@Copyright (C) 2011 Free Ware";
+$lang_translator['info'] = "";
+$lang_translator['langtype'] = "lang_module";
 
 $lang_module['weight'] = "Thứ tự";
 $lang_module['title'] = "Tiêu đề";
@@ -23,6 +23,7 @@ $lang_module['status'] = "Hoạt động";
 $lang_module['description'] = "Mô tả";
 $lang_module['keywords'] = "Từ khóa";
 $lang_module['keywords_info'] = "phân cách bởi dấu phảy";
+$lang_module['dt'] = "Tạo lúc";
 
 $lang_module['4category_main'] = "Bốn thể loại trên trang chủ";
 $lang_module['author'] = "Nhạc sĩ";
@@ -277,5 +278,23 @@ $lang_module['vcat_lits'] = "Danh sách thể loại clip";
 $lang_module['vcat_edit'] = "Sửa thể loại clip";
 $lang_module['vcat_add'] = "Thêm thể loại clip";
 $lang_module['vcat_error_exist'] = "Lỗi: Thể loại clip này đã có";
+
+$lang_module['album_error_title'] = "Lỗi: Tên đầy đủ của album còn trống";
+$lang_module['album_error_alias'] = "Lỗi: Tên ngắn gọn của album còn trống";
+$lang_module['album_error_thumb'] = "Lỗi: Chưa có ảnh hiển thị cho album";
+$lang_module['album_confirm_delsong'] = "Bạn có muốn xóa không?";
+$lang_module['album_add_list_song'] = "Thêm nhiều bài hát";
+$lang_module['album_add_a_song'] = "Thêm một bài hát";
+
+$lang_module['filter_enterkey'] = "Nhập từ khóa";
+$lang_module['filter_from'] = "Từ";
+$lang_module['filter_to'] = "Đến";
+$lang_module['filter_action'] = "Lọc";
+$lang_module['filter_cancel'] = "Hủy";
+$lang_module['filter_clear'] = "Xóa";
+$lang_module['filter_lang_asc'] = "tăng dần";
+$lang_module['filter_lang_desc'] = "giảm dần";
+$lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
+$lang_module['filter_all_cat'] = "- Tất cả thể loại -";
 
 ?>

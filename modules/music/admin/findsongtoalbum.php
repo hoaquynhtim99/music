@@ -12,17 +12,28 @@ if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 if( $nv_Request->isset_request( 'loadname', 'get' ) )
 {
 	$songlist = $nv_Request->get_string( 'songlist', 'get', '' );
-	$sql = "SELECT `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $songlist . ")";
+	$sql = "SELECT `id`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $songlist . ")";
 	$result = $db->sql_query( $sql );
 	
 	$list_song = array();
-	while( list( $songname ) = $db->sql_fetchrow( $result ) )
+	$_tmp = array();
+	while( list( $songid, $songname ) = $db->sql_fetchrow( $result ) )
 	{
-		$list_song[] = $songname;
+		$_tmp[$songid] = $songname;
 	}
 	
-	$list_song = "<div style=\"width:300px\" class=\"fl\">" . implode( "</div><div style=\"width:300px\" class=\"fl\">", $list_song ) . "</div><div class=\"clear\"></div>";
-	die( $list_song );
+	foreach( explode( ",", $songlist ) as $_sid )
+	{
+		$list_song[$_sid] = $_tmp[$_sid];
+	}
+	
+	$return = "";
+	foreach( $list_song as $_id => $_name )
+	{
+		$return .= "<li class=\"" . $_id . "\">" . $_name . "<span onclick=\"nv_del_song_fromalbum(" . $_id . ")\" class=\"delete_icon\">&nbsp;</span></li>";
+	}
+	
+	die( $return );
 }
 
 $songlist = $nv_Request->get_string( 'songlist', 'get', '' );

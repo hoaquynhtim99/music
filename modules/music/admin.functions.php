@@ -32,10 +32,11 @@ $submenu['category'] = $lang_module['sub_category'];
 $submenu['video_category'] = $lang_module['sub_videocategory']; 
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getnhaccuatui', 'getzing', 'getnhacvui', 'findsongtoalbum', 'getalbumid', 'getnhacso'); 
+$allow_func = array('main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'addhotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'delsr', 'delallsr', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getnhaccuatui', 'getzing', 'getnhacvui', 'findsongtoalbum', 'getalbumid', 'getnhacso', 'findasongtoalbum');
+
 define( 'NV_IS_MUSIC_ADMIN', true );
 
-// sap xep
+// Sap xep
 function changeorder( $old, $new, $wherechange )
 {
 	global $module_data ;
@@ -44,28 +45,29 @@ function changeorder( $old, $new, $wherechange )
 	WHERE `order` = " . $old . ";";
 	return mysql_query($sql);
 }
-// hien thi cac trang
-function new_page_admin ( $ts, $now_page, $link)
+
+// Hien thi cac trang
+function new_page_admin ( $ts, $now_page, $link )
 {
 	$page = '' ;
-	if($ts>1)
+	if( $ts > 1 )
 	{
 		$page = "<div id=\"numpage\"><p>";
-		if( $ts>5 && $now_page>3 )
+		if( $ts > 5 && $now_page > 3 )
 		{
 			$page .= "<a href=\"" . $link . "";
 			$page .= "&now_page=1\" class=\"next\">&lt;&lt;</a> ... ";
 		}
-		if($now_page > 1)
+		if( $now_page > 1 )
 		{
 			$now_page_min = $now_page -1 ;
 			$page .= "<a href=\"" . $link . "";
 			$page .= "&now_page=".$now_page_min."\" class=\"next\">&lt;</a> ";
 		}
-		if($ts<=5)
+		if( $ts <= 5 )
 		{
 			$i=1;
-			while($i <= $ts)
+			while( $i <= $ts )
 			{
 				if($i==$now_page){$page .= "<b> ".$i." </b>";}
 				else
@@ -76,7 +78,7 @@ function new_page_admin ( $ts, $now_page, $link)
 				$i++;	
 			}
 		}
-		else if($now_page<=2)
+		elseif( $now_page <= 2 )
 		{
 			$i=1;
 			while($i <= 5){
@@ -137,7 +139,7 @@ function new_page_admin ( $ts, $now_page, $link)
 	return $page;
 }
 
-// cap nhat bai hat khi xoa, sua album
+// Cap nhat bai hat khi xoa, sua album
 function updateSwhendelA( $albumname, $newname )
 {
 	global $module_data, $db ;
@@ -146,7 +148,7 @@ function updateSwhendelA( $albumname, $newname )
 	return;
 }
 
-// cap nhat bai hat, album ,video khi xoa, sua ca si
+// Cap nhat bai hat, album ,video khi xoa, sua ca si
 function updatewhendelS( $singername, $newname )
 {
 	global $module_data, $db ;
@@ -156,7 +158,7 @@ function updatewhendelS( $singername, $newname )
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `casi` = '" . $newname . "' WHERE `casi` = '" . $singername . "'");
 	return;
 }
-// cap nhat bai hat, album ,video khi xoa, sua nhac si
+// Cap nhat bai hat, album ,video khi xoa, sua nhac si
 function updatewhendelA( $singername, $newname )
 {
 	global $module_data, $db ;
@@ -166,7 +168,7 @@ function updatewhendelA( $singername, $newname )
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `nhacsi` = '" . $newname . "' WHERE `nhacsi` = '" . $singername . "'");
 	return;
 }
-// lay nhac si tu id
+// Lay nhac si tu id
 function getauthorbyID( $id )
 {
 	global $module_data, $db;
@@ -177,7 +179,7 @@ function getauthorbyID( $id )
 
 	return $author ;
 }
-// cap nhat bai hat, video khi xoa, sua host nhac
+// Cap nhat bai hat, video khi xoa, sua host nhac
 function updatewhendelFTP( $server, $active )
 {
 	global $module_data, $db ;
@@ -187,7 +189,7 @@ function updatewhendelFTP( $server, $active )
 	return;
 }
 
-// xuat duong dan nguoc lai
+// Xuat duong dan nguoc lai
 function admin_outputURL ( $server, $inputurl )
 {
 	global $module_name, $setting;

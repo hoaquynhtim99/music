@@ -5,3 +5,9 @@ td.strong{font-weight:bold}
 .fr{float:right}
 .center{ text-align:center}
 .infoerror, .requie{color:#FF0000}
+.atop{vertical-align:top!important}
+
+/* SONG OF ALBUM */
+.list_song{list-style-type:none;padding:0;margin:0}
+.list_song li{list-style-type:none;padding:0px 0px 0px 10px;margin:0;display:block;background-color:#EEEEEE;border:1px #999999 solid;margin-bottom:3px;height:25px;line-height:25px;cursor:move;position:relative}
+.list_song li span{position:absolute;top:0px;right:0px;cursor:pointer}
