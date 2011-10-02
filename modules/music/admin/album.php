@@ -57,13 +57,18 @@ while ( $ts * $numshow < $output ) {$ts ++ ;}
 
 
 // Form tim kiem
-$contents .= "<br /><form action=\"\" method=\"post\">";
-$contents .= "<label>" . $lang_module['search_album'] . ": </label><br />\n";
-
-// so ket qua hien thi
 $i = 5;
-$contents .= "<label>".$lang_module['search_per_page'].":</label>\n";
-$contents .= "<select name=\"numshow\">\n";
+$contents .= "
+<form action=\"\" method=\"post\">
+<table class=\"tab1 fixbottomtable\">
+	<tbody>
+		<tr>
+			<td class=\"fixbg\">
+				<strong>" . $lang_module['search_album'] . ":&nbsp;&nbsp;&nbsp;</strong>
+				" . $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" style=\"width: 265px\">\n
+				" . $lang_module['search_per_page'] . "";
+$contents .= "
+<select name=\"numshow\">\n";
 while ( $i <= 1000 )
 {
 	$a = '';
@@ -72,16 +77,18 @@ while ( $i <= 1000 )
     $i = $i + 10;
 }
 $contents .= "</select>\n";
-$contents .= "<br>\n";
-
-$contents .= "" . $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" style=\"width: 265px\">\n";
-$contents .= "<input type=\"submit\" value=\"" . $lang_module['search'] . "\"><br>\n";
+$contents .= "
+				<input type=\"submit\" value=\"" . $lang_module['search'] . "\"><br>\n
+			</td>
+		</tr>
+	</tbody>
+</table>
+";
 $contents .= "<input type=\"hidden\" name =\"data\" value=\"" . $sql . "\" />";
 $contents .= "<input type=\"hidden\" name =\"do\" value=\"1\" />";
-$contents .= "<br />\n";
 $contents .= "</form>\n";
 
-// ket qua
+// Ket qua
 $xtpl = new XTemplate("album.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addalbum");

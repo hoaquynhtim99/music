@@ -1,4 +1,36 @@
 <!-- BEGIN: main -->
+<form action="" method="post">
+	<table class="tab1 fixbottomtable">
+		<tbody>
+			<tr>
+				<td>
+					<strong>{LANG.search_music}:</strong>&nbsp;&nbsp;&nbsp;
+					<select name="where_search">
+						<option value="0" >{LANG.select_category}</option>
+						<!-- BEGIN: cat -->
+						<option value="{CAT.id}"{CAT.selected}>{CAT.title}</option>
+						<!-- END: cat -->
+					</select>
+					<select name="type_search">
+						<option value="ten"{TYPE_TEN}>{LANG.search_with_name}</option>
+						<option value="casi"{TYPE_CASI}>{LANG.search_with_singer}</option>
+						<option value="nhacsi"{TYPE_NHACSI}>{LANG.search_with_author}</option>
+						<option value="album"{TYPE_ALBUM}>{LANG.search_with_album}</option>
+					</select>
+					{LANG.search_per_page}
+					<select name="numshow">
+						<!-- BEGIN: numshow -->
+						<option value="{NUM}"{SELECTED}>{TITLE}</option>
+						<!-- END: numshow -->
+					</select>
+					{LANG.search_key}: <input type="text" value="{Q}" maxlength="64" name="q" style="width: 265px">
+					<input type="submit" value="{LANG.search}">
+					<input type="hidden" name ="do" value="1" />
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
 <table class="tab1">
 	<thead>
 		<tr>
@@ -33,6 +65,9 @@
 		</tr>
 	</tbody>
 	<!-- END: row -->
+	<!-- BEGIN: genpage -->
+	<tbody><tr><td class="strong center" colspan="7">{genpage}</td></tr></tbody>
+	<!-- END: genpage -->
 </table>
 <table class="tab1">
 	<tfoot>

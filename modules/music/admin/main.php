@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Phan Tan Dung (phantandung92@gmail.com)
@@ -7,6 +8,7 @@
  */
  
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+
 $page_title = $lang_module['content_list'];
 
 if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
@@ -18,8 +20,6 @@ if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
 	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&numshow=" . $numshow . "&where_search=" . $where_search . "&type_search=" . $type_search . "&q=" . $q ) ;  die();	
 }
 
-// lay du lieu 
-$contents = '' ;
 $category = get_category() ;
 if ( count ( $category ) == 0 ) 
 {
@@ -51,7 +51,7 @@ else
 $where = $type_search." LIKE '%". $q ."%'";
 $where1 = "a." . $type_search." LIKE '%". $q ."%'";
 
-// xu li du lieu
+// Xu li du lieu
 if ( $now_page == 0 ) 
 {
 	$now_page = 1 ;
@@ -61,7 +61,6 @@ else
 {
 	$first_page = ( $now_page -1 ) * $numshow;
 }	
-
 
 $sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, a.theloai AS theloai, a.casi AS casi, a.album AS album, a.active AS active, b.tname AS albumname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `". NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.name WHERE " . $theloai1 . " " . $where1 . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
 
@@ -74,50 +73,6 @@ $output = $db->sql_numrows($num);
 $ts = 1;
 while ( $ts * $numshow < $output ) {$ts ++ ;}
 
-// Form tim kiem
-$contents .= "<br />\n";
-$contents .= "<form action=\"\" method=\"post\">";
-$contents .= "<label>" . $lang_module['search_music'] . ": </label>\n";
-
-// tim theo the loai
-$contents .= "<select name=\"where_search\">\n";
-$contents .= "<option value=\"0\" >" . $lang_module['select_category'] . "</option>\n";
-foreach ( $category as $id => $title )
-{	
-	$a = '';
-	if ($id == $where_search) $a = "selected=\"selected\"";
-	$contents .= "<option ".$a." value=\"".$id."\" >" . $title['title'] . "</option>\n";
-}
-$contents .= "</select>";
-
-// kieu tim
-$contents .= "<select name=\"type_search\">";
-$contents .= "<option"; ($type_search == 'ten')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"ten\" >" . $lang_module['search_with_name'] . "</option>\n";
-$contents .= "<option"; ($type_search == 'casi')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"casi\" >" . $lang_module['search_with_singer'] . "</option>\n";
-$contents .= "<option"; ($type_search == 'nhacsi')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"nhacsi\" >" . $lang_module['search_with_author'] . "</option>\n";
-$contents .= "<option"; ($type_search == 'album')? ($contents .= " selected=\"selected\""):'' ; $contents .= " value=\"album\" >" . $lang_module['search_with_album'] . "</option>\n";
-$contents .= "</select>";
-
-// so ket qua hien thi
-$i = 5;
-$contents .= "<label>".$lang_module['search_per_page'].":</label>\n";
-$contents .= "<select name=\"numshow\">\n";
-while ( $i <= 1000 )
-{
-	$a = '';
-	if ($i == $numshow) $a = "selected=\"selected\"";
-    $contents .= "<option ".$a." value=\"".$i."\" >".$i."</option>\n";
-    $i = $i + 10;
-}
-$contents .= "</select>\n";
-$contents .= "<br>\n";
-
-$contents .= "" . $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" style=\"width: 265px\">\n";
-$contents .= "<input type=\"submit\" value=\"" . $lang_module['search'] . "\"><br>\n";
-$contents .= "<input type=\"hidden\" name =\"do\" value=\"1\" />";
-$contents .= "</form><br />\n";
-
-// ket qua
 $xtpl = new XTemplate("main.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 
 $xtpl->assign('LANG', $lang_module);
@@ -129,7 +84,35 @@ $xtpl->assign('ORDER_NAME', $link ."&order=ten" );
 $xtpl->assign('ORDER_SINGER', $link ."&order=casi" );
 $xtpl->assign('ORDER_ALBUM', $link ."&order=album" );
 
-//lay du lieu
+// Tu khoa tim kiem
+$xtpl->assign('Q', $q );
+
+// Chon kieu tim
+$xtpl->assign( 'TYPE_TEN', ( $type_search == 'ten' ) ? " selected=\"selected\"" : "" );
+$xtpl->assign( 'TYPE_CASI', ( $type_search == 'casi' ) ? " selected=\"selected\"" : "" );
+$xtpl->assign( 'TYPE_NHACSI', ( $type_search == 'nhacsi' ) ? " selected=\"selected\"" : "" );
+$xtpl->assign( 'TYPE_ALBUM', ( $type_search == 'album' ) ? " selected=\"selected\"" : "" );
+
+// Xuat the loai tim kiem
+foreach ( $category as $id => $title )
+{	
+	$title['selected'] = ( $id == $where_search ) ? " selected=\"selected\"" : "";
+	$xtpl->assign( 'CAT', $title );
+	$xtpl->parse('main.cat');
+}
+
+// So ket qua tim kiem
+$i = 5;
+while ( $i <= 1000 )
+{
+	$xtpl->assign( 'SELECTED', ( $i == $numshow ) ? " selected=\"selected\"" : "" );
+	$xtpl->assign( 'NUM', $i );
+	$xtpl->assign( 'TITLE', $i );
+	$xtpl->parse('main.numshow');
+
+    $i = $i + 10;
+}
+
 $result = $db->sql_query( $sql );
 $num = $db->sql_numrows($result);
 
@@ -159,11 +142,15 @@ while($rs = $db->sql_fetchrow($result))
 	$xtpl->parse('main.row');
 }
 
+$gen_page = new_page_admin( $ts, $now_page, $link );
+if( ! empty( $gen_page ) )
+{
+	$xtpl->assign( 'genpage', $gen_page );
+	$xtpl->parse('main.genpage');
+}
+
 $xtpl->parse('main');
-$contents .= $xtpl->text('main');
-$contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto;\">\n ";
-$contents .= new_page_admin( $ts, $now_page, $link);
-$contents .= "</div>\n";
+$contents = $xtpl->text('main');
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
