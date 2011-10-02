@@ -166,20 +166,7 @@ function getADS()
 	
 	return $ads;
 }
-// lay 10 bai hat moi theo ten
-function gettopsongbyalbumNAME( $name )
-{
-	global $module_data, $db ;
 
-	$data = array() ;
-	
-	$result = $db->sql_query( "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`='" . $name . "' AND `active`=1" );
-	list( $name ) = $db->sql_fetchrow( $result );
-	
-	$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $name . ") AND `active` = 1 ORDER BY id DESC LIMIT 0,10 " );
-
-	return $result ;
-}
 // update bai hat
 function updateHIT_VIEW( $id, $where )
 {

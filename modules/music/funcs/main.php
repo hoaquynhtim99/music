@@ -15,106 +15,78 @@ $description = $setting['description'];
 $key_words = $module_info['keywords'];
 
 // Global data
-$allsinger = getallsinger();
-$category = get_category();
+if( empty( $allsinger ) ) $allsinger = getallsinger();
+if( empty( $category ) ) $category = get_category();
 
-$xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'allalbum', $mainURL . "=album/numview" );
-$xtpl->assign( 'allsong', $mainURL . "=song/numview" );
-$xtpl->assign( 'URL_DOWN', $downURL );
+// Lay album HOT nhat
+$sql = "SELECT b.id, b.name, b.tname, b.casi, b.thumb, b.listsong FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id WHERE b.active=1 ORDER BY a.stt ASC";
 
-// viet cac album hot nhat
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot ORDER BY stt";
-$query = $db->sql_query( $sql );
-$hot_abid = array();
-while ( $row = $db->sql_fetchrow( $query ) )
+// Lay 9 album moi nhat khi load tab
+if( $nv_Request->isset_request( 'load_main_song', 'get' ) )
 {
-	$hot_abid[$row['stt']] = $row['albumid'];
-}
-foreach ( $hot_abid as $stt => $albumid )
-{
-	if ( $albumid == 0 ) continue;
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `id` = ". $albumid ." AND `active`=1 ";
-	$query = $db->sql_query( $sql );
-	$hot_album = $db->sql_fetchrow( $query );
-	$xtpl->assign( 'url_album', $mainURL . "=listenlist/" .$hot_album['id'] . "/" . $hot_album['name'] );
-	if ( $stt == 1)
+	$type = $nv_Request->get_int( 'load_main_song', 'get', 0 );
+	if( $type == 2 )
 	{
-		$xtpl->assign( 'fapic', $hot_album['thumb'] );
-		$xtpl->assign( 'faname', $hot_album['tname'] );
-		$xtpl->assign( 'fasinger', $allsinger[$hot_album['casi']] );
-		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $hot_album['casi']);
+		$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb`, `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `active`=1 ORDER BY `addtime` DESC LIMIT 0,9";
+	}
+	elseif( $type != 1 )
+	{
+		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	}
+}
 
-		// viet 10 bai hat cua album HOT
-		$data = gettopsongbyalbumNAME( $hot_album['name'] );
-		$i = 1 ;
-		while ( $row = $db->sql_fetchrow($data) )
+$result = $db->sql_query( $sql );
+
+$first_album_id = array();
+$first_album_data = array();
+$array_album = array();
+
+while ( $row = $db->sql_fetchrow( $result ) )
+{
+	if( empty( $first_album_id ) ) $first_album_id = array( $row['id'], $row['listsong'] );
+	$array_album[] = array(
+		"id" => $row['id'],  //
+		"tname" => $row['tname'],  //
+		"thumb" => $row['thumb'],  //
+		"casi" => $allsinger[$row['casi']],  //
+		"url_search_singer" => nv_url_rewrite( $main_header_URL . "=search/singer/" . $row['casi'], true ),  //
+		"url_album" => nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true )  //
+	);
+}
+
+if( ! empty( $first_album_id ) )
+{
+	$sql = "SELECT `id`, `ten`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $first_album_id[1] . ") AND `active`=1";
+	$result = $db->sql_query( $sql );
+	$_tmp = array();
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$_tmp[$row['id']] = $row;
+	}
+	
+	if( ! empty( $_tmp ) )
+	{
+		$i = 1;
+		foreach( explode( ",", $first_album_id[1] ) as $_sid )
 		{
-			$xtpl->assign( 'STT', $i );
-			$xtpl->assign( 'name', $row['tenthat'] );
+			$first_album_data[] = array(
+				"stt" => $i,  //
+				"tenthat" => $_tmp[$_sid]['tenthat'],  //
+				"url" => nv_url_rewrite( $main_header_URL . "=listenone/" . $_tmp[$_sid]['id'] . "/" . $_tmp[$_sid]['ten'], true )  //
+			);
 			
-			$xtpl->assign( 'url', $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'] );
-			$i ++ ;
-			$xtpl->parse( 'main.hotalbum.first.song' );
+			$i ++;
+			if( $i > 10 ) break;
 		}
-		$xtpl->parse( 'main.hotalbum.first' );
-	}
-	else
-	{
-		// viet 8 album HOT
-		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $hot_album['casi']);
-		$xtpl->assign( 'albumpic', $hot_album['thumb'] );
-		$xtpl->assign( 'albumtitle', $hot_album['tname'] );
-		$xtpl->assign( 'singer', $allsinger[$hot_album['casi']] );
-		$xtpl->parse( 'main.hotalbum.old' );
 	}
 }
-$xtpl->parse( 'main.hotalbum' );
 
-// Lay album moi nhat
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE `active` = 1 ORDER BY id DESC LIMIT 0,9 ";
-$query = $db->sql_query( $sql );
-$a = 1 ;
-while ($row = $db->sql_fetchrow( $query ))
-{
-	$xtpl->assign( 'url_album', $mainURL . "=listenlist/" .$row['id']. "/" .$row['name'] );
+$array = array(
+	"url_more" => ( $nv_Request->get_int( 'load_main_song', 'get', 0 ) == 2 ) ? nv_url_rewrite( $main_header_URL . "=album/id/-", true ) : nv_url_rewrite( $main_header_URL . "=album/numview", true )
+);
 
-	if ($a == 1)
-	{
-		// viet album moi nhat
-		$xtpl->assign( 'pic', $row['thumb'] );
-		$xtpl->assign( 'name', $row['tname'] );
-		$xtpl->assign( 'singer', $allsinger[$row['casi']] );
-		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
-		
-		// viet 10 bai hat cua album MOI
-		$data = gettopsongbyalbumNAME( $row['name'] );
-		$i = 1 ;
-		while ( $rows = $db->sql_fetchrow( $data ) )
-		{
-			$xtpl->assign( 'STT', $i );
-			$xtpl->assign( 'sname', $rows['tenthat'] );
-			$xtpl->assign( 'url', $mainURL . "=listenone/" .$rows['id']. "/" .$rows['ten'] );
-			$i ++ ;
-			$xtpl->parse( 'main.topalbum.firstn.song' );
-		}
-		$xtpl->parse( 'main.topalbum.firstn' );
-	}
-	else
-	{
-		$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . $row['casi']);
-		$xtpl->assign( 'albumpic', $row['thumb'] );
-		$xtpl->assign( 'albumtitle', $row['tname'] );
-		$xtpl->assign( 'singer', $allsinger[$row['casi']] );		
-		$xtpl->parse( 'main.topalbum.old' );
-	}
-	$a ++ ;
-}
-$xtpl->parse( 'main.topalbum' );
-
-$xtpl->parse( 'main' );
-$contents = $xtpl->text( 'main' );
+$contents = nv_music_main( $array, $array_album, $first_album_data );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

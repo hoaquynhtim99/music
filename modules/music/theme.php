@@ -995,7 +995,7 @@ function nv_music_viewvideo( $g_array, $array )
  */
 function nv_music_gift( $array, $generate_page )
 {
-    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting;
     
 	$xtpl = new XTemplate( "gift.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
@@ -1018,6 +1018,60 @@ function nv_music_gift( $array, $generate_page )
 	{
 		$xtpl->assign( 'generate_page', $generate_page );
 		$xtpl->parse( 'main.generate_page' );
+	}
+	
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
+/**
+ * nv_music_main()
+ * 
+ * @param mixed $array
+ * @param mixed $array_album
+ * @param mixed $first_album_data
+ * @return
+ */
+function nv_music_main( $array, $array_album, $first_album_data )
+{
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request;
+    
+	$xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'DATA', $array );
+	$xtpl->assign( 'URL_DOWN', $downURL );
+	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . $op . "&load_main_song=" );
+
+	$i = 1;
+	if( ! empty( $array_album ) )
+	{
+		foreach( $array_album as $album )
+		{
+			$xtpl->assign( 'ALBUM', $album );
+			
+			if( ( $i++ ) == 1 )
+			{
+				foreach( $first_album_data as $song )
+				{
+					$song['tenthat1'] = nv_clean60( $song['tenthat'], 23 );
+					$xtpl->assign( 'SONG', $song );
+					$xtpl->parse( 'main.data.first.song' );
+				}
+				$xtpl->parse( 'main.data.first' );
+			}
+			else
+			{
+				$xtpl->parse( 'main.data.old' );
+			}
+		}
+		
+		$xtpl->parse( 'main.data' );
+		if( $nv_Request->isset_request( 'load_main_song', 'get' ) ) die( $xtpl->text( 'main.data' ) );
+	}
+	elseif( $nv_Request->isset_request( 'load_main_song', 'get' ) )
+	{
+		die("");
 	}
 	
 	$xtpl->parse( 'main' );
