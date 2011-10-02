@@ -101,6 +101,7 @@ $lang_module['error_name_ads'] = "Lỗi: Bạn chưa điền tên quảng cáo";
 $lang_module['error_link_ads'] = "Lỗi: Bạn chưa chọn quảng cáo";
 $lang_module['error_title'] = "Lỗi: Tiêu đề không được để trống";
 $lang_module['error_update'] = "Lỗi: Không thể cập nhật dữ liệu";
+$lang_module['error_exist_song'] = "Lỗi: Bài hát đã tồn tại";
 
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";

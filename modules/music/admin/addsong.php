@@ -125,6 +125,17 @@ if ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 {
 	$error = nv_check_ok_song( $array );
 	
+	// Kiem tra bai hat da co chua
+	if( empty( $error ) )
+	{
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `ten`=" . $db->dbescape( $array['ten'] ) . " AND `id`!=" . $id );
+		list( $exist ) = $db->sql_fetchrow( $result );
+		if( $exist )
+		{
+			$error = $lang_module['error_exist_song'];
+		}
+	}
+	
 	if( empty( $error ) )
 	{
 		$check_url = creatURL ( $array['duongdan'] );
@@ -153,6 +164,17 @@ if ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 {	
 	$error = nv_check_ok_song( $array );
+	
+	// Kiem tra bai hat da co chua
+	if( empty( $error ) )
+	{
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `ten`=" . $db->dbescape( $array['ten'] ) );
+		list( $exist ) = $db->sql_fetchrow( $result );
+		if( $exist )
+		{
+			$error = $lang_module['error_exist_song'];
+		}
+	}
 	
 	if ( empty( $error ) )
 	{
