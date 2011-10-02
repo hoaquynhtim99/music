@@ -35,13 +35,13 @@ if( $nv_Request->isset_request( 'load_main_song', 'get' ) )
 	}
 }
 
-$result = $db->sql_query( $sql );
+$list = nv_db_cache( $sql, 0, $module_name );
 
 $first_album_id = array();
 $first_album_data = array();
 $array_album = array();
 
-while ( $row = $db->sql_fetchrow( $result ) )
+foreach( $list as $row )
 {
 	if( empty( $first_album_id ) ) $first_album_id = array( $row['id'], $row['listsong'] );
 	$array_album[] = array(
@@ -57,10 +57,10 @@ while ( $row = $db->sql_fetchrow( $result ) )
 if( ! empty( $first_album_id ) )
 {
 	$sql = "SELECT `id`, `ten`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $first_album_id[1] . ") AND `active`=1";
-	$result = $db->sql_query( $sql );
+	$list = nv_db_cache( $sql, 'id', $module_name );
 	$_tmp = array();
 	
-	while( $row = $db->sql_fetchrow( $result ) )
+	foreach( $list as $row )
 	{
 		$_tmp[$row['id']] = $row;
 	}
