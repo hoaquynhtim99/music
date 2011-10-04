@@ -188,5 +188,5 @@ function afterdellist(res)
 // an hien div
 function ShowHide(what)
 {
-	$("#"+what+"").animate({"height": "toggle"}, { duration: 90 });
+	$("#"+what+"").animate({"height": "toggle"}, { duration: 1 });
 }

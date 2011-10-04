@@ -13,10 +13,16 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 {
     function nv_music_gift_block ( $block_config )
     {
-        global $module_array_cat, $module_info, $lang_module, $site_mods, $db, $module_name;
+        global $module_array_cat, $module_info, $lang_module, $site_mods, $db, $module_name, $my_head;
         $module = $block_config['module'];
 		$data = $site_mods[$module]['module_data'];
 		$file = $site_mods[$module]['module_file'];
+		
+		// Neu khong phai la module music
+		if( $module_name != $module )
+		{
+			$my_head .= '<script type="text/javascript">function ShowHide(what){$("#"+what+"").animate({"height": "toggle"}, { duration: 1 });}</script>';
+		}	
 		
 		$block_file_lang = NV_ROOTDIR . "/modules/" . $file . "/language/block." . $block_config['block_name'] . "_" . NV_LANG_INTERFACE . ".php";
 		if( file_exists( $block_file_lang ) )
@@ -33,42 +39,48 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 				{
 					$block_theme = $module_info['template'];
 				}
-				else
+				elseif ( file_exists( NV_ROOTDIR . "/themes/default/modules/" . $file . "/block_music_gift.tpl" ) )
 				{
 					$block_theme = "default";
+				}
+				else
+				{
+					$block_theme = "modern";
 				}
 				
 				$xtpl = new XTemplate( "block_music_gift.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $file );
 				$xtpl->assign( 'LANG', $lang_block );
+				$xtpl->assign( 'GIFT_LINK', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . '&amp;' . NV_OP_VARIABLE . "=gift" );
 				
 				$i = 1;
-				foreach( $list as $row )
+				foreach( $list as $gift )
 				{
-					$row['linksong'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . '&amp;' . NV_OP_VARIABLE . "=listenone/" . $row['songid'] . "/" . $row['songalias'];
-					$row['search_singer'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . '&amp;' . NV_OP_VARIABLE . "=search/singer/" . $row['singeralias'];
-
-					$num = strlen( $row['body'] );
+					$xtpl->assign( 'url_listen', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . '&amp;' . NV_OP_VARIABLE . "=listenone/" . $gift['songid'] . "/" . $gift['songalias'] );
+					$xtpl->assign( 'from', $gift['who_send'] );
+					$xtpl->assign( 'to', $gift['who_receive'] );
+					$xtpl->assign( 'time', nv_date( "d/m/Y H:i", $gift['time'] ) );
 					
-					if( $num > 100 )
+					$sub = explode ( ' ', $gift['body'] ) ;
+					$bodymini = $bodyfull = '';
+					foreach ( $sub as $i => $value )
 					{
-						$body = $row['body'];
-						$row['body'] = nv_clean60( $row['body'], 100 );
-						
-						if( preg_match( "/^(.*)\\.\.\.$/" , $row['body'] ) )
+						if ( $i < 25 ) 
 						{
-							$row['body'] = substr( $row['body'], 0, -3 );
-							$row['mbody'] = substr( $body, strlen( $row['body'] ) );
-							
-							$xtpl->assign( 'I', $i );
-							$xtpl->assign( 'mbody', $row['mbody'] );
-							$xtpl->parse( 'main.loop.more' );
+							$bodymini .= " " . $value;
+						}
+						else
+						{
+							$bodyfull .= " " . $value;
 						}
 					}
 					
-					$xtpl->assign( 'ROW', $row );
-					
+					$xtpl->assign( 'message', $bodymini );
+					$xtpl->assign( 'fullmessage', $bodyfull );
+					$xtpl->assign( 'DIV', $i );
+					$xtpl->assign( 'songname', $gift['songtitle'] );
+
+					$i ++ ;
 					$xtpl->parse( 'main.loop' );
-					$i ++;
 				}
 				
 				$xtpl->parse( 'main' );
