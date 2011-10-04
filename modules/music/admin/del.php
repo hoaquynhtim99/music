@@ -20,6 +20,14 @@ if( $id > 0 )
 {
 	if ( $where == '_album' )
 	{
+		// Xoa trong album trang chu
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_main_album` WHERE `albumid`=" . $id;
+		$db->sql_query( $sql );
+		
+		// Xoa album HOT
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` WHERE `albumid`=" . $id;
+		$db->sql_query( $sql );
+		
 		$album = getalbumbyID( $id );
 		updatesinger( $album['casi'], 'numalbum', '-1' );
 		delcomment('album', $album['id']);
