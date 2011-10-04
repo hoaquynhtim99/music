@@ -70,14 +70,17 @@ if( ! empty( $first_album_id ) )
 		$i = 1;
 		foreach( explode( ",", $first_album_id[1] ) as $_sid )
 		{
-			$first_album_data[] = array(
-				"stt" => $i,  //
-				"tenthat" => $_tmp[$_sid]['tenthat'],  //
-				"url" => nv_url_rewrite( $main_header_URL . "=listenone/" . $_tmp[$_sid]['id'] . "/" . $_tmp[$_sid]['ten'], true )  //
-			);
-			
-			$i ++;
-			if( $i > 10 ) break;
+			if( isset( $_tmp[$_sid] ) )
+			{
+				$first_album_data[] = array(
+					"stt" => $i,  //
+					"tenthat" => $_tmp[$_sid]['tenthat'],  //
+					"url" => nv_url_rewrite( $main_header_URL . "=listenone/" . $_tmp[$_sid]['id'] . "/" . $_tmp[$_sid]['ten'], true )  //
+				);
+				
+				$i ++;
+				if( $i > 10 ) break;
+			}
 		}
 	}
 }
