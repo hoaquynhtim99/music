@@ -50,15 +50,15 @@ if ( $nv_Request->isset_request( 'loadblocktabsong', 'get' ) )
 if( ! empty( $first_cat ) )
 {
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `theloai`=" . $first_cat . " AND `active`=1 ORDER BY `dt` DESC LIMIT 0," . $setting['num_blocktab'];
-	$result = $db->sql_query( $sql );
-	$numrow = $db->sql_numrows( $result );
 	
-	if( ! empty( $numrow ) )
+	$list = nv_db_cache( $sql, 'id', $module_name );
+	
+	if( ! empty( $list ) )
 	{
 		if( empty( $allsinger ) ) $allsinger = getallsinger();
 		if( empty( $category ) ) $category = get_category();
 		
-		while ( $row = $db->sql_fetchrow( $result ) )
+		foreach( $list as $row )
 		{
 			$xtpl->assign( 'ID', $row['id'] );
 			$xtpl->assign( 'name', $row['tenthat'] );

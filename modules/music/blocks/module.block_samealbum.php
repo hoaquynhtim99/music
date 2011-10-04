@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
@@ -8,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op, $op;
+global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op, $op, $module_name;
 
 if ( $op == "listenone" )
 {
@@ -17,15 +18,16 @@ if ( $op == "listenone" )
 
 	$songid = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 AND `id`!=" . $songid . " AND album =( SELECT `album` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $songid . " LIMIT 1 ) ORDER BY id DESC LIMIT 0,10";
+	$sql = "SELECT `id`, `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 AND `id`!=" . $songid . " AND `album` =( SELECT `album` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $songid . " LIMIT 1 ) ORDER BY `id` DESC LIMIT 0,10";
 
-	$query = $db->sql_query( $sql );
-	if( $db->sql_numrows( $query ) )
+	$list = nv_db_cache( $sql, 'id', $module_name );
+	
+	if( ! empty( $list ) )
 	{
-		while( $song =  $db->sql_fetchrow( $query ) )
+		foreach( $list as $row )
 		{
-			$xtpl->assign( 'url_listen', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
-			$xtpl->assign( 'song_name', $song['tenthat'] );
+			$xtpl->assign( 'url_listen', $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'] );
+			$xtpl->assign( 'song_name', $row['tenthat'] );
 			$xtpl->parse( 'main.loop' );
 		}
 

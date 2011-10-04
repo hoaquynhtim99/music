@@ -10,22 +10,21 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
-$allsinger = getallsinger();
 
 $xtpl = new XTemplate( "block_video_same_category.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `active` = 1 ORDER BY `view` DESC LIMIT 0,8";
-$query = $db->sql_query( $sql );
+$sql = "SELECT a.id, a.name, a.tname, a.thumb, a.casi, a.view, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1 ORDER BY a.view DESC LIMIT 0,8";
+$result = $db->sql_query( $sql );
 
-while( $video =  $db->sql_fetchrow( $query ) )
+while( $row =  $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" . $video['id'] . "/" . $video['name'] );
-	$xtpl->assign( 'video_name', $video['tname'] );
-	$xtpl->assign( 'thumb', $video['thumb'] );
-	$xtpl->assign( 'view', $video['view'] );
-	$xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $video['casi'] );
-	$xtpl->assign( 'singer', $allsinger[$video['casi']] );
+	$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'] );
+	$xtpl->assign( 'video_name', $row['tname'] );
+	$xtpl->assign( 'thumb', $row['thumb'] );
+	$xtpl->assign( 'view', $row['view'] );
+	$xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . $row['casi'] );
+	$xtpl->assign( 'singer', empty( $row['tenthat'] ) ? $lang_module['unknow'] : $row['tenthat'] );
 	$xtpl->parse( 'main.loop' );
 }
 

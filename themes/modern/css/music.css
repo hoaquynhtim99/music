@@ -131,6 +131,14 @@ ul.tabs li a:hover {
 
 }
 
+/* LIST SONG */
+ul.list_song{padding:0;margin:0;list-style-type:none}
+ul.list_song li{display:block;padding:0px 0px 5px 0px;background-image:url('../images/music/listmusic.png');background-repeat:no-repeat;background-position:0px 1px;text-indent:20px;border-bottom:1px #dadada solid;margin-bottom:5px}
+ul.list_song li strong, ul.list_song li .singer{color:#0066FF;font-size:11px}
+ul.list_song li .singer:hover{text-decoration:underline}
+
+/* OTHER */
+
 .topsong_container {
 	overflow: hidden;
 	float: left;
