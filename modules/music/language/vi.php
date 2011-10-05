@@ -21,6 +21,7 @@ $lang_translator['langtype'] ="lang_module";
 $lang_module['menu1'] = "Nhạc";
 $lang_module['menu3'] = "Bài hát của bạn";
 $lang_module['menu4'] = "Playlist của bạn";
+
 $lang_module['author'] = "Sáng tác";
 $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
@@ -39,6 +40,8 @@ $lang_module['category_2'] = "Thể loại";
 $lang_module['active_yes'] = "Có";
 $lang_module['active_no'] = "Không";
 $lang_module['cancel'] = "Làm lại";
+$lang_module['page'] = "Trang %d";
+
 $lang_module['cofirm_del'] = "Bạn có chắc chắn xóa không?";
 $lang_module['content'] = "Nội dung";
 $lang_module['comment'] = "Bình luận";
@@ -91,6 +94,7 @@ $lang_module['show_1'] = "Thể hiện";
 $lang_module['songof'] = "Các ca khúc do";
 $lang_module['topics'] = "CHỦ ĐỀ";
 $lang_module['upload'] = "Tải lên bởi";
+
 $lang_module['playlist_listen'] = "Nghe playlist";
 $lang_module['playlist_listen1'] = "Nghe playlist này";
 $lang_module['playlist_info'] = "Thông tin về playlist";
@@ -114,13 +118,16 @@ $lang_module['playlist_edit_sucess1'] = "nghe ";
 $lang_module['playlist_edit_sucess2'] = "playlist này hoặc ";
 $lang_module['playlist_edit_sucess3'] = "quay lại ";
 $lang_module['playlist_edit_sucess4'] = "trang quản lý playlist";
+
 $lang_module['prev'] = "Trang trước";
+
 $lang_module['ready_send_gift'] = "Bạn vừa gủi quà tặng, bạn phải đợi 6 phút sau để có thể gủi quà tặng lần nữa";
 $lang_module['ready_send_error'] = "Xin lỗi, hình như bạn vừa gửi báo lỗi cho chúng tôi rồi!";
 $lang_module['ready_lyric_gift'] = "Xin lỗi, hình như bạn vừa gửi lời bài hát rồi!";
 $lang_module['request'] = "Yêu cầu";
 $lang_module['read_more'] = "Xem thêm";
 $lang_module['results'] = "kết quả";
+
 $lang_module['save'] = "Lưu";
 $lang_module['singer'] = "Ca sĩ";
 $lang_module['song_vote'] = "Bình chọn";
