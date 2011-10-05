@@ -12,11 +12,13 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
     
-// xu li
+// Xu li
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'view';
 $now_page = isset( $array_op[3] ) ?  intval( $array_op[3] ) : 1;
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
 $link = $mainURL . "=allplaylist/". $type ."/" . $key ;
+
+if( ! in_array( $type, array( 'id', 'view' ) ) ) module_info_die();
 
 $g_array = array(
 	"hot" => $mainURL . "=allplaylist/view/" . $key,  //
@@ -25,12 +27,12 @@ $g_array = array(
 );
 
 $data = '';
-if ( $key != '' )
+if ( $key != '-' )
 	$data = "WHERE `keyname` LIKE '%". $db->dblikeescape( $key ) ."%' AND `active` = 1";
 else
 	$data = "WHERE `active` = 1";
 	
-// xu li du lieu
+// Xu li du lieu
 if ( $now_page == 1) 
 {
 	$first_page = 0 ;
@@ -40,16 +42,17 @@ else
 	$first_page = ( $now_page -1 ) * 20;
 }	
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist " . $data . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist " . $data;
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist`" . $data . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT COUNT(*) AS num FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` " . $data;
 
-// tinh so trang
-$num = $db->sql_query($sqlnum);
-$output = $db->sql_numrows($num);
+// Tinh so trang
+$list = nv_db_cache( $sqlnum, 0, $module_name );
+$output = empty( $list ) ? 0 : $list[0]['num'];
+if( empty( $output ) and ( $now_page > 1 ) ) module_info_die();
+
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
-// ket qua
 $result = $db->sql_query( $sql );
 $g_array['num'] = $output;
 
@@ -66,6 +69,20 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"url_search_upload" => $mainURL . "=search/upload/" . $row['username']  //
 	);	
 }
+
+// Xu ly tieu de trang
+switch( $type )
+{
+	case 'id' : $page_title = $lang_module['playlist_newest']; break;
+	case 'view' : $page_title = $lang_module['playlist_hotest']; break;
+	default : $page_title = $lang_module['playlist_all'];
+}
+
+if( $now_page > 1 ) $page_title .= NV_TITLEBAR_DEFIS . sprintf( $lang_module['page'], $now_page );
+
+$page_title .= NV_TITLEBAR_DEFIS . $module_info['custom_title'];
+$key_words = $module_info['keywords'];
+$description = $setting['description'];
 
 $contents = nv_music_allplaylist ( $g_array, $array );
 $contents .= new_page( $ts, $now_page, $link );

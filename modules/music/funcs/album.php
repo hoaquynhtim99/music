@@ -91,7 +91,6 @@ $page_title .= NV_TITLEBAR_DEFIS . $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $description = $setting['description'];
 
-
 $contents = nv_music_album ( $g_array, $array );
 $contents .= new_page( $ts, $now_page, $link );
 
