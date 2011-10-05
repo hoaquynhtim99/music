@@ -281,6 +281,8 @@ function nv_music_showcomment( $g_array, $array )
 	foreach( $array as $row )
 	{
 		$row['avatar'] = empty( $row['avatar'] ) ? NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/default.jpg" : NV_BASE_SITEURL . $row['avatar'];
+		$row['date'] = nv_date( "d/m/Y H:i", $row['date'] );
+		
 		$xtpl->assign( 'ROW', $row );
 		$xtpl->parse( 'main.loop' );
 	}
