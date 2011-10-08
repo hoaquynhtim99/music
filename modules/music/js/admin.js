@@ -3,6 +3,8 @@
  * @Author PHAN TAN DUNG (phantandung92@gmail.vn)
  * @Createdate 1 - 1 - 2011 5 : 12
  */
+ 
+
 // Tao ten ngan gon
 function get_alias( id, func ) {
 	var title = strip_tags(document.getElementById(id).value);
@@ -144,3 +146,19 @@ function nv_change_vcat_weight_result( res )
    return;
 }
 
+// Cap nhat lai album HOT
+function nv_update_hot_album(stt,id)
+{
+   nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=hotalbum&update=1&id=' + id + '&stt=' + stt + '&num=' + nv_randomPassword( 8 ), '', 'nv_update_hot_album_result' );
+   return;
+}
+function nv_update_hot_album_result( res )
+{
+	if ( res != 'OK' )
+	{
+		alert( nv_is_change_act_confirm[2] );
+	}else{
+	   window.location.href = window.location.href;
+	}
+   return;
+}
