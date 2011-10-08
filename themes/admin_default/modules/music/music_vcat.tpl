@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <form action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
 	<table class="tab1">
-		<caption>{LANG.cat_lits}</caption>
+		<caption>{LANG.vcat_lits}</caption>
 		<thead>
 			<tr>
 				<td style="width:50px">{LANG.weight}</td>

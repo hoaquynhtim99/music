@@ -278,7 +278,7 @@ $lang_module['cat_edit'] = "Sửa thể loại bài hát";
 $lang_module['cat_add'] = "Thêm thể loại bài hát";
 $lang_module['cat_error_exist'] = "Lỗi: Thể loại bài hát này đã có";
 
-$lang_module['vcat_lits'] = "Danh sách thể loại clip";
+$lang_module['vcat_lits'] = "Danh sách thể loại video clip";
 $lang_module['vcat_edit'] = "Sửa thể loại clip";
 $lang_module['vcat_add'] = "Thêm thể loại clip";
 $lang_module['vcat_error_exist'] = "Lỗi: Thể loại clip này đã có";

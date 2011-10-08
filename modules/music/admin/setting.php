@@ -1,18 +1,16 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 7-17-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:34 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
-{
-    die( 'Stop!!!' );
-}
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' ); 
 
 $page_title = $lang_module['music_setting'];
+
 $contents = '';
 $setting = setting_music();
 
