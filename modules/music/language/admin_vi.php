@@ -301,4 +301,11 @@ $lang_module['filter_lang_desc'] = "giảm dần";
 $lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
 $lang_module['filter_all_cat'] = "- Tất cả thể loại -";
 
+$lang_module['guide_hot'] = "Quản lý các album HOT nhất trên trang chủ";
+$lang_module['guide_fourcategory'] = "Các thể loại sẽ hiển thị trên block TAB";
+$lang_module['guide_maincategory'] = "Các thể loại trên block thể loại";
+$lang_module['guide_mainalbum'] = "Các album được dùng làm chủ đề trên block";
+$lang_module['guide_ftpsetting'] = "Quản lý tài khoản FTP, quản lý host nhạc, các host nhạc mặc định để lấy link nhạc";
+$lang_module['guide_setting'] = "Thiết lập chức năng của module như cấp phép đăng nhạc, tải nhạc, bình luận...";
+
 ?>

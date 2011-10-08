@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author VINADES.,JSC (contact@vinades.vn)
@@ -7,43 +8,72 @@
  */
  
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+
 $page_title = $lang_module['set_global'];
 
-$contents = '
-<table class="tab1">
-    <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=hotalbum">' . $lang_module['sub_hotalbum'] . '</a>
-    </caption>
-</table>
-<table class="tab1">
-    <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=fourcategory">' . $lang_module['sub_fourcategory'] . '</a>
-    </caption>
-</table>
-<table class="tab1">
-    <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=maincategory">' . $lang_module['sub_maincategory'] . '</a>
-    </caption>
-</table>
-<table class="tab1">
-    <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=mainalbum">' . $lang_module['sub_mainalbum'] . '</a>
-    </caption>
-</table>
-<table class="tab1">
-    <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=ftpsetting">' . $lang_module['ftpsetting'] . '</a>
-    </caption>
-</table>
-<table class="tab1">
-    <caption>
-        <a href="index.php?' . NV_NAME_VARIABLE . '=' . $module_name . '&' . NV_OP_VARIABLE . '=setting">' . $lang_module['music_setting'] . '</a>
-    </caption>
-</table>
-' ;
- 
-include (NV_ROOTDIR . "/includes/header.php");
-echo nv_admin_theme($contents);
-include (NV_ROOTDIR . "/includes/footer.php");
+$xtpl = new XTemplate( "global_setting.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
+$xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'GLANG', $lang_global );
+
+$array = array();
+
+// Album HOT
+$array[] = array(
+	"title" => $lang_module['sub_hotalbum'],  //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=hotalbum",  //
+	"guide" => $lang_module['guide_hot']  //
+);
+
+// Cac the loai tren block TAB
+$array[] = array(
+	"title" => $lang_module['sub_fourcategory'],  //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=fourcategory",  //
+	"guide" => $lang_module['guide_fourcategory']  //
+);
+
+// Cac the loai tên block the loai
+$array[] = array(
+	"title" => $lang_module['sub_maincategory'],  //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=maincategory",  //
+	"guide" => $lang_module['guide_maincategory']  //
+);
+
+// Cac album duoc dung lam the loai tren block
+$array[] = array(
+	"title" => $lang_module['sub_mainalbum'],  //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=mainalbum",  //
+	"guide" => $lang_module['guide_mainalbum']  //
+);
+
+// Cau hinh FTP
+$array[] = array(
+	"title" => $lang_module['ftpsetting'],  //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting",  //
+	"guide" => $lang_module['guide_ftpsetting']  //
+);
+
+// Cau hinh chinh cua module
+$array[] = array(
+	"title" => $lang_module['music_setting'],  //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting",  //
+	"guide" => $lang_module['guide_setting']  //
+);
+
+$i = 1;
+foreach( $array as $row )
+{
+	$xtpl->assign( 'ROW', $row );
+	$xtpl->assign( 'CLASS', ( $i % 2 == 0 ) ? " class=\"second\"" : "" );
+	
+	$xtpl->parse('main.loop');
+	++ $i;
+}
+
+$xtpl->parse( 'main' );
+$contents = $xtpl->text( 'main' );
+
+include ( NV_ROOTDIR . "/includes/header.php" );
+echo nv_admin_theme( $contents );
+include ( NV_ROOTDIR . "/includes/footer.php" );
 
 ?>
