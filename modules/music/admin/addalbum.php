@@ -268,7 +268,7 @@ if( ! empty( $array['listsong'] ) )
 	
 	foreach( explode( ",", $listsong ) as $_id )
 	{
-		$array['listsong'][$_id] = $_tmp[$_id];
+		if( isset( $_tmp[$_id] ) ) $array['listsong'][$_id] = $_tmp[$_id];
 	}
 }
 else
