@@ -12,6 +12,12 @@ td.strong{font-weight:bold}
 .aright{text-align: right;}
 .fixbottomtable{margin:0px 0px 3px 0px!important}
 
+/* ICON */
+.select_icon {background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}
+.unselect_icon {background: url('../images/music/unselect-icon.png') no-repeat left center;padding-left: 17px}
+.status_icon {background: url('../images/music/status-icon.png') no-repeat left center;padding-left: 17px}
+
+
 /* SONG OF ALBUM */
 .list_song{list-style-type:none;padding:0;margin:0}
 .list_song li{list-style-type:none;padding:0px 0px 0px 10px;margin:0;display:block;background-color:#EEEEEE;border:1px #999999 solid;margin-bottom:3px;height:25px;line-height:25px;cursor:move;position:relative}

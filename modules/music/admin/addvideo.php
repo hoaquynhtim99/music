@@ -1,50 +1,66 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 7-17-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' ); 
+
+// Ham kiem tra video co day du thong tin chua
+function nv_check_ok_video( $array )
 {
-    die( 'Stop!!!' );
+	global $lang_module;
+	
+	if( empty( $array['name'] ) ) return $lang_module['video_error_name'];
+	if( empty( $array['tname'] ) ) return $lang_module['video_error_tname'];
+	if( empty( $array['theloai'] ) ) return $lang_module['video_error_theloai'];
+	if( empty( $array['duongdan'] ) ) return $lang_module['video_error_duongdan'];
+	if( empty( $array['thumb'] ) ) return $lang_module['video_error_thumb'];
+	
+	return "";
 }
-//khoi tao
+
 $contents = "";
 $error = "";
-//lay gia tri
-$videodata['name'] = filter_text_input( 'name', 'post', '' );
-$videodata['tname'] = filter_text_input( 'tname', 'post', '' );
-$videodata['casi'] = filter_text_input( 'casi', 'post', '' );
-$videodata['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
-$videodata['nhacsi'] = filter_text_input( 'nhacsi', 'post', '' );
-$videodata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '' );
-$videodata['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
-$videodata['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
-$videodata['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
+$array = $array_old = array();
 
-if ( $videodata['casimoi'] != '')
+$array['name'] = filter_text_input( 'name', 'post', '' );
+$array['tname'] = filter_text_input( 'tname', 'post', '' );
+$array['casi'] = filter_text_input( 'casi', 'post', '' );
+$array['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
+$array['nhacsi'] = filter_text_input( 'nhacsi', 'post', '' );
+$array['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '' );
+$array['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
+$array['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
+$array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
+$array['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
+
+// Tao moi ca si va nhac si
+if ( $array['casimoi'] != '')
 {
-	$videodata['casi'] = change_alias( $videodata['casimoi'] );
-	$error = newsinger( $videodata['casi'], $videodata['casimoi'] );
+	$array['casi'] = change_alias( $array['casimoi'] );
+	newsinger( $array['casi'], $array['casimoi'] );
 }
-if ( $videodata['nhacsimoi'] != '')
+if ( $array['nhacsimoi'] != '')
 {
-	$videodata['nhacsi'] = change_alias( $videodata['nhacsimoi'] );
-	$error = newauthor( $videodata['nhacsi'], $videodata['nhacsimoi'] );
+	$array['nhacsi'] = change_alias( $array['nhacsimoi'] );
+	newauthor( $array['nhacsi'], $array['nhacsimoi'] );
 }
+
 $category = get_videocategory() ;
-if ( count ( $category ) == 0 ) 
+if ( empty( $category ) )
 {
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=video_category" ) ;  
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=video_category" );  
 	die();	
 }
+
 $allsinger = getallsinger();
 $allauthor = getallauthor();
 $setting = setting_music();
-// lay du lieu
+
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 if ( $id == 0 )
@@ -54,111 +70,167 @@ if ( $id == 0 )
 else
 {
     $page_title = $lang_module['video_edit'];
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id` = ".$id."";
-	$resuilt = $db->sql_query( $sql );
-	$row = $db->sql_fetchrow( $resuilt );
-	if ( !$nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $id;
+	$result = $db->sql_query( $sql );
+	$numrow = $db->sql_numrows( $result );
+	
+	if( $numrow != 1 ) nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	
+	$row = $db->sql_fetchrow( $result );
+	
+	// Thong tin cu
+	$array_old['casi'] = $row['casi'];
+	$array_old['nhacsi'] = $row['nhacsi'];
+	$array_old['theloai'] = $row['theloai'];
+	
+	if ( ! $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 	{
-		$videodata['name'] = $row['name'];
-		$videodata['tname'] = $row['tname'];
-		$videodata['casi'] = $row['casi'];
-		$videodata['nhacsi'] = $row['nhacsi'];
-		$videodata['theloai'] = $row['theloai'];
-		$videodata['duongdan'] = $row['duongdan'];
-		$videodata['thumb'] = $row['thumb'];	
-		$videodata['duongdan'] = outputURL ( $row['server'], $row['duongdan'] );
+		$array['name'] = $row['name'];
+		$array['tname'] = $row['tname'];
+		$array['casi'] = $row['casi'];
+		$array['nhacsi'] = $row['nhacsi'];
+		$array['theloai'] = $row['theloai'];
+		$array['thumb'] = $row['thumb'];	
+		$array['duongdan'] = admin_outputURL( $row['server'], $row['duongdan'] );
+		$array['listcat'] = $row['listcat'];
+			
+		if( ! empty( $array['listcat'] ) )
+		{
+			$array['listcat'] = explode( ",", $array['listcat'] );
+		}
+		else
+		{
+			$array['listcat'] = array();
+		}
 	}
 }
 
-//sua video
-if ( (($nv_Request->get_int( 'edit', 'post', 0 )) == 1) && ($error =='') )
+// Sua video
+if ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 {
-	$check_url = creatURL ( $videodata['duongdan'] );
-	$videodata['duongdan'] = $check_url['duongdan'];
-	$videodata['server'] = $check_url['server'];
+	$error = nv_check_ok_video( $array );
 
-	foreach ( $videodata as $key => $data  )
-	{	
-		$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
-	}
-	if ( $query ) 
+	if( empty( $error ) )
 	{
-		nv_del_moduleCache( $module_name );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" ); die();
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `name`=" . $db->dbescape( $array['name'] ) . " AND `id`!=" . $id );
+		list( $exist ) = $db->sql_fetchrow( $result );
+		if( $exist )
+		{
+			$error = $lang_module['error_exist_video'];
+		}
 	}
-	else
+	
+	if( empty( $error ) )
 	{
-		$error = $lang_module['error_save'];
+		$check_url = creatURL ( $array['duongdan'] );
+		$array['duongdan'] = $check_url['duongdan'];
+		$array['server'] = $check_url['server'];
+
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET 
+			`name`=" . $db->dbescape( $array['name'] ) . ", 
+			`tname`=" . $db->dbescape( $array['tname'] ) . ", 
+			`casi`=" . $db->dbescape( $array['casi'] ) . ", 
+			`nhacsi`=" . $db->dbescape( $array['nhacsi'] ) . ", 
+			`theloai`=" . $db->dbescape( $array['theloai'] ) . ", 
+			`listcat`=" . $db->dbescape( implode( ",", $array['listcat'] ) ) . ", 
+			`duongdan`=" . $db->dbescape( $array['duongdan'] ) . ", 
+			`thumb`=" . $db->dbescape( $array['thumb'] ) . ", 
+			`server`=" . $db->dbescape( $array['server'] ) . "
+		WHERE `id`=" . $id;
+		
+		$check_update = $db->sql_query( $sql );
+		
+		if( $check_update )
+		{
+			// Cap nhat so video cua ca si
+			if( $array_old['casi'] != $array['casi'] )
+			{
+				updatesinger( $array_old['casi'], 'numvideo', '-1' );
+				updatesinger( $array['casi'], 'numvideo', '+1' );
+			}
+			
+			// Cap nhat so video cua nhac si
+			if( $array_old['nhacsi'] != $array['nhacsi'] )
+			{
+				updateauthor( $array_old['nhacsi'], 'numvideo', '-1' );
+				updateauthor( $array['nhacsi'], 'numvideo', '+1' );
+			}
+			$db->sql_freeresult();
+			
+			nv_del_moduleCache( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" ); 
+			die();
+		}
+		else
+		{
+			$error = $lang_module['error_save'];
+		}
 	}
 }
 
-// them video moi
-if ( ($nv_Request->get_int( 'add', 'post', 0 ) == 1) && ($error =='') )
-{	
+// Them video moi
+if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
+{
+	$error = nv_check_ok_video( $array );
 	
-	foreach ( $videodata as $data => $null )
+	// Kiem tra video da co chua
+	if( empty( $error ) )
 	{
-		if ( $data == 'casimoi' ) continue;
-		if ( $data == 'nhacsimoi' ) continue;
-		if	($null == '') $error = $lang_module['error_video']; 
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `name`=" . $db->dbescape( $array['name'] ) );
+		list( $exist ) = $db->sql_fetchrow( $result );
+		if( $exist )
+		{
+			$error = $lang_module['error_exist_video'];
+		}
 	}
-	if ( $error == "" )
-	{
-		$hit = "0-" . NV_CURRENTTIME;
-		$check_url = creatURL ( $videodata['duongdan'] );
-		$data = $check_url['duongdan'];
-		$server = $check_url['server'];
 	
-		updatesinger( $videodata['casi'], 'numvideo', '+1' );
-		updateauthor( $videodata['nhacsi'], 'numvideo', '+1' );
-		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` 
-		(
-			`id`, `name`, `tname`, `casi`, `nhacsi`, `theloai`, `duongdan`, `thumb`, `view`, `active`, `dt`, `server`, `binhchon`, `hit`
-		) 
-		VALUES 
-		( 
+	if ( empty( $error ) )
+	{
+		$check_url = creatURL ( $array['duongdan'] );
+	
+		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` VALUES (
 			NULL, 
-			" . $db->dbescape( $videodata['name'] ) . ", 
-			" . $db->dbescape( $videodata['tname'] ) . ", 
-			" . $db->dbescape( $videodata['casi'] ) . ", 
-			" . $db->dbescape( $videodata['nhacsi'] ) . ", 
-			" . $db->dbescape( $videodata['theloai'] ) . ", 
-			" . $db->dbescape( $data ) . ", 
-			" . $db->dbescape( $videodata['thumb'] ) . " ,
+			" . $db->dbescape( $array['name'] ) . ", 
+			" . $db->dbescape( $array['tname'] ) . ", 
+			" . $db->dbescape( $array['casi'] ) . ", 
+			" . $db->dbescape( $array['nhacsi'] ) . ", 
+			" . $db->dbescape( $array['theloai'] ) . ", 
+			" . $db->dbescape( implode( ",", $array['listcat'] ) ) . ",
+			" . $db->dbescape( $check_url['duongdan'] ) . ", 
+			" . $db->dbescape( $array['thumb'] ) . " ,
 			0,
 			1,
-			UNIX_TIMESTAMP() ,
-			" . $server . ",
+			" . NV_CURRENTTIME . ",
+			" . $check_url['server'] . ",
 			0,
-			" . $db->dbescape( $hit ) . "			
-		)
-		"; 
-		if ( $db->sql_query_insert_id( $query ) ) 
-		{ 
-			nv_del_moduleCache( $module_name );
+			" . $db->dbescape( "0-" . NV_CURRENTTIME ) . "			
+		)"; 
+	
+		if ( $db->sql_query_insert_id( $sql ) ) 
+		{
+			// Cap nhat so video cua ca si, nhac si
+			updatesinger( $array['casi'], 'numvideo', '+1' );
+			updateauthor( $array['nhacsi'], 'numvideo', '+1' );
 			$db->sql_freeresult();
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" ); die();
-		} 
+		
+			nv_del_moduleCache( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" ); 
+			die();
+		}
 		else 
-		{ 
+		{
 			$error = $lang_module['error_save']; 
 		} 
-
 	}
+}
 
-}
-// hien bao loi
-if($error)
+// Hien bao loi
+if( $error )
 {
-	$contents .= "<div class=\"quote\" style=\"width: 780px;\">\n
-					<blockquote class=\"error\">
-						<span>".$error."</span>
-					</blockquote>
-				</div>\n
-				<div class=\"clear\">
-				</div>";
+	$contents .= "<div class=\"quote\" style=\"width: 98%;\"><blockquote class=\"error\"><span>" . $error . "</span></blockquote></div><div class=\"clear\"></div>";
 }
-// noi dung trsng
+
+// Noi dung trang
 $contents .="
 <form method=\"post\" name=\"add_pic\">
 	<table class=\"tab1\">
@@ -171,110 +243,107 @@ $contents .="
 		</thead>
 		<tbody>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['video_name']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['video_name'] . " </td>
 				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"tname\" style=\"width: 470px;\" value=\"".$videodata['tname']."\" type=\"text\"><img height=\"16\" alt=\"\" onclick=\"get_alias('idtitle','res_get_alias');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"".NV_BASE_SITEURL."images/refresh.png\">
+					<input id=\"idtitle\" name=\"tname\" style=\"width: 470px;\" value=\"" . $array['tname'] . "\" type=\"text\"><img height=\"16\" alt=\"\" onclick=\"get_alias('idtitle','res_get_alias');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"" . NV_BASE_SITEURL . "images/refresh.png\">
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['video_name_short']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['video_name_short'] . "</td>
 				<td style=\"background: #eee;\">
-					<input id=\"idalias\" name=\"name\" style=\"width: 470px;\" value=\"".$videodata['name']."\" type=\"text\" />
+					<input id=\"idalias\" name=\"name\" style=\"width: 470px;\" value=\"" . $array['name'] . "\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['singer']."	
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['singer'] . "</td>
 				<td style=\"background: #eee;\">
 					<select name=\"casi\">\n";
 					foreach ( $allsinger as $key => $title )
 					{
 						$i= "";
-						if ( $videodata['casi'] == $key )
+						if ( $array['casi'] == $key )
 						$i = "selected=\"selected\"";
-						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+						$contents .= "<option " . $i . " value=\"" . $key . "\" >" . $title . "</option>\n";
 					}
 					$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['singer_new']."	
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['singer_new'] . "</td>
 				<td style=\"background: #eee;\">
 				<input id=\"singer_sortname\" name=\"casimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['author']."	
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['author'] . "</td>
 				<td style=\"background: #eee;\">
 					<select name=\"nhacsi\">\n";
 					foreach ( $allauthor as $key => $title )
 					{
 						$i= "";
-						if ( $videodata['nhacsi'] == $key )
+						if ( $array['nhacsi'] == $key )
 						$i = "selected=\"selected\"";
-						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title . "</option>\n";
+						$contents .= "<option ". $i ." value=\"" . $key . "\" >" . $title . "</option>\n";
 					}
 					$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['author_new']."	
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['author_new'] . "</td>
 				<td style=\"background: #eee;\">
-				<input id=\"singer_sortname\" name=\"nhacsimoi\" style=\"width: 470px;\" type=\"text\" />
+					<input id=\"singer_sortname\" name=\"nhacsimoi\" style=\"width: 470px;\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['category']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['category_base'] . "</td>
 				<td style=\"background: #eee;\">
 					<select name=\"theloai\">\n";
 					foreach ( $category as $key => $title )
 					{
 						$i= "";
-						if ( $videodata['theloai'] == $key )
+						if ( $array['theloai'] == $key )
 						$i = "selected=\"selected\"";
-						$contents .= "<option ". $i ." value=\"".$key."\" >" . $title['title'] . "</option>\n";
+						$contents .= "<option " . $i . " value=\"" . $key . "\" >" . $title['title'] . "</option>\n";
 					}
 					$contents .= "</select>
 				</td>
 			</tr>
 			<tr>
 				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['link']."
+					".$lang_module['category_sub']."
 				</td>
+				<td style=\"background: #eee;max-height:250px;overflow:auto\">";
+				
+					foreach ( $category as $key => $title )
+					{
+						$checked = in_array( $key, $array['listcat'] ) ? " checked=\"checked\"" : "";
+						$contents .= "<input name=\"listcat[]\" type=\"checkbox\"" . $checked . " value=\"" . $key . "\" />" . $title['title'] . "<br />\n";
+					}
+					
+					$contents .= "
+				</td>
+			</tr>
+			<tr>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['link'] . "</td>
 				<td style=\"background: #eee;\">
-				<input id=\"duongdan\" name=\"duongdan\" style=\"width: 370px;\" value=\"".$videodata['duongdan']."\" type=\"text\" />
-                <input name=\"selectvideo\" type=\"button\" value=\"".$lang_module['select']."\" />
+				<input id=\"duongdan\" name=\"duongdan\" style=\"width: 370px;\" value=\"" . $array['duongdan'] . "\" type=\"text\" />
+                <input name=\"selectvideo\" type=\"button\" value=\"" . $lang_module['select'] . "\" />
 				<script type=\"text/javascript\">			
 				$(\"input[name=selectvideo]\").click(function()
 				{
 					var area = \"duongdan\"; // return value area
-					var path = \"".NV_UPLOADS_DIR . "/" . $module_name."/" . $setting['root_contain'] . "/video\";
-					nv_open_browse_file(\"".NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path, "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no'."\");
+					var path = \"" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/video\";
+					nv_open_browse_file(\"" . NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path, "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no'."\");
 					return false;
 				});
 				</script>
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['thumb']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['thumb'] . "</td>
 				<td style=\"background: #eee;\">
-				<input id=\"thumb\" name=\"thumb\" style=\"width: 370px;\" value=\"".$videodata['thumb']."\" type=\"text\"  readonly=\"readonly\"/>
-                <input name=\"select\" type=\"button\" value=\"".$lang_module['select']."\" />
+				<input id=\"thumb\" name=\"thumb\" style=\"width: 370px;\" value=\"" . $array['thumb'] . "\" type=\"text\"  readonly=\"readonly\"/>
+                <input name=\"select\" type=\"button\" value=\"" . $lang_module['select'] . "\" />
 				<script type=\"text/javascript\">			
 				$(\"input[name=select]\").click(function()
 				{
@@ -288,7 +357,7 @@ $contents .="
 			</tr>
 			<tr>
 				<td colspan=\"2\" align=\"center\" style=\"background: #eee;\">\n
-					<input name=\"confirm\" value=\"".$lang_module['save']."\" type=\"submit\">\n";
+					<input name=\"confirm\" value=\"" . $lang_module['save'] . "\" type=\"submit\">\n";
 					if ( $id == 0 ) 
 						$contents .="<input type=\"hidden\" name=\"add\" id=\"add\" value=\"1\">\n";
 					else
@@ -299,8 +368,9 @@ $contents .="
 		</tbody>\n
 	</table>\n
 </form>\n";
-// Neu ten ngan gon bai hat chua có thi tu dong tao ten
-if ( empty( $videodata['ten'] ) )
+
+// Neu ten ngan gon video chua có thi tu dong tao ten
+if ( empty( $array['ten'] ) )
 {
     $contents .= "<script type=\"text/javascript\">\n";
     $contents .= "$(\"#idtitle\").change(function () {
@@ -312,4 +382,5 @@ if ( empty( $videodata['ten'] ) )
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>

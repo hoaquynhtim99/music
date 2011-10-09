@@ -73,18 +73,11 @@
 	<tfoot>
 		<tr>
 			<td>
-				<span>
-					<a href='javascript:void(0);' id='checkall'>{LANG.checkall}</a>
-					&nbsp;&nbsp;
-					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span class="add_icon">
-					<a class='addfile' href="{LINK_ADD}">{LANG.song_add}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a></span>
-				<span><a id='activelist' href="javascript:void(0);">{LANG.active1}</a></span>
+				<span class="select_icon"><a href="javascript:void(0);" id="checkall">{LANG.checkall}</a>&nbsp;&nbsp;</span>
+				<span class="unselect_icon"><a href="javascript:void(0);" id="uncheckall">{LANG.uncheckall}</a>&nbsp;&nbsp;</span>
+				<span class="add_icon"><a class="addfile" href="{LINK_ADD}">{LANG.song_add}</a>&nbsp;&nbsp;</span>
+				<span class="delete_icon"><a id="delfilelist" href="javascript:void(0);">{LANG.delete}</a>&nbsp;&nbsp;</span>
+				<span class="status_icon"><a id="activelist" href="javascript:void(0);">{LANG.active1}</a>&nbsp;&nbsp;</span>
 			</td>
 		</tr>
 	</tfoot>

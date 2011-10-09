@@ -101,6 +101,7 @@ $lang_module['error_link_ads'] = "Lỗi: Bạn chưa chọn quảng cáo";
 $lang_module['error_title'] = "Lỗi: Tiêu đề không được để trống";
 $lang_module['error_update'] = "Lỗi: Không thể cập nhật dữ liệu";
 $lang_module['error_exist_song'] = "Lỗi: Bài hát đã tồn tại";
+$lang_module['error_exist_video'] = "Lỗi: Video đã tồn tại";
 
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";
@@ -307,5 +308,11 @@ $lang_module['guide_maincategory'] = "Các thể loại trên block thể loại
 $lang_module['guide_mainalbum'] = "Các album được dùng làm chủ đề trên block";
 $lang_module['guide_ftpsetting'] = "Quản lý tài khoản FTP, quản lý host nhạc, các host nhạc mặc định để lấy link nhạc";
 $lang_module['guide_setting'] = "Thiết lập chức năng của module như cấp phép đăng nhạc, tải nhạc, bình luận...";
+
+$lang_module['video_error_name'] = "Tên ngắn gọn của video không được để trống";
+$lang_module['video_error_tname'] = "Tên đầy đủ của video không được để trống";
+$lang_module['video_error_theloai'] = "Bạn chưa chọn thể loại cho video";
+$lang_module['video_error_duongdan'] = "Đường dẫn của video không được để trống";
+$lang_module['video_error_thumb'] = "Bạn chưa chọn ảnh cho video";
 
 ?>

@@ -3,7 +3,7 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @copyright Freeware
+ * @copyright @2011 Freeware
  * @createdate 05/12/2010 09:47
  */
 
@@ -214,6 +214,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `nhacsi` varchar(255) NOT NULL DEFAULT 'na',
   `theloai` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `duongdan` varchar(255) NOT NULL DEFAULT '',
+  `listcat` varchar(255) NOT NULL DEFAULT '',
   `thumb` varchar(255) NOT NULL DEFAULT '',
   `view` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `active` smallint(2) unsigned NOT NULL DEFAULT '0',

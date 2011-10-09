@@ -64,7 +64,7 @@ else
 
 $sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, a.theloai AS theloai, a.casi AS casi, a.album AS album, a.active AS active, b.tname AS albumname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `". NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.name WHERE " . $theloai1 . " " . $where1 . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
 
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE ".$theloai." ".$where."";
+$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE " . $theloai . " " . $where;
 
 $link = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&numshow=" . $numshow . "&where_search=" . $where_search . "&type_search=" . $type_search . "&q=" . $q . "&order=" . $order ;
 

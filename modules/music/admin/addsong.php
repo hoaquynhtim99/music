@@ -3,11 +3,11 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) { die( 'Stop!!!' ); }
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 function nv_check_ok_song( $array )
 {
@@ -17,6 +17,8 @@ function nv_check_ok_song( $array )
 	if( empty( $array['tenthat'] ) ) return $lang_module['song_error_tenthat'];
 	if( empty( $array['theloai'] ) ) return $lang_module['song_error_theloai'];
 	if( empty( $array['duongdan'] ) ) return $lang_module['song_error_duongdan'];
+	
+	return "";
 }
 
 $contents = "";
