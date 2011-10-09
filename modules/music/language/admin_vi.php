@@ -330,4 +330,7 @@ $lang_module['author_error_tenthat'] = "Tên đầy đủ của nhạc sĩ còn 
 $lang_module['singer_error_ten'] = "Tên ngắn gọn của ca sĩ còn trống kìa";
 $lang_module['singer_error_tenthat'] = "Tên đầy đủ của ca sĩ còn trống kìa";
 
+$lang_module['ads_add'] = "Thêm quảng cáo mới";
+$lang_module['ads_name'] = "Tên quảng cáo";
+
 ?>
