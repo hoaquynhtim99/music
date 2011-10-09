@@ -6,43 +6,47 @@
 			<td>{LANG.error_user}</td>
 			<td>{LANG.error_what}</td>
 			<td>{LANG.content}</td>
+			<td style="width:100px">{LANG.addtime}</td>
+			<td style="width:100px">{LANG.ip}</td>
 			<td width="150px" align="center">{LANG.feature}</td>
 		</tr>
 	</thead>
 	<!-- BEGIN: row -->
 	<tbody{class}>
 		<tr>
-			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
+			<td align="center"><input type="checkbox" class="filelist" value="{id}"></td>
 			<td>{name}</td>
-			<td>{what}</td>
+			<td><a href="{url_edit}" title="{what}">{what}</a></td>
 			<td>{body}</td>
+			<td>{addtime}</td>
+			<td>{ip}</td>
 			<td align="center">
 				<!-- BEGIN: check -->
-					<a onclick="checksong('{SONG}');" class='checkfile'>{LANG.check}</a>
+				<span class="check_icon"><a href="javascript:void(0);" onclick="checksong('{SONG}');" class="checkfile">{LANG.check}</a></span>
 				<!-- END: check -->
-				<span class="delete_icon">
-					<a class='delfile' href="{URL_DEL_ONE}">{LANG.delete}</a>
-				</span>
+				<span class="delete_icon"><a class="delfile" href="{URL_DEL_ONE}">{LANG.delete}</a></span>
 			</td>
 		</tr>
 	</tbody>
 	<!-- END: row -->
+	<!-- BEGIN: generate_page -->
+	<tfoot>
+		<tr>
+		<td colspan="7">
+			{GENERATE_PAGE}
+		</td>
+	</tr>
+	</tfoot>
+<!-- END: generate_page -->
 </table>
 <table class="tab1">
 	<tfoot>
 		<tr>
 			<td>
-				<span>
-					<a href='javascript:void(0);' id='checkall'>{LANG.checkall}</a>
-					&nbsp;&nbsp;
-					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span>
-					<a id='checklink'>{LANG.check}</a>
-				</span>
-				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
-				</span>
+				<span class="select_icon"><a href="javascript:void(0);" id="checkall">{LANG.checkall}</a>&nbsp;&nbsp;</span>
+				<span class="unselect_icon"><a href="javascript:void(0);" id="uncheckall">{LANG.uncheckall}</a>&nbsp;&nbsp;</span>
+				<span class="delete_icon"><a id="delfilelist" href="javascript:void(0);">{LANG.delete}</a>&nbsp;&nbsp;</span>
+				<span class="check_icon"><a href="javascript:void(0);" id="checklink">{LANG.check}</a>&nbsp;&nbsp;</span>
 			</td>
 		</tr>
 	</tfoot>

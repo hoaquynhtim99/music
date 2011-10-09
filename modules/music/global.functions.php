@@ -275,9 +275,9 @@ function dellyric( $songid )
 function delerror( $where, $key )
 {
 	global $module_data, $db ;	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `key` = " . $key;
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
     $result = $db->sql_query( $sql );
-	return ;
+	return $result;
 }
 
 // xoa cac qua tang am nhac

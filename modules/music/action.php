@@ -153,11 +153,16 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 //10. bao loi
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_error` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `user` varchar(255) NOT NULL DEFAULT '',
+  `sid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `username` varchar(255) NOT NULL DEFAULT '',
   `body` text NOT NULL,
   `where` varchar(10) NOT NULL DEFAULT '',
-  `key` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  `addtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(100) NOT NULL DEFAULT '',
+  `status` smallint(2) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `userid`(`userid`)
 ) ENGINE=MyISAM";
 
 //11. loi bai hat

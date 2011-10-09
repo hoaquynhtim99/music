@@ -3,7 +3,7 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 09:05 AM
  */
  
@@ -29,9 +29,15 @@ if( $id > 0 )
 		$db->sql_query( $sql );
 		
 		$album = getalbumbyID( $id );
+		
+		// Cap nhat lai so album cua ca si
 		updatesinger( $album['casi'], 'numalbum', '-1' );
+		
+		// Xoa cac bao loi, binh luan
 		delcomment('album', $album['id']);
 		delerror( 'album', $album['id'] );
+		
+		// Cap nhat lai album thanh chua biet cho cac bai hat
 		updateSwhendelA( $album['name'], 'na' );
 	}
 	if ( $where == '_video' )
@@ -63,12 +69,18 @@ if( $id > 0 )
 		{
 			updatealbum( $song['album'], '-1' );
 		}
+		
+		// Cap nhat so bai hat cua ca si, nhac si
 		updatesinger( $song['casi'], 'numsong', '-1' );
 		updateauthor( $song['nhacsi'], 'numsong', '-1' );
+		
+		// Xoa binh luan, loi bai hat, qua tang am nhac, bao loi
 		delcomment('song', $song['id']);
 		dellyric($song['id']);
 		delerror( 'song', $song['id'] );
 		delgift( $song['id'] );
+		
+		// Xoa file nhac
 		unlinkSV ( $song['server'], $song['duongdan'] );
 	}
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where ."` WHERE `id`=" . $id;
