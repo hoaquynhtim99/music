@@ -18,11 +18,11 @@
 			</td>			
 			<td align="center">
 				<span class="edit_icon">
-					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
+					<a class="editfile" href="{URL_EDIT}">{LANG.edit}</a>
 				</span>
 				&nbsp;-&nbsp; 
 				<span class="delete_icon">
-					<a class='delfile' href="{URL_DEL_ONE}">{LANG.delete}</a>
+					<a class="delfile" href="{URL_DEL_ONE}">{LANG.delete}</a>
 				</span>
 			</td>
 			<td>
@@ -39,18 +39,10 @@
 	<tfoot>
 		<tr>
 			<td>
-				<span>
-					<a href='javascript:void(0);' id='checkall'>{LANG.checkall}</a>
-					&nbsp;&nbsp;
-					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span class="add_icon">
-					<a class='addfile' href="{LINK_ADD}">{LANG.author_add}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
-				</span>
+				<span class="select_icon"><a href="javascript:void(0);" id="checkall">{LANG.checkall}</a>&nbsp;&nbsp;</span>
+				<span class="unselect_icon"><a href="javascript:void(0);" id="uncheckall">{LANG.uncheckall}</a>&nbsp;&nbsp;</span>
+				<span class="delete_icon"><a id="delfilelist" href="javascript:void(0);">{LANG.delete}</a>&nbsp;&nbsp;</span>
+				<span class="add_icon"><a class="addfile" href="{LINK_ADD}">{LANG.author_add}</a>&nbsp;&nbsp;</span>
 			</td>
 		</tr>
 	</tfoot>

@@ -103,6 +103,7 @@ $lang_module['error_update'] = "Lỗi: Không thể cập nhật dữ liệu";
 $lang_module['error_exist_song'] = "Lỗi: Bài hát đã tồn tại";
 $lang_module['error_exist_video'] = "Lỗi: Video đã tồn tại";
 $lang_module['error_exist_singer'] = "Lỗi: Ca sĩ đã tồn tại";
+$lang_module['error_exist_author'] = "Lỗi: Nhạc sĩ đã tồn tại";
 
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";
@@ -315,6 +316,9 @@ $lang_module['video_error_tname'] = "Tên đầy đủ của video không đư�
 $lang_module['video_error_theloai'] = "Bạn chưa chọn thể loại cho video";
 $lang_module['video_error_duongdan'] = "Đường dẫn của video không được để trống";
 $lang_module['video_error_thumb'] = "Bạn chưa chọn ảnh cho video";
+
+$lang_module['author_error_ten'] = "Tên ngắn gọn của nhạc sĩ còn trống kìa";
+$lang_module['author_error_tenthat'] = "Tên đầy đủ của nhạc sĩ còn trống kìa";
 
 $lang_module['singer_error_ten'] = "Tên ngắn gọn của ca sĩ còn trống kìa";
 $lang_module['singer_error_tenthat'] = "Tên đầy đủ của ca sĩ còn trống kìa";
