@@ -1,32 +1,41 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 7-17-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:09 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )  die( 'Stop!!!' ); 
+
+function nv_check_ok_singer( $array )
 {
-    die( 'Stop!!!' );
+	global $lang_module;
+	
+	if( empty( $array['ten'] ) ) return $lang_module['singer_error_ten'];
+	if( empty( $array['tenthat'] ) ) return $lang_module['singer_error_tenthat'];
+	
+	return "";
 }
 
 if ( defined( 'NV_EDITOR' ) )
 {
     require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
 }
-// khoi tao
+
+// Khoi tao
 $contents = "";
 $error = "";
+$array = $array_old = array();
 
-//lay gia tri
-$albumdata['ten'] = filter_text_input( 'ten', 'get,post', '' );
-$albumdata['tenthat'] = filter_text_input( 'tenthat', 'post', '' );
-$albumdata['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
-$albumdata['introduction'] = $nv_Request->get_string( 'introduction', 'post', '' );
+// Lay gia tri
+$array['ten'] = filter_text_input( 'ten', 'get,post', '', 1, 100 );
+$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 100 );
+$array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
+$array['introduction'] = nv_editor_filter_textarea( 'introduction', '', NV_ALLOWED_HTML_TAGS );
 
-// lay du lieu
+// Lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 if ( $id == 0 )
@@ -36,128 +45,149 @@ if ( $id == 0 )
 else
 {
     $page_title = $lang_module['singer_edit'];
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id` = ".$id."";
-	$resuilt = $db->sql_query( $sql );
-	$row = $db->sql_fetchrow( $resuilt );
-	if ( !$nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
+	
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id` = " . $id;
+	$result = $db->sql_query( $sql );
+	$check = $db->sql_numrows( $result );
+		
+	if ( $check != 1 )
 	{
-		$albumdata['ten'] = $row['ten'];
-		$albumdata['tenthat'] = $row['tenthat'];
-		$albumdata['thumb'] = $row['thumb'];
-		$albumdata['introduction'] = $row['introduction'];
+		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	}
+	$row = $db->sql_fetchrow( $result );
+	
+	if ( ! $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
+	{
+		$array['ten'] = $row['ten'];
+		$array['tenthat'] = $row['tenthat'];
+		$array['thumb'] = $row['thumb'];
+		$array['introduction'] = nv_editor_br2nl( $row['introduction'] );
 	}
 }
 
-//sua ca si
-if ( ($nv_Request->get_int( 'edit', 'post', 0 )) == 1 )
+// Sua ca si
+if ( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 {
-	foreach ( $albumdata as $key => $data  )
-	{	
-		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
-		nv_del_moduleCache( $module_name );
-	}
-	if ( $query ) 
+	$error = nv_check_ok_singer( $array );
+	$array['introduction'] = nv_editor_nl2br( $array['introduction'] );
+	
+	// Kiem tra xem ca si da ton tai chua
+	if( empty( $error ) )
 	{
-		updatewhendelS( $row['ten'], $albumdata['ten'] );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=singer"); die();
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `ten`=" . $db->dbescape( $array['ten'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
+		list( $exist ) = $db->sql_fetchrow( $result );
+		if( $exist )
+		{
+			$error = $lang_module['error_exist_singer'];
+		}
 	}
-	else
+
+	if( empty( $error ) )
 	{
-		$error = $lang_module['error_save'];
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET
+			`ten`=" . $db->dbescape( $array['ten'] ) . ", 
+			`tenthat`=" . $db->dbescape( $array['tenthat'] ) . ", 
+			`thumb`=" . $db->dbescape( $array['thumb'] ) . ", 
+			`introduction`=" . $db->dbescape( $array['introduction'] ) . " 
+		WHERE `id` =" . $id;
+		
+		$result = $db->sql_query( $sql );
+		if ( $result ) 
+		{
+			if( $row['ten'] != $array['ten'] ) updatewhendelS( $row['ten'], $array['ten'] ); // Cap nhat lai ca si cua cac bai hat neu thay doi ten ngan gon
+			nv_del_moduleCache( $module_name );
+			
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer"); die();
+		}
+		else
+		{
+			$array['introduction'] = nv_editor_br2nl( $array['introduction'] );
+			$error = $lang_module['error_save'];
+		}
 	}
 }
 
-// them album
+// Them moi ca si
 if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 {	
+	$error = nv_check_ok_singer( $array );
+	$array['introduction'] = nv_editor_nl2br( $array['introduction'] );
 	
-	foreach ( $albumdata as $data => $null )
+	// Kiem tra xem ca si da ton tai chua
+	if( empty( $error ) )
 	{
-		if ( $data == 'introduction' ) continue;
-		if	($null == ''& $data !="album") $error = $lang_module['singer_error']; 
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `ten`=" . $db->dbescape( $array['ten'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) );
+		list( $exist ) = $db->sql_fetchrow( $result );
+		if( $exist )
+		{
+			$error = $lang_module['error_exist_singer'];
+		}
 	}
-	if ( $error == "" )
+
+	if( empty( $error ) )
 	{
-		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` 
-		(
-			`id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`
-		) 
-		VALUES 
-		( 
+		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` VALUES ( 
 			NULL, 
-			" . $db->dbescape( $albumdata['ten'] ) . ", 
-			" . $db->dbescape( $albumdata['tenthat'] ) . ", 
-			" . $db->dbescape( $albumdata['thumb'] ) . ", 
-			" . $db->dbescape( $albumdata['introduction'] ) . ", 
-			0,
-			0
-		)
-		"; 
-		if ( $db->sql_query_insert_id( $query ) ) 
+			" . $db->dbescape( $array['ten'] ) . ", 
+			" . $db->dbescape( $array['tenthat'] ) . ", 
+			" . $db->dbescape( $array['thumb'] ) . ", 
+			" . $db->dbescape( $array['introduction'] ) . ", 
+			0, 0, 0
+		)";
+		
+		if ( $db->sql_query_insert_id( $sql ) ) 
 		{ 
 			$db->sql_freeresult();
 			nv_del_moduleCache( $module_name );
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=singer"); die();
-		} 
-		else 
-		{ 
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&" . NV_OP_VARIABLE . "=singer"); die();
+		}
+		else
+		{
 			$error = $lang_module['error_save']; 
-		} 
-
+		}
 	}
+}
 
-}
-// hien bao loi
-if($error)
+// Hien bao loi
+if( $error )
 {
-	$contents .= "<div class=\"quote\" style=\"width: 780px;\">\n
-					<blockquote class=\"error\">
-						<span>".$error."</span>
-					</blockquote>
-				</div>\n
-				<div class=\"clear\">
-				</div>";
+	$contents .= "<div class=\"quote\" style=\"width: 98%;\"><blockquote class=\"error\"><span>" . $error . "</span></blockquote></div><div class=\"clear\"></div>";
 }
-// noi dung
+
+//
+if ( ! empty( $array['introduction'] ) ) $array['introduction'] = nv_htmlspecialchars( $array['introduction'] );
+
+// Noi dung
 $contents .="
 <form method=\"post\" name=\"add_pic\">
 	<table class=\"tab1\">
 		<thead>
 			<tr>
-				<td colspan=\"2\">
-					".$lang_module['singer_info']."
-				</td>
+				<td colspan=\"2\">" . $lang_module['singer_info'] . "</td>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['singer_name']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['singer_name'] . "</td>
 				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"tenthat\" style=\"width: 470px;\" value=\"".$albumdata['tenthat']."\" type=\"text\"><img height=\"16\" alt=\"\" onclick=\"get_alias('idtitle','res_get_alias');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"".NV_BASE_SITEURL."images/refresh.png\">
+					<input id=\"idtitle\" name=\"tenthat\" style=\"width: 470px;\" value=\"" . $array['tenthat'] . "\" type=\"text\"><img height=\"16\" alt=\"\" onclick=\"get_alias('idtitle','res_get_alias');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"" . NV_BASE_SITEURL . "images/refresh.png\">
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-				".$lang_module['song_name_short']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['song_name_short'] . "</td>
 				<td style=\"background: #eee;\">
-					<input id=\"idalias\" name=\"ten\" style=\"width: 470px;\" value=\"".$albumdata['ten']."\" type=\"text\" />
+					<input id=\"idalias\" name=\"ten\" style=\"width: 470px;\" value=\"" . $array['ten'] . "\" type=\"text\" />
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['thumb']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['thumb'] . "</td>
 				<td style=\"background: #eee;\">
-				<input id=\"thumb\" name=\"thumb\" style=\"width: 370px;\" value=\"".$albumdata['thumb']."\" type=\"text\" />
-                <input name=\"select\" type=\"button\" value=\"".$lang_module['select']."\" />
+				<input id=\"thumb\" name=\"thumb\" style=\"width: 370px;\" value=\"" . $array['thumb'] . "\" type=\"text\" />
+                <input name=\"select\" type=\"button\" value=\"" . $lang_module['select'] . "\" />
 				<script type=\"text/javascript\">			
-				$(\"input[name=select]\").click(function()
-				{
+				$(\"input[name=select]\").click(function(){
 					var area = \"thumb\"; // return value area
-					var path = \"".NV_UPLOADS_DIR . "/" . $module_name."/singerthumb\";
+					var path = \"".NV_UPLOADS_DIR . "/" . $module_name . "/singerthumb\";
 					nv_open_browse_file(\"".NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path+"&type=image", "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no'."\");
 					return false;
 				});
@@ -165,36 +195,35 @@ $contents .="
 				</td>
 			</tr>
 			<tr>
-				<td style=\"width: 150px; background: #eee;\">
-					".$lang_module['describle']."
-				</td>
+				<td style=\"width: 150px; background: #eee;\">" . $lang_module['describle'] . "</td>
 				<td style=\"background: #eee;\">";
 				if ( defined( 'NV_EDITOR' ) and function_exists( 'nv_aleditor' ) )
 				{
-					$contents .= nv_aleditor( 'introduction', '680px', '250px', $albumdata['introduction'] );
+					$contents .= nv_aleditor( 'introduction', '98%', '250px', $array['introduction'] );
 				}
 				else
 				{
-					$contents .= "<textarea style=\"width: 680px\" value=\"".$albumdata['introduction']."\" name=\"introduction\" id=\"introduction\" cols=\"20\" rows=\"15\"></textarea>\n";
+					$contents .= "<textarea style=\"width:98%\" name=\"introduction\" id=\"introduction\" cols=\"20\" rows=\"15\">" . $array['introduction'] . "</textarea>\n";
 				}
 				$contents .="
 				</td>
 			</tr>
 			<tr>
 				<td colspan=\"2\" align=\"center\" style=\"background: #eee;\">\n
-					<input name=\"confirm\" value=\"".$lang_module['save']."\" type=\"submit\">\n";
+					<input name=\"confirm\" value=\"" . $lang_module['save'] . "\" type=\"submit\">\n";
 					if ( $id == 0 ) 
-						$contents .="<input type=\"hidden\" name=\"add\" id=\"add\" value=\"1\">\n";
+						$contents .= "<input type=\"hidden\" name=\"add\" id=\"add\" value=\"1\">\n";
 					else
-						$contents .="<input type=\"hidden\" name=\"edit\" id=\"edit\" value=\"1\">\n";
-                    $contents .="<span name=\"notice\" style=\"float: right; padding-right: 50px; color: red; font-weight: bold;\"></span>\n
+						$contents .= "<input type=\"hidden\" name=\"edit\" id=\"edit\" value=\"1\">\n";
+                    $contents .= "<span name=\"notice\" style=\"float: right; padding-right: 50px; color: red; font-weight: bold;\"></span>\n
 				</td>\n
 			</tr>\n
 		</tbody>\n
 	</table>\n
 </form>\n";
-// neu khong co ten album thi tu dong tao
-if ( empty( $albumdata['ten'] ) )
+
+// Neu khong co ten album thi tu dong tao
+if ( empty( $array['ten'] ) )
 {
     $contents .= "<script type=\"text/javascript\">\n";
     $contents .= '$("#idtitle").change(function () {
@@ -206,4 +235,5 @@ if ( empty( $albumdata['ten'] ) )
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>
