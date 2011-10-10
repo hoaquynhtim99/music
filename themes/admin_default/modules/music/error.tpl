@@ -7,7 +7,8 @@
 			<td>{LANG.error_what}</td>
 			<td>{LANG.content}</td>
 			<td style="width:100px">{LANG.addtime}</td>
-			<td style="width:100px">{LANG.ip}</td>
+			<td style="width:60px">{LANG.ip}</td>
+			<td style="width:80px">{LANG.status1}</td>
 			<td width="150px" align="center">{LANG.feature}</td>
 		</tr>
 	</thead>
@@ -20,6 +21,7 @@
 			<td>{body}</td>
 			<td>{addtime}</td>
 			<td>{ip}</td>
+			<td><span class="text">{status}</span>&nbsp;<a class="nounderline" title="{atitle}" href="javascript:void(0);" onclick="nv_checkviewed($(this),'{id}');"><span class="{icon}_icon">&nbsp;</span></a></td>
 			<td align="center">
 				<!-- BEGIN: check -->
 				<span class="check_icon"><a href="javascript:void(0);" onclick="checksong('{SONG}');" class="checkfile">{LANG.check}</a></span>
@@ -52,54 +54,41 @@
 	</tfoot>
 </table>
 <script type='text/javascript'>
-	$(function()
-	{
-		$('#checkall').click(function()
-		{
-			$('input:checkbox').each(function()
-			{
+	$(function(){
+		$('#checkall').click(function(){
+			$('input:checkbox').each(function(){
 				$(this).attr('checked', 'checked');
 			});
 		});
 		
-		$('#uncheckall').click(function()
-		{
-			$('input:checkbox').each(function()
-			{
+		$('#uncheckall').click(function(){
+			$('input:checkbox').each(function(){
 				$(this).removeAttr('checked');
 			});
 		});
 		
-		$('#checklink').click(function()
-		{
+		$('#checklink').click(function(){
 			var listall = [];
-			$('input.filelist:checked').each(function()
-			{
+			$('input.filelist:checked').each(function(){
 				listall.push($(this).val());
 			});
-			if (listall.length < 1)
-			{
+			if (listall.length < 1){
 				alert("{LANG.error_check_error}");
 				return false;
 			}
 			window.location = '{URL_CHECK}' + '&listall=' + listall;
 		});
-		$('#delfilelist').click(function()
-		{
-			if (confirm("{LANG.error_del_confirm}"))
-			{
+		$('#delfilelist').click(function(){
+			if (confirm("{LANG.error_del_confirm}")){
 				var listall = [];
-				$('input.filelist:checked').each(function()
-				{
+				$('input.filelist:checked').each(function(){
 					listall.push($(this).val());
 				});
-				if (listall.length < 1)
-				{
+				if (listall.length < 1){
 					alert("{LANG.error_check_error}");
 					return false;
 				}
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: '{URL_DEL}',
 					data: 'listall=' + listall,
@@ -111,19 +100,15 @@
 				});
 			}
 		});
-		$('a[class="delfile"]').click(function(event)
-		{
+		$('a[class="delfile"]').click(function(event){
 			event.preventDefault();
-			if (confirm("{LANG.error_del_confirm}"))
-			{
+			if (confirm("{LANG.error_del_confirm}")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',
-					success: function(data)
-					{
+					success: function(data){
 						alert(data);
 						window.location = '{URL_DEL_BACK}';
 					}
@@ -131,5 +116,22 @@
 			}
 		});
 	});
+// Danh da xem cac bao loi
+function nv_checkviewed(element,sid){
+	var parent_class = element.children('span').attr('class');
+	if(parent_class=='select_icon') return false;
+	$.ajax({
+		type: 'POST',
+		url: script_name,
+		data: nv_name_variable+'='+nv_module_name+'&'+nv_fc_variable+'=error&setviewed='+sid+'&num='+nv_randomPassword(8),
+		success: function(data){
+			if(data=='OK'){
+				element.children('span').attr('class','select_icon');
+				element.parent('td').find('.text').text('{LANG.view_ed}');
+			}else alert(data);
+		}
+	});
+	return false;
+}
 </script>
 <!-- END: main -->

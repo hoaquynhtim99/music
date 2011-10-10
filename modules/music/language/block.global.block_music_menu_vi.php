@@ -3,7 +3,7 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung922gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * Language Tiếng Việt
  * @Createdate 29/01/2011 02:41 AM
  */

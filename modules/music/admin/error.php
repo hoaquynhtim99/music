@@ -9,6 +9,17 @@
 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
+// Cap nhat tinh trang cac bao loi
+if ( $nv_Request->isset_request( 'setviewed', 'post' ) )
+{
+	$id = $nv_Request->get_int( 'setviewed', 'post' );
+	if( ! $id ) die( "Error Access!!!" );
+	
+	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_error` SET `status`=0 WHERE `id`=" . $id;
+	$db->sql_query( $sql );
+	die( "OK" );
+}
+
 $page_title = $lang_module['error_list'];
 
 // Ket qua
@@ -31,7 +42,7 @@ list( $all_page ) = $db->sql_fetchrow( $result1 );
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 
-$sql2 = "SELECT a.id, a.userid, a.username AS full_name, a.body, a.sid, a.where, b.username, a.addtime, a.ip " . $sql . " ORDER BY `status`, `addtime` DESC LIMIT " . $page . ", " . $per_page;
+$sql2 = "SELECT a.id, a.userid, a.username AS full_name, a.body, a.sid, a.where, b.username, a.addtime, a.ip, a.status " . $sql . " ORDER BY `status` DESC, `addtime` DESC LIMIT " . $page . ", " . $per_page;
 $result2 = $db->sql_query( $sql2 );
 
 $generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
@@ -42,6 +53,9 @@ while( $row = $db->sql_fetchrow( $result2 ) )
 	$xtpl->assign( 'name', $row['userid'] ? "<a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=edit&amp;userid=" . $row['userid'] . "\" title=\"" . $row['username'] . "\">" . $row['username'] . "</a>" : $row['full_name'] . " - " . $lang_module['visittor'] );
 	$xtpl->assign( 'body', $row['body'] );
 	$xtpl->assign( 'ip', $row['ip'] );
+	$xtpl->assign( 'status', $row['status'] ? $lang_module['view_non'] : $lang_module['view_ed'] );
+	$xtpl->assign( 'icon', $row['status'] ? "view" : "select" );
+	$xtpl->assign( 'atitle', $row['status'] ? $lang_module['error_check_viewed'] : "" );
 	$xtpl->assign( 'addtime', nv_date( "d/m/Y H:i", $row['addtime'] ) );
 	
 	if( $row['where'] == 'song' )
@@ -50,7 +64,7 @@ while( $row = $db->sql_fetchrow( $result2 ) )
 		$xtpl->assign( 'what', $lang_module['song'] . ' ' . $album['tenthat'] );
 		$xtpl->assign( 'url_edit', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=addsong&amp;id=" . $row['sid'] );
 
-		$xtpl->assign( 'SONG', $row['sid']);
+		$xtpl->assign( 'SONG', $row['sid'] );
 		$xtpl->parse( 'main.row.check');
 	}
 	else

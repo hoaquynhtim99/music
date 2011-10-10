@@ -3,7 +3,7 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung
- * @Copyright (C) 2011 Free Ware
+ * @Copyright (C) 2011 FreeWare
  * Language Tiếng Việt
  * @Createdate 26/01/2011 09:41 AM
  */
@@ -20,6 +20,7 @@ $lang_module['weight'] = "Thứ tự";
 $lang_module['title'] = "Tiêu đề";
 $lang_module['submit'] = "Lưu lại";
 $lang_module['status'] = "Hoạt động";
+$lang_module['status1'] = "Trạng thái";
 $lang_module['description'] = "Mô tả";
 $lang_module['keywords'] = "Từ khóa";
 $lang_module['keywords_info'] = "phân cách bởi dấu phảy";
@@ -27,6 +28,8 @@ $lang_module['dt'] = "Tạo lúc";
 $lang_module['visittor'] = "Khách";
 $lang_module['ip'] = "Địa chỉ IP";
 $lang_module['addtime'] = "Lúc";
+$lang_module['view_non'] = "Chưa xem";
+$lang_module['view_ed'] = "Đã xem";
 
 $lang_module['author'] = "Nhạc sĩ";
 $lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
@@ -332,5 +335,7 @@ $lang_module['singer_error_tenthat'] = "Tên đầy đủ của ca sĩ còn tr�
 
 $lang_module['ads_add'] = "Thêm quảng cáo mới";
 $lang_module['ads_name'] = "Tên quảng cáo";
+
+$lang_module['error_check_viewed'] = "Đánh dấu là đã kiểm tra";
 
 ?>
