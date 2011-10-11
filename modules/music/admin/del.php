@@ -83,7 +83,7 @@ if( $id > 0 )
 		// Xoa file nhac
 		unlinkSV ( $song['server'], $song['duongdan'] );
 	}
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where ."` WHERE `id`=" . $id;
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
     $result = $db->sql_query( $sql );
 }
 

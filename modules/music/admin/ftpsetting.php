@@ -54,7 +54,7 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 		{
 			foreach ( $data as $key => $value )
 			{
-				if ( ! $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` SET `" . $key . "` = " . $db->dbescape( $value ) . " WHERE `id` = " . $i . "  LIMIT 1 " ))
+				if ( ! $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` SET `" . $key . "` = " . $db->dbescape( $value ) . " WHERE `id` = " . $i . "  LIMIT 1 " ) )
 				{
 					$error .= $lang_module['error_save'];
 					break;				
@@ -64,9 +64,11 @@ if ( $nv_Request->get_int( 'save', 'post', 0 ) == 1 )
 		}
 	}
 }
+
 $newid = 2;
 $lastid = 1;
 $ftpdata = getFTP();
+
 foreach ( $ftpdata as $data )
 {
 	if ( $newid <= $data['id'] ) 
@@ -75,16 +77,14 @@ foreach ( $ftpdata as $data )
 		$lastid = $data['id'];
 	}
 }
+
 if( $error )
 {
 	$contents .= "
-	<div class=\"quote\" style=\"width: 780px;\">
-		<blockquote class=\"error\">
-		<span>".$error."</span>
-		</blockquote>
+	<div class=\"quote\" style=\"width: 98%;\">
+		<blockquote class=\"error\"><span>" . $error . "</span></blockquote>
 	</div>
-	<div class=\"clear\">
-	</div>";
+	<div class=\"clear\"></div>";
 }
 
 $contents .= "<form method=\"post\">\n";
@@ -97,8 +97,8 @@ $contents .= "<table class=\"tab1\">\n
     <td style=\"width:110px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_full_address'] . "<span></td>\n
     <td style=\"width:100px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_floder'] . "<span></td>\n
     <td style=\"width:100px;\"><span style=\"font-size:11px;\">" . $lang_module['ftp_sub_address'] . "<span></td>\n
-	<td width=\"40px\" align=\"center\"><span style=\"font-size:11px;\">" . $lang_module['active'] . "<span></td>\n
-	<td width=\"40px\" align=\"center\"><span style=\"font-size:11px;\">" . $lang_module['feature'] . "<span></td>\n
+	<td style=\"width:20px;\" align=\"center\"><span style=\"font-size:11px;\">" . $lang_module['active'] . "<span></td>\n
+	<td style=\"width:20px;\" align=\"center\"><span style=\"font-size:11px;\">" . $lang_module['feature'] . "<span></td>\n
 </tr>\n
 </thead>";
 foreach ( $ftpdata as $j => $data )
@@ -107,22 +107,22 @@ foreach ( $ftpdata as $j => $data )
 	"<tbody class=\"second\">
 	<tr>
 		<td style=\"width:60px;\">
-			<input style=\"width:60px;\" name=\"host" . $j . "\" type=\"text\" value=\"" . $data['host'] . "\" />
+			<input style=\"width:100%;\" name=\"host" . $j . "\" type=\"text\" value=\"" . $data['host'] . "\" />
 		</td>
 		<td style=\"width:60px;\">
-			<input style=\"width:60px;\" name=\"user" . $j . "\" type=\"text\" value=\"". $data['user'] . "\" />
+			<input style=\"width:100%;\" name=\"user" . $j . "\" type=\"text\" value=\"". $data['user'] . "\" />
 		</td>
 		<td style=\"width:60px;\">
-			<input style=\"width:60px;\" name=\"pass" . $j . "\" type=\"password\" value=\"". $data['pass'] . "\" />
+			<input style=\"width:100%;\" name=\"pass" . $j . "\" type=\"password\" value=\"". $data['pass'] . "\" />
 		</td>
 		<td style=\"width:110px;\">
-			<input name=\"fulladdress" . $j . "\" type=\"text\" value=\"". $data['fulladdress'] . "\" />
+			<input style=\"width:100%;\" name=\"fulladdress" . $j . "\" type=\"text\" value=\"". $data['fulladdress'] . "\" />
 		</td>
 		<td style=\"width:110px;\">
-			<input style=\"width:100px;\" name=\"subpart" . $j . "\" type=\"text\" value=\"". $data['subpart'] . "\" />
+			<input style=\"width:100%;\" name=\"subpart" . $j . "\" type=\"text\" value=\"". $data['subpart'] . "\" />
 		</td>
 		<td style=\"width:110px;\">
-			<input style=\"width:100px;\" name=\"ftppart" . $j . "\" type=\"text\" value=\"". $data['ftppart'] . "\" />
+			<input style=\"width:100%;\" name=\"ftppart" . $j . "\" type=\"text\" value=\"". $data['ftppart'] . "\" />
 		</td>
 		<td align=\"center\"><a href=\"" . $link_active . $data['id'] . "\" class=\"active\">". $data['active'] . "</a>
 		<td align=\"center\">
@@ -137,27 +137,25 @@ $contents .=
 "<tbody class=\"second\">
 <tr>
 	<td style=\"width:60px;\">
-		<input style=\"width:60px;\" name=\"host" . $newid . "\" type=\"text\" />
+		<input style=\"width:100%;\" name=\"host" . $newid . "\" type=\"text\" />
 	</td>
 	<td style=\"width:60px;\">
-		<input style=\"width:60px;\" name=\"user" . $newid . "\" type=\"text\" />
+		<input style=\"width:100%;\" name=\"user" . $newid . "\" type=\"text\" />
 	</td>
 	<td style=\"width:60px;\">
-		<input style=\"width:60px;\" name=\"pass" . $newid . "\" type=\"password\" />
+		<input style=\"width:100%;\" name=\"pass" . $newid . "\" type=\"password\" />
 	</td>
 	<td style=\"width:110px;\">
-		<input name=\"fulladdress" . $newid . "\" type=\"text\" />
+		<input style=\"width:100%;\" name=\"fulladdress" . $newid . "\" type=\"text\" />
 	</td>
 	<td style=\"width:110px;\">
-		<input style=\"width:100px;\" name=\"subpart" . $newid . "\" type=\"text\" />
+		<input style=\"width:100%;\" name=\"subpart" . $newid . "\" type=\"text\" />
 	</td>
 	<td style=\"width:100px;\">
-		<input style=\"width:100px;\" name=\"ftppart" . $newid . "\" type=\"text\" />
+		<input style=\"width:100%;\" name=\"ftppart" . $newid . "\" type=\"text\" />
 	</td>
-	<td>
-	</td>
-	<td>
-	</td>
+	<td>&nbsp;</td>
+	<td>&nbsp;</td>
 </tr>
 </tbody>
 </table>
@@ -169,16 +167,12 @@ $contents .=
 </div>
 </form>
 <script type='text/javascript'>
-	$(function()
-	{		
-		$('a[class=\"delfile\"]').click(function(event)
-		{
+	$(function(){		
+		$('a[class=\"delfile\"]').click(function(event){
 			event.preventDefault();
-			if (confirm(\"" . $lang_module['ftp_del_confirm'] . "\"))
-			{
+			if (confirm(\"" . $lang_module['ftp_del_confirm'] . "\")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',
@@ -190,14 +184,11 @@ $contents .=
 				});
 			}
 		});
-		$('a[class=\"active\"]').click(function(event)
-		{
+		$('a[class=\"active\"]').click(function(event){
 			event.preventDefault();
-			if (confirm(\"" . $lang_module['active_confirm'] . "\"))
-			{
+			if (confirm(\"" . $lang_module['active_confirm'] . "\")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',
@@ -209,9 +200,10 @@ $contents .=
 			}
 		});
 	});
-</script>
-";
+</script>";
+
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>
