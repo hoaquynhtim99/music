@@ -126,7 +126,8 @@ function saveplaylist(name, singer, message) {
 function aftersavelist(res){
 	var r_split = res.split("_");
 	if (r_split[0] == 1) {
-		window.location = r_split[1];
+		alert(r_split[1]);
+		window.location = r_split[2];
 	} else alert(res);
 
 }

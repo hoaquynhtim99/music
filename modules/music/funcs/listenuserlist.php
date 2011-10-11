@@ -17,7 +17,7 @@ if ( empty ( $id ) or empty ( $playlist_alias ) )
 	module_info_die();
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE `active`=1 AND `id` = " . $id;
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active`=1 AND `id`=" . $id;
 $result = $db->sql_query( $sql );
 $check_exit = $db->sql_numrows( $result );
 $row = $db->sql_fetchrow( $result );
@@ -27,7 +27,7 @@ if ( $check_exit != 1 or $row['keyname'] != $playlist_alias )
 	module_info_die();
 }
 
-$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view` = view+1 WHERE `id` =" . $id );
+$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view`=view+1 WHERE `id`=" . $id );
 
 // Global data
 $allsinger = getallsinger();
@@ -35,7 +35,7 @@ $allsinger = getallsinger();
 // Page info
 $page_title = "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'];
 $key_words =  "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'] ;
-$description =  "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'] ;
+$description =  $row['message'];
 
 // Playlist data
 $gdata = array(
@@ -57,7 +57,7 @@ $gdata = array(
 
 $sdata = array();
 
-$listsong_id = explode ( "/", $row['songdata'] );
+$listsong_id = explode ( ",", $row['songdata'] );
 $listsong_id = array_filter ( $listsong_id );
 $listsong_id = implode ( ",", $listsong_id );
 

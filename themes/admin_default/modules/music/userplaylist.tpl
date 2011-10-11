@@ -1,4 +1,18 @@
 <!-- BEGIN: main -->
+<form action="{FORM_ACTION}" method="get"/>
+	<table class="tab1 fixbottomtable">
+		<tbody>
+			<tr>
+				<td>
+					<input type="text" name="q" value="{Q}" style="width:200px"/>
+					<input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}"/>
+					<input type="hidden" name="{OP}" value="{OP1}"/>
+					<input type="submit" value="{LANG.search}"/>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</form>
 <table class="tab1">
 	<thead>
 		<tr>
@@ -20,13 +34,9 @@
 			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
 			</td>
 			<td align="center">
-				<span class="edit_icon">
-					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
-				</span>
+				<span class="edit_icon"><a class="editfile" href="{URL_EDIT}">{LANG.edit}</a></span>
 				&nbsp;-&nbsp; 
-				<span class="delete_icon">
-					<a class='delfile' href="{URL_DEL_ONE}">{LANG.delete}</a>
-				</span>
+				<span class="delete_icon"><a class="delfile" href="{URL_DEL_ONE}">{LANG.delete}</a></span>
 			</td>
 		</tr>
 	</tbody>
@@ -36,54 +46,39 @@
 	<tfoot>
 		<tr>
 			<td>
-				<span>
-					<a href='javascript:void(0);' id='checkall'>{LANG.checkall}</a>
-					&nbsp;&nbsp;
-					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
-				</span>
-				<span><a id='activelist' href="javascript:void(0);">{LANG.active1}</a></span>
+				<span class="select_icon"><a href="javascript:void(0);" id="checkall">{LANG.checkall}</a>&nbsp;&nbsp;</span>
+				<span class="unselect_icon"><a href="javascript:void(0);" id="uncheckall">{LANG.uncheckall}</a>&nbsp;&nbsp;</span>
+				<span class="delete_icon"><a id="delfilelist" href="javascript:void(0);">{LANG.delete}</a>&nbsp;&nbsp;</span>
+				<span class="status_icon"><a id="activelist" href="javascript:void(0);">{LANG.active1}</a>&nbsp;&nbsp;</span>
 			</td>
 		</tr>
 	</tfoot>
 </table>
-<script type='text/javascript'>
-	$(function()
-	{
-		$('#checkall').click(function()
-		{
-			$('input:checkbox').each(function()
-			{
+<script type="text/javascript">
+	$(function(){
+		$('#checkall').click(function(){
+			$('input:checkbox').each(function(){
 				$(this).attr('checked', 'checked');
 			});
 		});
 		
-		$('#uncheckall').click(function()
-		{
-			$('input:checkbox').each(function()
-			{
+		$('#uncheckall').click(function(){
+			$('input:checkbox').each(function(){
 				$(this).removeAttr('checked');
 			});
 		});
 		
-		$('#activelist').click(function()
-		{
-			if (confirm("{LANG.active_confirm}"))
-			{
+		$('#activelist').click(function(){
+			if (confirm("{LANG.active_confirm}")){
 				var listall = [];
-				$('input.filelist:checked').each(function()
-				{
+				$('input.filelist:checked').each(function(){
 					listall.push($(this).val());
 				});
-				if (listall.length < 1)
-				{
+				if (listall.length < 1){
 					alert("{LANG.error_check_playlist}");
 					return false;
 				}
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: '{URL_ACTIVE_LIST}',
 					data: 'listall=' + listall,
@@ -95,22 +90,17 @@
 				});
 			}
 		});
-		$('#delfilelist').click(function()
-		{
-			if (confirm("{LANG.playlist_del_confirm}"))
-			{
+		$('#delfilelist').click(function(){
+			if (confirm("{LANG.playlist_del_confirm}")){
 				var listall = [];
-				$('input.filelist:checked').each(function()
-				{
+				$('input.filelist:checked').each(function(){
 					listall.push($(this).val());
 				});
-				if (listall.length < 1)
-				{
+				if (listall.length < 1){
 					alert("{LANG.error_check_playlist}");
 					return false;
 				}
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: '{URL_DEL}',
 					data: 'listall=' + listall,
@@ -122,14 +112,11 @@
 				});
 			}
 		});
-		$('a[class="delfile"]').click(function(event)
-		{
+		$('a[class="delfile"]').click(function(event){
 			event.preventDefault();
-			if (confirm("{LANG.playlist_del_confirm}"))
-			{
+			if (confirm("{LANG.playlist_del_confirm}")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',
@@ -141,14 +128,11 @@
 				});
 			}
 		});
-		$('a[class="active"]').click(function(event)
-		{
+		$('a[class="active"]').click(function(event){
 			event.preventDefault();
-			if (confirm("{LANG.active_confirm}"))
-			{
+			if (confirm("{LANG.active_confirm}")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',

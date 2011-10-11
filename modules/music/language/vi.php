@@ -118,6 +118,8 @@ $lang_module['playlist_edit_sucess1'] = "nghe ";
 $lang_module['playlist_edit_sucess2'] = "playlist này hoặc ";
 $lang_module['playlist_edit_sucess3'] = "quay lại ";
 $lang_module['playlist_edit_sucess4'] = "trang quản lý playlist";
+$lang_module['playlist_add_ok'] = "Playlist của bạn đã được lưu và sẽ hiển thị ngay bây giờ";
+$lang_module['playlist_add_waiting'] = "Playlist của bạn đang được kiểm duyệt và sẽ hiển thị sau khi được kiểm duyệt";
 
 $lang_module['prev'] = "Trang trước";
 

@@ -49,7 +49,7 @@ if( $nv_Request->get_int( 'ok', 'post', 0 ) == 1 )
 	$pldata = array();
 	$row['name'] = $pldata['name'] = filter_text_input( 'name', 'post', '' );
 	$row['keyname'] = $pldata['keyname'] = change_alias ( $pldata['name'] );
-	$row['singer'] = $pldata['singer'] =filter_text_input( 'singer', 'post', '' );
+	$row['singer'] = $pldata['singer'] = filter_text_input( 'singer', 'post', '' );
 	$row['message'] = $pldata['message'] = $nv_Request->get_string( 'message', 'post', '' );
 	
 	$result = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET
@@ -67,7 +67,7 @@ if( $nv_Request->get_int( 'ok', 'post', 0 ) == 1 )
 
 $g_array['ok'] = $ok;
 
-$songdata = explode ( '/', $row['songdata'] );
+$songdata = explode ( ',', $row['songdata'] );
 $songdata = array_filter( $songdata );
 $songdata = array_unique( $songdata );
 $songdata = implode( ",", $songdata );
