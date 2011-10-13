@@ -50,6 +50,7 @@ $lang_module['comment_error'] = "Lỗi, bình luận của bạn không thực h
 $lang_module['comment_timeouts'] = "Xin lỗi bạn vừa mới bình luận rồi.";
 $lang_module['down_info'] = "Nhấn chuột phải chọn save link để tải về";
 $lang_module['enter_name'] = "Nhập tên bạn";
+
 $lang_module['error_s_1'] = "Ca khúc không play được";
 $lang_module['error_s_2'] = "Ca khúc có chất lượng kém";
 $lang_module['error_s_3'] = "Ca khúc bị méo tiếng";
@@ -68,6 +69,11 @@ $lang_module['error_a_6'] = "Album có lời nhắn không lành mạnh";
 $lang_module['error_a_7'] = "Nội dung album không lành mạnh";
 $lang_module['error_a_8'] = "Nội dung bình luận album không lành mạnh";
 $lang_module['error_choose'] = "-- Chọn nguyên nhân --";
+$lang_module['error_empty_email'] = "Bạn cần nhập vào email hợp lệ";
+$lang_module['error_gift_send'] = "Bạn cần nhập tên của mình";
+$lang_module['error_gift_recieve'] = "Bạn cần nhập tên người nhận";
+$lang_module['error_gift_body'] = "Bạn cần nhập nội dung lời nhắn";
+
 $lang_module['give_error'] = "Báo lỗi";
 $lang_module['give_error_diff'] = "Nếu không phải một trong các nguyên nhân trên bạn vui lòng nhập nguyên nhân vào ô dưới đây.";
 $lang_module['give_error_info'] = "Để giúp chúng tôi quản lý tốt hơn chất lượng các bài hát bạn hãy gửi ngay thông tin khi gặp vấn đề nào đó về bài hát hoặc album này";
@@ -161,6 +167,8 @@ $lang_module['send_gift_suc'] = "Quà tặng của bạn đã được gửi đi
 $lang_module['send_lyric_suc'] = "Xin cảm ơn bạn đã đóng góp lời cho ca khúc này";
 $lang_module['send_error_suc'] = "Xin cảm ơn bạn đã giúp chúng tôi phát hiện lỗi này. Chúng tôi sẽ mau chóng kiểm tra.";
 $lang_module['send_gift_error'] = "Quà tặng của bạn đã không thể gửi đi";
+$lang_module['send_gift_wating'] = "Quà tặng của bạn sẽ được kiểm duyệt";
+
 $lang_module['send_lyric_error'] = "Xin lỗi, lời bài hát của bạn đã không thể gửi đi được!";
 $lang_module['send_error_error'] = "Xin lỗi, báo lỗi của bạn không thể gửi đi!";
 $lang_module['send_error_not'] = "Xin lỗi, bài hát này hiện đang tồn tại, bạn hãy thử kiểm tra lại. Nếu có vấn đề bạn có thể lên hệ trực tiếp với quan quản trị để được biết thêm thông tin. Chúc bạn nghe nhạc vui vẻ.";

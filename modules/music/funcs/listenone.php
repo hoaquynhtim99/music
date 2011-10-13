@@ -63,7 +63,8 @@ $gdata = array(
 	"user_name" =>  $name,  //
 	"creat_link_url" =>  NV_MY_DOMAIN . nv_url_rewrite ( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ),  //
 	"selfurl_base" =>  $client_info['selfurl'],  //
-	"selfurl_encode" =>  rawurlencode ( $client_info['selfurl'] )  //
+	"selfurl_encode" =>  rawurlencode ( $client_info['selfurl'] ),  //
+	"checksess_gift" =>  md5( "gift_" . $global_config['sitekey'] . session_id() )  //
 );
 
 if( ! empty( $row['listcat'] ) )

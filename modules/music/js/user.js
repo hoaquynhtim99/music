@@ -4,24 +4,6 @@
  * @Createdate 26 - 12 - 2010 5 : 12
  */
 
-// gui qua tang
-function sendgift(id) {
-	var who_send = document.getElementById('who_send');
-	var email_receive = document.getElementById('email_receive');
-	var who_receive = document.getElementById('who_receive');
-	var body  = strip_tags(document.getElementById('body').value);
-	if (who_send.value == "") {
-		alert(nv_fullname);
-		who_send.focus();
-	} else if (body == "") {
-		alert(nv_content);
-		document.getElementById('body').focus();
-	} else {
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=sendgift&id=' + id + '&who_send=' + who_send.value + '&who_receive=' + who_receive.value + '&email_receive=' + email_receive.value + '&body=' + encodeURIComponent(body), '', 'resultgift');
-	}
-	return;
-}
-
 // gui loi bai hat
 function sendlyric(id) {
 	var user_lyric = document.getElementById('user_lyric');
@@ -190,4 +172,17 @@ function afterdellist(res)
 function ShowHide(what)
 {
 	$("#"+what+"").animate({"height": "toggle"}, { duration: 1 });
+}
+
+// Kiem tra thoi gian thuc hien
+function nvms_check_timeout(ckname,timeout,lang){
+	var timeout_old = nv_getCookie(ckname);
+	var timeout_new = new Date();
+	timeout_new = timeout_new.getTime();
+	if((timeout_old != null)&&((timeout_new - timeout_old)<timeout)){
+		alert(lang);
+		return false;
+	}
+	//nv_setCookie(ckname, timeout_new);
+	return true;
 }

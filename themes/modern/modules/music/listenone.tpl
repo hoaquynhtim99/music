@@ -87,17 +87,50 @@
 			</script>
 			<p><strong>{LANG.send_to}</strong></p>
 		<!-- BEGIN: gift -->
-			<p>{LANG.enter_name}:
-			<input id="who_send" type="text" value="{GDATA.username}" {CDATA.no_change} /> </p>
-			<p>{LANG.who_recive}:
-			<input id="who_receive" type="text" value="" /> </p>
-			<p>{LANG.email_receive}:
-			<input id="email_receive" type="text" value="" /> </p>
-			<p>{LANG.message}:</p>
-			<textarea id="body" name="message" rows="2" cols="auto"></textarea>
-			<p style="text-align:center">
-			<input style="width: 50px" onclick="sendgift('{SDATA.song_id}');" class="submitbutton" type="button" value="{LANG.send}" />
-			</p>
+			<div class="giftcontent">
+				<p>{LANG.enter_name}:
+				<input id="who-send-gift" type="text" value="{GDATA.username}" {CDATA.no_change} /> </p>
+				<p>{LANG.who_recive}:
+				<input class="txt" id="who-receive-gift" type="text" value="" /> </p>
+				<p>{LANG.email_receive}:
+				<input class="txt" id="email-receive-gift" type="text" value="" /> </p>
+				<p>{LANG.message}:</p>
+				<textarea class="txt" id="body-gift" name="message" rows="2" cols="auto"></textarea>
+				<p style="text-align:center">
+				<input id="send-gift-button" style="width: 50px" onclick="nvms_sendgift('{SDATA.song_id}');" class="submitbutton" type="button" value="{LANG.send}" />
+				</p>
+			</div>
+			<script type="text/javascript">
+			function nvms_sendgift(sid){
+				var who_send = $('#who-send-gift').val();
+				var who_receive = $('#who-receive-gift').val();
+				var email_receive = $('#email-receive-gift').val();
+				var body = $('#body-gift').val();
+				
+				if( who_send == '' ){ alert('{LANG.error_gift_send}'); $('#who-send-gift').focus(); return; }
+				if( who_receive == '' ){ alert('{LANG.error_gift_recieve}'); $('#who-receive-gift').focus(); return; }
+				if( email_receive == '' ){ alert('{LANG.error_empty_email}'); $('#email-receive-gift').focus(); return; }
+				if( body == '' ){ alert('{LANG.error_gift_body}'); $('#body-gift').focus(); return; }
+				
+				$('#send-gift-button').attr('disabled','disabled');
+				$.ajax({
+					type: 'POST',
+					url: nv_siteroot + 'index.php',
+					data: nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&send_gift=1&checksess={GDATA.checksess_gift}&id=' + sid + '&who_send=' + who_send + '&who_receive=' + who_receive + '&email_receive=' + email_receive + '&body=' + encodeURIComponent(body),
+					success: function(data){
+						if(data=='OK'||data=='WAIT'){
+							$('.giftcontent .txt').val('');
+							if(data=='OK'){
+								alert('{LANG.send_gift_suc}');
+							}else if(data=='WAIT'){
+								alret('{LANG.send_gift_wating}');
+							}
+							$('#send-gift-button').attr('disabled','');
+						}else alert(data);
+					}
+				});
+			}
+			</script>
 		<!-- END: gift -->
 		</fieldset>
 		</form>
