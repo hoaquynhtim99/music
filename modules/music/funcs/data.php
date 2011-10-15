@@ -281,6 +281,104 @@ if ( $nv_Request->isset_request( 'votesong', 'post' ) )
 	die();
 }
 
+// Xoa bai hat tu playlist (Chua luu va CSDL)
+if ( $nv_Request->isset_request( 'delsongfrlist', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+
+	$stt = $nv_Request->get_int( 'stt', 'post', 0 );
+	$contents = "OK_" . $stt;
+	
+	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+
+	for ( $i = $stt; $i <= $num; $i ++ )
+	{
+		$j = $i +1;
+		$tmp = $nv_Request->get_int( $module_name . '_song'. $j , 'cookie', 0 );
+		$nv_Request->set_Cookie( $module_name . '_song' . $i , $tmp );
+	}
+
+	$numprev = $num - 1 ;
+	$nv_Request->set_Cookie( $module_name . '_numlist' , $numprev );
+
+	die( $contents );
+}
+
+// Luu playlist
+if ( $nv_Request->isset_request( 'savealbum', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+
+	$difftimeout = 180;
+
+	$name = filter_text_input( 'name', 'post', '' );
+	$keyname = change_alias( $name );
+	$singer = filter_text_input( 'singer', 'post', '' );
+	$message = $nv_Request->get_string( 'message', 'post', '' );
+
+	if ( defined( 'NV_IS_USER' ) )
+	{
+		$username = $user_info['username'];
+		$userid = $user_info['userid'];
+	}
+	else
+	{
+		$username = "";
+		$userid = 0;
+	}
+
+	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+	$songdata = array();
+	for ( $i = 1 ; $i <= $num ; $i ++ )
+	{
+		$tmp = $nv_Request->get_int( $module_name . '_song' . $i, 'cookie', 0 );
+		$songdata[] = $tmp;
+	}
+		
+	$timeout = $nv_Request->get_int( $module_name . '_' . $userid, 'cookie', 0 );
+
+	if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
+	{
+		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` (`id`, `userid`, `username`, `name`, `keyname`, `singer`, `message`, `songdata`, `time`, `view`, `active`) VALUES ( NULL, " . $userid . ", \"" . $username  . "\", \"" .  $name  . "\", \"" .  $keyname  . "\", \"" .  $singer  . "\", \"" .  $message  . "\", \"" . implode( ",", $songdata ) . "\", UNIX_TIMESTAMP() , 0, " . $setting['auto_album'] . ")"; 
+				
+		$aaaa = $db->sql_query( $query ) ? "1_" : "0_" ;
+		$nv_Request->set_Cookie( $module_name . '_' . $userid, NV_CURRENTTIME );
+		
+		$aaaa .= $setting['auto_album'] ? $lang_module['playlist_add_ok'] : $lang_module['playlist_add_waiting'];
+		$aaaa .= "_" . nv_url_rewrite ( $main_header_URL . "=creatalbum", true );
+		die( $aaaa );
+	}
+	else
+	{
+		die( $lang_module['err_cre_album'] );
+	}
+}
+
+// Xoa playlist da duoc luu vao CSDL
+if ( $nv_Request->isset_request( 'dellist', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+
+	$id = $nv_Request->get_int( 'id', 'post', 0 );
+
+	if( ! defined( 'NV_IS_USER' ) )
+	{
+		die( $lang_module['del_error'] );
+	}
+
+	if( $id > 0 ){
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data ."_playlist` WHERE `id`=" . $id . " AND `userid`=" . $user_info['userid'];
+		$result = $db->sql_query( $sql );
+	}
+
+	if( ! empty( $result ) )
+	{
+		die( "OK_" . $id );
+	}
+
+	die( $lang_module['del_error'] );
+}
+
 die( "Error Access !!!" );
 
 ?>

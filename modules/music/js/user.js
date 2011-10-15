@@ -89,7 +89,7 @@ function show_comment(id, where, page) {
 
 // Luu album
 function saveplaylist(name, singer, message) {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=savealbum&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), '', 'aftersavelist');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&savealbum=1&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), '', 'aftersavelist');
 }
 function aftersavelist(res){
 	var r_split = res.split("_");
@@ -103,7 +103,7 @@ function aftersavelist(res){
 // Xoa mot bai hat tu playlist
 function delsongfrlist(stt, mess) {
 	if ( confirm( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrlist&stt=' + stt, '', 'afterdelsong');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsongfrlist=1&stt=' + stt, '', 'afterdelsong');
 }
 // xoa mot bai hat tu playlist da luu
 function delsongfrplaylist(id, plid, mess) {
@@ -130,10 +130,18 @@ function afterdelsong(res)
 	}
 }
 
-// xoa playlist
+// Xoa playlist da duoc luu vao CSDL
 function dellist(id, mess) {
 	if( confirm( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=dellist&id=' + id, '', 'afterdellist');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&dellist=1&id=' + id, '', 'afterdellist');
+}
+function afterdellist(res)
+{
+	var r_split = res.split("_");
+	if (r_split[0] == "OK") {
+		element = document.getElementById("item" + r_split[1]);
+		element.parentNode.removeChild(element);
+	} else alert(res);
 }
 
 // Binh chon bai hat
@@ -150,14 +158,6 @@ function aftervote(res)
 }
 
 
-function afterdellist(res)
-{
-	var r_split = res.split("_");
-	if (r_split[0] == "OK") {
-		element = document.getElementById("item" + r_split[1]);
-		element.parentNode.removeChild(element);
-	} else alert(res);
-}
 // an hien div
 function ShowHide(what)
 {
