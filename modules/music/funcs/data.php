@@ -78,6 +78,52 @@ if ( $nv_Request->isset_request( 'send_gift', 'post' ) )
 	}
 }
 
+// Them bai hat vao playlist
+if ( $nv_Request->isset_request( 'addplaylist', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+
+	$id = $nv_Request->get_int( 'id', 'post', 0 );
+	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+
+	if( empty( $id ) ) die( "Error Access!!!" );
+
+	if ( $num >= 20 ) die( $lang_module['playlist_full'] );
+
+	// Kiem tra bai hat da them vao chua
+	for ( $i = 1 ; $i <= $num ; $i ++ )
+	{
+		$song = $nv_Request->get_int( $module_name . '_song' . $i, 'cookie', 0 );
+		if ( $song == $id ) die( $lang_module['playlist_added'] );
+	}
+
+	// Neu chua thi them vao
+	$numnext = $num + 1 ;
+	$nv_Request->set_Cookie( $module_name . '_song' . $numnext, $id );
+	$nv_Request->set_Cookie( $module_name . '_numlist', $numnext );
+	die( "OK_" . $lang_module['playlist_add_success'] );
+}
+
+// Xoa mot playlist chua luu vao CSDL
+if ( $nv_Request->isset_request( 'delplaylist', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	
+	// Lay so bai hat
+	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+
+	if ( $num == 0 ) die( $lang_module['playlist_null'] );
+
+	// Dat cac ban hat lai thanh 0
+	for ( $i = 1 ; $i <= $num ; $i ++ )
+	{
+		$nv_Request->set_Cookie( $module_name . '_song' . $i, 0 );
+	}
+
+	$nv_Request->set_Cookie( $module_name . '_numlist' , 0 );
+	die( $lang_module['playlist_del_success'] );
+}
+
 die( "Error Access !!!" );
 
 ?>

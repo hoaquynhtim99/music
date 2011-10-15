@@ -1,10 +1,11 @@
 /* *
  * @Project NUKEVIET-MUSIC
  * @Author PHAN TAN DUNG (phantandung92@gmail.com)
- * @Createdate 26 - 12 - 2010 5 : 12
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/09/2011 5:12 PM
  */
 
-// gui loi bai hat
+// Gui loi bai hat
 function sendlyric(id) {
 	var user_lyric = document.getElementById('user_lyric');
 	var body_lyric  = strip_tags(document.getElementById('body_lyric').value, '<br />');
@@ -20,13 +21,13 @@ function sendlyric(id) {
 	return;
 }
 
-// bao ket qua
+// Bao ket qua
 function resultgift(res) {
 	alert(res);
 	return false;
 }
 
-// gui bao loi cho quan tri
+// Gui bao loi cho quan tri
 function senderror(id, where) {
 	var root_error = document.getElementById('root_error').value;
 	var user = document.getElementById('user');
@@ -43,21 +44,28 @@ function senderror(id, where) {
 	return;
 }
 
-// them paylist
+// Them paylist
 function addplaylist(id) 
 {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=addplaylist&id=' + id, '', 'resultplaylist');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&addplaylist=1&id=' + id, '', 'resultplaylist');
 	return;
 }
+function resultplaylist(res) {
+	var r_split = res.split("_");
+	if (r_split[0] == 'OK') {
+		//$("a#add").addClass("added");
+		nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist', 'playlist', '');
+	} else alert(res);
+}
 
-// xoa paylist
-function delplaylist() 
+// Xoa paylist (dang luu trong phien lam viec hien tai)
+function delplaylist()
 {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delplaylist' , '', 'resultgift');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delplaylist=1' , '', 'resultgift');
 	return;
 }
 
-// gui binh luan
+// Gui binh luan
 function sendcommment(id, where) {
 	var name = document.getElementById('name');
 	var body = strip_tags(document.getElementById('commentbody').value);
@@ -89,19 +97,13 @@ function comment_result(res) {
 	nv_set_disable_false('buttoncontent');
 	return false;
 }
-// tra ve sau khi them playlist
-function resultplaylist(res) {
-	var r_split = res.split("_");
-	if (r_split[0] == 'OK') {
-		//$("a#add").addClass("added");
-		nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist', 'playlist', '');
-	} else alert(res);
-}
-// hien thi cac binh luan
+
+// Hien thi cac binh luan
 function show_comment(id, where, page) {
 	nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&id=' + id + '&where=' + where + '&page=' + page, 'size', '');
 }
-// luu album
+
+// Luu album
 function saveplaylist(name, singer, message) {
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=savealbum&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), '', 'aftersavelist');
 }
@@ -113,7 +115,8 @@ function aftersavelist(res){
 	} else alert(res);
 
 }
-// xoa mot bai hat tu playlist
+
+// Xoa mot bai hat tu playlist
 function delsongfrlist(stt, mess) {
 	if ( confirm( mess ) )
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrlist&stt=' + stt, '', 'afterdelsong');
