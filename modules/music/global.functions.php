@@ -625,41 +625,27 @@ function unlinkSV ( $server, $url )
 	return;
 }
 
-/**
- * nv_get_URL_content()
- * 
- * @param mixed $target_url
- * @return
- */
+// 
 function nv_get_URL_content( $target_url )
 {	
-	$error = 0;
-		
-	$content = @file( $target_url );
+	global $client_info;
 	
-	if( $content === false )
-	{
-		$error = 1;
-	}
+	$agent = empty( $client_info['agent'] ) ? 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0' : $client_info['agent'];
 	
-	//	Phuong phap thu 2
-	if( $error == 1 )
+	if( function_exists('curl_init') )
 	{
-		if( function_exists('curl_init') )
-		{
-			$ch = curl_init();
-			curl_setopt( $ch, CURLOPT_URL, $target_url );
-			curl_setopt( $ch, CURLOPT_HEADER, 0 );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-			curl_setopt( $ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0' );
-			$content = curl_exec( $ch );
-			$errormsg = curl_error( $ch );
-			curl_close( $ch );
+		$ch = curl_init();
+		curl_setopt( $ch, CURLOPT_URL, $target_url );
+		curl_setopt( $ch, CURLOPT_HEADER, 0 );
+		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt( $ch, CURLOPT_USERAGENT, $agent );
+		$content = curl_exec( $ch );
+		$errormsg = curl_error( $ch );
+		curl_close( $ch );
 			
-			if ( $errormsg != "" )
-			{
-				return false;
-			}
+		if ( $errormsg != "" )
+		{
+			return "";
 		}
 	}
 	
