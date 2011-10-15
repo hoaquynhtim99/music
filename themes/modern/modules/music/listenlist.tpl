@@ -11,20 +11,16 @@
 	<strong>{ALBUM.name} - {ALBUM.singer}</strong>
 	<p>{LANG.who_post}:<a title="{ALBUM.who_post}" href="{ALBUM.url_search_upload}"> {ALBUM.who_post}&nbsp;</a> | {LANG.view}: {ALBUM.numview}</p>
 	<div class="playercontainer">
-		<div style="float:left;background:black;cursor:pointer;width:470px;height:120px;">
-		<!--[if !IE]> -->
-		<object onclick="window.open('{ads.url}'); return false;" type="application/x-shockwave-flash" data="{ads.link}" width="470" height="120">
-		<!-- <![endif]-->
-		<!--[if IE]>
-		<object onclick="window.open('{ads.url}'); return false;" classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" width="479" height="120"
-			codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0">
-			<param name="movie" value="{ads.link}" />
-		<!--><!--dgx-->
-			<param name="loop" value="true" />
-			<param name="wmode" value="transparent" />
-			<param name="menu" value="false" />
-		</object>
-		<!-- <![endif]-->
+		<div class="music-ads">
+			<a onclick="this.target='_blank';" class="fixads" href="{ads.url}" title="">&nbsp;</a>
+			<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="470" height="120">
+				<param name="src" value="{ads.link}" />
+				<param name="loop" value="true" />
+				<param name="allowscriptaccess" value="always" />
+				<param name="wmode" value="transparent" />
+				<param name="menu" value="false" />
+				<embed src="{ads.link}" pluginspage="http://www.adobe.com/shockwave/download/" width="470" height="120" wmode="transparent" loop="true" menu="false" allowscriptaccess="always"></embed>
+			</object>
 		</div>
 		<div id="player">Loading the player ...</div>	
 		<script type="text/javascript">
