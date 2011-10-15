@@ -144,6 +144,7 @@ $lang_module['song_vote_err'] = "Bạn phải đăng nhập trước khi bình c
 $lang_module['song_vote_timeout'] = "Xin lỗi bạn chỉ được bình chọn một bài hát một lần trong ngày, bạn vừa bình chọn cho bài hát này rồi";
 $lang_module['send'] = "Gửi";
 $lang_module['song'] = "bài hát";
+$lang_module['song1'] = "Bài hát";
 $lang_module['send_to'] = "Gửi tặng";
 $lang_module['sendtomail'] = "Gửi tặng qua email";
 $lang_module['send_mail'] = "Gửi quà tặng âm nhạc";

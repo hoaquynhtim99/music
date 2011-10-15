@@ -11,115 +11,38 @@
         </script>
         <!-- END: close -->
         <style type="text/css">
-            body {
-                background: #fff;
-                padding: 20px;
-                font-size: 12pt;
-            }
-            
-            h1 {
-                margin: 0;
-                padding: 0;
-                text-align: center;
-                font-size: 110%;
-                margin-bottom: 10px;
-            }
-            
-            input {
-                color: #000;
-            }
-            
-            em {
-                color: #ff0000;
-            }
-            
-            .form label {
-                width: 150px;
-                float: left;
-            }
-            
-            .form label.error {
-                float: none;
-                color: red;
-                padding-left: .5em;
-                vertical-align: top;
-            }
-            
-            .form input, .form textarea {
-                width: 250px;
-                float: right;
-                border: 1px solid #ccc;
-            }
-            
-            .form input:hover, .form textarea:hover {
-                border: 1px solid #999;
-            }
-            
-            .form textarea {
-                height: 100px;
-            }
-            
-            .form div {
-                margin: 0 0 10px 0;
-            }
-            
-            img {
-                padding: 0 2px;
-            }
-            
-            .resfresh1 {
-                padding-top: 6px;
-                cursor: pointer;
-            }
-            
-            .form div.submit {
-                text-align: center;
-                margin: 0 auto;
-            }
-            
-            .form div.submit input {
-                width: 80px;
-                float: none;
-            }
-            
-            ul {
-                color: #ff0000;
-            }
-            
-            .clearfix:after {
-                content: ".";
-                display: block;
-                clear: both;
-                visibility: hidden;
-                line-height: 0;
-                height: 0;
-            }
-            
-            .fl {
-                float: left;
-            }
-            
-            .fr {
-                float: right;
-            }
-            
-            .clearfix {
-                display: inline-block;
-            }
-            
-            html[xmlns] .clearfix {
-                display: block;
-            }
-            * html .clearfix {
-                height: 1%;
-            }
+			body {font-family: arial, Helvetica, sans-serif;font-size: 12px;color: #333333;background-color:#F0F0F0;padding:20px}            
+            h1{margin:0;padding:0;text-align:center;font-size:22px;margin-bottom:10px}
+			h2{margin:0;padding:0;font-size:16px;line-height:22px}
+            em{color:#ff0000}
+            input{color:#999}
+            ul {color: #ff0000}
+			.hr{margin-top:10px;margin-bottom:10px;border-bottom:1px #CCCCCC solid}
+            .form label{width:150px;float:left}
+            .form label.error{float:none;color:red;padding-left:0.5em;vertical-align:top}
+            .form input, .form textarea{width:250px;float:right;border:1px solid #ccc}
+            .form input:hover, .form textarea:hover {border: 1px solid #999}
+            .form textarea {height: 100px}
+            .form div{margin: 0 0 10px 0}
+            img{padding: 0 2px}
+            .resfresh1{padding-top: 6px;cursor: pointer}
+            .form div.submit{text-align:center;margin:0 auto}
+            .form div.submit input{width: 80px;float: none}
+            .clearfix:after{content: ".";display: block;clear: both;visibility: hidden;line-height: 0;height: 0}
+            .fl{float: left}
+            .fr{float: right}
+            .clearfix {display: inline-block}
+            html[xmlns] .clearfix{display: block}
+            * html .clearfix{height: 1%}
+			input[type=submit]{cursor:pointer}
         </style>
     </head>
     <body onload="self.focus()">
         <!-- BEGIN: content -->
 		<h1>{LANG.send_mail}</h1>
-		<strong>Bài hát: {SENDMAIL.song}</strong><br />
-		<strong>Ca sĩ: {SENDMAIL.singer}</strong><br />
+		<h2>{LANG.song1}: {SENDMAIL.song}</h2>
+		<h2>{LANG.singer}: {SENDMAIL.singer}</h2>
+		<div class="hr"></div>
         <form id="sendmailForm" action="{SENDMAIL.action}" method="post" class="form">
             <div class="name clearfix">
                 <label for="sname">{LANG.your_name}</label>

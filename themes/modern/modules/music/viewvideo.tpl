@@ -36,7 +36,7 @@
 	<div id="tab1" class="tab_content">
 		<div class="sendtool">
 			<a onclick="this.target='_blank';" href="http://www.facebook.com/sharer.php?u={DATA.URL_SONG}&t={DATA.name}-{DATA.singer}" class="facebook">Facebook   </a>
-			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{DATA.URL_SENDMAIL}','{DATA.TITLE}','500','450','no');return false">{LANG.sendtomail}</a>
+			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{DATA.URL_SENDMAIL}','{DATA.TITLE}','500','500','no');return false">{LANG.sendtomail}</a>
 		</div>
 		<form style="width:100%;" action="#" method="post">
 			<p>{LANG.video_link}:

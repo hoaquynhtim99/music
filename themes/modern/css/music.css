@@ -1,5 +1,6 @@
 ﻿.strong{ font-weight:bold}
 .nv-relative{position:relative!important}
+.hr{margin-top:10px;margin-bottom:10px;border-bottom:1px #CCCCCC solid}
 ul.tabs {
 	margin: 0;
 	padding: 0 0 0 0px;

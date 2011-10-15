@@ -63,7 +63,7 @@
 	<div id="tab1" class="tab_content">
 		<div class="sendtool">
 			<a onclick="window.open(this.href); return false;"  href="http://www.facebook.com/sharer.php?u={GDATA.selfurl_encode}&amp;t={SDATA.song_name}-{SDATA.song_singer}" class="facebook">Facebook   </a>
-			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{SDATA.send_mail_url}','{SDATA.send_mail_title}','500','450','no');return false">{LANG.sendtomail}</a>
+			<a class="sendtomail" href="javascript:void(0);" onclick="NewWindow('{SDATA.send_mail_url}','{SDATA.send_mail_title}','500','500','no');return false">{LANG.sendtomail}</a>
 			<a class="votesong" href="javascript:void(0);" onclick="votethissong('{SDATA.song_id}');"><strong>{LANG.song_vote}</strong></a><div id="vote">({SDATA.song_vote})</div>
 		</div>
 		<form action="#" method="post">
