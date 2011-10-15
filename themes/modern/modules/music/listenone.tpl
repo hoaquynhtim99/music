@@ -239,7 +239,7 @@
 			<p>{LANG.enter_name}:
 			<input id="user" type="text" value="{GDATA.username}" {CDATA.no_change}/> </p>
 			<p style="width:460px">{LANG.give_error_diff}</p>
-			<textarea id="bodyerror" name="message" rows="1"cols="auto"></textarea>
+			<textarea id="bodyerror" name="message" rows="3" cols="3"></textarea>
 			<p style="text-align:center">
 			<input style="width: 50px" class="submitbutton" onclick="senderror('{SDATA.song_id}', 'song');" type="button" value="{LANG.send}" />
 			</p>
