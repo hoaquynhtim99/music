@@ -135,9 +135,10 @@ function dellist(id, mess) {
 	if( confirm( mess ) )
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=dellist&id=' + id, '', 'afterdellist');
 }
-// binh chon bai hat
+
+// Binh chon bai hat
 function votethissong( id ) {
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=vote&id=' + id, '', 'aftervote');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&votesong=1&id=' + id, '', 'aftervote');
 }
 function aftervote(res)
 {
@@ -147,6 +148,8 @@ function aftervote(res)
 	} 
 	alert(r_split[2]);
 }
+
+
 function afterdellist(res)
 {
 	var r_split = res.split("_");

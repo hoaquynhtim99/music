@@ -75,8 +75,7 @@
 			<p>{LANG.forum_song}:
 			<input id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{GDATA.full_data_url}player.swf?playlistfile={GDATA.creat_link_url}[/FLASH]" readonly="readonly" /> </p>
 			<script type="text/javascript">
-				function Select_all(id)
-				{
+				function Select_all(id){
 					document.getElementById(id).focus();
 					document.getElementById(id).select();
 				}

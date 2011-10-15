@@ -10,7 +10,9 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $allsinger = getallsinger();
+
 $id = $nv_Request->get_int( 'id', 'get', 0 );
+
 if ( $id > 0 )
 {
         $result_send = "";
@@ -102,6 +104,7 @@ if ( $id > 0 )
 	echo $contents;
 	include ( NV_ROOTDIR . "/includes/footer.php" );
 }
+
 Header( "Location: " . $global_config['site_url'] );
 exit();
 
