@@ -3,20 +3,18 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * Language Tiếng Việt
  * @Createdate 26/01/2011 09:41 AM
  */
 
- if (!defined( 'NV_MAINFILE' )) {
- die('Stop!!!');
-}
+if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
-$lang_translator['author'] ="PHAN TAN DUNG (phantandung92@gmail.com)";
-$lang_translator['createdate'] ="01/01/2011, 15:22";
-$lang_translator['copyright'] ="@Copyright (C) 2011";
-$lang_translator['info'] ="";
-$lang_translator['langtype'] ="lang_module";
+$lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
+$lang_translator['createdate'] = "01/01/2011, 15:22";
+$lang_translator['copyright'] = "@Copyright (C) 2011 Freeware";
+$lang_translator['info'] = "";
+$lang_translator['langtype'] = "lang_module";
 
 $lang_module['menu1'] = "Nhạc";
 $lang_module['menu3'] = "Bài hát của bạn";
@@ -25,7 +23,6 @@ $lang_module['menu4'] = "Playlist của bạn";
 $lang_module['author'] = "Sáng tác";
 $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
-$lang_module['add_playlist_info'] = "Bạn dùng thẻ &lt;br /&gt; để xuống dòng";
 $lang_module['del'] = "Xóa";
 $lang_module['all_album'] = "Tất cả album";
 $lang_module['all_song'] = "Tất cả bài hát";
@@ -165,7 +162,10 @@ $lang_module['search_with_singer'] = "Tìm theo ca sĩ";
 $lang_module['search_with_album'] = "Tìm theo album";
 $lang_module['search_playlist'] = "Tìm playlist";
 $lang_module['send_gift_suc'] = "Quà tặng của bạn đã được gửi đi thành công";
-$lang_module['send_lyric_suc'] = "Xin cảm ơn bạn đã đóng góp lời cho ca khúc này";
+
+$lang_module['send_lyric_suc'] = "Xin cảm ơn bạn đã đóng góp lời cho ca khúc này, lời bài hát sẽ được hiển thị ngay bây giờ";
+$lang_module['send_lyric_wait'] = "Xin cảm ơn bạn đã đóng góp lời cho ca khúc này, lời bài hát sẽ được duyệt trước khi hiển thị";
+
 $lang_module['send_error_suc'] = "Xin cảm ơn bạn đã giúp chúng tôi phát hiện lỗi này. Chúng tôi sẽ mau chóng kiểm tra.";
 $lang_module['send_gift_error'] = "Quà tặng của bạn đã không thể gửi đi";
 $lang_module['send_gift_wating'] = "Quà tặng của bạn sẽ được kiểm duyệt";

@@ -5,22 +5,6 @@
  * @Createdate 26/09/2011 5:12 PM
  */
 
-// Gui loi bai hat
-function sendlyric(id) {
-	var user_lyric = document.getElementById('user_lyric');
-	var body_lyric  = strip_tags(document.getElementById('body_lyric').value, '<br />');
-	if (user_lyric.value == "") {
-		alert(nv_fullname);
-		user_lyric.focus();
-	} else if (body_lyric == "") {
-		alert(nv_content);
-		document.getElementById('body_lyric').focus();
-	} else {
-		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=sendlyric&id=' + id + '&user_lyric=' + user_lyric.value +  '&body_lyric=' + encodeURIComponent(body_lyric), '', 'resultgift');
-	}
-	return;
-}
-
 // Bao ket qua
 function resultgift(res) {
 	alert(res);

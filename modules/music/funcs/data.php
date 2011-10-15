@@ -124,6 +124,51 @@ if ( $nv_Request->isset_request( 'delplaylist', 'post' ) )
 	die( $lang_module['playlist_del_success'] );
 }
 
+// Gui loi bai hat
+if ( $nv_Request->isset_request( 'sendlyric', 'post' ) )
+{
+	$id = $nv_Request->get_int( 'id', 'post', 0 );
+	$user_lyric = filter_text_input( 'user_lyric', 'post', '' );
+	$body_lyric = filter_text_textarea( 'body_lyric', '', NV_ALLOWED_HTML_TAGS );
+	$body_lyric = nv_nl2br( $body_lyric );
+
+	// Kiem tra thoi gian
+	$timeout = $nv_Request->get_int( $module_name . '_lyric' , 'cookie', 0 );
+	if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
+	{
+		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES (
+			NULL, 
+			" . $db->dbescape( $id ) . ", 
+			" . $db->dbescape( $user_lyric ) . ", 
+			" . $db->dbescape( $body_lyric ) . ", 
+			" . $setting['auto_lyric']  . ", 
+			" . NV_CURRENTTIME . " 
+		)";
+		
+		if ( $db->sql_query_insert_id( $sql ) )
+		{
+			$nv_Request->set_Cookie( $module_name . '_lyric', NV_CURRENTTIME );
+			
+			if( $setting['auto_lyric'] )
+			{
+				die( "OK" );
+			}
+			else
+			{
+				die( "WAIT" );
+			}
+		} 
+		else
+		{
+			die( $lang_module['send_lyric_error'] );
+		}
+	}
+	else
+	{
+		die( $lang_module['ready_lyric_gift'] );
+	}
+}
+
 die( "Error Access !!!" );
 
 ?>

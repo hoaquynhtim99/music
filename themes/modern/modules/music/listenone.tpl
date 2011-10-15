@@ -173,12 +173,43 @@
 		<!-- BEGIN: accesslyric -->
 		<p style="width:498px;float:left;"><a onclick="ShowHide('sendlyric'); return false;" class="show_lyric">{LANG.send} {LANG.lyric}</a></p>
 		<div id="sendlyric" class="send_lyric">
-			<p>{LANG.add_playlist_info}</p>
 			<form method="post">
-				<input style="width: 250px" type="text" id="user_lyric" value="{GDATA.username}" onfocus="if(this.value=='{GDATA.username}')this.value=''" onblur="if(this.value=='')this.value='{GDATA.username}'" {CDATA.no_change}/>
+				<input style="width:250px" type="text" id="user_lyric" value="{GDATA.username}" {CDATA.no_change}/>
+				<input id="send-lyric-button" style="width: 50px;float:right;margin-right:20px;" onclick="sendlyric('{SDATA.song_id}');" class="submitbutton" type="button" value="{LANG.send}" />
 				<textarea rows="10" cols="auto" id="body_lyric" ></textarea>
-				<input style="width: 50px;float:right;margin-right:20px;" onclick="sendlyric('{SDATA.song_id}');" class="submitbutton" type="button" value="{LANG.send}" />
 			</form>
+			<script type="text/javascript">
+			function sendlyric(id){
+				var user_lyric = document.getElementById('user_lyric');
+				var body_lyric = document.getElementById('body_lyric').value;
+				if (user_lyric.value == "") {
+					alert(nv_fullname);
+					user_lyric.focus();
+				} else if (body_lyric == "") {
+					alert(nv_content);
+					document.getElementById('body_lyric').focus();
+				}else{
+					$('#send-lyric-button').attr('disabled','disabled');
+					$.ajax({
+						type: 'POST',
+						url: nv_siteroot + 'index.php',
+						data: nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&sendlyric=1&id=' + id + '&user_lyric=' + user_lyric.value +  '&body_lyric=' + encodeURIComponent(body_lyric),
+						success: function(data){
+							if(data=='OK'||data=='WAIT'){
+								$('#body_lyric').val('');
+								if(data=='OK'){
+									alert('{LANG.send_lyric_suc}');
+								}else if(data=='WAIT'){
+									alret('{LANG.send_lyric_wait}');
+								}
+								$('#send-lyric-button').attr('disabled','');
+							}else alert(data);
+						}
+					});
+				}
+				return;
+			}
+			</script>
 		</div>
 		<!-- END: accesslyric -->
 		<!-- BEGIN: noaccesslyric -->

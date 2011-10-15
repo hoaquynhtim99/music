@@ -635,23 +635,22 @@ a.show_lyric {
 	font-weight: bold;
 	color: #000000;
 }
-#sendlyric {
-	float: left;
-	width: 100%;
-	display: none;
-	color: #000000;
-}
+
+/* GUI LOI BAI HAT */
+#sendlyric {float: left;width: 100%;display: none;color: #999;}
 #sendlyric form input, #sendlyric form textarea {
 	padding: 0px 5px 0px 5px;
-	border: 1px solid #000000;
+	line-height:1.5em;
+	border: 1px solid #999;
 	float: left;
 	width: 450px;
-	background-color: inherit;
-	color: #000000;
+	color: #999;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 11px;
+	font-size: 12px;
 	margin-left: 15px;
 }
+
+/*  */
 #album_info {
 	padding: 5px;
 	float: left;
@@ -923,13 +922,6 @@ ul.tool li.active {
 }
 #boderfull {
 	border: 1px solid #D3D3D3;
-}
-#sendlyric p {
-	float: left;
-	width: 400px;
-	color: #666666;
-	font-style: italic;
-	padding-left: 20px;
 }
 .header-block1 .active {
 	background-repeat: repeat-x;
