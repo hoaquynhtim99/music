@@ -406,6 +406,38 @@ if ( $nv_Request->isset_request( 'delsong', 'post' ) )
 	die( "OK_" . $id );
 }
 
+// Xoa mot bai hat tu playlist da luu
+if ( $nv_Request->isset_request( 'delsongfrplaylist', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if ( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
+
+	$id = $nv_Request->get_int( 'id', 'post', 0 );
+	$plid = $nv_Request->get_int( 'plid', 'post', 0 );
+
+	if( empty( $plid ) ) die( 'Error !!!!!' );
+
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active`=1 AND `id`=" . $plid . " AND `userid`=" . $user_info['userid'];
+	$result = $db->sql_query( $sql );
+	$check = $db->sql_numrows( $result );
+	if( $check != 1 ) die( 'Error !!!!!' );
+
+	$row = $db->sql_fetchrow( $result );
+
+	$songdatanew = array();
+	$songdata = explode ( ',', $row['songdata'] );
+	foreach ( $songdata as $value )
+	{
+		if ( ( intval($value) == $id ) || ( $value == '' ) ) continue;
+		$songdatanew[] = $value;
+	}
+	
+	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `songdata` = " . $db->dbescape( implode( ",", $songdatanew ) ) . " WHERE `id` =" . $plid );
+	nv_del_moduleCache( $module_name );
+
+	die( "OK_" . $id );
+}
+
 die( "Error Access !!!" );
 
 ?>

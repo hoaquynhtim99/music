@@ -3,14 +3,11 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 10:12 AM
  */
  
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-
-$page_title = $module_info['custom_title'];
-$key_words = $module_info['keywords'];
 
 if ( ! defined ( "NV_IS_USER" ) )
 {
@@ -20,8 +17,9 @@ if ( ! defined ( "NV_IS_USER" ) )
 	exit();
 }
 
-$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 $allsinger = getallsinger();
+
+$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active` = 1 AND id = " . $id . " AND `userid`=" . $user_info['userid'];
 $result = $db->sql_query( $sql );
@@ -33,6 +31,11 @@ if( $check != 1 )
 }
 
 $row = $db->sql_fetchrow( $result );
+
+// Thong tin trang
+$page_title = $lang_module['playlist_edit'] . NV_TITLEBAR_DEFIS . $row['name'] . NV_TITLEBAR_DEFIS . $user_info['username'] . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
+$key_words = $module_info['keywords'];
+$description = $setting['description'];
 
 $name = $user_info['username'];
 $userid = $user_info['userid'];
@@ -62,6 +65,7 @@ if( $nv_Request->get_int( 'ok', 'post', 0 ) == 1 )
 	if ( $result ) 
 	{
 		$ok = 1;
+		nv_del_moduleCache( $module_name );
 	}
 }
 

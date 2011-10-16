@@ -100,15 +100,16 @@ function aftersavelist(res){
 
 }
 
-// Xoa mot bai hat tu playlist
+// Xoa mot bai hat tu playlist chua luu
 function delsongfrlist(stt, mess) {
 	if ( confirm( mess ) )
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsongfrlist=1&stt=' + stt, '', 'afterdelsong');
 }
-// xoa mot bai hat tu playlist da luu
+
+// Xoa mot bai hat tu playlist da luu
 function delsongfrplaylist(id, plid, mess) {
 	if ( confirm( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrplaylist&id=' + id + '&plid=' + plid, '', 'afterdelsong');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsongfrplaylist=1&id=' + id + '&plid=' + plid, '', 'afterdelsong');
 }
 
 // Xoa mot bai hat cua thanh vien
