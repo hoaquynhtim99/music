@@ -3,14 +3,11 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 10:12 AM
  */
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) )
-{
-    die( 'Stop!!!' );
-}
+if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $url = array();
 $cacheFile = NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . NV_LANG_DATA . "_" . $module_data . "_Sitemap.cache";

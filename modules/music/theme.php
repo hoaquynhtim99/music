@@ -3,21 +3,14 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 09:41 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-/**
- * nv_music_listenone()
- * 
- * @param mixed $gdata
- * @param mixed $sdata
- * @param mixed $cdata
- * @param mixed $ldata
- * @return
- */
+// Giao dien
+// Nghe mot bai hat
 function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $my_head, $main_header_URL;
@@ -133,13 +126,8 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_listen_playlist()
- * 
- * @param mixed $gdata
- * @param mixed $sdata
- * @return
- */
+// Giao dien
+// Nghe playlist cua thanh vien
 function nv_music_listen_playlist ( $gdata, $sdata )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $main_header_URL, $my_head, $downURL;
@@ -172,13 +160,8 @@ function nv_music_listen_playlist ( $gdata, $sdata )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_album()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Danh sach cac alum
 function nv_music_album ( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
@@ -210,13 +193,8 @@ function nv_music_album ( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_allplaylist()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Tat cac cac playlist
 function nv_music_allplaylist ( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
@@ -248,13 +226,8 @@ function nv_music_allplaylist ( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_showcomment()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Hien thi binh luan
 function nv_music_showcomment( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
@@ -264,7 +237,7 @@ function nv_music_showcomment( $g_array, $array )
 	$xtpl->assign( 'GLANG', $lang_global );
 	$xtpl->assign( 'GDATA', $g_array );
 	
-	// phan trang binh luan
+	// Phan trang binh luan
 	if (  $g_array['num'] > ( $g_array['page'] + 8 ) )
 	{
 		$next = $g_array['page'] + 8 ;
@@ -338,14 +311,8 @@ function nv_music_creatalbum( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_editplaylist()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @param mixed $row
- * @return
- */
+// Giao dien
+// Sua playlist
 function nv_music_editplaylist( $g_array, $array, $row )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL;
@@ -375,14 +342,8 @@ function nv_music_editplaylist( $g_array, $array, $row )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_listenlist()
- * 
- * @param mixed $g_array
- * @param mixed $album_array
- * @param mixed $song_array
- * @return
- */
+// Giao dien
+// Nghe album
 function nv_music_listenlist( $g_array, $album_array, $song_array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL, $downURL;
@@ -443,14 +404,8 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_managersong()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @param mixed $row
- * @return
- */
+// Giao dien
+// Quan ly bai hat
 function nv_music_managersong( $g_array, $array_song, $data_song )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL;
@@ -513,13 +468,8 @@ function nv_music_managersong( $g_array, $array_song, $data_song )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_playlist()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Nghe gio nhac
 function nv_music_playlist( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL;
@@ -552,13 +502,8 @@ function nv_music_playlist( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_search()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Tiem kiem bai hat
 function nv_music_search( $g_array, $array_song, $array_album, $array_video )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
@@ -619,13 +564,8 @@ function nv_music_search( $g_array, $array_song, $array_album, $array_video )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_searchvideo()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Tim kiem video
 function nv_music_searchvideo( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL;
@@ -646,12 +586,8 @@ function nv_music_searchvideo( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_sendmail_themme()
- * 
- * @param mixed $sendmail
- * @return
- */
+// Giao dien
+// Gui email bai hat
 function nv_sendmail_themme ( $sendmail )
 {
     global $module_name, $module_info, $module_file, $global_config, $lang_module, $lang_global;
@@ -695,12 +631,8 @@ function nv_sendmail_themme ( $sendmail )
     return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_showplaylist()
- * 
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Hien thi danh sach cac bai hat trong playlist cookie
 function nv_music_showplaylist( $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL;
@@ -719,13 +651,8 @@ function nv_music_showplaylist( $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_song()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Tat cac cac bai hat
 function nv_music_song ( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
@@ -770,12 +697,8 @@ function nv_music_song ( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_upload()
- * 
- * @param mixed $g_array
- * @return
- */
+// Giao dien
+// Upload bai hat
 function nv_music_upload( $g_array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
@@ -807,12 +730,8 @@ function nv_music_upload( $g_array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_sendmail_video_themme()
- * 
- * @param mixed $sendmail
- * @return
- */
+// Giao dien
+// Gui email video
 function nv_sendmail_video_themme ( $sendmail )
 {
     global $module_name, $module_info, $module_file, $global_config, $lang_module, $lang_global;
@@ -856,14 +775,7 @@ function nv_sendmail_video_themme ( $sendmail )
     return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_video()
- * 
- * @param mixed $category
- * @param mixed $array_new
- * @param mixed $array_hot
- * @return
- */
+// Giao dien trang chu video
 function nv_music_video ( $category, $array_new, $array_hot )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
@@ -929,13 +841,8 @@ function nv_music_video ( $category, $array_new, $array_hot )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_viewvideo()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Xem video
 function nv_music_viewvideo( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL;
@@ -959,7 +866,7 @@ function nv_music_viewvideo( $g_array, $array )
 	$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'thisurl', $mainURL . "=video" );
 	
-	// binh luan
+	// Binh luan
 	if ( ( $setting['who_comment'] == 0 ) and ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
 	{
 		$xtpl->assign( 'USER_LOGIN', $g_array['user_login'] );
@@ -983,13 +890,8 @@ function nv_music_viewvideo( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_gift()
- * 
- * @param mixed $array
- * @param mixed $generate_page
- * @return
- */
+// Giao dien
+// Danh sach qua tang am nhac
 function nv_music_gift( $array, $generate_page )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting;
@@ -1021,14 +923,8 @@ function nv_music_gift( $array, $generate_page )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_main()
- * 
- * @param mixed $array
- * @param mixed $array_album
- * @param mixed $first_album_data
- * @return
- */
+// Giao dien
+// Trang chu module
 function nv_music_main( $array, $array_album, $first_album_data )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request;

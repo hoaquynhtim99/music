@@ -1,19 +1,21 @@
 <?php
+
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES., JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES ., JSC. All rights reserved
- * @Createdate Dec 3, 2010  11:32:04 AM 
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 10:12 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$page_title = $module_info['custom_title'];
+$page_title = $lang_module['listen_playlist'] . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
 $key_words = $module_info['keywords'];
+$description = $setting['description'];
 
 $allsinger = getallsinger();
 
-// lay thong tin playlist
+// Lay thong tin playlist
 $num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
 
 $g_array = array();

@@ -3,8 +3,8 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright 2011
- * @Createdate 26/01/2011
+ * @Copyright 2011 Freeware
+ * @Createdate 26/01/2011 10:24 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
