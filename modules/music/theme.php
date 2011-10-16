@@ -291,16 +291,11 @@ function nv_music_showcomment( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-/**
- * nv_music_creatalbum()
- * 
- * @param mixed $g_array
- * @param mixed $array
- * @return
- */
+// Giao dien
+// Quan ly playlist cua thanh vien
 function nv_music_creatalbum( $g_array, $array )
 {
-    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
+    global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $client_info;
     
 	$xtpl = new XTemplate( "creatalbum.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
@@ -308,10 +303,10 @@ function nv_music_creatalbum( $g_array, $array )
 	$xtpl->assign( 'GDATA', $g_array );
 	$xtpl->assign( 'img',  NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/randimg/img(" . rand( 1, 10 ) . ").jpg" );
 	
-	// khong duoc vao
+	// Chua dang nhap
 	if( empty( $g_array['userid'] ) )
 	{
-		$xtpl->assign( 'USER_LOGIN', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login" );
+		$xtpl->assign( 'USER_LOGIN', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login&amp;nv_redirect=" . nv_base64_encode( $client_info['selfurl'] ) );
 		$xtpl->assign( 'USER_REGISTER', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" );		
 		$xtpl->parse( 'main.noaccess' );
 	}

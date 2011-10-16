@@ -3,27 +3,28 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 10:12 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$page_title = $lang_module['album_creat'] . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
-$key_words = $module_info['keywords'];
-
 $allsinger = getallsinger();
 
+$username = "";
+$userid = 0;
 if ( defined( 'NV_IS_USER' ) )
 {
 	$username = $user_info['username'];
 	$userid = $user_info['userid'];
 }
-else
-{
-	$username = "";
-	$userid = 0;
-}
+
+// Thong tin trang
+$page_title = $lang_module['playlist_save'] . NV_TITLEBAR_DEFIS;
+if( ! empty( $username ) ) $page_title .= $username . NV_TITLEBAR_DEFIS;
+$page_title .=  $module_info['custom_title'];
+$key_words = $module_info['keywords'];
+$description = $setting['description'];
 
 $g_array = array(
 	"username" => $username,  //
