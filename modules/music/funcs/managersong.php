@@ -1,15 +1,13 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 12:01 PM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
-
-$page_title = $module_info['custom_title'];
-$key_words = $module_info['keywords'];
 
 $id = 0;
 $userid = 0;
@@ -29,21 +27,33 @@ $g_array = array(
 	"userid" => $userid  //
 );
 
-//duoc vao
+// Thong tin trang
+$page_title = $lang_module['mana_song'] . NV_TITLEBAR_DEFIS;
+if( ! empty( $username ) ) $page_title .= $username . NV_TITLEBAR_DEFIS;
+$page_title .=  $module_info['custom_title'];
+$key_words = $module_info['keywords'];
+$description = $setting['description'];
+
+// Da dang nhap
 $array_song = array();
 $data_song = array();
+
 if( ! empty( $userid ) )
 {
 	$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 	if ( $id > 0 )
 	{
-		$resuit = false;
 		$song = getsongbyID( $id );
+		
+		// Thong tin trang
+		$page_title = $lang_module['song_edit1'] . NV_TITLEBAR_DEFIS . $song['tenthat'] . NV_TITLEBAR_DEFIS . $username . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
+
+		$resuit = false;
 		if ( $song['userid'] != $userid ) die ('Stop!!!');
 		if ( $nv_Request->get_int( 'ok', 'post', 0 ) == 1 )
 		{
 			$song['tenthat'] = $songdata['tenthat'] = filter_text_input( 'name', 'post', '' );
-			$song['ten'] = $songdata['ten'] = change_alias( $songdata['tenthat'] );
+			$song['ten'] = $songdata['ten'] = change_alias( $songdata['tenthat'] . "-" . $id );
 			$song['casi'] = $songdata['casi'] = filter_text_input( 'singer', 'post', '' );
 			$songdata['casimoi'] = filter_text_input( 'newsinger', 'post', '' );
 			$song['nhacsi'] = $songdata['nhacsi'] = filter_text_input( 'nhacsi', 'post', '' );
@@ -61,22 +71,25 @@ if( ! empty( $userid ) )
 				newauthor( $songdata['nhacsi'], $songdata['nhacsimoi'] );
 				updateauthor( $songdata['nhacsi'], 'numsong', '+1' );
 			}
-			foreach ( $songdata as $key => $data  )
-			{	
-				if ( $key == 'casimoi' ) continue;
-				if ( $key == 'nhacsimoi' ) continue;
-				$resuit = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
-			}
+			
+			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET 
+				`tenthat`=" . $db->dbescape( $song['tenthat'] ) . ", 
+				`ten`=" . $db->dbescape( $song['ten'] ) . ", 
+				`casi`=" . $db->dbescape( $song['casi'] ) . ", 
+				`theloai`=" . $db->dbescape( $song['theloai'] ) . ", 
+				`nhacsi`=" . $db->dbescape( $song['nhacsi'] ) . "
+			WHERE `id`=" .  $id;
+			$resuit = $db->sql_query( $sql );
+			
+			if( $resuit ) nv_del_moduleCache( $module_name );
 		}
-		$category = get_category( ) ;
-		$allsinger = getallsinger( );
-		
+				
 		$cate = '';
 		$singer = '';
 		$author = '';
 		foreach( $category as $key => $data )
 		{
-			$cate .= "<option " . ( ( $key == $song['theloai'] )? ( "selected=\"selected\"" ):( "" ) ) . " value=\"" . $key . "\">" . $data . "</option>";
+			$cate .= "<option " . ( ( $key == $song['theloai'] )? ( "selected=\"selected\"" ):( "" ) ) . " value=\"" . $key . "\">" . $data['title'] . "</option>";
 		}
 		foreach( $allsinger as $key => $data )
 		{
@@ -108,16 +121,15 @@ if( ! empty( $userid ) )
 		{
 			$first_page = ( $now_page -1 ) * 20;
 		}	
-		$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `userid` = " . $userid . " ORDER BY id DESC LIMIT ".$first_page.",20";
-		$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `userid` = " . $userid ;
+		$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `userid`=" . $userid . " ORDER BY `id` DESC LIMIT " . $first_page . ",20";
+		$sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `userid` = " . $userid;
 
 		$num = $db->sql_query( $sqlnum );
-		$output = $db->sql_numrows( $num );
+		list( $output ) = $db->sql_fetchrow( $num );
 		$ts = 1;
 		while ( $ts * 20 < $output ) {$ts ++ ;}
 
 		$result = $db->sql_query( $sql );
-		
 		while ( $row = $db->sql_fetchrow( $result ) )
 		{
 			$array_song[] = array(
@@ -140,8 +152,7 @@ if( ! empty( $userid ) )
 }
 
 $contents = nv_music_managersong( $g_array, $array_song, $data_song );
-if ( $userid != 0 ) if ( $id == 0 )
-$contents .= new_page( $ts, $now_page, $link);
+if ( $userid != 0 and $id == 0 ) $contents .= new_page( $ts, $now_page, $link );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

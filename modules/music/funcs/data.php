@@ -379,6 +379,33 @@ if ( $nv_Request->isset_request( 'dellist', 'post' ) )
 	die( $lang_module['del_error'] );
 }
 
+// Xoa mot bai hat cua thanh vien
+if ( $nv_Request->isset_request( 'delsong', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if ( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
+
+	$id = $nv_Request->get_int( 'id', 'post', 0 );
+	$song = getsongbyID ( $id );
+
+	if( $song['userid'] != $user_info['userid'] ) die( 'Wrong URL' );
+
+	updatesinger( $song['casi'], 'numsong', '-1' );
+	updateauthor( $song['nhacsi'], 'numsong', '-1' );
+	updatealbum( $song['album'], '-1' );
+	delcomment( 'song', $song['id']);
+	dellyric( $song['id']);
+	delerror( 'song', $song['id'] );
+	delgift( $song['id'] );
+	unlinkSV ( $song['server'], $song['duongdan'] );
+
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
+	$db->sql_query( $sql );
+	nv_del_moduleCache( $module_name );
+
+	die( "OK_" . $id );
+}
+
 die( "Error Access !!!" );
 
 ?>

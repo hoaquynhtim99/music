@@ -88,8 +88,11 @@ $lang_module['listen_song'] = "Nghe ca khúc";
 $lang_module['listen_album'] = "Nghe album";
 $lang_module['listen_playlist'] = "Nghe playlist";
 $lang_module['lyric'] = "lời bài hát";
+
 $lang_module['message'] = "Lời nhắn";
 $lang_module['newest_song'] = "Bài hát mới nhất";
+$lang_module['mana_song'] = "Quản lý bài hát";
+
 $lang_module['next'] = "Trang sau";
 $lang_module['no_lyric'] = "Hiện tại chưa có lời cho bài hát này, mời bạn đóng góp";
 $lang_module['show'] = "Trình bày";
@@ -208,6 +211,8 @@ $lang_module['video'] = "Video";
 $lang_module['video_link'] = "Link video";
 $lang_module['video_hot'] = "Video hot";
 $lang_module['video_new'] = "Video mới";
+
+$lang_module['song_edit1'] = "Sửa bài hát";
 $lang_module['song_edit'] = "Sửa bài hát này";
 $lang_module['song_listen'] = "Nghe bài hát này";
 $lang_module['song_del'] = "Xóa bài hát này";

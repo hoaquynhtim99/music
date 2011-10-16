@@ -110,10 +110,11 @@ function delsongfrplaylist(id, plid, mess) {
 	if ( confirm( mess ) )
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsongfrplaylist&id=' + id + '&plid=' + plid, '', 'afterdelsong');
 }
-// xoa mot bai
+
+// Xoa mot bai hat cua thanh vien
 function delsong(id, mess) {
 	if ( confirm ( mess ) )
-	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=delsong&id=' + id , '', 'afterdelsong');
+	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&delsong=1&id=' + id , '', 'afterdelsong');
 }
 function afterdelsong(res)
 {
