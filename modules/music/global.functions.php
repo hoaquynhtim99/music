@@ -92,7 +92,7 @@ function setting_music()
 	return $setting ;
 }
 
-// lay album tu id
+// Lay album tu id
 function getalbumbyID( $id )
 {
 	global $module_data, $db ;

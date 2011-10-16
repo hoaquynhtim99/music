@@ -424,7 +424,7 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 		$i ++;
 	}
 	
-	// binh luan
+	// Binh luan
 	if ( ( $setting['who_comment'] == 0 ) && ! defined( 'NV_IS_USER' ) && ! defined( 'NV_IS_ADMIN' ) )
 	{
 		$xtpl->assign( 'USER_LOGIN', $g_array['user_login'] );

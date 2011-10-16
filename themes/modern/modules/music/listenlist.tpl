@@ -7,56 +7,56 @@
 			<strong>{LANG.listen_album}</strong>
 		</div>
 	</div>
-<div id="listen_main">
-	<strong>{ALBUM.name} - {ALBUM.singer}</strong>
-	<p>{LANG.who_post}:<a title="{ALBUM.who_post}" href="{ALBUM.url_search_upload}"> {ALBUM.who_post}&nbsp;</a> | {LANG.view}: {ALBUM.numview}</p>
-	<div class="playercontainer">
-		<div class="music-ads">
-			<a onclick="this.target='_blank';" class="fixads" href="{ads.url}" title="">&nbsp;</a>
-			<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="470" height="120">
-				<param name="src" value="{ads.link}" />
-				<param name="loop" value="true" />
-				<param name="allowscriptaccess" value="always" />
-				<param name="wmode" value="transparent" />
-				<param name="menu" value="false" />
-				<embed src="{ads.link}" pluginspage="http://www.adobe.com/shockwave/download/" width="470" height="120" wmode="transparent" loop="true" menu="false" allowscriptaccess="always"></embed>
-			</object>
-		</div>
-		<div id="player">Loading the player ...</div>	
-		<script type="text/javascript">
-			var nv_num_song = {ALBUM.numsong};
-			var nv_current_song = 1;
-			jwplayer("player").setup({
-			flashplayer: "{base_url}player.swf",			
-			controlbar: "bottom",
-			volume: 100,
-			height: 24,
-			width: 470,
-			autostart: true,
-			events: {
-				onReady: function(){nv_start_player('player')},
-				onComplete: function(){nv_complete_song('player')}
-			}
-			});
-		</script>
-		<div class="clear"></div>
-		<div id="playlist-container">
-			<!-- BEGIN: song -->
-			<div class="item" id="song-wrap-{SONG.stt}">
-				<strong>{SONG.stt}. </strong><a id="song-{SONG.stt}" class="nv-song-item" title="" name="{SONG.song_url}" href="javascript:void(0);" onclick="play_song('player', this);return false;">{SONG.song_name}</a> - <a onclick="this.target='_blank';" href="{SONG.url_search_singer}" title="">{SONG.song_singer}</a>
-				<div class="fr">
-					<div class="tool" style="margin-top:4px">
-						<a name="{SONG.id}" class="adds add"></a>
-						<a href="{URL_DOWN}{SONG.id}" class="down"></a>
-					</div>
-				</div>
-				<div class="clear"></div>
+	<div id="listen_main">
+		<strong>{ALBUM.name} - {ALBUM.singer}</strong>
+		<p>{LANG.who_post}:<a title="{ALBUM.who_post}" href="{ALBUM.url_search_upload}"> {ALBUM.who_post}&nbsp;</a> | {LANG.view}: {ALBUM.numview}</p>
+		<div class="playercontainer">
+			<div class="music-ads">
+				<a onclick="this.target='_blank';" class="fixads" href="{ads.url}" title="">&nbsp;</a>
+				<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=10,1,1,0" width="470" height="120">
+					<param name="src" value="{ads.link}" />
+					<param name="loop" value="true" />
+					<param name="allowscriptaccess" value="always" />
+					<param name="wmode" value="transparent" />
+					<param name="menu" value="false" />
+					<embed src="{ads.link}" pluginspage="http://www.adobe.com/shockwave/download/" width="470" height="120" wmode="transparent" loop="true" menu="false" allowscriptaccess="always"></embed>
+				</object>
 			</div>
-			<!-- END: song -->
+			<div id="player">Loading the player ...</div>	
+			<script type="text/javascript">
+				var nv_num_song = {ALBUM.numsong};
+				var nv_current_song = 1;
+				jwplayer("player").setup({
+				flashplayer: "{base_url}player.swf",			
+				controlbar: "bottom",
+				volume: 100,
+				height: 24,
+				width: 470,
+				autostart: true,
+				events: {
+					onReady: function(){nv_start_player('player')},
+					onComplete: function(){nv_complete_song('player')}
+				}
+				});
+			</script>
+			<div class="clear"></div>
+			<div id="playlist-container">
+				<!-- BEGIN: song -->
+				<div class="item" id="song-wrap-{SONG.stt}">
+					<strong>{SONG.stt}. </strong><a id="song-{SONG.stt}" class="nv-song-item" title="" name="{SONG.song_url}" href="javascript:void(0);" onclick="play_song('player', this);return false;">{SONG.song_name}</a> - <a onclick="this.target='_blank';" href="{SONG.url_search_singer}" title="">{SONG.song_singer}</a>
+					<div class="fr">
+						<div class="tool" style="margin-top:4px">
+							<a name="{SONG.id}" class="adds add"></a>
+							<a href="{URL_DOWN}{SONG.id}" class="down"></a>
+						</div>
+					</div>
+					<div class="clear"></div>
+				</div>
+				<!-- END: song -->
+			</div>
+			<div class="clear"></div>
 		</div>
-		<div class="clear"></div>
 	</div>
-</div>
 </div>
 <ul class="tool">
 	<li class="active"><a title="" class="give" href="#tab1">{LANG.send_to}</a></li>

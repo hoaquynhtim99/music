@@ -3,7 +3,7 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011
+ * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 10:12 AM
  */
 
@@ -20,7 +20,6 @@ if ( defined( 'NV_IS_USER' ) )
 	$name = $user_info['username'];
 }
 
-// xu li
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
 $row = getalbumbyID( $id );
@@ -52,29 +51,33 @@ if( empty( $row ) )
     exit();
 }
 
-// update album
-//$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview`=`numview`+1 WHERE `id` =" . $id );
+// Cap nhat so luot nghe
+$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview`=`numview`+1 WHERE `id` =" . $id );
 
-// cac bai hat cua album
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $row['listsong'] . ") AND `active` = 1 ORDER BY `id` DESC";
-$result = $db->sql_query( $sql );
+// Cac bai hat cua album
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $row['listsong'] . ") AND `active`=1";
+$list = nv_db_cache( $sql, 'id' );
 
-$album_array['numsong'] = $db->sql_numrows( $result );
-
+$album_array['numsong'] = sizeof( $list );
 $song_array = array();
-while ( $row = $db->sql_fetchrow( $result ) )
+
+foreach ( explode( ",", $row['listsong'] ) as $row )
 {
-	$song_array[] = array(
-		"id" => $row['id'],  //
-		"song_name" => $row['tenthat'],  //
-		"song_singer" => $allsinger[$row['casi']],  //
-		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
-		"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true )  //
-	);
+	if( ! empty( $row ) and isset( $list[$row] ) )
+	{
+		$row = $list[$row];
+		$song_array[] = array(
+			"id" => $row['id'],  //
+			"song_name" => $row['tenthat'],  //
+			"song_singer" => $allsinger[$row['casi']],  //
+			"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
+			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true )  //
+		);
+	}
 }
 
-// tieu de trang
-$page_title = "Album " . $album_array['name'] . NV_TITLEBAR_DEFIS . $album_array['singer'];
+// Tieu de trang
+$page_title = $lang_module['album'] . " " . $album_array['name'] . NV_TITLEBAR_DEFIS . $album_array['singer'];
 $key_words =  $album_array['name'] . " - " . $album_array['singer'];
 $description = sprintf ( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
 
@@ -83,7 +86,5 @@ $contents = nv_music_listenlist( $g_array, $album_array, $song_array );
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
-
-
 
 ?>
