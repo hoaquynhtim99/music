@@ -11,7 +11,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
 
-$xtpl = new XTemplate( "block_video_same_category.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+$xtpl = new XTemplate( "block_top_video.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
 $sql = "SELECT a.id, a.name, a.tname, a.thumb, a.casi, a.view, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1 ORDER BY a.view DESC LIMIT 0,8";

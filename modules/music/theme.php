@@ -2,12 +2,15 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 09:41 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
+global $my_head;
+$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/js/music/music.js\"></script>\n";// js chung
 
 // Giao dien
 // Nghe mot bai hat
@@ -941,6 +944,11 @@ function nv_music_main( $array, $array_album, $first_album_data )
 	{
 		foreach( $array_album as $album )
 		{
+			$album['tname1'] = nv_clean60( $album['tname'], 30 );
+			$album['casi1'] = nv_clean60( $album['casi'], 30 );
+			$album['tname2'] = nv_clean60( $album['tname'], 40 );
+			$album['casi2'] = nv_clean60( $album['casi'], 40 );
+			
 			$xtpl->assign( 'ALBUM', $album );
 			
 			if( ( $i++ ) == 1 )

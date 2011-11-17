@@ -1,0 +1,68 @@
+﻿/**
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:41 AM
+ */
+
+/* COMPLAIN FOR CSS 2.1 & CSS 3 */
+
+/* GLOBAL */
+.msmall{font-size:11px;color:#999999}
+.alright{text-align:right}
+.mcenter{text-align:center!important;border:1px maroon solid}
+a.boldcolor{font-weight:bold;color:#3366CC}
+.mreset{padding:0;margin:0}
+h2.large{padding:0;margin:0;line-height:16px;font-size:14px;font-weight:bold;margin-bottom:8px}
+a.singer{color:#3366CC}
+a.singer:hover{text-decoration:underline}
+.hr{border-bottom:1px #DADADA solid;margin-bottom:5px;padding-bottom:5px}
+
+/* TYPE <a> */
+a.singersmall{font-size:11px;color:#3366CC}
+a.singersmall:hover{text-decoration:underline}
+
+/* BOX */
+ul.musicbox1{padding:0;margin:0;list-style-type:none}
+ul.musicbox1 li{padding:0px 0px 5px 0px;margin:0px 0px 5px 0px;line-height:16px;border-bottom:1px #DADADA solid}
+
+.alboxw{padding:0;margin:0px 0px 6px 0px;display:block; }
+.alwrap{border:1px #DADADA solid;display:block;box-shadow: 0px 0px 2px 0px #dadada;border-radius: 2px}
+.alheader{height:30px;overflow:hidden;display:block;background-image:url('../images/music/cat-header-bg.png');background-repeat:repeat-x;line-height:30px;padding-left:10px;border-bottom:1px #DADADA solid;position:relative}
+.alheader span{font-weight:bold;color:#0066FF}
+.alcontent{display:block;padding:5px;margin:0px}
+.nv-loader{position:absolute;top:1px;right:0px;width:25px;height:25px;background-image:url('../images/music/loader.gif')}
+
+/* ICON PACK */
+.musicicon{padding-left:16px;background-repeat:no-repeat}
+.miconalbum{background-image:url('../images/music/album.png')}
+.miconcat{background-image:url('../images/music/categories.png')}
+.mforward{background-image:url('../images/music/forward.png')}
+.mmore{background-image:url('../images/music/more.png')}
+.mplay{background-image:url('../images/music/play.png')}
+.msame{background-image:url('../images/music/same.png')}
+.msame1{background-image:url('../images/music/same1.png')}
+
+/* IMAGE EFFECT */
+.musicsmalllalbum{padding:2px;border:1px #DADADA solid;display:block;box-shadow: 0px 0px 2px 0px #dadada;border-radius: 2px;behavior: url(ie-css3.htc);position:relative;margin-right:5px}
+.musicsmalllalbum:hover{box-shadow: 0px 0px 3px 0px #333}
+
+/* SEARCH BLOCK  */
+.searchblock form {padding: 6px 0px 0px 6px;width: 494px;height: 25px;background-repeat: no-repeat;background-image: url('../images/music/search_bg.png');margin-bottom: 10px}
+.searchblock form .sed {margin: -3px 8px 0px 0px;float: right;width: 60px;height: 25px;background-repeat: no-repeat;background-image: url('../images/music/search_sub.gif');border-style: none;border-width: 0px;border-color: inherit;color: #FFFFFF;font-weight: bold;cursor: pointer;line-height: 25px}
+.searchblock form input {border-style: none solid none none;border-width: 1px;border-color: #999999}
+.searchblock form select {border-style: none;color:#666666}
+
+/* MAIN */
+.maintopal{position:relative;background-image:url('../images/music/main-top-bg.png');margin-top:20px;padding:5px 5px 5px 150px;background-repeat:repeat-x}
+.main-imgtop{position:absolute;top:-10px;left:30px}
+ul.mmainsong{padding:0;margin:0;list-style-type:none}
+ul.mmainsong li{float:left;width:50%;padding:0;margin:0}
+.topalbum_item{float:left;height:180px;width:25%}
+.mmimgalbum{margin:0px auto 0px auto}
+
+/* Block tabsong center */
+.mbltabsong{list-style-type:none}
+.mbltabsong li{float:left;text-align:center}
+.mbltabsong li a{background-image:url('../images/music/tab-block.png');display:block;margin:0px 5px 0px 5px;height:19px;line-height:19px;text-align:center;border-color:#dadada;border-style:solid;border-width:1px}
+.mbltabsong li a.active{background-image:url('../images/music/tab-block-current.png');color:#fff}

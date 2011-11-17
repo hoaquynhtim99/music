@@ -11,7 +11,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
 
-$xtpl = new XTemplate( "block_hotalbum.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+$xtpl = new XTemplate( "block_hot_playlist.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
 //
@@ -25,7 +25,7 @@ while( $song =  $db->sql_fetchrow( $result ) )
 	$xtpl->assign( 'view', $song['view'] );
 	
 	$img = rand( 1, 10 );
-	$xtpl->assign( 'img', NV_BASE_SITEURL ."themes/" . $module_info['template'] . "/images/" . $module_file . "/randimg/img(" . $img . ").jpg" );
+	$xtpl->assign( 'img', NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/randimg/img(" . $img . ").jpg" );
 	
 	$xtpl->parse( 'main.loop' );
 }

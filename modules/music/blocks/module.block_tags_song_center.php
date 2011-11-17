@@ -21,6 +21,10 @@ $xtpl->assign( 'ALL_NEW_SONG', $mainURL . "=song/id" );
 $sql = "SELECT a.id, a.cid, b.title FROM `" . NV_PREFIXLANG . "_" . $module_data . "_4category` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_category` AS b ON a.cid=b.id ORDER BY a.id ASC";
 $list = nv_db_cache( $sql, 'id', $module_name );
 
+$item_width = sizeof( $list );
+$item_width =  $item_width ? ( 100 / $item_width ) : 100;
+$xtpl->assign( 'ITEM_WIDTH', $item_width );
+
 $first_cat = 0;
 
 // Xuat tabs
