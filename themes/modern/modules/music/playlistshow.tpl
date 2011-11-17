@@ -1,1 +1,0 @@
-<!-- BEGIN: main --><!-- BEGIN: loop --><a class="listsong" href="{ROW.url}" title="{ROW.name}">{ROW.name}</a><!-- END: loop --><!-- END: main -->
