@@ -30,6 +30,7 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 	$xtpl = new XTemplate( "listenone.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
 	
 	$xtpl->assign( 'SDATA', $sdata );
 	$xtpl->assign( 'GDATA', $gdata );
@@ -48,6 +49,12 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 	if ( $cdata['checkhit'] >= 20 )
 	{
 		$xtpl->parse( 'main.hit' );
+	}
+	
+	// Ten album neu co
+	if ( $sdata['album_name'] )
+	{
+		$xtpl->parse( 'main.album' );
 	}
 
 	if ( $ldata['number'] >= 1 )

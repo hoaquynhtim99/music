@@ -25,6 +25,7 @@ $lang_module['author'] = "Sáng tác";
 $lang_module['add'] = "Thêm";
 $lang_module['add_playlist'] = "Thêm vào playlist";
 $lang_module['del'] = "Xóa";
+$lang_module['ads'] = "Quảng cáo";
 $lang_module['all_album'] = "Tất cả album";
 $lang_module['all_song'] = "Tất cả bài hát";
 $lang_module['album_hotest'] = "Album HOT nhất";
@@ -39,6 +40,7 @@ $lang_module['active_yes'] = "Có";
 $lang_module['active_no'] = "Không";
 $lang_module['cancel'] = "Làm lại";
 $lang_module['page'] = "Trang %d";
+$lang_module['here'] = "đây";
 
 $lang_module['cofirm_del'] = "Bạn có chắc chắn xóa không?";
 $lang_module['content'] = "Nội dung";
@@ -127,6 +129,8 @@ $lang_module['playlist_edit_sucess3'] = "quay lại ";
 $lang_module['playlist_edit_sucess4'] = "trang quản lý playlist";
 $lang_module['playlist_add_ok'] = "Playlist của bạn đã được lưu và sẽ hiển thị ngay bây giờ";
 $lang_module['playlist_add_waiting'] = "Playlist của bạn đang được kiểm duyệt và sẽ hiển thị sau khi được kiểm duyệt";
+$lang_module['playlist_next'] = "Bản cũ hơn";
+$lang_module['playlist_prev'] = "Bản mới hơn";
 
 $lang_module['prev'] = "Trang trước";
 
@@ -147,6 +151,7 @@ $lang_module['send'] = "Gửi";
 $lang_module['song'] = "bài hát";
 $lang_module['song1'] = "Bài hát";
 $lang_module['send_to'] = "Gửi tặng";
+$lang_module['send_online_gift'] = "Gửi quà tặng trực tuyến";
 $lang_module['sendtomail'] = "Gửi tặng qua email";
 $lang_module['send_mail'] = "Gửi quà tặng âm nhạc";
 $lang_module['send_mail_success'] = "Bạn đã gửi quà tặng thành công tới";
@@ -263,5 +268,9 @@ $lang_module['email_receive'] = "Email nhận";
 $lang_module['email_receive_null'] = "Lỗi: Bạn chưa nhập địa chỉ email";
 $lang_module['gift_message'] = "<p>Chào <strong>%s</strong>,</p><p>Bạn vừa nhận được một quà tặng âm nhạc được gửi từ %s thông qua website %s.</p><p>Lời nhắn:</p><p>%s</p><p>Bạn có thể nghe bài hát của mình tại: %s</p>";
 $lang_module['gift_list'] = "Danh sách quà tặng âm nhạc";
+
+$lang_module['down_info1'] = "Nhấp vào";
+$lang_module['down_info2'] = "để tải bài hát về máy";
+$lang_module['down_info3'] = "Tải bài hát";
 
 ?>

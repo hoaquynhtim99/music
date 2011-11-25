@@ -86,7 +86,7 @@ else
 }
 
 $sdata = array(
-	"send_mail_url" => $mainURL . "=sendmail&amp;id=". $id,  //
+	"send_mail_url" => $main_header_URL . "=sendmail&id=". $id,  //
 	"send_mail_title" => $lang_module['sendtomail'],  //
 	
 	"song_id" => $id,  //

@@ -112,11 +112,12 @@ function new_page ( $ts, $now_page, $link)
 // lay quang cao
 function getADS()
 {
-	global $module_data, $global_config, $db, $module_file;
+	global $module_data, $global_config, $db, $module_file, $lang_module;
 	
 	$ads = array() ;
 	$ads['link'] = array();
 	$ads['url'] = array();
+	$ads['name'] = array();
 	
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY RAND()";
     $result = nv_db_cache( $sql, 'id' );
@@ -126,12 +127,14 @@ function getADS()
 		$i = 0;
         foreach ( $result as $row )
 		{
+			$ads['name'][] = $row['name'];
 			$ads['link'][] = $row['link'];
 			$ads['url'][] = $row['url'];	
 			$i ++;
 		}
 		
 		$j = rand( 0, $i - 1 );
+		$ads['name'] = $ads['name'][$j];
 		$ads['link'] = $ads['link'][$j];
 		$ads['url'] = $ads['url'][$j];
 	}
@@ -139,6 +142,7 @@ function getADS()
 	{
 		$ads['link'] = NV_BASE_SITEURL . "modules/" . $module_file . "/data/default.swf";
 		$ads['url'] = $global_config['site_url'];
+		$ads['name'] = $lang_module['ads'];
 	}
 	
 	return $ads;
