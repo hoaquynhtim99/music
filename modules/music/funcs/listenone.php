@@ -26,7 +26,7 @@ if ( $check_exit != 1 or $row['ten'] != $alias )
 }
 
 // Update
-updateHIT_VIEW( $id, '' );
+updateHIT_VIEW( $id, '', false );
 
 // Global data
 $category = get_category();

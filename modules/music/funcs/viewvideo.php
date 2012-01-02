@@ -25,7 +25,7 @@ if ( defined( 'NV_IS_USER' ) )
 $g_array = array();
 $g_array['name'] = $name;
 
-// lay video
+// Lay video
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
 if( empty( $id ) ) module_info_die();
@@ -36,7 +36,7 @@ $row = $db->sql_fetchrow( $query );
 
 if( empty( $row ) ) module_info_die();
 
-updateHIT_VIEW( $id, '_video' );
+updateHIT_VIEW( $id, '_video', false );
 
 $row['listcat'] = empty( $row['listcat'] ) ? array() : array_diff(array_filter(array_unique(explode(",", $row['listcat']))),array($row['theloai']));
 if( ! empty( $row['listcat'] ) )

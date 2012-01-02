@@ -148,13 +148,14 @@ function getADS()
 	return $ads;
 }
 
-// update bai hat
-function updateHIT_VIEW( $id, $where )
+// Update bai hat
+function updateHIT_VIEW( $id, $where, $is_numview = true )
 {
 	global $module_data, $db ;
 	( $where == "_video" )? ( $key = "view" ) : ( $key = "numview" );
 	
-	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET " . $key . " = " . $key . "+1 WHERE `id` =" . $id );
+	if( $is_numview ) $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET " . $key . " = " . $key . "+1 WHERE `id` =" . $id );
+	
 	if ( $where == '' ) $data = getsongbyID( $id );
 	else $data = getvideobyID( $id ); 
 	
