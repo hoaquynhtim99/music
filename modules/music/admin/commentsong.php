@@ -88,7 +88,7 @@ while ( $ts * 50 < $output ) {$ts ++ ;}
 
 $xtpl = new XTemplate("comment_song.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 $xtpl->assign('LANG', $lang_module);
-$xtpl->assign('URL_DEL_BACK', $link);
+$xtpl->assign('URL_DEL_BACK', str_replace( "&amp;", "&", $link ));
 $xtpl->assign('URL_ACTIVE_LIST', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=listactive&where=_comment_song" );
 $xtpl->assign('URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_comment_song");
 
