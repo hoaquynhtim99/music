@@ -1,4 +1,54 @@
 <!-- BEGIN: main -->
+<table class="tab1 fixmargin">
+	<tbody>
+		<tr>
+			<td>
+				<form id="filter-form" method="get" action="" onsubmit="return false;">
+					<input style="width:300px" type="text" name="q" value="{DATA_SEARCH.q}" onfocus="if(this.value == '{LANG.filter_enterkey}') {this.value = '';}" onblur="if (this.value == '') {this.value = '{LANG.filter_enterkey}';}"/>
+					{LANG.filter_from}
+					<input class="text" value="{DATA_SEARCH.from}" type="text" id="from" name="from" readonly="readonly" style="width:70px" />
+					{LANG.filter_to}
+					<input class="text" value="{DATA_SEARCH.to}" type="text" id="to" name="to" readonly="readonly" style="width:70px" />
+					<input type="button" name="do" value="{LANG.filter_action}"/>
+					<input type="button" name="cancel" value="{LANG.filter_cancel}" onclick="window.location='{URL_CANCEL}';"{DATA_SEARCH.disabled}/>
+					<input type="button" name="clear" value="{LANG.filter_clear}"/>
+				</form>
+			</td>
+		</tr>
+	</tbody>
+</table>
+<script type="text/javascript">
+$(document).ready(function(){
+	$("#from,#to").datepicker({
+		showOn: "button",
+		dateFormat: "dd.mm.yy",
+		changeMonth: true,
+		changeYear: true,
+		showOtherMonths: true,
+		buttonText: '{LANG.select}',
+		showButtonPanel: true,
+		showOn: 'focus'
+	});
+	//
+	$('input[name=clear]').click(function(){
+		$('#filter-form .text').val('');
+		$('input[name=q]').val('{LANG.filter_enterkey}');
+	});
+	//
+	$('input[name=do]').click(function(){
+		var f_q = $('input[name=q]').val();
+		var f_from = $('input[name=from]').val();
+		var f_to = $('input[name=to]').val();
+
+		if ( ( f_q != '{LANG.filter_enterkey}' && f_q != '' ) || f_from != '' || f_to != '' ){
+			$('#filter-form input, #filter-form select').attr('disabled', 'disabled');
+			window.location = '{NV_BASE_ADMINURL}index.php?{NV_NAME_VARIABLE}={MODULE_NAME}&{NV_OP_VARIABLE}={OP}&q=' + f_q + '&from=' + f_from + '&to=' + f_to;	
+		}else{
+			alert ('{LANG.filter_err_submit}');
+		}
+	});
+});
+</script>
 <table class="tab1">
 	<thead>
 		<tr>
@@ -36,15 +86,10 @@
 	<tfoot>
 		<tr>
 			<td>
-				<span>
-					<a href='javascript:void(0);' id='checkall'>{LANG.checkall}</a>
-					&nbsp;&nbsp;
-					<a href='javascript:void(0);' id='uncheckall'>{LANG.uncheckall}</a>
-					&nbsp;&nbsp;
-				</span>
-				<span class="delete_icon"><a id='delfilelist' href="javascript:void(0);">{LANG.delete}</a>
-				</span>
-				<span><a id='activelist' href="javascript:void(0);">{LANG.active1}</a></span>
+				<span class="select_icon"><a href="javascript:void(0);" id="checkall">{LANG.checkall}</a>&nbsp;&nbsp;</span>
+				<span class="unselect_icon"><a href="javascript:void(0);" id="uncheckall">{LANG.uncheckall}</a>&nbsp;&nbsp;</span>
+				<span class="delete_icon"><a id="delfilelist" href="javascript:void(0);">{LANG.delete}</a>&nbsp;&nbsp;</span>
+				<span class="status_icon"><a id="activelist" href="javascript:void(0);">{LANG.active1}</a>&nbsp;&nbsp;</span>
 			</td>
 		</tr>
 	</tfoot>

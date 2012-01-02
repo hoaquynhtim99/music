@@ -12,6 +12,7 @@ td.strong{font-weight:bold}
 .aright{text-align: right;}
 .fixbottomtable{margin:0px 0px 3px 0px!important}
 a.nounderline{text-decoration:none!important}
+.tab1{margin:2px 0px 2px 0px !important}
 
 /* ICON */
 .select_icon {background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}

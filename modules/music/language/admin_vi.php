@@ -338,4 +338,15 @@ $lang_module['ads_name'] = "Tên quảng cáo";
 
 $lang_module['error_check_viewed'] = "Đánh dấu là đã kiểm tra";
 
+$lang_module['filter_enterkey'] = "Nhập từ khóa";
+$lang_module['filter_from'] = "từ";
+$lang_module['filter_to'] = "đến";
+$lang_module['filter_action'] = "Lọc";
+$lang_module['filter_cancel'] = "Hủy";
+$lang_module['filter_clear'] = "Xóa";
+$lang_module['filter_err_submit'] = "Bạn cần chọn ít nhất một điều kiện để lọc dữ liệu";
+$lang_module['filter_lang_asc'] = "tăng dần";
+$lang_module['filter_lang_desc'] = "giảm dần";
+$lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
+
 ?>
