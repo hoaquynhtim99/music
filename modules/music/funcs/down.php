@@ -29,6 +29,9 @@ elseif ( $setting['who_download'] == 2 )
 
 if ( $contents != "" )
 {
+	$page_title = $lang_module['down_info3'] . " - " . $id . " - " . $module_info['custom_title'];
+	$key_words = $module_info['keywords'];
+
 	include ( NV_ROOTDIR . "/includes/header.php" );
 	echo nv_site_theme( $contents );
 	include ( NV_ROOTDIR . "/includes/footer.php" );
