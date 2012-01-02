@@ -8,18 +8,18 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$page_title = $module_info['custom_title'];
+$page_title = $lang_module['search_song1'];
 $key_words = $module_info['keywords'];
 
 $category = get_category() ;
 $allsinger = getallsinger();
     
-// xu li
+// Xu li
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'name';
-$now_page = isset( $array_op[3] ) ?  $array_op[3]  : 1;
+$now_page = isset( $array_op[3] ) ?  intval($array_op[3])  : 1;
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
 
-// xu li thong tin submit
+// Xu li thong tin submit
 if ( ( $nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 ) or ( $nv_Request->isset_request( 'q', 'get' ) ) )
 {
 	$type = filter_text_input( 'type', 'post', 'name' );
@@ -58,33 +58,48 @@ $g_array['key'] = $key;
 $link = $mainURL . "=search/" . $type . "/" . $key ;
 $data = '';
 
+if ( ! preg_match( "/^([a-z0-9\-\_\.]+)$/i", $key ) and ! preg_match( "/^([a-z0-9\-\_\.]+)$/i", $type ) )
+{
+	module_info_die();
+}
+
 if ( $type == "name" )
 {
+	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
 	$data = "WHERE `ten` LIKE '%". $db->dblikeescape( $key ) ."%'";
 	$video = "WHERE `name` LIKE '%". $db->dblikeescape( $key ) ."%'";
 }
 elseif ( $type == "singer" )
 {
+	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
 	$data = "WHERE `casi` LIKE '%". $db->dblikeescape( $key ) ."%'";
 	$video = "WHERE `casi` LIKE '%". $db->dblikeescape( $key ) ."%'";
 }
 elseif ( $type == "category" )
 {
+	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
 	$data = "WHERE `theloai` =". $key ;
 	$video = "WHERE `theloai` =". $key ;
 }
 elseif ( $type == "upload" )
 {
+	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
 	$data = "WHERE `upboi` =\"". $key."\"" ;
 	$video = "WHERE `id` = 0" ;
 }
-// xu li du lieu
+else
+{
+	module_info_die();
+}
+
+// Xu li du lieu
 if ( $now_page == 1) 
 {
 	$first_page = 0 ;
 }
 else 
 {
+	$page_title .= " " . NV_TITLEBAR_DEFIS . " " . sprintf( $lang_module['page'], $now_page );
 	$first_page = ($now_page -1)*20;
 }	
 
@@ -173,6 +188,8 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"checkhit" => $checkhit  //
 	);
 }
+
+$page_title .= " " . NV_TITLEBAR_DEFIS . " " . $module_info['custom_title'];
 
 $contents = nv_music_search( $g_array, $array_song, $array_album, $array_video );
 $contents .= new_page( $ts, $now_page, $link);

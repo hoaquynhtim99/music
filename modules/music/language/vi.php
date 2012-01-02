@@ -237,6 +237,8 @@ $lang_module['song_edit_back'] = "Trở lại trang quản lý bài hát";
 $lang_module['song_edit_listen'] = "nghe bài hát này";
 $lang_module['song_edit_listen1'] = "Nghe bài hát";
 
+$lang_module['song_search_by_name'] = "Tìm theo từ khóa";
+
 $lang_module['search_song_by_singer'] = "Tìm tất cả các bài hát của ca sĩ";
 $lang_module['search_song_by_uploader'] = "Tìm tất cả các bài hát đăng bởi";
 $lang_module['search_song_by_cat'] = "Tìm tất cả các bài thuộc thể loại";
