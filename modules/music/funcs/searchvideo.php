@@ -7,13 +7,14 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$page_title = $module_info['custom_title'];
+$page_title = $lang_module['search_video'];
 $key_words = $module_info['keywords'];
+
 $category = get_videocategory() ;
 $allsinger = getallsinger();
 $data = '';
 
-// xu li
+// Xu li
 $type = isset( $array_op[1] ) ?  $array_op[1]  : 'name';
 $key = isset( $array_op[2] ) ?  $array_op[2]  : '-';
 if ( ($type == "id") || ($type == "view") )
@@ -22,9 +23,15 @@ if ( ($type == "id") || ($type == "view") )
 	$order = $type;
 	$data = 'WHERE';
 	$link = $mainURL . "=searchvideo/" . $type ;
+	$page_title = ($type == "id") ? $lang_module['video_new'] : $lang_module['video_hot'] ;
 }
 else
 {
+	if ( ! preg_match( "/^([a-z0-9\-\_\.]+)$/i", $key ) )
+	{
+		module_info_die();
+	}
+	
 	$now_page = isset( $array_op[3] ) ?  $array_op[3]  : 1;
 	$order = "id";
 	$link = $mainURL . "=searchvideo/" . $type . "/" . $key ;
@@ -32,37 +39,47 @@ else
 
 if ( $type == "name" )
 {
+	$page_title .= " " . $lang_module['video_search_by_name'];
 	$data = "WHERE `name` LIKE '%". $db->dblikeescape( $key ) ."%' AND";
 }
 elseif ( $type == "singer" )
 {
+	if( ! isset( $allsinger[$key] ) ) module_info_die();
+	$page_title .= " " . $lang_module['video_search_by_singer'] . " " . $allsinger[$key];
 	$data = "WHERE `casi` LIKE '%". $db->dblikeescape( $key ) ."%' AND";
 }
 elseif ( $type == "category" )
 {
+	if( ! isset( $category[$key] ) ) module_info_die();
+	$page_title .= " " . $lang_module['video_search_by_cat'] . " " . $category[$key]['title'];
 	$data = "WHERE `theloai` =". $key . " AND";
 }
+elseif( ! in_array( $type, array("view","id") ) )
+{
+	module_info_die();
+}
 
-// xu li du lieu
+// Xu li du lieu
 if ( $now_page == 1) 
 {
 	$first_page = 0 ;
 }
 else 
 {
+	$page_title .= " " . NV_TITLEBAR_DEFIS . " " . sprintf( $lang_module['page'], $now_page );
 	$first_page = ($now_page -1)*20;
 }	
 
 $sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video ".$data." `active` = 1 ORDER BY `" . $order . "` DESC LIMIT ".$first_page.",20";
 $sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video ".$data." `active` = 1 ";
 
-// tinh so trang
+// Tinh so trang
 $num = $db->sql_query( $sqlnum );
 $output = $db->sql_numrows( $num );
 $ts = 1;
 while ( $ts * 20 < $output ) {$ts ++ ;}
 
-// ket qua
+// Ket qua
 $result = $db->sql_query( $sql );
 
 $g_array = array();

@@ -172,6 +172,7 @@ $lang_module['search'] = "Tìm";
 $lang_module['search_find'] = "Tìm thấy";
 $lang_module['search_info'] = "Nhập từ khóa mà bạn muốn tìm để tìm bài hát bạn mong muốn";
 $lang_module['search_song'] = "Tìm kiếm bài hát";
+$lang_module['search_video'] = "Tìm kiếm video";
 $lang_module['search_song1'] = "Tìm kiếm";
 $lang_module['search_with_name'] = "Tìm theo tên";
 $lang_module['search_with_singer'] = "Tìm theo ca sĩ";
@@ -223,6 +224,10 @@ $lang_module['video'] = "Video";
 $lang_module['video_link'] = "Link video";
 $lang_module['video_hot'] = "Video hot";
 $lang_module['video_new'] = "Video mới";
+
+$lang_module['video_search_by_name'] = "theo tên";
+$lang_module['video_search_by_singer'] = "theo ca sĩ";
+$lang_module['video_search_by_cat'] = "theo thể loại";
 
 $lang_module['song_edit1'] = "Sửa bài hát";
 $lang_module['song_edit'] = "Sửa bài hát này";
