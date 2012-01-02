@@ -1,21 +1,16 @@
 <?php
+
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Project NUKEVIET-MUSIC
+ * @Author PHAN TAN DUNG (phantandung@gmail.com)
+ * @Copyright (C) 2010 Freeware
  * @Createdate 29-12-2010 18:43
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
-{
-    die( 'Stop!!!' );
-}
-if ( defined( 'NV_EDITOR' ) )
-{
-    require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
-}
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-//khoi tao
+if ( defined( 'NV_EDITOR' ) ) require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
+
 $contents = "";
 $error = "";
 $gift = array();
@@ -25,55 +20,72 @@ $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 $page_title = $lang_module['edit_gift'];
 
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `id` = ".$id."";
-$resuilt = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $resuilt );
+$result = $db->sql_query( $sql );
+$row = $db->sql_fetchrow( $result );
+
 $gift['who_send'] = $row['who_send'];
 $gift['who_receive'] = $row['who_receive'];
-$gift['body'] = $row['body'];
+$gift['body'] = nv_br2nl( $row['body'] );
 
 $gift['time'] = nv_date( "d/m/Y H:i", $row['time'] );
 
 $tmp = getsongbyID( $row['songid'] );
 $gift['songname'] = $tmp['tenthat'];
 
-// sua
+// Sua
 if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 {
-	$datac = array() ;
-	$datac['who_send'] = filter_text_input( 'who_send', 'post', '' );
-	$datac['who_receive'] = filter_text_input( 'who_receive', 'post', '' );
-	$datac['body'] = $nv_Request->get_string( 'body', 'post', '' );
+	$gift['who_send'] = filter_text_input( 'who_send', 'post', '', 1, 100 );
+	$gift['who_receive'] = filter_text_input( 'who_receive', 'post', '', 1, 100 );
+	$gift['body'] = filter_text_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
 
-	foreach ( $datac as $key => $data  )
-	{	
-		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_gift` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
-	}
-	if ( $query ) 
+	if( empty( $gift['who_send'] ) )
 	{
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=gift" ); die();
+		$error = $lang_module['gift_error_who_send'];
+	}
+	elseif( empty( $gift['who_receive'] ) )
+	{
+		$error = $lang_module['gift_error_who_receive'];
+	}
+	elseif( empty( $gift['body'] ) )
+	{
+		$error = $lang_module['gift_error_body'];
 	}
 	else
 	{
-		$error = $lang_module['error_save'];
+		$array['body'] = nv_nl2br( $array['body'] );
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_gift` SET
+			`who_send`=" . $db->dbescape( $gift['who_send'] ) . ",
+			`who_receive`=" . $db->dbescape( $gift['who_receive'] ) . ",
+			`body`=" . $db->dbescape( $gift['body'] ) . "
+		WHERE `id` =" . $id;
+		
+		if( $db->sql_query( $sql ) )
+		{
+			$db->sql_freeresult();
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=gift" ); 
+			die();
+		}
+		else
+		{
+			$db->sql_freeresult();
+			$error = $lang_module['error_save'];
+		}
 	}
 }
-else
-{
 
-}
-
-// hien bao loi
+// Hien bao loi
 if($error)
 {
-	$contents .= "<div class=\"quote\" style=\"width: 780px;\">\n
-					<blockquote class=\"error\">
-						<span>".$error."</span>
-					</blockquote>
-				</div>\n
-				<div class=\"clear\">
-				</div>";
+	$contents .= "<div class=\"quote\" style=\"width:98%\">\n
+	<blockquote class=\"error\">
+	<span>".$error."</span>
+	</blockquote>
+	</div>\n
+	<div class=\"clear\">
+	</div>";
 }
-// noi dung
+
 $contents .= "
 	<form method=\"post\"> 
 	<table class=\"tab1\">
@@ -113,7 +125,7 @@ $contents .= "
 				<td>" . $lang_module['content'] . "
 				</td>
 				<td>
-					<textarea style=\"width: 680px\" name=\"body\" id=\"body\" cols=\"20\" rows=\"15\">" . $gift['body'] ."</textarea>\n		
+					<textarea style=\"width: 680px\" name=\"body\" id=\"body\" cols=\"20\" rows=\"15\">" . nv_htmlspecialchars($gift['body']) ."</textarea>\n		
 				</td>
 			</tr>
 			<tr>
@@ -123,9 +135,11 @@ $contents .= "
 				</td>\n
 			</tr>\n
 		</tbody>
-	</table></form>";
+	</table>
+</form>";
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>

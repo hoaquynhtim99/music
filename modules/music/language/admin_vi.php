@@ -124,7 +124,12 @@ $lang_module['ftp_pass'] = "Mật khẩu";
 $lang_module['ftp_full_address'] = "Địa chỉ tới thư mục chứa file";
 $lang_module['ftp_sub_address'] = "Đường dẫn FTP";
 $lang_module['ftp_floder'] = "Thư mục chứa file";
+
 $lang_module['gift_del_confirm'] = "Bạn có chắc xóa quà tặng này";
+$lang_module['gift_error_who_send'] = "Chưa có tên người gửi kìa";
+$lang_module['gift_error_who_receive'] = "Chưa có tên người nhận kìa";
+$lang_module['gift_error_body'] = "Chưa có lời nhắn kìa";
+
 $lang_module['info'] = "Thông tin";
 $lang_module['hot_album'] = "Album HOT";
 $lang_module['hot_album_select'] = "Chọn một Album HOT";
