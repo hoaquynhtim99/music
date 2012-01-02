@@ -134,7 +134,11 @@ $lang_module['fillin'] = "Điền thông tin";
 $lang_module['link'] = "Đường dẫn";
 $lang_module['list_album'] = "Danh sách các album";
 $lang_module['list_gift'] = "Danh sách các quà tặng";
+
 $lang_module['lyric_del_confirm'] = "Bạn có chắc xóa lời bài hát này";
+$lang_module['lyric_error_name'] = "Lỗi: Tên người gửi còn trống";
+$lang_module['lyric_error_body'] = "Lỗi: Nội dung lời bài hát còn trống";
+
 $lang_module['manager_category'] = "Quản lý thể loại bài hát";
 $lang_module['manager_category_info'] = "Lưu ý khi thêm thể loại bạn sẽ không thể xóa";
 $lang_module['music_setting'] = "Cấu hình module";
