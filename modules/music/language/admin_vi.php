@@ -65,8 +65,11 @@ $lang_module['album_menu'] = "Album trên menu chính";
 $lang_module['album_name'] = "Tên album";
 $lang_module['album_info'] = "Thông tin về album";
 $lang_module['album_del_cofirm'] = "Bạn có chắc xóa các album này nếu xóa các dữ liệu liên quan sẽ bị xóa";
+
 $lang_module['comment_del_cofirm'] = "Bạn có chắc xóa các bình luận này";
 $lang_module['comment_time'] = "Gửi lúc";
+$lang_module['comment_error_name'] = "Người bình luận chưa nhập kìa";
+$lang_module['comment_error_body'] = "Nội dung bình luận chưa có kìa";
 
 $lang_module['category'] = "Thể loại";
 $lang_module['category_base'] = "Thể loại chính";
@@ -237,6 +240,7 @@ $lang_module['song_error_ten'] = "Tên ngắn gọn còn trống kìa";
 $lang_module['song_error_tenthat'] = "Tên đầy đủ còn trống kìa";
 $lang_module['song_error_theloai'] = "Bài hát chưa có thể loại kìa";
 $lang_module['song_error_duongdan'] = "Chưa có đường dẫn đến bài hát kìa";
+$lang_module['song_list_comment'] = "Danh sách các bình luận bài hát";
 
 $lang_module['thumb'] = "Ảnh hiển thị";
 $lang_module['uncheckall'] = "Bỏ chọn";
@@ -311,6 +315,7 @@ $lang_module['album_error_thumb'] = "Lỗi: Chưa có ảnh hiển thị cho alb
 $lang_module['album_confirm_delsong'] = "Bạn có muốn xóa không?";
 $lang_module['album_add_list_song'] = "Thêm nhiều bài hát";
 $lang_module['album_add_a_song'] = "Thêm một bài hát";
+$lang_module['album_list_comment'] = "Danh sách các bình luận Album";
 
 $lang_module['filter_enterkey'] = "Nhập từ khóa";
 $lang_module['filter_from'] = "Từ";

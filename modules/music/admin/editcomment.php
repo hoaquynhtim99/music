@@ -1,17 +1,14 @@
 <?php
+
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Project NUKEVIET-MUSIC
+ * @Author PHAN TAN DUNG (phantandung@gmail.com)
+ * @Copyright (C) 2010 Freeware
  * @Createdate 29-12-2010 18:43
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
-{
-    die( 'Stop!!!' );
-}
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-//khoi tao
 $contents = "";
 $error = "";
 $comment = array();
@@ -40,10 +37,10 @@ elseif ( $where == 'video' )
 else die('Stop!!!');
 
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE `id` = " . $id;
-$resuilt = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $resuilt );
+$result = $db->sql_query( $sql );
+$row = $db->sql_fetchrow( $result );
 $comment['name'] = $row['name'];
-$comment['body'] = $row['body'];
+$comment['body'] = nv_br2nl( $row['body'] );
 
 $comment['dt'] = nv_date( "d/m/Y H:i", $row['dt'] );
 
@@ -63,43 +60,53 @@ elseif ( $where == 'video' )
 	$comment['what'] = $tmp['tname'];
 }
 
-// sua
+// Sua
 if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 {
-	$datac = array() ;
-	$datac['name'] = filter_text_input( 'name', 'post', '' );
-	$datac['body'] = $nv_Request->get_string( 'body', 'post', '' );
+	$comment['name'] = filter_text_input( 'name', 'post', '', 1, 100 );
+	$comment['body'] = filter_text_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
 
-	foreach ( $datac as $key => $data  )
-	{	
-		$query = mysql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` SET `".$key."` = " . $db->dbescape( $data ) . " WHERE `id` =" . $id . "");
-	}
-	if ( $query ) 
+	if( empty( $comment['name'] ) )
 	{
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&op=" . $back); die();
+		$error = $lang_module['comment_error_name'];
+	}
+	elseif( empty( $comment['body'] ) )
+	{
+		$error = $lang_module['comment_error_body'];
 	}
 	else
 	{
-		$error = $lang_module['error_save'];
-	}
+		$array['body'] = nv_nl2br( $array['body'] );
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` SET
+			`name`=" . $db->dbescape( $comment['name'] ) . ",
+			`body`=" . $db->dbescape( $comment['body'] ) . "
+		WHERE `id` =" . $id;
+		
+		if( $db->sql_query( $sql ) )
+		{
+			$db->sql_freeresult();
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $back ); 
+			die();
+		}
+		else
+		{
+			$db->sql_freeresult();
+			$error = $lang_module['error_save'];
+		}
+	}	
 }
-else
-{
 
-}
-
-// hien bao loi
+// Hien bao loi
 if($error)
 {
-	$contents .= "<div class=\"quote\" style=\"width: 780px;\">\n
-					<blockquote class=\"error\">
-						<span>".$error."</span>
-					</blockquote>
-				</div>\n
-				<div class=\"clear\">
-				</div>";
+	$contents .= "<div class=\"quote\" style=\"width:98%\">\n
+	<blockquote class=\"error\">
+		<span>".$error."</span>
+	</blockquote>
+	</div>\n
+	<div class=\"clear\"></div>";
 }
-// noi dung
+
 $contents .= "
 	<form method=\"post\"> 
 	<table class=\"tab1\">
@@ -133,7 +140,7 @@ $contents .= "
 				<td>" . $lang_module['content'] . "
 				</td>
 				<td>
-					<textarea style=\"width: 680px\" value=\"\" name=\"body\" id=\"describe\" cols=\"20\" rows=\"15\">" . $comment['body'] . "</textarea>\n
+					<textarea style=\"width: 680px\" value=\"\" name=\"body\" id=\"describe\" cols=\"20\" rows=\"15\">" . nv_htmlspecialchars($comment['body']) . "</textarea>\n
 				</td>
 			</tr>
 			<tr>
@@ -143,9 +150,11 @@ $contents .= "
 				</td>\n
 			</tr>\n
 		</tbody>
-	</table></form>";
+	</table>
+</form>";
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
+
 ?>

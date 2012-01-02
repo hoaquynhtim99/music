@@ -29,11 +29,11 @@ if (!$now_page)
 }
 else 
 {
-	$first_page = ($now_page -1)*100;
+	$first_page = ($now_page -1)*50;
 }	
 
 $sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.id!=0";
-$link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_NAME_VARIABLE . "=" . $op;
+$link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 
 // Search data
 $data_search = array(
@@ -84,7 +84,7 @@ $sql1 = "SELECT COUNT(*) " . $sql;
 $result1 = $db->sql_query( $sql1 );
 list( $output ) = $db->sql_fetchrow( $result1 );
 $ts = 1;
-while ( $ts * 100 < $output ) {$ts ++ ;}
+while ( $ts * 50 < $output ) {$ts ++ ;}
 
 $xtpl = new XTemplate("gift.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 $xtpl->assign('LANG', $lang_module);

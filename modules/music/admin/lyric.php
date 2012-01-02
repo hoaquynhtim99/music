@@ -28,7 +28,7 @@ if ( $now_page == 0 )
 }
 else 
 {
-	$first_page = ($now_page -1)*100;
+	$first_page = ($now_page -1)*50;
 }	
 
 $sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.id!=0";
@@ -83,7 +83,7 @@ $sql1 = "SELECT COUNT(*) " . $sql;
 $result1 = $db->sql_query( $sql1 );
 list( $output ) = $db->sql_fetchrow( $result1 );
 $ts = 1;
-while ( $ts * 100 < $output ) {$ts ++ ;}
+while ( $ts * 50 < $output ) {$ts ++ ;}
 
 $xtpl = new XTemplate("lyric.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name);
 $xtpl->assign('LANG', $lang_module);
