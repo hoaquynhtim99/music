@@ -30,13 +30,22 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 
 	foreach ( $array['link'] as $link )
 	{
-		$array_meta_tag = get_meta_tags( $link );
+		$array_meta_tag = file_get_contents( $link );
+		if( empty( $array_meta_tag ) ) continue;
 		
-		$_title = explode( ',', $array_meta_tag['keywords'] );
+		$array_meta_tag = str_replace( "\n", "", $array_meta_tag );
+		preg_match( "/\<title\>(.*)\<\/title\>/", $array_meta_tag , $webtitle );
+		if( empty( $webtitle ) ) continue;
+		unset( $array_meta_tag );
 		
-		if( isset( $_title[0] ) ) $title = trim( $_title[0] );
-		if( isset( $_title[1] ) ) $singer = trim( $_title[1] );
+		$webtitle = explode("|",trim($webtitle[1]));
+		if( empty( $webtitle ) ) continue;
+		$webtitle = array_map( "trim", explode( "-", $webtitle[0] ) );
+		
+		if( isset( $webtitle[0] ) ) $title = $webtitle[0];
+		if( isset( $webtitle[1] ) ) $singer = str_replace( ",", " ft.", $webtitle[1] );		
 		$alias = ! empty ( $title ) ? change_alias( $title ) : "";
+		unset( $webtitle );
 		
 		if ( ! empty ( $title ) )
 		{
@@ -68,7 +77,7 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 		}
 	}
 		
-	nv_insert_logs( NV_LANG_DATA, $module_name, "Add song from mp3.zing.vn" , "List song", $admin_info['userid'] );
+	nv_insert_logs( NV_LANG_DATA, $module_name, "Add song from nhacso.net" , "List song", $admin_info['userid'] );
 	nv_del_moduleCache( $module_name );
 	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
 	exit();
