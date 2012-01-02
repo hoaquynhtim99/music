@@ -71,7 +71,7 @@ if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 $contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php\" method=\"post\">";
 $contents .= "<input type=\"hidden\" name =\"" . NV_NAME_VARIABLE . "\"value=\"" . $module_name . "\" />";
 $contents .= "<input type=\"hidden\" name =\"" . NV_OP_VARIABLE . "\"value=\"" . $op . "\" />";
-$contents .= "<table summary=\"\" class=\"tab1\">
+$contents .= "<table class=\"tab1\">
 <tr>
     <td style=\"width: 170px;\"><strong>" . $lang_module['set_who_comment'] . "</strong></td>
     <td>
