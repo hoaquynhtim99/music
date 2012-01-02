@@ -52,14 +52,17 @@ function nv_music_main_show_loader(show){
 				<div class="clear"></div>
 				<!-- BEGIN: old -->
 				<div class="topalbum_item">
-					<a href="{ALBUM.url_album}" title="{ALBUM.tname} - {ALBUM.casi}">			 
-						<img class="musicsmalllalbum mmimgalbum" src="{ALBUM.thumb}" width="90" height="90" alt="{ALBUM.tname}"/>
-					</a>
 					<div class="alcontent">
-						<a href="{ALBUM.url_album}" title="{ALBUM.tname}">{ALBUM.tname1}</a><br />
-						<a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.casi}">{ALBUM.casi1}</a>
+						<a href="{ALBUM.url_album}" title="{ALBUM.tname} - {ALBUM.casi}">			 
+							<img class="musicsmalllalbum mmimgalbum" src="{ALBUM.thumb}" width="90" height="90" alt="{ALBUM.tname}"/>
+						</a>
+						<div class="alcontent">
+							<a href="{ALBUM.url_album}" title="{ALBUM.tname}">{ALBUM.tname1}</a><br />
+							<a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.casi}">{ALBUM.casi1}</a>
+						</div>
 					</div>
 				</div>
+				<!-- BEGIN: break --><div class="clear"></div><!-- END: break -->
 				<!-- END: old -->
 			<div class="clear"></div>
 			<p class="alright alcontent"><a class="musicicon mforward" title="{LANG.view_all}" href="{DATA.url_more}" >&nbsp;{LANG.view_all}</a></p>

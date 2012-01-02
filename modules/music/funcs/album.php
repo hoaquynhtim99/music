@@ -27,7 +27,7 @@ $g_array = array(
 );
 
 $data = '';
-if ( $key != '' )
+if ( $key != '-' )
 {
 	$data = "WHERE `name` LIKE '%". $db->dblikeescape( $key ) ."%' AND `active` = 1";
 }
@@ -85,9 +85,9 @@ switch( $type )
 	default : $page_title = $lang_module['all_album'];
 }
 
-if( $now_page > 1 ) $page_title .= NV_TITLEBAR_DEFIS . sprintf( $lang_module['page'], $now_page );
+if( $now_page > 1 ) $page_title .= " " . NV_TITLEBAR_DEFIS . " " . sprintf( $lang_module['page'], $now_page );
 
-$page_title .= NV_TITLEBAR_DEFIS . $module_info['custom_title'];
+$page_title .= " " . NV_TITLEBAR_DEFIS . " " . $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $description = $setting['description'];
 

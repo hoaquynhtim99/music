@@ -39,13 +39,9 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 				{
 					$block_theme = $module_info['template'];
 				}
-				elseif ( file_exists( NV_ROOTDIR . "/themes/default/modules/" . $file . "/block_music_gift.tpl" ) )
-				{
-					$block_theme = "default";
-				}
 				else
 				{
-					$block_theme = "modern";
+					$block_theme = "default";
 				}
 				
 				$xtpl = new XTemplate( "block_music_gift.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $file );

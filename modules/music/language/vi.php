@@ -23,6 +23,7 @@ $lang_module['menu4'] = "Playlist của bạn";
 $lang_module['album'] = "Album";
 $lang_module['author'] = "Sáng tác";
 $lang_module['add'] = "Thêm";
+$lang_module['add_box'] = "Thêm bài hát này vào box nhạc";
 $lang_module['add_playlist'] = "Thêm vào playlist";
 $lang_module['del'] = "Xóa";
 $lang_module['ads'] = "Quảng cáo";
@@ -42,6 +43,8 @@ $lang_module['cancel'] = "Làm lại";
 $lang_module['page'] = "Trang %d";
 $lang_module['here'] = "đây";
 
+$lang_module['close_info'] = "Đóng thông báo này lại";
+
 $lang_module['cofirm_del'] = "Bạn có chắc chắn xóa không?";
 $lang_module['content'] = "Nội dung";
 $lang_module['comment'] = "Bình luận";
@@ -49,6 +52,7 @@ $lang_module['comment_success'] = "Bình luận thành công";
 $lang_module['comment_error'] = "Lỗi, bình luận của bạn không thực hiện được";
 $lang_module['comment_timeouts'] = "Xin lỗi bạn vừa mới bình luận rồi.";
 $lang_module['down_info'] = "Nhấn chuột phải chọn save link để tải về";
+$lang_module['down_song'] = "Tải bài hát này về máy";
 $lang_module['enter_name'] = "Nhập tên bạn";
 
 $lang_module['error_s_1'] = "Ca khúc không play được";
@@ -88,7 +92,7 @@ $lang_module['listen_all_album'] = "Nghe toàn bộ album";
 $lang_module['listen_all_song_of'] = "Nghe toàn bộ ca khúc";
 $lang_module['listen_song'] = "Nghe ca khúc";
 $lang_module['listen_album'] = "Nghe album";
-$lang_module['listen_playlist'] = "Nghe playlist";
+$lang_module['listen_playlist'] = "Nghe Box nhạc";
 $lang_module['lyric'] = "lời bài hát";
 
 $lang_module['message'] = "Lời nhắn";
@@ -103,6 +107,8 @@ $lang_module['show_1'] = "Thể hiện";
 $lang_module['songof'] = "Các ca khúc do";
 $lang_module['topics'] = "CHỦ ĐỀ";
 $lang_module['upload'] = "Tải lên bởi";
+
+$lang_module['hit_song'] = "Bài hát nổi bật";
 
 $lang_module['playlist_listen'] = "Nghe playlist";
 $lang_module['playlist_listen1'] = "Nghe playlist này";
@@ -166,6 +172,7 @@ $lang_module['search'] = "Tìm";
 $lang_module['search_find'] = "Tìm thấy";
 $lang_module['search_info'] = "Nhập từ khóa mà bạn muốn tìm để tìm bài hát bạn mong muốn";
 $lang_module['search_song'] = "Tìm kiếm bài hát";
+$lang_module['search_song1'] = "Tìm kiếm";
 $lang_module['search_with_name'] = "Tìm theo tên";
 $lang_module['search_with_singer'] = "Tìm theo ca sĩ";
 $lang_module['search_with_album'] = "Tìm theo album";
@@ -223,9 +230,16 @@ $lang_module['song_listen'] = "Nghe bài hát này";
 $lang_module['song_del'] = "Xóa bài hát này";
 $lang_module['song_edit_back'] = "Trở lại trang quản lý bài hát";
 $lang_module['song_edit_listen'] = "nghe bài hát này";
+$lang_module['song_edit_listen1'] = "Nghe bài hát";
+
+$lang_module['search_song_by_singer'] = "Tìm tất cả các bài hát của ca sĩ";
+$lang_module['search_song_by_uploader'] = "Tìm tất cả các bài hát đăng bởi";
+$lang_module['search_song_by_cat'] = "Tìm tất cả các bài thuộc thể loại";
+
 $lang_module['upload_ok'] = "Tải lên";
 $lang_module['upload_wait_accept'] = "Đang kiểm duyệt";
 $lang_module['upload_inviad'] = "Định dạng không hợp lệ";
+$lang_module['upload_size_out'] = "File nhạc kích thước quá lớn";
 $lang_module['upload_rule'] = "Quy định upload";
 $lang_module['upload_rule1'] = "Không upload nhạc cấm";
 $lang_module['upload_rule2'] = "Không upload nhạc xuyên tạc";
@@ -253,6 +267,10 @@ $lang_module['upload_ok1'] = "đây";
 $lang_module['upload_ok2'] = "để nghe hoặc";
 $lang_module['upload_ok3'] = "về trang chủ";
 $lang_module['upload_nook'] = "Bài hát đang chờ kiểm duyệt";
+$lang_module['upload_selectfile'] = "Chọn file nhạc";
+$lang_module['upload_error_empty_song'] = "Bạn chưa chọn file nhạc";
+$lang_module['upload_error_file'] = "Lỗi: Không có file nào được tìm thấy";
+$lang_module['upload_error_un'] = "Lỗi không xác định";
 
 $lang_module['err_module_title'] = "Lỗi: Không tồn tại";
 $lang_module['err_module_content'] = "Nội dung bạn cần đã hết hoặc không tồn tại";

@@ -9,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$page_title = $module_info['custom_title'];
+$page_title = $lang_module['video'] . " " . NV_TITLEBAR_DEFIS . " " . $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $category = get_videocategory();
 $allsinger = getallsinger();

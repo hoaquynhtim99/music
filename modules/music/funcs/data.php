@@ -314,7 +314,7 @@ if ( $nv_Request->isset_request( 'savealbum', 'post' ) )
 	$name = filter_text_input( 'name', 'post', '' );
 	$keyname = change_alias( $name );
 	$singer = filter_text_input( 'singer', 'post', '' );
-	$message = $nv_Request->get_string( 'message', 'post', '' );
+	$message = nv_br2nl(filter_text_textarea( 'message', '', NV_ALLOWED_HTML_TAGS ));
 
 	if ( defined( 'NV_IS_USER' ) )
 	{

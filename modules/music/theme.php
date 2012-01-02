@@ -10,11 +10,18 @@
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $my_head;
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/js/music/music.js\"></script>\n";// js chung
+if ( file_exists( NV_ROOTDIR . "/themes/" . $module_info['template'] . "/js/music/music.js" ) )
+{
+	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/js/music/music.js\"></script>\n";
+}
+else
+{
+	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/default/js/music/music.js\"></script>\n";
+}
 
 // Giao dien
 // Nghe mot bai hat
-function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
+function nv_music_listenone( $gdata, $sdata, $cdata, $ldata )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $my_head, $main_header_URL;
     
@@ -127,8 +134,6 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 	}
 	else
 	{
-		require_once NV_ROOTDIR . "/modules/" . $module_name . '/class/emotions.php';
-		$xtpl->assign( 'EMOTIONS', show_emotions() );
 		$xtpl->parse( 'main.comment' );
 	}
 
@@ -138,7 +143,7 @@ function nv_music_listenone ( $gdata, $sdata, $cdata, $ldata )
 
 // Giao dien
 // Nghe playlist cua thanh vien
-function nv_music_listen_playlist ( $gdata, $sdata )
+function nv_music_listen_playlist( $gdata, $sdata )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $main_header_URL, $my_head, $downURL;
 
@@ -160,6 +165,8 @@ function nv_music_listen_playlist ( $gdata, $sdata )
 	$i = 1;
 	foreach ( $sdata as $song )
 	{
+		$song['song_names'] = nv_clean60( $song['song_name'], 30 );
+		$song['song_singers'] = nv_clean60( $song['song_singer'], 30 );
 		$song['stt'] = $i;
 		$xtpl->assign( 'SDATA', $song );
 		$xtpl->parse( 'main.song' );
@@ -171,8 +178,8 @@ function nv_music_listen_playlist ( $gdata, $sdata )
 }
 
 // Giao dien
-// Danh sach cac alum
-function nv_music_album ( $g_array, $array )
+// Danh sach cac album
+function nv_music_album( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
     
@@ -181,16 +188,16 @@ function nv_music_album ( $g_array, $array )
 	$xtpl->assign( 'GLANG', $lang_global );
 	$xtpl->assign( 'GDATA', $g_array );
 	
-	// active span
+	// Active span
 	if ( $g_array['type'] == 'id' )
 	{
-		$xtpl->assign( 'active_1', 'class="active"' );
-		$xtpl->assign( 'active_2', '' );
+		$xtpl->assign( 'active_1', '' );
+		$xtpl->assign( 'active_2', ' active' );
 	}
 	else
 	{
-		$xtpl->assign( 'active_1', '' );
-		$xtpl->assign( 'active_2', 'class="active"' );
+		$xtpl->assign( 'active_1', ' active' );
+		$xtpl->assign( 'active_2', '' );
 	}
 	
 	foreach( $array as $row )
@@ -205,7 +212,7 @@ function nv_music_album ( $g_array, $array )
 
 // Giao dien
 // Tat cac cac playlist
-function nv_music_allplaylist ( $g_array, $array )
+function nv_music_allplaylist( $g_array, $array )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global;
     
@@ -261,13 +268,17 @@ function nv_music_showcomment( $g_array, $array )
 		$xtpl->parse( 'main.prev' );					
 	}
 	
-	foreach( $array as $row )
+	if( $array )
 	{
-		$row['avatar'] = empty( $row['avatar'] ) ? NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/default.jpg" : NV_BASE_SITEURL . $row['avatar'];
-		$row['date'] = nv_date( "d/m/Y H:i", $row['date'] );
-		
-		$xtpl->assign( 'ROW', $row );
-		$xtpl->parse( 'main.loop' );
+		foreach( $array as $row )
+		{
+			$row['avatar'] = empty( $row['avatar'] ) ? NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/d-avatar.gif" : NV_BASE_SITEURL . $row['avatar'];
+			$row['date'] = nv_date( "d/m/Y H:i", $row['date'] );
+			
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.datacomment.loop' );
+		}
+		$xtpl->parse( 'main.datacomment' );
 	}
 	
 	$xtpl->parse( 'main' );
@@ -385,6 +396,8 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 	foreach( $song_array as $song )
 	{
 		$song['stt'] = $i;
+		$song['song_singers'] = nv_clean60( $song['song_singer'], 30 );
+		$song['song_names'] = nv_clean60( $song['song_name'], 30 );
 		$xtpl->assign( 'SONG', $song );
 		$xtpl->parse( 'main.song' );
 		$i ++;
@@ -403,8 +416,6 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 	}
 	else
 	{
-		require_once NV_ROOTDIR . "/modules/" . $module_file . '/class/emotions.php';
-		$xtpl->assign( 'EMOTIONS', show_emotions() );
 		$xtpl->assign( 'USER_NAME', $g_array['name'] );
 		$xtpl->assign( 'NO_CHANGE', ( $g_array['name'] == '' )? '' : 'readonly="readonly"' );
 		$xtpl->parse( 'main.comment' );
@@ -462,14 +473,15 @@ function nv_music_managersong( $g_array, $array_song, $data_song )
 				$xtpl->assign( 'SONG', $song );
 				if( $song['active'] == 0 )
 				{
-					$xtpl->parse( 'main.access.song.noacept' );
+					$xtpl->parse( 'main.access.song.loop.noacept' );
 				}
 				else
 				{
-					$xtpl->parse( 'main.access.song.acept' );
+					$xtpl->parse( 'main.access.song.loop.acept' );
 				}
-				$xtpl->parse( 'main.access.song' );
+				$xtpl->parse( 'main.access.song.loop' );
 			}
+			$xtpl->parse( 'main.access.song' );
 		}
 		$xtpl->parse( 'main.access' );
 	}
@@ -502,6 +514,8 @@ function nv_music_playlist( $g_array, $array )
 		foreach( $array as $row )
 		{
 			$row['stt'] = $i;
+			$row['song_names'] = nv_clean60( $row['song_name'], 30 );
+			$row['song_singers'] = nv_clean60( $row['song_singer'], 30 );
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'main.song' );
 			$i ++;
@@ -541,6 +555,7 @@ function nv_music_search( $g_array, $array_song, $array_album, $array_video )
 			{
 				foreach( $array_video as $video )
 				{
+					$video['videonames'] = nv_clean60( $video['videoname'], 40 );
 					$xtpl->assign( 'VIDEO', $video );
 					$xtpl->parse( 'main.loop.sub.video.loop' );
 				}
@@ -551,6 +566,7 @@ function nv_music_search( $g_array, $array_song, $array_album, $array_video )
 			{
 				foreach( $array_album as $album )
 				{
+					$album['albumnames'] = nv_clean60( $album['albumname'], 40 );
 					$xtpl->assign( 'ALBUM', $album );
 					$xtpl->parse( 'main.loop.sub.album.loop' );
 				}
@@ -675,16 +691,16 @@ function nv_music_song ( $g_array, $array )
 	$xtpl->assign( 'hot', $mainURL . "=song/numview");
 	$xtpl->assign( 'new', $mainURL . "=song/id" );
 	
-	// active span
+	// Active span
 	if ( $g_array['type'] == 'id' )
 	{
-		$xtpl->assign( 'active_1', 'class="active"' );
-		$xtpl->assign( 'active_2', '' );
+		$xtpl->assign( 'active_1', '' );
+		$xtpl->assign( 'active_2', ' active' );
 	}
 	else
 	{
-		$xtpl->assign( 'active_1', '' );
-		$xtpl->assign( 'active_2', 'class="active"' );
+		$xtpl->assign( 'active_1', ' active' );
+		$xtpl->assign( 'active_2', '' );
 	}
 	
 	foreach( $array as $row )
@@ -786,7 +802,7 @@ function nv_sendmail_video_themme ( $sendmail )
 }
 
 // Giao dien trang chu video
-function nv_music_video ( $category, $array_new, $array_hot )
+function nv_music_video( $category, $array_new, $array_hot )
 {
     global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
     
@@ -796,55 +812,30 @@ function nv_music_video ( $category, $array_new, $array_hot )
 	$xtpl->assign( 'url_viewhot', $mainURL . "=searchvideo/view" );
 	$xtpl->assign( 'url_viewnew', $mainURL . "=searchvideo/id" );
 	
-	// viet the loai
+	// Viet the loai
 	foreach ( $category as $key => $value )
 	{
 		$xtpl->assign( 'name', $value['title'] );
 		$xtpl->assign( 'url_view_category', $mainURL . "=searchvideo/category/" . $key );
 		
-		$xtpl->parse( 'main.cate' );
+		$xtpl->parse( 'main.cat' );
 	}
 	
-	$i = 1;
+	$i = 0;
 	foreach( $array_new as $row )
 	{
-		if ( $i < 5 )
-		{
-			$xtpl->assign( 'ROW', $row );
-			$xtpl->parse( 'main.new1' );
-		}
-		elseif ( $i < 9 )
-		{
-			$xtpl->assign( 'ROW', $row );
-			$xtpl->parse( 'main.new2' );
-		}
-		else
-		{
-			$xtpl->assign( 'ROW', $row );
-			$xtpl->parse( 'main.new3' );
-		}
-		$i ++;
+		$xtpl->assign( 'ROW', $row );
+			
+		if ( ++ $i % 4 == 0 ) $xtpl->parse( 'main.new.break' );
+		$xtpl->parse( 'main.new' );
 	}
 	
-	$i = 1;
+	$i = 0;
 	foreach( $array_hot as $row )
 	{
-		if ( $i < 5 )
-		{
-			$xtpl->assign( 'ROW', $row );
-			$xtpl->parse( 'main.hot1' );
-		}
-		elseif ( $i < 9 )
-		{
-			$xtpl->assign( 'ROW', $row );
-			$xtpl->parse( 'main.hot2' );
-		}
-		else
-		{
-			$xtpl->assign( 'ROW', $row );
-			$xtpl->parse( 'main.hot3' );
-		}
-		$i ++;
+		$xtpl->assign( 'ROW', $row );
+		if ( ++ $i % 4 == 0 ) $xtpl->parse( 'main.hot.break' );
+		$xtpl->parse( 'main.hot' );
 	}
 	
 	$xtpl->parse( 'main' );
@@ -889,8 +880,6 @@ function nv_music_viewvideo( $g_array, $array )
 	}
 	else
 	{
-		require_once NV_ROOTDIR . "/modules/" . $module_file . '/class/emotions.php';
-		$xtpl->assign( 'EMOTIONS', show_emotions() );
 		$xtpl->assign( 'USER_NAME', $g_array['name'] );
 		$xtpl->assign( 'NO_CHANGE', ( $g_array['name'] == '' )? '' : 'readonly="readonly"' );
 		$xtpl->parse( 'main.comment' );
@@ -947,6 +936,7 @@ function nv_music_main( $array, $array_album, $first_album_data )
 	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . $op . "&load_main_song=" );
 
 	$i = 1;
+	$j = 0;
 	if( ! empty( $array_album ) )
 	{
 		foreach( $array_album as $album )
@@ -970,6 +960,7 @@ function nv_music_main( $array, $array_album, $first_album_data )
 			}
 			else
 			{
+				if( ++ $j % 4 == 0 ) $xtpl->parse( 'main.data.old.break' );
 				$xtpl->parse( 'main.data.old' );
 			}
 		}
@@ -980,6 +971,35 @@ function nv_music_main( $array, $array_album, $first_album_data )
 	elseif( $nv_Request->isset_request( 'load_main_song', 'get' ) )
 	{
 		die("");
+	}
+	
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
+// Giao dien
+// Hien thi bieu tuong cam xuc
+function nv_emotion_theme()
+{
+	global $module_info, $module_file, $lang_module, $lang_global;
+	$xtpl = new XTemplate( "emotions.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+	$xtpl->assign( 'TEMPLATE', $module_info['template'] );
+	$xtpl->assign( 'MODULE_FILE', $module_file );
+	$xtpl->assign( 'MTEM', "yahoo" );
+
+	require_once NV_ROOTDIR . "/modules/" . $module_file . "/class/emotions.php";
+	
+	$emotions = m_emotions_array();
+	
+	foreach ( $emotions as $name => $value ) 
+	{
+		if ( is_array( $value ) ) $value = $value[0];
+		$xtpl->assign( 'VALUE', nv_htmlspecialchars( $value ) );
+		$xtpl->assign( 'NAME', $name );
+		$xtpl->parse( 'main.loop' );
 	}
 	
 	$xtpl->parse( 'main' );

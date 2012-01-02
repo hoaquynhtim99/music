@@ -8,25 +8,12 @@ var clientPC = navigator.userAgent.toLowerCase(); // Get client info
 var is_ie = ((clientPC.indexOf('msie') != -1) && (clientPC.indexOf('opera') == -1));
 var baseHeight;
 
-if (is_ie && typeof(baseHeight) != 'number')
-{
+if (is_ie && typeof(baseHeight) != 'number'){
 	baseHeight = document.selection.createRange().duplicate().boundingHeight;
 }
 
-$(function(){
-	$("#showemotion").click(function(){
-		$("#emotion").show();
-	});
-	$("#emotion a").click(function(){
-		var add = $(this).attr("title");
-		nvm_insert_text(add, true);
-		$("#emotion").hide();
-	});
-});
-
 // Chen doan ma vao
-function nvm_insert_text(text, spaces)
-{
+function nvm_insert_text(text, spaces){
 	if (spaces) {
 		text = ' ' + text + ' ';
 	}
@@ -59,8 +46,7 @@ function nvm_insert_text(text, spaces)
 	textarea.focus();
 }
 
-function mozWrap(txtarea, open, close)
-{
+function mozWrap(txtarea, open, close){
 	var selLength = (typeof(txtarea.textLength) == 'undefined') ? txtarea.value.length : txtarea.textLength;
 	var selStart = txtarea.selectionStart;
 	var selEnd = txtarea.selectionEnd;

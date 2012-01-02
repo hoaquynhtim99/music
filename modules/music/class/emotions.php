@@ -36,34 +36,7 @@ function m_emotions_array()
 		8 => array(':X',':-X'),		4 => array(':D',':-D'),		27 => '=;',		10 => array(':P',':-P'),
 	);
 }
-function show_emotions( )
-{
-	global $module_name, $module_file, $module_info;
-	$emotions = m_emotions_array();
-	$data = '
-	<table width="100%" border="0"><tr>';
-	$i = 0;
-	foreach ( $emotions as $name => $value ) 
-	{
-		$i ++;
-		if ( is_array( $value ) ) $value = $value[0];
 
-		$data .= '
-		<td style="float:left;width:30px">
-		<a href="javascript:void(0);" title=\'' . htmlspecialchars_decode( $value ) . '\'>
-		<img src="' . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file .'/emoticons/' . $name . '.gif" boder="0"/>
-		</a>
-		</td>';
-		if ($i % 9 == 0)
-			$data .= '</tr>';
-	}
-	if ($i % 9 !== 0) 
-	{
-		$data .= '</tr>';
-	}
-	$data .= '</table>';
-	return $data;
-}
 function m_emotions_replace( $data )
 {
 	global $module_name,  $module_file, $module_info;
@@ -97,7 +70,7 @@ function m_emotions_replace( $data )
 			else $p .= $x[0][$u];
 		}
 
-		$data = str_replace( $x, "<img style=\"vertical-align:middle\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/emoticons/" . $a . ".gif\" />", $data );
+		$data = str_replace( $x, "<img style=\"vertical-align:middle\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/emoticons/yahoo/" . $a . ".gif\" />", $data );
 	}
 	return $data;
 }

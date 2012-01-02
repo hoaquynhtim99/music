@@ -9,6 +9,19 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
+// Hien thi bieu tuong cam xuc
+if ( $nv_Request->isset_request( 'loademotion', 'post' ) )
+{
+	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+
+	$contents = nv_emotion_theme();
+	
+	include ( NV_ROOTDIR . "/includes/header.php" );
+	echo ( $contents );
+	include ( NV_ROOTDIR . "/includes/footer.php" );
+	exit();
+}
+
 // Thong tin trang
 $page_title = $module_info['custom_title'];
 $description = $setting['description'];

@@ -41,6 +41,7 @@ if( ! empty( $num ) )
 			"id" => $row['id'],  //
 			"song_name" => $row['tenthat'],  //
 			"song_singer" => $allsinger[$row['casi']],  //
+			"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'],  //
 			"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true )  //
 		);

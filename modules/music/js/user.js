@@ -6,13 +6,13 @@
  */
 
 // Bao ket qua
-function resultgift(res) {
+function resultgift(res){
 	alert(res);
 	return false;
 }
 
 // Gui bao loi cho quan tri
-function senderror(id, where) {
+function senderror(id, where){
 	var root_error = document.getElementById('root_error').value;
 	var user = document.getElementById('user');
 	var body  = strip_tags(document.getElementById('bodyerror').value);
@@ -37,7 +37,6 @@ function addplaylist(id)
 function resultplaylist(res) {
 	var r_split = res.split("_");
 	if (r_split[0] == 'OK') {
-		//$("a#add").addClass("added");
 		nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=showplaylist', 'playlist', '');
 	} else alert(res);
 }
@@ -60,7 +59,7 @@ function sendcommment(id, where) {
 		alert(nv_content);
 		document.getElementById('commentbody').focus();
 	} else {
-		var sd = document.getElementById('buttoncontent');
+		var sd = document.getElementById('button-comment');
 		sd.disabled = true;
 		nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=postcomment&id=' + id + '&where=' + where + '&name=' + name.value + '&body=' + encodeURIComponent(body), '', 'comment_result');
 	}
@@ -78,26 +77,29 @@ function comment_result(res) {
 	} else {
 		alert(nv_content_failed);
 	}
-	nv_set_disable_false('buttoncontent');
+	nv_set_disable_false('button-comment');
 	return false;
 }
 
 // Hien thi cac binh luan
 function show_comment(id, where, page) {
-	nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&id=' + id + '&where=' + where + '&page=' + page, 'size', '');
+	nv_ajax('get', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=comment&id=' + id + '&where=' + where + '&page=' + page, 'comment-content', '');
 }
 
 // Luu album
-function saveplaylist(name, singer, message) {
+function saveplaylist(name, singer, message){
+	document.getElementById('submitpl').disabled = true;
 	nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&savealbum=1&name=' + name + '&singer=' + singer + '&message=' + encodeURIComponent(message), '', 'aftersavelist');
 }
 function aftersavelist(res){
 	var r_split = res.split("_");
-	if (r_split[0] == 1) {
+	if (r_split[0] == 1){
 		alert(r_split[1]);
 		window.location = r_split[2];
-	} else alert(res);
-
+	}else{
+		document.getElementById('submitpl').disabled = false;
+		alert(res);
+	}
 }
 
 // Xoa mot bai hat tu playlist chua luu

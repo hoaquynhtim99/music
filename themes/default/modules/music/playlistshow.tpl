@@ -1,0 +1,1 @@
+<!-- BEGIN: main --><!-- BEGIN: loop --><a class="musicicon mplay" title="{LANG.song_edit_listen1} {ROW.name}" href="{ROW.url}"><strong>{ROW.name}</strong></a><div class="hr"></div><!-- END: loop --><!-- END: main -->

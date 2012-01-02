@@ -15,13 +15,9 @@ $user_login = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_
 $user_register = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" ;
 
 $name = '';
-if ( defined( 'NV_IS_USER' ) )
-{ 
-	$name = $user_info['username'];
-}
+if ( defined( 'NV_IS_USER' ) ) $name = $user_info['username'];
 
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-
 $row = getalbumbyID( $id );
 
 $g_array = array(
@@ -42,7 +38,8 @@ $album_array = array(
 	"who_post" => $row['upboi'], //
 	"album_thumb" => $row['thumb'], //
 	"describe" => $row['describe'], //
-	"URL_ALBUM" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true ) //
+	"URL_ALBUM" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true ), //
+	"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'] //
 );
 
 if( empty( $row ) )
@@ -70,6 +67,7 @@ foreach ( explode( ",", $row['listsong'] ) as $row )
 			"id" => $row['id'],  //
 			"song_name" => $row['tenthat'],  //
 			"song_singer" => $allsinger[$row['casi']],  //
+			"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'],  //
 			"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'],  //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true )  //
 		);

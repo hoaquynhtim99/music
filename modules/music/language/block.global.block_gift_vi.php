@@ -21,4 +21,6 @@ $lang_block['to'] = "Người nhận";
 $lang_block['message'] = "Lời nhắn";
 $lang_block['readmore'] = "Xem thêm";
 
+$lang_block['listen'] = "Nghe quà tặng";
+
 ?>

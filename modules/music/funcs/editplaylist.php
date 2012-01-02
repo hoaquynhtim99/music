@@ -53,7 +53,7 @@ if( $nv_Request->get_int( 'ok', 'post', 0 ) == 1 )
 	$row['name'] = $pldata['name'] = filter_text_input( 'name', 'post', '' );
 	$row['keyname'] = $pldata['keyname'] = change_alias ( $pldata['name'] );
 	$row['singer'] = $pldata['singer'] = filter_text_input( 'singer', 'post', '' );
-	$row['message'] = $pldata['message'] = $nv_Request->get_string( 'message', 'post', '' );
+	$row['message'] = $pldata['message'] = nv_br2nl(filter_text_textarea( 'message', '', NV_ALLOWED_HTML_TAGS ));
 	
 	$result = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET
 		`name` = " . $db->dbescape( $pldata['name'] ) . ",

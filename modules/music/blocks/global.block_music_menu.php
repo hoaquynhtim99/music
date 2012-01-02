@@ -42,10 +42,6 @@ if ( ! nv_function_exists( 'nv_music_menu' ) )
 		{
 			$block_theme = $module_info['template'];
 		}
-		elseif ( file_exists( NV_ROOTDIR . "/themes/default/modules/" . $file . "/block_music_menu.tpl" ) )
-		{
-			$block_theme = "default";
-		}
 		else
 		{
 			$block_theme = "modern";

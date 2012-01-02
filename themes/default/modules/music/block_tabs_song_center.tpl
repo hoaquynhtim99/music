@@ -38,31 +38,20 @@
 		<!-- END: catdata -->
 		<div id="tabssongarea" class="alcontent">
 			<!-- BEGIN: songdata -->
-			<script type="text/javascript">
-			$(document).ready(function() {
-				$("a.adds").click(function() {
-					$(this).removeClass("add"); 
-					$(this).addClass("addedtolist"); 
-					var songid = $(this).attr("name");
-					addplaylist(songid);
-				});
-			});
-			</script>
 			<!-- BEGIN: loop -->
-			<a class="musicicon mplay" title="{name}" href="{url_view}"><strong>{name}</strong></a>
-			<div class="tool">
-				<a name="{ID}" class="adds add"></a>
-				<a href="{URL_DOWN}{ID}" class="down"></a>
-				<a href="{url_view}" class="play"></a>
-			</div>
+			<ul class="mtool">
+				<li><a title="{LANG.add_box}" href="javascript:void(0);" name="{ID}" class="madd">&nbsp;</a></li>
+				<li><a title="{LANG.down_song}" href="{URL_DOWN}{ID}" class="mdown">&nbsp;</a></li>
+			</ul>
+			<a class="musicicon mplay" title="{name}" href="{url_view}"><strong>{name}</strong></a><br />
 			{LANG.show}: <a href="{url_search_singer}" title="{singer}" class="singer">{singer}</a><br />
 			{LANG.upload}: <a class="singer" href="{url_search_upload}" title="{who_upload}">{who_upload}</a> | {LANG.category_2}: <a class="singer" href="{url_search_category}" title="{category}">{category}</a> | {LANG.view}:	{view}
 			<div class="hr"></div>
 			<!-- END: loop -->
 			<!-- END: songdata -->
 			<div class="clear"></div>
-			<p class="alright alcontent"><a class="musicicon mforward" title="{LANG.view_all}" href="{ALL_NEW_SONG}" >&nbsp;{LANG.view_all}</a></p>
 		</div>
+		<p class="alright alcontent"><a class="musicicon mforward" title="{LANG.view_all}" href="{ALL_NEW_SONG}" >&nbsp;{LANG.view_all}</a></p>
 	</div>
 </div>
 <div class="clear"></div>

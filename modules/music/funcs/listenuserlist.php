@@ -71,6 +71,7 @@ while ( list( $id, $ten, $tenthat, $casi ) = $db->sql_fetchrow( $result ) )
 		"id" => $id,  //
 		"song_name" => $tenthat,  //
 		"song_singer" => $allsinger[$casi],  //
+		"url_listen" => $mainURL . "=listenone/" . $id . "/" . $ten,  //
 		"url_search_singer" => $mainURL . "=search/singer/" . $casi,  //
 		"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $id . "/" . $ten, true )  //
 	);
