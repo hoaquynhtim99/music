@@ -41,6 +41,7 @@ $lang_module['active_yes'] = "Có";
 $lang_module['active_no'] = "Không";
 $lang_module['cancel'] = "Làm lại";
 $lang_module['page'] = "Trang %d";
+$lang_module['goto'] = "Chuyển đến";
 $lang_module['here'] = "đây";
 
 $lang_module['close_info'] = "Đóng thông báo này lại";
