@@ -51,10 +51,11 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 				$_title = explode( '|', $_title[1] );
 				$_title = trim( $_title[0] );
 				$_title = strip_tags( $_title );
-				$singer = empty( $_title ) ? "ns" : $_title;
+				$singer = empty( $_title ) ? "ns" : str_replace( array("-", "/", "  "), array("ft.", "ft.", " "), $_title );
 			}
 		}
-		
+		unset( $data, $_title );
+				
 		if ( ! empty ( $title ) )
 		{
 			if ( ! in_array ( $singer, $all_singer ) and ( $singer != 'ns' ) and ! empty( $singer ) )
