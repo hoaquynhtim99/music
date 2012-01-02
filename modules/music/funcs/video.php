@@ -11,6 +11,7 @@ if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['video'] . " " . NV_TITLEBAR_DEFIS . " " . $module_info['custom_title'];
 $key_words = $module_info['keywords'];
+
 $category = get_videocategory();
 $allsinger = getallsinger();
 
@@ -20,7 +21,7 @@ $sqlnew = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHER
 $array_new = array();
 $array_hot = array();
 
-// video moi
+// Video moi
 $result = $db->sql_query( $sqlnew );
 while( $row = $db->sql_fetchrow( $result ) )
 {
@@ -33,7 +34,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 	);
 }
 
-// video hot
+// Video hot
 $result = $db->sql_query( $sqlhot );
 while( $row = $db->sql_fetchrow($result) )
 {

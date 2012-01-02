@@ -867,6 +867,12 @@ function nv_music_viewvideo( $g_array, $array )
 	$xtpl->assign( 'playerurl', $global_config['site_url'] ."/modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'thisurl', $mainURL . "=video" );
 	
+	foreach( $array['listcat'] as $cat )
+	{
+		$xtpl->assign( 'SUBCAT', $cat );
+		$xtpl->parse( 'main.subcat' );
+	}
+	
 	// Binh luan
 	if ( ( $setting['who_comment'] == 0 ) and ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
 	{

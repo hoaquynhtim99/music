@@ -3,8 +3,8 @@
 <h2 class="medium greencolor mlotitle">{DATA.name} - <a class="singer" href="{DATA.url_search_singer}" title="{DATA.singer}">{DATA.singer}</a></h2>
 <p class="msmall">
 	{LANG.category_2}: <a class="singer" href="{DATA.url_search_category}" title="{DATA.category}">{DATA.category}</a>
-	<!-- BEGIN: cat --><!-- BEGIN: loop --> / <a class="singer" href="{CAT.url}" title="{CAT.title}">{CAT.title}&nbsp;</a>
-	<!-- END: loop --><!-- END: cat --> | {LANG.view1}: {DATA.view}
+	<!-- BEGIN: subcat --> / <a class="singer" href="{SUBCAT.url}" title="{SUBCAT.name}">{SUBCAT.name}&nbsp;</a>
+	<!-- END: subcat --> | {LANG.view1}: {DATA.view}
 </p>
 <div class="alboxw">
 	<div class="alwrap">

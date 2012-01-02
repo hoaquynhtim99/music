@@ -38,12 +38,27 @@ if( empty( $row ) ) module_info_die();
 
 updateHIT_VIEW( $id, '_video' );
 
+$row['listcat'] = empty( $row['listcat'] ) ? array() : array_diff(array_filter(array_unique(explode(",", $row['listcat']))),array($row['theloai']));
+if( ! empty( $row['listcat'] ) )
+{
+	$list_cat = $row['listcat'];
+	$row['listcat'] = array();
+	foreach( $list_cat as $cat )
+	{
+		$row['listcat'][] = array(
+			"name" => $category[$cat]['title'],  //
+			"url" => $mainURL . "=searchvideo/category/" . $cat  //
+		);
+	}
+}
+
 $array = array(
 	"URL_SENDMAIL" => $mainURL . "=videosendmail&amp;id=" . $id,  //
 	"TITLE" => $lang_module['sendtomail'],  //
 	"ID" => $id,  //
 	"name" => $row['tname'],  //
 	"thumb" => $row['thumb'],  //
+	"listcat" => $row['listcat'],  //
 	"sname" => $row['name'],  //
 	"singer" => $allsinger[$row['casi']],  //
 	"category" => $category[$row['theloai']]['title'],  //
