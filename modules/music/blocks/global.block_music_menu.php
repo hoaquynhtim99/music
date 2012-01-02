@@ -44,7 +44,7 @@ if ( ! nv_function_exists( 'nv_music_menu' ) )
 		}
 		else
 		{
-			$block_theme = "modern";
+			$block_theme = "default";
 		}
 			
 		$xtpl = new XTemplate( "block_music_menu.tpl", NV_ROOTDIR . "/themes/" . $block_theme . "/modules/" . $file );
