@@ -30,17 +30,23 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 
 	foreach ( $array['link'] as $link )
 	{
-		$array_meta_tag = get_meta_tags( $link );
+		$array_meta_tag = file_get_contents( $link );
+		if( empty( $array_meta_tag ) ) continue;
 		
-		$array['keywords'] = $array_meta_tag['keywords']? $array_meta_tag['keywords'] : "";
-		$array['keywords'] = explode ( ",", $array['keywords'] );
-		$array['keywords'] = array_map ( "trim", $array['keywords'] );
-
-		$title = ! empty ( $array['keywords'][0] ) ? $array['keywords'][0] : "";
+		$array_meta_tag = str_replace( "\n", "", $array_meta_tag );
+		preg_match( "/\<title\>(.*)\<\/title\>/", $array_meta_tag , $webtitle );
+		if( empty( $webtitle ) ) continue;
+		unset( $array_meta_tag );
+		
+		$webtitle = explode("|",trim($webtitle[1]));
+		if( empty( $webtitle ) ) continue;
+		$webtitle = array_map( "trim", explode( "-", $webtitle[0] ) );
+		
+		if( isset( $webtitle[0] ) ) $title = $webtitle[0];
+		if( isset( $webtitle[1] ) ) $singer = str_replace( array( ",", "  " ), array( " ft.", " " ), $webtitle[1] );		
 		$alias = ! empty ( $title ) ? change_alias( $title ) : "";
-		
-		$singer = ! empty ( $array['keywords'][1] ) ? $array['keywords'][1] : "ns";
-		
+		unset( $webtitle );
+				
 		if ( ! empty ( $title ) )
 		{
 			if ( ! in_array ( $singer, $all_singer ) and ( $singer != 'ns' ) and ! empty( $singer ) )
