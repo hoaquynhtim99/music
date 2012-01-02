@@ -128,7 +128,7 @@ while ( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 // Page title
 $page_title = $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
 $key_words =  $row['tenthat'] . " - " . $allsinger[$row['casi']] ;
-$description = ! $num_lyric ? sprintf ( $lang_module['share_descreption'], $row['tenthat'], $allsinger[$row['casi']], $allauthor[$row['nhacsi']], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
+$description = ! isset( $ldata['data'][0]['content']{50} ) ? sprintf ( $lang_module['share_descreption'], $row['tenthat'], $allsinger[$row['casi']], $allauthor[$row['nhacsi']], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
 
 $contents = nv_music_listenone ( $gdata, $sdata, $cdata, $ldata );
 

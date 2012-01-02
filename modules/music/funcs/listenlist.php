@@ -77,7 +77,7 @@ foreach ( explode( ",", $row['listsong'] ) as $row )
 // Tieu de trang
 $page_title = $lang_module['album'] . " " . $album_array['name'] . NV_TITLEBAR_DEFIS . $album_array['singer'];
 $key_words =  $album_array['name'] . " - " . $album_array['singer'];
-$description = sprintf ( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
+$description = isset( $album_array['describe']{50} ) ? $album_array['describe'] : sprintf ( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
 
 $contents = nv_music_listenlist( $g_array, $album_array, $song_array );
 
