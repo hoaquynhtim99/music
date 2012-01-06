@@ -1,16 +1,13 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 7-17-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:09 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
-{
-    die( 'Stop!!!' );
-}
+if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $new = $nv_Request->get_int('new', 'post', 0);
 $old = $nv_Request->get_int('old', 'post', 0);
@@ -37,4 +34,5 @@ if($old != $new)
 }
 
 echo $lang_module['update_success'];
+
 ?>

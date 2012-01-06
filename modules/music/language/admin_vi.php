@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011 FreeWare
  * Language Tiếng Việt
  * @Createdate 26/01/2011 09:41 AM

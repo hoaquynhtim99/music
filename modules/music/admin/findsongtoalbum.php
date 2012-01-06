@@ -1,10 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.1
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2011 VINADES.,JSC. All rights reserved
- * @Createdate 24-03-2011 20:08
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:09 AM
  */
 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );

@@ -1,10 +1,12 @@
 <?php
+
 /**
- * @Project NUKEVIET 3.0
- * @Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 25-12-2010 14:43
+ * @Project NUKEVIET-MUSIC
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:09 AM
  */
+
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 $page_title = $lang_module['list_album'];
 $allsinger = getallsinger();

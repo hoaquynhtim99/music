@@ -1,10 +1,10 @@
 <?php
 
-/**
+/* *
  * @Project NUKEVIET-MUSIC
- * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
- * @Createdate 2-6-2010 21:16
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 10:12 AM
  */
 
 define("FTP_TIMEOUT",90);
@@ -563,4 +563,5 @@ class FTP {
 	}
 }
 /* end */
+
 ?>

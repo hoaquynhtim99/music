@@ -1,7 +1,8 @@
 /* *
  * @Project NUKEVIET-MUSIC
- * @Author PHAN TAN DUNG (phantandung92@gmail.com)
- * @Createdate 26 - 12 - 2010 5 : 12
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 10:12 AM
  */
 
 var clientPC = navigator.userAgent.toLowerCase(); // Get client info

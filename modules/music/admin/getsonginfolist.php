@@ -31,4 +31,5 @@ if ( !preg_match('/^(ht|f)tp:\/\//', $data) )
 $au = GetAllMP3info($data);
 
 echo $id . "_" . $au['fileformat'] . "_" . $au['bitrate'] . "_" . $au['filesize'] . "_" . $au['playtime_seconds'] . "_" . $lang_module['error_file_type'];
+
 ?>

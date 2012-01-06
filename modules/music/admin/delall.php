@@ -2,9 +2,9 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung
- * @Copyright (C) 2011
- * @Createdate 26/01/2011 09:34 AM
+ * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:09 AM
  */
  
 if( ! defined('NV_IS_MUSIC_ADMIN') ) { die('Stop!!!'); }

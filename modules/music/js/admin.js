@@ -1,9 +1,9 @@
 /* *
  * @Project NUKEVIET-MUSIC
- * @Author PHAN TAN DUNG (phantandung92@gmail.vn)
- * @Createdate 1 - 1 - 2011 5 : 12
+ * @Author PHAN TAN DUNG (phantandung92@gmail.com)
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/09/2011 5:12 PM
  */
- 
 
 // Tao ten ngan gon
 function get_alias( id, func ) {

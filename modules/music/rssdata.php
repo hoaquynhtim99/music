@@ -3,8 +3,8 @@
 /**
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @copyright 2011
- * @createdate 26/01/2011 10:10 AM
+ * @Copyright (C) 2011 Freeware
+ * @Createdate 26/01/2011 09:09 AM
  */
 
 if ( ! defined( 'NV_IS_MOD_RSS' ) ) die( 'Stop!!!' );

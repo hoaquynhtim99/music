@@ -1,10 +1,12 @@
 <?php
+
 /**
  * @Project NUKEVIET-MUSIC
  * @Author VINADES.,JSC (contact@vinades.vn)
  * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
  * @Createdate 7-17-2010 14:43
  */
+
 if (! defined ( 'NV_IS_MUSIC_ADMIN' )) { die ( 'Stop!!!' ); }
 
 $where = filter_text_input( 'where', 'get,post', '' );
@@ -36,4 +38,5 @@ foreach( $array_id as $id )
 }
 
 echo $lang_module['active_succer1'];
+
 ?>
