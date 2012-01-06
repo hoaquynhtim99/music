@@ -34,7 +34,7 @@ $allsinger = getallsinger();
 
 // Page info
 $page_title = "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'];
-$key_words =  "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'] ;
+$key_words =  "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'];
 $description =  $row['message'];
 
 // Playlist data
@@ -59,22 +59,24 @@ $sdata = array();
 
 $listsong_id = explode ( ",", $row['songdata'] );
 $listsong_id = array_filter ( $listsong_id );
-$listsong_id = implode ( ",", $listsong_id );
 
-$sql = "SELECT `id`, `ten`, `tenthat`, `casi` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . $listsong_id . ") AND `active`=1";
-$result = $db->sql_query( $sql );
-$gdata['numsong'] = $db->sql_numrows( $result );
+$sql = "SELECT `id`, `ten`, `tenthat`, `casi` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode ( ",", $listsong_id ) . ") AND `active`=1";
+$list = nv_db_cache( $sql, 'id' );
+$gdata['numsong'] = sizeof( $list );
 
-while ( list( $id, $ten, $tenthat, $casi ) = $db->sql_fetchrow( $result ) )
+foreach( $listsong_id as $sid )
 {
-	$sdata[] = array(
-		"id" => $id,  //
-		"song_name" => $tenthat,  //
-		"song_singer" => $allsinger[$casi],  //
-		"url_listen" => $mainURL . "=listenone/" . $id . "/" . $ten,  //
-		"url_search_singer" => $mainURL . "=search/singer/" . $casi,  //
-		"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $id . "/" . $ten, true )  //
-	);
+	if( isset( $list[$sid] ) )
+	{
+		$sdata[] = array(
+			"id" => $list[$sid]['id'],  //
+			"song_name" => $list[$sid]['tenthat'],  //
+			"song_singer" => $allsinger[$list[$sid]['casi']],  //
+			"url_listen" => $mainURL . "=listenone/" . $list[$sid]['id'] . "/" . $list[$sid]['ten'],  //
+			"url_search_singer" => $mainURL . "=search/singer/" . $list[$sid]['casi'],  //
+			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $list[$sid]['id'] . "/" . $list[$sid]['ten'], true )  //
+		);
+	}
 }
 
 $contents = nv_music_listen_playlist ( $gdata, $sdata );
