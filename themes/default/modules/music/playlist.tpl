@@ -29,7 +29,7 @@
 		var player_width = $('#player').width();
 		var nv_num_song = {GDATA.num};
 		var nv_current_song = 1;
-		jwplayer("player").setup({ flashplayer: "{base_url}player.swf", controlbar: "bottom", volume: 100, height: 24, width: player_width, autostart: true, events: {onReady: function(){nv_start_player('player')}, onComplete: function(){nv_complete_song('player')}} });
+		jwplayer("player").setup({ flashplayer: "{base_url}player.swf", controlbar: "bottom", volume: 100, height: 24, width: player_width,menu:false, autostart: true, events: {onReady: function(){nv_start_player('player')}, onComplete: function(){nv_complete_song('player')}} });
 		</script>
 		<div id="playlist-container" class="plsong">
 			<!-- BEGIN: song -->

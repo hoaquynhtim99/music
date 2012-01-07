@@ -34,7 +34,7 @@
 			var player_width = $('#player').width();
 			jwplayer("player").setup({
 				flashplayer: "{GDATA.data_url}player.swf", file: "{SDATA.song_link}", controlbar: "bottom",
-				volume: 100, height: 24, width: player_width, repeat: "list", autostart: "true"
+				volume: 100, height: 24, width: player_width, repeat: "always", autostart: "true", menu: false
 			});
 		});
 		</script>

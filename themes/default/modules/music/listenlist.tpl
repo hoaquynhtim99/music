@@ -30,7 +30,7 @@
 		var player_width = $('#player').width();
 		var nv_num_song = {ALBUM.numsong};
 		var nv_current_song = 1;
-		jwplayer("player").setup({ flashplayer: "{base_url}player.swf", controlbar: "bottom", volume: 100, height: 24, width: player_width, autostart: true, events: {onReady: function(){nv_start_player('player')}, onComplete: function(){nv_complete_song('player')}} });
+		jwplayer("player").setup({ flashplayer: "{base_url}player.swf", controlbar: "bottom", volume: 100, height: 24, width: player_width, autostart: true,menu:false,events: {onReady: function(){nv_start_player('player')}, onComplete: function(){nv_complete_song('player')}} });
 		</script>
 		<div id="playlist-container" class="plsong">
 			<!-- BEGIN: song -->
@@ -48,7 +48,6 @@
 	</div>
 </div>
 <div class="clear"></div>
-<script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: '{NV_LANG_INTERFACE}'}</script>
 <script type="text/javascript">
 var url_share = u=location.href;
 var title_share = document.title;
@@ -202,4 +201,5 @@ $(document).ready(function() {
 		</div>
 	</div>
 </div>
+<script type="text/javascript" src="https://apis.google.com/js/plusone.js">{lang: '{NV_LANG_INTERFACE}'}</script>
 <!-- END: main -->

@@ -109,8 +109,7 @@ elseif ( $where == 'playlist' )
 			$duongdan =  NV_MY_DOMAIN . $duongdan;
 		}
 		
-		$globaldata[] = array
-		(
+		$globaldata[] = array(
 			"duongdan" => $duongdan,  //
 			"casi" => $allsinger[$casi],  //
 			"tenthat" => $tenthat  //

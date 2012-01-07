@@ -13,8 +13,8 @@
 		var player_width = $('#player').width();
 		var player_height = parseInt(player_width * 9.65 / 16);
 		jwplayer("player").setup({
-			flashplayer: "{base_url}player.swf", file: "{DATA.link}", image: "{ads}", controlbar: "bottom",
-			volume: 100, height: player_height, width: player_width, repeat: "list", autostart: "true"
+			flashplayer: "{base_url}player.swf", file: "{DATA.link}", image: "{ads}", controlbar: "bottom",menu:false,
+			volume: 100, height: player_height, width: player_width, repeat: "always", autostart: "true"
 		});
 		</script>
 	</div>
