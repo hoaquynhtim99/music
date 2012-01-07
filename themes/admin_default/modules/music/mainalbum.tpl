@@ -29,38 +29,29 @@
 	<!-- END: row -->
 </table>
 <script type='text/javascript'>
-	$(function()
-	{
-		$('a[class="delfile"]').click(function(event)
-		{
+	$(function(){
+		$('a[class="delfile"]').click(function(event){
 			event.preventDefault();
-			if (confirm("{LANG.album_del_cofirm}"))
-			{
+			if (confirm("{LANG.album_del_cofirm}")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',
-					success: function(data)
-					{
+					success: function(data){
 						alert(data);
 						window.location = '{URL_DEL_BACK}';
 					}
 				});
 			}
 		});
-		$('.sel_w').change(function(event)
-		{
-			$.ajax(
-			{
+		$('.sel_w').change(function(event){
+			$.ajax({
 				type: "POST",
-				url: "index.php?nv=music&op=sortmainalbum",
+				url: "{NV_BASE_ADMINURL}index.php?"+nv_name_variable+"="+nv_module_name+"&"+nv_fc_variable+"=sortmainalbum",
 				data: "old=" + $(this).attr('id') + "&new=" + $(this).val(),
-				success: function(data)
-				{
-					alert(data);
-					window.location = 'index.php?nv=music&op=mainalbum';
+				success: function(data){
+					window.location.href = window.location.href;
 				}
 			});
 		});

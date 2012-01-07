@@ -33,7 +33,8 @@ if( ! empty( $id ) )
 
 $xtpl = new XTemplate( "mainalbum.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 $xtpl->assign('LANG', $lang_module);
-$xtpl->assign('URL_DEL_BACK', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign('URL_DEL_BACK', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign('NV_BASE_ADMINURL', NV_BASE_ADMINURL );
 
 // Xu li cac du lieu
 $i = 0;
