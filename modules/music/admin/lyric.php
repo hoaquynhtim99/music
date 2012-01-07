@@ -111,7 +111,7 @@ while($row = $db->sql_fetchrow($result))
 {
 	$xtpl->assign('id', $row['id']);
 	$xtpl->assign('user', $row['user']);
-	$xtpl->assign('body', strip_tags(substr($row['body'], 0, 200)) );	
+	$xtpl->assign('body', nv_clean60(strip_tags($row['body']), 200) );	
 	$xtpl->assign('song', $row['tenthat']);
 
 	$class = ($i % 2) ? " class=\"second\"" : "";
