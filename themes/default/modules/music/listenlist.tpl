@@ -145,6 +145,7 @@ $(document).ready(function() {
 			<span class="greencolor">{LANG.who_create}</span>: {ALBUM.who_post}<br />
 			<span class="greencolor">{LANG.view}</span>: {ALBUM.numview}<br />
 			<span class="greencolor">{LANG.message}</span>: {ALBUM.describe}
+			<div class="clear"></div>
 		</div>
 	</div>
 </div>
