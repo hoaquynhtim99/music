@@ -41,9 +41,10 @@ if( $save == 1 )
 
 $xtpl = new XTemplate( "maincategory.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'URL_DEL_BACK', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_DEL_BACK', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
 
-$link_del_one = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
+$link_del_one = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 
 // Xu li cac du lieu
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_main_category` ORDER BY `order` ASC";

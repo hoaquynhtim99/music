@@ -43,38 +43,29 @@
 	</form>
 </table>
 <script type='text/javascript'>
-	$(function()
-	{
-		$('a[class="delfile"]').click(function(event)
-		{
+	$(function(){
+		$('a[class="delfile"]').click(function(event){
 			event.preventDefault();
-			if (confirm("{LANG.category_main_del_confim}"))
-			{
+			if (confirm("{LANG.category_main_del_confim}")){
 				var href = $(this).attr('href');
-				$.ajax(
-				{
+				$.ajax({
 					type: 'POST',
 					url: href,
 					data: '',
-					success: function(data)
-					{
+					success: function(data){
 						alert(data);
 						window.location = '{URL_DEL_BACK}';
 					}
 				});
 			}
 		});
-		$('.sel_w').change(function(event)
-		{
-			$.ajax(
-			{
+		$('.sel_w').change(function(event){
+			$.ajax({
 				type: "POST",
-				url: "index.php?nv=music&op=sort",
+				url: "{NV_BASE_ADMINURL}index.php?"+nv_name_variable+"="+nv_module_name+"&"+nv_fc_variable+"=sort",
 				data: "old=" + $(this).attr('id') + "&new=" + $(this).val(),
-				success: function(data)
-				{
-					alert(data);
-					window.location = 'index.php?nv=music&op=maincategory';
+				success: function(data){
+					window.location.href = window.location.href;
 				}
 			});
 		});
