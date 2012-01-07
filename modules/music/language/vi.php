@@ -294,6 +294,7 @@ $lang_module['email_receive'] = "Email nhận";
 $lang_module['email_receive_null'] = "Lỗi: Bạn chưa nhập địa chỉ email";
 $lang_module['gift_message'] = "<p>Chào <strong>%s</strong>,</p><p>Bạn vừa nhận được một quà tặng âm nhạc được gửi từ %s thông qua website %s.</p><p>Lời nhắn:</p><p>%s</p><p>Bạn có thể nghe bài hát của mình tại: %s</p>";
 $lang_module['gift_list'] = "Danh sách quà tặng âm nhạc";
+$lang_module['gift_list_empty'] = "Không có quà tặng âm nhạc nào đến thời điểm này";
 
 $lang_module['down_info1'] = "Nhấp vào";
 $lang_module['down_info2'] = "để tải bài hát về máy";

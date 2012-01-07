@@ -1,3 +1,6 @@
+<!-- BEGIN: empty -->
+<div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.gift_list_empty}<a title="{LANG.close_info}" href="javascript:void(0);" onclick="$(this).parent().parent().remove();" class="fr musicicon mcancel">&nbsp;</a></div></div></div>
+<!-- END: empty -->
 <!-- BEGIN: main -->
 <div class="alboxw">
 	<div class="alwrap">
