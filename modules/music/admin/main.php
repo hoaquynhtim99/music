@@ -149,6 +149,26 @@ if( ! empty( $gen_page ) )
 	$xtpl->parse('main.genpage');
 }
 
+// Kiem tra cac ham can thiet de chay
+$array_info = array();
+
+$disable_functions = ( ini_get( "disable_functions" ) != "" and ini_get( "disable_functions" ) != false ) ? array_map( 'trim', preg_split( "/[\s,]+/", ini_get( "disable_functions" ) ) ) : array();
+if ( extension_loaded( 'suhosin' ) )
+{
+	$disable_functions = array_merge( $disable_functions, array_map( 'trim', preg_split( "/[\s,]+/", ini_get( "suhosin.executor.func.blacklist" ) ) ) );
+}
+
+if (!( extension_loaded( 'curl' ) and ( empty( $disable_functions ) or ( ! empty( $disable_functions ) and ! preg_grep( '/^curl\_/', $disable_functions )))))
+{
+	$array_info[] = $lang_module['info_check_curl'];
+}
+
+foreach( $array_info as $info )
+{
+	$xtpl->assign( 'INFO', $info );
+	$xtpl->parse('main.info');
+}
+
 $xtpl->parse('main');
 $contents = $xtpl->text('main');
 

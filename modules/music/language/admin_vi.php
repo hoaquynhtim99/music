@@ -363,4 +363,6 @@ $lang_module['filter_lang_asc'] = "tăng dần";
 $lang_module['filter_lang_desc'] = "giảm dần";
 $lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
 
+$lang_module['info_check_curl'] = "Hệ thống của bạn không hỗ trợ thư viện CURL do đó sẽ không sử dụng được chức năng lấy nhạc từ các website khác";
+
 ?>

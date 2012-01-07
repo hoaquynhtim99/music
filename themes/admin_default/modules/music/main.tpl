@@ -1,4 +1,7 @@
 <!-- BEGIN: main -->
+<!-- BEGIN: info --><div style="width:98%" class="quote">
+    <blockquote class="error"><span>{INFO}.</span></blockquote>
+</div><!-- END: info -->
 <form action="" method="post">
 	<table class="tab1 fixbottomtable">
 		<tbody>
