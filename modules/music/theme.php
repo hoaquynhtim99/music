@@ -452,7 +452,7 @@ function nv_music_managersong( $g_array, $array_song, $data_song )
 			$xtpl->assign( 'AUTHOR', $data_song['author'] );
 			$xtpl->assign( 'CATEGORY', $data_song['cate'] );
 			
-			if ( $data_song['resuit'] )
+			if ( $g_array['updateok'] )
 			{
 				$xtpl->assign( 'url_play', $mainURL . "=listenone/" . $data_song['song']['id'] . "/" . $data_song['song']['ten'] );
 				$xtpl->assign( 'url_back', $mainURL . "=managersong" );

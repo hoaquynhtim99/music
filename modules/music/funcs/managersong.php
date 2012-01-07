@@ -23,6 +23,7 @@ if ( defined( 'NV_IS_USER' ) )
 }
 
 $g_array = array(
+	"updateok" => false,  //
 	"username" => $username,  //
 	"userid" => $userid  //
 );
@@ -43,7 +44,7 @@ if( ! empty( $userid ) )
 	$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 	if ( $id > 0 )
 	{
-		$song = getsongbyID( $id );
+		$song = $old_song = getsongbyID( $id );
 		
 		// Thong tin trang
 		$page_title = $lang_module['song_edit1'] . NV_TITLEBAR_DEFIS . $song['tenthat'] . NV_TITLEBAR_DEFIS . $username . NV_TITLEBAR_DEFIS . $module_info['custom_title'];
@@ -63,13 +64,11 @@ if( ! empty( $userid ) )
 			{
 				$song['casi'] = $songdata['casi'] = change_alias( $songdata['casimoi'] );
 				newsinger( $songdata['casi'], $songdata['casimoi'] );
-				updatesinger( $songdata['casi'], 'numsong', '+1' );
 			}
 			if ( $songdata['nhacsimoi'] != '')
 			{
 				$song['nhacsi'] = $songdata['nhacsi'] = change_alias( $songdata['nhacsimoi'] );
 				newauthor( $songdata['nhacsi'], $songdata['nhacsimoi'] );
-				updateauthor( $songdata['nhacsi'], 'numsong', '+1' );
 			}
 			
 			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET 
@@ -79,9 +78,27 @@ if( ! empty( $userid ) )
 				`theloai`=" . $db->dbescape( $song['theloai'] ) . ", 
 				`nhacsi`=" . $db->dbescape( $song['nhacsi'] ) . "
 			WHERE `id`=" .  $id;
-			$resuit = $db->sql_query( $sql );
+			$update = $db->sql_query( $sql );
 			
-			if( $resuit ) nv_del_moduleCache( $module_name );
+			if( $update )
+			{
+				// Cap nhat so bai hat cua ca si
+				if( $old_song['casi'] != $song['casi'] )
+				{
+					updatesinger( $old_song['casi'], 'numsong', '-1' );
+					updatesinger( $song['casi'], 'numsong', '+1' );
+				}
+				
+				// Cap nhat so bai hat cua nhac si
+				if( $old_song['nhacsi'] != $song['nhacsi'] )
+				{
+					updateauthor( $old_song['nhacsi'], 'numsong', '-1' );
+					updateauthor( $song['nhacsi'], 'numsong', '+1' );
+				}
+				
+				nv_del_moduleCache( $module_name );
+				$g_array['updateok'] = true;
+			}
 		}
 				
 		$cate = '';
