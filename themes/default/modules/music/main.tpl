@@ -15,8 +15,7 @@ function nv_tool_music_main_tabalbum(cid){
 function nv_music_main_show_loader(show){
 	if( show == 1 ){
 		$('#music-main-tabs').append('<span class="nv-loader">&nbsp;</span>');
-	}
-	else{
+	}else{
 		$('#music-main-tabs .nv-loader').remove();
 	}
 }
