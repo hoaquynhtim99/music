@@ -184,7 +184,7 @@ $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
 
 // Lay du lieu
-$sql = "SELECT a.stt, a.id, a.albumid, b.tname FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id ORDER BY a.stt ASC" ;
+$sql = "SELECT a.stt, a.id, a.albumid, b.tname FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id ORDER BY a.stt ASC" ;
 $result = $db->sql_query( $sql );
 $num = $db->sql_numrows( $result );
 
