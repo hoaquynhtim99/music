@@ -4,7 +4,7 @@
  * @Project NUKEVIET-MUSIC
  * @Author Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011 FreeWare
- * Language English / Translated by nguyenngocphuong (nguyengocphuonga1@yahoo.com)
+ * Language English / Transtale by nguyengocphuonga1@yahoo.com
  * @Createdate 26/01/2011 09:41 AM
  */
 
@@ -12,7 +12,7 @@ if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "04/03/2010, 15:22";
-$lang_translator['copyright'] = "Copyright (C) 2011 Freeware";
+$lang_translator['copyright'] = "@Copyright (C) 2011 Free Ware";
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
@@ -37,7 +37,7 @@ $lang_module['author_add'] = "Add musician";
 $lang_module['author_info'] = "Musician infomation";
 $lang_module['author_edit'] = "Edit musician infomation";
 $lang_module['author_list'] = "Musicians list";
-$lang_module['author_name'] = "Musician's name";
+$lang_module['author_name'] = "Musician name";
 $lang_module['author_search'] = "Search musician";
 $lang_module['author_sort_name'] = "Musician's alias name";
 $lang_module['author_del_confirm'] = "Are you sure want to delete?";
@@ -76,7 +76,7 @@ $lang_module['category_base'] = "Main category";
 $lang_module['category_sub'] = "Sub category";
 $lang_module['category_main'] = "Left menu category";
 $lang_module['category_main_del_confim'] = "Are you sure to delete this category?";
-$lang_module['checkall'] = "Select all";
+$lang_module['checkall'] = "Check all";
 
 $lang_module['check_link_suc'] = "Link exist";
 $lang_module['check_link_err'] = "Link is not exist";
@@ -95,7 +95,7 @@ $lang_module['edit_song'] = " Edit song information";
 $lang_module['edit_comment'] = "Edit comment";
 $lang_module['edit_comment_song'] = "Edit song comment";
 $lang_module['edit_comment_album'] = "Edit album comment";
-$lang_module['edit_lyric'] = "Edit song lyric";
+$lang_module['edit_lyric'] = "Edit song lyrics";
 $lang_module['edit_gift'] = "Edit gift";
 
 $lang_module['error_save'] = "An error occurred that makes the data cannot be saved, please check back";
@@ -139,13 +139,13 @@ $lang_module['hot_album_select'] = "Select a hot album";
 $lang_module['hot_album_add'] = "select album";
 
 $lang_module['fillin'] = "Fill in the information";
-$lang_module['link'] = "path";
+$lang_module['link'] = "Path";
 $lang_module['list_album'] = "Album list";
 $lang_module['list_gift'] = "Gift list";
 
-$lang_module['lyric_del_confirm'] = "Are you sure to delete this song lyric?";
+$lang_module['lyric_del_confirm'] = "Are you sure to delete this song lyrics?";
 $lang_module['lyric_error_name'] = "Error: Empty sender name";
-$lang_module['lyric_error_body'] = "Error: Empty lyric content";
+$lang_module['lyric_error_body'] = "Error: Empty lyrics content";
 
 $lang_module['manager_category'] = "Song category management";
 $lang_module['manager_category_info'] = "Note: You cannot delete existed category";
@@ -188,7 +188,7 @@ $lang_module['siteinfo_error'] = "Number of error reported";
 $lang_module['siteinfo_gift'] = "Number of gift";
 $lang_module['state'] = "Status";
 $lang_module['set_who_comment'] = "Who can comment?";
-$lang_module['set_who_lyric'] = "Who can send song lyric?";
+$lang_module['set_who_lyric'] = "Who can send song lyrics?";
 $lang_module['set_who_download'] = "Permission to download";
 $lang_module['set_who_upload'] = "Who can upload?";
 $lang_module['set_who_gift'] = "Who can send gift?";
@@ -201,13 +201,13 @@ $lang_module['set_root_server'] = "The same server";
 $lang_module['set_default_server'] = "Default server";
 $lang_module['set_auto_comment'] = "Auto post comment";
 $lang_module['set_auto_upload'] = "Upload song without censoring";
-$lang_module['set_auto_lyric'] = "Auto post song lyric";
+$lang_module['set_auto_lyric'] = "Auto post song lyrics";
 $lang_module['set_auto_gift'] = "Auto post gift";
 $lang_module['set_auto_album'] = "Auto post playlist";
 $lang_module['set_floder_file'] = "File directory";
 $lang_module['set_playlist_max'] = "Maximum member's playlist";
 $lang_module['set_time_del_cache'] = "Time to reset the music link cache";
-$lang_module['set_time_del_cache_info'] = " (munite). Enter 0 if not delete this cache";
+$lang_module['set_time_del_cache_info'] = " (minute). Enter 0 if not delete this cache";
 
 $lang_module['sub_category'] = "Category management";
 $lang_module['sub_album'] = "Album management";
@@ -226,14 +226,14 @@ $lang_module['sub_maincategory'] = "Home category (will be displayed in home pag
 $lang_module['sub_mainalbum'] = "Home album (will be displayed in home page)";
 $lang_module['sub_ads'] = "Advertisment";
 $lang_module['sub_error'] = "Error reported";
-$lang_module['sub_gift'] = "Music gift";
-$lang_module['sub_lyric'] = "Lyric management";
+$lang_module['sub_gift'] = "Musical gift";
+$lang_module['sub_lyric'] = "lyrics management";
 $lang_module['sub_singer'] = "Singer management";
 $lang_module['sub_videocategory'] = "Video category management";
 
 $lang_module['song'] = "Song";
 $lang_module['song_name'] = "Song name";
-$lang_module['song_name_short'] = "Song alias";
+$lang_module['song_name_short'] = "Alias";
 $lang_module['song_info'] = "Song information";
 $lang_module['song_manager'] = "Song management";
 $lang_module['song_error_ten'] = "Error: You haven't entered a song alias";
@@ -243,7 +243,7 @@ $lang_module['song_error_duongdan'] = "Error: You haven't entered a song path";
 $lang_module['song_list_comment'] = "The list of song comments";
 
 $lang_module['thumb'] = "Thumbnail";
-$lang_module['uncheckall'] = "Unchecked";
+$lang_module['uncheckall'] = "Uncheck all";
 $lang_module['update_success'] = "Update successful";
 $lang_module['who_up'] = "Upload by";
 $lang_module['error_del_confirm'] = "Are you sure to delete these error reported?";
@@ -253,7 +253,7 @@ $lang_module['user_send_gift'] = "Donation user";
 $lang_module['user_send_lyric'] = "Sender name";
 $lang_module['user_recive_gift'] = "Recipient name";
 $lang_module['userplaylist'] = "Playlist management";
-$lang_module['unknow'] = "Unknow";
+$lang_module['unknow'] = "Unknown";
 $lang_module['playlist_name'] = "Playlist name";
 $lang_module['playlist_edit'] = "Edit playlist";
 $lang_module['playlist_time'] = "Created date";
@@ -293,7 +293,7 @@ $lang_module['zing_title'] = "Add song from mp3.zing.vn V3";
 $lang_module['nhacvui_title'] = "Add song from nhac.vui.vn";
 $lang_module['nhacso_get'] = "Add song from nhacso.net";
 
-$lang_module['add_lyric'] = "Song lyric";
+$lang_module['add_lyric'] = "Song lyrics";
 $lang_module['complete'] = "Completed";
 $lang_module['error_exist_album'] = "Error: This album existed";
 
@@ -332,7 +332,7 @@ $lang_module['guide_hot'] = "The management of the most HOT album on home page";
 $lang_module['guide_fourcategory'] = "The category that will be displayed on the TAB block ";
 $lang_module['guide_maincategory'] = "The category that will be displayed on the CATEGORIES block ";
 $lang_module['guide_mainalbum'] = "The album that will be using as the category on block";
-$lang_module['guide_ftpsetting'] = "FTP account mângement, host management, Default host to get link";
+$lang_module['guide_ftpsetting'] = "FTP account management, host management, Default host to get link";
 $lang_module['guide_setting'] = "Set the module functions as: the license of upload music, download, comment ...";
 
 $lang_module['video_error_name'] = "Video alias can not be empty";
@@ -363,6 +363,6 @@ $lang_module['filter_lang_asc'] = "Increasing";
 $lang_module['filter_lang_desc'] = "Descending";
 $lang_module['filter_order_by'] = "Order by %s position";
 
-$lang_module['info_check_curl'] = "Your system does not support CURL library so you can't use feature retrieving the music from other website";
+$lang_module['info_check_curl'] = "Your system had disabled CURL extension so your can't get link form other website";
 
 ?>
