@@ -363,6 +363,6 @@ $lang_module['filter_lang_asc'] = "Increasing";
 $lang_module['filter_lang_desc'] = "Descending";
 $lang_module['filter_order_by'] = "Order by %s position";
 
-$lang_module['info_check_curl'] = "Your system had disabled CURL extension so your can't get link form other website";
+$lang_module['info_check_curl'] = "CURL extension is currently disabled on your system so you can't get link from an other website";
 
 ?>
