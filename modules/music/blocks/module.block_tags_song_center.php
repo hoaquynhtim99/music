@@ -9,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $module_file, $module_info, $mainURL, $lang_module, $db, $module_data, $module_name, $setting, $main_header_URL, $op, $downURL, $allsinger, $category;
+global $module_file, $module_info, $mainURL, $lang_module, $db, $module_data, $module_name, $setting, $main_header_URL, $op, $downURL, $allsinger, $category, $nv_Request;
 
 $xtpl = new XTemplate( "block_tabs_song_center.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
