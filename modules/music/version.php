@@ -11,10 +11,10 @@ if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 $module_version = array( //
     "name" => "Music", // Tieu de module
-    "modfuncs" => "main, listenone, listenlist, search, playlist, album, song, creatalbum, listenuserlist, allplaylist, viewvideo, video, upload, searchvideo, editplaylist, managersong, gift, down", //
+    "modfuncs" => "main, listenone, listenlist, search, playlist, album, song, creatalbum, listenuserlist, allplaylist, viewvideo, video, upload, searchvideo, editplaylist, managersong, gift", //
     "is_sysmod" => 0, //
     "virtual" => 1, //
-    "version" => "3.2.00", //
+    "version" => "3.3.01", //
     "date" => "Wed, 26 Jan 2011 12:47:15 GMT", //
     "author" => "PHAN TAN DUNG (phantandung1912@gmail.com)", //
     "note" => "", //
