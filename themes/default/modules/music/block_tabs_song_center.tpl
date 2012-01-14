@@ -48,6 +48,7 @@
 			{LANG.upload}: <a class="singer" href="{url_search_upload}" title="{who_upload}">{who_upload}</a> | {LANG.category_2}: <a class="singer" href="{url_search_category}" title="{category}">{category}</a> | {LANG.view}:	{view}
 			<div class="hr"></div>
 			<!-- END: loop -->
+			<script type="text/javascript">$(document).ready(function(){$("ul.mtool a.madd").click(function(){$(this).removeClass("madd").addClass("madded");addplaylist($(this).attr("name"));});});</script>
 			<!-- END: songdata -->
 			<div class="clear"></div>
 		</div>
