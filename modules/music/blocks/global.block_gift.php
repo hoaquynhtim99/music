@@ -29,9 +29,9 @@ if ( ! nv_function_exists( 'nv_music_gift_block' ) )
 		{
 			include( $block_file_lang );
 			
-			$sql = "SELECT a.who_send, a.who_receive, a.time, a.body, b.id AS songid, b.ten AS songalias, b.tenthat AS songtitle, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $data . "_gift` as a INNER JOIN `" . NV_PREFIXLANG . "_" . $data . "` AS b ON a.songid =b.id RIGHT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS c ON b.casi=c.ten WHERE a.active=1 ORDER BY a.time DESC LIMIT 0,3";
+			$sql = "SELECT a.who_send, a.who_receive, a.time, a.body, b.id AS songid, b.ten AS songalias, b.tenthat AS songtitle, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $data . "` AS b ON a.songid =b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS c ON b.casi=c.ten WHERE a.active=1 ORDER BY a.id DESC LIMIT 0,3";
 			
-			$list = nv_db_cache( $sql, 0, $module_name );
+			$list = nv_db_cache( $sql, 0, $module );
 		
 			if( ! empty( $list ) )
 			{
