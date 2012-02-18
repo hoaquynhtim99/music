@@ -9,11 +9,11 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $module_file, $module_info, $mainURL, $lang_module, $db, $module_data, $module_name, $setting, $main_header_URL, $op, $downURL, $allsinger, $category, $nv_Request;
+global $module_file, $module_info, $mainURL, $lang_module, $db, $module_data, $module_name, $setting, $main_header_URL, $op, $array_op, $downURL, $allsinger, $category, $nv_Request;
 
 $xtpl = new XTemplate( "block_tabs_song_center.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'LOAD_URL', $main_header_URL . "=" . $op . "&loadblocktabsong=" );
+$xtpl->assign( 'LOAD_URL', $main_header_URL . "=" . ( empty( $array_op ) ? $op : implode( "/", $array_op ) ) . "&loadblocktabsong=" );
 $xtpl->assign( 'URL_DOWN', $downURL );
 $xtpl->assign( 'ALL_NEW_SONG', $mainURL . "=song/id" );
 
