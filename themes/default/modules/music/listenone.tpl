@@ -143,7 +143,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<div class="alboxw">
 			<div class="alwrap alcontent infoerror">
 				<div>
-					{LANG.you_must} <a href="{GDATA.url_login}">{LANG.loginsubmit}</a> / <a href="{GDATA.url_register}">{LANG.register}</a> {LANG.to_access}
+					{LANG.you_must} <a href="{CDATA.url_login}">{LANG.loginsubmit}</a> / <a href="{CDATA.url_register}">{LANG.register}</a> {LANG.to_access}
 				</div>
 			</div>
 		</div>
@@ -241,7 +241,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<div class="alboxw">
 			<div class="alwrap alcontent infoerror">
 				<div>
-					{LANG.you_must} <a href="{GDATA.url_login}">{LANG.loginsubmit}</a> / <a href="{GDATA.url_register}">{LANG.register}</a> {LANG.to_access}
+					{LANG.you_must} <a href="{CDATA.url_login}">{LANG.loginsubmit}</a> / <a href="{CDATA.url_register}">{LANG.register}</a> {LANG.to_access}
 				</div>
 			</div>
 		</div>
@@ -327,7 +327,7 @@ $(document).ready(function() {
 			<div class="alboxw">
 				<div class="alwrap alcontent infoerror">
 					<div>
-						{LANG.you_must} <a href="{GDATA.url_login}">{LANG.loginsubmit}</a> / <a href="{GDATA.url_register}">{LANG.register}</a> {LANG.to_access}
+						{LANG.you_must} <a href="{CDATA.url_login}">{LANG.loginsubmit}</a> / <a href="{CDATA.url_register}">{LANG.register}</a> {LANG.to_access}
 					</div>
 				</div>
 			</div>

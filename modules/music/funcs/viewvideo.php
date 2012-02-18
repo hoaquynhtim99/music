@@ -13,17 +13,10 @@ $allsinger = getallsinger();
 $category = get_videocategory();
 $setting = setting_music();
 
-$user_login = $mainURL . "=login" ;
-$user_register = $mainURL . "=register" ;
-
-$name = '';		
-if ( defined( 'NV_IS_USER' ) )
-{ 
-	$name = $user_info['username'];
-}
-
 $g_array = array();
-$g_array['name'] = $name;
+$g_array['name'] = defined( 'NV_IS_USER' ) ? $user_info['username'] : '';
+$g_array['user_login'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login&amp;nv_redirect=" . nv_base64_encode( $client_info['selfurl'] );
+$g_array['user_register'] = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register";
 
 // Lay video
 $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
