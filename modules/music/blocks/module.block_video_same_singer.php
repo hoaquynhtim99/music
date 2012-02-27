@@ -9,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $op, $module_name;
+global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $op, $module_name, $array_op;
 
 $xtpl = new XTemplate( "block_video_same_singer.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );

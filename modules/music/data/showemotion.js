@@ -21,7 +21,9 @@ function nvm_insert_text(text, spaces){
 	
 	var textarea = document.getElementById('commentbody');
 
-	if (!isNaN(textarea.selectionStart))
+ 	// Since IE9, IE also has textarea.selectionStart, but it still needs to be treated the old way.
+ 	// Therefore we simply add a !is_ie here until IE fixes the text-selection completely.
+ 	if (!isNaN(textarea.selectionStart) && !is_ie)
 	{
 		var sel_start = textarea.selectionStart;
 		var sel_end = textarea.selectionEnd;
