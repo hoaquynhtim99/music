@@ -19,8 +19,6 @@ $channel['description'] = $global_config['site_description'];
 
 // Global data
 $category = get_category();
-$allsinger = getallsinger();
-$allauthor = getallauthor();
 $video_category = get_videocategory();
 
 // Get lang
@@ -39,19 +37,19 @@ if( $xml !== false and $module_info['rss'] )
 
 		if( $type == change_alias( $lang_rss['rss_gift'] ) )
 		{
-			$sql = "SELECT a.who_send AS who_send, a.who_receive AS who_receive, a.time AS time, a.body AS body, b.id AS songid, b.ten AS song_alias, b.tenthat AS song_title, b.casi AS casi FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 30";
+			$sql = "SELECT a.who_send AS who_send, a.who_receive AS who_receive, a.time AS time, a.body AS body, b.id AS songid, b.ten AS song_alias, b.tenthat AS song_title, b.casi AS casi, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 30";
 
 			if( ( $result = $db->sql_query( $sql ) ) !== false )
 			{
-				while( list( $who_send, $who_receive, $time, $body, $songid, $song_alias, $song_title, $casi ) = $db->sql_fetchrow( $result ) )
+				while( list( $who_send, $who_receive, $time, $body, $songid, $song_alias, $song_title, $casi, $singername ) = $db->sql_fetchrow( $result ) )
 				{
 					$items[] = array( //
-						'title' => $song_title . " - " . $allsinger[$casi], //
+						'title' => $song_title . " - " . ( $singername ? $singername : $lang_module['unknow'] ), //
 						'link' => NV_MY_DOMAIN . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=listenone/" . $songid . "/" . $song_alias, //
 						'guid' => $module_name . '_' . $songid, //
 						'description' => $body . "<strong><br />" . $who_send . " - " . $who_receive . "</strong>", //
 						'pubdate' => $time //
-							);
+					);
 				}
 			}
 		}
@@ -71,7 +69,7 @@ if( $xml !== false and $module_info['rss'] )
 						'guid' => $module_name . '_' . $row['id'], //
 						'description' => $rimages . $row['message'], //
 						'pubdate' => $row['time'] //
-							);
+					);
 				}
 			}
 		}
@@ -92,19 +90,19 @@ if( $xml !== false and $module_info['rss'] )
 				}
 			}
 
-			$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
+			$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
 
 			if( ( $result = $db->sql_query( $sql ) ) !== false )
 			{
 				while( list( $id, $ten, $tenthat, $casithat, $add_time ) = $db->sql_fetchrow( $result ) )
 				{
 					$items[] = array( //
-						'title' => $tenthat . " - " . $casithat, //
+						'title' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
 						'link' => NV_MY_DOMAIN . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=listenone/" . $id . "/" . $ten, //
 						'guid' => $module_name . '_' . $id, //
-						'description' => $tenthat . " - " . $casithat, //
+						'description' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
 						'pubdate' => $add_time //
-							);
+					);
 				}
 			}
 		}
@@ -125,7 +123,7 @@ if( $xml !== false and $module_info['rss'] )
 				}
 			}
 
-			$sql = "SELECT a.id AS id, a.name AS ten, a.tname AS tenthat, b.tenthat AS casithat, a.dt AS add_time, a.thumb AS thumb FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
+			$sql = "SELECT a.id AS id, a.name AS ten, a.tname AS tenthat, b.tenthat AS casithat, a.dt AS add_time, a.thumb AS thumb FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
 
 			if( ( $result = $db->sql_query( $sql ) ) !== false )
 			{
@@ -134,31 +132,31 @@ if( $xml !== false and $module_info['rss'] )
 					$rimages = "<img src=\"" . NV_MY_DOMAIN . $thumb . "\" width=\"100\" align=\"left\" border=\"0\">";
 
 					$items[] = array( //
-						'title' => $tenthat . " - " . $casithat, //
+						'title' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
 						'link' => NV_MY_DOMAIN . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=listenone/" . $id . "/" . $ten, //
 						'guid' => $module_name . '_' . $id, //
 						'description' => $rimages, //
 						'pubdate' => $add_time //
-							);
+					);
 				}
 			}
 		}
 	}
 	else
 	{
-		$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten ORDER BY a.id DESC LIMIT 30";
+		$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten ORDER BY a.id DESC LIMIT 30";
 
 		if( ( $result = $db->sql_query( $sql ) ) !== false )
 		{
 			while( list( $id, $ten, $tenthat, $casithat, $add_time ) = $db->sql_fetchrow( $result ) )
 			{
 				$items[] = array( //
-					'title' => $tenthat . " - " . $casithat, //
+					'title' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
 					'link' => NV_MY_DOMAIN . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=listenone/" . $id . "/" . $ten, //
 					'guid' => $module_name . '_' . $id, //
-					'description' => $tenthat . " - " . $casithat, //
+					'description' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
 					'pubdate' => $add_time //
-						);
+				);
 			}
 		}
 	}

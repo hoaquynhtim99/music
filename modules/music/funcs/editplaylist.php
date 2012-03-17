@@ -76,7 +76,7 @@ $songdata = array_filter( $songdata );
 $songdata = array_unique( $songdata );
 $songdata = implode( ",", $songdata );
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $songdata . ") AND `active`=1";
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN(" . $songdata . ") AND a.active=1";
 $result = $db->sql_query( $sql );
 
 $array = array();
@@ -85,10 +85,10 @@ while( $song = $db->sql_fetchrow( $result ) )
 	$array[] = array(
 		"songid" => $song['id'], //
 		"songname" => $song['tenthat'], //
-		"songsinger" => $allsinger[$song['casi']], //
+		"songsinger" => $song['singername'] ? $song['singername'] : $lang_module['unknow'], //
 		"url_view" => $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . $song['casi'] //
-			);
+		"url_search_singer" => $mainURL . "=search/singer/" . ( $song['singeralias'] ? $song['singeralias'] : '-' ) //
+	);
 }
 
 $contents = nv_music_editplaylist( $g_array, $array, $row );

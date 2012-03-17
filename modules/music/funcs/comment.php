@@ -17,15 +17,12 @@ $where = filter_text_input( 'where', 'get', '', 1 );
 $page = $nv_Request->get_int( 'page', 'get', 0 );
 
 // Kiem tra tinh hop le du lieu
-if( ! in_array( $where, array(
-	'song',
-	'album',
-	'video' ) ) or empty( $id ) ) die( "Error Access!!!" );
+if( ! in_array( $where, array( 'song', 'album', 'video' ) ) or empty( $id ) ) die( "Error Access!!!" );
 
 $g_array = array(
 	"id" => $id, //
 	"where" => $where, //
-	);
+);
 
 // So binh luan
 list( $num ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) AS num FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE `what`=" . $id . " AND `active`=1" ) );
@@ -46,7 +43,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"name" => empty( $row['username'] ) ? $row['name'] : $row['username'], //
 		"date" => $row['dt'], //
 		"avatar" => $row['photo'] //
-			);
+	);
 }
 
 $contents = nv_music_showcomment( $g_array, $array );

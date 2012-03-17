@@ -18,7 +18,6 @@ if( empty( $id ) or empty( $name ) )
 	module_info_die();
 }
 
-$allsinger = getallsinger();
 $globaldata = array();
 
 if( $where == 'song' )
@@ -35,7 +34,7 @@ if( $where == 'song' )
 		$song['duongdan'] = NV_MY_DOMAIN . $song['duongdan'];
 	}
 
-	$song['casi'] = $allsinger[$song['casi']];
+	$song['casi'] = $song['casi'];
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = numview+1 WHERE `id` =" . $id );
 	$globaldata[] = $song;
 }
@@ -53,7 +52,7 @@ elseif( $where == 'video' )
 		$song['duongdan'] = NV_MY_DOMAIN . $song['duongdan'];
 	}
 
-	$song['casi'] = $allsinger[$song['casi']];
+	$song['casi'] = $song['casi'];
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
 	$globaldata[] = $song;
 }
@@ -76,7 +75,7 @@ elseif( $where == 'album' )
 			$song['duongdan'] = NV_MY_DOMAIN . $song['duongdan'];
 		}
 
-		$song['casi'] = $allsinger[$song['casi']];
+		$song['casi'] = $song['casi'];
 		$globaldata[] = $song;
 	}
 }
@@ -111,9 +110,9 @@ elseif( $where == 'playlist' )
 
 		$globaldata[] = array(
 			"duongdan" => $duongdan, //
-			"casi" => $allsinger[$casi], //
+			"casi" => $casi, //
 			"tenthat" => $tenthat //
-				);
+		);
 	}
 }
 else

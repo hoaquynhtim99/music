@@ -13,8 +13,6 @@ $page_title = $lang_module['listen_playlist'] . NV_TITLEBAR_DEFIS . $module_info
 $key_words = $module_info['keywords'];
 $description = $setting['description'];
 
-$allsinger = getallsinger();
-
 // Lay thong tin playlist
 $num = $nv_Request->get_int( $module_name . '_numlist', 'cookie', 0 );
 
@@ -32,7 +30,7 @@ if( ! empty( $num ) )
 
 	$songid = implode( ",", $songid );
 
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . $songid . ") AND `active`=1";
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN (" . $songid . ") AND a.active=1";
 	$result = $db->sql_query( $sql );
 
 	while( $row = $db->sql_fetchrow( $result ) )
@@ -40,11 +38,11 @@ if( ! empty( $num ) )
 		$array[] = array(
 			"id" => $row['id'], //
 			"song_name" => $row['tenthat'], //
-			"song_singer" => $allsinger[$row['casi']], //
+			"song_singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 			"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-			"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'], //
+			"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ) //
-				);
+		);
 	}
 }
 

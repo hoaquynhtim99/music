@@ -15,10 +15,7 @@ $id = $nv_Request->get_int( 'id', 'post', 0 );
 $body = $nv_Request->get_string( 'body', 'post', '' );
 $where = filter_text_input( 'where', 'post', '', 1 );
 
-if( ! in_array( $where, array(
-	"song",
-	"album",
-	"video" ) ) )
+if( ! in_array( $where, array( "song", "album", "video" ) ) )
 {
 	die( "ERR_" . $lang_module['comment_error'] );
 }

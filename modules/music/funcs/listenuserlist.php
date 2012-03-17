@@ -29,9 +29,6 @@ if( $check_exit != 1 or $row['keyname'] != $playlist_alias )
 
 $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view`=view+1 WHERE `id`=" . $id );
 
-// Global data
-$allsinger = getallsinger();
-
 // Page info
 $page_title = "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'];
 $key_words = "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'];
@@ -53,14 +50,14 @@ $gdata = array(
 	"pl_date" => nv_date( "d/m/Y H:i", $row['time'] ), //
 	"pl_message" => $row['message'], //
 	"pl_url_search_upload" => $mainURL . "=search/upload/" . $row['username'] //
-		);
+);
 
 $sdata = array();
 
 $listsong_id = explode( ",", $row['songdata'] );
 $listsong_id = array_filter( $listsong_id );
 
-$sql = "SELECT `id`, `ten`, `tenthat`, `casi` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode( ",", $listsong_id ) . ") AND `active`=1";
+$sql = "SELECT a.id, a.ten, a.tenthat, a.casi, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN (" . implode( ",", $listsong_id ) . ") AND a.active=1";
 $list = nv_db_cache( $sql, 'id' );
 $gdata['numsong'] = sizeof( $list );
 
@@ -71,11 +68,11 @@ foreach( $listsong_id as $sid )
 		$sdata[] = array(
 			"id" => $list[$sid]['id'], //
 			"song_name" => $list[$sid]['tenthat'], //
-			"song_singer" => $allsinger[$list[$sid]['casi']], //
+			"song_singer" => $list[$sid]['singername'] ? $list[$sid]['singername'] : $lang_module['unknow'], //
 			"url_listen" => $mainURL . "=listenone/" . $list[$sid]['id'] . "/" . $list[$sid]['ten'], //
-			"url_search_singer" => $mainURL . "=search/singer/" . $list[$sid]['casi'], //
+			"url_search_singer" => $mainURL . "=search/singer/" . ( $list[$sid]['singeralias'] ? $list[$sid]['singeralias'] : '-' ), //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $list[$sid]['id'] . "/" . $list[$sid]['ten'], true ) //
-				);
+		);
 	}
 }
 

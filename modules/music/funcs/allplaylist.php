@@ -24,10 +24,10 @@ $g_array = array(
 	"hot" => $mainURL . "=allplaylist/view/" . $key, //
 	"new" => $mainURL . "=allplaylist/id/" . $key, //
 	"type" => $type //
-		);
+);
 
 $data = '';
-if( $key != '-' ) $data = "WHERE `keyname` LIKE '%" . $db->dblikeescape( $key ) . "%' AND `active` = 1";
+if( $key != '-' ) $data = "WHERE `keyname` LIKE '%" . $db->dblikeescape( ( $key == '-' ? '' : $key ) ) . "%' AND `active` = 1";
 else  $data = "WHERE `active` = 1";
 
 // Xu li du lieu

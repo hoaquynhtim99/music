@@ -9,8 +9,6 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-if( empty( $allsinger ) ) $allsinger = getallsinger();
-
 // Lay cac gia tri
 $type = isset( $array_op[1] ) ? $array_op[1] : 'numview';
 $now_page = isset( $array_op[3] ) ? intval( $array_op[3] ) : 1;
@@ -24,16 +22,17 @@ $g_array = array(
 	"hot" => $mainURL . "=album/numview/" . $key, //
 	"new" => $mainURL . "=album/id/" . $key, //
 	"type" => $type //
-		);
+);
 
 $data = '';
 if( $key != '-' )
 {
-	$data = "WHERE `name` LIKE '%" . $db->dblikeescape( $key ) . "%' AND `active` = 1";
+	if( $key == '-' ) $key = '';
+	$data = "WHERE a.name LIKE '%" . $db->dblikeescape( $key ) . "%' AND a.active=1";
 }
 else
 {
-	$data = "WHERE `active` = 1";
+	$data = "WHERE a.active=1";
 }
 
 // Xu li du lieu
@@ -46,8 +45,9 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album " . $data . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT COUNT(*) AS num FROM " . NV_PREFIXLANG . "_" . $module_data . "_album " . $data;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $data;
+$sqlnum = "SELECT COUNT(*) AS num " . $sql;
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername " . $sql . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
 
 // Tinh so trang
 $list = nv_db_cache( $sqlnum, 0, $module_name );
@@ -71,13 +71,13 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$array[] = array(
 		"name" => $row['tname'], //
 		"thumb" => $row['thumb'], //
-		"singer" => $allsinger[$row['casi']], //
+		"singer" => empty( $row['singername'] ) ? $lang_module['unknow'] : $row['singername'], //
 		"upload" => $row['upboi'], //
 		"view" => $row['numview'], //
 		"url_listen" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'], //
+		"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
 		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'] //
-			);
+	);
 }
 
 // Xu ly tieu de trang

@@ -14,14 +14,12 @@ $page_title = $mod_title = $lang_module['gift_list'];
 $description = $setting['description'];
 $key_words = $module_info['keywords'];
 
-$allsinger = getallsinger();
-
 $page = $page = isset( $array_op[1] ) ? intval( end( explode( "-", $array_op[1] ) ) ) : 1;
 ;
 $per_page = 10;
 $base_url = $mainURL . "=" . $op;
 
-$sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS `songid`, b.ten AS `songname`, b.tenthat AS `songtitle`, b.casi AS `songsinger` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ( $page - 1 ) * $per_page ) . "," . $per_page;
+$sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS `songid`, b.ten AS `songname`, b.tenthat AS `songtitle`, b.casi AS `songsinger`, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ( $page - 1 ) * $per_page ) . "," . $per_page;
 
 $result = $db->sql_query( $sql );
 $query = $db->sql_query( "SELECT FOUND_ROWS()" );
@@ -52,9 +50,9 @@ $generate_page = nv_alias_page( $lang_module['goto'], $base_url, $all_page, $per
 $array = array();
 while( $row = $db->sql_fetchrow( $result ) )
 {
-	$row['singer'] = $allsinger[$row['songsinger']];
+	$row['singer'] = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 	$row['url_listen'] = $mainURL . "=listenone/" . $row['songid'] . "/" . $row['songname'];
-	$row['url_search_singer'] = $mainURL . "=search/singer/" . $row['songsinger'];
+	$row['url_search_singer'] = $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' );
 	$array[] = $row;
 }
 

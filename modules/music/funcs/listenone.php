@@ -15,7 +15,7 @@ $alias = isset( $array_op[2] ) ? $array_op[2] : "";
 
 if( ! $id ) module_info_die();
 
-$sql = "SELECT a.id AS id, a.ten AS ten, a.album AS album, a.tenthat AS tenthat, a.casi AS casi, a.nhacsi AS nhacsi, a.theloai AS theloai, a.listcat AS listcat, a.duongdan AS duongdan, a.upboi AS upboi, a.numview AS numview, a.server AS server, a.binhchon AS binhchon, a.hit AS hit, b.name AS name, b.tname AS tname FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.id WHERE a.id=" . $id . " AND a.active=1";
+$sql = "SELECT a.id AS id, a.ten AS ten, a.album AS album, a.tenthat AS tenthat, a.casi AS casi, a.nhacsi AS nhacsi, a.theloai AS theloai, a.listcat AS listcat, a.duongdan AS duongdan, a.upboi AS upboi, a.numview AS numview, a.server AS server, a.binhchon AS binhchon, a.hit AS hit, b.name AS name, b.tname AS tname, c.ten AS singeralias, c.tenthat AS singername, d.ten AS authoralias, d.tenthat AS authorname FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.album=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON a.casi=c.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS d ON a.nhacsi=d.id WHERE a.id=" . $id . " AND a.active=1";
 $result = $db->sql_query( $sql );
 $check_exit = $db->sql_numrows( $result );
 $row = $db->sql_fetchrow( $result );
@@ -30,8 +30,6 @@ updateHIT_VIEW( $id, '', false );
 
 // Global data
 $category = get_category();
-$allsinger = getallsinger();
-$allauthor = getallauthor();
 
 // Info user
 $name = ( defined( 'NV_IS_USER' ) ) ? $user_info['username'] : "";
@@ -51,7 +49,7 @@ $cdata = array(
 	"checkhit" => $checkhit, //
 	"url_login" => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=login&amp;nv_redirect=" . nv_base64_encode( $client_info['selfurl'] ), //
 	"url_register" => NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=users&amp;" . NV_OP_VARIABLE . "=register" //
-		);
+);
 
 $gdata = array(
 	"username" => $name, //
@@ -65,7 +63,7 @@ $gdata = array(
 	"selfurl_base" => $client_info['selfurl'], //
 	"selfurl_encode" => rawurlencode( $client_info['selfurl'] ), //
 	"checksess_gift" => md5( "gift_" . $global_config['sitekey'] . session_id() ) //
-		);
+);
 
 if( ! empty( $row['listcat'] ) )
 {
@@ -74,9 +72,7 @@ if( ! empty( $row['listcat'] ) )
 
 	foreach( $row['listcat'] as $cat )
 	{
-		$listcat[] = array( "title" => $category[$cat]['title'], //
-				"url" => $mainURL . "=search/category/" . $cat //
-				);
+		$listcat[] = array( "title" => $category[$cat]['title'], "url" => $mainURL . "=search/category/" . $cat );
 	}
 }
 else
@@ -91,20 +87,20 @@ $sdata = array(
 	"song_id" => $id, //
 	"song_name" => $row['tenthat'], //
 	"song_sname" => $row['ten'], //
-	"song_singer" => $allsinger[$row['casi']], //
-	"song_author" => $allauthor[$row['nhacsi']], //
+	"song_singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+	"song_author" => $row['authorname'] ? $row['authorname'] : $lang_module['unknow'], //
 	"song_cat" => $category[$row['theloai']]['title'], //
 	"song_listcat" => $listcat, //
 	"song_vote" => $row['binhchon'], //
 	"song_numview" => $row['numview'], //
 	"song_link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ), //
 
-	"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'], //
+	"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
 	"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
-	"url_search_album" => $mainURL . "=album/numview/" . $row['album'], //
+	"url_search_album" => $mainURL . "=album/numview/" . $row['name'], //
 
 	"album_name" => $row['tname'] //
-		);
+);
 
 // Lyric data
 $sqllyric = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE songid = " . $id . " AND `active` = 1 ORDER BY id DESC";
@@ -114,7 +110,7 @@ $num_lyric = $db->sql_numrows( $querylyric );
 $ldata = array(
 	"number" => $num_lyric, //
 	"data" => array(), //
-	);
+);
 
 while( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 {
@@ -124,12 +120,12 @@ while( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 }
 
 // Page title
-$page_title = $row['tenthat'] . " - " . $allsinger[$row['casi']];
-$key_words = $row['tenthat'] . " - " . $allsinger[$row['casi']];
+$page_title = $row['tenthat'] . " - " . $sdata['song_singer'];
+$key_words = $row['tenthat'] . " - " . $sdata['song_singer'];
 $description = ! isset( $ldata['data'][0]['content']
 {
 	50}
-) ? sprintf( $lang_module['share_descreption'], $row['tenthat'], $allsinger[$row['casi']], $allauthor[$row['nhacsi']], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
+) ? sprintf( $lang_module['share_descreption'], $row['tenthat'], $sdata['song_singer'], $sdata['song_author'], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
 
 $contents = nv_music_listenone( $gdata, $sdata, $cdata, $ldata );
 

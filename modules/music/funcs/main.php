@@ -28,11 +28,10 @@ $description = $setting['description'];
 $key_words = $module_info['keywords'];
 
 // Global data
-if( empty( $allsinger ) ) $allsinger = getallsinger();
 if( empty( $category ) ) $category = get_category();
 
 // Lay album HOT nhat
-$sql = "SELECT b.id, b.name, b.tname, b.casi, b.thumb, b.listsong FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id WHERE b.active=1 ORDER BY a.stt ASC";
+$sql = "SELECT b.id, b.name, b.tname, b.casi, b.thumb, b.listsong, c.ten AS singeralias, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE b.active=1 ORDER BY a.stt ASC";
 
 // Lay 9 album moi nhat khi load tab
 if( $nv_Request->isset_request( 'load_main_song', 'get' ) )
@@ -40,7 +39,7 @@ if( $nv_Request->isset_request( 'load_main_song', 'get' ) )
 	$type = $nv_Request->get_int( 'load_main_song', 'get', 0 );
 	if( $type == 2 )
 	{
-		$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb`, `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `active`=1 ORDER BY `addtime` DESC LIMIT 0,9";
+		$sql = "SELECT a.id, a.name, a.tname, a.casi, a.thumb, a.listsong, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.addtime DESC LIMIT 0,9";
 	}
 	elseif( $type != 1 )
 	{
@@ -61,15 +60,15 @@ foreach( $list as $row )
 		"id" => $row['id'], //
 		"tname" => $row['tname'], //
 		"thumb" => $row['thumb'], //
-		"casi" => $allsinger[$row['casi']], //
-		"url_search_singer" => nv_url_rewrite( $main_header_URL . "=search/singer/" . $row['casi'], true ), //
+		"casi" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+		"url_search_singer" => nv_url_rewrite( $main_header_URL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), true ), //
 		"url_album" => nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true ) //
-			);
+	);
 }
 
 if( ! empty( $first_album_id ) )
 {
-	$sql = "SELECT `id`, `ten`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $first_album_id[1] . ") AND `active`=1";
+	$sql = "SELECT a.id, a.ten, a.tenthat, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN(" . $first_album_id[1] . ") AND a.active=1";
 	$list = nv_db_cache( $sql, 'id', $module_name );
 	$_tmp = array();
 
@@ -89,7 +88,7 @@ if( ! empty( $first_album_id ) )
 					"stt" => $i, //
 					"tenthat" => $_tmp[$_sid]['tenthat'], //
 					"url" => nv_url_rewrite( $main_header_URL . "=listenone/" . $_tmp[$_sid]['id'] . "/" . $_tmp[$_sid]['ten'], true ) //
-						);
+				);
 
 				$i++;
 				if( $i > 10 ) break;

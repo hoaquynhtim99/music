@@ -9,8 +9,6 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$allsinger = getallsinger();
-
 $username = "";
 $userid = 0;
 if( defined( 'NV_IS_USER' ) )
@@ -26,9 +24,7 @@ $page_title .= $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $description = $setting['description'];
 
-$g_array = array( "username" => $username, //
-		"userid" => $userid //
-		);
+$g_array = array( "username" => $username, "userid" => $userid );
 
 if( $userid )
 {
@@ -47,7 +43,7 @@ if( $userid )
 
 		if( ! empty( $list_song ) )
 		{
-			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `active` = 1 AND `id` IN(" . $list_song . ") ORDER BY `ten` ASC";
+			$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 AND a.id IN(" . $list_song . ") ORDER BY a.ten ASC";
 			$result = $db->sql_query( $sql );
 			$i = 1;
 			while( $row = $db->sql_fetchrow( $result ) )
@@ -55,10 +51,10 @@ if( $userid )
 				$array['song'][] = array(
 					"stt" => $i, //
 					"songname" => $row['tenthat'], //
-					"singer" => $allsinger[$row['casi']], //
+					"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 					"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-					"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'] //
-						);
+					"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+				);
 				$i++;
 			}
 		}
@@ -81,7 +77,7 @@ if( $userid )
 			"view" => $row['view'], //
 			"url_view" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], //
 			"url_edit" => $mainURL . "=editplaylist/" . $row['id'] //
-				);
+		);
 	}
 }
 
