@@ -7,7 +7,7 @@
  * @createdate 26/01/2011 09:17 AM
  */
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $lang_module, $module_file, $module_info, $mainURL;
 

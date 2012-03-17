@@ -6,19 +6,20 @@
  * @Copyright (C) 2011 Freeware
  * @Createdate 26-01-2011 14:43
  */
- 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['author_list'];
 
-if ( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
+if( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
 {
 	$numshow = $nv_Request->get_int( 'numshow', 'post', 100 );
-	$q = change_alias( $nv_Request->get_string( 'q', 'post', '' ));
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=author&numshow=" . $numshow . "&q=" . $q ) ;  die();	
+	$q = change_alias( $nv_Request->get_string( 'q', 'post', '' ) );
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=author&numshow=" . $numshow . "&q=" . $q );
+	die();
 }
 
-// Lay du lieu 
+// Lay du lieu
 $contents = "";
 
 $numshow = $nv_Request->get_int( 'numshow', 'get', 100 );
@@ -26,20 +27,21 @@ $now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
 $q = filter_text_input( 'q', 'get', '' );
 
 $order = filter_text_input( 'order', 'get', 'id' );
-if ( $order == 'id' ) $sort = "ORDER BY " . $order  . " DESC" ; else $sort = "ORDER BY " . $order  . " ASC" ;
+if( $order == 'id' ) $sort = "ORDER BY " . $order . " DESC";
+else  $sort = "ORDER BY " . $order . " ASC";
 
 // Xu li du lieu
-if ( ! $now_page ) 
+if( ! $now_page )
 {
-	$now_page = 1 ;
-	$first_page = 0 ;
+	$now_page = 1;
+	$first_page = 0;
 }
-else 
+else
 {
 	$first_page = ( $now_page - 1 ) * $numshow;
-}	
+}
 
-$where = "`ten` LIKE '%". $q ."%'";
+$where = "`ten` LIKE '%" . $q . "%'";
 
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE " . $where . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
 $sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE " . $where;
@@ -50,7 +52,10 @@ $link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name 
 $num = $db->sql_query( $sqlnum );
 list( $output ) = $db->sql_fetchrow( $num );
 $ts = 1;
-while ( $ts * $numshow < $output ) { $ts ++ ; }
+while( $ts * $numshow < $output )
+{
+	$ts++;
+}
 
 // Form tim kiem
 $contents .= "<form action=\"\" method=\"post\"><table class=\"tab1 fixbottomtable\"><tbody><tr><td>";
@@ -60,12 +65,12 @@ $contents .= $lang_module['author_search'] . ":&nbsp;";
 $i = 5;
 $contents .= "&nbsp;" . $lang_module['search_per_page'] . ":&nbsp;";
 $contents .= "<select name=\"numshow\">\n";
-while ( $i <= 1000 )
+while( $i <= 1000 )
 {
 	$a = '';
-	if ( $i == $numshow ) $a = "selected=\"selected\"";
-    $contents .= "<option " . $a . " value=\"".$i."\" >" . $i . "</option>\n";
-    $i = $i + 10;
+	if( $i == $numshow ) $a = "selected=\"selected\"";
+	$contents .= "<option " . $a . " value=\"" . $i . "\" >" . $i . "</option>\n";
+	$i = $i + 10;
 }
 $contents .= "</select>\n";
 
@@ -80,7 +85,7 @@ $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addauthor" );
 $xtpl->assign( 'URL_DEL_BACK', $link );
 $xtpl->assign( 'URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_author" );
-$xtpl->assign( 'ORDER_NAME', $link ."&order=ten" );
+$xtpl->assign( 'ORDER_NAME', $link . "&order=ten" );
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addauthor";
@@ -88,18 +93,18 @@ $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_
 $result = mysql_query( $sql );
 while( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'id', $row['id']);
-	$xtpl->assign( 'ten', $row['tenthat']);
-	$xtpl->assign( 'numsong', $row['numsong']);
-	$xtpl->assign( 'numvideo', $row['numvideo']);
+	$xtpl->assign( 'id', $row['id'] );
+	$xtpl->assign( 'ten', $row['tenthat'] );
+	$xtpl->assign( 'numsong', $row['numsong'] );
+	$xtpl->assign( 'numvideo', $row['numvideo'] );
 	$xtpl->assign( 'URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=nhacsi&q=" . $row['ten'] );
 	$xtpl->assign( 'URL_VIDEO', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip&type_search=nhacsi&q=" . $row['ten'] );
-	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&nhacsi=".$row['ten'] );
+	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&nhacsi=" . $row['ten'] );
 	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_author&id=" . $row['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );
-		
-	$xtpl->parse( 'main.row');
+
+	$xtpl->parse( 'main.row' );
 }
 
 $xtpl->parse( 'main' );

@@ -7,7 +7,7 @@
  * @createdate 05/12/2010 09:47
  */
 
-if ( ! defined( 'NV_IS_FILE_MODULES' ) ) die('Stop!!!');
+if( ! defined( 'NV_IS_FILE_MODULES' ) ) die( 'Stop!!!' );
 
 $sql_drop_module = array();
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "`";
@@ -314,10 +314,10 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 ) ENGINE=MyISAM";
 
 //1. them vao hot album
-$i = 1 ;
-while ( $i <= 9 )
+$i = 1;
+while( $i <= 9 )
 {
-	$sql_create_module[] ="
+	$sql_create_module[] = "
 	INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` 
 	(
 	`id` ,
@@ -326,9 +326,9 @@ while ( $i <= 9 )
 	)
 	VALUES 
 	(
-	'".$i."',  '0',  '".$i."'
+	'" . $i . "',  '0',  '" . $i . "'
 	)";
-	$i ++ ;
+	$i++;
 }
 
 // them vao cau hinh

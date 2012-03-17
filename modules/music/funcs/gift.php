@@ -7,7 +7,7 @@
  * @Createdate 26/01/2011 10:26 AM
  */
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 // Set page title, keywords, description
 $page_title = $mod_title = $lang_module['gift_list'];
@@ -16,26 +16,27 @@ $key_words = $module_info['keywords'];
 
 $allsinger = getallsinger();
 
-$page = $page = isset( $array_op[1] ) ? intval( end(explode("-",$array_op[1])) ) : 1;;
+$page = $page = isset( $array_op[1] ) ? intval( end( explode( "-", $array_op[1] ) ) ) : 1;
+;
 $per_page = 10;
 $base_url = $mainURL . "=" . $op;
-	
-$sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS `songid`, b.ten AS `songname`, b.tenthat AS `songtitle`, b.casi AS `songsinger` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ($page - 1)*$per_page ) . "," . $per_page;
+
+$sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS `songid`, b.ten AS `songname`, b.tenthat AS `songtitle`, b.casi AS `songsinger` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ( $page - 1 ) * $per_page ) . "," . $per_page;
 
 $result = $db->sql_query( $sql );
 $query = $db->sql_query( "SELECT FOUND_ROWS()" );
 list( $all_page ) = $db->sql_fetchrow( $query );
 
-if ( ! $all_page or $page >= $all_page )
+if( ! $all_page or $page >= $all_page )
 {
-	if ( $nv_Request->isset_request( 'page', 'get' ) )
+	if( $nv_Request->isset_request( 'page', 'get' ) )
 	{
 		Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
 		exit();
 	}
 }
 
-if ( ( ($page - 1)*$per_page ) > $all_page )
+if( ( ( $page - 1 ) * $per_page ) > $all_page )
 {
 	Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
 	exit();
@@ -49,7 +50,7 @@ if( $page > 1 )
 $generate_page = nv_alias_page( $lang_module['goto'], $base_url, $all_page, $per_page, $page );
 
 $array = array();
-while ( $row = $db->sql_fetchrow( $result ) )
+while( $row = $db->sql_fetchrow( $result ) )
 {
 	$row['singer'] = $allsinger[$row['songsinger']];
 	$row['url_listen'] = $mainURL . "=listenone/" . $row['songid'] . "/" . $row['songname'];

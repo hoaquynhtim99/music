@@ -7,7 +7,7 @@
  * @Createdate 26/01/2011 09:09 AM
  */
 
-if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' ); 
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['ads_title'];
 
@@ -22,9 +22,9 @@ $url = $nv_Request->get_string( 'url', 'post', '' );
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ads` ORDER BY `stt`";
 $result = $db->sql_query( $sql );
 $num = $db->sql_numrows( $result );
-$numadd = $num + 1 ;
+$numadd = $num + 1;
 
-if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
+if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 {
 	if( empty( $name ) )
 	{
@@ -42,22 +42,23 @@ if ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 			" . $db->dbescape( $link ) . ", 
 			" . $db->dbescape( $name ) . ",
 			" . $db->dbescape( $url ) . "
-		)"; 
-		
-		if ( $db->sql_query_insert_id( $sql ) ) 
-		{ 
+		)";
+
+		if( $db->sql_query_insert_id( $sql ) )
+		{
 			$db->sql_freeresult();
 			nv_del_moduleCache( $module_name );
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&". NV_OP_VARIABLE . "=" . $op ); die();
-		} 
-		else 
-		{ 
-			$error = $lang_module['error_save']; 
-		} 
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+			die();
+		}
+		else
+		{
+			$error = $lang_module['error_save'];
+		}
 	}
 }
 
-if( $error != '')
+if( $error != '' )
 {
 	$contents .= "<div class=\"quote\" style=\"width: 98%;\"><blockquote class=\"error\"><span>" . $error . "</span></blockquote></div><div class=\"clear\"</div>";
 }
@@ -71,20 +72,20 @@ $contents .= "<table class=\"tab1\">
 		</tr>
 	</thead>
 	<tbody>";
-$i = 1 ;
-while ( $row = $db->sql_fetchrow( $result ) )
+$i = 1;
+while( $row = $db->sql_fetchrow( $result ) )
 {
 	$contents .= "
 	<tr>
 		<td align=\"center\">" . $i . "</td>
-		<td>". $row['name'] . "</td>
+		<td>" . $row['name'] . "</td>
 		<td align=\"center\">
 			<span class=\"delete_icon\">
 				<a class=\"delfile\" href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delads&id=" . $row['id'] . "\">" . $lang_module['delete'] . "</a>
 			</span>
 		</td>
 	</tr>";
-	$i ++ ;
+	$i++;
 }
 $contents .= "</tbody>
 </table>

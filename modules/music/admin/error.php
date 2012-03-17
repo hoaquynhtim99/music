@@ -7,14 +7,14 @@
  * @Createdate 26/01/2011 10:12 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 // Cap nhat tinh trang cac bao loi
-if ( $nv_Request->isset_request( 'setviewed', 'post' ) )
+if( $nv_Request->isset_request( 'setviewed', 'post' ) )
 {
 	$id = $nv_Request->get_int( 'setviewed', 'post' );
 	if( ! $id ) die( "Error Access!!!" );
-	
+
 	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_error` SET `status`=0 WHERE `id`=" . $id;
 	$db->sql_query( $sql );
 	die( "OK" );
@@ -57,7 +57,7 @@ while( $row = $db->sql_fetchrow( $result2 ) )
 	$xtpl->assign( 'icon', $row['status'] ? "view" : "select" );
 	$xtpl->assign( 'atitle', $row['status'] ? $lang_module['error_check_viewed'] : "" );
 	$xtpl->assign( 'addtime', nv_date( "d/m/Y H:i", $row['addtime'] ) );
-	
+
 	if( $row['where'] == 'song' )
 	{
 		$album = getsongbyID( $row['sid'] );
@@ -65,24 +65,24 @@ while( $row = $db->sql_fetchrow( $result2 ) )
 		$xtpl->assign( 'url_edit', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=addsong&amp;id=" . $row['sid'] );
 
 		$xtpl->assign( 'SONG', $row['sid'] );
-		$xtpl->parse( 'main.row.check');
+		$xtpl->parse( 'main.row.check' );
 	}
 	else
 	{
 		$song = getalbumbyID( $row['sid'] );
-		$xtpl->assign( 'what', $lang_module['album'] . ' ' . $song['tname'] );	
+		$xtpl->assign( 'what', $lang_module['album'] . ' ' . $song['tname'] );
 		$xtpl->assign( 'url_edit', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=addalbum&amp;id=" . $row['sid'] );
 	}
-	
+
 	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_error&id=" . $row['id'] );
-	$xtpl->parse( 'main.row');
+	$xtpl->parse( 'main.row' );
 }
 
-if ( ! empty( $generate_page ) )
+if( ! empty( $generate_page ) )
 {
-    $xtpl->assign( 'GENERATE_PAGE', $generate_page );
-    $xtpl->parse( 'main.generate_page' );
+	$xtpl->assign( 'GENERATE_PAGE', $generate_page );
+	$xtpl->parse( 'main.generate_page' );
 }
 
 $xtpl->parse( 'main' );

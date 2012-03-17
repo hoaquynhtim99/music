@@ -7,13 +7,13 @@
  * @Createdate 26/01/2011 10:12 AM
  */
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $allsinger = getallsinger();
 
 $username = "";
 $userid = 0;
-if ( defined( 'NV_IS_USER' ) )
+if( defined( 'NV_IS_USER' ) )
 {
 	$username = $user_info['username'];
 	$userid = $user_info['userid'];
@@ -22,30 +22,29 @@ if ( defined( 'NV_IS_USER' ) )
 // Thong tin trang
 $page_title = $lang_module['playlist_save'] . NV_TITLEBAR_DEFIS;
 if( ! empty( $username ) ) $page_title .= $username . NV_TITLEBAR_DEFIS;
-$page_title .=  $module_info['custom_title'];
+$page_title .= $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $description = $setting['description'];
 
-$g_array = array(
-	"username" => $username,  //
-	"userid" => $userid  //
-);
+$g_array = array( "username" => $username, //
+		"userid" => $userid //
+		);
 
 if( $userid )
 {
 	$array = array( "song" => array(), "playlist" => array() );
-	
+
 	// Get song
-	$numsong = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
-	if ( $numsong > 0 )
+	$numsong = $nv_Request->get_int( $module_name . '_numlist', 'cookie', 0 );
+	if( $numsong > 0 )
 	{
 		$list_song = array();
-		for ( $i = 1; $i <= $numsong; $i ++ )
+		for( $i = 1; $i <= $numsong; $i++ )
 		{
-			$list_song[] = $nv_Request->get_int( $module_name . '_song'. $i , 'cookie', 0 );
+			$list_song[] = $nv_Request->get_int( $module_name . '_song' . $i, 'cookie', 0 );
 		}
 		$list_song = implode( ",", $list_song );
-		
+
 		if( ! empty( $list_song ) )
 		{
 			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `active` = 1 AND `id` IN(" . $list_song . ") ORDER BY `ten` ASC";
@@ -54,35 +53,35 @@ if( $userid )
 			while( $row = $db->sql_fetchrow( $result ) )
 			{
 				$array['song'][] = array(
-					"stt" => $i,  //
-					"songname" => $row['tenthat'],  //
-					"singer" => $allsinger[$row['casi']],  //
-					"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'],  //
-					"url_search_singer" => $mainURL . "=search/singer/" . $row['casi']  //
-				);
-				$i ++;
+					"stt" => $i, //
+					"songname" => $row['tenthat'], //
+					"singer" => $allsinger[$row['casi']], //
+					"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
+					"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'] //
+						);
+				$i++;
 			}
 		}
 	}
-	
+
 	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active` = 1 AND `userid` = " . $userid . " ORDER BY `id` DESC";
 	$result = $db->sql_query( $sql );
 	$numlist = $db->sql_numrows( $result );
 	$g_array['num'] = $numlist;
 	$g_array['playlist_max'] = $setting['playlist_max'];
-	
-	while ( $row = $db->sql_fetchrow( $result ) )
+
+	while( $row = $db->sql_fetchrow( $result ) )
 	{
 		$array['playlist'][] = array(
-			"playlist_img" => "",  //
-			"name" => $row['name'],  //
-			"singer" => $row['singer'],  //
-			"date" => $row['time'],  //
-			"id" => $row['id'],  //
-			"view" => $row['view'],  //
-			"url_view" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'],  //
-			"url_edit" => $mainURL . "=editplaylist/" . $row['id']  //
-		);
+			"playlist_img" => "", //
+			"name" => $row['name'], //
+			"singer" => $row['singer'], //
+			"date" => $row['time'], //
+			"id" => $row['id'], //
+			"view" => $row['view'], //
+			"url_view" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], //
+			"url_edit" => $mainURL . "=editplaylist/" . $row['id'] //
+				);
 	}
 }
 

@@ -7,9 +7,9 @@
  * @Createdate 29-12-2010 18:43
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-if ( defined( 'NV_EDITOR' ) ) require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
+if( defined( 'NV_EDITOR' ) ) require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
 
 $contents = "";
 $error = "";
@@ -19,7 +19,7 @@ $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 $page_title = $lang_module['edit_gift'];
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `id` = ".$id."";
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `id` = " . $id . "";
 $result = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $result );
 
@@ -33,7 +33,7 @@ $tmp = getsongbyID( $row['songid'] );
 $gift['songname'] = $tmp['tenthat'];
 
 // Sua
-if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
+if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
 	$gift['who_send'] = filter_text_input( 'who_send', 'post', '', 1, 100 );
 	$gift['who_receive'] = filter_text_input( 'who_receive', 'post', '', 1, 100 );
@@ -59,11 +59,11 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 			`who_receive`=" . $db->dbescape( $gift['who_receive'] ) . ",
 			`body`=" . $db->dbescape( $gift['body'] ) . "
 		WHERE `id` =" . $id;
-		
+
 		if( $db->sql_query( $sql ) )
 		{
 			$db->sql_freeresult();
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=gift" ); 
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=gift" );
 			die();
 		}
 		else
@@ -75,11 +75,11 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 }
 
 // Hien bao loi
-if($error)
+if( $error )
 {
 	$contents .= "<div class=\"quote\" style=\"width:98%\">\n
 	<blockquote class=\"error\">
-	<span>".$error."</span>
+	<span>" . $error . "</span>
 	</blockquote>
 	</div>\n
 	<div class=\"clear\">
@@ -92,7 +92,7 @@ $contents .= "
 		<thead>
 			<tr>
 				<td colspan=\"2\">
-					".$lang_module['edit_gift']."
+					" . $lang_module['edit_gift'] . "
 				</td>
 			</tr>
 		</thead>
@@ -125,12 +125,12 @@ $contents .= "
 				<td>" . $lang_module['content'] . "
 				</td>
 				<td>
-					<textarea style=\"width: 680px\" name=\"body\" id=\"body\" cols=\"20\" rows=\"15\">" . nv_htmlspecialchars($gift['body']) ."</textarea>\n		
+					<textarea style=\"width: 680px\" name=\"body\" id=\"body\" cols=\"20\" rows=\"15\">" . nv_htmlspecialchars( $gift['body'] ) . "</textarea>\n		
 				</td>
 			</tr>
 			<tr>
 				<td colspan=\"2\" align=\"center\" style=\"background: #eee;\">\n
-					<input name=\"confirm\" value=\"".$lang_module['save']."\" type=\"submit\">\n
+					<input name=\"confirm\" value=\"" . $lang_module['save'] . "\" type=\"submit\">\n
 					<input type=\"hidden\" name=\"save\" id=\"save\" value=\"1\">\n
 				</td>\n
 			</tr>\n

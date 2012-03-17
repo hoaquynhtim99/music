@@ -7,33 +7,33 @@
  * @Createdate 26/01/2011 09:09 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-if ( $nv_Request->isset_request( 'changeweight', 'post' ) )
+if( $nv_Request->isset_request( 'changeweight', 'post' ) )
 {
-    if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-    
-    $id = $nv_Request->get_int( 'id', 'post', 0 );
-    $new = $nv_Request->get_int( 'new', 'post', 0 );
-    
-    if ( empty( $id ) ) die( "NO" );
-        
-    $query = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `id`!=" . $id . " ORDER BY `weight` ASC";
-    $result = $db->sql_query( $query );
-    $weight = 0;
-    while ( $row = $db->sql_fetchrow( $result ) )
-    {
-        $weight ++;
-        if ( $weight == $new ) $weight ++;
-        $sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET `weight`=" . $weight . " WHERE `id`=" . $row['id'];
-        $db->sql_query( $sql );
-    }
-    $sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET `weight`=" . $new . " WHERE `id`=" . $id;
-    $db->sql_query( $sql );
-    
-    nv_del_moduleCache( $module_name );
-    
-    die( "OK" );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+
+	$id = $nv_Request->get_int( 'id', 'post', 0 );
+	$new = $nv_Request->get_int( 'new', 'post', 0 );
+
+	if( empty( $id ) ) die( "NO" );
+
+	$query = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `id`!=" . $id . " ORDER BY `weight` ASC";
+	$result = $db->sql_query( $query );
+	$weight = 0;
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$weight++;
+		if( $weight == $new ) $weight++;
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET `weight`=" . $weight . " WHERE `id`=" . $row['id'];
+		$db->sql_query( $sql );
+	}
+	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET `weight`=" . $new . " WHERE `id`=" . $id;
+	$db->sql_query( $sql );
+
+	nv_del_moduleCache( $module_name );
+
+	die( "OK" );
 }
 
 // Page title collum
@@ -46,52 +46,52 @@ $result = $db->sql_query( $sql );
 $num = $db->sql_numrows( $result );
 
 $i = 1;
-while ( list ( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow( $result ) )
+while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow( $result ) )
 {
-    $list_weight = array();
-    for ( $j = 1; $j <= $num; $j ++ )
-    {
-        $list_weight[$j] = array(
-			"weight" => $j,  //
-			"title" => $j,  //
-			"selected" => ( $j == $weight ) ? " selected=\"selected\"" : ""  //
-		);
-    }
+	$list_weight = array();
+	for( $j = 1; $j <= $num; $j++ )
+	{
+		$list_weight[$j] = array(
+			"weight" => $j, //
+			"title" => $j, //
+			"selected" => ( $j == $weight ) ? " selected=\"selected\"" : "" //
+				);
+	}
 
 	$array_data[$id] = array(
-		"id" => $id,  //
-		"title" => $title,  //
-		"description" => $description,  //
-		"weight" => $list_weight,  //
-		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id . "#addeditarea",  //
-		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""  //
-	);
-	$i ++;
+		"id" => $id, //
+		"title" => $title, //
+		"description" => $description, //
+		"weight" => $list_weight, //
+		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id . "#addeditarea", //
+		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : "" //
+			);
+	$i++;
 }
 
 // Add - Edit
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 $error = "";
 
-if ( $id )
+if( $id )
 {
 	$sql = "SELECT `id`, `title`, `keywords`, `description` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `id`=" . $id;
 	$result = $db->sql_query( $sql );
 	$check_ok = $db->sql_numrows( $result );
-	
-	if ( $check_ok != 1 )
+
+	if( $check_ok != 1 )
 	{
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	}
-	
-	list ( $id, $title, $keywords, $description ) = $db->sql_fetchrow( $result );
+
+	list( $id, $title, $keywords, $description ) = $db->sql_fetchrow( $result );
 	$array_old = $array = array(
-		"id" => $id,  //
-		"title" => $title,  //
-		"keywords" => $keywords,  //
-		"description" => $description  //
-	);
-	
+		"id" => $id, //
+		"title" => $title, //
+		"keywords" => $keywords, //
+		"description" => $description //
+			);
+
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $lang_module['vcat_edit'];
 }
@@ -99,46 +99,46 @@ else
 {
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 	$table_caption = $lang_module['vcat_add'];
-	
+
 	$array = array(
-		"id" => 0,  //
-		"title" => "",  //
-		"keywords" => "",  //
-		"description" => ""  //
-	);
+		"id" => 0, //
+		"title" => "", //
+		"keywords" => "", //
+		"description" => "" //
+			);
 }
 
-if ( $nv_Request->isset_request( 'submit', 'post' ) )
+if( $nv_Request->isset_request( 'submit', 'post' ) )
 {
 	$array['id'] = $id;
-    $array['title'] = filter_text_input( 'title', 'post', '', 1, 255 );
-    $array['keywords'] = filter_text_input( 'keywords', 'post', '', 1 );
+	$array['title'] = filter_text_input( 'title', 'post', '', 1, 255 );
+	$array['keywords'] = filter_text_input( 'keywords', 'post', '', 1 );
 	$array['description'] = filter_text_input( 'description', 'post', '', 1, 255 );
-     
-	if ( empty ( $array['title'] ) )
+
+	if( empty( $array['title'] ) )
 	{
 		$error = $lang_module['error_title'];
 	}
 	else
 	{
-		if ( empty ( $id ) )
+		if( empty( $id ) )
 		{
-			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `title`=" .  $db->dbescape( $array['title'] );
+			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `title`=" . $db->dbescape( $array['title'] );
 			$result = $db->sql_query( $sql );
-			list ( $check_exist ) = $db->sql_fetchrow( $result );
-			
-			if ( $check_exist )
+			list( $check_exist ) = $db->sql_fetchrow( $result );
+
+			if( $check_exist )
 			{
 				$error = $lang_module['vcat_error_exist'];
 			}
 			else
-			{				
+			{
 				// Get new weight
 				$sql = "SELECT MAX(`weight`) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category`";
 				$result = $db->sql_query( $sql );
-				list ( $weight ) = $db->sql_fetchrow( $result );
+				list( $weight ) = $db->sql_fetchrow( $result );
 				$new_weight = $weight + 1;
-				
+
 				// Insert into database
 				$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` VALUES (
 					NULL, 
@@ -147,8 +147,8 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 					" . $db->dbescape( $array['description'] ) . ",
 					" . $new_weight . "
 				)";
-				
-				if ( $db->sql_query_insert_id( $sql ) )
+
+				if( $db->sql_query_insert_id( $sql ) )
 				{
 					$db->sql_freeresult();
 					nv_del_moduleCache( $module_name );
@@ -164,11 +164,11 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 		}
 		else
 		{
-			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `title`=" .  $db->dbescape( $array['title'] ) . " AND `id`!=" . $id;
+			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` WHERE `title`=" . $db->dbescape( $array['title'] ) . " AND `id`!=" . $id;
 			$result = $db->sql_query( $sql );
-			list ( $check_exist ) = $db->sql_fetchrow( $result );
-			
-			if ( $check_exist )
+			list( $check_exist ) = $db->sql_fetchrow( $result );
+
+			if( $check_exist )
 			{
 				$error = $lang_module['vcat_error_exist'];
 			}
@@ -178,8 +178,8 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 					`title`= " . $db->dbescape( $array['title'] ) . ",
 					`keywords`= " . $db->dbescape( $array['keywords'] ) . ",
 					`description`= " . $db->dbescape( $array['description'] ) . "
-					WHERE `id` =" . $id;	
-				if ( $db->sql_query( $query ) )
+					WHERE `id` =" . $id;
+				if( $db->sql_query( $query ) )
 				{
 					$db->sql_freeresult();
 					nv_del_moduleCache( $module_name );
@@ -203,21 +203,21 @@ $xtpl->assign( 'TABLE_CAPTION', $table_caption );
 $xtpl->assign( 'FORM_ACTION', $form_action );
 $xtpl->assign( 'DATA', $array );
 
-if ( ! empty ( $error ) )
+if( ! empty( $error ) )
 {
 	$xtpl->assign( 'ERROR', $error );
 	$xtpl->parse( 'main.error' );
 }
 
-foreach ( $array_data as $row )
+foreach( $array_data as $row )
 {
 	$xtpl->assign( 'ROW', $row );
-	
-    foreach ( $row['weight'] as $weight )
-    {
-        $xtpl->assign( 'WEIGHT', $weight );
-        $xtpl->parse( 'main.row.weight' );
-    }
+
+	foreach( $row['weight'] as $weight )
+	{
+		$xtpl->assign( 'WEIGHT', $weight );
+		$xtpl->parse( 'main.row.weight' );
+	}
 
 	$xtpl->parse( 'main.row' );
 }

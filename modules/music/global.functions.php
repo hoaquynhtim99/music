@@ -6,300 +6,332 @@
  * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 09:09 AM
  */
- 
-if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+
+if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 global $mainURL, $main_header_URL;
-$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE ;
-$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE ;
+$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
+$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
 
 // Lay thong tin the loai
 function get_category()
 {
-	global $module_data, $db ;
-	
-	$category = array() ;
-	
+	global $module_data, $db;
+
+	$category = array();
+
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category ORDER BY `weight` ASC";
-	
-    $result = nv_db_cache( $sql, 'id' );
-    
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
+
+	$result = nv_db_cache( $sql, 'id' );
+
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
 		{
 			$category[$row['id']] = array(
-				'id'  => $row['id'], //
-				'title'  => $row['title'], //
-				'keywords'  => $row['keywords'], //
-				'description'  => $row['description'] //
-			);
+				'id' => $row['id'], //
+				'title' => $row['title'], //
+				'keywords' => $row['keywords'], //
+				'description' => $row['description'] //
+					);
 		}
 	}
-	return $category ;
+	return $category;
 }
 // lay thong tin the loai video
 function get_videocategory()
 {
-	global $module_data, $db ;
-	
-	$category = array() ;
-	
+	global $module_data, $db;
+
+	$category = array();
+
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category ORDER BY `weight` ASC";
-    $result = nv_db_cache( $sql, 'id' );
-    
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
+	$result = nv_db_cache( $sql, 'id' );
+
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
 		{
 			$category[$row['id']] = array(
-				'id'  => $row['id'], //
-				'title'  => $row['title'], //
-				'keywords'  => $row['keywords'], //
-				'description'  => $row['description'] //
-			);
+				'id' => $row['id'], //
+				'title' => $row['title'], //
+				'keywords' => $row['keywords'], //
+				'description' => $row['description'] //
+					);
 		}
 	}
-	
-	return $category ;
+
+	return $category;
 }
 
 // cau hinh module
 function setting_music()
 {
 	global $module_data, $db;
-	
+
 	$setting = array();
-	
+
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_setting";
 	$result = nv_db_cache( $sql, 'id' );
-	 
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
+
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
 		{
 			if( in_array( $row['key'], array( "root_contain", "description" ) ) )
 			{
-				$setting[$row['key']] = $row['char'] ;
+				$setting[$row['key']] = $row['char'];
 			}
 			else
 			{
-				$setting[$row['key']] = $row['value'] ;
+				$setting[$row['key']] = $row['value'];
 			}
 		}
 	}
 
-	return $setting ;
+	return $setting;
 }
 
 // Lay album tu id
 function getalbumbyID( $id )
 {
-	global $module_data, $db ;
+	global $module_data, $db;
 
-	$album = array() ;
+	$album = array();
 	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id = " . $id );
-	$album = $db->sql_fetchrow($result);
+	$album = $db->sql_fetchrow( $result );
 
-	return $album ;
+	return $album;
 }
 
 // lay video tu id
 function getvideobyID( $id )
 {
-	global $module_data, $db ;
+	global $module_data, $db;
 
-	$video = array() ;
+	$video = array();
 	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = " . $id );
-	$video = $db->sql_fetchrow($result);
+	$video = $db->sql_fetchrow( $result );
 
-	return $video ;
+	return $video;
 }
 
 // lay song tu id
 function getsongbyID( $id )
 {
-	global $module_data, $db ;
+	global $module_data, $db;
 
-	$song = array() ;
+	$song = array();
 	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = " . $id );
-	$song = $db->sql_fetchrow($result);
+	$song = $db->sql_fetchrow( $result );
 
-	return $song ;
+	return $song;
 }
 
 // lay album tu ten
 function getalbumbyNAME( $name )
 {
-	global $module_data, $db ;
+	global $module_data, $db;
 
-	$album = array() ;
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE name =\"" . $name ."\"");
-	$album = $db->sql_fetchrow($result);
+	$album = array();
+	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE name =\"" . $name . "\"" );
+	$album = $db->sql_fetchrow( $result );
 
-	return $album ;
+	return $album;
 }
 
 // lay tat ca ca si
-function getallsinger()
+function getallsinger( $reverse = false )
 {
-	global $module_data, $db, $lang_module ;
+	global $module_data, $db, $lang_module;
 
-	$allsinger = array() ;
-	$allsinger['ns'] = $lang_module['unknow'];
-	
-	$sql = "SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer ORDER BY ten ASC";
+	$allsinger = array();
+
+	if( $reverse === true )
+	{
+		$allsinger[$lang_module['unknow']] = 0;
+	}
+	else
+	{
+		$allsinger[0] = $lang_module['unknow'];
+	}
+
+	$sql = "SELECT `id`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer ORDER BY ten ASC";
 	$result = nv_db_cache( $sql, 'ten' );
-	 
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
+
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
 		{
-			$allsinger[$row['ten']] = $row['tenthat'];
+			if( $reverse === true )
+			{
+				$allsinger[$row['tenthat']] = $row['id'];
+			}
+			else
+			{
+				$allsinger[$row['id']] = $row['tenthat'];
+			}
 		}
 	}
 
-	return $allsinger ;
+	return $allsinger;
 }
 // lay tat ca nhac si
-function getallauthor()
+function getallauthor( $reverse = false )
 {
-	global $module_data, $db, $lang_module ;
+	global $module_data, $db, $lang_module;
 
-	$allsinger = array() ;
-	$allsinger['na'] = $lang_module['unknow'];
-	$sql = "SELECT `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC";
+	$allsinger = array();
+
+	if( $reverse === true )
+	{
+		$allsinger[$lang_module['unknow']] = 0;
+	}
+	else
+	{
+		$allsinger[0] = $lang_module['unknow'];
+	}
+
+	$sql = "SELECT `id`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC";
 	$result = nv_db_cache( $sql, 'ten' );
-	 
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
+
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
 		{
-			$allsinger[$row['ten']] = $row['tenthat'];
+			if( $reverse === true )
+			{
+				$allsinger[$row['tenthat']] = $row['id'];
+			}
+			else
+			{
+				$allsinger[$row['id']] = $row['tenthat'];
+			}
 		}
 	}
 
-	return $allsinger ;
+	return $allsinger;
 }
 // lay ca si tu id
 function getsingerbyID( $id )
 {
 	global $module_data, $db;
 
-	$singer = array() ;
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $id);
-	$singer = $db->sql_fetchrow($result);
+	$singer = array();
+	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $id );
+	$singer = $db->sql_fetchrow( $result );
 
-	return $singer ;
+	return $singer;
 }
 
 // Them moi mot ca si
 function newsinger( $name, $tname )
 {
 	$error = '';
-	global $module_data, $lang_module, $db, $module_name ;	
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
+	global $module_data, $lang_module, $db, $module_name;
+	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )";
+
+	$newid = $db->sql_query_insert_id( $sql );
+
+	if( $newid )
+	{
 		$db->sql_freeresult();
-	} 
-	else 
-	{ 
-		$error = $lang_module['singer_new_added']; 
+		nv_del_moduleCache( $module_name );
+		return $newid;
 	}
-	
-	nv_del_moduleCache( $module_name );
-	
-	return $error;
+
+	return false;
 }
 
 // Them moi mot nhac si
 function newauthor( $name, $tname )
 {
-	$error = '';
-	global $module_data, $lang_module, $db, $module_name ;	
-	$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )"; 
-	if ( $db->sql_query_insert_id( $query ) ) 
-	{ 
+	global $module_data, $lang_module, $db, $module_name;
+	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )";
+
+	$newid = $db->sql_query_insert_id( $sql );
+
+	if( $newid )
+	{
 		$db->sql_freeresult();
+		nv_del_moduleCache( $module_name );
+		return $newid;
 	}
-	
-	nv_del_moduleCache( $module_name );
-	
-	return;
+
+	return false;
 }
 
 // cap nhat ca si
-function updatesinger( $name, $what, $action )
+function updatesinger( $id, $what, $action )
 {
-	global $module_data, $db ;	
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
-	return ;
+	global $module_data, $db;
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `id` = '" . $id . "'" );
+	return;
 }
 
 // cap nhat nhac si
-function updateauthor( $name, $what, $action )
+function updateauthor( $id, $what, $action )
 {
-	global $module_data, $db ;	
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_author` SET " . $what . " = " . $what . $action . " WHERE `ten` = '" . $name . "'" );
-	return ;
+	global $module_data, $db;
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_author` SET " . $what . " = " . $what . $action . " WHERE `id` = '" . $id . "'" );
+	return;
 }
 
 // cap nhat album
-function updatealbum( $name, $action )
+function updatealbum( $id, $action )
 {
-	global $module_data, $db ;	
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET numsong = numsong" . $action . " WHERE `name` = '" . $name . "'" );
-	return ;
+	global $module_data, $db;
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET numsong = numsong" . $action . " WHERE `id` = '" . $id . "'" );
+	return;
 }
 
 // xoa cac binh luan
 function delcomment( $delwwhat, $where )
 {
-	global $module_data, $db ;	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $delwwhat ."` WHERE `what`=" . $where;
-    $result = $db->sql_query( $sql );
-	return ;
+	global $module_data, $db;
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $delwwhat . "` WHERE `what`=" . $where;
+	$result = $db->sql_query( $sql );
+	return;
 }
 
 // xoa cac loi bai hat
 function dellyric( $songid )
 {
-	global $module_data, $db ;	
+	global $module_data, $db;
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $songid;
-    $result = $db->sql_query( $sql );
-	return ;
+	$result = $db->sql_query( $sql );
+	return;
 }
 
 // xoa cac bao loi
 function delerror( $where, $key )
 {
-	global $module_data, $db ;	
+	global $module_data, $db;
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
-    $result = $db->sql_query( $sql );
+	$result = $db->sql_query( $sql );
 	return $result;
 }
 
 // xoa cac qua tang am nhac
 function delgift( $songid )
 {
-	global $module_data, $db ;	
+	global $module_data, $db;
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `songid` =" . $songid;
-    $result = $db->sql_query( $sql );
-	return ;
+	$result = $db->sql_query( $sql );
+	return;
 }
 // Lay thong tin ftp cua host nhac
 function getFTP()
 {
-	global $module_data, $db, $lang_module ;
+	global $module_data, $db, $lang_module;
 	$ftpdata = array();
 	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id ASC";
 	$result = nv_db_cache( $sql, 'id' );
-	 
-    if ( ! empty( $result ) )
-    {
-        foreach ( $result as $row )
-		{		
+
+	if( ! empty( $result ) )
+	{
+		foreach( $result as $row )
+		{
 			$ftpdata[$row['id']] = array(
 				"id" => $row['id'],
 				"host" => $row['host'],
@@ -308,38 +340,37 @@ function getFTP()
 				"fulladdress" => $row['fulladdress'],
 				"subpart" => $row['subpart'],
 				"ftppart" => $row['ftppart'],
-				"active" => ( $row['active'] == 1 )? $lang_module['active_yes'] : $lang_module['active_no']
-			);
+				"active" => ( $row['active'] == 1 ) ? $lang_module['active_yes'] : $lang_module['active_no'] );
 		}
 	}
 	return $ftpdata;
 }
 // tao duong dan tu mot chuoi
-function creatURL ( $inputurl )
+function creatURL( $inputurl )
 {
 	global $module_name, $setting;
 
 	$songdata = array();
-	if ( preg_match( '/^(ht|f)tp:\/\//', $inputurl ) ) 
+	if( preg_match( '/^(ht|f)tp:\/\//', $inputurl ) )
 	{
 		$ftpdata = getFTP();
 		$str_inurl = str_split( $inputurl );
 		$no_ftp = true;
-		foreach ( $ftpdata as $id => $data )
+		foreach( $ftpdata as $id => $data )
 		{
 			$this_host = $data['fulladdress'] . $data['subpart'];
 			$str_check = str_split( $this_host );
 			$check_ok = false;
-			foreach ( $str_check as $stt => $char )
+			foreach( $str_check as $stt => $char )
 			{
-				if ( $char != $str_inurl[$stt] ) 
+				if( $char != $str_inurl[$stt] )
 				{
 					$check_ok = false;
 					break;
 				}
 				$check_ok = true;
 			}
-			if ( $check_ok )
+			if( $check_ok )
 			{
 				$lu = strlen( $this_host );
 				$songdata['duongdan'] = substr( $inputurl, $lu );
@@ -348,7 +379,7 @@ function creatURL ( $inputurl )
 				break;
 			}
 		}
-		if ( $no_ftp )
+		if( $no_ftp )
 		{
 			$songdata['duongdan'] = $inputurl;
 			$songdata['server'] = 0;
@@ -364,7 +395,7 @@ function creatURL ( $inputurl )
 }
 
 // xuat duong dan day du
-function outputURL ( $server, $inputurl )
+function outputURL( $server, $inputurl )
 {
 	global $module_name, $setting;
 	$output = "";
@@ -379,23 +410,23 @@ function outputURL ( $server, $inputurl )
 	else
 	{
 		$ftpdata = getFTP();
-		foreach ( $ftpdata as $id => $data )
+		foreach( $ftpdata as $id => $data )
 		{
-			if ( $id == $server )
+			if( $id == $server )
 			{
-				if ( $data['host'] == "nhaccuatui" )
+				if( $data['host'] == "nhaccuatui" )
 				{
 					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
-					
-					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+
+					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if ( ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
 						}
 					}
-					
-					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+
+					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -403,17 +434,17 @@ function outputURL ( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-						$output = explode ( '&autostart=true&file=', $output );
-						
+						$output = explode( '&autostart=true&file=', $output );
+
 						if( isset( $output[1] ) )
 						{
-							$output = explode ( '"', $output[1] );
-							$output =  nv_get_URL_content ( $output[0] );
-							$output = explode ( "<location><![CDATA[", $output );
+							$output = explode( '"', $output[1] );
+							$output = nv_get_URL_content( $output[0] );
+							$output = explode( "<location><![CDATA[", $output );
 							if( isset( $output[1] ) )
 							{
-								$output = explode ( "]]></location>", $output[1] );
-								$output =  $output[0];
+								$output = explode( "]]></location>", $output[1] );
+								$output = $output[0];
 							}
 							else
 							{
@@ -424,24 +455,24 @@ function outputURL ( $server, $inputurl )
 						{
 							$output = "";
 						}
-						
+
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
 					}
 				}
-				elseif ( $data['host'] == "zing" )
+				elseif( $data['host'] == "zing" )
 				{
 					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
-					
-					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+
+					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if ( ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
 						}
 					}
-					
-					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+
+					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -449,18 +480,18 @@ function outputURL ( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-						$output = explode ( '<input type="hidden" id="_strNoAuto" value="', $output );
-						
+						$output = explode( '<input type="hidden" id="_strNoAuto" value="', $output );
+
 						if( isset( $output[1] ) )
 						{
-							$output = explode ( '"', $output[1] );
-							$output =  nv_get_URL_content ( $output[0] );
-							$output = explode ( "<urlSource>", $output );
-							
+							$output = explode( '"', $output[1] );
+							$output = nv_get_URL_content( $output[0] );
+							$output = explode( "<urlSource>", $output );
+
 							if( isset( $output[1] ) )
 							{
-								$output = explode ( "</urlSource>", $output[1] );
-								$output =  nv_unhtmlspecialchars ( $output[0] );
+								$output = explode( "</urlSource>", $output[1] );
+								$output = nv_unhtmlspecialchars( $output[0] );
 							}
 							else
 							{
@@ -471,24 +502,24 @@ function outputURL ( $server, $inputurl )
 						{
 							$output = "";
 						}
- 
+
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
 					}
 				}
-				elseif ( $data['host'] == "nhacvui" )
+				elseif( $data['host'] == "nhacvui" )
 				{
 					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
-					
-					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+
+					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if ( ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
 						}
 					}
-					
-					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+
+					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -496,26 +527,26 @@ function outputURL ( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-						
-						$output = explode ( '[FLASH]', $output );
-						
+
+						$output = explode( '[FLASH]', $output );
+
 						if( isset( $output[1] ) )
 						{
-							$output = explode ( 'playlistfile=', $output[1] );
-							
+							$output = explode( 'playlistfile=', $output[1] );
+
 							if( isset( $output[1] ) )
 							{
-								$output = explode ( '[/FLASH]"', $output[1] );
-								$output =  rawurldecode ( $output[0] );
+								$output = explode( '[/FLASH]"', $output[1] );
+								$output = rawurldecode( $output[0] );
 								$output = str_replace( "nhac.vui.vn", "hcm.nhac.vui.vn", $output );
-								$output =  nv_get_URL_content ( $output );
-													
-								$output = explode ( "<location><![CDATA[", $output );
-								
+								$output = nv_get_URL_content( $output );
+
+								$output = explode( "<location><![CDATA[", $output );
+
 								if( isset( $output[1] ) )
 								{
-									$output = explode ( "]]></location>", $output[1] );
-									$output =  $output[0];
+									$output = explode( "]]></location>", $output[1] );
+									$output = $output[0];
 								}
 								else
 								{
@@ -531,24 +562,24 @@ function outputURL ( $server, $inputurl )
 						{
 							$output = "";
 						}
-						
+
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
 					}
 				}
-				elseif ( $data['host'] == "nhacso" )
+				elseif( $data['host'] == "nhacso" )
 				{
 					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
-					
-					if ( file_exists ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+
+					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if ( ( ( NV_CURRENTTIME - filemtime ( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
 						}
 					}
-					
-					if ( ( $cache = nv_get_cache( $cache_file ) ) != false )
+
+					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
 					{
 						$output = unserialize( $cache );
 					}
@@ -556,20 +587,20 @@ function outputURL ( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-						
-						$output = explode ( 'embedPlaylistjs.swf?xmlPath=', $output );
-						
+
+						$output = explode( 'embedPlaylistjs.swf?xmlPath=', $output );
+
 						if( isset( $output[1] ) )
 						{
-							$output = explode ( '&amp;', $output[1] );
-							$output =  nv_get_URL_content ( $output[0] );
+							$output = explode( '&amp;', $output[1] );
+							$output = nv_get_URL_content( $output[0] );
 
-							$output = explode ( "<mp3link><![CDATA[", $output );
-								
+							$output = explode( "<mp3link><![CDATA[", $output );
+
 							if( isset( $output[1] ) )
 							{
-								$output = explode ( "]]></mp3link>", $output[1] );
-								$output =  trim( $output[0] );
+								$output = explode( "]]></mp3link>", $output[1] );
+								$output = trim( $output[0] );
 							}
 							else
 							{
@@ -580,7 +611,7 @@ function outputURL ( $server, $inputurl )
 						{
 							$output = "";
 						}
-						
+
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
 					}
@@ -596,43 +627,47 @@ function outputURL ( $server, $inputurl )
 	return $output;
 }
 
-function unlinkSV ( $server, $url )
+function unlinkSV( $server, $url )
 {
 	global $module_name, $setting;
-	if ( $server == 1 )
+	if( $server == 1 )
 	{
 		@unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $url );
 	}
-	elseif ( $server != 0 )
+	elseif( $server != 0 )
 	{
 		$ftpdata = getFTP();
-		
+
 		if( ! isset( $ftpdata[$server] ) ) return;
-		
-		if( in_array( $ftpdata[$server]['host'], array( 'nhaccuatui', 'zing', 'nhacvui', 'nhacso' ) ) ) return;
-		
+
+		if( in_array( $ftpdata[$server]['host'], array(
+			'nhaccuatui',
+			'zing',
+			'nhacvui',
+			'nhacso' ) ) ) return;
+
 		require_once ( NV_ROOTDIR . "/modules/" . $module_name . "/class/ftp.class.php" );
 		$ftp = new FTP();
-		if ( $ftp->connect( $ftpdata[$server]['host'] ) ) 
+		if( $ftp->connect( $ftpdata[$server]['host'] ) )
 		{
-			if ( $ftp->login( $ftpdata[$server]['user'], $ftpdata[$server]['pass'] ) ) 
+			if( $ftp->login( $ftpdata[$server]['user'], $ftpdata[$server]['pass'] ) )
 			{
-				$ftp->delete( $ftpdata[$server]['ftppart']  . $ftpdata[$server]['subpart'] . $url );
-			} 
+				$ftp->delete( $ftpdata[$server]['ftppart'] . $ftpdata[$server]['subpart'] . $url );
+			}
 			$ftp->disconnect();
-		} 
+		}
 	}
 	return;
 }
 
-// 
+//
 function nv_get_URL_content( $target_url )
-{	
+{
 	global $client_info;
-	
+
 	$agent = empty( $client_info['agent'] ) ? 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0' : $client_info['agent'];
-	
-	if( function_exists('curl_init') )
+
+	if( function_exists( 'curl_init' ) )
 	{
 		$ch = curl_init();
 		curl_setopt( $ch, CURLOPT_URL, $target_url );
@@ -642,30 +677,30 @@ function nv_get_URL_content( $target_url )
 		$content = curl_exec( $ch );
 		$errormsg = curl_error( $ch );
 		curl_close( $ch );
-			
-		if ( $errormsg != "" )
+
+		if( $errormsg != "" )
 		{
 			return "";
 		}
 	}
-	
+
 	if( ! is_array( $content ) )
 	{
 		$content = explode( "\n", $content );
 	}
-	
-	return implode ( "", $content );
+
+	return implode( "", $content );
 }
 
 function nvm_new_song( $array )
 {
 	global $module_data, $db;
-	
+
 	$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
 	$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
-	$array['casi'] = ! isset( $array['casi'] ) ? "ns" : $array['casi'];
-	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? "na" : $array['nhacsi'];
-	$array['album'] = ! isset( $array['album'] ) ? "" : $array['album'];
+	$array['casi'] = ! isset( $array['casi'] ) ? 0 : $array['casi'];
+	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? 0 : $array['nhacsi'];
+	$array['album'] = ! isset( $array['album'] ) ? 0 : $array['album'];
 	$array['theloai'] = ! isset( $array['theloai'] ) ? "1" : $array['theloai'];
 	$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
 	$array['data'] = ! isset( $array['data'] ) ? "" : $array['data'];
@@ -677,17 +712,17 @@ function nvm_new_song( $array )
 	$array['userid'] = ! isset( $array['userid'] ) ? "1" : $array['userid'];
 	$array['hit'] = ! isset( $array['hit'] ) ? "0-" . NV_CURRENTTIME : $array['hit'];
 	$array['lyric'] = ! isset( $array['lyric'] ) ? "" : $array['lyric'];
-	
+
 	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` VALUES (
 		NULL, 
 		" . $db->dbescape( $array['ten'] ) . ", 
 		" . $db->dbescape( $array['tenthat'] ) . ", 
-		" . $db->dbescape( $array['casi'] ) . ", 
-		" . $db->dbescape( $array['nhacsi'] ) . ", 
-		" . $db->dbescape( $array['album'] ) . ", 
+		" . $array['casi'] . ", 
+		" . $array['nhacsi'] . ", 
+		" . $array['album'] . ", 
 		" . $db->dbescape( $array['theloai'] ) . ", 
 		" . $db->dbescape( implode( ",", $array['listcat'] ) ) . ", 
-		" . $db->dbescape( $array['data'] )  . ", 
+		" . $db->dbescape( $array['data'] ) . ", 
 		" . $db->dbescape( $array['username'] ) . " ,
 		0,
 		1,
@@ -700,9 +735,9 @@ function nvm_new_song( $array )
 		0,
 		" . $db->dbescape( $array['hit'] ) . "
 	)";
-	
+
 	$_songid = $db->sql_query_insert_id( $sql );
-	
+
 	if( $_songid )
 	{
 		// Cap nhat so bai hat cua ca si, nhac si va album
@@ -713,24 +748,24 @@ function nvm_new_song( $array )
 		// Them bai hat vao danh sach nhac cua album moi
 		if( ! empty( $array['album'] ) )
 		{
-			$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $array['album'] );
+			$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $array['album'];
 			$result = $db->sql_query( $sql );
 			list( $list_song ) = $db->sql_fetchrow( $result );
-			
+
 			$list_song = explode( ',', $list_song );
 			$list_song[] = $_songid;
 			$list_song = array_unique( $list_song );
 			$list_song = array_filter( $list_song );
-			
-			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ',', $list_song ) ) . " WHERE `name`=" . $db->dbescape( $array['album'] );
+
+			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ',', $list_song ) ) . " WHERE `id`=" . $array['album'];
 			$db->sql_query( $sql );
 		}
-		
+
 		// Them loi bai hat moi
 		if( ! empty( $array['lyric'] ) )
 		{
 			$array['lyric'] = nv_nl2br( $array['lyric'], "<br />" );
-			
+
 			$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES(
 				NULL,
 				" . $_songid . ",
@@ -741,27 +776,27 @@ function nvm_new_song( $array )
 			)";
 			$db->sql_query( $sql );
 		}
-		
+
 		$db->sql_freeresult();
 	}
-	
+
 	return $_songid;
 }
 
 function nvm_edit_song( $array_old, $array )
 {
 	global $module_data, $db;
-	
-	$array_old['casi'] = ! isset( $array_old['casi'] ) ? "ns" : $array_old['casi'];
-	$array_old['nhacsi'] = ! isset( $array_old['nhacsi'] ) ? "na" : $array_old['nhacsi'];
+
+	$array_old['casi'] = ! isset( $array_old['casi'] ) ? 0 : $array_old['casi'];
+	$array_old['nhacsi'] = ! isset( $array_old['nhacsi'] ) ? 0 : $array_old['nhacsi'];
 	$array_old['theloai'] = ! isset( $array_old['theloai'] ) ? "1" : $array_old['theloai'];
 	$array_old['lyric'] = ! isset( $array_old['lyric'] ) ? "" : $array_old['lyric'];
-	
+
 	$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
 	$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
-	$array['casi'] = ! isset( $array['casi'] ) ? "ns" : $array['casi'];
-	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? "na" : $array['nhacsi'];
-	$array['album'] = ! isset( $array['album'] ) ? "" : $array['album'];
+	$array['casi'] = ! isset( $array['casi'] ) ? 0 : $array['casi'];
+	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? 0 : $array['nhacsi'];
+	$array['album'] = ! isset( $array['album'] ) ? 0 : $array['album'];
 	$array['theloai'] = ! isset( $array['theloai'] ) ? "1" : $array['theloai'];
 	$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
 	$array['duongdan'] = ! isset( $array['duongdan'] ) ? "" : $array['duongdan'];
@@ -773,24 +808,24 @@ function nvm_edit_song( $array_old, $array )
 	$array['username'] = ! isset( $array['username'] ) ? "N/A" : $array['username'];
 	$array['lyric'] = ! isset( $array['lyric'] ) ? "" : $array['lyric'];
 	$array['id'] = ! isset( $array['id'] ) ? "0" : $array['id'];
-	
+
 	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET 
 		`ten`=" . $db->dbescape( $array['ten'] ) . ", 
 		`tenthat`=" . $db->dbescape( $array['tenthat'] ) . ", 
-		`casi`=" . $db->dbescape( $array['casi'] ) . ", 
-		`nhacsi`=" . $db->dbescape( $array['nhacsi'] ) . ", 
-		`album`=" . $db->dbescape( $array['album'] ) . ", 
+		`casi`=" . $array['casi'] . ", 
+		`nhacsi`=" . $array['nhacsi'] . ", 
+		`album`=" . $array['album'] . ", 
 		`theloai`=" . $db->dbescape( $array['theloai'] ) . ", 
 		`listcat`=" . $db->dbescape( implode( ",", $array['listcat'] ) ) . ", 
-		`duongdan`=" . $db->dbescape( $array['duongdan'] )  . ", 
+		`duongdan`=" . $db->dbescape( $array['duongdan'] ) . ", 
 		`bitrate`=" . $db->dbescape( $array['bitrate'] ) . " ,
 		`size`=" . $db->dbescape( $array['size'] ) . " ,
 		`duration`=" . $db->dbescape( $array['duration'] ) . ",
 		`server`=" . $array['server'] . "
 		WHERE `id`=" . $array['id'];
-	
+
 	$check_update = $db->sql_query( $sql );
-	
+
 	if( $check_update )
 	{
 		// Cap nhat so bai hat cua ca si
@@ -799,31 +834,31 @@ function nvm_edit_song( $array_old, $array )
 			updatesinger( $array_old['casi'], 'numsong', '-1' );
 			updatesinger( $array['casi'], 'numsong', '+1' );
 		}
-		
+
 		// Cap nhat so bai hat cua nhac si
 		if( $array_old['nhacsi'] != $array['nhacsi'] )
 		{
 			updateauthor( $array_old['nhacsi'], 'numsong', '-1' );
 			updateauthor( $array['nhacsi'], 'numsong', '+1' );
 		}
-		
+
 		// Cap nhat so bai hat cua album
 		if( $array_old['album'] != $array['album'] )
 		{
 			updatealbum( $array_old['album'], '-1' );
 			updatealbum( $array['album'], '+1' );
-			
+
 			// Them bai hat vao danh sach bai hat cua album moi
-			$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $array['album'] );
+			$sql = "SELECT `listsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $array['album'];
 			$result = $db->sql_query( $sql );
 			list( $list_song ) = $db->sql_fetchrow( $result );
-			
+
 			$list_song = explode( ',', $list_song );
 			$list_song[] = $array['id'];
 			$list_song = array_unique( $list_song );
 			$list_song = array_filter( $list_song );
-			
-			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ',', $list_song ) ) . " WHERE `name`=" . $db->dbescape( $array['album'] );
+
+			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `listsong`=" . $db->dbescape( implode( ',', $list_song ) ) . " WHERE `id`=" . $array['album'];
 			$db->sql_query( $sql );
 		}
 
@@ -831,12 +866,12 @@ function nvm_edit_song( $array_old, $array )
 		if( $array['lyric'] != $array_old['lyric'] )
 		{
 			$array['lyric'] = nv_nl2br( $array['lyric'], "<br />" );
-			
+
 			$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $array['id'] . " AND `user`=" . $db->dbescape( $array['username'] );
 			$result = $db->sql_query( $sql );
 			list( $lyric_id ) = $db->sql_fetchrow( $result );
-			
-			// Cap nhat loi bai hat			
+
+			// Cap nhat loi bai hat
 			if( $lyric_id )
 			{
 				$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` SET `body`=" . $db->dbescape( $array['lyric'] ) . " WHERE `id`=" . $lyric_id;
@@ -855,10 +890,10 @@ function nvm_edit_song( $array_old, $array )
 				$db->sql_query( $sql );
 			}
 		}
-		
+
 		$db->sql_freeresult();
 	}
-	
+
 	return $check_update;
 }
 

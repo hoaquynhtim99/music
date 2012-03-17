@@ -6,8 +6,8 @@
  * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 09:09 AM
  */
- 
-if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die('Stop!!!'); 
+
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $result = false;
 
@@ -15,11 +15,11 @@ $id = $nv_Request->get_int( 'id', 'post,get' );
 if( empty( $id ) ) die( "Stop!!!" );
 
 // Xoa khoi thu muc upload
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ads` WHERE `id` = ". $id;
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ads` WHERE `id` = " . $id;
 $result = $db->sql_query( $sql );
 $ads = $db->sql_fetchrow( $result );
 unlink( NV_DOCUMENT_ROOT . $ads['link'] );
-	
+
 // Xoa khoi database
 $sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ads` WHERE `id`=" . $id;
 $result = $db->sql_query( $sql );

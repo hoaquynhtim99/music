@@ -6,8 +6,8 @@
  * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
  * @Createdate 9-8-2010 14:43
  */
- 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['set_global'];
 
@@ -19,54 +19,54 @@ $array = array();
 
 // Album HOT
 $array[] = array(
-	"title" => $lang_module['sub_hotalbum'],  //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=hotalbum",  //
-	"guide" => $lang_module['guide_hot']  //
-);
+	"title" => $lang_module['sub_hotalbum'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=hotalbum", //
+	"guide" => $lang_module['guide_hot'] //
+		);
 
 // Cac the loai tren block TAB
 $array[] = array(
-	"title" => $lang_module['sub_fourcategory'],  //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=fourcategory",  //
-	"guide" => $lang_module['guide_fourcategory']  //
-);
+	"title" => $lang_module['sub_fourcategory'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=fourcategory", //
+	"guide" => $lang_module['guide_fourcategory'] //
+		);
 
 // Cac the loai tên block the loai
 $array[] = array(
-	"title" => $lang_module['sub_maincategory'],  //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=maincategory",  //
-	"guide" => $lang_module['guide_maincategory']  //
-);
+	"title" => $lang_module['sub_maincategory'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=maincategory", //
+	"guide" => $lang_module['guide_maincategory'] //
+		);
 
 // Cac album duoc dung lam the loai tren block
 $array[] = array(
-	"title" => $lang_module['sub_mainalbum'],  //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=mainalbum",  //
-	"guide" => $lang_module['guide_mainalbum']  //
-);
+	"title" => $lang_module['sub_mainalbum'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=mainalbum", //
+	"guide" => $lang_module['guide_mainalbum'] //
+		);
 
 // Cau hinh FTP
 $array[] = array(
-	"title" => $lang_module['ftpsetting'],  //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting",  //
-	"guide" => $lang_module['guide_ftpsetting']  //
-);
+	"title" => $lang_module['ftpsetting'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting", //
+	"guide" => $lang_module['guide_ftpsetting'] //
+		);
 
 // Cau hinh chinh cua module
 $array[] = array(
-	"title" => $lang_module['music_setting'],  //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting",  //
-	"guide" => $lang_module['guide_setting']  //
-);
+	"title" => $lang_module['music_setting'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting", //
+	"guide" => $lang_module['guide_setting'] //
+		);
 
 $i = 1;
 foreach( $array as $row )
 {
 	$xtpl->assign( 'ROW', $row );
 	$xtpl->assign( 'CLASS', ( $i % 2 == 0 ) ? " class=\"second\"" : "" );
-	
-	$xtpl->parse('main.loop');
-	++ $i;
+
+	$xtpl->parse( 'main.loop' );
+	++$i;
 }
 
 $xtpl->parse( 'main' );

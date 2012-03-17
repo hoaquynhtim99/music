@@ -7,16 +7,16 @@
  * @Createdate 26/01/2011 09:09 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$new = $nv_Request->get_int('new', 'post', 0);
-$old = $nv_Request->get_int('old', 'post', 0);
+$new = $nv_Request->get_int( 'new', 'post', 0 );
+$old = $nv_Request->get_int( 'old', 'post', 0 );
 
-if ( $old != $new )
+if( $old != $new )
 {
 	changeorder( $old, 0, 'main_category' );
 
-	if($old < $new)
+	if( $old < $new )
 	{
 		for( $i = $old; $i < $new; $i++ )
 		{
@@ -27,10 +27,10 @@ if ( $old != $new )
 	{
 		for( $i = $old; $i > $new; $i-- )
 		{
-			changeorder($i - 1, $i, 'main_category');
+			changeorder( $i - 1, $i, 'main_category' );
 		}
 	}
-	changeorder(0, $new, 'main_category');
+	changeorder( 0, $new, 'main_category' );
 }
 
 echo $lang_module['update_success'];

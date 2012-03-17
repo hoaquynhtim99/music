@@ -7,11 +7,11 @@
  * @createdate 26/01/2011 09:17 AM
  */
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op, $op, $module_name;
 
-if ( $op == "listenone" )
+if( $op == "listenone" )
 {
 	$xtpl = new XTemplate( "block_samealbum.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
@@ -21,7 +21,7 @@ if ( $op == "listenone" )
 	$sql = "SELECT `id`, `ten`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active` = 1 AND `id`!=" . $songid . " AND `album` =( SELECT `album` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $songid . " LIMIT 1 ) ORDER BY `id` DESC LIMIT 0,10";
 
 	$list = nv_db_cache( $sql, 'id', $module_name );
-	
+
 	if( ! empty( $list ) )
 	{
 		foreach( $list as $row )

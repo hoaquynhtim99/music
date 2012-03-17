@@ -7,9 +7,9 @@
  * @Createdate 29-12-2010 18:43
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-if ( defined( 'NV_EDITOR' ) ) require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
+if( defined( 'NV_EDITOR' ) ) require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
 
 $contents = "";
 $error = "";
@@ -19,7 +19,7 @@ $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 $page_title = $lang_module['edit_lyric'];
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `id` = ".$id."";
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `id` = " . $id . "";
 $result = $db->sql_query( $sql );
 $row = $db->sql_fetchrow( $result );
 $lyric['name'] = $row['user'];
@@ -31,7 +31,7 @@ $tmp = getsongbyID( $row['songid'] );
 $lyric['songname'] = $tmp['tenthat'];
 
 // Sua
-if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
+if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
 	$lyric['name'] = filter_text_input( 'user', 'post', '' );
 	$lyric['body'] = nv_editor_filter_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
@@ -51,11 +51,11 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 			`user`=" . $db->dbescape( $lyric['name'] ) . ",
 			`body`=" . $db->dbescape( $lyric['body'] ) . "
 		WHERE `id` =" . $id;
-		
+
 		if( $db->sql_query( $sql ) )
 		{
 			$db->sql_freeresult();
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=lyric" ); 
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=lyric" );
 			die();
 		}
 		else
@@ -67,11 +67,11 @@ if ( ($nv_Request->get_int( 'save', 'post', 0 )) == 1 )
 }
 
 // Hien bao loi
-if($error)
+if( $error )
 {
 	$contents .= "<div class=\"quote\" style=\"width:98%\">\n
 	<blockquote class=\"error\">
-	<span>".$error."</span>
+	<span>" . $error . "</span>
 	</blockquote>
 	</div>\n
 	<div class=\"clear\">
@@ -84,7 +84,7 @@ $contents .= "
 		<thead>
 			<tr>
 				<td colspan=\"2\">
-					".$lang_module['edit_lyric']."
+					" . $lang_module['edit_lyric'] . "
 				</td>
 			</tr>
 		</thead>
@@ -111,14 +111,14 @@ $contents .= "
 				<td>" . $lang_module['content'] . "
 				</td>
 				<td>";
-				if ( defined( 'NV_EDITOR' ) and function_exists( 'nv_aleditor' ) )
-				{
-					$contents .= nv_aleditor( 'body', '100%', '250px', nv_htmlspecialchars( $lyric['body'] ) );
-				}
-				else
-				{
-					$contents .= "<textarea style=\"width:98%\" value=\"" . nv_htmlspecialchars( $lyric['body'] ) . "\" name=\"body\" id=\"body\" cols=\"20\" rows=\"15\"></textarea>\n";
-				}
+if( defined( 'NV_EDITOR' ) and function_exists( 'nv_aleditor' ) )
+{
+	$contents .= nv_aleditor( 'body', '100%', '250px', nv_htmlspecialchars( $lyric['body'] ) );
+}
+else
+{
+	$contents .= "<textarea style=\"width:98%\" value=\"" . nv_htmlspecialchars( $lyric['body'] ) . "\" name=\"body\" id=\"body\" cols=\"20\" rows=\"15\"></textarea>\n";
+}
 $contents .= "				
 				</td>
 			</tr>

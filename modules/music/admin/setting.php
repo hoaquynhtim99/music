@@ -7,16 +7,16 @@
  * @Createdate 26/01/2011 09:34 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' ); 
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['music_setting'];
 
 $contents = '';
 $setting = setting_music();
 
-if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
+if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
-	$data['root_contain'] = md5(filter_text_input( 'root_contain', 'post', '' ));
+	$data['root_contain'] = md5( filter_text_input( 'root_contain', 'post', '' ) );
 	$data['who_comment'] = $nv_Request->get_int( 'who_comment', 'post', 0 );
 	$data['who_download'] = $nv_Request->get_int( 'who_download', 'post', 0 );
 	$data['auto_comment'] = $nv_Request->get_int( 'auto_comment', 'post', 0 );
@@ -33,34 +33,35 @@ if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	$data['del_cache_time_out'] = $nv_Request->get_int( 'del_cache_time_out', 'post', 0 );
 	$data['num_blocktab'] = $nv_Request->get_int( 'num_blocktab', 'post', 0 );
 	$data['description'] = filter_text_input( 'description', 'post', '', 1, 255 );
-	
+
 	$data['del_cache_time_out'] = $data['del_cache_time_out'] * 60;
-	
-	if ( ( $data['upload_max'] * ( 1024 * 1024 ) ) > $global_config['nv_max_size'] )
+
+	if( ( $data['upload_max'] * ( 1024 * 1024 ) ) > $global_config['nv_max_size'] )
 	{
 		$data['upload_max'] = $global_config['nv_max_size'] / ( 1024 * 1024 );
 	}
 
-	foreach ( $data as $key => $value  )
-	{	
-		if ( $key == "root_contain" )
+	foreach( $data as $key => $value )
+	{
+		if( $key == "root_contain" )
 		{
 			@rename( NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'], NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $value );
-			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
 		}
 		elseif( $key == "description" )
 		{
-			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
 		}
 		else
 		{
-			$query = $db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `value` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `value` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
 		}
 	}
-	if ( $query ) 
+	if( $query )
 	{
 		nv_del_moduleCache( $module_name );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op ); die();
+		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+		die();
 	}
 	else
 	{
@@ -148,7 +149,7 @@ $contents .= "<table class=\"tab1\">
 <tr>
     <td><strong>" . $lang_module['set_floder_file'] . "</strong></td>
     <td>
-		<input name=\"root_contain\" type=\"text\" value=\"". $setting['root_contain'] . "\" />
+		<input name=\"root_contain\" type=\"text\" value=\"" . $setting['root_contain'] . "\" />
     </td>
 </tr>
 <tbody class=\"second\">
@@ -173,7 +174,7 @@ $contents .= "<table class=\"tab1\">
 <tr>
     <td><strong>" . $lang_module['set_uploadmax'] . "</strong></td>
     <td>
-		<input name=\"upload_max\" type=\"text\" value=\"". $setting['upload_max'] . "\" />
+		<input name=\"upload_max\" type=\"text\" value=\"" . $setting['upload_max'] . "\" />
     </td>
 </tr>
 </tbody>
@@ -182,14 +183,14 @@ $contents .= "<table class=\"tab1\">
     <td>
 		<select name=\"default_server\">
 			<option value=\"1\"" . ( $setting['default_server'] == 1 ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_root_server'] . "</option>\n";
-			$ftpdata = getFTP();
-			foreach ( $ftpdata as $id => $data )
-			{
-				$contents .="
+$ftpdata = getFTP();
+foreach( $ftpdata as $id => $data )
+{
+	$contents .= "
 				<option value=\"" . $id . "\"" . ( $setting['default_server'] == $id ? " selected=\"selected\"" : "" ) . ">" . $data['fulladdress'] . "</option>\n";
 
-			}
-		$contents .="
+}
+$contents .= "
 		</select>
     </td>
 </tr>
@@ -197,7 +198,7 @@ $contents .= "<table class=\"tab1\">
 	<tr>
 		<td><strong>" . $lang_module['set_playlist_max'] . "</strong></td>
 		<td>
-			<input name=\"playlist_max\" type=\"text\" value=\"". $setting['playlist_max'] . "\" />
+			<input name=\"playlist_max\" type=\"text\" value=\"" . $setting['playlist_max'] . "\" />
 		</td>
 	</tr>
 </tbody>
@@ -205,7 +206,7 @@ $contents .= "<table class=\"tab1\">
 	<tr>
 		<td><strong>" . $lang_module['set_time_del_cache'] . "</strong></td>
 		<td>
-			<input maxlength=\"4\" name=\"del_cache_time_out\" type=\"text\" value=\"". ( $setting['del_cache_time_out'] / 60 ) . "\" />
+			<input maxlength=\"4\" name=\"del_cache_time_out\" type=\"text\" value=\"" . ( $setting['del_cache_time_out'] / 60 ) . "\" />
 			" . $lang_module['set_time_del_cache_info'] . "
 		</td>
 	</tr>
@@ -214,7 +215,7 @@ $contents .= "<table class=\"tab1\">
 	<tr>
 		<td><strong>" . $lang_module['setting_num_blocktab'] . "</strong></td>
 		<td>
-			<input maxlength=\"4\" name=\"num_blocktab\" type=\"text\" value=\"". $setting['num_blocktab'] . "\" />
+			<input maxlength=\"4\" name=\"num_blocktab\" type=\"text\" value=\"" . $setting['num_blocktab'] . "\" />
 		</td>
 	</tr>
 </tbody>
@@ -222,7 +223,7 @@ $contents .= "<table class=\"tab1\">
 	<tr>
 		<td><strong>" . $lang_module['setting_description'] . "</strong></td>
 		<td>
-			<input style=\"width:350px\" maxlength=\"255\" name=\"description\" type=\"text\" value=\"". $setting['description'] . "\" />
+			<input style=\"width:350px\" maxlength=\"255\" name=\"description\" type=\"text\" value=\"" . $setting['description'] . "\" />
 		</td>
 	</tr>
 </tbody>

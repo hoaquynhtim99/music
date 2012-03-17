@@ -1,13 +1,13 @@
 <?php
 
 /* *
- * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011 Freeware
- * @Createdate 26/01/2011 10:12 AM
- */
+* @Project NUKEVIET-MUSIC
+* @Author Phan Tan Dung (phantandung92@gmail.com)
+* @Copyright (C) 2011 Freeware
+* @Createdate 26/01/2011 10:12 AM
+*/
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 $allsinger = getallsinger();
 $category = get_videocategory();
@@ -31,41 +31,40 @@ if( empty( $row ) ) module_info_die();
 
 updateHIT_VIEW( $id, '_video', false );
 
-$row['listcat'] = empty( $row['listcat'] ) ? array() : array_diff(array_filter(array_unique(explode(",", $row['listcat']))),array($row['theloai']));
+$row['listcat'] = empty( $row['listcat'] ) ? array() : array_diff( array_filter( array_unique( explode( ",", $row['listcat'] ) ) ), array( $row['theloai'] ) );
 if( ! empty( $row['listcat'] ) )
 {
 	$list_cat = $row['listcat'];
 	$row['listcat'] = array();
 	foreach( $list_cat as $cat )
 	{
-		$row['listcat'][] = array(
-			"name" => $category[$cat]['title'],  //
-			"url" => $mainURL . "=searchvideo/category/" . $cat  //
-		);
+		$row['listcat'][] = array( "name" => $category[$cat]['title'], //
+				"url" => $mainURL . "=searchvideo/category/" . $cat //
+				);
 	}
 }
 
 $array = array(
-	"URL_SENDMAIL" => $mainURL . "=videosendmail&amp;id=" . $id,  //
-	"TITLE" => $lang_module['sendtomail'],  //
-	"ID" => $id,  //
-	"name" => $row['tname'],  //
-	"thumb" => $row['thumb'],  //
-	"listcat" => $row['listcat'],  //
-	"sname" => $row['name'],  //
-	"singer" => $allsinger[$row['casi']],  //
-	"category" => $category[$row['theloai']]['title'],  //
-	"view" => $row['view'],  //
-	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ),  //
-	"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'],  //
-	"url_search_category" => $mainURL . "=searchvideo/category/" . $row['theloai'],  //
-	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ),  //
-	"URL_SONG" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=viewvideo/' . $row['id'] . '/' . $row['name'], true )  //
-);
+	"URL_SENDMAIL" => $mainURL . "=videosendmail&amp;id=" . $id, //
+	"TITLE" => $lang_module['sendtomail'], //
+	"ID" => $id, //
+	"name" => $row['tname'], //
+	"thumb" => $row['thumb'], //
+	"listcat" => $row['listcat'], //
+	"sname" => $row['name'], //
+	"singer" => $allsinger[$row['casi']], //
+	"category" => $category[$row['theloai']]['title'], //
+	"view" => $row['view'], //
+	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ), //
+	"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'], //
+	"url_search_category" => $mainURL . "=searchvideo/category/" . $row['theloai'], //
+	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ), //
+	"URL_SONG" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=viewvideo/' . $row['id'] . '/' . $row['name'], true ) //
+		);
 
 // tieu de trang
-$page_title = $row['tname'] . " - " . $allsinger[$row['casi']] ;
-$key_words =  $row['tname'] . " - " . $allsinger[$row['casi']] ;
+$page_title = $row['tname'] . " - " . $allsinger[$row['casi']];
+$key_words = $row['tname'] . " - " . $allsinger[$row['casi']];
 
 $contents = nv_music_viewvideo( $g_array, $array );
 

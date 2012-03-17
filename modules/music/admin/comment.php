@@ -6,8 +6,8 @@
  * @copyright 2011 Freeware
  * @createdate 26/01/2011 09:17 AM
  */
- 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['sub_comment'];
 

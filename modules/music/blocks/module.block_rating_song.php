@@ -1,13 +1,13 @@
 <?php
 
 /* *
- * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @Copyright (C) 2011 Freeware
- * @Createdate 26/01/2011 10:12 AM
- */
+* @Project NUKEVIET-MUSIC
+* @Author Phan Tan Dung (phantandung92@gmail.com)
+* @Copyright (C) 2011 Freeware
+* @Createdate 26/01/2011 10:12 AM
+*/
 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
 global $module_data, $mainURL, $db, $lang_module, $module_file;
 
@@ -18,8 +18,8 @@ $sql = "SELECT a.songid, b.ten, b.tenthat, b.casi, c.tenthat AS casithat  FROM `
 $result = $db->sql_query( $sql );
 
 $i = 1;
-while( $data =  $db->sql_fetchrow( $result ) )
-{	
+while( $data = $db->sql_fetchrow( $result ) )
+{
 	$xtpl->assign( 'STT', $i );
 	$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $data['songid'] . "/" . $data['ten'] );
 	$xtpl->assign( 'songname', $data['tenthat'] );

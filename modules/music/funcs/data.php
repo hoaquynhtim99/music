@@ -6,14 +6,14 @@
  * @Copyright (C) 2011 Freeware
  * @Createdate 29/01/2011 02:41 AM
  */
- 
-if ( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-if ( $nv_Request->isset_request( 'send_gift', 'post' ) )
+if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
+if( $nv_Request->isset_request( 'send_gift', 'post' ) )
 {
 	$checksess = filter_text_input( 'checksess', 'post', '' );
-	if( $checksess != md5( "gift_" . $global_config['sitekey'] . session_id() ) ) die('Error access !!!');
-	
+	if( $checksess != md5( "gift_" . $global_config['sitekey'] . session_id() ) ) die( 'Error access !!!' );
+
 	// Lay du lieu
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
 	$who_send = filter_text_input( 'who_send', 'post', '', 1, 255 );
@@ -33,14 +33,14 @@ if ( $nv_Request->isset_request( 'send_gift', 'post' ) )
 	}
 
 	// Kiem tra thoi gian
-	$timeout = $nv_Request->get_int( $module_name . '_gift' , 'cookie', 0 );
-	if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
+	$timeout = $nv_Request->get_int( $module_name . '_gift', 'cookie', 0 );
+	if( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 	{
 		$song = getsongbyID( $id );
 		if( empty( $song ) ) die( $lang_module['err_exist_song'] );
-		
-		$nv_Request->set_Cookie( $module_name . '_gift' , NV_CURRENTTIME );
-		
+
+		$nv_Request->set_Cookie( $module_name . '_gift', NV_CURRENTTIME );
+
 		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_gift` VALUES ( 
 			NULL, 
 			" . $db->dbescape( $who_send ) . ", 
@@ -48,24 +48,24 @@ if ( $nv_Request->isset_request( 'send_gift', 'post' ) )
 			" . $db->dbescape( $id ) . ", 
 			UNIX_TIMESTAMP(), 
 			" . $db->dbescape( $body ) . ", 
-			" . $setting['auto_gift']  . " 
-		)"; 
-		
-		if ( $db->sql_query_insert_id( $sql ) ) 
+			" . $setting['auto_gift'] . " 
+		)";
+
+		if( $db->sql_query_insert_id( $sql ) )
 		{
 			if( $setting['auto_gift'] )
 			{
 				nv_del_moduleCache( $module_name );
 			}
-			
+
 			$link = "<a href=\"" . NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=listenone/" . $song['id'] . "/" . $song['ten'] ) . "\">" . NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=listenone/" . $song['id'] . "/" . $song['ten'] ) . "</a>";
-			
+
 			$subject = $lang_module['sendmail_welcome'] . " \"" . $who_send . "\"";
 			$message = sprintf( $lang_module['gift_message'], $who_receive, $who_send, NV_MY_DOMAIN, $body, $link );
 			nv_sendmail( array( $global_config['site_name'], $global_config['site_email'] ), $email_receive, $subject, $message );
-			
+
 			if( $setting['auto_gift'] ) die( "OK" );
-			else die( "WAIT" );
+			else  die( "WAIT" );
 		}
 		else
 		{
@@ -79,53 +79,53 @@ if ( $nv_Request->isset_request( 'send_gift', 'post' ) )
 }
 
 // Them bai hat vao playlist
-if ( $nv_Request->isset_request( 'addplaylist', 'post' ) )
+if( $nv_Request->isset_request( 'addplaylist', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
-	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+	$num = $nv_Request->get_int( $module_name . '_numlist', 'cookie', 0 );
 
 	if( empty( $id ) ) die( "Error Access!!!" );
 
-	if ( $num >= 20 ) die( $lang_module['playlist_full'] );
+	if( $num >= 20 ) die( $lang_module['playlist_full'] );
 
 	// Kiem tra bai hat da them vao chua
-	for ( $i = 1 ; $i <= $num ; $i ++ )
+	for( $i = 1; $i <= $num; $i++ )
 	{
 		$song = $nv_Request->get_int( $module_name . '_song' . $i, 'cookie', 0 );
-		if ( $song == $id ) die( $lang_module['playlist_added'] );
+		if( $song == $id ) die( $lang_module['playlist_added'] );
 	}
 
 	// Neu chua thi them vao
-	$numnext = $num + 1 ;
+	$numnext = $num + 1;
 	$nv_Request->set_Cookie( $module_name . '_song' . $numnext, $id );
 	$nv_Request->set_Cookie( $module_name . '_numlist', $numnext );
 	die( "OK_" . $lang_module['playlist_add_success'] );
 }
 
 // Xoa mot playlist chua luu vao CSDL
-if ( $nv_Request->isset_request( 'delplaylist', 'post' ) )
+if( $nv_Request->isset_request( 'delplaylist', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	
-	// Lay so bai hat
-	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
-	if ( $num == 0 ) die( $lang_module['playlist_null'] );
+	// Lay so bai hat
+	$num = $nv_Request->get_int( $module_name . '_numlist', 'cookie', 0 );
+
+	if( $num == 0 ) die( $lang_module['playlist_null'] );
 
 	// Dat cac ban hat lai thanh 0
-	for ( $i = 1 ; $i <= $num ; $i ++ )
+	for( $i = 1; $i <= $num; $i++ )
 	{
 		$nv_Request->set_Cookie( $module_name . '_song' . $i, 0 );
 	}
 
-	$nv_Request->set_Cookie( $module_name . '_numlist' , 0 );
+	$nv_Request->set_Cookie( $module_name . '_numlist', 0 );
 	die( $lang_module['playlist_del_success'] );
 }
 
 // Gui loi bai hat
-if ( $nv_Request->isset_request( 'sendlyric', 'post' ) )
+if( $nv_Request->isset_request( 'sendlyric', 'post' ) )
 {
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
 	$user_lyric = filter_text_input( 'user_lyric', 'post', '' );
@@ -133,22 +133,22 @@ if ( $nv_Request->isset_request( 'sendlyric', 'post' ) )
 	$body_lyric = nv_nl2br( $body_lyric );
 
 	// Kiem tra thoi gian
-	$timeout = $nv_Request->get_int( $module_name . '_lyric' , 'cookie', 0 );
-	if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
+	$timeout = $nv_Request->get_int( $module_name . '_lyric', 'cookie', 0 );
+	if( $timeout == 0 or NV_CURRENTTIME - $timeout > 360 )
 	{
 		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` VALUES (
 			NULL, 
 			" . $db->dbescape( $id ) . ", 
 			" . $db->dbescape( $user_lyric ) . ", 
 			" . $db->dbescape( $body_lyric ) . ", 
-			" . $setting['auto_lyric']  . ", 
+			" . $setting['auto_lyric'] . ", 
 			" . NV_CURRENTTIME . " 
 		)";
-		
-		if ( $db->sql_query_insert_id( $sql ) )
+
+		if( $db->sql_query_insert_id( $sql ) )
 		{
 			$nv_Request->set_Cookie( $module_name . '_lyric', NV_CURRENTTIME );
-			
+
 			if( $setting['auto_lyric'] )
 			{
 				die( "OK" );
@@ -157,7 +157,7 @@ if ( $nv_Request->isset_request( 'sendlyric', 'post' ) )
 			{
 				die( "WAIT" );
 			}
-		} 
+		}
 		else
 		{
 			die( $lang_module['send_lyric_error'] );
@@ -170,9 +170,9 @@ if ( $nv_Request->isset_request( 'sendlyric', 'post' ) )
 }
 
 // Gui bao loi bai hat, bao loi album cho quan tri
-if ( $nv_Request->isset_request( 'senderror', 'post' ) )
+if( $nv_Request->isset_request( 'senderror', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 	$user = filter_text_input( 'user', 'post', '' ); // Ten nguoi gui bao loi
 	$body = filter_text_input( 'body', 'post', '', 1 );
@@ -186,20 +186,23 @@ if ( $nv_Request->isset_request( 'senderror', 'post' ) )
 
 	// Kiem tra thoi gian
 	$timeout = $nv_Request->get_int( $module_name . '_error_' . $where . "_" . $key, 'cookie', 0 );
-	if ( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
+	if( $timeout == 0 or NV_CURRENTTIME - $timeout > 90 )
 	{
 		$check = 0;
-		
+
 		// Neu day la ba hat va kiem tra loi khong ton tai
-		if ( ( $where == 'song' ) and ( $root_error == "check" ) )
+		if( ( $where == 'song' ) and ( $root_error == "check" ) )
 		{
 			$song = getsongbyID( $key );
-			$url = outputURL ( $song['server'], $song['duongdan'] ) ;
-			if ( $song['server'] == 1 ) { $url = NV_MY_DOMAIN . $url ; }
-			if (  nv_check_url( $url ) )
+			$url = outputURL( $song['server'], $song['duongdan'] );
+			if( $song['server'] == 1 )
 			{
-			   $ok = 1;
-			   die( $lang_module['send_error_not'] );
+				$url = NV_MY_DOMAIN . $url;
+			}
+			if( nv_check_url( $url ) )
+			{
+				$ok = 1;
+				die( $lang_module['send_error_not'] );
 			}
 			else
 			{
@@ -208,8 +211,8 @@ if ( $nv_Request->isset_request( 'senderror', 'post' ) )
 			$check = 1;
 		}
 		$nv_Request->set_Cookie( $module_name . '_error_' . $where . "_" . $key, NV_CURRENTTIME );
-		
-		if ( ( $check == 0 ) or ( ( $check == 1 ) and ( $ok == 0 ) ) )
+
+		if( ( $check == 0 ) or ( ( $check == 1 ) and ( $ok == 0 ) ) )
 		{
 			$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_error` VALUES (
 				NULL, 
@@ -220,10 +223,10 @@ if ( $nv_Request->isset_request( 'senderror', 'post' ) )
 				" . $db->dbescape( $where ) . ", 
 				" . NV_CURRENTTIME . ", 
 				" . $db->dbescape( $client_info['ip'] ) . ", 1
-			)"; 
-			
-			if ( $db->sql_query_insert_id( $sql ) ) 
-			{ 
+			)";
+
+			if( $db->sql_query_insert_id( $sql ) )
+			{
 				die( $lang_module['send_error_suc'] );
 			}
 			else
@@ -239,38 +242,38 @@ if ( $nv_Request->isset_request( 'senderror', 'post' ) )
 }
 
 // Binh chon bai hat
-if ( $nv_Request->isset_request( 'votesong', 'post' ) )
+if( $nv_Request->isset_request( 'votesong', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 	$difftimeout = 86400;
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
 
-	if ( ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
+	if( ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
 	{
 		echo "ERR_no_" . $lang_module['song_vote_err'];
 	}
 	else
 	{
 		$timeout = $nv_Request->get_int( $module_name . '_vote_song_' . $id, 'cookie', 0 );
-		if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
+		if( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 		{
-			$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET binhchon = binhchon+1 WHERE `id` =" . $id );
+			$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET binhchon = binhchon+1 WHERE `id` =" . $id );
 			$nv_Request->set_Cookie( $module_name . '_vote_song_' . $id, NV_CURRENTTIME );
-			$song = getsongbyID ( $id );
+			$song = getsongbyID( $id );
 			$numvote = $song['binhchon'];
 			$endtime = NV_CURRENTTIME - 2592000;
-			$result_time = $db->sql_query("SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` WHERE songid=" .  $id . " LIMIT 1");
+			$result_time = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` WHERE songid=" . $id . " LIMIT 1" );
 			$nums_music = $db->sql_numrows( $result_time );
-			if ( $nums_music == 0 ) 
+			if( $nums_music == 0 )
 			{
-				$db->sql_query( "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` (`id`, `songid`, `dt`, `hit`) VALUES ( NULL, " . $db->dbescape( $id ) . ", " . $db->dbescape( NV_CURRENTTIME ) . ", 1 )");
-			} 
-			else 
-			{
-				$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` SET hit=hit+1 WHERE songid = " . $id ); 
+				$db->sql_query( "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` (`id`, `songid`, `dt`, `hit`) VALUES ( NULL, " . $db->dbescape( $id ) . ", " . $db->dbescape( NV_CURRENTTIME ) . ", 1 )" );
 			}
-			$db->sql_query( "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` WHERE dt < " . $endtime . "");
+			else
+			{
+				$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` SET hit=hit+1 WHERE songid = " . $id );
+			}
+			$db->sql_query( "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_topsong` WHERE dt < " . $endtime . "" );
 			echo "OK_" . $numvote . "_" . $lang_module['song_vote_success'];
 		}
 		else
@@ -282,41 +285,41 @@ if ( $nv_Request->isset_request( 'votesong', 'post' ) )
 }
 
 // Xoa bai hat tu playlist (Chua luu va CSDL)
-if ( $nv_Request->isset_request( 'delsongfrlist', 'post' ) )
+if( $nv_Request->isset_request( 'delsongfrlist', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 	$stt = $nv_Request->get_int( 'stt', 'post', 0 );
 	$contents = "OK_" . $stt;
-	
-	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
 
-	for ( $i = $stt; $i <= $num; $i ++ )
+	$num = $nv_Request->get_int( $module_name . '_numlist', 'cookie', 0 );
+
+	for( $i = $stt; $i <= $num; $i++ )
 	{
-		$j = $i +1;
-		$tmp = $nv_Request->get_int( $module_name . '_song'. $j , 'cookie', 0 );
-		$nv_Request->set_Cookie( $module_name . '_song' . $i , $tmp );
+		$j = $i + 1;
+		$tmp = $nv_Request->get_int( $module_name . '_song' . $j, 'cookie', 0 );
+		$nv_Request->set_Cookie( $module_name . '_song' . $i, $tmp );
 	}
 
-	$numprev = $num - 1 ;
-	$nv_Request->set_Cookie( $module_name . '_numlist' , $numprev );
+	$numprev = $num - 1;
+	$nv_Request->set_Cookie( $module_name . '_numlist', $numprev );
 
 	die( $contents );
 }
 
 // Luu playlist
-if ( $nv_Request->isset_request( 'savealbum', 'post' ) )
+if( $nv_Request->isset_request( 'savealbum', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 	$difftimeout = 180;
 
 	$name = filter_text_input( 'name', 'post', '' );
 	$keyname = change_alias( $name );
 	$singer = filter_text_input( 'singer', 'post', '' );
-	$message = nv_br2nl(filter_text_textarea( 'message', '', NV_ALLOWED_HTML_TAGS ));
+	$message = nv_br2nl( filter_text_textarea( 'message', '', NV_ALLOWED_HTML_TAGS ) );
 
-	if ( defined( 'NV_IS_USER' ) )
+	if( defined( 'NV_IS_USER' ) )
 	{
 		$username = $user_info['username'];
 		$userid = $user_info['userid'];
@@ -327,25 +330,25 @@ if ( $nv_Request->isset_request( 'savealbum', 'post' ) )
 		$userid = 0;
 	}
 
-	$num = $nv_Request->get_int( $module_name . '_numlist' , 'cookie', 0 );
+	$num = $nv_Request->get_int( $module_name . '_numlist', 'cookie', 0 );
 	$songdata = array();
-	for ( $i = 1 ; $i <= $num ; $i ++ )
+	for( $i = 1; $i <= $num; $i++ )
 	{
 		$tmp = $nv_Request->get_int( $module_name . '_song' . $i, 'cookie', 0 );
 		$songdata[] = $tmp;
 	}
-		
+
 	$timeout = $nv_Request->get_int( $module_name . '_' . $userid, 'cookie', 0 );
 
-	if ( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
+	if( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 	{
-		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` (`id`, `userid`, `username`, `name`, `keyname`, `singer`, `message`, `songdata`, `time`, `view`, `active`) VALUES ( NULL, " . $userid . ", \"" . $username  . "\", \"" .  $name  . "\", \"" .  $keyname  . "\", \"" .  $singer  . "\", \"" .  $message  . "\", \"" . implode( ",", $songdata ) . "\", UNIX_TIMESTAMP() , 0, " . $setting['auto_album'] . ")"; 
-				
-		$aaaa = $db->sql_query( $query ) ? "1_" : "0_" ;
+		$query = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` (`id`, `userid`, `username`, `name`, `keyname`, `singer`, `message`, `songdata`, `time`, `view`, `active`) VALUES ( NULL, " . $userid . ", \"" . $username . "\", \"" . $name . "\", \"" . $keyname . "\", \"" . $singer . "\", \"" . $message . "\", \"" . implode( ",", $songdata ) . "\", UNIX_TIMESTAMP() , 0, " . $setting['auto_album'] . ")";
+
+		$aaaa = $db->sql_query( $query ) ? "1_" : "0_";
 		$nv_Request->set_Cookie( $module_name . '_' . $userid, NV_CURRENTTIME );
-		
+
 		$aaaa .= $setting['auto_album'] ? $lang_module['playlist_add_ok'] : $lang_module['playlist_add_waiting'];
-		$aaaa .= "_" . nv_url_rewrite ( $main_header_URL . "=creatalbum", true );
+		$aaaa .= "_" . nv_url_rewrite( $main_header_URL . "=creatalbum", true );
 		die( $aaaa );
 	}
 	else
@@ -355,9 +358,9 @@ if ( $nv_Request->isset_request( 'savealbum', 'post' ) )
 }
 
 // Xoa playlist da duoc luu vao CSDL
-if ( $nv_Request->isset_request( 'dellist', 'post' ) )
+if( $nv_Request->isset_request( 'dellist', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
 
@@ -366,8 +369,9 @@ if ( $nv_Request->isset_request( 'dellist', 'post' ) )
 		die( $lang_module['del_error'] );
 	}
 
-	if( $id > 0 ){
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data ."_playlist` WHERE `id`=" . $id . " AND `userid`=" . $user_info['userid'];
+	if( $id > 0 )
+	{
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `id`=" . $id . " AND `userid`=" . $user_info['userid'];
 		$result = $db->sql_query( $sql );
 	}
 
@@ -380,24 +384,24 @@ if ( $nv_Request->isset_request( 'dellist', 'post' ) )
 }
 
 // Xoa mot bai hat cua thanh vien
-if ( $nv_Request->isset_request( 'delsong', 'post' ) )
+if( $nv_Request->isset_request( 'delsong', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	if ( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
 
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
-	$song = getsongbyID ( $id );
+	$song = getsongbyID( $id );
 
 	if( $song['userid'] != $user_info['userid'] ) die( 'Wrong URL' );
 
 	updatesinger( $song['casi'], 'numsong', '-1' );
 	updateauthor( $song['nhacsi'], 'numsong', '-1' );
 	updatealbum( $song['album'], '-1' );
-	delcomment( 'song', $song['id']);
-	dellyric( $song['id']);
+	delcomment( 'song', $song['id'] );
+	dellyric( $song['id'] );
 	delerror( 'song', $song['id'] );
 	delgift( $song['id'] );
-	unlinkSV ( $song['server'], $song['duongdan'] );
+	unlinkSV( $song['server'], $song['duongdan'] );
 
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
 	$db->sql_query( $sql );
@@ -407,10 +411,10 @@ if ( $nv_Request->isset_request( 'delsong', 'post' ) )
 }
 
 // Xoa mot bai hat tu playlist da luu
-if ( $nv_Request->isset_request( 'delsongfrplaylist', 'post' ) )
+if( $nv_Request->isset_request( 'delsongfrplaylist', 'post' ) )
 {
-	if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
-	if ( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+	if( ! defined( 'NV_IS_USER' ) ) die( 'Wrong URL' );
 
 	$id = $nv_Request->get_int( 'id', 'post', 0 );
 	$plid = $nv_Request->get_int( 'plid', 'post', 0 );
@@ -425,14 +429,14 @@ if ( $nv_Request->isset_request( 'delsongfrplaylist', 'post' ) )
 	$row = $db->sql_fetchrow( $result );
 
 	$songdatanew = array();
-	$songdata = explode ( ',', $row['songdata'] );
-	foreach ( $songdata as $value )
+	$songdata = explode( ',', $row['songdata'] );
+	foreach( $songdata as $value )
 	{
-		if ( ( intval($value) == $id ) || ( $value == '' ) ) continue;
+		if( ( intval( $value ) == $id ) || ( $value == '' ) ) continue;
 		$songdatanew[] = $value;
 	}
-	
-	$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `songdata` = " . $db->dbescape( implode( ",", $songdatanew ) ) . " WHERE `id` =" . $plid );
+
+	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `songdata` = " . $db->dbescape( implode( ",", $songdatanew ) ) . " WHERE `id` =" . $plid );
 	nv_del_moduleCache( $module_name );
 
 	die( "OK_" . $id );

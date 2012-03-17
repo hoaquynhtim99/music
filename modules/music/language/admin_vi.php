@@ -8,7 +8,7 @@
  * @Createdate 26/01/2011 09:41 AM
  */
 
-if ( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "04/03/2010, 15:22";
@@ -117,6 +117,8 @@ $lang_module['error_exist_song'] = "Lỗi: Bài hát đã tồn tại";
 $lang_module['error_exist_video'] = "Lỗi: Video đã tồn tại";
 $lang_module['error_exist_singer'] = "Lỗi: Ca sĩ đã tồn tại";
 $lang_module['error_exist_author'] = "Lỗi: Nhạc sĩ đã tồn tại";
+$lang_module['error_add_new_author'] = "Lỗi: Không thể tạo nhạc sĩ mới";
+$lang_module['error_add_new_singer'] = "Lỗi: Không thể tạo ca sĩ mới";
 
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";

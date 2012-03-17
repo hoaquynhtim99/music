@@ -7,9 +7,9 @@
  * @Createdate 2-10-2010 18:49
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$title = filter_text_input( 'tenthat', 'post', '');
+$title = filter_text_input( 'tenthat', 'post', '' );
 $alias = change_alias( $title );
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo $alias;

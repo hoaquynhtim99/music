@@ -7,12 +7,12 @@
  * @Createdate 26/01/2011 09:09 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $area = filter_text_input( 'area', 'get', '' );
-if ( empty( $area ) )
+if( empty( $area ) )
 {
-    nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 }
 
 $page_title = $lang_module['getaid_title'];
@@ -44,29 +44,29 @@ $data_search = array(
 	"casi" => filter_text_input( 'casi', 'get', '', 1, 255 ), //
 	"describe" => filter_text_input( 'describe', 'get', '', 1, 255 ), //
 	"upboi" => filter_text_input( 'upboi', 'get', '', 1, 255 ), //
-);
+	);
 
 $xtpl->assign( 'SEARCH', $data_search );
 
-if ( ! empty ( $data_search['title'] ) )
+if( ! empty( $data_search['title'] ) )
 {
 	$base_url .= "&amp;title=" . $data_search['title'];
 	$sql .= " AND ( a.tname LIKE '%" . $db->dblikeescape( $data_search['title'] ) . "%' )";
 }
 
-if ( ! empty ( $data_search['casi'] ) )
+if( ! empty( $data_search['casi'] ) )
 {
 	$base_url .= "&amp;casi=" . $data_search['casi'];
 	$sql .= " AND ( b.tenthat LIKE '%" . $db->dblikeescape( $data_search['casi'] ) . "%' )";
 }
 
-if ( ! empty ( $data_search['describe'] ) )
+if( ! empty( $data_search['describe'] ) )
 {
 	$base_url .= "&amp;describe=" . $data_search['describe'];
 	$sql .= " AND ( a.describe LIKE '%" . $db->dblikeescape( $data_search['describe'] ) . "%' )";
 }
 
-if ( ! empty ( $data_search['upboi'] ) )
+if( ! empty( $data_search['upboi'] ) )
 {
 	$base_url .= "&amp;upboi=" . $data_search['upboi'];
 	$sql .= " AND ( a.upboi LIKE '%" . $db->dblikeescape( $data_search['upboi'] ) . "%' )";
@@ -84,23 +84,23 @@ $per_page = 15;
 $sql2 = "SELECT a.id, a.name, a.tname, a.upboi, b.tenthat " . $sql . " ORDER BY a.id DESC LIMIT " . $page . ", " . $per_page;
 $query2 = $db->sql_query( $sql2 );
 
-while ( $row = $db->sql_fetchrow( $query2 ) )
+while( $row = $db->sql_fetchrow( $query2 ) )
 {
-	$array[$row['id']] = array( 
+	$array[$row['id']] = array(
 		"id" => $row['id'], //
 		"name" => $row['name'], //
 		"tname" => $row['tname'], //
 		"upboi" => $row['upboi'], //
 		"tenthat" => $row['tenthat'] //
-	);
+			);
 }
 
 $generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 
-if ( ! empty( $array ) )
+if( ! empty( $array ) )
 {
 	$a = 0;
-	foreach ( $array as $row )
+	foreach( $array as $row )
 	{
 		$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 		$xtpl->assign( 'ROW', $row );
@@ -108,7 +108,7 @@ if ( ! empty( $array ) )
 		$a++;
 	}
 
-	if ( ! empty( $generate_page ) )
+	if( ! empty( $generate_page ) )
 	{
 		$xtpl->assign( 'GENERATE_PAGE', $generate_page );
 		$xtpl->parse( 'main.resultdata.data.generate_page' );

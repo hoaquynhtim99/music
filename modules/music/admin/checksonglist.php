@@ -6,7 +6,7 @@
  * @Copyright (C) 2011 Freeware
  * @Createdate 26/01/2011 08:39 AM
  */
- 
+
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['check_song'];
@@ -35,10 +35,10 @@ $result = $db->sql_query( $sql );
 $i = 1;
 while( $row = $db->sql_fetchrow( $result ) )
 {
-	if ( $row['where'] == "album" )
+	if( $row['where'] == "album" )
 	{
 		$album = getalbumbyID( $row['sid'] );
-		
+
 		$xtpl->assign( 'id', $row['id'] );
 		$xtpl->assign( 'songname', $lang_module['album'] . ": " . $album['tname'] );
 		$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_album&id=" . $album['id'] );
@@ -49,16 +49,19 @@ while( $row = $db->sql_fetchrow( $result ) )
 	else
 	{
 		$song = getsongbyID( $row['sid'] );
-			
+
 		$xtpl->assign( 'id', $song['id'] );
 		$xtpl->assign( 'songname', $lang_module['song'] . ": " . $song['tenthat'] );
 		$xtpl->assign( 'URL_DEL_ONE', $link_del . "&id=" . $song['id'] );
 		$xtpl->assign( 'URL_EDIT', $link_edit_song . "&id=" . $song['id'] );
 		$xtpl->assign( 'URL', $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'] );
 
-		$url = outputURL ( $song['server'], $song['duongdan'] ) ;
-		if ( $song['server'] == 1 ) { $url = NV_MY_DOMAIN . $url ; }
-		if (  nv_check_url( $url ) )
+		$url = outputURL( $song['server'], $song['duongdan'] );
+		if( $song['server'] == 1 )
+		{
+			$url = NV_MY_DOMAIN . $url;
+		}
+		if( nv_check_url( $url ) )
 		{
 			$xtpl->assign( 'result', $lang_module['check_link_suc'] );
 		}
@@ -69,9 +72,9 @@ while( $row = $db->sql_fetchrow( $result ) )
 	}
 
 	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
-	
+
 	$xtpl->parse( 'main.loop' );
-	++ $i;
+	++$i;
 }
 
 $xtpl->parse( 'main' );

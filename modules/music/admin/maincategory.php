@@ -7,35 +7,35 @@
  * @createdate 26/01/2011 09:17 AM
  */
 
-if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die('Stop!!!');
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['category_main'];
 
-$category = get_category() ;
+$category = get_category();
 $save = $nv_Request->get_int( 'save', 'post', 0 );
 
 if( $save == 1 )
 {
 	$num = $nv_Request->get_int( 'num', 'post', 0 );
-	$numnew = $num + 1 ;
+	$numnew = $num + 1;
 	$newct = $nv_Request->get_int( 'c' . $numnew, 'post', 0 );
-	
-	$i = 1 ;
-	while ( $i <= $num )
+
+	$i = 1;
+	while( $i <= $num )
 	{
-		$data =  $nv_Request->get_int( 'c' . $i , 'post', 0 );
-		$db->sql_query("UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_main_category` SET `cid` = " . $db->dbescape( $data ) . " WHERE `order` =" . $i . "");
-		$i ++ ;
+		$data = $nv_Request->get_int( 'c' . $i, 'post', 0 );
+		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_main_category` SET `cid` = " . $db->dbescape( $data ) . " WHERE `order` =" . $i . "" );
+		$i++;
 	}
-	
+
 	// Them vao the loai moi
-	if ( $newct != 0 )
+	if( $newct != 0 )
 	{
-		$db->sql_query( "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_main_category` (`id`, `cid`, `order`) VALUES ( NULL, " . $db->dbescape( $newct ) . ", " . $db->dbescape( $numnew ) . ")" ); 
+		$db->sql_query( "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_main_category` (`id`, `cid`, `order`) VALUES ( NULL, " . $db->dbescape( $newct ) . ", " . $db->dbescape( $numnew ) . ")" );
 	}
-	
+
 	nv_del_moduleCache( $module_name );
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op ); 
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 	die();
 }
 
@@ -57,16 +57,16 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$xtpl->assign( 'id', $row['id'] );
 
 	$td = "<select name=\"c" . $row['order'] . "\">\n";
-	foreach ( $category as $key => $title )
+	foreach( $category as $key => $title )
 	{
-		$j= "";
-		if ( $row['cid'] == $key ) $j = "selected=\"selected\"";
-		$td .= "<option ". $j ." value=\"" . $key . "\" >" . $title['title'] . "</option>\n";
+		$j = "";
+		if( $row['cid'] == $key ) $j = "selected=\"selected\"";
+		$td .= "<option " . $j . " value=\"" . $key . "\" >" . $title['title'] . "</option>\n";
 	}
 	$td .= "</select>";
 	$xtpl->assign( 'td', $td );
 	$xtpl->assign( 'num', $num );
-	
+
 	$class = ( $i % 2 ) ? " class=\"second\"" : "";
 	$xtpl->assign( 'class', $class );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del_one . "&where=_main_category&id=" . $row['id'] );
@@ -84,7 +84,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 			$xtpl->assign( 'SELECT', '' );
 		}
 
-		$xtpl->parse( 'main.row.sel.sel_op');
+		$xtpl->parse( 'main.row.sel.sel_op' );
 	}
 
 	$xtpl->assign( 'SEL_W', $row['order'] );
@@ -94,15 +94,15 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$i++;
 }
 
-$numadd = $num + 1 ;
+$numadd = $num + 1;
 $tdadd = "<select name=\"c" . $numadd . "\">\n";
 $tdadd .= "<option value=\"0\" >" . $lang_module['select_category'] . "</option>\n";
-foreach ( $category as $key => $title )
+foreach( $category as $key => $title )
 {
 	$tdadd .= "<option value=\"" . $key . "\" >" . $title['title'] . "</option>\n";
 }
 $tdadd .= "</select>";
-	
+
 $xtpl->assign( 'tdadd', $tdadd );
 $xtpl->parse( 'main.add' );
 

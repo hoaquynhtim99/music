@@ -7,7 +7,7 @@
  * @Createdate 26/01/2011 09:09 AM
  */
 
-if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' ); 
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['playlist_edit'];
 
@@ -38,9 +38,9 @@ $array['message'] = $row['message'];
 $array['time'] = nv_date( "d/m/Y H:i", $row['time'] );
 
 // Sua
-if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
+if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
-	$array = array() ;
+	$array = array();
 	$array['name'] = filter_text_input( 'name', 'post', '' );
 	$array['singer'] = filter_text_input( 'singer', 'post', '' );
 	$array['message'] = $nv_Request->get_string( 'message', 'post', '' );
@@ -52,11 +52,12 @@ if ( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 		`message`=" . $db->dbescape( $array['message'] ) . ", 
 		`songdata`=" . $db->dbescape( $array['songdata'] ) . "
 	WHERE `id`=" . $id;
-	
+
 	if( $db->sql_query( $sql ) )
 	{
 		nv_del_moduleCache( $module_name );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name."&" . NV_OP_VARIABLE . "=userplaylist" ); die();
+		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=userplaylist" );
+		die();
 	}
 	else
 	{
@@ -70,14 +71,14 @@ if( ! empty( $array['songdata'] ) )
 	$songdata = $array['songdata'];
 	$array['songdata'] = array();
 	$_tmp = array();
-		
+
 	$sql = "SELECT `id`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $songdata . ")";
 	$result = $db->sql_query( $sql );
 	while( list( $songid, $songname ) = $db->sql_fetchrow( $result ) )
 	{
 		$_tmp[$songid] = $songname;
 	}
-	
+
 	foreach( explode( ",", $songdata ) as $_id )
 	{
 		if( isset( $_tmp[$_id] ) ) $array['songdata'][$_id] = $_tmp[$_id];
@@ -115,21 +116,21 @@ $contents .= "
 				</td>
 			</tr>
 			<tr>
-				<td class=\"fixbg\">" . $lang_module['content_list']. "<br />
+				<td class=\"fixbg\">" . $lang_module['content_list'] . "<br />
 					<input type=\"hidden\" name=\"listsong\" value=\"" . implode( ",", array_keys( $array['songdata'] ) ) . "\"/>
 					<a href=\"javascript:void(0);\" id=\"selectsongtoadd\">" . $lang_module['album_add_list_song'] . "</a><br />
 					<a href=\"javascript:void(0);\" id=\"addasong\">" . $lang_module['album_add_a_song'] . "</a>
 				</td>
 				<td><ul id=\"listsong-area\" class=\"fixbg list_song\">
 				";
-					if( ! empty( $array['songdata'] ) )
-					{
-						foreach( $array['songdata'] as $_id => $_tmp )
-						{
-							$contents .= "<li class=\"" . $_id . "\">" . $_tmp . "<span onclick=\"nv_del_song_fromalbum(" . $_id . ")\" class=\"delete_icon\">&nbsp;</span></li>\n";
-						}
-					}
-				$contents .="</ul></td>
+if( ! empty( $array['songdata'] ) )
+{
+	foreach( $array['songdata'] as $_id => $_tmp )
+	{
+		$contents .= "<li class=\"" . $_id . "\">" . $_tmp . "<span onclick=\"nv_del_song_fromalbum(" . $_id . ")\" class=\"delete_icon\">&nbsp;</span></li>\n";
+	}
+}
+$contents .= "</ul></td>
 			</tr>
 			<tr>
 				<td>" . $lang_module['user_send_lyric'] . "</td>
