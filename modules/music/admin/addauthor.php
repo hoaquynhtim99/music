@@ -74,7 +74,7 @@ if( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 )
 	// Kiem tra xem nhac si da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `ten`=" . $db->dbescape( $array['ten'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{
@@ -116,7 +116,7 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	// Kiem tra xem ca si da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `ten`=" . $db->dbescape( $array['ten'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{

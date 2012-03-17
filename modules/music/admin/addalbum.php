@@ -93,12 +93,12 @@ else
 // Sua album
 if( ( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 ) and ( $error == '' ) )
 {
-	$error = nv_check_ok_album( $array );
+	$error .= nv_check_ok_album( $array );
 
 	// Kiem tra album da co chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $array['name'] ) . " AND `id`!=" . $id );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $array['casi'] . " AND `tname`=" . $db->dbescape( $array['tname'] ) . " AND `id`!=" . $id );
 		list( $existalbum ) = $db->sql_fetchrow( $result );
 		if( $existalbum )
 		{
@@ -179,12 +179,12 @@ if( ( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 ) and ( $error == '' ) 
 // Them album
 if( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) and ( $error == '' ) )
 {
-	$error = nv_check_ok_album( $array );
+	$error .= nv_check_ok_album( $array );
 
 	// Kiem tra album da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $array['name'] ) );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $array['casi'] . " `tname`=" . $db->dbescape( $array['tname'] ) );
 		list( $existalbum ) = $db->sql_fetchrow( $result );
 		if( $existalbum )
 		{

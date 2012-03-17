@@ -122,7 +122,7 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `name`=" . $db->dbescape( $array['name'] ) . " AND `id`!=" . $id );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $array['casi'] . " AND `tname`=" . $db->dbescape( $array['tname'] ) . " AND `id`!=" . $id );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{
@@ -186,7 +186,7 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	// Kiem tra video da co chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `name`=" . $db->dbescape( $array['name'] ) );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $array['casi'] . " AND `tname`=" . $db->dbescape( $array['tname'] ) );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{

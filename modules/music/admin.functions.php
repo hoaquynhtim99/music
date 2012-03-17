@@ -83,7 +83,8 @@ $allow_func = array(
 	'findsongtoalbum',
 	'getalbumid',
 	'getnhacso',
-	'findasongtoalbum' );
+	'findasongtoalbum'
+);
 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
