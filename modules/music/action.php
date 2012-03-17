@@ -74,8 +74,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `numsong` int(255) NOT NULL DEFAULT '0',
   `listsong` mediumtext NOT NULL,
   `addtime` int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
 //3. The loai
@@ -272,8 +271,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `numsong` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `numalbum` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `numvideo` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ten` (`ten`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
 //21 nhac si
@@ -285,8 +283,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `introduction` text NOT NULL ,
   `numsong` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `numvideo` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `ten` (`ten`)
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
 //22 FTP

@@ -135,12 +135,12 @@ else
 // Sua bai hat
 if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 {
-	$error = nv_check_ok_song( $array );
+	$error .= nv_check_ok_song( $array );
 
 	// Kiem tra bai hat da co chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `ten`=" . $db->dbescape( $array['ten'] ) . " AND `id`!=" . $id );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `casi`=" . $array['casi'] . " AND `nhacsi`=" . $array['nhacsi'] . " AND `id`!=" . $id );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{
@@ -177,12 +177,12 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 // Them bai hat moi
 if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 {
-	$error = nv_check_ok_song( $array );
+	$error .= nv_check_ok_song( $array );
 
 	// Kiem tra bai hat da co chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `ten`=" . $db->dbescape( $array['ten'] ) );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `casi`=" . $array['casi'] . " AND `nhacsi`=" . $array['nhacsi'] . " AND `tenthat`=" . $db->dbescape( $array['tenthat'] ) );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{
