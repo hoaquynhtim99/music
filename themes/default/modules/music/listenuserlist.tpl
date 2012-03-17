@@ -87,6 +87,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 			<span class="greencolor">{LANG.who_create}</span>: {GDATA.pl_who_post}<br />
 			<span class="greencolor">{LANG.view}</span>: {GDATA.pl_numview}<br />
 			<span class="greencolor">{LANG.message}</span>: {GDATA.pl_message}
+			<div class="clear"></div>
 		</div>
 	</div>
 </div>
