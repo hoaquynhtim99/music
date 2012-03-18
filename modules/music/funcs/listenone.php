@@ -72,7 +72,7 @@ if( ! empty( $row['listcat'] ) )
 
 	foreach( $row['listcat'] as $cat )
 	{
-		$listcat[] = array( "title" => $category[$cat]['title'], "url" => $mainURL . "=search/category/" . $cat );
+		$listcat[] = array( "title" => isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'], "url" => $mainURL . "=search/category/" . $cat );
 	}
 }
 else

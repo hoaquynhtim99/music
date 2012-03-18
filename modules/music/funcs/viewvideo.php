@@ -37,7 +37,7 @@ if( ! empty( $row['listcat'] ) )
 	$row['listcat'] = array();
 	foreach( $list_cat as $cat )
 	{
-		$row['listcat'][] = array( "name" => $category[$cat]['title'], "url" => $mainURL . "=searchvideo/category/" . $cat );
+		$row['listcat'][] = array( "name" => isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'], "url" => $mainURL . "=searchvideo/category/" . $cat );
 	}
 }
 

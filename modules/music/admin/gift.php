@@ -41,7 +41,7 @@ $data_search = array(
 	"from" => filter_text_input( 'from', 'get', '', 1, 100 ), //
 	"to" => filter_text_input( 'to', 'get', '', 1, 100 ), //
 	"disabled" => " disabled=\"disabled\"" //
-		);
+);
 
 // Enable cancel filter data
 if( ( $data_search['q'] != $lang_module['filter_enterkey'] and ! empty( $data_search['q'] ) ) or ! empty( $data_search['from'] ) or ! empty( $data_search['to'] ) )
