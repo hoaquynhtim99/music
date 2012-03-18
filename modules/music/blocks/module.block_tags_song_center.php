@@ -9,7 +9,7 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $module_file, $module_info, $mainURL, $lang_module, $db, $module_data, $module_name, $setting, $main_header_URL, $op, $array_op, $downURL, $allsinger, $category, $nv_Request;
+global $module_file, $module_info, $mainURL, $lang_module, $db, $module_data, $module_name, $setting, $main_header_URL, $op, $array_op, $downURL, $category, $nv_Request;
 
 $xtpl = new XTemplate( "block_tabs_song_center.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
@@ -53,26 +53,25 @@ if( $nv_Request->isset_request( 'loadblocktabsong', 'get' ) )
 // Xuat bai hat cua Tab dau tien
 if( ! empty( $first_cat ) )
 {
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `theloai`=" . $first_cat . " AND `active`=1 ORDER BY `dt` DESC LIMIT 0," . $setting['num_blocktab'];
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.theloai=" . $first_cat . " AND a.active=1 ORDER BY a.dt DESC LIMIT 0," . $setting['num_blocktab'];
 
 	$list = nv_db_cache( $sql, 'id', $module_name );
 
 	if( ! empty( $list ) )
 	{
-		if( empty( $allsinger ) ) $allsinger = getallsinger();
 		if( empty( $category ) ) $category = get_category();
 
 		foreach( $list as $row )
 		{
 			$xtpl->assign( 'ID', $row['id'] );
 			$xtpl->assign( 'name', $row['tenthat'] );
-			$xtpl->assign( 'singer', $allsinger[$row['casi']] );
+			$xtpl->assign( 'singer', $row['singername'] ? $row['singername'] : $lang_module['unknow'] );
 			$xtpl->assign( 'category', $category[$row['theloai']]['title'] );
 			$xtpl->assign( 'who_upload', $row['upboi'] );
 			$xtpl->assign( 'view', $row['numview'] );
 			$xtpl->assign( 'url_view', nv_url_rewrite( $main_header_URL . "=listenone/" . $row['id'] . "/" . $row['ten'], true ) );
 
-			$xtpl->assign( 'url_search_singer', nv_url_rewrite( $main_header_URL . "=search/singer/" . $row['casi'], true ) );
+			$xtpl->assign( 'url_search_singer', nv_url_rewrite( $main_header_URL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), true ) );
 			$xtpl->assign( 'url_search_category', nv_url_rewrite( $main_header_URL . "=search/category/" . $row['theloai'], true ) );
 			$xtpl->assign( 'url_search_upload', nv_url_rewrite( $main_header_URL . "=search/upload/" . $row['upboi'], true ) );
 

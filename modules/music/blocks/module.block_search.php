@@ -17,11 +17,7 @@ $xtpl->assign( 'LANG', $lang_module );
 $key_search = $nv_Request->get_string( 'music_search_key', 'session', '' );
 $type_search = $nv_Request->get_string( 'music_search_type', 'session', '' );
 
-$search = array(
-	"name",
-	"singer",
-	"album",
-	"playlist" );
+$search = array( "name", "singer", "album", "playlist" );
 
 foreach( $search as $type )
 {

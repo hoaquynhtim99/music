@@ -57,7 +57,7 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 
 		$load_type = $nv_Request->get_int( 'loadblocktabvideo', 'get', 0 );
 
-		$sql = "SELECT a.*, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1 ORDER BY";
+		$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY";
 
 		switch( $load_type )
 		{
@@ -96,13 +96,9 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 			while( $row = $db->sql_fetchrow( $result ) )
 			{
 				$row['url_view'] = nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module . "&" . NV_OP_VARIABLE . "=viewvideo/" . $row['id'] . "/" . $row['name'], true );
-				$row['url_search_singer'] = nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module . "&" . NV_OP_VARIABLE . "=searchvideo/singer/" . $row['casi'], true );
+				$row['url_search_singer'] = nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module . "&" . NV_OP_VARIABLE . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), true );
 
 				if( empty( $row['tenthat'] ) )
-				{
-					$row['tenthat'] = $lang_block['ns'];
-				}
-				elseif( $row['tenthat'] == 'ns' )
 				{
 					$row['tenthat'] = $lang_block['ns'];
 				}

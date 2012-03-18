@@ -8,6 +8,7 @@
  */
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
+
 global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db, $array_op, $op, $module_name;
 
 if( $op == "listenone" )
