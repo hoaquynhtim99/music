@@ -300,6 +300,22 @@ function updatealbum( $id, $action )
 	return;
 }
 
+// Cap nhat so bai hat the loai am nha
+function UpdateSongCat( $id, $action )
+{
+	global $module_data, $db;
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET numsong = numsong" . $action . " WHERE `id`=" . $id );
+	return;
+}
+
+// Cap nhat so bai hat the loai am nha
+function UpdateVideoCat( $id, $action )
+{
+	global $module_data, $db;
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET numvideo = numvideo" . $action . " WHERE `id`=" . $id );
+	return;
+}
+
 // xoa cac binh luan
 function delcomment( $delwwhat, $where )
 {
@@ -716,7 +732,7 @@ function nvm_new_song( $array )
 	$array['casi'] = ! isset( $array['casi'] ) ? 0 : $array['casi'];
 	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? 0 : $array['nhacsi'];
 	$array['album'] = ! isset( $array['album'] ) ? 0 : $array['album'];
-	$array['theloai'] = ! isset( $array['theloai'] ) ? "1" : $array['theloai'];
+	$array['theloai'] = ! isset( $array['theloai'] ) ? 0 : $array['theloai'];
 	$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
 	$array['data'] = ! isset( $array['data'] ) ? "" : $array['data'];
 	$array['username'] = ! isset( $array['username'] ) ? "N/A" : $array['username'];
@@ -755,6 +771,17 @@ function nvm_new_song( $array )
 
 	if( $_songid )
 	{
+		// Cap nhat bai hat cho the loai
+		// Xac dinh chu de moi
+		$list_new_cat = $array['listcat'];
+		$list_new_cat[] = $array['theloai'];
+		$list_new_cat = array_unique( $list_new_cat );
+		
+		foreach( $list_new_cat as $_cid )
+		{
+			if( $_cid > 0 ) UpdateSongCat( $_cid, '+1' );
+		}
+
 		// Cap nhat so bai hat cua ca si, nhac si va album
 		updatesinger( $array['casi'], 'numsong', '+1' );
 		updateauthor( $array['nhacsi'], 'numsong', '+1' );
@@ -804,15 +831,16 @@ function nvm_edit_song( $array_old, $array )
 
 	$array_old['casi'] = ! isset( $array_old['casi'] ) ? 0 : $array_old['casi'];
 	$array_old['nhacsi'] = ! isset( $array_old['nhacsi'] ) ? 0 : $array_old['nhacsi'];
-	$array_old['theloai'] = ! isset( $array_old['theloai'] ) ? "1" : $array_old['theloai'];
+	$array_old['theloai'] = ! isset( $array_old['theloai'] ) ? 0 : $array_old['theloai'];
 	$array_old['lyric'] = ! isset( $array_old['lyric'] ) ? "" : $array_old['lyric'];
+	$array_old['listcat'] = ! isset( $array_old['listcat'] ) ? array() : ( array ) $array_old['listcat'];
 
 	$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
 	$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
 	$array['casi'] = ! isset( $array['casi'] ) ? 0 : $array['casi'];
 	$array['nhacsi'] = ! isset( $array['nhacsi'] ) ? 0 : $array['nhacsi'];
 	$array['album'] = ! isset( $array['album'] ) ? 0 : $array['album'];
-	$array['theloai'] = ! isset( $array['theloai'] ) ? "1" : $array['theloai'];
+	$array['theloai'] = ! isset( $array['theloai'] ) ? 0 : $array['theloai'];
 	$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
 	$array['duongdan'] = ! isset( $array['duongdan'] ) ? "" : $array['duongdan'];
 	$array['bitrate'] = ! isset( $array['bitrate'] ) ? "0" : $array['bitrate'];
@@ -837,12 +865,36 @@ function nvm_edit_song( $array_old, $array )
 		`size`=" . $db->dbescape( $array['size'] ) . " ,
 		`duration`=" . $db->dbescape( $array['duration'] ) . ",
 		`server`=" . $array['server'] . "
-		WHERE `id`=" . $array['id'];
+	WHERE `id`=" . $array['id'];
 
 	$check_update = $db->sql_query( $sql );
 
 	if( $check_update )
 	{
+		// Cap nhat bai hat cho the loai
+		// Xac dinh cac chu de cu
+		$list_old_cat = $array_old['listcat'];
+		$list_old_cat[] = $array_old['theloai'];
+		$list_old_cat = array_unique( $list_old_cat );
+		
+		// Xac dinh chu de moi
+		$list_new_cat = $array['listcat'];
+		$list_new_cat[] = $array['theloai'];
+		$list_new_cat = array_unique( $list_new_cat );
+		
+		$array_mul = array_diff( $list_new_cat, $list_old_cat );
+		$array_div = array_diff( $list_old_cat, $list_new_cat );
+		
+		foreach( $array_mul as $_cid )
+		{
+			if( $_cid > 0 ) UpdateSongCat( $_cid, '+1' );
+		}
+		
+		foreach( $array_div as $_cid )
+		{
+			if( $_cid > 0 ) UpdateSongCat( $_cid, '-1' );
+		}
+		
 		// Cap nhat so bai hat cua ca si
 		if( $array_old['casi'] != $array['casi'] )
 		{

@@ -41,12 +41,12 @@ $page_title = $lang_module['sub_videocategory'];
 
 // List
 $array_data = array();
-$sql = "SELECT `id`, `title`, `keywords`, `description`, `weight` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` ORDER BY `weight` ASC";
+$sql = "SELECT `id`, `title`, `keywords`, `description`, `numvideo`, `weight` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` ORDER BY `weight` ASC";
 $result = $db->sql_query( $sql );
 $num = $db->sql_numrows( $result );
 
 $i = 1;
-while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow( $result ) )
+while( list( $id, $title, $keywords, $description, $numvideo, $weight ) = $db->sql_fetchrow( $result ) )
 {
 	$list_weight = array();
 	for( $j = 1; $j <= $num; $j++ )
@@ -55,17 +55,18 @@ while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow
 			"weight" => $j, //
 			"title" => $j, //
 			"selected" => ( $j == $weight ) ? " selected=\"selected\"" : "" //
-				);
+		);
 	}
 
 	$array_data[$id] = array(
 		"id" => $id, //
 		"title" => $title, //
 		"description" => $description, //
+		"numvideo" => $numvideo, //
 		"weight" => $list_weight, //
 		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id . "#addeditarea", //
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : "" //
-			);
+	);
 	$i++;
 }
 
@@ -90,7 +91,7 @@ if( $id )
 		"title" => $title, //
 		"keywords" => $keywords, //
 		"description" => $description //
-			);
+	);
 
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $lang_module['vcat_edit'];
@@ -105,7 +106,7 @@ else
 		"title" => "", //
 		"keywords" => "", //
 		"description" => "" //
-			);
+	);
 }
 
 if( $nv_Request->isset_request( 'submit', 'post' ) )
@@ -145,6 +146,7 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 					" . $db->dbescape( $array['title'] ) . ",
 					" . $db->dbescape( $array['keywords'] ) . ",
 					" . $db->dbescape( $array['description'] ) . ",
+					0,
 					" . $new_weight . "
 				)";
 
@@ -174,12 +176,13 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 			}
 			else
 			{
-				$query = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET 
+				$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET 
 					`title`= " . $db->dbescape( $array['title'] ) . ",
 					`keywords`= " . $db->dbescape( $array['keywords'] ) . ",
 					`description`= " . $db->dbescape( $array['description'] ) . "
-					WHERE `id` =" . $id;
-				if( $db->sql_query( $query ) )
+				WHERE `id` =" . $id;
+				
+				if( $db->sql_query( $sql ) )
 				{
 					$db->sql_freeresult();
 					nv_del_moduleCache( $module_name );

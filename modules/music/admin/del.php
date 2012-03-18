@@ -50,6 +50,16 @@ if( $id > 0 )
 		updateauthor( $video['nhacsi'], 'numvideo', '-1' );
 		delcomment( 'video', $video['id'] );
 		unlinkSV( $video['server'], $video['duongdan'] );
+		
+		// Cap nhat lai chu de
+		$list_cat = $video['listcat'] ? explode( ',', $video['listcat'] ) : array();
+		$list_cat[] = $video['theloai'];
+		$list_cat = array_filter( array_unique( $list_cat ) );
+		
+		foreach( $list_cat as $_cid )
+		{
+			UpdateVideoCat( $_cid, '-1' );
+		}
 	}
 	elseif( $where == '_singer' )
 	{
@@ -85,6 +95,16 @@ if( $id > 0 )
 
 		// Xoa file nhac
 		unlinkSV( $song['server'], $song['duongdan'] );
+		
+		// Cap nhat lai chu de
+		$list_cat = $song['listcat'] ? explode( ',', $song['listcat'] ) : array();
+		$list_cat[] = $song['theloai'];
+		$list_cat = array_filter( array_unique( $list_cat ) );
+		
+		foreach( $list_cat as $_cid )
+		{
+			UpdateSongCat( $_cid, '-1' );
+		}
 	}
 	
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;

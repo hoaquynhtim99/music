@@ -33,30 +33,40 @@ foreach( $array_id as $id )
 			updatesinger( $album['casi'], 'numalbum', '-1' );
 			delcomment( 'album', $album['id'] );
 			delerror( 'album', $album['id'] );
-			updateSwhendelA( $album['name'], 'na' );
+			updateSwhendelA( $album['id'], 0 );
 		}
-		if( $where == '_video' )
+		elseif( $where == '_video' )
 		{
 			$video = getvideobyID( $id );
 			updatesinger( $video['casi'], 'numvideo', '-1' );
 			updateauthor( $video['nhacsi'], 'numvideo', '-1' );
 			delcomment( 'video', $video['id'] );
 			unlinkSV( $video['server'], $video['duongdan'] );
+			
+			// Cap nhat lai chu de
+			$list_cat = $video['listcat'] ? explode( ',', $video['listcat'] ) : array();
+			$list_cat[] = $video['theloai'];
+			$list_cat = array_filter( array_unique( $list_cat ) );
+			
+			foreach( $list_cat as $_cid )
+			{
+				UpdateVideoCat( $_cid, '-1' );
+			}
 		}
-		if( $where == '_singer' )
+		elseif( $where == '_singer' )
 		{
 			$singer = getsingerbyID( $id );
-			updatewhendelS( $singer['ten'], 'ns' );
+			updatewhendelS( $singer['id'], 0 );
 		}
-		if( $where == '_author' )
+		elseif( $where == '_author' )
 		{
 			$singer = getauthorbyID( $id );
-			updatewhendelA( $singer['ten'], 'na' );
+			updatewhendelA( $singer['id'], 0 );
 		}
-		if( $where == '' )
+		elseif( $where == '' )
 		{
 			$song = getsongbyID( $id );
-			if( $song['album'] != 'na' )
+			if( $song['album'] != 0 )
 			{
 				updatealbum( $song['album'], '-1' );
 			}
@@ -67,7 +77,18 @@ foreach( $array_id as $id )
 			delerror( 'song', $song['id'] );
 			delgift( $song['id'] );
 			unlinkSV( $song['server'], $song['duongdan'] );
+			
+			// Cap nhat lai chu de
+			$list_cat = $song['listcat'] ? explode( ',', $song['listcat'] ) : array();
+			$list_cat[] = $song['theloai'];
+			$list_cat = array_filter( array_unique( $list_cat ) );
+			
+			foreach( $list_cat as $_cid )
+			{
+				UpdateSongCat( $_cid, '-1' );
+			}
 		}
+		
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
 		$result = $db->sql_query( $sql );
 	}

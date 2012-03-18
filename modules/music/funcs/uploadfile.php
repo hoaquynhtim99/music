@@ -160,6 +160,8 @@ if( $upload_success )
 		$saved = true;
 		updatesinger( $singer, 'numsong', '+1' );
 		updateauthor( $author, 'numsong', '+1' );
+		
+		UpdateSongCat( $category, '+1' );
 	}
 
 }

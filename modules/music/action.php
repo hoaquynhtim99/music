@@ -83,6 +83,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `title` varchar(255) NOT NULL DEFAULT '',
   `keywords` mediumtext NOT NULL,
   `description` varchar(255) NOT NULL DEFAULT '',
+  `numsong` int(11) unsigned NOT NULL DEFAULT '0',
   `weight` smallint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
@@ -235,6 +236,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `title` varchar(50) NOT NULL DEFAULT '',
   `keywords` mediumtext NOT NULL,
   `description` varchar(255) NOT NULL DEFAULT '',
+  `numvideo` int(11) unsigned NOT NULL DEFAULT '0',
   `weight` smallint(4) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)

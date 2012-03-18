@@ -403,6 +403,15 @@ if( $nv_Request->isset_request( 'delsong', 'post' ) )
 	delgift( $song['id'] );
 	unlinkSV( $song['server'], $song['duongdan'] );
 
+	$list_cat = $song['listcat'] ? explode( ',', $song['listcat'] ) : array();
+	$list_cat[] = $song['theloai'];
+	$list_cat = array_filter( array_unique( $list_cat ) );
+	
+	foreach( $list_cat as $_cid )
+	{
+		UpdateSongCat( $_cid, '-1' );
+	}
+	
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
 	$db->sql_query( $sql );
 	nv_del_moduleCache( $module_name );

@@ -41,12 +41,12 @@ $page_title = $lang_module['manager_category'];
 
 // List
 $array_data = array();
-$sql = "SELECT `id`, `title`, `keywords`, `description`, `weight` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_category` ORDER BY `weight` ASC";
+$sql = "SELECT `id`, `title`, `keywords`, `description`, `numsong`, `weight` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_category` ORDER BY `weight` ASC";
 $result = $db->sql_query( $sql );
 $num = $db->sql_numrows( $result );
 
 $i = 1;
-while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow( $result ) )
+while( list( $id, $title, $keywords, $description, $numsong, $weight ) = $db->sql_fetchrow( $result ) )
 {
 	$list_weight = array();
 	for( $j = 1; $j <= $num; $j++ )
@@ -62,6 +62,7 @@ while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow
 		"id" => $id, //
 		"title" => $title, //
 		"description" => $description, //
+		"numsong" => $numsong, //
 		"weight" => $list_weight, //
 		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id . "#addeditarea", //
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : "" //
@@ -146,6 +147,7 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 					" . $db->dbescape( $array['title'] ) . ",
 					" . $db->dbescape( $array['keywords'] ) . ",
 					" . $db->dbescape( $array['description'] ) . ",
+					0,
 					" . $new_weight . "
 				)";
 

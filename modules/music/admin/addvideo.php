@@ -86,6 +86,7 @@ else
 	$array_old['casi'] = $row['casi'];
 	$array_old['nhacsi'] = $row['nhacsi'];
 	$array_old['theloai'] = $row['theloai'];
+	$array_old['listcat'] = $row['listcat'] ? explode( ",", $row['listcat'] ) : array();
 
 	if( ! $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 	{
@@ -146,6 +147,30 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 
 		if( $check_update )
 		{
+			// Cap nhat bai hat cho the loai
+			// Xac dinh cac chu de cu
+			$list_old_cat = $array_old['listcat'];
+			$list_old_cat[] = $array_old['theloai'];
+			$list_old_cat = array_unique( $list_old_cat );
+			
+			// Xac dinh chu de moi
+			$list_new_cat = $array['listcat'];
+			$list_new_cat[] = $array['theloai'];
+			$list_new_cat = array_unique( $list_new_cat );
+			
+			$array_mul = array_diff( $list_new_cat, $list_old_cat );
+			$array_div = array_diff( $list_old_cat, $list_new_cat );
+			
+			foreach( $array_mul as $_cid )
+			{
+				if( $_cid > 0 ) UpdateVideoCat( $_cid, '+1' );
+			}
+			
+			foreach( $array_div as $_cid )
+			{
+				if( $_cid > 0 ) UpdateVideoCat( $_cid, '-1' );
+			}
+
 			// Cap nhat so video cua ca si
 			if( $array_old['casi'] != $array['casi'] )
 			{
@@ -212,6 +237,17 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 
 		if( $db->sql_query_insert_id( $sql ) )
 		{
+			// Cap nhat bai hat cho the loai
+			// Xac dinh chu de moi
+			$list_new_cat = $array['listcat'];
+			$list_new_cat[] = $array['theloai'];
+			$list_new_cat = array_unique( $list_new_cat );
+			
+			foreach( $list_new_cat as $_cid )
+			{
+				if( $_cid > 0 ) UpdateVideoCat( $_cid, '+1' );
+			}
+			
 			// Cap nhat so video cua ca si, nhac si
 			updatesinger( $array['casi'], 'numvideo', '+1' );
 			updateauthor( $array['nhacsi'], 'numvideo', '+1' );
