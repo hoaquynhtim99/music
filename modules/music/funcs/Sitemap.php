@@ -64,7 +64,7 @@ elseif( $type == "video" )
 			$url[] = array( //
 					'link' => $mainURL . "=viewvideo" . '/' . $id . '/' . $ten, //
 					'publtime' => $dt //
-					);
+			);
 		}
 
 		$cache = serialize( $url );
@@ -94,7 +94,7 @@ else
 		$url[] = array( //
 				'link' => $mainURL . "=listenone" . '/' . $id . '/' . $ten, //
 				'publtime' => $dt //
-				);
+		);
 	}
 
 	$cache = serialize( $url );

@@ -9,9 +9,8 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$allsinger = getallsinger();
-
 $id = $nv_Request->get_int( 'id', 'get', 0 );
+
 if( $id > 0 )
 {
 	$result = "";
@@ -34,7 +33,7 @@ if( $id > 0 )
 	}
 	$to_mail = $content = "";
 
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = " . $id . "";
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id = " . $id;
 	$query = $db->sql_query( $sql );
 	$video = $db->sql_fetchrow( $query );
 
@@ -64,7 +63,7 @@ if( $id > 0 )
 			$message .= "" . $lang_module['sendmail_welcome_1'] . " 
 							<strong>" . $global_config['site_name'] . "</strong>
 							" . $lang_module['sendmail_welcome_2'] . "<br />
-							<br />" . $lang_module['video'] . "<strong> " . $video['tname'] . "</strong> " . $lang_module['sendmail_singer_show'] . " <strong> " . $allsinger[$video['casi']] . " </strong> " . $lang_module['show_2'] . ".<br/>
+							<br />" . $lang_module['video'] . "<strong> " . $video['tname'] . "</strong> " . $lang_module['sendmail_singer_show'] . " <strong> " . ( $video['singername'] ? $video['singername'] : $lang_module['unknow'] ) . " </strong> " . $lang_module['show_2'] . ".<br/>
 							<br />" . $lang_module['message'] . ": " . $content . "<br />
 							<br /><strong>" . $lang_module['sendmail_welcome_3'] . ": </strong><br />" . $link . "";
 			$from = array( $name, $youremail );
@@ -78,12 +77,14 @@ if( $id > 0 )
 				$success = $lang_module['send_mail_err'];
 			}
 		}
+		
 		$result = array(
 			"err_name" => $err_name,
 			"err_email" => $err_email,
 			"err_yourmail" => $err_youremail,
 			"send_success" => $success,
-			"check" => $check );
+			"check" => $check
+		);
 	}
 
 	$sendmail = array(
@@ -91,14 +92,16 @@ if( $id > 0 )
 		"checkss" => md5( $id . session_id() . $global_config['sitekey'] ),
 		"v_name" => $name,
 		"video" => $video['tname'],
-		"singer" => $allsinger[$video['casi']],
+		"singer" => ( $video['singername'] ? $video['singername'] : $lang_module['unknow'] ),
 		"v_mail" => $youremail,
 		"to_mail" => $to_mail,
 		"content" => $content,
 		"result" => $result,
-		"action" => "" . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=videosendmail&amp;id=" . $id );
+		"action" => "" . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=videosendmail&amp;id=" . $id
+	);
 
 	$contents = nv_sendmail_video_themme( $sendmail );
+	
 	include ( NV_ROOTDIR . "/includes/header.php" );
 	echo $contents;
 	include ( NV_ROOTDIR . "/includes/footer.php" );

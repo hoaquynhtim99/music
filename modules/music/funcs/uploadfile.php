@@ -19,9 +19,9 @@ $userfile = $_FILES['uploadfile'];
 if( empty( $userfile ) ) nv_return_upload( $lang_module['upload_error_file'], false );
 
 $songname = filter_text_input( 'song', 'get,post', '', 1, 255 );
-$singer = filter_text_input( 'singer', 'get,post', '', 1, 255 );
+$singer = $nv_Request->get_int( 'singer', 'get,post', 0 );
 $newsinger = filter_text_input( 'newsinger', 'get,post', '', 1, 255 );
-$author = filter_text_input( 'author', 'get,post', '', 1, 255 );
+$author = $nv_Request->get_int( 'author', 'get,post', 0 );
 $newauthor = filter_text_input( 'newauthor', 'get,post', '', 1, 255 );
 $category = $nv_Request->get_int( 'category', 'get,post', 0 );
 
@@ -137,14 +137,12 @@ if( $upload_success )
 {
 	if( $newsinger != '' )
 	{
-		newsinger( change_alias( $newsinger ), $newsinger );
-		$singer = $newsinger;
+		$singer = newsinger( change_alias( $newsinger ), $newsinger );
 	}
 
 	if( $newauthor != '' )
 	{
-		newauthor( change_alias( $newauthor ), $newauthor );
-		$author = $newauthor;
+		$author = newauthor( change_alias( $newauthor ), $newauthor );
 	}
 
 	$hit = "0-" . NV_CURRENTTIME;
@@ -152,7 +150,7 @@ if( $upload_success )
 	$duongdan = $check_url['duongdan'];
 	$server = $check_url['server'];
 
-	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `listcat`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $db->dbescape( change_alias( $singer ) ) . ", " . $db->dbescape( change_alias( $author ) ) . ", 'na', " . $db->dbescape( $category ) . ", '', " . $db->dbescape( $duongdan ) . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", " . $server . ", " . $userid . ", UNIX_TIMESTAMP() , 0, " . $db->dbescape( $hit ) . " ) ";
+	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `listcat`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $singer . ", " . $author . ", 'na', " . $db->dbescape( $category ) . ", '', " . $db->dbescape( $duongdan ) . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", " . $server . ", " . $userid . ", UNIX_TIMESTAMP() , 0, " . $db->dbescape( $hit ) . " ) ";
 
 	$songid = $db->sql_query_insert_id( $sql );
 
@@ -161,6 +159,7 @@ if( $upload_success )
 		$db->sql_freeresult();
 		$saved = true;
 		updatesinger( $singer, 'numsong', '+1' );
+		updateauthor( $author, 'numsong', '+1' );
 	}
 
 }

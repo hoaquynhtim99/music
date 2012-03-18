@@ -13,10 +13,9 @@ $page_title = $lang_module['video'] . " " . NV_TITLEBAR_DEFIS . " " . $module_in
 $key_words = $module_info['keywords'];
 
 $category = get_videocategory();
-$allsinger = getallsinger();
 
-$sqlhot = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `active` = 1 ORDER BY `view` DESC LIMIT 0,12";
-$sqlnew = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `active` = 1 ORDER BY `id` DESC LIMIT 0,12";
+$sqlhot = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.view DESC LIMIT 0,12";
+$sqlnew = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 0,12";
 
 $array_new = array();
 $array_hot = array();
@@ -27,11 +26,11 @@ while( $row = $db->sql_fetchrow( $result ) )
 {
 	$array_new[] = array(
 		"name" => $row['tname'], //
-		"singer" => $allsinger[$row['casi']], //
+		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"thumb" => $row['thumb'], //
 		"url_view" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'] //
-			);
+		"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+	);
 }
 
 // Video hot
@@ -40,11 +39,11 @@ while( $row = $db->sql_fetchrow( $result ) )
 {
 	$array_hot[] = array(
 		"name" => $row['tname'], //
-		"singer" => $allsinger[$row['casi']], //
+		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"thumb" => $row['thumb'], //
 		"url_view" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'] //
-			);
+		"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+	);
 }
 
 $contents = nv_music_video( $category, $array_new, $array_hot );

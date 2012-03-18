@@ -13,7 +13,7 @@ $category = get_category();
 
 $type = isset( $array_op[1] ) ? $array_op[1] : 'numview';
 $now_page = isset( $array_op[2] ) ? intval( $array_op[2] ) : 1;
-$allsinger = getallsinger();
+
 $link = $mainURL . "=song/" . $type;
 
 $g_array = array();
@@ -29,8 +29,8 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active`=1 ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `active`=1";
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a." . $type . " DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `active`=1";
 
 // tinh so trang
 $num = $db->sql_query( $sqlnum );
@@ -55,7 +55,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"id" => $row['id'], //
 		"name" => $row['tenthat'], //
 		"category" => $category[$row['theloai']]['title'], //
-		"singer" => $allsinger[$row['casi']], //
+		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"upload" => $row['upboi'], //
 		"view" => $row['numview'], //
 		"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
@@ -63,11 +63,11 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"size" => $row['size'], //
 		"duration" => $row['duration'], //
 		"url_listen" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['ten'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'], //
+		"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
 		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
 		"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
 		"checkhit" => $checkhit //
-			);
+	);
 }
 
 // Xu ly tieu de trang

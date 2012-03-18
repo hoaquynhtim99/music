@@ -27,7 +27,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$array[] = array(
 		"name" => $row['tenthat'], //
 		"url" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-		);
+	);
 }
 
 $contents = nv_music_showplaylist( $array );

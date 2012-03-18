@@ -53,6 +53,8 @@ elseif( $where == 'video' )
 	}
 
 	$song['casi'] = $song['casi'];
+	$song['tenthat'] = $song['tname'];
+	
 	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
 	$globaldata[] = $song;
 }

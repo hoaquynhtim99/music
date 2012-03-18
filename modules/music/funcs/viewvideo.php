@@ -9,7 +9,6 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$allsinger = getallsinger();
 $category = get_videocategory();
 $setting = setting_music();
 
@@ -23,9 +22,9 @@ $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
 if( empty( $id ) ) module_info_die();
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE id=" . $id . " AND `active`=1";
-$query = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $query );
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id=" . $id . " AND a.active=1";
+$result = $db->sql_query( $sql );
+$row = $db->sql_fetchrow( $result );
 
 if( empty( $row ) ) module_info_die();
 
@@ -38,9 +37,7 @@ if( ! empty( $row['listcat'] ) )
 	$row['listcat'] = array();
 	foreach( $list_cat as $cat )
 	{
-		$row['listcat'][] = array( "name" => $category[$cat]['title'], //
-				"url" => $mainURL . "=searchvideo/category/" . $cat //
-				);
+		$row['listcat'][] = array( "name" => $category[$cat]['title'], "url" => $mainURL . "=searchvideo/category/" . $cat );
 	}
 }
 
@@ -52,19 +49,19 @@ $array = array(
 	"thumb" => $row['thumb'], //
 	"listcat" => $row['listcat'], //
 	"sname" => $row['name'], //
-	"singer" => $allsinger[$row['casi']], //
+	"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 	"category" => $category[$row['theloai']]['title'], //
 	"view" => $row['view'], //
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ), //
-	"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'], //
+	"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
 	"url_search_category" => $mainURL . "=searchvideo/category/" . $row['theloai'], //
 	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ), //
 	"URL_SONG" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=viewvideo/' . $row['id'] . '/' . $row['name'], true ) //
-		);
+);
 
 // tieu de trang
-$page_title = $row['tname'] . " - " . $allsinger[$row['casi']];
-$key_words = $row['tname'] . " - " . $allsinger[$row['casi']];
+$page_title = $row['tname'] . " - " . $array['singer'];
+$key_words = $row['tname'] . " - " . $array['singer'];
 
 $contents = nv_music_viewvideo( $g_array, $array );
 

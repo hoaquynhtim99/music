@@ -13,7 +13,7 @@ $page_title = $lang_module['search_video'];
 $key_words = $module_info['keywords'];
 
 $category = get_videocategory();
-$allsinger = getallsinger();
+
 $data = '';
 
 // Xu li
@@ -22,7 +22,7 @@ $key = isset( $array_op[2] ) ? $array_op[2] : '-';
 if( ( $type == "id" ) || ( $type == "view" ) )
 {
 	$now_page = isset( $array_op[2] ) ? $array_op[2] : 1;
-	$order = $type;
+	$order = 'a.' . $type;
 	$data = 'WHERE';
 	$link = $mainURL . "=searchvideo/" . $type;
 	$page_title = ( $type == "id" ) ? $lang_module['video_new'] : $lang_module['video_hot'];
@@ -35,26 +35,25 @@ else
 	}
 
 	$now_page = isset( $array_op[3] ) ? $array_op[3] : 1;
-	$order = "id";
+	$order = "a.id";
 	$link = $mainURL . "=searchvideo/" . $type . "/" . $key;
 }
 
 if( $type == "name" )
 {
 	$page_title .= " " . $lang_module['video_search_by_name'];
-	$data = "WHERE `name` LIKE '%" . $db->dblikeescape( $key ) . "%' AND";
+	$data = "WHERE a.name LIKE '%" . $db->dblikeescape( $key ) . "%' AND";
 }
 elseif( $type == "singer" )
 {
-	if( ! isset( $allsinger[$key] ) ) module_info_die();
-	$page_title .= " " . $lang_module['video_search_by_singer'] . " " . $allsinger[$key];
-	$data = "WHERE `casi` LIKE '%" . $db->dblikeescape( $key ) . "%' AND";
+	$page_title .= " " . $lang_module['video_search_by_singer'] . " " . $key;
+	$data = "WHERE b.ten LIKE '%" . $db->dblikeescape( $key ) . "%' AND";
 }
 elseif( $type == "category" )
 {
 	if( ! isset( $category[$key] ) ) module_info_die();
 	$page_title .= " " . $lang_module['video_search_by_cat'] . " " . $category[$key]['title'];
-	$data = "WHERE `theloai` =" . $key . " AND";
+	$data = "WHERE a.theloai=" . $key . " AND";
 }
 elseif( ! in_array( $type, array( "view", "id" ) ) )
 {
@@ -72,8 +71,8 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video " . $data . " `active` = 1 ORDER BY `" . $order . "` DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video " . $data . " `active` = 1 ";
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $data . " a.active=1 ORDER BY " . $order . " DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $data . " a.active = 1 ";
 
 // Tinh so trang
 $num = $db->sql_query( $sqlnum );
@@ -95,13 +94,13 @@ while( $row = $db->sql_fetchrow( $result ) )
 {
 	$array[] = array(
 		"name" => $row['tname'], //
-		"singer" => $allsinger[$row['casi']], //
+		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"view" => $row['view'], //
 		"thumb" => $row['thumb'], //
 		"creat" => $row['dt'], //
 		"url_listen" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=searchvideo/singer/" . $row['casi'] //
-			);
+		"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+	);
 }
 
 $contents = nv_music_searchvideo( $g_array, $array );

@@ -9,8 +9,6 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-$allsinger = getallsinger();
-
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 
 if( $id > 0 )
@@ -31,7 +29,7 @@ if( $id > 0 )
 	}
 	$to_mail = $content = "";
 
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = " . $id . " AND `active`=1";
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id=" . $id . " AND a.active=1";
 	$result = $db->sql_query( $sql );
 	$song = $db->sql_fetchrow( $result );
 
@@ -61,7 +59,7 @@ if( $id > 0 )
 			$message .= "" . $lang_module['sendmail_welcome_1'] . " 
 							<strong>" . $global_config['site_name'] . "</strong>
 							" . $lang_module['sendmail_welcome_2'] . "<br />
-							<br />" . $lang_module['song'] . "<strong> " . $song['tenthat'] . "</strong> " . $lang_module['sendmail_singer_show'] . " <strong> " . $allsinger[$song['casi']] . " </strong> " . $lang_module['show_2'] . ".<br/>
+							<br />" . $lang_module['song'] . "<strong> " . $song['tenthat'] . "</strong> " . $lang_module['sendmail_singer_show'] . " <strong> " . ( $song['singername'] ? $song['singername'] : $lang_module['unknow'] ) . " </strong> " . $lang_module['show_2'] . ".<br/>
 							<br />" . $lang_module['message'] . ": " . $content . "<br />
 							<br /><strong>" . $lang_module['sendmail_welcome_3'] . ": </strong><br />" . $link . "";
 			$from = array( $name, $youremail );
@@ -88,12 +86,13 @@ if( $id > 0 )
 		"checkss" => md5( $id . session_id() . $global_config['sitekey'] ),
 		"v_name" => $name,
 		"song" => $song['tenthat'],
-		"singer" => $allsinger[$song['casi']],
+		"singer" => $song['singername'] ? $song['singername'] : $lang_module['unknow'],
 		"v_mail" => $youremail,
 		"to_mail" => $to_mail,
 		"content" => $content,
 		"result" => $result_send,
-		"action" => "" . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=sendmail&amp;id=" . $id );
+		"action" => "" . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=sendmail&amp;id=" . $id
+	);
 
 	$contents = nv_sendmail_themme( $sendmail );
 	include ( NV_ROOTDIR . "/includes/header.php" );

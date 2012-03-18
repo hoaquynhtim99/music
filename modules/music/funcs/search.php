@@ -13,7 +13,6 @@ $page_title = $lang_module['search_song1'];
 $key_words = $module_info['keywords'];
 
 $category = get_category();
-$allsinger = getallsinger();
 
 // Xu li
 $type = isset( $array_op[1] ) ? $array_op[1] : 'name';
@@ -67,26 +66,26 @@ if( ! preg_match( "/^([a-z0-9\-\_\.]+)$/i", $key ) and ! preg_match( "/^([a-z0-9
 if( $type == "name" )
 {
 	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE `ten` LIKE '%" . $db->dblikeescape( $key ) . "%'";
-	$video = "WHERE `name` LIKE '%" . $db->dblikeescape( $key ) . "%'";
+	$data = "WHERE a.ten LIKE '%" . $db->dblikeescape( $key ) . "%'";
+	$video = "WHERE a.name LIKE '%" . $db->dblikeescape( $key ) . "%'";
 }
 elseif( $type == "singer" )
 {
 	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE `casi` LIKE '%" . $db->dblikeescape( $key ) . "%'";
-	$video = "WHERE `casi` LIKE '%" . $db->dblikeescape( $key ) . "%'";
+	$data = "WHERE b.ten LIKE '%" . $db->dblikeescape( $key ) . "%'";
+	$video = "WHERE b.ten LIKE '%" . $db->dblikeescape( $key ) . "%'";
 }
 elseif( $type == "category" )
 {
 	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE `theloai` =" . $key;
-	$video = "WHERE `theloai` =" . $key;
+	$data = "WHERE a.theloai =" . $key;
+	$video = "WHERE a.theloai =" . $key;
 }
 elseif( $type == "upload" )
 {
 	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE `upboi` =\"" . $key . "\"";
-	$video = "WHERE `id` = 0";
+	$data = "WHERE a.upboi='" . $key . "'";
+	$video = "WHERE a.id = 0";
 }
 else
 {
@@ -104,8 +103,8 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ORDER BY id DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . " " . $data . " AND `active` = 1 ";
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id " . $data . " AND a.active=1 ORDER BY a.id DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id " . $data . " AND a.active=1";
 
 // tinh so trang
 $num = $db->sql_query( $sqlnum );
@@ -126,10 +125,10 @@ $array_song = array();
 $array_album = array();
 $array_video = array();
 
-if( $now_page == 1 )
+if( $now_page == 1 ) // Hien thi ket qua album va video
 {
-	$sqlvideo = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video " . $video . " AND `active` = 1 ORDER BY id DESC LIMIT 0,3";
-	$sqlalbum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album " . $video . " AND `active` = 1 ORDER BY id DESC LIMIT 0,4";
+	$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $video . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
+	$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $video . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
 
 	$resultvideo = $db->sql_query( $sqlvideo );
 	$resultalbum = $db->sql_query( $sqlalbum );
@@ -140,11 +139,11 @@ if( $now_page == 1 )
 		{
 			$array_video[] = array(
 				"videoname" => $rsv['tname'], //
-				"videosinger" => $allsinger[$rsv['casi']], //
+				"videosinger" => $rsv['singername'] ? $rsv['singername'] : $lang_module['unknow'], //
 				"thumb" => $rsv['thumb'], //
 				"videoview" => $mainURL . "=viewvideo/" . $rsv['id'] . "/" . $rsv['name'], //
-				"s_video" => $mainURL . "=searchvideo/singer/" . $rsv['casi'] //
-					);
+				"s_video" => $mainURL . "=searchvideo/singer/" . ( $rsv['singeralias'] ? $rsv['singeralias'] : '-' ) //
+			);
 		}
 	}
 	if( $db->sql_numrows( $resultalbum ) > 0 )
@@ -153,11 +152,11 @@ if( $now_page == 1 )
 		{
 			$array_album[] = array(
 				"albumname" => $rsa['tname'], //
-				"albumsinger" => $allsinger[$rsa['casi']], //
+				"albumsinger" => $rsa['singername'] ? $rsa['singername'] : $lang_module['unknow'], //
 				"thumb" => $rsa['thumb'], //
 				"albumview" => $mainURL . "=listenlist/" . $rsa['id'] . "/" . $rsa['name'], //
-				"url_search_singer" => $mainURL . "=search/singer/" . $rsa['casi'] //
-					);
+				"url_search_singer" => $mainURL . "=search/singer/" . ( $rsa['singeralias'] ? $rsa['singeralias'] : '-' ) //
+			);
 		}
 	}
 }
@@ -178,7 +177,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$array_song[] = array(
 		"id" => $row['id'], //
 		"name" => $row['tenthat'], //
-		"singer" => $allsinger[$row['casi']], //
+		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"upload" => $row['upboi'], //
 		"category" => $category[$row['theloai']]['title'], //
 		"view" => $row['numview'], //
@@ -186,11 +185,11 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"size" => $row['size'], //
 		"duration" => $row['duration'], //
 		"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . $row['casi'], //
+		"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
 		"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
 		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
 		"checkhit" => $checkhit //
-			);
+	);
 }
 
 $page_title .= " " . NV_TITLEBAR_DEFIS . " " . $module_info['custom_title'];
