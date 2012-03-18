@@ -2,7 +2,9 @@
 <!-- BEGIN: info --><div style="width:98%" class="quote">
     <blockquote class="error"><span>{INFO}.</span></blockquote>
 </div><!-- END: info -->
-<form action="" method="post">
+<form action="{FORM_ACTION}" method="get">
+	<input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}" />
+	<input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}" />
 	<table class="tab1 fixbottomtable">
 		<tbody>
 			<tr>

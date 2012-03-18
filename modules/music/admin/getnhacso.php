@@ -16,11 +16,6 @@ $page_title = $lang_module['nhacso_get'];
 
 $all_singer = getallsinger( true );
 $all_cat = get_category();
-if( empty( $all_cat ) )
-{
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" );
-	die();
-}
 
 if( $nv_Request->isset_request( 'submit', 'post' ) )
 {

@@ -111,7 +111,7 @@
 							{ROW.upboi}
 						</td>
 						<td style="width:50px;text-align:center">
-							<a title="" onclick="nv_close_pop('{ROW.name}');" href="javascript:void(0);">{LANG.select}</a>
+							<a title="" onclick="nv_close_pop('{ROW.id}');" href="javascript:void(0);">{LANG.select}</a>
 						</td>
 					</tr>
 				</tbody>

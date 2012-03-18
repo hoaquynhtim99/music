@@ -43,7 +43,7 @@ if( $id > 0 )
 		// Cap nhat lai album thanh chua biet cho cac bai hat
 		updateSwhendelA( $id, 0 );
 	}
-	if( $where == '_video' )
+	elseif( $where == '_video' )
 	{
 		$video = getvideobyID( $id );
 		updatesinger( $video['casi'], 'numvideo', '-1' );
@@ -51,21 +51,21 @@ if( $id > 0 )
 		delcomment( 'video', $video['id'] );
 		unlinkSV( $video['server'], $video['duongdan'] );
 	}
-	if( $where == '_singer' )
+	elseif( $where == '_singer' )
 	{
 		$singer = getsingerbyID( $id );
 		updatewhendelS( $singer['id'], 0 );
 	}
-	if( $where == '_author' )
+	elseif( $where == '_author' )
 	{
 		$author = getauthorbyID( $id );
 		updatewhendelA( $author['id'], 0 );
 	}
-	if( $where == '_ftp' )
+	elseif( $where == '_ftp' )
 	{
 		updatewhendelFTP( $id, 0 );
 	}
-	if( $where == '' )
+	elseif( $where == '' )
 	{
 		$song = getsongbyID( $id );
 		if( $song['album'] != 0 )
@@ -86,8 +86,42 @@ if( $id > 0 )
 		// Xoa file nhac
 		unlinkSV( $song['server'], $song['duongdan'] );
 	}
+	
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
 	$result = $db->sql_query( $sql );
+	
+	if( $where == '_category' )
+	{
+		// Cap nhat cac bai hat
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `theloai`=0 WHERE `theloai`=" . $id;
+		$db->sql_query( $sql );
+		
+		// Sap xep lai thu tu
+		$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_category` ORDER BY `weight` ASC";
+		$result = $db->sql_query( $sql );
+		$weight = 0;
+		while ( $row = $db->sql_fetchrow( $result ) )
+		{
+			$weight ++;
+			$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET `weight`=" . $weight . " WHERE `id`=" . $row['id'] );
+		}
+	}
+	elseif( $where == '_video_category' )
+	{
+		// Cap nhat cac video
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `theloai`=0 WHERE `theloai`=" . $id;
+		$db->sql_query( $sql );
+		
+		// Sap xep lai thu tu
+		$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` ORDER BY `weight` ASC";
+		$result = $db->sql_query( $sql );
+		$weight = 0;
+		while ( $row = $db->sql_fetchrow( $result ) )
+		{
+			$weight ++;
+			$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET `weight`=" . $weight . " WHERE `id`=" . $row['id'] );
+		}
+	}
 }
 
 nv_del_moduleCache( $module_name );

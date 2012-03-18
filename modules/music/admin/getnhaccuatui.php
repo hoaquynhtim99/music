@@ -17,12 +17,6 @@ $page_title = $lang_module['nct_title'];
 $all_singer = getallsinger( true );
 $all_cat = get_category();
 
-if( empty( $all_cat ) )
-{
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" );
-	die();
-}
-
 if( $nv_Request->isset_request( 'submit', 'post' ) )
 {
 	$array['link'] = $nv_Request->get_typed_array( 'song', 'post', 'string' );

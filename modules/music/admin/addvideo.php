@@ -61,12 +61,6 @@ if( $array['nhacsimoi'] != '' )
 }
 
 $category = get_videocategory();
-if( empty( $category ) )
-{
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=video_category" );
-	die();
-}
-
 $allsinger = getallsinger();
 $allauthor = getallauthor();
 $setting = setting_music();

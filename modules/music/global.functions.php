@@ -16,7 +16,7 @@ $main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_
 // Lay thong tin the loai
 function get_category()
 {
-	global $module_data, $db;
+	global $module_data, $db, $lang_module;
 
 	$category = array();
 
@@ -24,6 +24,13 @@ function get_category()
 
 	$result = nv_db_cache( $sql, 'id' );
 
+	$category[0] = array(
+		'id' => 0, //
+		'title' => $lang_module['unknow'], //
+		'keywords' => '', //
+		'description' => '' //
+	);
+	
 	if( ! empty( $result ) )
 	{
 		foreach( $result as $row )
@@ -33,20 +40,28 @@ function get_category()
 				'title' => $row['title'], //
 				'keywords' => $row['keywords'], //
 				'description' => $row['description'] //
-					);
+			);
 		}
 	}
 	return $category;
 }
+
 // lay thong tin the loai video
 function get_videocategory()
 {
-	global $module_data, $db;
+	global $module_data, $db, $lang_module;
 
 	$category = array();
 
 	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category ORDER BY `weight` ASC";
 	$result = nv_db_cache( $sql, 'id' );
+	
+	$category[0] = array(
+		'id' => 0, //
+		'title' => $lang_module['unknow'], //
+		'keywords' => '', //
+		'description' => '' //
+	);
 
 	if( ! empty( $result ) )
 	{
@@ -57,7 +72,7 @@ function get_videocategory()
 				'title' => $row['title'], //
 				'keywords' => $row['keywords'], //
 				'description' => $row['description'] //
-					);
+			);
 		}
 	}
 

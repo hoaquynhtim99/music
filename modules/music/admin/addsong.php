@@ -66,12 +66,6 @@ if( $array['nhacsimoi'] != '' )
 
 // Lay cac the loai
 $category = get_category();
-if( count( $category ) == 0 )
-{
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" );
-	die();
-}
-
 $setting = setting_music();
 $allsinger = getallsinger();
 $allauthor = getallauthor();

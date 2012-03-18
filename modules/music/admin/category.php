@@ -55,7 +55,7 @@ while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow
 			"weight" => $j, //
 			"title" => $j, //
 			"selected" => ( $j == $weight ) ? " selected=\"selected\"" : "" //
-				);
+		);
 	}
 
 	$array_data[$id] = array(
@@ -65,7 +65,8 @@ while( list( $id, $title, $keywords, $description, $weight ) = $db->sql_fetchrow
 		"weight" => $list_weight, //
 		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id . "#addeditarea", //
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : "" //
-			);
+	);
+	
 	$i++;
 }
 
@@ -90,7 +91,7 @@ if( $id )
 		"title" => $title, //
 		"keywords" => $keywords, //
 		"description" => $description //
-			);
+	);
 
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $lang_module['cat_edit'];
@@ -105,7 +106,7 @@ else
 		"title" => "", //
 		"keywords" => "", //
 		"description" => "" //
-			);
+	);
 }
 
 if( $nv_Request->isset_request( 'submit', 'post' ) )
@@ -178,7 +179,8 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 					`title`= " . $db->dbescape( $array['title'] ) . ",
 					`keywords`= " . $db->dbescape( $array['keywords'] ) . ",
 					`description`= " . $db->dbescape( $array['description'] ) . "
-					WHERE `id` =" . $id;
+				WHERE `id` =" . $id;
+					
 				if( $db->sql_query( $query ) )
 				{
 					$db->sql_freeresult();

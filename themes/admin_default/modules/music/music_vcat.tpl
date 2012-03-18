@@ -24,6 +24,8 @@
 				<td>{ROW.description}</td>
 				<td class="center">
 					<span class="edit_icon"><a href="{ROW.url_edit}">{GLANG.edit}</a></span>
+					&nbsp;&nbsp;
+					<span class="delete_icon"><a href="javascript:void(0);" onclick="nv_delete_category('{ROW.id}', '_video_category');">{GLANG.delete}</a></span>
 				</td>
 			</tr>
 		</tbody>

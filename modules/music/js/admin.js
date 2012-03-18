@@ -162,3 +162,16 @@ function nv_update_hot_album_result( res )
 	}
    return;
 }
+
+// Xoa chu de bai hat
+function nv_delete_category( id, where ){
+	if ( confirm( nv_is_del_confirm[0] ) ){
+		nv_ajax( 'get', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=del&where=' + where + '&id=' + id, '', 'nv_delete_category_result' );
+	}
+	return false;
+}
+function nv_delete_category_result(res){
+	alert( res );
+	window.location.href = window.location.href;
+	return false;
+}
