@@ -11,14 +11,6 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['singer_list'];
 
-if( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
-{
-	$numshow = $nv_Request->get_int( 'numshow', 'post', 100 );
-	$q = change_alias( $nv_Request->get_string( 'q', 'post', '' ) );
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer&numshow=" . $numshow . "&q=" . $q );
-	die();
-}
-
 // Lay du lieu
 $contents = '';
 
@@ -41,7 +33,7 @@ else
 	$first_page = ( $now_page - 1 ) * $numshow;
 }
 
-$where = "`ten` LIKE '%" . $q . "%'";
+$where = "`tenthat` LIKE '%" . $db->dblikeescape( $q ) . "%'";
 
 $link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer&numshow=" . $numshow . "&q=" . $q . "&order=" . $order;
 
@@ -58,7 +50,9 @@ while( $ts * $numshow < $output )
 }
 
 // Form tim kiem
-$contents .= "<form action=\"\" method=\"post\"><table class=\"tab1 fixbottomtable\"><tbody><tr><td>";
+$contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php?\" method=\"get\"><table class=\"tab1 fixbottomtable\"><tbody><tr><td>";
+$contents .= "<input type=\"hidden\" name=\"" . NV_NAME_VARIABLE . "\" value=\"" . $module_name . "\" />\n";
+$contents .= "<input type=\"hidden\" name=\"" . NV_OP_VARIABLE . "\" value=\"" . $op . "\" />\n";
 $contents .= $lang_module['search_singer'] . ": ";
 
 // So ket qua hien thi tim kiem

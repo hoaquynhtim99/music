@@ -7,6 +7,7 @@
 				<td style="width:50px">{LANG.weight}</td>
 				<td>{LANG.title}</td>
 				<td>{LANG.description}</td>
+				<td style="width:100px" class="center">{LANG.siteinfo_numsong}</td>
 				<td style="width:90px" class="center">{LANG.feature}</td>
 			</tr>
 		</thead>
@@ -22,6 +23,7 @@
 				</td>
 				<td>{ROW.title}</td>
 				<td>{ROW.description}</td>
+				<td class="center">{ROW.numsong}</td>
 				<td class="center">
 					<span class="edit_icon"><a href="{ROW.url_edit}">{GLANG.edit}</a></span>
 					&nbsp;&nbsp;
@@ -69,7 +71,7 @@
 		</tbody>
 		<tfoot>
 			<tr>
-				<td colspan="3"><input type="submit" name="submit" value="{LANG.submit}"/></td>
+				<td colspan="5"><input type="submit" name="submit" value="{LANG.submit}"/></td>
 			</tr>
 		</tfoot>
 	</table>
