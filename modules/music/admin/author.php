@@ -11,14 +11,6 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['author_list'];
 
-if( $nv_Request->get_int( 'do', 'post', 0 ) == 1 )
-{
-	$numshow = $nv_Request->get_int( 'numshow', 'post', 100 );
-	$q = change_alias( $nv_Request->get_string( 'q', 'post', '' ) );
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=author&numshow=" . $numshow . "&q=" . $q );
-	die();
-}
-
 // Lay du lieu
 $contents = "";
 
@@ -41,7 +33,7 @@ else
 	$first_page = ( $now_page - 1 ) * $numshow;
 }
 
-$where = "`ten` LIKE '%" . $q . "%'";
+$where = "`tenthat` LIKE '%" . $db->dblikeescape( $q ) . "%'";
 
 $sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE " . $where . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
 $sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE " . $where;
@@ -58,7 +50,9 @@ while( $ts * $numshow < $output )
 }
 
 // Form tim kiem
-$contents .= "<form action=\"\" method=\"post\"><table class=\"tab1 fixbottomtable\"><tbody><tr><td>";
+$contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php?\" method=\"get\"><table class=\"tab1 fixbottomtable\"><tbody><tr><td>";
+$contents .= "<input type=\"hidden\" name=\"" . NV_NAME_VARIABLE . "\" value=\"" . $module_name . "\" />\n";
+$contents .= "<input type=\"hidden\" name=\"" . NV_OP_VARIABLE . "\" value=\"" . $op . "\" />\n";
 $contents .= $lang_module['author_search'] . ":&nbsp;";
 
 // So ket qua hien thi
@@ -97,9 +91,9 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$xtpl->assign( 'ten', $row['tenthat'] );
 	$xtpl->assign( 'numsong', $row['numsong'] );
 	$xtpl->assign( 'numvideo', $row['numvideo'] );
-	$xtpl->assign( 'URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=nhacsi&q=" . $row['ten'] );
-	$xtpl->assign( 'URL_VIDEO', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip&type_search=nhacsi&q=" . $row['ten'] );
-	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&nhacsi=" . $row['ten'] );
+	$xtpl->assign( 'URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=nhacsi&q=" . $row['tenthat'] );
+	$xtpl->assign( 'URL_VIDEO', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip&type_search=nhacsi&q=" . $row['tenthat'] );
+	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&nhacsi=" . $row['id'] );
 	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_author&id=" . $row['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );
