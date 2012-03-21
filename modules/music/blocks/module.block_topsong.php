@@ -19,9 +19,11 @@ $result = $db->sql_query( $sql );
 
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	$singername = empty( $row['casithat'] ) ? $lang_module['unknow'] : $row['casithat'];
+
 	$row['url_listen'] = $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'];
-	$row['url_search_singer'] = $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' );
-	$row['casithat'] = empty( $row['casithat'] ) ? $lang_module['unknow'] : $row['casithat'];
+	$row['url_search_singer'] = $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer";
+	$row['casithat'] = $singername;
 
 	$xtpl->assign( 'ROW', $row );
 

@@ -50,7 +50,7 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 
 	function nv_scroll_tabvideo( $block_config )
 	{
-		global $module_info, $site_mods, $db, $nv_Request, $op, $array_op;
+		global $module_info, $site_mods, $db, $nv_Request, $op, $array_op, $main_header_URL;
 		$module = $block_config['module'];
 		$data = $site_mods[$module]['module_data'];
 		$file = $site_mods[$module]['module_file'];
@@ -96,16 +96,17 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 			while( $row = $db->sql_fetchrow( $result ) )
 			{
 				$row['url_view'] = nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module . "&" . NV_OP_VARIABLE . "=viewvideo/" . $row['id'] . "/" . $row['name'], true );
-				$row['url_search_singer'] = nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module . "&" . NV_OP_VARIABLE . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), true );
 
 				if( empty( $row['tenthat'] ) )
 				{
 					$row['tenthat'] = $lang_block['ns'];
 				}
 
+				$row['url_search_singer'] = nv_url_rewrite( $main_header_URL . "=search&where=video&q=" . urlencode( $row['tenthat'] ) . "&id=" . $row['casi'] . "&type=singer", true );
+
 				$row['stenthat'] = nv_clean60( $row['tenthat'], $block_config['length'] );
 				$row['stname'] = nv_clean60( $row['tname'], $block_config['length'] );
-
+				
 				$xtpl->assign( 'ROW', $row );
 
 				if( ++$i % $block_config['col'] == 0 ) $xtpl->parse( 'main.data.loop.break' );

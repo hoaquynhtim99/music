@@ -19,12 +19,14 @@ $result = $db->sql_query( $sql );
 
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	$singername = empty( $row['tenthat'] ) ? $lang_module['unknow'] : $row['tenthat'];
+	
 	$xtpl->assign( 'url_view', $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'] );
 	$xtpl->assign( 'video_name', $row['tname'] );
 	$xtpl->assign( 'thumb', $row['thumb'] );
 	$xtpl->assign( 'view', $row['view'] );
-	$xtpl->assign( 'url_search_singer', $mainURL . "=searchvideo/singer/" . ( $row['ten'] ? $row['ten'] : '-' ) );
-	$xtpl->assign( 'singer', empty( $row['tenthat'] ) ? $lang_module['unknow'] : $row['tenthat'] );
+	$xtpl->assign( 'url_search_singer', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" );
+	$xtpl->assign( 'singer', $singername );
 	$xtpl->parse( 'main.loop' );
 }
 

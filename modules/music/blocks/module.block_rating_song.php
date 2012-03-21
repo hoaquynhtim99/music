@@ -20,11 +20,13 @@ $result = $db->sql_query( $sql );
 $i = 1;
 while( $data = $db->sql_fetchrow( $result ) )
 {
+	$singername = empty( $data['casithat'] ) ? $lang_module['unknow'] : $data['casithat'];
+	
 	$xtpl->assign( 'STT', $i );
 	$xtpl->assign( 'url_view', $mainURL . "=listenone/" . $data['songid'] . "/" . $data['ten'] );
 	$xtpl->assign( 'songname', $data['tenthat'] );
-	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . ( $data['singeralias'] ? $data['singeralias'] : '-' ) );
-	$xtpl->assign( 'singer', empty( $data['casithat'] ) ? $lang_module['unknow'] : $data['casithat'] );
+	$xtpl->assign( 'url_search_singer', $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $data['casi'] . "&amp;type=singer" );
+	$xtpl->assign( 'singer', $singername );
 	$xtpl->parse( 'main.loop' );
 	$i++;
 }

@@ -17,10 +17,12 @@ $xtpl->assign( 'LANG', $lang_module );
 $result = $db->sql_query( "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id ORDER BY a.numview DESC LIMIT 0,8" );
 while( $song = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'url_search_singer', $mainURL . "=search/singer/" . ( $song['singeralias'] ? $song['singeralias'] : '-' ) );
+	$singername = $song['singername'] ? $song['singername'] : $lang_module['unknow'];
+
+	$xtpl->assign( 'url_search_singer', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $song['casi'] . "&amp;type=singer" );
 	$xtpl->assign( 'url_listen', $mainURL . "=listenlist/" . $song['id'] . "/" . $song['name'] );
 	$xtpl->assign( 'name', $song['tname'] );
-	$xtpl->assign( 'singer', $song['singername'] ? $song['singername'] : $lang_module['unknow'] );
+	$xtpl->assign( 'singer', $singername );
 	$xtpl->assign( 'view', $song['numview'] );
 	$xtpl->assign( 'img', $song['thumb'] );
 	$xtpl->parse( 'main.loop' );

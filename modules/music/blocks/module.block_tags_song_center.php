@@ -63,17 +63,19 @@ if( ! empty( $first_cat ) )
 
 		foreach( $list as $row )
 		{
+			$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+		
 			$xtpl->assign( 'ID', $row['id'] );
 			$xtpl->assign( 'name', $row['tenthat'] );
-			$xtpl->assign( 'singer', $row['singername'] ? $row['singername'] : $lang_module['unknow'] );
+			$xtpl->assign( 'singer', $singername );
 			$xtpl->assign( 'category', $category[$row['theloai']]['title'] );
 			$xtpl->assign( 'who_upload', $row['upboi'] );
 			$xtpl->assign( 'view', $row['numview'] );
 			$xtpl->assign( 'url_view', nv_url_rewrite( $main_header_URL . "=listenone/" . $row['id'] . "/" . $row['ten'], true ) );
 
-			$xtpl->assign( 'url_search_singer', nv_url_rewrite( $main_header_URL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), true ) );
-			$xtpl->assign( 'url_search_category', nv_url_rewrite( $main_header_URL . "=search/category/" . $row['theloai'], true ) );
-			$xtpl->assign( 'url_search_upload', nv_url_rewrite( $main_header_URL . "=search/upload/" . $row['upboi'], true ) );
+			$xtpl->assign( 'url_search_singer', nv_url_rewrite( $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", true ) );
+			$xtpl->assign( 'url_search_category', nv_url_rewrite( $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", true ) );
+			$xtpl->assign( 'url_search_upload', nv_url_rewrite( $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $row['upboi'] ) . "&amp;type=upload", true ) );
 
 			$xtpl->parse( 'main.songdata.loop' );
 		}
