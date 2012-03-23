@@ -244,6 +244,9 @@ $lang_module['song_search_by_name'] = "Search by keywords";
 $lang_module['search_song_by_singer'] = "Search all songs of";
 $lang_module['search_song_by_uploader'] = "Search all songs that posted by";
 $lang_module['search_song_by_cat'] = "Search all songs in";
+$lang_module['search_width'] = "Search with";
+$lang_module['search_quick_res_song'] = "Song";
+$lang_module['search_quick_res_playlist'] = "Playlist";
 
 $lang_module['upload_ok'] = "Upload";
 $lang_module['upload_wait_accept'] = "Is being censored";

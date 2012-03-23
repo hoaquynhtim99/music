@@ -91,10 +91,18 @@ textarea.txt-full{width:98%!important}
 .musicsmalllalbum:hover{box-shadow: 0px 0px 3px 0px #333}
 
 /* SEARCH BLOCK  */
-.searchblock form {padding: 6px 0px 0px 6px;width: 494px;height: 25px;background-repeat: no-repeat;background-image: url('../images/music/search_bg.png');margin-bottom: 10px}
+.searchblock form {padding: 6px 0px 0px 6px;width: 494px;height: 25px;background-repeat: no-repeat;background-image: url('../images/music/search_bg.png');margin-bottom: 10px;position:relative}
 .searchblock form .sed {margin: -3px 8px 0px 0px;float: right;width: 60px;height: 25px;background-repeat: no-repeat;background-image: url('../images/music/search_sub.gif');border-style: none;border-width: 0px;border-color: inherit;color: #FFFFFF;font-weight: bold;cursor: pointer;line-height: 25px}
-.searchblock form input {border-style: none solid none none;border-width: 1px;border-color: #999}
-.searchblock form select {border-style: none;color:#666}
+.searchblock form input {border-style: none}
+#msimgload{position:absolute;top:6px;right:80px;display:none}
+#msressearch{position:absolute;border:1px #dadada solid;top:27px;left:5px;width:416px;background-color:#fff;z-index:1;display:none}
+
+.cquicksed-hd{background-color:#F5F5F5;line-height:16px;padding:5px}
+.wquicksed-dt .mss-item{background-color:#F7F7F7}
+.wquicksed-dt .mss-item .mssit-left{float:left;width:99px;border-right:1px #F5F5F5 solid;text-indent:10px;height:100%}
+.wquicksed-dt .mss-item .mssit-right{float:left;width:315px;border-bottom:1px #F7F7F7 solid;background-color:#fff}
+.wquicksed-dt .mss-item .mssit-right .it{padding:5px;display:block}
+.wquicksed-dt .mss-item .mssit-right .it:hover{background-color:#f7f7f7}
 
 /* MAIN */
 .maintopal{position:relative;background-image:url('../images/music/main-top-bg.png');margin-top:20px;padding:5px 5px 5px 150px;background-repeat:repeat-x}

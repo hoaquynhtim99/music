@@ -73,9 +73,9 @@ if( ! empty( $first_cat ) )
 			$xtpl->assign( 'view', $row['numview'] );
 			$xtpl->assign( 'url_view', nv_url_rewrite( $main_header_URL . "=listenone/" . $row['id'] . "/" . $row['ten'], true ) );
 
-			$xtpl->assign( 'url_search_singer', nv_url_rewrite( $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", true ) );
-			$xtpl->assign( 'url_search_category', nv_url_rewrite( $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", true ) );
-			$xtpl->assign( 'url_search_upload', nv_url_rewrite( $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $row['upboi'] ) . "&amp;type=upload", true ) );
+			$xtpl->assign( 'url_search_singer', nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $singername ) . "&id=" . $row['casi'] . "&type=singer", true ) );
+			$xtpl->assign( 'url_search_category', nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $category[$row['theloai']]['title'] ) . "&id=" . $row['theloai'] . "&type=category", true ) );
+			$xtpl->assign( 'url_search_upload', nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $row['upboi'] ) . "&type=upload", true ) );
 
 			$xtpl->parse( 'main.songdata.loop' );
 		}

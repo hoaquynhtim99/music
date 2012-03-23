@@ -1013,4 +1013,87 @@ function nv_emotion_theme()
 	return $xtpl->text( 'main' );
 }
 
+// Giao dien
+// Tim kiem nhanh
+function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $array_video, $array_playlist )
+{
+	global $module_info, $module_file, $lang_module, $lang_global, $main_header_URL;
+	
+	$xtpl = new XTemplate( "quicksearch.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+
+	// Ket qua ca si
+	if( ! empty( $array_singer ) )
+	{
+		foreach( $array_singer as $singer )
+		{
+			if( empty( $singer['thumb'] ) ) $singer['thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/d-img.png';
+			
+			$xtpl->assign( 'SINGER', $singer );
+			$xtpl->parse( 'main.singer.loop' );
+		}
+		
+		$xtpl->parse( 'main.singer' );
+	}
+
+	// Ket qua album
+	if( ! empty( $array_album ) )
+	{
+		foreach( $array_album as $album )
+		{			
+			if( empty( $album['singer'] ) ) $album['singer'] = $lang_module['unknow'];
+
+			$xtpl->assign( 'ALBUM', $album );
+			$xtpl->parse( 'main.album.loop' );
+		}
+		
+		$xtpl->parse( 'main.album' );
+	}
+
+	if( ! empty( $array_playlist ) )
+	{
+		foreach( $array_playlist as $playlist )
+		{			
+			$playlist['thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/randimg/img(' . rand(1, 10) . ').jpg';
+			$xtpl->assign( 'PLAYLIST', $playlist );
+			$xtpl->parse( 'main.playlist.loop' );
+		}
+		
+		$xtpl->parse( 'main.playlist' );
+	}
+
+	if( ! empty( $array_video ) )
+	{
+		foreach( $array_video as $video )
+		{			
+			if( empty( $video['singer'] ) ) $video['singer'] = $lang_module['unknow'];
+
+			$xtpl->assign( 'VIDEO', $video );
+			$xtpl->parse( 'main.video.loop' );
+		}
+		
+		$xtpl->parse( 'main.video' );
+	}
+
+	if( ! empty( $array_song ) )
+	{
+		foreach( $array_song as $song )
+		{
+			if( empty( $song['singer'] ) ) $song['singer'] = $lang_module['unknow'];
+			
+			$xtpl->assign( 'SONG', $song );
+			$xtpl->parse( 'main.song.loop' );
+		}
+		
+		$xtpl->parse( 'main.song' );
+	}
+	
+	$xtpl->assign( 'Q', $q );
+	$xtpl->assign( 'URL_SEARCH', nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $q ), true ) );
+	
+	$xtpl->parse( 'main' );
+	return $xtpl->text( 'main' );
+}
+
 ?>

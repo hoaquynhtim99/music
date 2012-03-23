@@ -451,6 +451,100 @@ if( $nv_Request->isset_request( 'delsongfrplaylist', 'post' ) )
 	die( "OK_" . $id );
 }
 
+// Tim kiem nhanh
+if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
+{
+	$q = filter_text_input( 'q', 'get', '', 0, NV_MAX_SEARCH_LENGTH );
+	$checksess = filter_text_input( 'checksess', 'get', '', 1, 255 );
+	
+	if( $checksess != md5( $global_config['sitekey'] . session_id() ) ) die('Error Access!!!');
+	
+	if( empty( $q ) ) die('Not thing to search!!!');
+	
+	$DB_LikeKey = $db->dblikeescape( $q );
+	
+	$array_singer = $array_song = $array_album = $array_video = $array_playlist = array();
+	
+	// Ket qua ca si
+	$sql = "SELECT `id`, `tenthat`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat` LIKE '%" . $DB_LikeKey . "%' ORDER BY `tenthat` ASC LIMIT 0,2";
+	$result = $db->sql_query( $sql );
+	$num_singer = $db->sql_numrows( $result );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$array_singer[] = array(
+			'title' => $row['tenthat'],
+			'thumb' => $row['thumb'],
+			'link' => nv_url_rewrite( $main_header_URL . "=search&where=song&q=" . urlencode( $row['tenthat'] ) . "&id=" . $row['id'] . "&type=singer", true )
+		);
+	}
+	
+	// Ket qua album
+	$sql = "SELECT a.id, a.name, a.tname, a.thumb, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 AND a.tname LIKE '%" . $DB_LikeKey . "%' ORDER BY a.tname ASC LIMIT 0,2";
+	$result = $db->sql_query( $sql );
+	$num_album = $db->sql_numrows( $result );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$array_album[] = array(
+			'title' => $row['tname'],
+			'thumb' => $row['thumb'],
+			'singer' => $row['singername'],
+			'link' => nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true )
+		);
+	}
+	
+	// Ket qua playlist
+	$sql = "SELECT `id`, `name`, `keyname`, `singer` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active`=1 AND `name` LIKE '%" . $DB_LikeKey . "%' ORDER BY `name` ASC LIMIT 0,2";
+	$result = $db->sql_query( $sql );
+	$num_playlist = $db->sql_numrows( $result );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$array_playlist[] = array(
+			'title' => $row['name'],
+			'singer' => $row['singer'],
+			'link' => nv_url_rewrite( $main_header_URL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], true )
+		);
+	}
+	
+	// Ket qua video
+	$sql = "SELECT a.id, a.name, a.tname, a.thumb, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 AND a.tname LIKE '%" . $DB_LikeKey . "%' ORDER BY a.tname ASC LIMIT 0,2";
+	$result = $db->sql_query( $sql );
+	$num_video = $db->sql_numrows( $result );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$array_video[] = array(
+			'title' => $row['tname'],
+			'singer' => $row['singername'],
+			'thumb' => $row['thumb'],
+			'link' => nv_url_rewrite( $main_header_URL . "=viewvideo/" . $row['id'] . "/" . $row['name'], true )
+		);
+	}
+
+	// Ket qua bai hat
+	$num_song = 10 - $num_video - $num_playlist - $num_album - $num_singer;
+	$sql = "SELECT a.id, a.ten, a.tenthat, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 AND a.tenthat LIKE '%" . $DB_LikeKey . "%' ORDER BY a.tenthat ASC LIMIT 0,2";
+	$result = $db->sql_query( $sql );
+
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$array_song[] = array(
+			'title' => $row['tenthat'],
+			'singer' => $row['singername'],
+			'link' => nv_url_rewrite( $main_header_URL . "=listenone/" . $row['id'] . "/" . $row['ten'], true )
+		);
+	}
+	
+	$contents = nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $array_video, $array_playlist );
+
+	include ( NV_ROOTDIR . "/includes/header.php" );
+	echo $contents;
+	include ( NV_ROOTDIR . "/includes/footer.php" );
+	exit();
+}
+
 die( "Error Access !!!" );
 
 ?>

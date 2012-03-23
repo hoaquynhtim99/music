@@ -243,6 +243,9 @@ $lang_module['song_search_by_name'] = "Tìm theo từ khóa";
 $lang_module['search_song_by_singer'] = "Tìm tất cả các bài hát của ca sĩ";
 $lang_module['search_song_by_uploader'] = "Tìm tất cả các bài hát đăng bởi";
 $lang_module['search_song_by_cat'] = "Tìm tất cả các bài thuộc thể loại";
+$lang_module['search_width'] = "Tìm kiếm với";
+$lang_module['search_quick_res_song'] = "Bài hát";
+$lang_module['search_quick_res_playlist'] = "Playlist";
 
 $lang_module['upload_ok'] = "Tải lên";
 $lang_module['upload_wait_accept'] = "Đang kiểm duyệt";
