@@ -83,11 +83,7 @@ $sql .= " ORDER BY a.id DESC";
 $sql1 = "SELECT COUNT(*) " . $sql;
 $result1 = $db->sql_query( $sql1 );
 list( $output ) = $db->sql_fetchrow( $result1 );
-$ts = 1;
-while( $ts * 50 < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / 50 );
 
 $xtpl = new XTemplate( "comment_song.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 $xtpl->assign( 'LANG', $lang_module );

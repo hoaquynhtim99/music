@@ -61,11 +61,7 @@ $link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name 
 // tinh so trang
 $num = $db->sql_query( $sqlnum );
 $output = $db->sql_numrows( $num );
-$ts = 1;
-while( $ts * $numshow < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / $numshow );
 
 // Form tim kiem
 $i = 5;

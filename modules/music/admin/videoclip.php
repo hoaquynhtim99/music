@@ -81,12 +81,7 @@ $sql = "SELECT a.*, b.tenthat AS singername " . $sql . " " . $sort . " LIMIT " .
 
 $num = $db->sql_query( $sqlnum );
 list( $output ) = $db->sql_fetchrow( $num );
-
-$ts = 1;
-while( $ts * $numshow < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / $numshow );
 
 // Form tim kiem
 $contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php?\" method=\"get\">

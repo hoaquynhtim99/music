@@ -93,11 +93,7 @@ $link = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&numshow=" . $nu
 
 $num = $db->sql_query( $sqlnum );
 $output = $db->sql_numrows( $num );
-$ts = 1;
-while( $ts * $numshow < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / $numshow );
 
 $xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 

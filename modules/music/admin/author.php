@@ -43,11 +43,7 @@ $link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name 
 // Tinh so trang
 $num = $db->sql_query( $sqlnum );
 list( $output ) = $db->sql_fetchrow( $num );
-$ts = 1;
-while( $ts * $numshow < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / $numshow );
 
 // Form tim kiem
 $contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php?\" method=\"get\"><table class=\"tab1 fixbottomtable\"><tbody><tr><td>";

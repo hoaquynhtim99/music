@@ -47,12 +47,7 @@ $sqlnum = "SELECT COUNT(*) AS num FROM `" . NV_PREFIXLANG . "_" . $module_data .
 $list = nv_db_cache( $sqlnum, 0, $module_name );
 $output = empty( $list ) ? 0 : $list[0]['num'];
 if( empty( $output ) and ( $now_page > 1 ) ) module_info_die();
-
-$ts = 1;
-while( $ts * 20 < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / 20 );
 
 $result = $db->sql_query( $sql );
 $g_array['num'] = $output;
@@ -68,7 +63,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"view" => $row['view'], //
 		"url_listen" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], //
 		"url_search_upload" => $mainURL . "=search/upload/" . $row['username'] //
-			);
+	);
 }
 
 // Xu ly tieu de trang

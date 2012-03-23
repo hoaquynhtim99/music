@@ -144,12 +144,8 @@ if( ! empty( $userid ) )
 
 		$num = $db->sql_query( $sqlnum );
 		list( $output ) = $db->sql_fetchrow( $num );
-		$ts = 1;
-		while( $ts * 20 < $output )
-		{
-			$ts++;
-		}
-
+		$ts = ceil( $output / 20 );
+		
 		$result = $db->sql_query( $sql );
 		while( $row = $db->sql_fetchrow( $result ) )
 		{

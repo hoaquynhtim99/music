@@ -39,11 +39,7 @@ else
 $sql1 = "SELECT COUNT(*) " . $sql;
 $result = $db->sql_query( $sql1 );
 list( $output ) = $db->sql_fetchrow( $result );
-$ts = 1;
-while( $ts * 50 < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / 50 );
 
 $xtpl = new XTemplate( "userplaylist.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 $xtpl->assign( 'LANG', $lang_module );

@@ -35,11 +35,7 @@ $sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHE
 // tinh so trang
 $num = $db->sql_query( $sqlnum );
 list( $output ) = $db->sql_fetchrow( $num );
-$ts = 1;
-while( $ts * 20 < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / 20 );
 
 // ket qua
 $result = $db->sql_query( $sql );

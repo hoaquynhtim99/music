@@ -77,11 +77,7 @@ $sqlnum = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a
 // Tinh so trang
 $num = $db->sql_query( $sqlnum );
 $output = $db->sql_numrows( $num );
-$ts = 1;
-while( $ts * 20 < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / 20 );
 
 // Ket qua
 $result = $db->sql_query( $sql );

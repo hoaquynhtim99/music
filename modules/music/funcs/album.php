@@ -53,12 +53,7 @@ $sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername " . $sql . " O
 $list = nv_db_cache( $sqlnum, 0, $module_name );
 $output = empty( $list ) ? 0 : $list[0]['num'];
 if( empty( $output ) and ( $now_page > 1 ) ) module_info_die();
-
-$ts = 1;
-while( $ts * 20 < $output )
-{
-	$ts++;
-}
+$ts = ceil( $output / 20 );
 
 // Ket qua
 $result = $db->sql_query( $sql );
