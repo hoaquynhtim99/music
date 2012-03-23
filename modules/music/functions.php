@@ -18,7 +18,7 @@ require_once NV_ROOTDIR . "/modules/" . $module_file . '/data.functions.php';
 $nv_vertical_menu = nv_music_global_menu( $module_name, $lang_module );
 
 // Hien thi cac trang
-function new_page( $ts, $now_page, $link )
+function new_page( $ts, $now_page, $link, $rewrite = true )
 {
 	$page = '';
 	if( $ts > 1 )
@@ -27,13 +27,13 @@ function new_page( $ts, $now_page, $link )
 		if( $ts > 5 && $now_page > 3 )
 		{
 			$page .= "<a href=\"" . $link . "";
-			$page .= "/1\" class=\"next\">&lt;&lt;</a> ... ";
+			$page .= ( $rewrite ? "/1" : "&amp;page=1" ) . "\" class=\"next\">&lt;&lt;</a> ... ";
 		}
 		if( $now_page > 1 )
 		{
 			$now_page_min = $now_page - 1;
 			$page .= "<a href=\"" . $link . "";
-			$page .= "/" . $now_page_min . "\" class=\"next\">&lt;</a> ";
+			$page .= ( $rewrite ? ( "/" . $now_page_min ) : ( "&amp;page=" . $now_page_min ) ) . "\" class=\"next\">&lt;</a> ";
 		}
 		if( $ts <= 5 )
 		{
@@ -47,7 +47,7 @@ function new_page( $ts, $now_page, $link )
 				else
 				{
 					$page .= "<a href=\"" . $link . "";
-					$page .= "/" . $i . "\">" . $i . "</a> ";
+					$page .= ( $rewrite ? ( "/" . $i ) : ( "&amp;page=" . $i ) ) . "\">" . $i . "</a> ";
 				}
 				$i++;
 			}
@@ -65,7 +65,7 @@ function new_page( $ts, $now_page, $link )
 					else
 					{
 						$page .= "<a href=\"" . $link . "";
-						$page .= "/" . $i . "\">" . $i . "</a> ";
+						$page .= ( $rewrite ? ( "/" . $i ) : ( "&amp;page=" . $i ) ) . "\">" . $i . "</a> ";
 					}
 					$i++;
 				}
@@ -84,7 +84,7 @@ function new_page( $ts, $now_page, $link )
 						else
 						{
 							$page .= "<a href=\"" . $link . "";
-							$page .= "/" . $j . "\">" . $j . "</a> ";
+							$page .= ( $rewrite ? ( "/" . $j ) : ( "&amp;page=" . $j ) ) . "\">" . $j . "</a> ";
 						}
 						$i++;
 						$j++;
@@ -103,7 +103,7 @@ function new_page( $ts, $now_page, $link )
 						else
 						{
 							$page .= "<a href=\"" . $link . "";
-							$page .= "/" . $j . "\">" . $j . "</a> ";
+							$page .= ( $rewrite ? ( "/" . $j ) : ( "&amp;page=" . $j ) ) . "\">" . $j . "</a> ";
 						}
 						$i++;
 						$j++;
@@ -113,12 +113,12 @@ function new_page( $ts, $now_page, $link )
 				{
 					$now_page_max = $now_page + 1;
 					$page .= " <a href=\"" . $link . "";
-					$page .= "/" . $now_page_max . "\" class=\"next\">&gt;</a>";
+					$page .= ( $rewrite ? ( "/" . $now_page_max ) : ( "&amp;page=" . $now_page_max ) ) . "\" class=\"next\">&gt;</a>";
 				}
 		if( ( $ts > 5 ) && ( $now_page < ( $ts - 2 ) ) )
 		{
 			$page .= " ... <a href=\"" . $link . "";
-			$page .= "/" . $ts . "\" class=\"next\">&gt;&gt;</a>";
+			$page .= ( $rewrite ? ( "/" . $ts ) : ( "&amp;page=" . $ts ) ) . "\" class=\"next\">&gt;&gt;</a>";
 		}
 		$page .= "</p></div>";
 	}

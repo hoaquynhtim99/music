@@ -6,8 +6,9 @@
 		</div>
 	</div>
 </div>
-<div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.search_find} {GDATA.num} {LANG.results}.<a title="{LANG.close_info}" href="javascript:void(0);" onclick="$(this).parent().parent().remove();" class="fr musicicon mcancel">&nbsp;</a></div></div></div>
+<div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.search_find} {NUM_RESULT} {LANG.results}.<a title="{LANG.close_info}" href="javascript:void(0);" onclick="$(this).parent().parent().remove();" class="fr musicicon mcancel">&nbsp;</a></div></div></div>
 <div class="clear"></div>
+<!-- BEGIN: typesong -->
 <!-- BEGIN: loop -->
 <ul class="mtool">
 	<!-- BEGIN: hit --><li><a title="{LANG.hit_song}" href="javascript:void(0);" class="mstar">&nbsp;</a></li><!-- END: hit -->
@@ -21,7 +22,7 @@
 <div class="hr"></div>
 <!-- BEGIN: sub -->
 <!-- BEGIN: video -->
-<blockquote><strong>{LANG.resuitvideo}</strong></blockquote>
+<blockquote><strong>{LANG.resuitvideo} &quot;{QUERY_SEARCH.key}&quot;</strong></blockquote>
 <!-- BEGIN: loop -->
 <div class="gv-wrap fixwrap">
 	<div class="vcontent">
@@ -38,7 +39,7 @@
 <div class="hr"></div>
 <!-- END: video -->
 <!-- BEGIN: album -->
-<blockquote><strong>{LANG.resuitalbum}</strong></blockquote>
+<blockquote><strong>{LANG.resuitalbum} &quot;{QUERY_SEARCH.key}&quot;</strong></blockquote>
 <!-- BEGIN: loop -->
 <div class="topalbum_item">
 	<div class="alcontent">
@@ -60,4 +61,55 @@
 <!-- END: album -->
 <!-- END: sub -->
 <!-- END: loop -->
+<!-- END: typesong -->
+
+<!-- BEGIN: typealbum -->
+<!-- BEGIN: loop -->
+	<a href="{ALBUM.albumview}" title="{LANG.listen_album} {ALBUM.albumname}">
+		<img alt="{ALBUM.albumname}" class="musicsmalllalbum fl" width="100" height="100" src="{ALBUM.thumb}" />
+	</a>
+	<h2 class="medium">
+		<a href="{ALBUM.albumview}" title="{LANG.listen_album} {ALBUM.albumname}">{ALBUM.albumname}</a> - 
+		<a title="{ALBUM.albumsinger}" href="{ALBUM.url_search_singer}">{ALBUM.albumsinger}</a>
+	</h2>
+	<p>{LANG.who_create_1}: <a class="singer" title="{ALBUM.upboi}" href="{ALBUM.url_search_upload}">{ALBUM.upboi}</a> | {LANG.view}: {ALBUM.numview}</p>
+	{ALBUM.describe}
+	<div class="clear"></div>
+	<div class="hr"></div>
+<!-- END: loop -->
+<!-- END: typealbum -->
+
+<!-- BEGIN: typeplaylist -->
+<!-- BEGIN: loop -->
+	<a href="{PLAYLIST.link}" title="{LANG.playlist_listen} {PLAYLIST.name}">
+		<img alt="{PLAYLIST.name}" class="musicsmalllalbum fl" width="100" height="100" src="{PLAYLIST.thumb}" />
+	</a>
+	<h2 class="medium">
+		<a href="{PLAYLIST.link}" title="{LANG.playlist_listen} {PLAYLIST.name}">{PLAYLIST.name}</a> - 
+		<a title="{PLAYLIST.singer}" href="{PLAYLIST.url_search_singer}">{PLAYLIST.singer}</a>
+	</h2>
+	<p>{LANG.who_create_1}: <a class="singer" title="{PLAYLIST.username}" href="{PLAYLIST.url_search_upload}">{PLAYLIST.username}</a> | {LANG.view}: {PLAYLIST.view}</p>
+	{PLAYLIST.message}
+	<div class="clear"></div>
+	<div class="hr"></div>
+<!-- END: loop -->
+<!-- END: typeplaylist -->
+
+<!-- BEGIN: typevideo -->
+<!-- BEGIN: loop -->
+<a href="{VIDEO.videoview}" title="{VIDEO.videoname}"><img class="musicsmalllalbum fl" width="128" height="72" src="{VIDEO.thumb}" alt="{VIDEO.videoname}" /></a>
+<strong><a href="{VIDEO.videoview}" title="{VIDEO.videoname}">{VIDEO.videoname}</a></strong><br />
+{LANG.show}: <a class="singer" href="{VIDEO.s_video}" title="{VIDEO.videosinger}">{VIDEO.videosinger}</a><br />
+{LANG.playlist_creat}: <span class="greencolor">{VIDEO.dt}</span> | {LANG.view1}: <span class="greencolor">{VIDEO.view}</span>
+<div class="clear"></div>
+<div class="hr"></div>
+<!-- END: loop -->
+<!-- END: typevideo -->
+
+<!-- BEGIN: gennerate_page -->
+<div class="clear"></div>
+<div class="hr"></div>
+<div class="mcenter">{GENNERATE_PAGE}</div>
+<!-- END: gennerate_page -->
+
 <!-- END: main -->

@@ -14,188 +14,392 @@ $key_words = $module_info['keywords'];
 
 $category = get_category();
 
-// Xu li
-$type = isset( $array_op[1] ) ? $array_op[1] : 'name';
-$now_page = isset( $array_op[3] ) ? intval( $array_op[3] ) : 1;
-$key = isset( $array_op[2] ) ? $array_op[2] : '-';
+// Du lieu tim kiem
+$query_search = array();
+$query_search['where'] = filter_text_input( 'where', 'get', 'song', 1, 255 );
+$query_search['id'] = $nv_Request->get_int( 'id', 'get', 0 );
+$query_search['key'] = filter_text_input( 'q', 'get', '', 0, NV_MAX_SEARCH_LENGTH );
+$query_search['SearchBy'] = filter_text_input( 'type', 'get', 'name', 1, 255 );
+$query_search['page'] = $nv_Request->get_int( 'page', 'get', 1 );
 
-// Xu li thong tin submit
-if( ( $nv_Request->get_int( 'block_sed', 'post', 0 ) == 1 ) or ( $nv_Request->isset_request( 'q', 'get' ) ) )
+$base_url = $mainURL . "=search&amp;where=" . $query_search['where'] . "&amp;q=" . urlencode( $query_search['key'] ) . "&amp;id=" . $query_search['id'] . "&amp;type=" . $query_search['SearchBy'];
+
+// Kiem tra type hop le
+if( ! empty( $query_search['SearchBy'] ) and ! in_array( $query_search['SearchBy'], array( 'singer', 'name', 'author', 'upload', 'category' ) ) )
 {
-	$type = filter_text_input( 'type', 'post', 'name' );
-	$key = ( filter_text_input( 'key', 'post', '' ) == '' ) ? '-' : change_alias( filter_text_input( 'key', 'post', '' ) );
-	$q = filter_text_input( 'key', 'post', '' );
-
-	if( ( $key == "-" ) and ( $nv_Request->isset_request( 'q', 'get' ) ) )
-	{
-		$q = filter_text_input( 'q', 'get', '' );
-		$key = ( filter_text_input( 'q', 'get', '' ) == '' ) ? '-' : change_alias( filter_text_input( 'q', 'get', '' ) );
-	}
-
-	$nv_Request->set_session( 'music_search_type', $type );
-	$nv_Request->set_session( 'music_search_key', $q );
-
-	if( $type == 'album' )
-	{
-		Header( "Location: " . nv_url_rewrite( $main_header_URL . "=album/id/" . $key, true ) );
-		die();
-	}
-
-	if( $type == 'playlist' )
-	{
-		Header( "Location: " . nv_url_rewrite( $main_header_URL . "=allplaylist/id/" . $key, true ) );
-		die();
-	}
-
-	Header( "Location: " . nv_url_rewrite( $main_header_URL . "=search/" . $type . "/" . $key, true ) );
-	die();
+	Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+	exit();
 }
 
-$g_array = array();
-$g_array['type'] = $type;
-$g_array['key'] = $key;
-
-$link = $mainURL . "=search/" . $type . "/" . $key;
-$data = '';
-
-if( ! preg_match( "/^([a-z0-9\-\_\.]+)$/i", $key ) and ! preg_match( "/^([a-z0-9\-\_\.]+)$/i", $type ) )
+// Tim kiem theo
+if( empty( $query_search['key'] ) )
 {
-	module_info_die();
+	Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+	exit();
+}
+elseif( empty( $query_search['where'] ) )
+{
+	Header( "Location: " . $main_header_URL . "=search&amp;where=song&amp;q=" . urlencode( $query_search['key'] ) );
+	exit();
+}
+elseif( ! in_array( $query_search['where'], array( 'song', 'album', 'video', 'playlist' ) ) )
+{
+	Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+	exit();
 }
 
-if( $type == "name" )
-{
-	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE a.ten LIKE '%" . $db->dblikeescape( $key ) . "%'";
-	$video = "WHERE a.name LIKE '%" . $db->dblikeescape( $key ) . "%'";
-}
-elseif( $type == "singer" )
-{
-	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE b.ten LIKE '%" . $db->dblikeescape( $key ) . "%'";
-	$video = "WHERE b.ten LIKE '%" . $db->dblikeescape( $key ) . "%'";
-}
-elseif( $type == "category" )
-{
-	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE a.theloai =" . $key;
-	$video = "WHERE a.theloai =" . $key;
-}
-elseif( $type == "upload" )
-{
-	$page_title = $lang_module['song_search_by_name'] . " " . str_replace( "-", " ", $key );
-	$data = "WHERE a.upboi='" . $key . "'";
-	$video = "WHERE a.id = 0";
-}
-else
-{
-	module_info_die();
-}
-
-// Xu li du lieu
-if( $now_page == 1 )
-{
-	$first_page = 0;
-}
-else
-{
-	$page_title .= " " . NV_TITLEBAR_DEFIS . " " . sprintf( $lang_module['page'], $now_page );
-	$first_page = ( $now_page - 1 ) * 20;
-}
-
-$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id " . $data . " AND a.active=1 ORDER BY a.id DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id " . $data . " AND a.active=1";
-
-// tinh so trang
-$num = $db->sql_query( $sqlnum );
-list( $output ) = $db->sql_fetchrow( $num );
-$ts = 1;
-while( $ts * 20 < $output )
-{
-	$ts++;
-}
-
-// ket qua
-$result = $db->sql_query( $sql );
-
-$g_array['num'] = $output;
-$g_array['now_page'] = $now_page;
-
+// Gia tri khoi tao
 $array_song = array();
 $array_album = array();
 $array_video = array();
+$array_singer = array();
+$array_playlist = array();
 
-if( $now_page == 1 ) // Hien thi ket qua album va video
+$DB_LikeKey = $db->dblikeescape( $query_search['key'] );
+
+if( $query_search['where'] == 'song' )
 {
-	$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $video . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
-	$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $video . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
-
-	$resultvideo = $db->sql_query( $sqlvideo );
-	$resultalbum = $db->sql_query( $sqlalbum );
-
-	if( $db->sql_numrows( $resultvideo ) > 0 )
+	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id WHERE a.active=1";
+	
+	if( $query_search['SearchBy'] == 'singer' ) // Tim bai hat theo ca si
 	{
-		while( $rsv = $db->sql_fetchrow( $resultvideo ) )
+		if( ! empty( $query_search['id'] ) )
 		{
-			$array_video[] = array(
-				"videoname" => $rsv['tname'], //
-				"videosinger" => $rsv['singername'] ? $rsv['singername'] : $lang_module['unknow'], //
-				"thumb" => $rsv['thumb'], //
-				"videoview" => $mainURL . "=viewvideo/" . $rsv['id'] . "/" . $rsv['name'], //
-				"s_video" => $mainURL . "=searchvideo/singer/" . ( $rsv['singeralias'] ? $rsv['singeralias'] : '-' ) //
-			);
+			$sql .= " AND a.casi=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND b.tenthat LIKE '%" . $DB_LikeKey . "%'";
 		}
 	}
-	if( $db->sql_numrows( $resultalbum ) > 0 )
+	elseif( $query_search['SearchBy'] == 'name' ) // Tim bai hat theo ten
 	{
-		while( $rsa = $db->sql_fetchrow( $resultalbum ) )
+		if( ! empty( $query_search['id'] ) )
 		{
-			$array_album[] = array(
-				"albumname" => $rsa['tname'], //
-				"albumsinger" => $rsa['singername'] ? $rsa['singername'] : $lang_module['unknow'], //
-				"thumb" => $rsa['thumb'], //
-				"albumview" => $mainURL . "=listenlist/" . $rsa['id'] . "/" . $rsa['name'], //
-				"url_search_singer" => $mainURL . "=search/singer/" . ( $rsa['singeralias'] ? $rsa['singeralias'] : '-' ) //
-			);
+			$sql .= " AND a.id=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND a.tenthat LIKE '%" . $DB_LikeKey . "%'";
 		}
 	}
-}
-
-while( $row = $db->sql_fetchrow( $result ) )
-{
-	$checkhit = explode( "-", $row['hit'] );
-	$checkhit = $checkhit[0];
-	if( $checkhit >= 20 )
+	elseif( $query_search['SearchBy'] == 'author' ) // Tim bai hat theo nhac si
 	{
-		$checkhit = true;
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND c.id=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND c.tenthat LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'upload' ) // Tim bai hat theo nguoi dang
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.userid=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND a.upboi LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'category' ) // Tim bai hat theo the loai
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.theloai=" . $query_search['id'];
+		}
+		else
+		{
+			Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+			exit();
+		}
+	}
+	
+	if( $query_search['page'] <= 1 )
+	{
+		$first_page = 0;
 	}
 	else
 	{
-		$checkhit = false;
+		$first_page = ( $query_search['page'] - 1 ) * 20;
 	}
+	
+	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
+	
+	$result = $db->sql_query( $sql );
+	$query = $db->sql_query( "SELECT FOUND_ROWS()" );
+	list( $all_page ) = $db->sql_fetchrow( $query );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$checkhit = explode( "-", $row['hit'] );
+		$checkhit = $checkhit[0];
+		if( $checkhit >= 20 )
+		{
+			$checkhit = true;
+		}
+		else
+		{
+			$checkhit = false;
+		}
 
-	$array_song[] = array(
-		"id" => $row['id'], //
-		"name" => $row['tenthat'], //
-		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
-		"upload" => $row['upboi'], //
-		"category" => $category[$row['theloai']]['title'], //
-		"view" => $row['numview'], //
-		"bitrate" => $row['bitrate'], //
-		"size" => $row['size'], //
-		"duration" => $row['duration'], //
-		"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
-		"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
-		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
-		"checkhit" => $checkhit //
-	);
+		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+		
+		$array_song[] = array(
+			"id" => $row['id'], //
+			"name" => $row['tenthat'], //
+			"singer" => $singername, //
+			"upload" => $row['upboi'], //
+			"category" => $category[$row['theloai']]['title'], //
+			"view" => $row['numview'], //
+			"bitrate" => $row['bitrate'], //
+			"size" => $row['size'], //
+			"duration" => $row['duration'], //
+			"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
+			"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
+			"url_search_category" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
+			"url_search_upload" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $row['upboi'] ) . "&amp;id=" . $row['userid'] . "&amp;type=upload", //
+			"checkhit" => $checkhit //
+		);
+	}
+	
+	if( $query_search['page'] <= 1 ) // Hien thi ket qua album va video
+	{
+		$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.tname LIKE '%" . $DB_LikeKey . "%' AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
+		$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.tname LIKE '%" . $DB_LikeKey . "%' AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
+
+		$resultvideo = $db->sql_query( $sqlvideo );
+		$resultalbum = $db->sql_query( $sqlalbum );
+
+		if( $db->sql_numrows( $resultvideo ) > 0 )
+		{
+			while( $rsv = $db->sql_fetchrow( $resultvideo ) )
+			{
+				$singername = $rsv['singername'] ? $rsv['singername'] : $lang_module['unknow'];
+				
+				$array_video[] = array(
+					"videoname" => $rsv['tname'], //
+					"videosinger" => $singername, //
+					"thumb" => $rsv['thumb'], //
+					"videoview" => $mainURL . "=viewvideo/" . $rsv['id'] . "/" . $rsv['name'], //
+					"s_video" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $rsv['casi'] . "&amp;type=singer" //
+				);
+			}
+		}
+		
+		if( $db->sql_numrows( $resultalbum ) > 0 )
+		{
+			while( $rsa = $db->sql_fetchrow( $resultalbum ) )
+			{
+				$singername = $rsa['singername'] ? $rsa['singername'] : $lang_module['unknow'];
+				
+				$array_album[] = array(
+					"albumname" => $rsa['tname'], //
+					"albumsinger" => $singername, //
+					"thumb" => $rsa['thumb'], //
+					"albumview" => $mainURL . "=listenlist/" . $rsa['id'] . "/" . $rsa['name'], //
+					"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $rsa['casi'] . "&amp;type=singer" //
+				);
+			}
+		}
+	}
+}
+elseif( $query_search['where'] == 'album' ) // Tim kiem album
+{
+	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1";
+	
+	if( $query_search['SearchBy'] == 'singer' ) // Tim album theo ca si
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.casi=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND b.tenthat LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'name' ) // Tim album theo ten
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.id=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND a.tname LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'upload' ) // Tim album theo nguoi dang
+	{
+		$sql .= " AND a.upboi LIKE '%" . $DB_LikeKey . "%'";
+	}
+	
+	if( $query_search['page'] <= 1 )
+	{
+		$first_page = 0;
+	}
+	else
+	{
+		$first_page = ( $query_search['page'] - 1 ) * 20;
+	}
+	
+	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
+	
+	$result = $db->sql_query( $sql );
+	$query = $db->sql_query( "SELECT FOUND_ROWS()" );
+	list( $all_page ) = $db->sql_fetchrow( $query );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+		
+		$array_album[] = array(
+			"albumname" => $row['tname'], //
+			"albumsinger" => $singername, //
+			"thumb" => $row['thumb'], //
+			"upboi" => $row['upboi'], //
+			"numview" => $row['numview'], //
+			"describe" => $row['describe'], //
+			"albumview" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['name'], //
+			"url_search_upload" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['upboi'] ) . "&amp;id=0&amp;type=upload", //
+			"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
+		);
+	}
+}
+elseif( $query_search['where'] == 'playlist' )
+{
+	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.username, b.full_name FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` AS a LEFT JOIN `" . NV_USERS_GLOBALTABLE . "` AS b ON a.userid=b.userid WHERE a.active=1";
+	
+	if( $query_search['SearchBy'] == 'singer' ) // Tim playlist theo ca si
+	{
+		$sql .= " AND a.singer LIKE '%" . $DB_LikeKey . "%'";
+	}
+	elseif( $query_search['SearchBy'] == 'name' ) // Tim playlist theo ten
+	{
+		$sql .= " AND a.name LIKE '%" . $DB_LikeKey . "%'";
+	}
+	elseif( $query_search['SearchBy'] == 'upload' ) // Tim playlist theo nguoi dang
+	{
+		$sql .= " AND a.username LIKE '%" . $DB_LikeKey . "%'";
+	}
+	
+	if( $query_search['page'] <= 1 )
+	{
+		$first_page = 0;
+	}
+	else
+	{
+		$first_page = ( $query_search['page'] - 1 ) * 20;
+	}
+	
+	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
+	
+	$result = $db->sql_query( $sql );
+	$query = $db->sql_query( "SELECT FOUND_ROWS()" );
+	list( $all_page ) = $db->sql_fetchrow( $query );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$array_playlist[] = array(
+			"name" => $row['name'], //
+			"singer" => $row['singer'], //
+			"message" => $row['message'], //
+			"username" => $row['username'], //
+			"view" => $row['view'], //
+			"link" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], //
+			"url_search_upload" => $mainURL . "=search&amp;where=playlist&amp;q=" . urlencode( $row['username'] ) . "&amp;id=" . $row['userid'] . "&amp;type=upload", //
+			"url_search_singer" => $mainURL . "=search&amp;where=playlist&amp;q=" . urlencode( $row['singer'] ) . "&amp;type=singer" //
+		);
+	}
+}
+elseif( $query_search['where'] == 'video' )
+{
+	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id WHERE a.active=1";
+	
+	if( $query_search['SearchBy'] == 'singer' ) // Tim video theo ca si
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.casi=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND b.tenthat LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'name' ) // Tim video theo ten
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.id=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND a.tname LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'author' ) // Tim video theo nhac si
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND c.id=" . $query_search['id'];
+		}
+		else
+		{
+			$sql .= " AND c.tenthat LIKE '%" . $DB_LikeKey . "%'";
+		}
+	}
+	elseif( $query_search['SearchBy'] == 'category' ) // Tim video theo the loai
+	{
+		if( ! empty( $query_search['id'] ) )
+		{
+			$sql .= " AND a.theloai=" . $query_search['id'];
+		}
+		else
+		{
+			Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
+			exit();
+		}
+	}
+	
+	if( $query_search['page'] <= 1 )
+	{
+		$first_page = 0;
+	}
+	else
+	{
+		$first_page = ( $query_search['page'] - 1 ) * 20;
+	}
+	
+	$sql .= " ORDER BY a.id DESC LIMIT " . $first_page . ", 20";
+	
+	$result = $db->sql_query( $sql );
+	$query = $db->sql_query( "SELECT FOUND_ROWS()" );
+	list( $all_page ) = $db->sql_fetchrow( $query );
+	
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+		
+		$array_video[] = array(
+			"videoname" => $row['tname'], //
+			"videosinger" => $singername, //
+			"thumb" => $row['thumb'], //
+			"view" => $row['view'], //
+			"dt" => $row['dt'], //
+			"videoview" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
+			"s_video" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
+		);
+	}
 }
 
-$page_title .= " " . NV_TITLEBAR_DEFIS . " " . $module_info['custom_title'];
+$ts = ceil( $all_page / 20 );
 
-$contents = nv_music_search( $g_array, $array_song, $array_album, $array_video );
-$contents .= new_page( $ts, $now_page, $link );
+$contents = nv_music_search( $array_song, $array_album, $array_video, $array_singer, $array_playlist, $query_search, $all_page, $ts, $base_url );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

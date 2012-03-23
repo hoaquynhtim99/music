@@ -56,12 +56,15 @@ $array_album = array();
 foreach( $list as $row )
 {
 	if( empty( $first_album_id ) ) $first_album_id = array( $row['id'], $row['listsong'] );
+	
+	$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+	
 	$array_album[] = array(
 		"id" => $row['id'], //
 		"tname" => $row['tname'], //
 		"thumb" => $row['thumb'], //
-		"casi" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
-		"url_search_singer" => nv_url_rewrite( $main_header_URL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), true ), //
+		"casi" => $singername, //
+		"url_search_singer" => nv_url_rewrite( $main_header_URL . "=search&where=album&q=" . urlencode( $singername ) . "&id=" . $row['casi'] . "&type=singer", true ), //
 		"url_album" => nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true ) //
 	);
 }

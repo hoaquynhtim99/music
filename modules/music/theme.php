@@ -528,65 +528,118 @@ function nv_music_playlist( $g_array, $array )
 
 // Giao dien
 // Tiem kiem bai hat
-function nv_music_search( $g_array, $array_song, $array_album, $array_video )
+function nv_music_search( $array_song, $array_album, $array_video, $array_singer, $array_playlist, $query_search, $all_page, $ts, $base_url )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
 
 	$xtpl = new XTemplate( "search.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
-	$xtpl->assign( 'GDATA', $g_array );
 	$xtpl->assign( 'URL_DOWN', $downURL );
-	$xtpl->assign( 'allvideo', $mainURL . "=searchvideo/" . $g_array['type'] . "/" . $g_array['key'] );
-	$xtpl->assign( 'allalbum', $mainURL . "=album/id/" . $g_array['key'] );
+	$xtpl->assign( 'allvideo', $mainURL . "=search&where=video&q=" . urlencode( $query_search['key'] ) );
+	$xtpl->assign( 'allalbum', $mainURL . "=search&where=album&q=" . urlencode( $query_search['key'] ) );
+	
+	$xtpl->assign( 'NUM_RESULT', $all_page );
+	$xtpl->assign( 'QUERY_SEARCH', $query_search );
 
-	$i = 1;
-	foreach( $array_song as $song )
+	// Hien thi ket qua bai hat
+	if( $query_search['where'] == 'song' )
 	{
-		$song['bitrate'] = $song['bitrate'] / 1000;
-		$song['size'] = round( ( $song['size'] / 1024 / 1024 ), 2 );
-		$song['duration'] = ( int )( $song['duration'] / 60 ) . ":" . $song['duration'] % 60;
-
-		$xtpl->assign( 'SONG', $song );
-
-		if( ( $i == 4 ) and ( $g_array['now_page'] == 1 ) )
+		$i = 1;
+		foreach( $array_song as $song )
 		{
-			if( ! empty( $array_video ) )
+			$song['bitrate'] = $song['bitrate'] / 1000;
+			$song['size'] = round( ( $song['size'] / 1024 / 1024 ), 2 );
+			$song['duration'] = ( int )( $song['duration'] / 60 ) . ":" . $song['duration'] % 60;
+
+			$xtpl->assign( 'SONG', $song );
+
+			if( ( $i == 4 ) and ( $query_search['page'] == 1 ) )
 			{
-				foreach( $array_video as $video )
+				if( ! empty( $array_video ) )
 				{
-					$video['videonames'] = nv_clean60( $video['videoname'], 40 );
-					$xtpl->assign( 'VIDEO', $video );
-					$xtpl->parse( 'main.loop.sub.video.loop' );
+					foreach( $array_video as $video )
+					{
+						$video['videonames'] = nv_clean60( $video['videoname'], 40 );
+						$xtpl->assign( 'VIDEO', $video );
+						$xtpl->parse( 'main.typesong.loop.sub.video.loop' );
+					}
+					$xtpl->parse( 'main.typesong.loop.sub.video' );
 				}
-				$xtpl->parse( 'main.loop.sub.video' );
+
+				if( ! empty( $array_album ) )
+				{
+					foreach( $array_album as $album )
+					{
+						$album['albumnames'] = nv_clean60( $album['albumname'], 40 );
+						$xtpl->assign( 'ALBUM', $album );
+						$xtpl->parse( 'main.typesong.loop.sub.album.loop' );
+					}
+					$xtpl->parse( 'main.typesong.loop.sub.album' );
+				}
+				$xtpl->parse( 'main.typesong.loop.sub' );
 			}
 
-			if( ! empty( $array_album ) )
+			if( ( $i % 2 ) == 0 ) $xtpl->assign( 'gray', 'gray' );
+			else  $xtpl->assign( 'gray', '' );
+
+			if( $song['checkhit'] )
 			{
-				foreach( $array_album as $album )
-				{
-					$album['albumnames'] = nv_clean60( $album['albumname'], 40 );
-					$xtpl->assign( 'ALBUM', $album );
-					$xtpl->parse( 'main.loop.sub.album.loop' );
-				}
-				$xtpl->parse( 'main.loop.sub.album' );
+				$xtpl->parse( 'main.typesong.loop.hit' );
 			}
-			$xtpl->parse( 'main.loop.sub' );
+
+			$xtpl->parse( 'main.typesong.loop' );
+			$i++;
 		}
-
-		if( ( $i % 2 ) == 0 ) $xtpl->assign( 'gray', 'gray' );
-		else  $xtpl->assign( 'gray', '' );
-
-		if( $song['checkhit'] )
+		
+		$xtpl->parse( 'main.typesong' );
+	}
+	elseif( $query_search['where'] == 'album' )
+	{
+		foreach( $array_album as $album )
+		{	
+			$album['describe'] = nv_clean60( strip_tags( $album['describe'] ), 200 );
+		
+			$xtpl->assign( 'ALBUM', $album );
+			$xtpl->parse( 'main.typealbum.loop' );
+		}
+		
+		$xtpl->parse( 'main.typealbum' );
+	}
+	elseif( $query_search['where'] == 'video' )
+	{
+		foreach( $array_video as $video )
 		{
-			$xtpl->parse( 'main.loop.hit' );
+			$video['dt'] = nv_date( 'd/m/Y H:i', $video['dt'] );
+			
+			$xtpl->assign( 'VIDEO', $video );
+			$xtpl->parse( 'main.typevideo.loop' );
 		}
-
-		$xtpl->parse( 'main.loop' );
-		$i++;
+		
+		$xtpl->parse( 'main.typevideo' );
+	}
+	elseif( $query_search['where'] == 'playlist' )
+	{
+		foreach( $array_playlist as $playlist )
+		{	
+			$playlist['message'] = nv_clean60( strip_tags( $playlist['message'] ), 200 );
+			$playlist['thumb'] = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/randimg/img(' . rand(1, 10) . ').jpg';
+		
+			$xtpl->assign( 'PLAYLIST', $playlist );
+			$xtpl->parse( 'main.typeplaylist.loop' );
+		}
+		
+		$xtpl->parse( 'main.typeplaylist' );
 	}
 
+	$gennerate_page = new_page( $ts, $query_search['page'], $base_url, false );
+	
+	if( ! empty( $gennerate_page ) )
+	{
+		$xtpl->assign( 'GENNERATE_PAGE', $gennerate_page );
+		$xtpl->parse( 'main.gennerate_page' );
+	}
+	
 	$xtpl->parse( 'main' );
 	return $xtpl->text( 'main' );
 }
