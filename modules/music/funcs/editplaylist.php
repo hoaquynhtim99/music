@@ -82,12 +82,14 @@ $result = $db->sql_query( $sql );
 $array = array();
 while( $song = $db->sql_fetchrow( $result ) )
 {
+	$singername = $song['singername'] ? $song['singername'] : $lang_module['unknow'];
+
 	$array[] = array(
 		"songid" => $song['id'], //
 		"songname" => $song['tenthat'], //
-		"songsinger" => $song['singername'] ? $song['singername'] : $lang_module['unknow'], //
+		"songsinger" => $singername, //
 		"url_view" => $mainURL . "=listenone/" . $song['id'] . "/" . $song['ten'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . ( $song['singeralias'] ? $song['singeralias'] : '-' ) //
+		"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $song['casi'] . "&amp;type=singer" //
 	);
 }
 

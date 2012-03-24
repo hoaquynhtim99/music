@@ -869,8 +869,10 @@ function nv_music_video( $category, $array_new, $array_hot )
 	// Viet the loai
 	foreach( $category as $key => $value )
 	{
+		if( $key == 0 ) continue;
+		
 		$xtpl->assign( 'name', $value['title'] );
-		$xtpl->assign( 'url_view_category', $mainURL . "=searchvideo/category/" . $key );
+		$xtpl->assign( 'url_view_category', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $value['title'] ) . "&amp;id=" . $key . "&amp;type=category" );
 
 		$xtpl->parse( 'main.cat' );
 	}

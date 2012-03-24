@@ -31,9 +31,9 @@ if( $type == "album" )
 		while( list( $id, $ten, $dt ) = $db->sql_fetchrow( $result ) )
 		{
 			$url[] = array( //
-					'link' => $mainURL . "=listenlist" . '/' . $id . '/' . $ten, //
-					'publtime' => $dt //
-					);
+				'link' => $mainURL . "=listenlist" . '/' . $id . '/' . $ten, //
+				'publtime' => $dt //
+			);
 		}
 
 		$cache = serialize( $url );
@@ -62,8 +62,8 @@ elseif( $type == "video" )
 		while( list( $id, $ten, $dt ) = $db->sql_fetchrow( $result ) )
 		{
 			$url[] = array( //
-					'link' => $mainURL . "=viewvideo" . '/' . $id . '/' . $ten, //
-					'publtime' => $dt //
+				'link' => $mainURL . "=viewvideo" . '/' . $id . '/' . $ten, //
+				'publtime' => $dt //
 			);
 		}
 
@@ -92,8 +92,8 @@ else
 	while( list( $id, $ten, $dt ) = $db->sql_fetchrow( $result ) )
 	{
 		$url[] = array( //
-				'link' => $mainURL . "=listenone" . '/' . $id . '/' . $ten, //
-				'publtime' => $dt //
+			'link' => $mainURL . "=listenone" . '/' . $id . '/' . $ten, //
+			'publtime' => $dt //
 		);
 	}
 

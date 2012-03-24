@@ -49,7 +49,7 @@ $gdata = array(
 	"pl_numview" => $row['view'], //
 	"pl_date" => nv_date( "d/m/Y H:i", $row['time'] ), //
 	"pl_message" => $row['message'], //
-	"pl_url_search_upload" => $mainURL . "=search/upload/" . $row['username'] //
+	"pl_url_search_upload" => $mainURL . "=search&amp;where=playlist&amp;q=" . urlencode( $row['username'] ) . "&amp;id=" . $row['userid'] . "&amp;type=upload"
 );
 
 $sdata = array();
@@ -65,12 +65,14 @@ foreach( $listsong_id as $sid )
 {
 	if( isset( $list[$sid] ) )
 	{
+		$singername = $list[$sid]['singername'] ? $list[$sid]['singername'] : $lang_module['unknow'];
+	
 		$sdata[] = array(
 			"id" => $list[$sid]['id'], //
 			"song_name" => $list[$sid]['tenthat'], //
-			"song_singer" => $list[$sid]['singername'] ? $list[$sid]['singername'] : $lang_module['unknow'], //
+			"song_singer" => $singername, //
 			"url_listen" => $mainURL . "=listenone/" . $list[$sid]['id'] . "/" . $list[$sid]['ten'], //
-			"url_search_singer" => $mainURL . "=search/singer/" . ( $list[$sid]['singeralias'] ? $list[$sid]['singeralias'] : '-' ), //
+			"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $list[$sid]['casi'] . "&amp;type=singer", //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $list[$sid]['id'] . "/" . $list[$sid]['ten'], true ) //
 		);
 	}

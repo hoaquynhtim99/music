@@ -48,12 +48,14 @@ if( $userid )
 			$i = 1;
 			while( $row = $db->sql_fetchrow( $result ) )
 			{
+				$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+			
 				$array['song'][] = array(
 					"stt" => $i, //
 					"songname" => $row['tenthat'], //
-					"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+					"singer" => $singername, //
 					"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-					"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+					"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
 				);
 				$i++;
 			}

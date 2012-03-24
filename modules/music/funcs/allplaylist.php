@@ -62,7 +62,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"upload" => $row['username'], //
 		"view" => $row['view'], //
 		"url_listen" => $mainURL . "=listenuserlist/" . $row['id'] . "/" . $row['keyname'], //
-		"url_search_upload" => $mainURL . "=search/upload/" . $row['username'] //
+		"url_search_upload" => $mainURL . "=search&amp;where=playlist&amp;q=" . urlencode( $row['username'] ) . "&amp;id=" . $row['userid'] . "&amp;type=upload" //
 	);
 }
 

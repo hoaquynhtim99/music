@@ -24,12 +24,14 @@ $array_hot = array();
 $result = $db->sql_query( $sqlnew );
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+
 	$array_new[] = array(
 		"name" => $row['tname'], //
-		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+		"singer" => $singername, //
 		"thumb" => $row['thumb'], //
 		"url_view" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+		"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
 	);
 }
 
@@ -37,12 +39,14 @@ while( $row = $db->sql_fetchrow( $result ) )
 $result = $db->sql_query( $sqlhot );
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+
 	$array_hot[] = array(
 		"name" => $row['tname'], //
 		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"thumb" => $row['thumb'], //
 		"url_view" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+		"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
 	);
 }
 

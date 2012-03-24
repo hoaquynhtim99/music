@@ -37,9 +37,13 @@ if( ! empty( $row['listcat'] ) )
 	$row['listcat'] = array();
 	foreach( $list_cat as $cat )
 	{
-		$row['listcat'][] = array( "name" => isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'], "url" => $mainURL . "=searchvideo/category/" . $cat );
+		$catname = isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'];
+	
+		$row['listcat'][] = array( "name" => $catname, "url" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $catname ) . "&amp;id=" . $cat . "&amp;type=category" );
 	}
 }
+
+$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 
 $array = array(
 	"URL_SENDMAIL" => $mainURL . "=videosendmail&amp;id=" . $id, //
@@ -49,12 +53,12 @@ $array = array(
 	"thumb" => $row['thumb'], //
 	"listcat" => $row['listcat'], //
 	"sname" => $row['name'], //
-	"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+	"singer" => $singername, //
 	"category" => $category[$row['theloai']]['title'], //
 	"view" => $row['view'], //
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ), //
-	"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
-	"url_search_category" => $mainURL . "=searchvideo/category/" . $row['theloai'], //
+	"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
+	"url_search_category" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
 	"link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $row['id'] . "/" . $row['name'], true ), //
 	"URL_SONG" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=viewvideo/' . $row['id'] . '/' . $row['name'], true ) //
 );

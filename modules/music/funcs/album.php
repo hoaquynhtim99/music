@@ -63,15 +63,17 @@ $g_array['num'] = $output;
 $array = array();
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	$singername = empty( $row['singername'] ) ? $lang_module['unknow'] : $row['singername'];
+
 	$array[] = array(
 		"name" => $row['tname'], //
 		"thumb" => $row['thumb'], //
-		"singer" => empty( $row['singername'] ) ? $lang_module['unknow'] : $row['singername'], //
+		"singer" => $singername, //
 		"upload" => $row['upboi'], //
 		"view" => $row['numview'], //
 		"url_listen" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['name'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
-		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'] //
+		"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
+		"url_search_upload" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['upboi'] ) . "&amp;type=upload" //
 	);
 }
 

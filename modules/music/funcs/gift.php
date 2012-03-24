@@ -52,7 +52,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 {
 	$row['singer'] = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 	$row['url_listen'] = $mainURL . "=listenone/" . $row['songid'] . "/" . $row['songname'];
-	$row['url_search_singer'] = $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' );
+	$row['url_search_singer'] = $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $row['singer'] ) . "&amp;id=" . $row['songsinger'] . "&amp;type=singer";
 	$array[] = $row;
 }
 

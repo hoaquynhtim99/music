@@ -72,13 +72,17 @@ if( ! empty( $row['listcat'] ) )
 
 	foreach( $row['listcat'] as $cat )
 	{
-		$listcat[] = array( "title" => isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'], "url" => $mainURL . "=search/category/" . $cat );
+		$cattitle = isset( $category[$cat] ) ? $category[$cat]['title'] : $category[0]['title'];
+	
+		$listcat[] = array( "title" => $cattitle, "url" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $cattitle ) . "&amp;id=" . $cat . "&amp;type=category" );
 	}
 }
 else
 {
 	$listcat = array();
 }
+
+$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 
 $sdata = array(
 	"send_mail_url" => $main_header_URL . "=sendmail&id=" . $id, //
@@ -87,7 +91,7 @@ $sdata = array(
 	"song_id" => $id, //
 	"song_name" => $row['tenthat'], //
 	"song_sname" => $row['ten'], //
-	"song_singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+	"song_singer" => $singername, //
 	"song_author" => $row['authorname'] ? $row['authorname'] : $lang_module['unknow'], //
 	"song_cat" => $category[$row['theloai']]['title'], //
 	"song_listcat" => $listcat, //
@@ -95,9 +99,9 @@ $sdata = array(
 	"song_numview" => $row['numview'], //
 	"song_link" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ), //
 
-	"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
-	"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
-	"url_search_album" => $mainURL . "=album/numview/" . $row['name'], //
+	"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
+	"url_search_category" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
+	"url_search_album" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['tname'] ) . "&amp;id=" . $row['album'], //
 
 	"album_name" => $row['tname'] //
 );

@@ -35,12 +35,14 @@ if( ! empty( $num ) )
 
 	while( $row = $db->sql_fetchrow( $result ) )
 	{
+		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+	
 		$array[] = array(
 			"id" => $row['id'], //
 			"song_name" => $row['tenthat'], //
-			"song_singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+			"song_singer" => $singername, //
 			"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-			"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
+			"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ) //
 		);
 	}

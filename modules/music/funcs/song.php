@@ -47,11 +47,13 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$checkhit = explode( "-", $row['hit'] );
 	$checkhit = $checkhit[0];
 
+	$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+	
 	$array[] = array(
 		"id" => $row['id'], //
 		"name" => $row['tenthat'], //
 		"category" => $category[$row['theloai']]['title'], //
-		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+		"singer" => $singername, //
 		"upload" => $row['upboi'], //
 		"view" => $row['numview'], //
 		"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
@@ -59,9 +61,9 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"size" => $row['size'], //
 		"duration" => $row['duration'], //
 		"url_listen" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['ten'], //
-		"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
-		"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
-		"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
+		"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
+		"url_search_upload" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $row['upboi'] ) . "&amp;id=" . $row['userid'] . "&amp;type=upload", //
+		"url_search_category" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
 		"checkhit" => $checkhit //
 	);
 }

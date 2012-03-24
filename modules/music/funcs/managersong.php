@@ -157,8 +157,8 @@ if( ! empty( $userid ) )
 				"bitrate" => $row['bitrate'], //
 				"size" => $row['size'], //
 				"duration" => $row['duration'], //
-				"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
-				"url_search_category" => $mainURL . "=search/category/" . $row['theloai'], //
+				"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $allsinger[$row['casi']] ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
+				"url_search_category" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
 				"category" => $category[$row['theloai']]['title'], //
 				"url_view" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
 				"url_edit" => $mainURL . "=managersong/" . $row['id'], //

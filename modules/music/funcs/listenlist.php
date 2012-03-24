@@ -25,7 +25,7 @@ $row['singername'] = $lang_module['unknow'];
 $sql = "SELECT `ten`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $row['casi'];
 $list = nv_db_cache( $sql );
 
-if( empty( $list ) )
+if( ! empty( $list ) )
 {
 	$row['singeralias'] = $list[0]['ten'];
 	$row['singername'] = $list[0]['tenthat'];
@@ -43,14 +43,14 @@ $album_array = array(
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
 	"playlist" => nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
 	"name" => $row['tname'], //
-	"url_search_upload" => $mainURL . "=search/upload/" . $row['upboi'], //
+	"url_search_upload" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['upboi'] ) . "&amp;type=upload", //
 	"singer" => $row['singername'], //
 	"numview" => $row['numview'], //
 	"who_post" => $row['upboi'], //
 	"album_thumb" => $row['thumb'], //
 	"describe" => $row['describe'], //
 	"URL_ALBUM" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true ), //
-	"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
+	"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['singername'] ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
 );
 
 if( empty( $row ) )
@@ -74,12 +74,14 @@ foreach( explode( ",", $row['listsong'] ) as $row )
 	if( ! empty( $row ) and isset( $list[$row] ) )
 	{
 		$row = $list[$row];
+		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+		
 		$song_array[] = array(
 			"id" => $row['id'], //
 			"song_name" => $row['tenthat'], //
-			"song_singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
+			"song_singer" => $singername, //
 			"url_listen" => $mainURL . "=listenone/" . $row['id'] . "/" . $row['ten'], //
-			"url_search_singer" => $mainURL . "=search/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ), //
+			"url_search_singer" => $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
 			"song_url" => nv_url_rewrite( $main_header_URL . "=creatlinksong/song/" . $row['id'] . "/" . $row['ten'], true ) //
 		);
 	}
