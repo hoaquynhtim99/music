@@ -202,6 +202,7 @@ function nv_music_album( $g_array, $array )
 
 	foreach( $array as $row )
 	{
+		$row['describe'] = nv_clean60( strip_tags( $row['describe'] ), 200 );
 		$xtpl->assign( 'ROW', $row );
 		$xtpl->parse( 'main.loop' );
 	}
@@ -542,6 +543,47 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 	$xtpl->assign( 'NUM_RESULT', $all_page );
 	$xtpl->assign( 'QUERY_SEARCH', $query_search );
 
+	// Kieu tim kiem
+	$array_where_search = array(
+		'song' => $lang_module['song1'],
+		'album' => $lang_module['album'],
+		'video' => $lang_module['video'],
+		'playlist' => $lang_module['search_quick_res_playlist'],
+	);
+	foreach( $array_where_search as $k => $v )
+	{
+		$xtpl->assign( 'CURRENT', $k == $query_search['where'] ? ' boldcolor' : '' );
+		$xtpl->assign( 'URL', $mainURL . "=search&amp;where=" . $k . "&amp;q=" . urlencode( $query_search['key'] ) . "&amp;id=" . $query_search['id'] . "&amp;type=" . $query_search['SearchBy'] );
+		$xtpl->assign( 'TITLE', $v );
+		$xtpl->parse( 'main.wheresearch' );
+	}
+
+	$xtpl->assign( 'TITLE_SEARCH', $array_where_search[$query_search['where']] );
+	
+	// Tim theo
+	$array_type_search = array(
+		'name' => $lang_module['search_adv_search_name'],
+		'singer' => $lang_module['singer']
+	);
+	
+	if( in_array( $query_search['where'], array( 'song', 'video' ) ) )
+	{
+		$array_type_search['author'] = $lang_module['author_1'];
+	}
+	
+	if( in_array( $query_search['where'], array( 'song', 'video', 'playlist' ) ) )
+	{
+		$array_type_search['upload'] = $lang_module['who_post'];
+	}
+	
+	foreach( $array_type_search as $k => $v )
+	{
+		$xtpl->assign( 'CURRENT', $k == $query_search['SearchBy'] ? ' boldcolor' : '' );
+		$xtpl->assign( 'URL', $mainURL . "=search&amp;where=" . $query_search['where'] . "&amp;q=" . urlencode( $query_search['key'] ) . "&amp;id=" . $query_search['id'] . "&amp;type=" . $k );
+		$xtpl->assign( 'TITLE', $v );
+		$xtpl->parse( 'main.typesearch' );
+	}
+	
 	// Hien thi ket qua bai hat
 	if( $query_search['where'] == 'song' )
 	{
@@ -1077,7 +1119,7 @@ function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $ar
 	$xtpl = new XTemplate( "quicksearch.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
-
+	
 	// Ket qua ca si
 	if( ! empty( $array_singer ) )
 	{

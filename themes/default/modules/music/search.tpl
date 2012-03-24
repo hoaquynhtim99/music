@@ -1,9 +1,35 @@
 <!-- BEGIN: main -->
-<div class="alboxw">
+<div class="alboxw mssearch-adv">
 	<div class="alwrap">
 		<div class="alheader"> 
-			<span>{LANG.search_song1}</span>
+			<span>{LANG.search_song1} &quot;{TITLE_SEARCH}&quot;</span>
+			<div class="mss-advtool" id="mss-advtool" onclick="NVMS.advsearch.prosess();">
+				{LANG.search_adv} <span class="musicicon madvance">&nbsp;</span>
+			</div>
 		</div>
+	</div>
+	<div class="ms-advwrap" id="ms-advwrap">
+		<div class="ms-advcontent">
+			<div class="col-33">
+				<blockquote>{LANG.search_song1}</blockquote>
+				<!-- BEGIN: wheresearch -->
+				<a href="{URL}" class="musicicon mplay singer{CURRENT}">{TITLE}</a><br />
+				<!-- END: wheresearch -->
+			</div>
+			<div class="col-33">
+				<blockquote>{LANG.search_adv_search_with}</blockquote>
+				<!-- BEGIN: typesearch -->
+				<a href="{URL}" class="musicicon mplay singer{CURRENT}">{TITLE}</a><br />
+				<!-- END: typesearch -->
+			</div>
+			<div class="col-33">
+				<div class="fr">
+					<a href="javascript:void(0);" onclick="NVMS.advsearch.prosess('close');" class="musicicon mcancel" title="{LANG.close}">&nbsp;</a>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
 	</div>
 </div>
 <div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.search_find} {NUM_RESULT} {LANG.results}.<a title="{LANG.close_info}" href="javascript:void(0);" onclick="$(this).parent().parent().remove();" class="fr musicicon mcancel">&nbsp;</a></div></div></div>

@@ -22,6 +22,7 @@ $lang_module['menu4'] = "Playlist của bạn";
 
 $lang_module['album'] = "Album";
 $lang_module['author'] = "Sáng tác";
+$lang_module['author_1'] = "Nhạc sĩ";
 $lang_module['add'] = "Thêm";
 $lang_module['add_box'] = "Thêm bài hát này vào box nhạc";
 $lang_module['add_playlist'] = "Thêm vào playlist";
@@ -43,6 +44,7 @@ $lang_module['cancel'] = "Làm lại";
 $lang_module['page'] = "Trang %d";
 $lang_module['goto'] = "Chuyển đến";
 $lang_module['here'] = "đây";
+$lang_module['close'] = "Đóng lại";
 
 $lang_module['close_info'] = "Đóng thông báo này lại";
 
@@ -302,5 +304,9 @@ $lang_module['gift_list_empty'] = "Không có quà tặng âm nhạc nào đến
 $lang_module['down_info1'] = "Nhấp vào";
 $lang_module['down_info2'] = "để tải bài hát về máy";
 $lang_module['down_info3'] = "Tải bài hát";
+
+$lang_module['search_adv'] = "Nâng cao";
+$lang_module['search_adv_search_with'] = "Tìm theo";
+$lang_module['search_adv_search_name'] = "Tên";
 
 ?>

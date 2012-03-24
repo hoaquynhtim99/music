@@ -85,6 +85,7 @@ textarea.txt-full{width:98%!important}
 .muser{background-image:url('../images/music/user.png')}
 .mexit{background-image:url('../images/music/exit.png')}
 .mcancel{background-image:url('../images/music/cancel.png')}
+.madvance{background-image:url('../images/music/down-arr.png')}
 
 /* IMAGE EFFECT */
 .musicsmalllalbum{padding:2px;border:1px #DADADA solid;display:block;box-shadow: 0px 0px 2px 0px #dadada;border-radius: 2px;position:relative;margin-right:5px}
@@ -204,4 +205,31 @@ h2.gift{padding:0;margin:0;font-size:14px}
 .uploadData:hover{box-shadow: 0px 0px 5px 0px #666}
 .uploadData .status{font-size:11px}
 .uploadData .close{float:right;padding-left:16px;background-repeat:no-repeat;background-image:url('../images/music/cancel.png');margin-top:6px}
+
+/* SEARCH */
+.mssearch-adv{position:relative}
+.ms-advwrap{
+	position:absolute;top:36px;right:1px;border:1px green solid;width:99%;z-index:2;
+	border: 1px solid #DFDFDF;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+	-moz-box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 0px 2px 4px rgba(0,0,0,0.1);
+	box-shadow: 2px 2px 2px rgba(0,0,0,0.1);
+	background-color: whiteSmoke;
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f2f2f2');
+	background-image: -moz-linear-gradient(100% 100% 90deg, #f2f2f2, #fff);
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#f2f2f2));
+	border-image: initial;
+	display:none
+}
+#mss-advtool{position:absolute;top:0;right:0;cursor:pointer}
+.ms-advcontent{padding:5px}
+
+/* COLUM */
+.col-33{float:left}
+.col-33{width:33%}
+
+
 

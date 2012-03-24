@@ -53,6 +53,26 @@ function nv_show_emotions(target){
 	}
 }
 
+// Tim kiem
+NVMS.advsearch = {};
+NVMS.advsearch.show = false;
+NVMS.advsearch.target = null;
+NVMS.advsearch.prosess = function(e){
+	NVMS.advsearch.target = $('#ms-advwrap');
+	if( e == 'close' ){
+		NVMS.advsearch.target.slideUp(500);
+		NVMS.advsearch.show = false;
+		return;
+	}
+	if( NVMS.advsearch.show == false ){
+		NVMS.advsearch.target.slideDown(500);
+		NVMS.advsearch.show = true;
+	}else{
+		NVMS.advsearch.target.slideUp(500);
+		NVMS.advsearch.show = false;
+	}
+}
+
 // Tim kiem nhanh
 NVMS.search = {};
 NVMS.search.minchar = 2;
@@ -87,9 +107,11 @@ $(document).ready(function(){
 	
 	// Load search
 	$('#mstxtsearch').keyup(function(){
-		NVMS.search.q = trim( $('#mstxtsearch').val() ); // Only NukeViet has trim()
+		var q = trim( $('#mstxtsearch').val() ); // Only NukeViet has trim()
 
-		if( NVMS.search.q.length >= NVMS.search.minchar ){
+		if( q.length >= NVMS.search.minchar ){
+			NVMS.search.q = q;
+		
 			// Hien thi anh load
 			NVMS.search.imgloader.show();
 				
@@ -99,6 +121,7 @@ $(document).ready(function(){
 			// Xac lap dinh thoi load ket qua
 			NVMS.search.timer = setTimeout( "NVMS.search.load()", NVMS.search.timeout );
 		}else{
+			clearTimeout( NVMS.search.timer );
 			NVMS.search.imgloader.hide();
 			$('#msressearch').hide();
 			NVMS.search.showres = false;

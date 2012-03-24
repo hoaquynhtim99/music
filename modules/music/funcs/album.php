@@ -68,6 +68,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$array[] = array(
 		"name" => $row['tname'], //
 		"thumb" => $row['thumb'], //
+		"describe" => $row['describe'], //
 		"singer" => $singername, //
 		"upload" => $row['upboi'], //
 		"view" => $row['numview'], //

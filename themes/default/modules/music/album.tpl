@@ -11,9 +11,9 @@
 				<a href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}">
 					<img alt="{ROW.name}" class="musicsmalllalbum fl" width="90" height="90" src="{ROW.thumb}" />
 				</a>
-				<p><a href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}"><strong>{ROW.name}</strong></a></p>
-				<p>{LANG.show_1}: <a class="singer" title="{ROW.name}" href="{ROW.url_search_singer}">{ROW.singer}</a></p>
+				<a class="singer" href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}"><strong>{ROW.name}</strong></a> - <a class="singer" title="{ROW.name}" href="{ROW.url_search_singer}"><strong>{ROW.singer}</strong></a>
 				<p>{LANG.who_create_1}: <a class="singer" title="{ROW.upload}" href="{ROW.url_search_upload}">{ROW.upload}</a> | {LANG.view}: {ROW.view}</p>
+				{ROW.describe}
 				<div class="clear"></div>
 				<div class="hr"></div>
 			<!-- END: loop -->
