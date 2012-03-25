@@ -308,5 +308,6 @@ $lang_module['down_info3'] = "Tải bài hát";
 $lang_module['search_adv'] = "Nâng cao";
 $lang_module['search_adv_search_with'] = "Tìm theo";
 $lang_module['search_adv_search_name'] = "Tên";
+$lang_module['search_adv_info_use'] = "Nếu kết quả không như mong đợi hãy dùng chức năng tìm kiếm nâng cao";
 
 ?>

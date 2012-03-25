@@ -32,7 +32,7 @@
 		<div class="clear"></div>
 	</div>
 </div>
-<div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.search_find} {NUM_RESULT} {LANG.results}.<a title="{LANG.close_info}" href="javascript:void(0);" onclick="$(this).parent().parent().remove();" class="fr musicicon mcancel">&nbsp;</a></div></div></div>
+<div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.search_find} {NUM_RESULT} {LANG.results}. {LANG.search_adv_info_use}.</div></div></div>
 <div class="clear"></div>
 <!-- BEGIN: typesong -->
 <!-- BEGIN: loop -->
