@@ -74,6 +74,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `numsong` int(255) NOT NULL DEFAULT '0',
   `listsong` mediumtext NOT NULL,
   `addtime` int(11) unsigned NOT NULL DEFAULT '0',
+  `hit` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
