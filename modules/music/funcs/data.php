@@ -9,6 +9,7 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
+// Gui qua tang am nhac
 if( $nv_Request->isset_request( 'send_gift', 'post' ) )
 {
 	$checksess = filter_text_input( 'checksess', 'post', '' );

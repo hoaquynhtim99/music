@@ -217,7 +217,8 @@ if( ( $nv_Request->get_int( 'add', 'post', 0 ) == 1 ) and ( $error == '' ) )
 			1,
 			" . $numsong . ",
 			" . $db->dbescape( $array['listsong'] ) . ",
-			" . NV_CURRENTTIME . "
+			" . NV_CURRENTTIME . ",
+			'0-" . NV_CURRENTTIME . "'
 		)";
 
 		$newid = $db->sql_query_insert_id( $sql );

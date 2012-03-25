@@ -163,7 +163,7 @@ function getADS()
 	return $ads;
 }
 
-// Update bai hat
+// Update luot nghe, HIT bai hat video, album
 function updateHIT_VIEW( $id, $where, $is_numview = true )
 {
 	global $module_data, $db;
@@ -171,8 +171,18 @@ function updateHIT_VIEW( $id, $where, $is_numview = true )
 
 	if( $is_numview ) $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . $where . "` SET " . $key . " = " . $key . "+1 WHERE `id` =" . $id );
 
-	if( $where == '' ) $data = getsongbyID( $id );
-	else  $data = getvideobyID( $id );
+	if( $where == '' )
+	{
+		$data = getsongbyID( $id );
+	}
+	elseif( $where == '_video' )
+	{
+		$data = getvideobyID( $id );
+	}
+	else
+	{
+		$data = getalbumbyID( $id );
+	}
 
 	$hitdata = explode( "-", $data['hit'] );
 	$hittime = $hitdata[1];

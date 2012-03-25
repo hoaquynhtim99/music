@@ -59,8 +59,8 @@ if( empty( $row ) )
 	exit();
 }
 
-// Cap nhat so luot nghe
-$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview`=`numview`+1 WHERE `id` =" . $id );
+// Cap nhat so luot nghe, HIT
+updateHIT_VIEW( $id, '_album', true );
 
 // Cac bai hat cua album
 $sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN(" . $row['listsong'] . ") AND a.active=1";
