@@ -39,7 +39,7 @@ $g_array = array(
 	"sname" => $row['name'] //
 );
 
-// Check HIT song
+// Check HIT
 $checkhit = explode( "-", $row['hit'] );
 $checkhit = $checkhit[0];
 

@@ -970,6 +970,11 @@ function nv_music_viewvideo( $g_array, $array )
 	$xtpl->assign( 'playerurl', $global_config['site_url'] . "/modules/" . $module_file . "/data/" );
 	$xtpl->assign( 'thisurl', $mainURL . "=video" );
 
+	if( $array['checkhit'] >= 20 )
+	{
+		$xtpl->parse( 'main.hit' );
+	}
+	
 	foreach( $array['listcat'] as $cat )
 	{
 		$xtpl->assign( 'SUBCAT', $cat );

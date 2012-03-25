@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
 <script type="text/javascript" src="{base_url}jwplayer.js"></script>
-<h2 class="medium greencolor mlotitle">{DATA.name} - <a class="singer" href="{DATA.url_search_singer}" title="{DATA.singer}">{DATA.singer}</a></h2>
+<h2 class="medium greencolor mlotitle">{DATA.name} - <a class="singer" href="{DATA.url_search_singer}" title="{DATA.singer}">{DATA.singer}</a><!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit --></h2>
 <p class="msmall">
 	{LANG.category_2}: <a class="singer" href="{DATA.url_search_category}" title="{DATA.category}">{DATA.category}</a>
 	<!-- BEGIN: subcat --> / <a class="singer" href="{SUBCAT.url}" title="{SUBCAT.name}">{SUBCAT.name}&nbsp;</a>

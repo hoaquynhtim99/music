@@ -45,6 +45,10 @@ if( ! empty( $row['listcat'] ) )
 
 $singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 
+// Check HIT
+$checkhit = explode( "-", $row['hit'] );
+$checkhit = $checkhit[0];
+
 $array = array(
 	"URL_SENDMAIL" => $mainURL . "=videosendmail&amp;id=" . $id, //
 	"TITLE" => $lang_module['sendtomail'], //
@@ -56,6 +60,7 @@ $array = array(
 	"singer" => $singername, //
 	"category" => $category[$row['theloai']]['title'], //
 	"view" => $row['view'], //
+	"checkhit" => $checkhit, //
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . '=creatlinksong/video/' . $row['id'] . '/' . $row['name'], true ), //
 	"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $row['casi'] . "&amp;type=singer", //
 	"url_search_category" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $category[$row['theloai']]['title'] ) . "&amp;id=" . $row['theloai'] . "&amp;type=category", //
