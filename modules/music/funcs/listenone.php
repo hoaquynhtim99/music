@@ -118,18 +118,13 @@ $ldata = array(
 
 while( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 {
-	$ldata['data'][] = array( "user" => $rowlyric['user'], //
-			"content" => $rowlyric['body'] //
-			);
+	$ldata['data'][] = array( "user" => $rowlyric['user'], "content" => $rowlyric['body'] );
 }
 
 // Page title
 $page_title = $row['tenthat'] . " - " . $sdata['song_singer'];
 $key_words = $row['tenthat'] . " - " . $sdata['song_singer'];
-$description = ! isset( $ldata['data'][0]['content']
-{
-	50}
-) ? sprintf( $lang_module['share_descreption'], $row['tenthat'], $sdata['song_singer'], $sdata['song_author'], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
+$description = ! isset( $ldata['data'][0]['content']{50} ) ? sprintf( $lang_module['share_descreption'], $row['tenthat'], $sdata['song_singer'], $sdata['song_author'], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
 
 $contents = nv_music_listenone( $gdata, $sdata, $cdata, $ldata );
 

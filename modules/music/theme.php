@@ -393,6 +393,11 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 
 	$xtpl->assign( 'ID', $g_array['id'] );
 
+	if( $album_array['checkhit'] >= 20 )
+	{
+		$xtpl->parse( 'main.hit' );
+	}
+
 	$i = 1;
 	foreach( $song_array as $song )
 	{

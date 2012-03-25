@@ -39,6 +39,10 @@ $g_array = array(
 	"sname" => $row['name'] //
 );
 
+// Check HIT song
+$checkhit = explode( "-", $row['hit'] );
+$checkhit = $checkhit[0];
+
 $album_array = array(
 	"creat_link_url" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
 	"playlist" => nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $row['id'] . "/" . $row['name'], true ), //
@@ -48,6 +52,7 @@ $album_array = array(
 	"numview" => $row['numview'], //
 	"who_post" => $row['upboi'], //
 	"album_thumb" => $row['thumb'], //
+	"checkhit" => $checkhit, //
 	"describe" => $row['describe'], //
 	"URL_ALBUM" => NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=listenlist/" . $row['id'] . "/" . $row['name'], true ), //
 	"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['singername'] ) . "&amp;id=" . $row['casi'] . "&amp;type=singer" //
