@@ -88,12 +88,17 @@ $g_array['num'] = $output;
 $array = array();
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	// Check HIT
+	$checkhit = explode( "-", $row['hit'] );
+	$checkhit = $checkhit[0];
+
 	$array[] = array(
 		"name" => $row['tname'], //
 		"singer" => $row['singername'] ? $row['singername'] : $lang_module['unknow'], //
 		"view" => $row['view'], //
 		"thumb" => $row['thumb'], //
 		"creat" => $row['dt'], //
+		"checkhit" => $checkhit, //
 		"url_listen" => $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'], //
 		"url_search_singer" => $mainURL . "=searchvideo/singer/" . ( $row['singeralias'] ? $row['singeralias'] : '-' ) //
 	);

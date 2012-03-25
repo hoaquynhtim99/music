@@ -12,7 +12,8 @@
 					<img alt="{ROW.name}" class="musicsmalllalbum fl" width="90" height="90" src="{ROW.thumb}" />
 				</a>
 				<a class="singer" href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}"><strong>{ROW.name}</strong></a> - <a class="singer" title="{ROW.name}" href="{ROW.url_search_singer}"><strong>{ROW.singer}</strong></a>
-				<p>{LANG.who_create_1}: <a class="singer" title="{ROW.upload}" href="{ROW.url_search_upload}">{ROW.upload}</a> | {LANG.view}: {ROW.view}</p>
+				<p>{LANG.who_create_1}: <a class="singer" title="{ROW.upload}" href="{ROW.url_search_upload}">{ROW.upload}</a> | {LANG.view}: {ROW.view}
+				<!-- BEGIN: hit -->&nbsp;&nbsp;<span class="musicicon mhit miconiblock">&nbsp;&nbsp;&nbsp;</span><!-- END: hit --></p>
 				{ROW.describe}
 				<div class="clear"></div>
 				<div class="hr"></div>

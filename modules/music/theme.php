@@ -204,6 +204,12 @@ function nv_music_album( $g_array, $array )
 	{
 		$row['describe'] = nv_clean60( strip_tags( $row['describe'] ), 200 );
 		$xtpl->assign( 'ROW', $row );
+
+		if( $row['checkhit'] >= 20 )
+		{
+			$xtpl->parse( 'main.loop.hit' );
+		}
+		
 		$xtpl->parse( 'main.loop' );
 	}
 
@@ -706,6 +712,12 @@ function nv_music_searchvideo( $g_array, $array )
 	{
 		$row['creat'] = nv_date( "H:i d/m/Y", $row['creat'] );
 		$xtpl->assign( 'ROW', $row );
+		
+		if( $row['checkhit'] >= 20 )
+		{
+			$xtpl->parse( 'main.loop.hit' );
+		}
+		
 		$xtpl->parse( 'main.loop' );
 	}
 

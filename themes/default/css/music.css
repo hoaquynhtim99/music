@@ -62,6 +62,7 @@ textarea.txt-full{width:98%!important}
 .mtcomment td{border-bottom:1px #dadada solid;vertical-align:top;padding:8px 0}
 
 /* ICON PACK */
+.miconiblock{line-height:16px;display:inline-block}
 .musicicon{padding-left:16px;background-repeat:no-repeat}
 .miconalbum{background-image:url('../images/music/album.png')}
 .miconcat{background-image:url('../images/music/categories.png')}

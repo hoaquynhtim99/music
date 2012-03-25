@@ -64,12 +64,17 @@ $array = array();
 while( $row = $db->sql_fetchrow( $result ) )
 {
 	$singername = empty( $row['singername'] ) ? $lang_module['unknow'] : $row['singername'];
+	
+	// Check HIT
+	$checkhit = explode( "-", $row['hit'] );
+	$checkhit = $checkhit[0];
 
 	$array[] = array(
 		"name" => $row['tname'], //
 		"thumb" => $row['thumb'], //
 		"describe" => $row['describe'], //
 		"singer" => $singername, //
+		"checkhit" => $checkhit, //
 		"upload" => $row['upboi'], //
 		"view" => $row['numview'], //
 		"url_listen" => $mainURL . "=listenlist/" . $row['id'] . "/" . $row['name'], //
