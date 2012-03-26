@@ -97,6 +97,7 @@
 	<h2 class="medium">
 		<a href="{ALBUM.albumview}" title="{LANG.listen_album} {ALBUM.albumname}">{ALBUM.albumname}</a> - 
 		<a title="{ALBUM.albumsinger}" href="{ALBUM.url_search_singer}">{ALBUM.albumsinger}</a>
+		<!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit -->
 	</h2>
 	<p>{LANG.who_create_1}: <a class="singer" title="{ALBUM.upboi}" href="{ALBUM.url_search_upload}">{ALBUM.upboi}</a> | {LANG.view}: {ALBUM.numview}</p>
 	{ALBUM.describe}
@@ -124,7 +125,10 @@
 <!-- BEGIN: typevideo -->
 <!-- BEGIN: loop -->
 <a href="{VIDEO.videoview}" title="{VIDEO.videoname}"><img class="musicsmalllalbum fl" width="128" height="72" src="{VIDEO.thumb}" alt="{VIDEO.videoname}" /></a>
-<strong><a href="{VIDEO.videoview}" title="{VIDEO.videoname}">{VIDEO.videoname}</a></strong><br />
+<h2 class="medium">
+	<a href="{VIDEO.videoview}" title="{VIDEO.videoname}">{VIDEO.videoname}</a>
+	<!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit -->
+</h2>
 {LANG.show}: <a class="singer" href="{VIDEO.s_video}" title="{VIDEO.videosinger}">{VIDEO.videosinger}</a><br />
 {LANG.playlist_creat}: <span class="greencolor">{VIDEO.dt}</span> | {LANG.view1}: <span class="greencolor">{VIDEO.view}</span>
 <div class="clear"></div>

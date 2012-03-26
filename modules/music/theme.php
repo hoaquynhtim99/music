@@ -654,6 +654,12 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 			$album['describe'] = nv_clean60( strip_tags( $album['describe'] ), 200 );
 		
 			$xtpl->assign( 'ALBUM', $album );
+
+			if( $album['checkhit'] >= 20 )
+			{
+				$xtpl->parse( 'main.typealbum.loop.hit' );
+			}
+			
 			$xtpl->parse( 'main.typealbum.loop' );
 		}
 		
@@ -666,6 +672,12 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 			$video['dt'] = nv_date( 'd/m/Y H:i', $video['dt'] );
 			
 			$xtpl->assign( 'VIDEO', $video );
+
+			if( $video['checkhit'] >= 20 )
+			{
+				$xtpl->parse( 'main.typevideo.loop.hit' );
+			}
+			
 			$xtpl->parse( 'main.typevideo.loop' );
 		}
 		

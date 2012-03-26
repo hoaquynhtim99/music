@@ -147,11 +147,16 @@ if( $query_search['where'] == 'song' )
 		}
 
 		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+
+		// Check HIT
+		$checkhit = explode( "-", $row['hit'] );
+		$checkhit = $checkhit[0];
 		
 		$array_song[] = array(
 			"id" => $row['id'], //
 			"name" => $row['tenthat'], //
 			"singer" => $singername, //
+			"checkhit" => $checkhit, //
 			"upload" => $row['upboi'], //
 			"category" => $category[$row['theloai']]['title'], //
 			"view" => $row['numview'], //
@@ -256,10 +261,15 @@ elseif( $query_search['where'] == 'album' ) // Tim kiem album
 	while( $row = $db->sql_fetchrow( $result ) )
 	{
 		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+
+		// Check HIT
+		$checkhit = explode( "-", $row['hit'] );
+		$checkhit = $checkhit[0];
 		
 		$array_album[] = array(
 			"albumname" => $row['tname'], //
 			"albumsinger" => $singername, //
+			"checkhit" => $checkhit, //
 			"thumb" => $row['thumb'], //
 			"upboi" => $row['upboi'], //
 			"numview" => $row['numview'], //
@@ -384,10 +394,15 @@ elseif( $query_search['where'] == 'video' )
 	while( $row = $db->sql_fetchrow( $result ) )
 	{
 		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
+
+		// Check HIT
+		$checkhit = explode( "-", $row['hit'] );
+		$checkhit = $checkhit[0];
 		
 		$array_video[] = array(
 			"videoname" => $row['tname'], //
 			"videosinger" => $singername, //
+			"checkhit" => $checkhit, //
 			"thumb" => $row['thumb'], //
 			"view" => $row['view'], //
 			"dt" => $row['dt'], //
