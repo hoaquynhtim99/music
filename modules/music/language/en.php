@@ -231,6 +231,9 @@ $lang_module['video_search_by_name'] = "by song name";
 $lang_module['video_search_by_singer'] = "by artist";
 $lang_module['video_search_by_cat'] = "by category";
 
+$lang_module['view_expand'] = "Expand";
+$lang_module['view_collapse'] = "Collapse";
+
 $lang_module['song_edit1'] = "Song editing";
 $lang_module['song_edit'] = "Edit this song";
 $lang_module['song_listen'] = "Listen to this song";

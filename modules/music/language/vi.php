@@ -232,6 +232,9 @@ $lang_module['video_search_by_name'] = "theo tên";
 $lang_module['video_search_by_singer'] = "theo ca sĩ";
 $lang_module['video_search_by_cat'] = "theo thể loại";
 
+$lang_module['view_expand'] = "Xem đầy đủ";
+$lang_module['view_collapse'] = "Thu gọn";
+
 $lang_module['song_edit1'] = "Sửa bài hát";
 $lang_module['song_edit'] = "Sửa bài hát này";
 $lang_module['song_listen'] = "Nghe bài hát này";

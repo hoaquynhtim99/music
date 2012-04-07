@@ -140,4 +140,18 @@ $(document).ready(function(){
 			NVMS.search.allowclose = true;
 		}
 	});
+	
+	// An hien thong tin
+	$('.ms-shd').click(function(){
+		var v = $(this).attr('rel');
+		v = v.split('|');
+		
+		if( v[0] == '0' ){
+			$(this).removeClass('zoomin').addClass('zoomout').attr('rel', '1|' + v[1] + '|' + v[2] + '|' + v[3] ).attr('title',v[2]).text(v[2]);
+			$('#'+v[3]).removeClass('ms-shdetail').addClass('ms-shdetaile');
+		}else{
+			$(this).removeClass('zoomout').addClass('zoomin').attr('rel', '0|' + v[1] + '|' + v[2] + '|' + v[3] ).attr('title',v[1]).text(v[1]);
+			$('#'+v[3]).removeClass('ms-shdetaile').addClass('ms-shdetail');
+		}
+	});
 });

@@ -33,10 +33,17 @@
 	</div>
 </div>
 <!-- BEGIN: singer_info -->
-<div class="mg10">
-	<img class="fl musicsmalllalbum" src="{SDATA.thumb}" alt="{SDATA.tenthat}" width="100" height="100"/>
-	<h2 class="medium greencolor">{SDATA.tenthat}</h2>
-	{SDATA.introduction}
+<div class="mg10 ms-shwrap">
+	<div class="ms-shimg">
+		<img class="fl musicsmalllalbum" src="{SDATA.thumb}" alt="{SDATA.tenthat}" width="100" height="100"/>
+	</div>
+	<div class="ms-shdetail" id="singersdetail">
+		<h2 class="medium greencolor">{SDATA.tenthat}</h2>
+		{SDATA.introduction}
+	</div>
+	<div class="ms-shshow">
+		<a href="javascript:void(0);" rel="0|{LANG.view_expand}|{LANG.view_collapse}|singersdetail" class="musicicon zoomin greencolor ms-shd" title="{LANG.view_expand}">{LANG.view_expand}</a>
+	</div>
 	<div class="clear"></div>
 </div>
 <!-- END: singer_info -->

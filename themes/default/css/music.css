@@ -87,6 +87,8 @@ textarea.txt-full{width:98%!important}
 .mexit{background-image:url('../images/music/exit.png')}
 .mcancel{background-image:url('../images/music/cancel.png')}
 .madvance{background-image:url('../images/music/down-arr.png')}
+.zoomin{background-image:url('../images/music/zoom-in.png')}
+.zoomout{background-image:url('../images/music/zoom-out.png')}
 
 /* IMAGE EFFECT */
 .musicsmalllalbum{padding:2px;border:1px #DADADA solid;display:block;box-shadow: 0px 0px 2px 0px #dadada;border-radius: 2px;position:relative;margin-right:5px}
@@ -226,11 +228,17 @@ h2.gift{padding:0;margin:0;font-size:14px}
 	display:none
 }
 #mss-advtool{position:absolute;top:0;right:0;cursor:pointer}
-.ms-advcontent{padding:5px}
 
 /* COLUM */
 .col-33{float:left}
-.col-33{width:33%}
+.col-33{width:33%;overflow:hidden}
+
+/* SHOW HIDE DETAIL */
+.ms-shwrap{position:relative;min-height:110px}
+.ms-shdetail{padding-left:110px;line-height:16px;max-height:85px;overflow:hidden}
+.ms-shdetaile{padding-left:110px;line-height:16px}
+.ms-shimg{position:absolute;width:110px;height:110px;top:0;left:0}
+.ms-shshow{padding-left:110px}
 
 
 
