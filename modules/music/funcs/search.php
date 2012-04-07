@@ -57,6 +57,27 @@ $array_playlist = array();
 
 $DB_LikeKey = $db->dblikeescape( $query_search['key'] );
 
+// Hien thi thong tin ca si - Lay ra 10 ca si "Kha nghi nhat"
+$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat` LIKE '%" . $DB_LikeKey . "%' AND `thumb`!='' AND `introduction`!='' ORDER BY RAND() LIMIT 10";
+$list = nv_db_cache( $sql, 'id' );
+
+foreach( $list as $row )
+{
+	$check = nv_strtolower( change_alias( $row['tenthat'] ) );
+	if( $check == nv_strtolower( change_alias( $query_search['key'] ) ) )
+	{
+		$array_singer = $row;
+		break;
+	}
+}
+
+// Chuyen thanh tim ca si neu xac dinh dung ca si
+if( ! empty( $array_singer ) and $query_search['where'] == 'song' )
+{
+	$query_search['SearchBy'] = 'singer';
+	$query_search['id'] = $array_singer['id'];
+}
+
 if( $query_search['where'] == 'song' )
 {
 	$sql = "SELECT SQL_CALC_FOUND_ROWS a.*, b.ten AS singeralias, b.tenthat AS singername, c.ten AS authoralias, c.tenthat AS authorname FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id WHERE a.active=1";
@@ -173,8 +194,17 @@ if( $query_search['where'] == 'song' )
 	
 	if( $query_search['page'] <= 1 ) // Hien thi ket qua album va video
 	{
-		$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.tname LIKE '%" . $DB_LikeKey . "%' AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
-		$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.tname LIKE '%" . $DB_LikeKey . "%' AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
+		if( ! empty( $array_singer ) )
+		{
+			$sub_sql = " a.casi=" . $array_singer['id'];
+		}
+		else
+		{
+			$sub_sql = " a.tname LIKE '%" . $DB_LikeKey . "%'";
+		}
+	
+		$sqlvideo = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,3";
+		$sqlalbum = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE" . $sub_sql . " AND a.active=1 ORDER BY a.id DESC LIMIT 0,4";
 
 		$resultvideo = $db->sql_query( $sqlvideo );
 		$resultalbum = $db->sql_query( $sqlalbum );

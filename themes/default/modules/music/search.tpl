@@ -32,6 +32,14 @@
 		<div class="clear"></div>
 	</div>
 </div>
+<!-- BEGIN: singer_info -->
+<div class="mg10">
+	<img class="fl musicsmalllalbum" src="{SDATA.thumb}" alt="{SDATA.tenthat}" width="100" height="100"/>
+	<h2 class="medium greencolor">{SDATA.tenthat}</h2>
+	{SDATA.introduction}
+	<div class="clear"></div>
+</div>
+<!-- END: singer_info -->
 <div class="alboxw"><div class="alwrap alcontent information"><div>{LANG.search_find} {NUM_RESULT} {LANG.results}. {LANG.search_adv_info_use}.</div></div></div>
 <div class="clear"></div>
 <!-- BEGIN: typesong -->

@@ -595,6 +595,13 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 		$xtpl->parse( 'main.typesearch' );
 	}
 	
+	// Thong tin ca si
+	if( ! empty( $array_singer ) and $query_search['where'] == "song" )
+	{
+		$xtpl->assign( 'SDATA', $array_singer );
+		$xtpl->parse( 'main.singer_info' );
+	}
+	
 	// Hien thi ket qua bai hat
 	if( $query_search['where'] == 'song' )
 	{
