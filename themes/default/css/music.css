@@ -228,6 +228,7 @@ h2.gift{padding:0;margin:0;font-size:14px}
 	display:none
 }
 #mss-advtool{position:absolute;top:0;right:0;cursor:pointer}
+.ms-advcontent{padding:5px}
 
 /* COLUM */
 .col-33{float:left}
