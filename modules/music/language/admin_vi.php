@@ -210,6 +210,9 @@ $lang_module['set_floder_file'] = "Thư mục chứa file";
 $lang_module['set_playlist_max'] = "Số playlist tối đa của một thành viên";
 $lang_module['set_time_del_cache'] = "Thời gian xác lập lại bộ nhớ tạm của link nhạc";
 $lang_module['set_time_del_cache_info'] = " (phút). Nhập 0 nếu không xóa bộ nhớ tạm này";
+$lang_module['set_type_main'] = "Cách hiển thị album trên trang chủ";
+$lang_module['set_type_main_0'] = "HOT nhất - mới nhất";
+$lang_module['set_type_main_1'] = "Mới nhất HOT nhất";
 
 $lang_module['sub_category'] = "Quản lý thể loại bài hát";
 $lang_module['sub_album'] = "Quản lý album";

@@ -1064,15 +1064,24 @@ function nv_music_gift( $array, $generate_page )
 // Trang chu module
 function nv_music_main( $array, $array_album, $first_album_data )
 {
-	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request;
+	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request, $array_op;
 
 	$xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
 	$xtpl->assign( 'DATA', $array );
 	$xtpl->assign( 'URL_DOWN', $downURL );
-	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . $op . "&load_main_song=" );
+	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . ( empty( $array_op ) ? $op : implode( "/", $array_op ) ) . "&load_main_song=" );
 
+	if( empty( $setting['type_main'] ) )
+	{
+		$xtpl->parse( 'main.type_tab1' );
+	}
+	else
+	{
+		$xtpl->parse( 'main.type_tab2' );
+	}
+	
 	$i = 1;
 	$j = 0;
 	if( ! empty( $array_album ) )

@@ -210,6 +210,9 @@ $lang_module['set_floder_file'] = "File directory";
 $lang_module['set_playlist_max'] = "Maximum member's playlist";
 $lang_module['set_time_del_cache'] = "Time to reset the music link cache";
 $lang_module['set_time_del_cache_info'] = " (minute). Enter 0 if not delete this cache";
+$lang_module['set_type_main'] = "Show main album type";
+$lang_module['set_type_main_0'] = "Hotest - Newsest";
+$lang_module['set_type_main_1'] = "Newsest - Hotest";
 
 $lang_module['sub_category'] = "Category management";
 $lang_module['sub_album'] = "Album management";

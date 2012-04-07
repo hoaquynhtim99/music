@@ -351,7 +351,8 @@ $sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "
 (16, 'version', 0, '3.3.01'),
 (17, 'revision', 284, ''),
 (18, 'num_blocktab', 10, ''),
-(19, 'description', 0, 'The Professional Module Music For Nukeviet 3.x, Developed By Phan Tan Dung - phantandung92@gmail.com' )
+(19, 'description', 0, 'The Professional Module Music For Nukeviet 3.x, Developed By Phan Tan Dung - phantandung92@gmail.com' ),
+(20, 'type_main', 0, '')
 ";
 
 ?>

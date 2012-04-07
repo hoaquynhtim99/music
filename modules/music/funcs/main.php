@@ -30,8 +30,15 @@ $key_words = $module_info['keywords'];
 // Global data
 if( empty( $category ) ) $category = get_category();
 
-// Lay album HOT nhat
-$sql = "SELECT b.id, b.name, b.tname, b.casi, b.thumb, b.listsong, c.ten AS singeralias, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE b.active=1 ORDER BY a.stt ASC";
+// Lay album HOT nhat / Moi nhat tuy theo cau hinh
+if( empty( $setting['type_main'] ) )
+{
+	$sql = "SELECT b.id, b.name, b.tname, b.casi, b.thumb, b.listsong, c.ten AS singeralias, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE b.active=1 ORDER BY a.stt ASC";
+}
+else
+{
+	$sql = "SELECT a.id, a.name, a.tname, a.casi, a.thumb, a.listsong, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.addtime DESC LIMIT 0,9";
+}
 
 // Lay 9 album moi nhat khi load tab
 if( $nv_Request->isset_request( 'load_main_song', 'get' ) )
@@ -44,6 +51,10 @@ if( $nv_Request->isset_request( 'load_main_song', 'get' ) )
 	elseif( $type != 1 )
 	{
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	}
+	else
+	{
+		$sql = "SELECT b.id, b.name, b.tname, b.casi, b.thumb, b.listsong, c.ten AS singeralias, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.albumid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE b.active=1 ORDER BY a.stt ASC";
 	}
 }
 

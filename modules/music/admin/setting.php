@@ -33,6 +33,7 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	$data['del_cache_time_out'] = $nv_Request->get_int( 'del_cache_time_out', 'post', 0 );
 	$data['num_blocktab'] = $nv_Request->get_int( 'num_blocktab', 'post', 0 );
 	$data['description'] = filter_text_input( 'description', 'post', '', 1, 255 );
+	$data['type_main'] = $nv_Request->get_int( 'type_main', 'post', 0 );
 
 	$data['del_cache_time_out'] = $data['del_cache_time_out'] * 60;
 
@@ -224,6 +225,22 @@ $contents .= "
 		<td><strong>" . $lang_module['setting_description'] . "</strong></td>
 		<td>
 			<input style=\"width:350px\" maxlength=\"255\" name=\"description\" type=\"text\" value=\"" . $setting['description'] . "\" />
+		</td>
+	</tr>
+</tbody>
+<tbody class=\"second\">
+	<tr>
+		<td><strong>" . $lang_module['set_type_main'] . "</strong></td>
+		<td>
+			<select class=\"txt-half\" name=\"type_main\">";
+			
+for( $i = 0; $i <= 1; ++ $i )
+{	
+	$contents .= "<option value=\"" . $i . "\"" . ( $i == $setting['type_main'] ? " selected=\"selected\"" : "" ) . ">" . $lang_module['set_type_main_' . $i ] . "</option>";
+}
+			
+$contents .= "				
+			</select>
 		</td>
 	</tr>
 </tbody>

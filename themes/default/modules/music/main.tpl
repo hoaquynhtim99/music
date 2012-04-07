@@ -23,9 +23,16 @@ function nv_music_main_show_loader(show){
 <div class="alboxw">
 	<div class="alwrap">
 		<div id="music-main-tabs" class="alheader"> 
+			<!-- BEGIN: type_tab1 -->
 			<a id="music-main-tabs-1" onclick="nv_tool_music_main_tabalbum(1);" class="boldcolor" href="javascript:void(0);">{LANG.album_hotest}</a>
 			&nbsp;|&nbsp;
 			<a id="music-main-tabs-2" onclick="nv_tool_music_main_tabalbum(2);" href="javascript:void(0);">{LANG.album_newest}</a>
+			<!-- END: type_tab1 -->
+			<!-- BEGIN: type_tab2 -->
+			<a id="music-main-tabs-2" onclick="nv_tool_music_main_tabalbum(2);" class="boldcolor" href="javascript:void(0);">{LANG.album_newest}</a>
+			&nbsp;|&nbsp;
+			<a id="music-main-tabs-1" onclick="nv_tool_music_main_tabalbum(1);" href="javascript:void(0);">{LANG.album_hotest}</a>
+			<!-- END: type_tab2 -->
 		</div>
 		<div id="music-main-load">
 			<!-- BEGIN: data -->

@@ -36,6 +36,7 @@ $nv_update_config['lang']['vi']['nv_up_statistics'] = 'Thêm trường để th�
 $nv_update_config['lang']['vi']['nv_up_stasong'] = 'Thống kê số bài hát cho các chủ đề bài hát';
 $nv_update_config['lang']['vi']['nv_up_stavideo'] = 'Thống kê số video cho các chủ đề video';
 $nv_update_config['lang']['vi']['nv_up_albumhit'] = 'Thêm trường HIT vào album';
+$nv_update_config['lang']['vi']['nv_up_maintype'] = 'Cập nhật cách hiển thị các album trên trang chủ';
 $nv_update_config['lang']['vi']['nv_up_version'] = 'Cập nhật phiên bản';
 
 // English
@@ -47,6 +48,7 @@ $nv_update_config['lang']['en']['nv_up_statistics'] = 'Add to the statistics the
 $nv_update_config['lang']['en']['nv_up_stasong'] = 'Statistics of the theme song for song';
 $nv_update_config['lang']['en']['nv_up_stavideo'] = 'Statistics of video for video topics';
 $nv_update_config['lang']['en']['nv_up_albumhit'] = 'Add to the album HIT';
+$nv_update_config['lang']['en']['nv_up_maintype'] = 'Main view type';
 $nv_update_config['lang']['en']['nv_up_version'] = 'Updated version';
 
 // Require level: 0: Khong bat buoc hoan thanh; 1: Canh bao khi that bai; 2: Bat buoc hoan thanh neu khong se dung nang cap.
@@ -61,6 +63,7 @@ $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_
 $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_stasong', 'f' => 'nv_up_stasong' );
 $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_stavideo', 'f' => 'nv_up_stavideo' );
 $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_albumhit', 'f' => 'nv_up_albumhit' );
+$nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_maintype', 'f' => 'nv_up_maintype' );
 $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_version', 'f' => 'nv_up_version' );
 
 // Danh sach cac function
@@ -361,6 +364,28 @@ function nv_up_albumhit()
 			$db->sql_query( "ALTER TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'] . "_album` ADD `hit` varchar(50) NOT NULL DEFAULT '' AFTER `addtime`" );
 			
 			$db->sql_query( "UPDATE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'] . "_album` SET `hit`='0-" . NV_CURRENTTIME . "'" );
+		}
+	}
+	$db->sql_freeresult();
+	
+	return $return;
+}
+
+function nv_up_maintype()
+{
+	global $nv_update_baseurl, $db, $db_config, $old_module_version, $array_lang_music_update;
+	$return = array( 'status' => 1, 'complete' => 1, 'next' => 1, 'link' => 'NO', 'lang' => 'NO', 'message' => '', );
+
+	foreach( $array_lang_music_update as $lang => $array_mod )
+	{
+		foreach( $array_mod['mod'] as $module_info )
+		{
+			if( ! $db->sql_query( "REPLACE INTO `" . $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'] . "_setting` VALUES ( 20, 'type_main', '0', '' )" ) )
+			{
+				$return['status'] = 0;
+				$return['complete'] = 0;
+				return $return;
+			}
 		}
 	}
 	$db->sql_freeresult();
