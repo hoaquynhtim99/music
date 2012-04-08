@@ -57,6 +57,58 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		</table>
 	</div>
 </div>
+<!-- SINGER INFO -->
+<!-- BEGIN: singer_info -->
+<div class="mg10 alwrap alcontent">
+	<div class="ms-shwrap">
+		<div class="ms-shimg">
+			<img class="fl musicsmalllalbum" src="{SINGER_INFO.thumb}" alt="{SINGER_INFO.tenthat}" width="100" height="100"/>
+		</div>
+		<div class="ms-shdetail" id="singersdetail">
+			<h2 class="medium greencolor">{SINGER_INFO.tenthat}</h2>
+			{SINGER_INFO.introduction}
+		</div>
+		<div class="ms-shshow">
+			<a href="javascript:void(0);" rel="0|{LANG.view_expand}|{LANG.view_collapse}|singersdetail" class="musicicon zoomin greencolor ms-shd" title="{LANG.view_expand}">{LANG.view_expand}</a>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+<!-- END: singer_info -->
+<!-- OTHER ALBUM -->
+<!-- BEGIN: other_album -->
+<div class="mg10 alwrap alcontent">
+	<strong>{LANG.album} {DATA.singer}</strong>
+	<div class="hr"></div>
+	<!-- BEGIN: loop -->
+	<div class="col-25 mcenter">
+		<a href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}"><img src="{ROW.thumb}" alt="{ROW.name}" width="100" height="100" class="musicsmalllalbum"/></a><br />
+		<a class="singer" href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}">{ROW.name}</a><br />
+		<a href="{ROW.url_search_singer}" title="{LANG.search_width} {DATA.singer}" class="msmall">{DATA.singer}</a>
+	</div>
+	<!-- END: loop -->
+	<div class="clear"></div>
+	<div class="hr"></div>
+	<div class="alright"><a href="{SEARCH_ALL_ALBUM}" title="{LANG.view_all}" class="musicicon mforward">{LANG.view_all}</a></div>
+</div>
+<!-- END: other_album -->
+<!-- OTHER VIDEO -->
+<!-- BEGIN: other_video -->
+<div class="mg10 alwrap alcontent">
+	<strong>{LANG.video} {DATA.singer}</strong>
+	<div class="hr"></div>
+	<!-- BEGIN: loop -->
+	<div class="col-33 mcenter">
+		<a href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}"><img src="{ROW.thumb}" alt="{ROW.name}" width="128" height="72" class="musicsmalllalbum"/></a><br />
+		<a class="singer" href="{ROW.url_listen}" title="{LANG.listen_album} {ROW.name}">{ROW.name}</a><br />
+		<a href="{ROW.url_search_singer}" title="{LANG.search_width} {DATA.singer}" class="msmall">{DATA.singer}</a>
+	</div>
+	<!-- END: loop -->
+	<div class="clear"></div>
+	<div class="hr"></div>
+	<div class="alright"><a href="{SEARCH_ALL_VIDEO}" title="{LANG.view_all}" class="musicicon mforward">{LANG.view_all}</a></div>
+</div>
+<!-- END: other_video -->
 <!-- COMMENT -->
 <div class="alboxw mg10">
 	<div class="alwrap">

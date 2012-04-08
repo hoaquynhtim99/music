@@ -1048,7 +1048,7 @@ function nv_music_video( $category, $array_new, $array_hot )
 
 // Giao dien
 // Xem video
-function nv_music_viewvideo( $g_array, $array )
+function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $array_singer )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL;
 
@@ -1081,7 +1081,42 @@ function nv_music_viewvideo( $g_array, $array )
 		$xtpl->assign( 'SUBCAT', $cat );
 		$xtpl->parse( 'main.subcat' );
 	}
-
+	
+	// Thong tin ca si
+	if( ! empty( $array_singer ) )
+	{
+		$xtpl->assign( 'SINGER_INFO', $array_singer );
+		$xtpl->parse( 'main.singer_info' );
+	}
+	
+	// Album cung ca si
+	if( ! empty( $array_album ) )
+	{
+		$xtpl->assign( 'SEARCH_ALL_ALBUM', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $array['singer'] ) . "&amp;id=" . $array['singerid'] . "&amp;type=singer");
+		
+		foreach( $array_album as $row )
+		{
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.other_album.loop' );
+		}
+		
+		$xtpl->parse( 'main.other_album' );
+	}
+	
+	// Video cung ca si
+	if( ! empty( $array_video ) )
+	{
+		$xtpl->assign( 'SEARCH_ALL_VIDEO', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $array['singer'] ) . "&amp;id=" . $array['singerid'] . "&amp;type=singer");
+		
+		foreach( $array_video as $row )
+		{
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.other_video.loop' );
+		}
+		
+		$xtpl->parse( 'main.other_video' );
+	}
+	
 	// Binh luan
 	if( ( $setting['who_comment'] == 0 ) and ! defined( 'NV_IS_USER' ) and ! defined( 'NV_IS_ADMIN' ) )
 	{
