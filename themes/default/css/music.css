@@ -20,7 +20,6 @@ a.singer:hover{text-decoration:underline}
 .hr{border-bottom:1px #DADADA solid;margin-bottom:5px;padding-bottom:5px}
 .mg10{margin:10px 0px!important}
 blockquote{border-left:5px solid #bbb;font-style:italic;margin:10px 0 18px 4px;padding:0 10px}
-.mcenter{text-align:center!important}
 div.smalltext{font-size:11px;padding-left:3px}
 
 .infoerror{background-image:url('../images/music/wanning-bg.jpg')}
@@ -91,7 +90,7 @@ textarea.txt-full{width:98%!important}
 .zoomout{background-image:url('../images/music/zoom-out.png')}
 
 /* IMAGE EFFECT */
-.musicsmalllalbum{padding:2px;border:1px #DADADA solid;display:block;box-shadow: 0px 0px 2px 0px #dadada;border-radius: 2px;position:relative;margin-right:5px}
+.musicsmalllalbum{padding:2px;border:1px #DADADA solid;display:inline-block;box-shadow: 0px 0px 2px 0px #dadada;border-radius: 2px;position:relative;margin-right:5px}
 .musicsmalllalbum:hover{box-shadow: 0px 0px 3px 0px #333}
 
 /* SEARCH BLOCK  */
@@ -231,8 +230,9 @@ h2.gift{padding:0;margin:0;font-size:14px}
 .ms-advcontent{padding:5px}
 
 /* COLUM */
-.col-33{float:left}
+.col-33, .col-25{float:left}
 .col-33{width:33%;overflow:hidden}
+.col-25{width:25%;overflow:hidden}
 
 /* SHOW HIDE DETAIL */
 .ms-shwrap{position:relative;min-height:110px}

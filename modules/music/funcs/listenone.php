@@ -92,6 +92,7 @@ $sdata = array(
 	"song_name" => $row['tenthat'], //
 	"song_sname" => $row['ten'], //
 	"song_singer" => $singername, //
+	"song_singer_id" => $row['casi'], //
 	"song_author" => $row['authorname'] ? $row['authorname'] : $lang_module['unknow'], //
 	"song_cat" => $category[$row['theloai']]['title'], //
 	"song_listcat" => $listcat, //
@@ -121,16 +122,54 @@ while( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 	$ldata['data'][] = array( "user" => $rowlyric['user'], "content" => $rowlyric['body'] );
 }
 
-// Danh sach album
+$array_album = $array_video = $array_singer = array();
 
-// Danh sach video
+if( $row['casi'] != 0 )
+{
+	// Danh sach album
+	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $row['casi'] . " AND `active`=1 ORDER BY `addtime` DESC LIMIT 0,4";
+	$list = nv_db_cache( $sql, 'id' );
+	
+	foreach( $list as $r )
+	{
+		$array_album[] = array(
+			"name" => $r['tname'], //
+			"thumb" => $r['thumb'], //
+			"url_listen" => $mainURL . "=listenlist/" . $r['id'] . "/" . $r['name'], //
+			"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $singername ) . "&amp;id=" . $r['casi'] . "&amp;type=singer", //
+		);
+	}
+	
+	// Danh sach video
+	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $row['casi'] . " AND `active`=1 ORDER BY `dt` DESC LIMIT 0,3";
+	$list = nv_db_cache( $sql, 'id' );
+	
+	foreach( $list as $r )
+	{
+		$array_video[] = array(
+			"name" => $r['tname'], //
+			"thumb" => $r['thumb'], //
+			"url_listen" => $mainURL . "=viewvideo/" . $r['id'] . "/" . $r['name'], //
+			"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $singername ) . "&amp;id=" . $r['casi'] . "&amp;type=singer", //
+		);
+	}
+	
+	// Chi tiet ca si
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $row['casi'] . " AND `thumb`!='' AND `introduction`!='' ORDER BY RAND() LIMIT 10";
+	$list = nv_db_cache( $sql, 'id' );
+	
+	foreach( $list as $r )
+	{
+		$array_singer = $r;
+	}
+}
 
 // Page title
 $page_title = $row['tenthat'] . " - " . $sdata['song_singer'];
 $key_words = $row['tenthat'] . " - " . $sdata['song_singer'];
 $description = ! isset( $ldata['data'][0]['content']{50} ) ? sprintf( $lang_module['share_descreption'], $row['tenthat'], $sdata['song_singer'], $sdata['song_author'], NV_MY_DOMAIN ) : $ldata['data'][0]['content'];
 
-$contents = nv_music_listenone( $gdata, $sdata, $cdata, $ldata );
+$contents = nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $array_video, $array_singer );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

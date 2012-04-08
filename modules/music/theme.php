@@ -21,9 +21,9 @@ else
 
 // Giao dien
 // Nghe mot bai hat
-function nv_music_listenone( $gdata, $sdata, $cdata, $ldata )
+function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $array_video, $array_singer )
 {
-	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $my_head, $main_header_URL;
+	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $my_head, $main_header_URL, $mainURL;
 
 	// My Head
 	$my_head .= '
@@ -123,6 +123,41 @@ function nv_music_listenone( $gdata, $sdata, $cdata, $ldata )
 		$xtpl->parse( 'main.accesslyric' );
 	}
 
+	// Thong tin ca si
+	if( ! empty( $array_singer ) )
+	{
+		$xtpl->assign( 'SINGER_INFO', $array_singer );
+		$xtpl->parse( 'main.singer_info' );
+	}
+	
+	// Album cung ca si
+	if( ! empty( $array_album ) )
+	{
+		$xtpl->assign( 'SEARCH_ALL_ALBUM', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $sdata['song_singer'] ) . "&amp;id=" . $sdata['song_singer_id'] . "&amp;type=singer");
+		
+		foreach( $array_album as $row )
+		{
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.other_album.loop' );
+		}
+		
+		$xtpl->parse( 'main.other_album' );
+	}
+	
+	// Video cung ca si
+	if( ! empty( $array_video ) )
+	{
+		$xtpl->assign( 'SEARCH_ALL_VIDEO', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $sdata['song_singer'] ) . "&amp;id=" . $sdata['song_singer_id'] . "&amp;type=singer");
+		
+		foreach( $array_video as $row )
+		{
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.other_video.loop' );
+		}
+		
+		$xtpl->parse( 'main.other_video' );
+	}
+	
 	// Comment
 	if( ( $setting['who_comment'] == 0 ) && ! defined( 'NV_IS_USER' ) && ! defined( 'NV_IS_ADMIN' ) )
 	{
