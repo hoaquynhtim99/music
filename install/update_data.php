@@ -16,11 +16,11 @@ $nv_update_config['packageID'] = 'NVUDMUSIC3401'; // ID goi cap nhat
 $nv_update_config['formodule'] = "music"; // Cap nhat cho module nao, de trong neu la cap nhat NukeViet, ten thu muc module neu la cap nhat module
 
 // Thong tin phien ban, tac gia, ho tro
-$nv_update_config['release_date'] = 1333315364;
+$nv_update_config['release_date'] = 1333929600;
 $nv_update_config['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $nv_update_config['support_website'] = "http://nukeviet.vn/phpbb/viewforum.php?f=118";
 $nv_update_config['to_version'] = "3.4.01";
-$nv_update_config['allow_old_version'] = array( "3.0.01", "3.1.00", "3.2.00", "3.3.00" );
+$nv_update_config['allow_old_version'] = array( "3.0.01", "3.1.00", "3.2.00", "3.3.00", "3.3.01" );
 $nv_update_config['update_auto_type'] = 1; // 0:Nang cap bang tay, 1:Nang cap tu dong, 2:Nang cap nua tu dong
 
 $nv_update_config['lang'] = array();
@@ -404,13 +404,13 @@ function nv_up_version()
 		foreach( $array_mod['mod'] as $module_info )
 		{
 			$table = $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'] . "_setting";
-			$db->sql_query( "UPDATE `" . $table . "` SET `value`=300 WHERE `key`='revision'" );				
+			$db->sql_query( "UPDATE `" . $table . "` SET `value`=331 WHERE `key`='revision'" );				
 			$db->sql_query( "UPDATE `" . $table . "` SET `char`='3.4.01' WHERE `key`='version'" );				
 		}
 	}
 	
-	$mod_version = "3.4.01 1333315364";
-	$db->sql_query( "UPDATE `" . $db_config['prefix'] . "_setup_modules` SET `mod_version`='" . $mod_version . "' WHERE `module_file`='music'" );
+	$mod_version = "3.4.01 1333929600";
+	$db->sql_query( "UPDATE `" . $db_config['prefix'] . "_setup_modules` SET `mod_version`='" . $mod_version . "', `author`='PHAN TAN DUNG (phantandung92@gmail.com)' WHERE `module_file`='music'" );
 	
 	nv_delete_all_cache();
 	
