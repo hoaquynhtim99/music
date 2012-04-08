@@ -121,6 +121,10 @@ while( $rowlyric = $db->sql_fetchrow( $querylyric ) )
 	$ldata['data'][] = array( "user" => $rowlyric['user'], "content" => $rowlyric['body'] );
 }
 
+// Danh sach album
+
+// Danh sach video
+
 // Page title
 $page_title = $row['tenthat'] . " - " . $sdata['song_singer'];
 $key_words = $row['tenthat'] . " - " . $sdata['song_singer'];

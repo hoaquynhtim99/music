@@ -139,6 +139,7 @@ $lang_module['playlist_add_ok'] = "Your playlist has been saved and it will be d
 $lang_module['playlist_add_waiting'] = "Your playlist is currently being moderated and it will be displayed when done";
 $lang_module['playlist_next'] = "The older";
 $lang_module['playlist_prev'] = "The later";
+$lang_module['playlist'] = "Playlist";
 
 $lang_module['prev'] = "The previous page";
 

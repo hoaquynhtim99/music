@@ -140,6 +140,7 @@ $lang_module['playlist_add_ok'] = "Playlist của bạn đã được lưu và s
 $lang_module['playlist_add_waiting'] = "Playlist của bạn đang được kiểm duyệt và sẽ hiển thị sau khi được kiểm duyệt";
 $lang_module['playlist_next'] = "Bản cũ hơn";
 $lang_module['playlist_prev'] = "Bản mới hơn";
+$lang_module['playlist'] = "Playlist";
 
 $lang_module['prev'] = "Trang trước";
 

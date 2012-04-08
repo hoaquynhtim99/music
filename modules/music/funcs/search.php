@@ -446,6 +446,34 @@ $ts = ceil( $all_page / 20 );
 
 $contents = nv_music_search( $array_song, $array_album, $array_video, $array_singer, $array_playlist, $query_search, $all_page, $ts, $base_url );
 
+// Hien thi ca si truoc
+if( ! empty( $array_singer ) )
+{
+	$page_title = $array_singer['tenthat'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['singer'] . " " . $array_singer['tenthat'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
+	
+	$description = $array_singer['introduction'];
+}
+elseif( $query_search['where'] == "song" )
+{
+	$page_title = $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['song1'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['album'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['playlist'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['video'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
+}
+elseif( $query_search['where'] == "album" )
+{
+	$page_title = $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['album'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
+}
+elseif( $query_search['where'] == "video" )
+{
+	$page_title = $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['video'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
+}
+elseif( $query_search['where'] == "playlist" )
+{
+	$page_title = $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $lang_module['playlist'] . " " . $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
+}
+else
+{
+	$page_title = $query_search['key'] . " " . NV_TITLEBAR_DEFIS . " " . $page_title;
+}
+
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );
 include ( NV_ROOTDIR . "/includes/footer.php" );
