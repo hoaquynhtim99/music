@@ -15,7 +15,7 @@ function nv_check_ok_song( $array )
 
 	if( empty( $array['ten'] ) ) return $lang_module['song_error_ten'];
 	if( empty( $array['tenthat'] ) ) return $lang_module['song_error_tenthat'];
-	if( empty( $array['theloai'] ) ) return $lang_module['song_error_theloai'];
+	// if( empty( $array['theloai'] ) ) return $lang_module['song_error_theloai'];
 	if( empty( $array['duongdan'] ) ) return $lang_module['song_error_duongdan'];
 
 	return "";

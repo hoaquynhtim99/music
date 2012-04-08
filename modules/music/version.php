@@ -16,7 +16,7 @@ $module_version = array( //
 	"virtual" => 1, //
 	"version" => "3.3.01", //
 	"date" => "Wed, 26 Jan 2011 12:47:15 GMT", //
-	"author" => "PHAN TAN DUNG (phantandung1912@gmail.com)", //
+	"author" => "PHAN TAN DUNG (phantandung92@gmail.com)", //
 	"note" => "", //
 	"uploads_dir" => array(
 		$module_name, //
