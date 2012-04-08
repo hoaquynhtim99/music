@@ -20,7 +20,7 @@ $list = nv_db_cache( $sql, 'cid', $module_name );
 foreach( $list as $row )
 {
 	$xtpl->assign( 'name', $row['title'] );
-	$xtpl->assign( 'url', $mainURL . "=search/category/" . $row['cid'] );
+	$xtpl->assign( 'url', $mainURL . "=search&amp;where=song&amp;q=" . urlencode( $row['title'] ) . "&amp;id=" . $row['cid'] . "&amp;type=category" );
 	$xtpl->parse( 'main.loop' );
 }
 

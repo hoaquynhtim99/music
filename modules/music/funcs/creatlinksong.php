@@ -124,6 +124,8 @@ else
 
 header( "Content-Type:text/xml" );
 
+$logo_img = $where == "video" ? $global_config['site_url'] . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/share-logo-video.jpg' : $global_config['site_url'] . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/share-logo-song.jpg';
+
 echo '<?xml version="1.0" encoding="utf-8"?>';
 echo "\n";
 echo '<playlist version="1" xmlns:jwplayer="http://developer.longtailvideo.com/">';
@@ -140,7 +142,7 @@ foreach( $globaldata as $song )
 		<creator>' . $song['casi'] . '</creator>
 		<location>' . $song['duongdan'] . '</location>
 		<info>' . $global_config['site_url'] . '</info>
-		<image>' . $global_config['site_url'] . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/logo.png</image>
+		<image>' . $logo_img . '</image>
 	</track>';
 }
 echo "\n";

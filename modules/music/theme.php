@@ -187,7 +187,7 @@ function nv_music_listen_playlist( $gdata, $sdata )
 	<link rel="image_src" href="' . NV_MY_DOMAIN . NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/randimg/img(' . rand( 1, 10 ) . ').jpg" />
 	<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_file . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/playlist/" . $gdata['id'] . "/" . $gdata['playlist_alias'], true ) . '" />
 	<meta name="video_width" content="360" />
-	<meta name="video_height" content="130" />
+	<meta name="video_height" content="84" />
 	<meta name="video_type" content="application/x-shockwave-flash" />
 	';
 
@@ -415,7 +415,7 @@ function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album,
 	<link rel="image_src" href="' . NV_MY_DOMAIN . $album_array['album_thumb'] . '" />
 	<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_file . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/album/" . $g_array['id'] . "/" . $g_array['sname'], true ) . '" />
 	<meta name="video_width" content="360" />
-	<meta name="video_height" content="100" />
+	<meta name="video_height" content="84" />
 	<meta name="video_type" content="application/x-shockwave-flash" />
 	';
 
@@ -1057,7 +1057,7 @@ function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $arra
 	<link rel="image_src" href="' . NV_MY_DOMAIN . $array['thumb'] . '" />
 	<link rel="video_src" href="' . $global_config['site_url'] . '/modules/' . $module_file . '/data/player.swf?playlistfile=' . NV_MY_DOMAIN . nv_url_rewrite( $main_header_URL . "=creatlinksong/video/" . $array['ID'] . "/" . $array['sname'], true ) . '" />
 	<meta name="video_width" content="360" />
-	<meta name="video_height" content="250" />
+	<meta name="video_height" content="227" />
 	<meta name="video_type" content="application/x-shockwave-flash" />
 	';
 
