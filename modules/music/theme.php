@@ -407,7 +407,7 @@ function nv_music_editplaylist( $g_array, $array, $row )
 
 // Giao dien
 // Nghe album
-function nv_music_listenlist( $g_array, $album_array, $song_array )
+function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $mainURL, $my_head, $main_header_URL, $downURL;
 	// My Head
@@ -448,6 +448,41 @@ function nv_music_listenlist( $g_array, $album_array, $song_array )
 		$xtpl->assign( 'SONG', $song );
 		$xtpl->parse( 'main.song' );
 		$i++;
+	}
+
+	// Thong tin ca si
+	if( ! empty( $array_singer ) )
+	{
+		$xtpl->assign( 'SINGER_INFO', $array_singer );
+		$xtpl->parse( 'main.singer_info' );
+	}
+	
+	// Album cung ca si
+	if( ! empty( $array_album ) )
+	{
+		$xtpl->assign( 'SEARCH_ALL_ALBUM', $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $album_array['singer'] ) . "&amp;id=" . $album_array['singerid'] . "&amp;type=singer");
+		
+		foreach( $array_album as $row )
+		{
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.other_album.loop' );
+		}
+		
+		$xtpl->parse( 'main.other_album' );
+	}
+	
+	// Video cung ca si
+	if( ! empty( $array_video ) )
+	{
+		$xtpl->assign( 'SEARCH_ALL_VIDEO', $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $album_array['singer'] ) . "&amp;id=" . $album_array['singerid'] . "&amp;type=singer");
+		
+		foreach( $array_video as $row )
+		{
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.other_video.loop' );
+		}
+		
+		$xtpl->parse( 'main.other_video' );
 	}
 
 	// Binh luan

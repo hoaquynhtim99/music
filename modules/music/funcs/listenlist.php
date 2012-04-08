@@ -49,6 +49,7 @@ $album_array = array(
 	"name" => $row['tname'], //
 	"url_search_upload" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $row['upboi'] ) . "&amp;type=upload", //
 	"singer" => $row['singername'], //
+	"singerid" => $row['casi'], //
 	"numview" => $row['numview'], //
 	"who_post" => $row['upboi'], //
 	"album_thumb" => $row['thumb'], //
@@ -92,15 +93,54 @@ foreach( explode( ",", $row['listsong'] ) as $row )
 	}
 }
 
+$array_album = $array_video = $array_singer = array();
+
+if( $album_array['singerid'] != 0 )
+{
+	// Danh sach album
+	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $album_array['singerid'] . " AND `active`=1 ORDER BY `addtime` DESC LIMIT 0,4";
+	$list = nv_db_cache( $sql, 'id' );
+	
+	foreach( $list as $r )
+	{
+		$array_album[] = array(
+			"name" => $r['tname'], //
+			"thumb" => $r['thumb'], //
+			"url_listen" => $mainURL . "=listenlist/" . $r['id'] . "/" . $r['name'], //
+			"url_search_singer" => $mainURL . "=search&amp;where=album&amp;q=" . urlencode( $album_array['singer'] ) . "&amp;id=" . $r['casi'] . "&amp;type=singer", //
+		);
+	}
+	
+	// Danh sach video
+	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $album_array['singerid'] . " AND `active`=1 ORDER BY `dt` DESC LIMIT 0,3";
+	$list = nv_db_cache( $sql, 'id' );
+	
+	foreach( $list as $r )
+	{
+		$array_video[] = array(
+			"name" => $r['tname'], //
+			"thumb" => $r['thumb'], //
+			"url_listen" => $mainURL . "=viewvideo/" . $r['id'] . "/" . $r['name'], //
+			"url_search_singer" => $mainURL . "=search&amp;where=video&amp;q=" . urlencode( $album_array['singer'] ) . "&amp;id=" . $r['casi'] . "&amp;type=singer", //
+		);
+	}
+	
+	// Chi tiet ca si
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $album_array['singerid'] . " AND `thumb`!='' AND `introduction`!=''";
+	$list = nv_db_cache( $sql, 'id' );
+	
+	foreach( $list as $r )
+	{
+		$array_singer = $r;
+	}
+}
+
 // Tieu de trang
 $page_title = $lang_module['album'] . " " . $album_array['name'] . NV_TITLEBAR_DEFIS . $album_array['singer'];
 $key_words = $album_array['name'] . " - " . $album_array['singer'];
-$description = isset( $album_array['describe']
-{
-	50}
-) ? $album_array['describe'] : sprintf( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
+$description = isset( $album_array['describe']{50} ) ? $album_array['describe'] : sprintf( $lang_module['share_descreption_album'], $album_array['name'], $album_array['singer'], NV_MY_DOMAIN );
 
-$contents = nv_music_listenlist( $g_array, $album_array, $song_array );
+$contents = nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_site_theme( $contents );

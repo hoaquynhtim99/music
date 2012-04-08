@@ -155,7 +155,7 @@ if( $row['casi'] != 0 )
 	}
 	
 	// Chi tiet ca si
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $row['casi'] . " AND `thumb`!='' AND `introduction`!='' ORDER BY RAND() LIMIT 10";
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $row['casi'] . " AND `thumb`!='' AND `introduction`!=''";
 	$list = nv_db_cache( $sql, 'id' );
 	
 	foreach( $list as $r )
