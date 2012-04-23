@@ -453,7 +453,7 @@ function outputURL( $server, $inputurl )
 					{
 						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
-							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
 					}
 
@@ -499,7 +499,7 @@ function outputURL( $server, $inputurl )
 					{
 						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
-							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
 					}
 
@@ -546,7 +546,7 @@ function outputURL( $server, $inputurl )
 					{
 						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
-							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
 					}
 
@@ -606,7 +606,7 @@ function outputURL( $server, $inputurl )
 					{
 						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
 						{
-							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file, true );
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
 					}
 
