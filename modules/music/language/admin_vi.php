@@ -370,4 +370,15 @@ $lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
 
 $lang_module['info_check_curl'] = "Hệ thống của bạn không hỗ trợ thư viện CURL do đó sẽ không sử dụng được chức năng lấy nhạc từ các website khác";
 
+$lang_module['ex_do'] = "Thực hiện";
+$lang_module['ex_delete_cat'] = "Tiện ích xóa chủ đề bài hát";
+$lang_module['ex_delete_cat_explain'] = "Xóa chủ đề và chuyển các bài hát của chủ đề đó sang chủ đề khác";
+$lang_module['ex_delete_cat_select_cat1'] = "Chọn chủ đề cần xóa";
+$lang_module['ex_delete_cat_select_cat2'] = "Chọn chủ đề cần chuyển đến";
+$lang_module['ex_delete_cat_error_same'] = "Hai chủ đề đã chọn giống nhau, vui lòng chọn hai chủ đề khác nhau";
+$lang_module['ex_delete_cat_error_cat1'] = "Bạn chưa chọn chủ đề cần xóa";
+$lang_module['ex_delete_cat_error_cat2'] = "Bạn chưa chọn chủ đề cần chuyển đến";
+$lang_module['ex_delete_cat_error_exists'] = "Lỗi: Chủ đề không tồn tại";
+$lang_module['ex_delete_cat_ok'] = "Thực hiện hoàn tất";
+
 ?>

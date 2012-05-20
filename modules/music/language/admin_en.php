@@ -370,4 +370,15 @@ $lang_module['filter_order_by'] = "Order by %s position";
 
 $lang_module['info_check_curl'] = "CURL extension is currently disabled on your system so you can't get link from an other website";
 
+$lang_module['ex_do'] = "Action";
+$lang_module['ex_delete_cat'] = "Add-on delete song cat";
+$lang_module['ex_delete_cat_explain'] = "Delete song cat and move the song to the other song cat";
+$lang_module['ex_delete_cat_select_cat1'] = "Select cat should be deleted";
+$lang_module['ex_delete_cat_select_cat2'] = "Select cat to move to";
+$lang_module['ex_delete_cat_error_same'] = "The two chose the same cat, please select two different cat";
+$lang_module['ex_delete_cat_error_cat1'] = "You had select no cat to be deleted";
+$lang_module['ex_delete_cat_error_cat2'] = "You had select no cat to be move to";
+$lang_module['ex_delete_cat_error_exists'] = "Error: Cat does not exist";
+$lang_module['ex_delete_cat_ok'] = "Perform complete";
+
 ?>

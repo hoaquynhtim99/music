@@ -52,12 +52,19 @@ $array[] = array(
 	"guide" => $lang_module['guide_ftpsetting'] //
 		);
 
+// Tien ich xoa chu de
+$array[] = array(
+	"title" => $lang_module['ex_delete_cat'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=deletecatsong", //
+	"guide" => $lang_module['ex_delete_cat_explain'] //
+);
+
 // Cau hinh chinh cua module
 $array[] = array(
 	"title" => $lang_module['music_setting'], //
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting", //
 	"guide" => $lang_module['guide_setting'] //
-		);
+);
 
 $i = 1;
 foreach( $array as $row )
