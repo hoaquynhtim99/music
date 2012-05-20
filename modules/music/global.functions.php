@@ -447,7 +447,7 @@ function outputURL( $server, $inputurl )
 			{
 				if( $data['host'] == "nhaccuatui" )
 				{
-					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_link_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
@@ -493,7 +493,7 @@ function outputURL( $server, $inputurl )
 				}
 				elseif( $data['host'] == "zing" )
 				{
-					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_link_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
@@ -540,7 +540,7 @@ function outputURL( $server, $inputurl )
 				}
 				elseif( $data['host'] == "nhacvui" )
 				{
-					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_link_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
@@ -600,7 +600,7 @@ function outputURL( $server, $inputurl )
 				}
 				elseif( $data['host'] == "nhacso" )
 				{
-					$cache_file = NV_LANG_DATA . "_" . $module_name . "_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_link_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
