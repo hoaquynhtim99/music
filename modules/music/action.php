@@ -71,7 +71,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `upboi` varchar(255) NOT NULL DEFAULT '',
   `describe` mediumtext NOT NULL,
   `active` smallint(2) NOT NULL DEFAULT '0',
-  `numsong` int(255) NOT NULL DEFAULT '0',
+  `numsong` int(11) NOT NULL DEFAULT '0',
   `listsong` mediumtext NOT NULL,
   `addtime` int(11) unsigned NOT NULL DEFAULT '0',
   `hit` varchar(50) NOT NULL DEFAULT '',
@@ -203,10 +203,10 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `name` varchar(255) NOT NULL DEFAULT '',
   `keyname` varchar(255) NOT NULL DEFAULT '',
   `singer` varchar(255) NOT NULL DEFAULT 'ns',
-  `message` text NOT NULL,
-  `songdata` varchar(255) NOT NULL DEFAULT '',
+  `message` mediumtext NOT NULL,
+  `songdata` mediumtext NOT NULL,
   `time` int(11) unsigned NOT NULL DEFAULT '0',
-  `view` bigint(20) unsigned NOT NULL DEFAULT '0',
+  `view` int(11) unsigned NOT NULL DEFAULT '0',
   `active` smallint(2) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
@@ -234,7 +234,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 //17 the loai video
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL DEFAULT '',
+  `title` varchar(255) NOT NULL DEFAULT '',
   `keywords` mediumtext NOT NULL,
   `description` varchar(255) NOT NULL DEFAULT '',
   `numvideo` int(11) unsigned NOT NULL DEFAULT '0',
@@ -280,8 +280,8 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 //21 nhac si
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `ten` varchar(100) NOT NULL DEFAULT '',
-  `tenthat` varchar(100) NOT NULL DEFAULT '',
+  `ten` varchar(255) NOT NULL DEFAULT '',
+  `tenthat` varchar(255) NOT NULL DEFAULT '',
   `thumb` varchar(255) NOT NULL DEFAULT '',
   `introduction` text NOT NULL ,
   `numsong` mediumint(8) unsigned NOT NULL DEFAULT '0',
