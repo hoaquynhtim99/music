@@ -356,7 +356,7 @@ function getFTP()
 {
 	global $module_data, $db, $lang_module;
 	$ftpdata = array();
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id ASC";
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id DESC";
 	$result = nv_db_cache( $sql, 'id' );
 
 	if( ! empty( $result ) )
@@ -642,6 +642,41 @@ function outputURL( $server, $inputurl )
 						{
 							$output = "";
 						}
+
+						$cache = serialize( $output );
+						nv_set_cache( $cache_file, $cache );
+					}
+				}
+				elseif( $data['host'] == "zingclip" )
+				{
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_link_zingclip_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+
+					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+					{
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						{
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
+						}
+					}
+
+					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					{
+						$output = unserialize( $cache );
+					}
+					else
+					{
+						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+						$output = nv_get_URL_content( $output );
+
+						unset( $m );
+						if( ! preg_match( "/\<input type\=\"hidden\" id\=\"\_strAuto\" value\=\"([^\"]+)\"[^\/]+\/\>/is", $output, $m ) )
+						{
+							return "";
+						}
+						
+						$output = nv_get_URL_content( $m[1] );
+						if( ( $xml = simplexml_load_string( $output ) ) == false ) return "";
+						$output = ( string )$xml->item->source;
 
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
