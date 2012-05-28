@@ -39,7 +39,7 @@ if( $id > 0 )
 
 	if( $nv_Request->get_int( 'send', 'post', 0 ) == 1 )
 	{
-		$link = "" . $global_config['site_url'] . "" . $mainURL . "=viewvideo/" . $id . "/" . $video['ten'];
+		$link = NV_MY_DOMAIN . nv_url_rewrite( $mainURL . "=viewvideo/" . $id . "/" . $video['ten'], true );
 		$link = "<a href=\"$link\">$link</a>\n";
 		$nv_seccode = filter_text_input( 'nv_seccode', 'post', '' );
 		$to_mail = filter_text_input( 'email', 'post', '' );
@@ -111,5 +111,3 @@ Header( "Location: " . $global_config['site_url'] );
 exit();
 
 ?>
-
-
