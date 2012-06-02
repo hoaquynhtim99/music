@@ -7,6 +7,16 @@
 
 // Packpage in jquery 1.3 + only
 
+// Replace broken images
+$(window).load(function() { 
+	$("img").each(function(){
+		var image = $(this);
+		if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){
+			$(image).unbind("error").attr("src", nv_siteroot + "images/logo.png");
+		}
+	});
+});
+
 var NVMS = {};
 
 function Select_all(id){ document.getElementById(id).focus(); document.getElementById(id).select(); }
