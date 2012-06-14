@@ -15,7 +15,6 @@ $description = $setting['description'];
 $key_words = $module_info['keywords'];
 
 $page = $page = isset( $array_op[1] ) ? intval( end( explode( "-", $array_op[1] ) ) ) : 1;
-;
 $per_page = 10;
 $base_url = $mainURL . "=" . $op;
 
