@@ -14,7 +14,7 @@ $page_title = $mod_title = $lang_module['gift_list'];
 $description = $setting['description'];
 $key_words = $module_info['keywords'];
 
-$page = $page = isset( $array_op[1] ) ? intval( end( explode( "-", $array_op[1] ) ) ) : 1;
+$page = isset( $array_op[1] ) ? intval( end( explode( "-", $array_op[1] ) ) ) : 1;
 $per_page = 10;
 $base_url = $mainURL . "=" . $op;
 
@@ -24,16 +24,7 @@ $result = $db->sql_query( $sql );
 $query = $db->sql_query( "SELECT FOUND_ROWS()" );
 list( $all_page ) = $db->sql_fetchrow( $query );
 
-if( ! $all_page or $page >= $all_page )
-{
-	if( $nv_Request->isset_request( 'page', 'get' ) )
-	{
-		Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
-		exit();
-	}
-}
-
-if( ( ( $page - 1 ) * $per_page ) > $all_page )
+if( ( ( $page - 1 ) * $per_page ) > $all_page and $page > 1 )
 {
 	Header( "Location: " . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) );
 	exit();
