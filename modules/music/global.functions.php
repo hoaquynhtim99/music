@@ -558,41 +558,19 @@ function outputURL( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-
-						$output = explode( '[FLASH]', $output );
-
-						if( isset( $output[1] ) )
+						
+						unset( $m );
+						$pattern = "/\[FLASH\]http\:\/\/nhac\.vui\.vn\/images\/player\.swf\?playlistfile\=(.*?)\[\/FLASH\]/i";
+						if( ! empty( $output ) and preg_match( $pattern, $output, $m ) )
 						{
-							$output = explode( 'playlistfile=', $output[1] );
-
-							if( isset( $output[1] ) )
+							$output = nv_get_URL_content( rawurldecode( trim( $m[1] ) ) );
+							unset( $m );
+							$pattern = "/\<jwplayer\:file\>\<\!\[CDATA\[(.*?)\]\]\>\<\/jwplayer\:file\>/i";
+							if( ! empty( $output ) and preg_match( $pattern, $output, $m ) )
 							{
-								$output = explode( '[/FLASH]"', $output[1] );
-								$output = rawurldecode( $output[0] );
-								$output = str_replace( "nhac.vui.vn", "hcm.nhac.vui.vn", $output );
-								$output = nv_get_URL_content( $output );
-
-								$output = explode( "<location><![CDATA[", $output );
-
-								if( isset( $output[1] ) )
-								{
-									$output = explode( "]]></location>", $output[1] );
-									$output = $output[0];
-								}
-								else
-								{
-									$output = "";
-								}
-							}
-							else
-							{
-								$output = "";
-							}
-						}
-						else
-						{
-							$output = "";
-						}
+								$output = trim( $m[1] );
+							}else $output = "";
+						}else $output = "";
 
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
@@ -671,12 +649,14 @@ function outputURL( $server, $inputurl )
 						unset( $m );
 						if( ! preg_match( "/\<input type\=\"hidden\" id\=\"\_strAuto\" value\=\"([^\"]+)\"[^\/]+\/\>/is", $output, $m ) )
 						{
-							return "";
+							$output = "";
 						}
-						
-						$output = nv_get_URL_content( $m[1] );
-						if( ( $xml = simplexml_load_string( $output ) ) == false ) return "";
-						$output = ( string )$xml->item->source;
+						else
+						{
+							$output = nv_get_URL_content( $m[1] );
+							if( ( $xml = simplexml_load_string( $output ) ) == false ) return "";
+							$output = ( string )$xml->item->source;
+						}
 
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );

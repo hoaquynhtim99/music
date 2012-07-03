@@ -15,6 +15,7 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
 $page_title = $lang_module['nhacvui_get'];
 
 $all_singer = getallsinger( true );
+$all_author = getallauthor( true );
 $all_cat = get_category();
 
 if( $nv_Request->isset_request( 'submit', 'post' ) )
@@ -34,34 +35,31 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 		$singer = "ns";
 		$author = "na";
 
-		$_title = explode( '<span class="orgranText12">', $data );
-		if( isset( $_title[1] ) )
+		// Ten bai hat
+		unset( $m );
+		if( preg_match( "/\<div class\=\"nghenhac-baihat\"\>\<h2\>(.*?)\<\/h2\>\<\/div\>/i", $data, $m ) )
 		{
-			$_title = explode( '</span>', $_title[1] );
-			$title = trim( $_title[0] );
+			$title = trim( strip_tags( $m[0] ) );
 		}
+		
+		// Ca di
+		unset( $m );
+		$pattern = "/<div class\=\"nghenhac\-info\"\>Ca sĩ\: \<a href\=\"([^\"]+)\" title\=\"([^\"]+)\"\>(.*?)\<\/a\> \| Nhạc sĩ\: \<span\>(.*?)\<\/span\> \| Thể loại/i";
+		if( preg_match( $pattern, $data, $m ) )
+		{
+			$singer = trim( $m[3] );
+			$singer = strip_tags( $singer );
+			$singer = empty( $singer ) ? "ns" : str_replace( array( "-", "/", "  " ), array( "ft.", "ft.", " " ), $singer );
+			
+			$author = trim( $m[4] );
+			$author = strip_tags( $author );
+		}
+		
+		unset( $data );
 
 		if( ! empty( $title ) )
 		{
-			$_title = explode( '<h3 class="nghenhac-baihat">Ca sĩ: ', $data );
-			if( isset( $_title[1] ) )
-			{
-				$_title = explode( '|', $_title[1] );
-				$_title = trim( $_title[0] );
-				$_title = strip_tags( $_title );
-				$singer = empty( $_title ) ? "ns" : str_replace( array(
-					"-",
-					"/",
-					"  " ), array(
-					"ft.",
-					"ft.",
-					" " ), $_title );
-			}
-		}
-		unset( $data, $_title );
-
-		if( ! empty( $title ) )
-		{
+			// Them ca si
 			if( empty( $singer ) )
 			{
 				$array_data['casi'] = 0;
@@ -74,6 +72,21 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 			else
 			{
 				$array_data['casi'] = $all_singer[$singer];
+			}
+			
+			// Them nhac si
+			if( empty( $author ) )
+			{
+				$array_data['nhacsi'] = 0;
+			}
+			elseif( ! empty( $author ) and ! in_array( $author, array_keys( $all_author ) ) )
+			{
+				$array_data['nhacsi'] = newauthor( change_alias( $author ), $author );
+				$array_data['nhacsi'] = ( int )$array_data['nhacsi'];
+			}
+			else
+			{
+				$array_data['nhacsi'] = $all_author[$author];
 			}
 
 			$check_url = creatURL( $link );
