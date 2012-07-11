@@ -133,7 +133,7 @@ if( $xml !== false and $module_info['rss'] )
 
 					$items[] = array( //
 						'title' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
-						'link' => NV_MY_DOMAIN . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=listenone/" . $id . "/" . $ten, //
+						'link' => NV_MY_DOMAIN . NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=viewvideo/" . $id . "/" . $ten, //
 						'guid' => $module_name . '_' . $id, //
 						'description' => $rimages, //
 						'pubdate' => $add_time //
