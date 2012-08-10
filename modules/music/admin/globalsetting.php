@@ -22,35 +22,42 @@ $array[] = array(
 	"title" => $lang_module['sub_hotalbum'], //
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=hotalbum", //
 	"guide" => $lang_module['guide_hot'] //
-		);
+);
 
 // Cac the loai tren block TAB
 $array[] = array(
 	"title" => $lang_module['sub_fourcategory'], //
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=fourcategory", //
 	"guide" => $lang_module['guide_fourcategory'] //
-		);
+);
 
 // Cac the loai tên block the loai
 $array[] = array(
 	"title" => $lang_module['sub_maincategory'], //
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=maincategory", //
 	"guide" => $lang_module['guide_maincategory'] //
-		);
+);
 
 // Cac album duoc dung lam the loai tren block
 $array[] = array(
 	"title" => $lang_module['sub_mainalbum'], //
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=mainalbum", //
 	"guide" => $lang_module['guide_mainalbum'] //
-		);
+);
 
 // Cau hinh FTP
 $array[] = array(
 	"title" => $lang_module['ftpsetting'], //
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting", //
 	"guide" => $lang_module['guide_ftpsetting'] //
-		);
+);
+
+// Cau hinh chinh cua module
+$array[] = array(
+	"title" => $lang_module['music_setting'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting", //
+	"guide" => $lang_module['guide_setting'] //
+);
 
 // Tien ich xoa chu de
 $array[] = array(
@@ -59,11 +66,11 @@ $array[] = array(
 	"guide" => $lang_module['ex_delete_cat_explain'] //
 );
 
-// Cau hinh chinh cua module
+// Tien ich phat hien va xoa ca si trung ten
 $array[] = array(
-	"title" => $lang_module['music_setting'], //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting", //
-	"guide" => $lang_module['guide_setting'] //
+	"title" => $lang_module['ex_detected_and_delete_duplicate_singer'], //
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer", //
+	"guide" => $lang_module['ex_detected_and_delete_duplicate_singer_guide'] //
 );
 
 $i = 1;

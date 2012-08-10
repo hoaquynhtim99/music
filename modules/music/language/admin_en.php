@@ -30,6 +30,10 @@ $lang_module['ip'] = "IP Adress";
 $lang_module['addtime'] = "At";
 $lang_module['view_non'] = "Haven't read";
 $lang_module['view_ed'] = "Had read";
+$lang_module['view'] = "View";
+$lang_module['detail'] = "Detail";
+$lang_module['images_mini'] = "Photo";
+$lang_module['back_page'] = "Back to previous page";
 
 $lang_module['author'] = "Musician";
 $lang_module['author_new'] = "Add musician quickly";
@@ -380,5 +384,11 @@ $lang_module['ex_delete_cat_error_cat1'] = "You had select no cat to be deleted"
 $lang_module['ex_delete_cat_error_cat2'] = "You had select no cat to be move to";
 $lang_module['ex_delete_cat_error_exists'] = "Error: Cat does not exist";
 $lang_module['ex_delete_cat_ok'] = "Perform complete";
+$lang_module['ex_detected_and_delete_duplicate_singer'] = "Delete duplicate singer";
+$lang_module['ex_detected_and_delete_duplicate_singer_guide'] = "Detect the duplicate singer, delete singer and moved the album, song, video of the singer to another singer";
+$lang_module['ex_detected_and_delete_duplicate_singer_num'] = "Duplicate";
+$lang_module['ex_detected_and_delete_duplicate_singer_detail'] = "Details singer &quot;%s&quot;";
+$lang_module['ex_detected_and_delete_duplicate_singer_to'] = "Move to";
+$lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Successfuly moved singer";
 
 ?>

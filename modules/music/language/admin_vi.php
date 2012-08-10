@@ -30,6 +30,10 @@ $lang_module['ip'] = "Địa chỉ IP";
 $lang_module['addtime'] = "Lúc";
 $lang_module['view_non'] = "Chưa xem";
 $lang_module['view_ed'] = "Đã xem";
+$lang_module['view'] = "Xem";
+$lang_module['detail'] = "Chi tiết";
+$lang_module['images_mini'] = "Ảnh";
+$lang_module['back_page'] = "Trở về trang trước";
 
 $lang_module['author'] = "Nhạc sĩ";
 $lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
@@ -380,5 +384,11 @@ $lang_module['ex_delete_cat_error_cat1'] = "Bạn chưa chọn chủ đề cần
 $lang_module['ex_delete_cat_error_cat2'] = "Bạn chưa chọn chủ đề cần chuyển đến";
 $lang_module['ex_delete_cat_error_exists'] = "Lỗi: Chủ đề không tồn tại";
 $lang_module['ex_delete_cat_ok'] = "Thực hiện hoàn tất";
+$lang_module['ex_detected_and_delete_duplicate_singer'] = "Tiện ích xóa ca sĩ trùng";
+$lang_module['ex_detected_and_delete_duplicate_singer_guide'] = "Phát hiện các ca sĩ trùng tên, xóa ca sĩ và chuyển các album, bài hát, video của ca sĩ đó sang ca sĩ khác";
+$lang_module['ex_detected_and_delete_duplicate_singer_num'] = "Xuất hiện";
+$lang_module['ex_detected_and_delete_duplicate_singer_detail'] = "Xem chi tiết ca sĩ &quot;%s&quot;";
+$lang_module['ex_detected_and_delete_duplicate_singer_to'] = "Chuyển sang";
+$lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Thực hiện thao tác thành công";
 
 ?>
