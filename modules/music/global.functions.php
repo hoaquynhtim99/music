@@ -645,7 +645,7 @@ function outputURL( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-
+						
 						unset( $m );
 						if( ! preg_match( "/\<input type\=\"hidden\" id\=\"\_strAuto\" value\=\"([^\"]+)\"[^\/]+\/\>/is", $output, $m ) )
 						{
@@ -655,7 +655,7 @@ function outputURL( $server, $inputurl )
 						{
 							$output = nv_get_URL_content( $m[1] );
 							if( ( $xml = simplexml_load_string( $output ) ) == false ) return "";
-							$output = ( string )$xml->item->source;
+							$output = ( string )$xml->item->f480;
 						}
 
 						$cache = serialize( $output );
