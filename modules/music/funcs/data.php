@@ -467,7 +467,7 @@ if( $nv_Request->isset_request( 'quicksearch', 'get' ) )
 	$array_singer = $array_song = $array_album = $array_video = $array_playlist = array();
 	
 	// Ket qua ca si
-	$sql = "SELECT `id`, `tenthat`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat` LIKE '%" . $DB_LikeKey . "%' ORDER BY `tenthat` ASC LIMIT 0,2";
+	$sql = "SELECT `id`, `tenthat`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE (`tenthat` LIKE '%" . $DB_LikeKey . "%' AND `tenthat` NOT LIKE '% ft. %') ORDER BY `tenthat` ASC LIMIT 0,2";
 	$result = $db->sql_query( $sql );
 	$num_singer = $db->sql_numrows( $result );
 	
