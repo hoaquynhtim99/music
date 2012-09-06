@@ -22,7 +22,7 @@ $result = $db->sql_query( $sql );
 $check_exit = $db->sql_numrows( $result );
 $row = $db->sql_fetchrow( $result );
 
-if( $check_exit != 1 or $row['keyname'] != $playlist_alias )
+if( $check_exit != 1 or $db->unfixdb( $row['keyname'] ) != $playlist_alias )
 {
 	module_info_die();
 }

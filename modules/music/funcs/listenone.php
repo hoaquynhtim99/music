@@ -20,7 +20,7 @@ $result = $db->sql_query( $sql );
 $check_exit = $db->sql_numrows( $result );
 $row = $db->sql_fetchrow( $result );
 
-if( $check_exit != 1 or $row['ten'] != $alias )
+if( $check_exit != 1 or $db->unfixdb( $row['ten'] ) != $alias )
 {
 	module_info_die();
 }

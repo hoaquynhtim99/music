@@ -23,7 +23,7 @@ $globaldata = array();
 if( $where == 'song' )
 {
 	$song = getsongbyID( $id );
-	if( $song['ten'] != $name )
+	if( $db->unfixdb( $song['ten'] ) != $name )
 	{
 		module_info_die();
 	}
@@ -41,7 +41,7 @@ if( $where == 'song' )
 elseif( $where == 'video' )
 {
 	$song = getvideobyID( $id );
-	if( $song['name'] != $name )
+	if( $db->unfixdb( $song['name'] ) != $name )
 	{
 		module_info_die();
 	}
@@ -61,7 +61,7 @@ elseif( $where == 'video' )
 elseif( $where == 'album' )
 {
 	$albumdata = getalbumbyID( $id );
-	if( $albumdata['name'] != $name )
+	if( $db->unfixdb( $albumdata['name'] ) != $name )
 	{
 		module_info_die();
 	}
@@ -88,7 +88,7 @@ elseif( $where == 'playlist' )
 	$check_exit = $db->sql_numrows( $result );
 	$row = $db->sql_fetchrow( $result );
 
-	if( $check_exit != 1 or $row['keyname'] != $name )
+	if( $check_exit != 1 or $db->unfixdb( $row['keyname'] ) != $name )
 	{
 		module_info_die();
 	}
