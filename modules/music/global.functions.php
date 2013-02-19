@@ -465,29 +465,27 @@ function outputURL( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-						$output = explode( '&autostart=true&file=', $output );
-
-						if( isset( $output[1] ) )
+						$cache = "";
+						
+						if( preg_match( "/\[FLASH\](.*?)\[\/FLASH\]/i", $output, $m ) )
 						{
-							$output = explode( '"', $output[1] );
-							$output = nv_get_URL_content( $output[0] );
-							$output = explode( "<location><![CDATA[", $output );
-							if( isset( $output[1] ) )
+							$output = get_headers( $m[1] );
+							
+							foreach( $output as $tmp )
 							{
-								$output = explode( "]]></location>", $output[1] );
-								$output = $output[0];
-							}
-							else
-							{
-								$output = "";
+								if( preg_match( "/^Location: (.*)/is", $tmp, $m ) )
+								{
+									if( preg_match( "/file\=(.*)\&ads\=/is", $tmp, $m ) )
+									{
+										$output = simplexml_load_string( nv_get_URL_content( $m[1] ) );
+										$output = trim( ( string ) $output->track->location );
+										break;
+									}
+								}
 							}
 						}
-						else
-						{
-							$output = "";
-						}
 
-						$cache = serialize( $output );
+						$cache = serialize( $cache );
 						nv_set_cache( $cache_file, $cache );
 					}
 				}
@@ -719,6 +717,7 @@ function nv_get_URL_content( $target_url )
 		curl_setopt( $ch, CURLOPT_URL, $target_url );
 		curl_setopt( $ch, CURLOPT_HEADER, 0 );
 		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
+		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1 );
 		curl_setopt( $ch, CURLOPT_USERAGENT, $agent );
 		$content = curl_exec( $ch );
 		$errormsg = curl_error( $ch );

@@ -7,10 +7,7 @@
  * @Createdate 25-12-2010 14:43
  */
 
-if( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
-{
-	die( 'Stop!!!' );
-}
+if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['nct_title'];
 
