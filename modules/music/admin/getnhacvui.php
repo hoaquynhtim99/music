@@ -37,24 +37,21 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 
 		// Ten bai hat
 		unset( $m );
-		if( preg_match( "/\<div class\=\"nghenhac-baihat\"\>\<h2\>(.*?)\<\/h2\>\<\/div\>/i", $data, $m ) )
+		if( preg_match( "/\<div class\=\"nghenhac-baihat\"\>\<h2\>(.*?) \- (.*?)\<\/h2\>\<\/div\>/i", $data, $m ) )
 		{
-			$title = trim( strip_tags( $m[0] ) );
+			$title = trim( strip_tags( $m[1] ) );
+			$singer = str_replace( array( ", ", "-", "/", "  " ), array( " ft. ", "ft.", "ft.", " " ), trim( strip_tags( $m[2] ) ) );
 		}
 		
-		// Ca di
+		// Nhac si
 		unset( $m );
-		$pattern = "/<div class\=\"nghenhac\-info\"\>Ca sĩ\: \<a href\=\"([^\"]+)\" title\=\"([^\"]+)\"\>(.*?)\<\/a\> \| Nhạc sĩ\: \<span\>(.*?)\<\/span\> \| Thể loại/i";
+		$pattern = "/\<div class\=\"nghenhac\-info\"\>Nhạc sĩ\: \<span\>(.*)\<\/span\> \|/i";
 		if( preg_match( $pattern, $data, $m ) )
 		{
-			$singer = trim( $m[3] );
-			$singer = strip_tags( $singer );
-			$singer = empty( $singer ) ? "ns" : str_replace( array( "-", "/", "  " ), array( "ft.", "ft.", " " ), $singer );
-			
-			$author = trim( $m[4] );
 			$author = strip_tags( $author );
+			$author = trim( $m[1] );
 		}
-		
+
 		unset( $data );
 
 		if( ! empty( $title ) )

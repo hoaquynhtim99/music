@@ -558,17 +558,25 @@ function outputURL( $server, $inputurl )
 						$output = nv_get_URL_content( $output );
 						
 						unset( $m );
-						$pattern = "/\[FLASH\]http\:\/\/nhac\.vui\.vn\/images\/player\.swf\?playlistfile\=(.*?)\[\/FLASH\]/i";
+						$pattern = "/\'playlistfile\'\: \'(.*?)\'\,/i";
 						if( ! empty( $output ) and preg_match( $pattern, $output, $m ) )
 						{
-							$output = nv_get_URL_content( rawurldecode( trim( $m[1] ) ) );
+							$output = nv_get_URL_content( "http://hcm.nhac.vui.vn" . trim( $m[1] ) );
 							unset( $m );
 							$pattern = "/\<jwplayer\:file\>\<\!\[CDATA\[(.*?)\]\]\>\<\/jwplayer\:file\>/i";
 							if( ! empty( $output ) and preg_match( $pattern, $output, $m ) )
 							{
 								$output = trim( $m[1] );
-							}else $output = "";
-						}else $output = "";
+							}
+							else
+							{
+								$output = "";
+							}
+						}
+						else
+						{
+							$output = "";
+						}
 
 						$cache = serialize( $output );
 						nv_set_cache( $cache_file, $cache );
@@ -594,7 +602,7 @@ function outputURL( $server, $inputurl )
 					{
 						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
 						$output = nv_get_URL_content( $output );
-
+						
 						$output = explode( 'embedPlaylistjs.swf?xmlPath=', $output );
 
 						if( isset( $output[1] ) )

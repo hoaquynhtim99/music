@@ -51,7 +51,7 @@ elseif( $where == 'video' )
 	{
 		$song['duongdan'] = NV_MY_DOMAIN . $song['duongdan'];
 	}
-
+	
 	$song['casi'] = $song['casi'];
 	$song['tenthat'] = $song['tname'];
 	
@@ -126,27 +126,26 @@ header( "Content-Type:text/xml" );
 
 $logo_img = $where == "video" ? $global_config['site_url'] . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/share-logo-video.jpg' : $global_config['site_url'] . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/share-logo-song.jpg';
 
-echo '<?xml version="1.0" encoding="utf-8"?>';
-echo "\n";
-echo '<playlist version="1" xmlns:jwplayer="http://developer.longtailvideo.com/">';
-echo "\n";
-echo '<trackList>';
-echo "\n";
+echo "<rss version=\"2.0\" xmlns:media=\"http://search.yahoo.com/mrss/\">";
+echo "	<channel>";
+echo "		<title>Example playlist</title>";
+
 foreach( $globaldata as $song )
 {
-
+	$song['duongdan'] = str_replace( '&amp;', '&', $song['duongdan'] );
 	$song['duongdan'] = str_replace( '&', '&amp;', $song['duongdan'] );
 
-	echo '<track> 
-		<title>' . $song['tenthat'] . '</title>
-		<creator>' . $song['casi'] . '</creator>
-		<location>' . $song['duongdan'] . '</location>
-		<info>' . $global_config['site_url'] . '</info>
-		<image>' . $logo_img . '</image>
-	</track>';
+	echo "		<item>";
+	echo "			<title>" . $song['tenthat'] . "</title>";
+	echo "			<link>" . $global_config['site_url'] . "</link>";
+	echo "			<description>None</description>";
+	echo "			<pubDate>None</pubDate>";
+	echo "			<media:content url=\"" . $song['duongdan'] . "\" />";
+	echo "			<media:thumbnail url=\"" . $logo_img . "\" />";
+	echo "		</item>";
 }
-echo "\n";
-echo "	</trackList>\n";
-echo "</playlist>\n";
+
+echo "	</channel>";
+echo "</rss>";
 
 ?>
