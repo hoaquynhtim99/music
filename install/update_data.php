@@ -12,14 +12,14 @@ if( ! defined( 'NV_IS_UPDATE' ) ) die( 'Stop!!!' );
 $nv_update_config = array();
 
 $nv_update_config['type'] = 1; // Kieu nang cap 1: Update; 2: Upgrade
-$nv_update_config['packageID'] = 'NVUDMUSIC3401'; // ID goi cap nhat
+$nv_update_config['packageID'] = 'NVUDMUSIC3402'; // ID goi cap nhat
 $nv_update_config['formodule'] = "music"; // Cap nhat cho module nao, de trong neu la cap nhat NukeViet, ten thu muc module neu la cap nhat module
 
 // Thong tin phien ban, tac gia, ho tro
-$nv_update_config['release_date'] = 1333929600;
+$nv_update_config['release_date'] = 1363499027;
 $nv_update_config['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $nv_update_config['support_website'] = "http://nukeviet.vn/phpbb/viewforum.php?f=118";
-$nv_update_config['to_version'] = "3.5.01";
+$nv_update_config['to_version'] = "3.4.02";
 $nv_update_config['allow_old_version'] = array( "3.0.01", "3.1.00", "3.2.00", "3.3.00", "3.3.01", "3.4.01" );
 $nv_update_config['update_auto_type'] = 1; // 0:Nang cap bang tay, 1:Nang cap tu dong, 2:Nang cap nua tu dong
 
@@ -38,6 +38,7 @@ $nv_update_config['lang']['vi']['nv_up_stavideo'] = 'Thống kê số video cho 
 $nv_update_config['lang']['vi']['nv_up_albumhit'] = 'Thêm trường HIT vào album';
 $nv_update_config['lang']['vi']['nv_up_maintype'] = 'Cập nhật cách hiển thị các album trên trang chủ';
 $nv_update_config['lang']['vi']['nv_up_datatype'] = 'Cập nhật lại định dạng dữ liệu';
+$nv_update_config['lang']['vi']['nv_up_nhaccuatui'] = 'Cập nhật FTP nhaccuatui.com';
 
 $nv_update_config['lang']['vi']['nv_up_version'] = 'Cập nhật phiên bản';
 
@@ -52,6 +53,7 @@ $nv_update_config['lang']['en']['nv_up_stavideo'] = 'Statistics of video for vid
 $nv_update_config['lang']['en']['nv_up_albumhit'] = 'Add to the album HIT';
 $nv_update_config['lang']['en']['nv_up_maintype'] = 'Main view type';
 $nv_update_config['lang']['en']['nv_up_datatype'] = 'Update data type';
+$nv_update_config['lang']['en']['nv_up_nhaccuatui'] = 'Update FTP nhaccuatui.com';
 
 $nv_update_config['lang']['en']['nv_up_version'] = 'Updated version';
 
@@ -69,9 +71,10 @@ $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_
 $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_albumhit', 'f' => 'nv_up_albumhit' );
 $nv_update_config['tasklist'][] = array( 'r' => '3.4.01', 'rq' => 2, 'l' => 'nv_up_maintype', 'f' => 'nv_up_maintype' );
 
-$nv_update_config['tasklist'][] = array( 'r' => '3.5.01', 'rq' => 1, 'l' => 'nv_up_datatype', 'f' => 'nv_up_datatype' );
+$nv_update_config['tasklist'][] = array( 'r' => '3.4.02', 'rq' => 1, 'l' => 'nv_up_datatype', 'f' => 'nv_up_datatype' );
+$nv_update_config['tasklist'][] = array( 'r' => '3.4.02', 'rq' => 1, 'l' => 'nv_up_nhaccuatui', 'f' => 'nv_up_nhaccuatui' );
 
-$nv_update_config['tasklist'][] = array( 'r' => '3.5.01', 'rq' => 2, 'l' => 'nv_up_version', 'f' => 'nv_up_version' );
+$nv_update_config['tasklist'][] = array( 'r' => '3.4.02', 'rq' => 2, 'l' => 'nv_up_version', 'f' => 'nv_up_version' );
 
 // Danh sach cac function
 /*
@@ -433,6 +436,42 @@ function nv_up_datatype()
 	return $return;
 }
 
+function nv_up_nhaccuatui()
+{
+	global $nv_update_baseurl, $db, $db_config, $old_module_version, $array_lang_music_update;
+	$return = array( 'status' => 1, 'complete' => 1, 'next' => 1, 'link' => 'NO', 'lang' => 'NO', 'message' => '', );
+
+	foreach( $array_lang_music_update as $lang => $array_mod )
+	{
+		foreach( $array_mod['mod'] as $module_info )
+		{
+			$TablePrefix = $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'];
+			
+			// Lay FTP nhaccuatui
+			$sql = "SELECT * FROM `" . $TablePrefix . "_ftp` WHERE `host`='nhaccuatui'";
+			$result = $db->sql_query( $sql );
+			$ftp_nct = $db->sql_fetch_assoc( $result );
+			
+			// Cap nhat FTP nhaccuatui
+			$db->sql_query( "UPDATE `" . $TablePrefix . "_ftp` SET `subpart`='subpart' WHERE `host`='nhaccuatui'" );
+			
+			if( ! empty( $ftp_nct ) )
+			{
+				$sql = "SELECT * FROM `" . $TablePrefix . "` WHERE `server`=" . $ftp_nct['id'];
+				$result = $db->sql_query( $sql );
+				while( $row = $db->sql_fetch_assoc( $result ) )
+				{
+					$row['duongdan'] = preg_replace( "/^\?M\=(.?)$/i", '/phan-tan-dung.${1}.html', $row['duongdan'] );
+					$db->sql_query( "UPDATE `" . $TablePrefix . "` SET `duongdan`='" . $row['duongdan'] . "' WHERE `id`=" . $row['duongdan'] );
+				}
+			}
+		}
+	}
+	$db->sql_freeresult();
+	
+	return $return;
+}
+
 function nv_up_version()
 {
 	global $nv_update_baseurl, $db, $db_config, $old_module_version, $array_lang_music_update;
@@ -444,12 +483,12 @@ function nv_up_version()
 		foreach( $array_mod['mod'] as $module_info )
 		{
 			$table = $db_config['prefix'] . "_" . $lang . "_" . $module_info['module_data'] . "_setting";
-			$db->sql_query( "UPDATE `" . $table . "` SET `value`=331 WHERE `key`='revision'" );				
-			$db->sql_query( "UPDATE `" . $table . "` SET `char`='3.5.01' WHERE `key`='version'" );				
+			$db->sql_query( "UPDATE `" . $table . "` SET `value`=352 WHERE `key`='revision'" );				
+			$db->sql_query( "UPDATE `" . $table . "` SET `char`='3.4.02' WHERE `key`='version'" );				
 		}
 	}
 	
-	$mod_version = "3.5.01 1333929600";
+	$mod_version = "3.4.02 1363499027";
 	$db->sql_query( "UPDATE `" . $db_config['prefix'] . "_setup_modules` SET `mod_version`='" . $mod_version . "', `author`='PHAN TAN DUNG (phantandung92@gmail.com)' WHERE `module_file`='music'" );
 	
 	nv_delete_all_cache();
