@@ -1,0 +1,32 @@
+﻿td.fixbg{background-color: #eeeeee !important;}
+td.strong{font-weight:bold}
+.clear{clear:both}
+.fl{float:left}
+.fr{float:right}
+.center{ text-align:center}
+.infoerror, .requie{color:#FF0000}
+.atop{vertical-align:top!important}
+.fixwidthinput{width:98%}
+.green{color:#3366CC!important}
+.pointer {cursor: pointer;}
+.aright{text-align: right;}
+.fixbottomtable{margin:0px 0px 3px 0px!important}
+a.nounderline{text-decoration:none!important}
+.tab1{margin:2px 0px 2px 0px !important}
+
+/* ICON */
+.select_icon {background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}
+.unselect_icon {background: url('../images/music/unselect-icon.png') no-repeat left center;padding-left: 17px}
+.status_icon {background: url('../images/music/status-icon.png') no-repeat left center;padding-left: 17px}
+.check_icon {background: url('../images/music/check-icon.png') no-repeat left center;padding-left: 17px}
+.view_icon {background: url('../images/music/view-icon.png') no-repeat left center;padding-left: 17px}
+
+/* SONG OF ALBUM */
+.list_song{list-style-type:none;padding:0;margin:0}
+.list_song li{list-style-type:none;padding:0px 0px 0px 10px;margin:0;display:block;background-color:#EEEEEE;border:1px #999999 solid;margin-bottom:3px;height:25px;line-height:25px;cursor:move;position:relative}
+.list_song li span{position:absolute;top:0px;right:0px;cursor:pointer}
+
+/* ORDER DATA */
+.orderasc {height: 16px;padding-left: 16px;background-repeat: no-repeat;background-position: left center;background-image: url('../images/arrows/tall-up-arrow.gif');}
+.orderdesc {height: 16px;padding-left: 16px;background-repeat: no-repeat;background-position: left center;background-image: url('../images/arrows/tall-down-arrow.gif');}
+.orderno {height: 16px;padding-left: 16px;background-repeat: no-repeat;background-position: left center;background-image: url('../images/collapse-all.gif');}
