@@ -1,0 +1,280 @@
+<p class="MsoNormal" style="margin-left:0cm;text-align:justify;text-indent:21.3pt">
+<span style="mso-fareast-language:X-NONE">Chức năng này chỉ dành cho những 
+hosting có hỗ trợ mod rewrite.<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-align:justify;text-indent:21.3pt">
+<span style="mso-fareast-language:X-NONE">Module music bản 3.4.01 được viết lại 
+chức năng tìm kiếm chuyên nghiệp hơn, cho kết quả chính xác và thông minh hơn 
+tuy nhiên đường dẫn không đẹp bằng, để tối ưu đường dẫn, các bạn có thể làm như 
+sau:<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:14.2pt;line-height:normal;
+mso-list:l0 level1 lfo1;tab-stops:1.0cm"><![if !supportLists]>
+<span style="font-size:10.0pt;font-family:Symbol;mso-fareast-font-family:Symbol;
+mso-bidi-font-family:Symbol;mso-fareast-language:X-NONE">
+<span style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style="mso-fareast-language:X-NONE">Mở file 
+/includes/rewrite.php tìm:<br />
+</span>
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;mso-fareast-language:
+X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">else<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;tab-stops:1.0cm">
+<span style="mso-fareast-language:X-NONE">Thêm vào bên trên:<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music rewrite<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">$rewrite[&quot;#([\&quot;|\&#39;]&quot; . NV_BASE_SITEURL . 
+&quot;)index.php*\?&quot; . NV_LANG_VARIABLE . &quot;=([a-z-]*)\&amp;[amp;]*&quot; . NV_NAME_VARIABLE . 
+&quot;=music\&amp;[amp;]*&quot; . NV_OP_VARIABLE . 
+&quot;=search\&amp;[amp;]*where\=([a-z]*)\&amp;[amp;]*q\=(.*?)([\&quot;|\&#39;])#&quot;] = 
+&quot;\\1music/search/\\3=\\4\\5&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music rewrite<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;tab-stops:1.0cm">
+<span style="mso-fareast-language:X-NONE">Thêm vào bên dưới:<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music rewrite<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">$rewrite[&quot;#([\&quot;|\&#39;]&quot; . NV_BASE_SITEURL . 
+&quot;)index.php*\?&quot; . NV_LANG_VARIABLE . &quot;=([a-z-]*)\&amp;[amp;]*&quot; . NV_NAME_VARIABLE . 
+&quot;=music\&amp;[amp;]*&quot; . NV_OP_VARIABLE . 
+&quot;=search\&amp;[amp;]*where\=([a-z]*)\&amp;[amp;]*q\=(.*?)([\&quot;|\&#39;])#&quot;] = 
+&quot;\\1\\2/music/search/\\3=\\4\\5&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music rewrite<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:14.2pt;mso-list:l0 level1 lfo1;
+tab-stops:1.0cm"><![if !supportLists]>
+<span style="font-family:Symbol;
+mso-fareast-font-family:Symbol;mso-bidi-font-family:Symbol;mso-fareast-language:
+X-NONE"><span style="mso-list:Ignore">-<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;
+</span></span></span><![endif]><span style="mso-fareast-language:X-NONE">Mở file 
+/includes/core/admin_functions.php ra tìm:<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">if( $sys_info[&#39;zlib_support&#39;] )<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;rule name=\&quot;nv_rule_&quot; . ++$rulename . &quot;\&quot;&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;match url=\&quot;^((?!http(s?)|ftp\:\/\/).*)\.(css|js)$\&quot; ignoreCase=\&quot;false\&quot; 
+/&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;action type=\&quot;Rewrite\&quot; url=\&quot;CJzip.php?file={R:1}.{R:3}\&quot; 
+appendQueryString=\&quot;false\&quot; /&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;/rule&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;tab-stops:1.0cm">
+<span style="mso-fareast-language:X-NONE">Thêm vào bên dưới<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music Rewrite //<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&lt;rule name=\&quot;nv_rule_&quot; . ++$rulename . &quot;\&quot;&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">if( $array_config_global[&#39;rewrite_optional&#39;] )<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;match url=\&quot;^music\/search\/([a-z]+)\=(.*)$\&quot; ignoreCase=\&quot;false\&quot; 
+/&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;action type=\&quot;Rewrite\&quot; url=\&quot;index.php?&quot; . NV_NAME_VARIABLE . &quot;=music&amp;amp;&quot; 
+. NV_OP_VARIABLE . &quot;=search&amp;amp;where={R:1}&amp;amp;q={R:2}\&quot; appendQueryString=\&quot;false\&quot; 
+/&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">else<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&lt;match url=\&quot;^([a-z]{2})\/music\/search\/([a-z]+)\=(.*)$\&quot; 
+ignoreCase=\&quot;false\&quot; /&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;action type=\&quot;Rewrite\&quot; url=\&quot;index.php?&quot; . NV_LANG_VARIABLE . 
+&quot;={R:1}&amp;amp;&quot; . NV_NAME_VARIABLE . &quot;=music&amp;amp;&quot; . NV_OP_VARIABLE . &quot;=search&amp;amp;where={R:2}&amp;amp;q={R:3}\&quot; 
+appendQueryString=\&quot;false\&quot; /&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">$rewrite_rule .= &quot;<span style="mso-spacerun:yes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+</span>&lt;/rule&gt;\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music Rewrite //<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;tab-stops:1.0cm">
+<span style="mso-fareast-language:X-NONE">Tìm:<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">if( $sys_info[&#39;zlib_support&#39;] )<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;RewriteRule ^((?!http(s?)|ftp\:\/\/).*)\.(css|js)$ 
+CJzip.php?file=$1.$3 [L]\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;tab-stops:1.0cm">
+<span style="mso-fareast-language:X-NONE">Thêm vào bên dưới:<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music Rewrite //<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">if( $array_config_global[&#39;rewrite_optional&#39;] )<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;RewriteRule ^music\/search\/([a-z]+)\=(.*)$ index.php?&quot; 
+. NV_NAME_VARIABLE . &quot;=music&amp;&quot; . NV_OP_VARIABLE . &quot;=search&amp;where=$1&amp;q=$2 [L]\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">else<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">{<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><span style="mso-tab-count:1">&nbsp;&nbsp;&nbsp;&nbsp;
+</span>$rewrite_rule .= &quot;RewriteRule ^([a-z]{2})\/music\/search\/([a-z]+)\=(.*)$ 
+index.php?&quot; . NV_LANG_VARIABLE . &quot;=$1&amp;&quot; . NV_NAME_VARIABLE . &quot;=music&amp;&quot; . 
+NV_OP_VARIABLE . &quot;=search&amp;where=$2&amp;q=$3 [L]\n&quot;;<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">}<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE">// Music Rewrite //<o:p></o:p></span></p>
+<p class="MsoNormal" style="margin-left:0cm;text-indent:0cm;line-height:normal;
+tab-stops:1.0cm">
+<span style="font-size:10.0pt;font-family:&quot;Courier New&quot;;
+mso-fareast-language:X-NONE"><o:p>&nbsp;</o:p></span></p>
+<span style="font-size:12.0pt;line-height:150%;font-family:&quot;Times New Roman&quot;,&quot;serif&quot;;
+mso-fareast-font-family:&quot;Times New Roman&quot;;mso-ansi-language:EN-US;mso-fareast-language:
+X-NONE;mso-bidi-language:AR-SA">Đăng nhập vào admin vào Cấu hình =&gt; Cấu hình 
+chung tắt chức năng rewrite, lưu lại sau đó kích hoạt trở lại.</span>
