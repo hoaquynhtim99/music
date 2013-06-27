@@ -292,16 +292,6 @@ $lang_module['video_del_confirm'] = "Are you sure to delete this video";
 $lang_module['video_error_check'] = "You haven't chosen any videos";
 $lang_module['video_comment_edit'] = "Edit video comment";
 
-$lang_module['zing_get'] = "Add song from mp3.zing.vn";
-$lang_module['nhacvui_get'] = "Add song from nhac.vui.vn";
-$lang_module['nhaccuatui_get'] = "Add song from nhaccuatui";
-
-$lang_module['nct_title'] = "Add song from nhaccuatui.com";
-$lang_module['nct_list_song'] = "The list of song link";
-$lang_module['zing_title'] = "Add song from mp3.zing.vn V3";
-$lang_module['nhacvui_title'] = "Add song from nhac.vui.vn";
-$lang_module['nhacso_get'] = "Add song from nhacso.net";
-
 $lang_module['add_lyric'] = "Song lyrics";
 $lang_module['complete'] = "Completed";
 $lang_module['error_exist_album'] = "Error: This album existed";
@@ -390,5 +380,9 @@ $lang_module['ex_detected_and_delete_duplicate_singer_num'] = "Duplicate";
 $lang_module['ex_detected_and_delete_duplicate_singer_detail'] = "Details singer &quot;%s&quot;";
 $lang_module['ex_detected_and_delete_duplicate_singer_to'] = "Move to";
 $lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Successfuly moved singer";
+
+$lang_module['addFromOtherSite_title'] = "Add song from other sites";
+$lang_module['addFromOtherSite_listSong'] = "List song url";
+$lang_module['addFromOtherSite_site'] = "Choose site";
 
 ?>

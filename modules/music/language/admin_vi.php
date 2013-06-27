@@ -292,16 +292,6 @@ $lang_module['video_del_confirm'] = "Bạn có chắc xóa video này";
 $lang_module['video_error_check'] = "Bạn chưa chọn video nào";
 $lang_module['video_comment_edit'] = "Sửa bình luận video";
 
-$lang_module['zing_get'] = "Thêm nhạc từ mp3.zing.vn";
-$lang_module['nhacvui_get'] = "Thêm nhạc từ nhac.vui.vn";
-$lang_module['nhaccuatui_get'] = "Thêm nhạc từ nhaccuatui";
-
-$lang_module['nct_title'] = "Thêm bài hát từ nhaccuatui.com";
-$lang_module['nct_list_song'] = "Danh sách các link nhạc";
-$lang_module['zing_title'] = "Thêm bài hát từ mp3.zing.vn V3";
-$lang_module['nhacvui_title'] = "Thêm bài hát từ nhac.vui.vn";
-$lang_module['nhacso_get'] = "Thêm bài hát từ nhacso.net";
-
 $lang_module['add_lyric'] = "Lời bài hát";
 $lang_module['complete'] = "Hoàn tất";
 $lang_module['error_exist_album'] = "Lỗi: Album này đã tồn tại";
@@ -390,5 +380,9 @@ $lang_module['ex_detected_and_delete_duplicate_singer_num'] = "Xuất hiện";
 $lang_module['ex_detected_and_delete_duplicate_singer_detail'] = "Xem chi tiết ca sĩ &quot;%s&quot;";
 $lang_module['ex_detected_and_delete_duplicate_singer_to'] = "Chuyển sang";
 $lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Thực hiện thao tác thành công";
+
+$lang_module['addFromOtherSite_title'] = "Thêm nhạc từ Site khác";
+$lang_module['addFromOtherSite_listSong'] = "Danh sách các link nhạc";
+$lang_module['addFromOtherSite_site'] = "Site cần lấy";
 
 ?>
