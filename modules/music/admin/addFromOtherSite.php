@@ -85,18 +85,17 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 		}
 		elseif( $site == 'zing' )
 		{
-			$array_meta_tag = get_meta_tags( $link );
+			$content = nv_get_URL_content( $link );
+			$pattern = "/\<div class\=\"detail\-content\-title\"\>\<h1 class\=\"detail\-title\"\>([^\<]+)\<\/h1\>\<span\>\-\<\/span\>\<h2\>\<a href\=\"([^\"]+)\" title\=\"([^\"]+)\"\>([^\<]+)\<\/a\>\<\/h2\>[\s\n\t\r]*\<\/div\>/is";
+			$title = $alias = $singer = "";
 
-			$array['title'] = $array_meta_tag['title'] ? $array_meta_tag['title'] : "";
-			$array['title'] = explode( "|", $array['title'] );
-			$array['title'] = explode( "-", $array['title'][0] );
-			$array['title'] = array_map( "trim", $array['title'] );
-
-			$title = ! empty( $array['title'][0] ) ? $array['title'][0] : "";
-			$alias = ! empty( $title ) ? change_alias( $title ) : "";
-
-			$singer = ! empty( $array['title'][1] ) ? $array['title'][1] : "ns";
-
+			if( preg_match( $pattern, $content, $m ) )
+			{
+				$title = $m[1];
+				$alias = change_alias( $title );
+				$singer = $m[4];
+			}
+			
 			if( ! empty( $title ) )
 			{
 				if( empty( $singer ) )

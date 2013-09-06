@@ -306,11 +306,12 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 // Cau hinh FTP mac dinh
 $sql_create_module[] = "INSERT INTO `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp` 
 (`id`, `host`, `user`, `pass`, `fulladdress`, `subpart`, `ftppart`, `active`) VALUES
-(1, 'nhaccuatui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/', 'bai-hat', '/', 1),
-(2, 'zing', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/', 'bai-hat', '/', 1),
-(3, 'nhacvui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://hcm.nhac.vui.vn', '/', '/', 1),
-(4, 'nhacso', 'hoaquynhtim99', 'hoaquynhtim99', 'http://nhacso.net/', 'nghe-nhac', '/', 1),
-(5, 'zingclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/video-clip', '/', '/', 1)";
+(2, 'nhaccuatui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/', 'bai-hat', '/', 1),
+(3, 'zing', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/', 'bai-hat', '/', 1),
+(4, 'nhacvui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://hcm.nhac.vui.vn', '/', '/', 1),
+(5, 'nhacso', 'hoaquynhtim99', 'hoaquynhtim99', 'http://nhacso.net/', 'nghe-nhac', '/', 1),
+(6, 'zingclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/video-clip', '/', '/', 1),
+(7, 'nctclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/video', '/', '/', 1)";
 
 
 //22 FTP

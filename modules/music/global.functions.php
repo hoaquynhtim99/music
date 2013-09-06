@@ -376,7 +376,8 @@ function getFTP()
 	}
 	return $ftpdata;
 }
-// tao duong dan tu mot chuoi
+
+// Tao duong dan tu mot chuoi
 function creatURL( $inputurl )
 {
 	global $module_name, $setting;
@@ -668,6 +669,50 @@ function outputURL( $server, $inputurl )
 						nv_set_cache( $cache_file, $cache );
 					}
 				}
+				elseif( $data['host'] == "nctclip" )
+				{
+					$cache_file = NV_LANG_DATA . "_" . $module_name . "_link_nctclip_" . md5( $server . $inputurl ) . "_" . NV_CACHE_PREFIX . ".cache";
+
+					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
+					{
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						{
+							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
+						}
+					}
+
+					if( ( $cache = nv_get_cache( $cache_file ) ) != false )
+					{
+						$output = unserialize( $cache );
+					}
+					else
+					{
+						$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
+						$output = nv_get_URL_content( $output );
+						
+						if( ! preg_match( "/\<input id\=\"urlEmbedBlog\" type\=\"text\" readonly\=\"readonly\" value\=\"\[FLASH\](.*?)\[\/FLASH\]\" class\=\"link3\" \/\>/is", $output, $m ) )
+						{
+							$output = "";
+						}
+						else
+						{
+							$tmp = get_headers( $m[1] );
+							$output = "";
+							foreach( $tmp as $_tmp )
+							{
+								if( preg_match( "/file\=(.*?)\&autostart\=/is", $_tmp, $m ) )
+								{
+									$output = nv_get_URL_content( $m[1] );
+									if( ( $xml = simplexml_load_string( $output ) ) == false ) return "";
+									$output = trim( ( string ) $xml->track->location );
+								}
+							}
+						}
+
+						$cache = serialize( $output );
+						nv_set_cache( $cache_file, $cache );
+					}
+				}
 				else
 				{
 					$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
@@ -715,34 +760,10 @@ function unlinkSV( $server, $url )
 //
 function nv_get_URL_content( $target_url )
 {
-	global $client_info;
-
-	$agent = empty( $client_info['agent'] ) ? 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.7.5) Gecko/20041107 Firefox/1.0' : $client_info['agent'];
-
-	if( function_exists( 'curl_init' ) )
-	{
-		$ch = curl_init();
-		curl_setopt( $ch, CURLOPT_URL, $target_url );
-		curl_setopt( $ch, CURLOPT_HEADER, 0 );
-		curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-		curl_setopt( $ch, CURLOPT_FOLLOWLOCATION, 1 );
-		curl_setopt( $ch, CURLOPT_USERAGENT, $agent );
-		$content = curl_exec( $ch );
-		$errormsg = curl_error( $ch );
-		curl_close( $ch );
-
-		if( $errormsg != "" )
-		{
-			return "";
-		}
-	}
-
-	if( ! is_array( $content ) )
-	{
-		$content = explode( "\n", $content );
-	}
-
-	return implode( "", $content );
+	global $global_config;
+	require_once( NV_ROOTDIR . "/includes/class/geturl.class.php" );
+	$UrlGetContents = new UrlGetContents( $global_config );
+	return $UrlGetContents->get( $target_url );
 }
 
 function nvm_new_song( $array )
