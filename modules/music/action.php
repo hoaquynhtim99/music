@@ -35,12 +35,12 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 
 $sql_create_module = $sql_drop_module;
 
-//1. bang bai hat
+// 1. bang bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) NOT NULL DEFAULT '',
   `tenthat` varchar(255) NOT NULL DEFAULT '',
-  `casi` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `casi` varchar(255) NOT NULL DEFAULT '',
   `nhacsi` mediumint(8) unsigned NOT NULL DEFAULT '0', 
   `album` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `theloai` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -60,12 +60,12 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//2. album
+// 2. album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `tname` varchar(255) NOT NULL DEFAULT '',
-  `casi` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `casi` varchar(255) NOT NULL DEFAULT '',
   `thumb` varchar(255) NOT NULL DEFAULT '',
   `numview` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `upboi` varchar(255) NOT NULL DEFAULT '',
@@ -78,7 +78,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//3. The loai
+// 3. The loai
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category` (
   `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -90,7 +90,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM";
 
-//4. Album HOT
+// 4. Album HOT
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `albumid` mediumint( 8 ) NOT NULL DEFAULT '0',
@@ -98,14 +98,14 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//5. bon the loai tren trang chu
+// 5. bon the loai tren trang chu
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_4category` (
   `id` mediumint(8) NOT NULL AUTO_INCREMENT,
   `cid` mediumint(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//6. quang cao tren player
+// 6. quang cao tren player
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `stt` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -115,7 +115,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//7. binh luan bai hat
+// 7. binh luan bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song` (
   `id`mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -127,7 +127,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//8. binh luan album
+// 8. binh luan album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_album` (
   `id`mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -139,7 +139,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//9. qua tang
+// 9. qua tang
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_gift` (
   `id`mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `who_send` varchar(255) NOT NULL DEFAULT '',
@@ -151,7 +151,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//10. bao loi
+// 10. bao loi
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_error` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `sid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -166,7 +166,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   KEY `userid`(`userid`)
 ) ENGINE=MyISAM";
 
-//11. loi bai hat
+// 11. loi bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_lyric` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `songid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -177,7 +177,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//12. the loai hien thi tren trang chu
+// 12. the loai hien thi tren trang chu
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_main_category` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `cid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -186,7 +186,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `cid` (`cid`)
 ) ENGINE=MyISAM";
 
-//13. album hien thi tren menu
+// 13. album hien thi tren menu
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_main_album` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `albumid` mediumint(8) NOT NULL DEFAULT '0',
@@ -195,7 +195,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `albumid` (`albumid`)
 ) ENGINE=MyISAM";
 
-//15. playlist
+// 15. playlist
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_playlist` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -211,12 +211,12 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//16. video
+// 16. video
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
   `tname` varchar(255) NOT NULL DEFAULT '',
-  `casi` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `casi` varchar(255) NOT NULL DEFAULT '',
   `nhacsi` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `theloai` mediumint(8) unsigned NOT NULL DEFAULT '0',
   `listcat` varchar(255) NOT NULL DEFAULT '',
@@ -231,7 +231,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//17 the loai video
+// 17 the loai video
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -243,7 +243,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM";
 
-//18. binh luan album
+// 18. binh luan album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_video` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -255,7 +255,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//19 cau hinh module
+// 19 cau hinh module
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `key` varchar(50) NOT NULL DEFAULT '',
@@ -264,7 +264,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//20 ca si
+// 20 ca si
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_singer` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ten` varchar(100) NOT NULL DEFAULT '',
@@ -277,7 +277,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//21 nhac si
+// 21 nhac si
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) NOT NULL DEFAULT '',
@@ -289,7 +289,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-//22 FTP
+// 22 FTP
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `host` varchar(30) NOT NULL DEFAULT '',
@@ -314,7 +314,7 @@ $sql_create_module[] = "INSERT INTO `" . $db_config['prefix'] . "_" . $lang . "_
 (7, 'nctclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/video', '/', '/', 1)";
 
 
-//22 FTP
+// 22 FTP
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_topsong` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `songid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -324,7 +324,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `songid` (`songid`)
 ) ENGINE=MyISAM";
 
-//1. them vao hot album
+// 1. them vao hot album
 $i = 1;
 while( $i <= 9 )
 {
