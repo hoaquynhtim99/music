@@ -9,18 +9,15 @@
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$page_title = $lang_module['content_list'];
-
-$category = get_category();
-if( count( $category ) == 0 )
-{
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=category" );
-	die();
-}
+$page_title = $classMusic->lang('content_list');
+$global_array_cat_song = $classMusic->get_category();
 
 $numshow = $nv_Request->get_int( 'numshow', 'get', 100 );
-
 $order = filter_text_input( 'order', 'get', 'id' );
+$now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
+$where_search = $nv_Request->get_int( 'where_search', 'get', 0 );
+$type_search = filter_text_input( 'type_search', 'get', 'ten' );
+$q = filter_text_input( 'q', 'get', '' );
 
 if( $order == 'ten' )
 {
@@ -38,11 +35,6 @@ else
 {
 	$sort = "ORDER BY a.id DESC";
 }
-
-$now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
-$where_search = $nv_Request->get_int( 'where_search', 'get', 0 );
-$type_search = filter_text_input( 'type_search', 'get', 'ten' );
-$q = filter_text_input( 'q', 'get', '' );
 
 if( $where_search == 0 )
 {
@@ -123,7 +115,7 @@ $xtpl->assign( 'TYPE_NHACSI', ( $type_search == 'nhacsi' ) ? " selected=\"select
 $xtpl->assign( 'TYPE_ALBUM', ( $type_search == 'album' ) ? " selected=\"selected\"" : "" );
 
 // Xuat the loai tim kiem
-foreach( $category as $id => $title )
+foreach( $global_array_cat_song as $id => $title )
 {
 	$title['selected'] = ( $id == $where_search ) ? " selected=\"selected\"" : "";
 	$xtpl->assign( 'CAT', $title );
@@ -153,18 +145,18 @@ while( $rs = $db->sql_fetchrow( $result ) )
 {
 	$xtpl->assign( 'id', $rs['id'] );
 	$xtpl->assign( 'name', $rs['tenthat'] );
-	$xtpl->assign( 'singer', empty( $rs['singername'] ) ? $lang_module['unknow'] : $rs['singername'] );
+	$xtpl->assign( 'singer', empty( $rs['singername'] ) ? $classMusic->lang('unknow') : $rs['singername'] );
 	$xtpl->assign( 'URL', $mainURL . "=listenone/" . $rs['id'] . "/" . $rs['ten'] );
 
 	$xtpl->assign( 'album', $rs['albumname'] );
-	$xtpl->assign( 'category', $category[$rs['theloai']]['title'] );
+	$xtpl->assign( 'category', $global_array_cat_song[$rs['theloai']]['title'] );
 
 	$class = ( $i % 2 ) ? " class=\"second\"" : "";
 	$xtpl->assign( 'class', $class );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&id=" . $rs['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $rs['id'] );
 
-	$str_ac = ( $rs['active'] == 1 ) ? $lang_module['active_yes'] : $lang_module['active_no'];
+	$str_ac = ( $rs['active'] == 1 ) ? $classMusic->lang('active_yes') : $classMusic->lang('active_no');
 	$xtpl->assign( 'active', $str_ac );
 	$xtpl->assign( 'URL_ACTIVE', $link_active . $rs['id'] );
 

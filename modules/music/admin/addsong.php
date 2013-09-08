@@ -15,7 +15,6 @@ function nv_check_ok_song( $array )
 
 	if( empty( $array['ten'] ) ) return $lang_module['song_error_ten'];
 	if( empty( $array['tenthat'] ) ) return $lang_module['song_error_tenthat'];
-	// if( empty( $array['theloai'] ) ) return $lang_module['song_error_theloai'];
 	if( empty( $array['duongdan'] ) ) return $lang_module['song_error_duongdan'];
 
 	return "";
@@ -34,13 +33,15 @@ $array['casimoi'] = filter_text_input( 'casimoi', 'post', '' );
 $array['nhacsi'] = $nv_Request->get_int( 'nhacsi', 'get,post', 0 );
 $array['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'get,post', '' );
 $array['album'] = $nv_Request->get_int( 'album', 'get,post', 0 );
+
 $array['theloai'] = $nv_Request->get_int( 'theloai', 'get,post', 0 );
+$array['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
+
 $array['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
 $array['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
 $array['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 $array['size'] = $nv_Request->get_int( 'size', 'post', 0 );
 $array['lyric'] = filter_text_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
-$array['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
 
 // Them ca si va nhac si moi
 if( $array['casimoi'] != '' )
@@ -67,8 +68,6 @@ if( $array['nhacsimoi'] != '' )
 // Lay cac the loai
 $category = get_category();
 $setting = setting_music();
-$allsinger = getallsinger();
-$allauthor = getallauthor();
 
 if( empty( $id ) )
 {
@@ -90,7 +89,7 @@ else
 	$array_old['album'] = $row['album'];
 	$array_old['theloai'] = $row['theloai'];
 
-	$sql = "SELECT `body` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $id . " ORDER BY `dt` DESC LIMIT 1";
+	$sql = "SELECT `body` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $id . " ORDER BY `dt` ASC LIMIT 1";
 	$result = $db->sql_query( $sql );
 	list( $array_old['lyric'] ) = $db->sql_fetchrow( $result );
 	$array_old['lyric'] = nv_br2nl( $array_old['lyric'] );

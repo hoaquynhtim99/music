@@ -9,7 +9,7 @@
 
 if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_MODADMIN' ) ) die( 'Stop!!!' );
 
-$submenu['addsong'] = $lang_module['sub_addsong'];
+$submenu['content-song'] = $lang_module['sub_addsong'];
 $submenu['addFromOtherSite'] = $lang_module['addFromOtherSite_title'];
 $submenu['album'] = $lang_module['sub_album'];
 $submenu['addalbum'] = $lang_module['sub_add_album'];
@@ -29,19 +29,13 @@ $submenu['category'] = $lang_module['sub_category'];
 $submenu['video_category'] = $lang_module['sub_videocategory'];
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array( 'main', 'addsong', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'findsongtoalbum', 'getalbumid', 'findasongtoalbum', 'ex', 'addFromOtherSite' );
+$allow_func = array( 'main', 'content-song', 'category', 'del', 'delall', 'album', 'addalbum', 'alias', 'hotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'findsongtoalbum', 'getalbumid', 'findasongtoalbum', 'ex', 'addFromOtherSite' );
 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
-// Sap xep
-function changeorder( $old, $new, $wherechange )
-{
-	global $module_data;
-	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_" . $wherechange . "`
-	SET `order` = " . $new . "
-	WHERE `order` = " . $old . ";";
-	return mysql_query( $sql );
-}
+// Class cua module
+require_once( NV_ROOTDIR . "/modules/" . $module_file . "/global.class.php" );
+$classMusic = new nv_mod_music();
 
 // Hien thi cac trang
 function new_page_admin( $ts, $now_page, $link )
@@ -50,7 +44,7 @@ function new_page_admin( $ts, $now_page, $link )
 	if( $ts > 1 )
 	{
 		$page = "<div id=\"numpage\"><p>";
-		if( $ts > 5 && $now_page > 3 )
+		if( $ts > 5 and $now_page > 3 )
 		{
 			$page .= "<a href=\"" . $link . "";
 			$page .= "&now_page=1\" class=\"next\">&lt;&lt;</a> ... ";
@@ -140,7 +134,7 @@ function new_page_admin( $ts, $now_page, $link )
 				$page .= " <a href=\"" . $link . "";
 				$page .= "&now_page=" . $now_page_max . "\" class=\"next\">&gt;</a>";
 			}
-		if( ( $ts > 5 ) && ( $now_page < ( $ts - 2 ) ) )
+		if( ( $ts > 5 ) and ( $now_page < ( $ts - 2 ) ) )
 		{
 			$page .= " ... <a href=\"" . $link . "";
 			$page .= "&now_page=" . $ts . "\" class=\"next\">&gt;&gt;</a>";
@@ -149,85 +143,5 @@ function new_page_admin( $ts, $now_page, $link )
 	}
 	return $page;
 }
-
-// Cap nhat bai hat khi xoa, sua album
-function updateSwhendelA( $id, $newid )
-{
-	global $module_data, $db;
-
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=" . $newid . " WHERE `album`=" . $id );
-	return;
-}
-
-// Cap nhat bai hat, album ,video khi xoa, sua ca si
-function updatewhendelS( $id, $newid )
-{
-	global $module_data, $db;
-
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `casi`=" . $newid . " WHERE `casi`=" . $id );
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `casi`=" . $newid . " WHERE `casi`=" . $id );
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `casi`=" . $newid . " WHERE `casi`=" . $id );
-	return;
-}
-// Cap nhat bai hat, album ,video khi xoa, sua nhac si
-function updatewhendelA( $id, $newid )
-{
-	global $module_data, $db;
-
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `nhacsi`=" . $newid . " WHERE `nhacsi`=" . $id );
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `nhacsi`=" . $newid . " WHERE `nhacsi`=" . $id );
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `nhacsi`=" . $newid . " WHERE `nhacsi`=" . $id );
-	return;
-}
-// Lay nhac si tu id
-function getauthorbyID( $id )
-{
-	global $module_data, $db;
-
-	$author = array();
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_author WHERE id=" . $id );
-	$author = $db->sql_fetchrow( $result );
-
-	return $author;
-}
-// Cap nhat bai hat, video khi xoa, sua host nhac
-function updatewhendelFTP( $server, $active )
-{
-	global $module_data, $db;
-
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `active` = " . $active . " WHERE `server` = " . $server );
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `active` = " . $active . " WHERE `server` = " . $server );
-	return;
-}
-
-// Xuat duong dan nguoc lai
-function admin_outputURL( $server, $inputurl )
-{
-	global $module_name, $setting;
-	$output = "";
-	if( $server == 0 )
-	{
-		$output = $inputurl;
-	}
-	elseif( $server == 1 )
-	{
-		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $inputurl;
-	}
-	else
-	{
-		$ftpdata = getFTP();
-		foreach( $ftpdata as $id => $data )
-		{
-			if( $id == $server )
-			{
-				$output = $data['fulladdress'] . $data['subpart'] . $inputurl;
-				break;
-			}
-		}
-	}
-	return $output;
-}
-
-require_once NV_ROOTDIR . "/modules/" . $module_name . '/global.functions.php';
 
 ?>

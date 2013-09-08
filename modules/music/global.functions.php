@@ -9,58 +9,24 @@
 
 if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
-global $mainURL, $main_header_URL;
 $mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
 $main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
 
-// Lay thong tin the loai
-function get_category()
-{
-	global $module_data, $db, $lang_module;
-
-	$category = array();
-
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_category ORDER BY `weight` ASC";
-
-	$result = nv_db_cache( $sql, 'id' );
-
-	$category[0] = array(
-		'id' => 0, //
-		'title' => $lang_module['unknow'], //
-		'keywords' => '', //
-		'description' => '' //
-	);
-	
-	if( ! empty( $result ) )
-	{
-		foreach( $result as $row )
-		{
-			$category[$row['id']] = array(
-				'id' => $row['id'], //
-				'title' => $row['title'], //
-				'keywords' => $row['keywords'], //
-				'description' => $row['description'] //
-			);
-		}
-	}
-	return $category;
-}
-
-// lay thong tin the loai video
+// Lay thong tin the loai video
 function get_videocategory()
 {
 	global $module_data, $db, $lang_module;
 
 	$category = array();
 
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video_category ORDER BY `weight` ASC";
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` ORDER BY `weight` ASC";
 	$result = nv_db_cache( $sql, 'id' );
 	
 	$category[0] = array(
-		'id' => 0, //
-		'title' => $lang_module['unknow'], //
-		'keywords' => '', //
-		'description' => '' //
+		'id' => 0,
+		'title' => $lang_module['unknow'],
+		'keywords' => '',
+		'description' => ''
 	);
 
 	if( ! empty( $result ) )
@@ -68,43 +34,15 @@ function get_videocategory()
 		foreach( $result as $row )
 		{
 			$category[$row['id']] = array(
-				'id' => $row['id'], //
-				'title' => $row['title'], //
-				'keywords' => $row['keywords'], //
-				'description' => $row['description'] //
+				'id' => $row['id'],
+				'title' => $row['title'],
+				'keywords' => $row['keywords'],
+				'description' => $row['description']
 			);
 		}
 	}
 
 	return $category;
-}
-
-// cau hinh module
-function setting_music()
-{
-	global $module_data, $db;
-
-	$setting = array();
-
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_setting";
-	$result = nv_db_cache( $sql, 'id' );
-
-	if( ! empty( $result ) )
-	{
-		foreach( $result as $row )
-		{
-			if( in_array( $row['key'], array( "root_contain", "description" ) ) )
-			{
-				$setting[$row['key']] = $row['char'];
-			}
-			else
-			{
-				$setting[$row['key']] = $row['value'];
-			}
-		}
-	}
-
-	return $setting;
 }
 
 // Lay album tu id
@@ -113,127 +51,55 @@ function getalbumbyID( $id )
 	global $module_data, $db;
 
 	$album = array();
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id = " . $id );
+	$result = $db->sql_query( " SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $id );
 	$album = $db->sql_fetchrow( $result );
 
 	return $album;
 }
 
-// lay video tu id
+// Lay video tu id
 function getvideobyID( $id )
 {
 	global $module_data, $db;
 
 	$video = array();
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id = " . $id );
+	$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $id );
 	$video = $db->sql_fetchrow( $result );
 
 	return $video;
 }
 
-// lay song tu id
+// Lay song tu id
 function getsongbyID( $id )
 {
 	global $module_data, $db;
 
 	$song = array();
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id = " . $id );
+	$result = $db->sql_query( " SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id );
 	$song = $db->sql_fetchrow( $result );
 
 	return $song;
 }
 
-// lay album tu ten
+// Lay album tu ten
 function getalbumbyNAME( $name )
 {
 	global $module_data, $db;
 
 	$album = array();
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE name =\"" . $name . "\"" );
+	$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `name`=" . $db->dbescape( $name ) );
 	$album = $db->sql_fetchrow( $result );
 
 	return $album;
 }
 
-// lay tat ca ca si
-function getallsinger( $reverse = false )
-{
-	global $module_data, $db, $lang_module;
-
-	$allsinger = array();
-
-	if( $reverse === true )
-	{
-		$allsinger[$lang_module['unknow']] = 0;
-	}
-	else
-	{
-		$allsinger[0] = $lang_module['unknow'];
-	}
-
-	$sql = "SELECT `id`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer ORDER BY ten ASC";
-	$result = nv_db_cache( $sql, 'ten' );
-
-	if( ! empty( $result ) )
-	{
-		foreach( $result as $row )
-		{
-			if( $reverse === true )
-			{
-				$allsinger[$row['tenthat']] = $row['id'];
-			}
-			else
-			{
-				$allsinger[$row['id']] = $row['tenthat'];
-			}
-		}
-	}
-
-	return $allsinger;
-}
-// lay tat ca nhac si
-function getallauthor( $reverse = false )
-{
-	global $module_data, $db, $lang_module;
-
-	$allsinger = array();
-
-	if( $reverse === true )
-	{
-		$allsinger[$lang_module['unknow']] = 0;
-	}
-	else
-	{
-		$allsinger[0] = $lang_module['unknow'];
-	}
-
-	$sql = "SELECT `id`, `tenthat` FROM " . NV_PREFIXLANG . "_" . $module_data . "_author ORDER BY ten ASC";
-	$result = nv_db_cache( $sql, 'ten' );
-
-	if( ! empty( $result ) )
-	{
-		foreach( $result as $row )
-		{
-			if( $reverse === true )
-			{
-				$allsinger[$row['tenthat']] = $row['id'];
-			}
-			else
-			{
-				$allsinger[$row['id']] = $row['tenthat'];
-			}
-		}
-	}
-
-	return $allsinger;
-}
-// lay ca si tu id
+// Lay ca si tu id
 function getsingerbyID( $id )
 {
 	global $module_data, $db;
 
 	$singer = array();
-	$result = $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $id );
+	$result = $db->sql_query( " SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $id );
 	$singer = $db->sql_fetchrow( $result );
 
 	return $singer;
@@ -242,9 +108,11 @@ function getsingerbyID( $id )
 // Them moi mot ca si
 function newsinger( $name, $tname )
 {
-	$error = '';
 	global $module_data, $lang_module, $db, $module_name;
-	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )";
+	
+	$error = '';
+	
+	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`, `numvideo` ) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0, 0 )";
 
 	$newid = $db->sql_query_insert_id( $sql );
 
@@ -262,6 +130,7 @@ function newsinger( $name, $tname )
 function newauthor( $name, $tname )
 {
 	global $module_data, $lang_module, $db, $module_name;
+	
 	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $tname ) . ", '', '', 0, 0 )";
 
 	$newid = $db->sql_query_insert_id( $sql );
@@ -276,105 +145,93 @@ function newauthor( $name, $tname )
 	return false;
 }
 
-// cap nhat ca si
+// Cap nhat ca si
 function updatesinger( $id, $what, $action )
 {
 	global $module_data, $db;
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . " = " . $what . $action . " WHERE `id` = '" . $id . "'" );
-	return;
-}
-
-// cap nhat nhac si
-function updateauthor( $id, $what, $action )
-{
-	global $module_data, $db;
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_author` SET " . $what . " = " . $what . $action . " WHERE `id` = '" . $id . "'" );
-	return;
-}
-
-// cap nhat album
-function updatealbum( $id, $action )
-{
-	global $module_data, $db;
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET numsong = numsong" . $action . " WHERE `id` = '" . $id . "'" );
-	return;
-}
-
-// Cap nhat so bai hat the loai am nha
-function UpdateSongCat( $id, $action )
-{
-	global $module_data, $db;
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET numsong = numsong" . $action . " WHERE `id`=" . $id );
-	return;
-}
-
-// Cap nhat so bai hat the loai am nha
-function UpdateVideoCat( $id, $action )
-{
-	global $module_data, $db;
-	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET numvideo = numvideo" . $action . " WHERE `id`=" . $id );
-	return;
-}
-
-// xoa cac binh luan
-function delcomment( $delwwhat, $where )
-{
-	global $module_data, $db;
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $delwwhat . "` WHERE `what`=" . $where;
-	$result = $db->sql_query( $sql );
-	return;
-}
-
-// xoa cac loi bai hat
-function dellyric( $songid )
-{
-	global $module_data, $db;
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $songid;
-	$result = $db->sql_query( $sql );
-	return;
-}
-
-// xoa cac bao loi
-function delerror( $where, $key )
-{
-	global $module_data, $db;
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
-	$result = $db->sql_query( $sql );
+	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET " . $what . "=" . $what . $action . " WHERE `id`=" . $id );
 	return $result;
 }
 
-// xoa cac qua tang am nhac
+// Cap nhat nhac si
+function updateauthor( $id, $what, $action )
+{
+	global $module_data, $db;
+	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_author` SET " . $what . " = " . $what . $action . " WHERE `id`=" . $id );
+	return $result;
+}
+
+// Cap nhat album
+function updatealbum( $id, $action )
+{
+	global $module_data, $db;
+	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET numsong = numsong" . $action . " WHERE `id`=" . $id );
+	return $result;
+}
+
+// Cap nhat so bai hat the loai am nhac
+function UpdateSongCat( $id, $action )
+{
+	global $module_data, $db;
+	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET numsong = numsong" . $action . " WHERE `id`=" . $id );
+	return $result;
+}
+
+// Cap nhat so bai hat the loai am nhac
+function UpdateVideoCat( $id, $action )
+{
+	global $module_data, $db;
+	
+	$result = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video_category` SET numvideo = numvideo" . $action . " WHERE `id`=" . $id );
+	return $result;
+}
+
+// Xoa cac binh luan
+function delcomment( $delwwhat, $where )
+{
+	global $module_data, $db;
+	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $delwwhat . "` WHERE `what`=" . $where;
+	$result = $db->sql_query( $sql );
+	
+	return $result;
+}
+
+// Xoa cac loi bai hat
+function dellyric( $songid )
+{
+	global $module_data, $db;
+	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $songid;
+	$result = $db->sql_query( $sql );
+	
+	return $result;
+}
+
+// Xoa cac bao loi
+function delerror( $where, $key )
+{
+	global $module_data, $db;
+	
+	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
+	$result = $db->sql_query( $sql );
+	
+	return $result;
+}
+
+// Xoa cac qua tang am nhac
 function delgift( $songid )
 {
 	global $module_data, $db;
+	
 	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `songid` =" . $songid;
 	$result = $db->sql_query( $sql );
+	
 	return;
-}
-// Lay thong tin ftp cua host nhac
-function getFTP()
-{
-	global $module_data, $db, $lang_module;
-	$ftpdata = array();
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ftp` ORDER BY id DESC";
-	$result = nv_db_cache( $sql, 'id' );
-
-	if( ! empty( $result ) )
-	{
-		foreach( $result as $row )
-		{
-			$ftpdata[$row['id']] = array(
-				"id" => $row['id'],
-				"host" => $row['host'],
-				"user" => $row['user'],
-				"pass" => $row['pass'],
-				"fulladdress" => $row['fulladdress'],
-				"subpart" => $row['subpart'],
-				"ftppart" => $row['ftppart'],
-				"active" => ( $row['active'] == 1 ) ? $lang_module['active_yes'] : $lang_module['active_no'] );
-		}
-	}
-	return $ftpdata;
 }
 
 // Tao duong dan tu mot chuoi
@@ -426,7 +283,7 @@ function creatURL( $inputurl )
 	return $songdata;
 }
 
-// xuat duong dan day du
+// Xuat duong dan day du
 function outputURL( $server, $inputurl )
 {
 	global $module_name, $setting;
@@ -727,6 +584,7 @@ function outputURL( $server, $inputurl )
 function unlinkSV( $server, $url )
 {
 	global $module_name, $setting;
+	
 	if( $server == 1 )
 	{
 		@unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $url );
@@ -757,11 +615,12 @@ function unlinkSV( $server, $url )
 	return;
 }
 
-//
 function nv_get_URL_content( $target_url )
 {
 	global $global_config;
+	
 	require_once( NV_ROOTDIR . "/includes/class/geturl.class.php" );
+	
 	$UrlGetContents = new UrlGetContents( $global_config );
 	return $UrlGetContents->get( $target_url );
 }

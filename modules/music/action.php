@@ -38,54 +38,55 @@ $sql_create_module = $sql_drop_module;
 // 1. bang bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `ten` varchar(255) NOT NULL DEFAULT '',
-  `tenthat` varchar(255) NOT NULL DEFAULT '',
-  `casi` varchar(255) NOT NULL DEFAULT '',
-  `nhacsi` varchar(255) NOT NULL DEFAULT '',
-  `album` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `theloai` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `listcat` varchar(255) NOT NULL DEFAULT '',
-  `duongdan` varchar(255) NOT NULL DEFAULT '',
-  `upboi` varchar(255) NOT NULL DEFAULT '',
-  `numview` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `active` smallint(2) NOT NULL DEFAULT '0',
-  `bitrate` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `size` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `duration` bigint(20) unsigned NOT NULL DEFAULT '0',
-  `server` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `dt` int(11) unsigned NOT NULL DEFAULT '0',
-  `binhchon` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `hit` varchar(50) NOT NULL DEFAULT '',
+  `ten` varchar(255) NOT NULL DEFAULT '' COMMENT 'Alias bài hát',
+  `tenthat` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên đầy đủ bài hát',
+  `casi` varchar(255) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của ca sĩ có dạng 0,id1,id2,id3,...,0',
+  `nhacsi` varchar(255) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của nhạc sĩ có dạng 0,id1,id2,id3,...,0',
+  `album` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID album của bài hát',
+  `theloai` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID thể loại chính của bài hát',
+  `listcat` varchar(255) NOT NULL DEFAULT '' COMMENT 'Danh sách ID phụ của thể loại có dạng id1,id2,...',
+  `duongdan` varchar(255) NOT NULL DEFAULT '' COMMENT 'Link đến file nhạc',
+  `upboi` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người đăng bài hát nếu là bài hát do khách upload',
+  `numview` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
+  `active` smallint(2) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
+  `bitrate` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bitrate của bài hát',
+  `size` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'Kích thước file nhạc',
+  `duration` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian file nhạc',
+  `server` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID server chứa nhạc',
+  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID thành viên đăng bài hát hày',
+  `dt` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  `binhchon` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt like',
+  `hit` varchar(50) NOT NULL DEFAULT '' COMMENT 'Dữ liệu về độ HOT của bài hát',
+  `is_official` tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1: Chính thức, 0: Thành viên đăng',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
 // 2. album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `tname` varchar(255) NOT NULL DEFAULT '',
-  `casi` varchar(255) NOT NULL DEFAULT '',
-  `thumb` varchar(255) NOT NULL DEFAULT '',
-  `numview` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `upboi` varchar(255) NOT NULL DEFAULT '',
-  `describe` mediumtext NOT NULL,
-  `active` smallint(2) NOT NULL DEFAULT '0',
-  `numsong` int(11) NOT NULL DEFAULT '0',
-  `listsong` mediumtext NOT NULL,
-  `addtime` int(11) unsigned NOT NULL DEFAULT '0',
-  `hit` varchar(50) NOT NULL DEFAULT '',
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Alias của album',
+  `tname` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên đầy đủ của album',
+  `casi` varchar(255) NOT NULL DEFAULT '' COMMENT 'Danh sách ca sĩ của album có dạng 0,id1,id2,...,0',
+  `thumb` varchar(255) NOT NULL DEFAULT '' COMMENT 'Đường dẫn ảnh',
+  `numview` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt nghe',
+  `upboi` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người tạo album',
+  `describe` mediumtext NOT NULL COMMENT 'Mô tả album',
+  `active` smallint(2) NOT NULL DEFAULT '0' COMMENT '0: Ngừng hoạt động, 1: Hoạt động',
+  `numsong` int(11) NOT NULL DEFAULT '0' COMMENT 'Số bài hát',
+  `listsong` mediumtext NOT NULL COMMENT 'Danh sách id bài hát có dạng id1,id2,id3...',
+  `addtime` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  `hit` varchar(50) NOT NULL DEFAULT '' COMMENT 'Thông tin HIT của album',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
 // 3. The loai
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category` (
   `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL DEFAULT '',
-  `keywords` mediumtext NOT NULL,
-  `description` varchar(255) NOT NULL DEFAULT '',
-  `numsong` int(11) unsigned NOT NULL DEFAULT '0',
-  `weight` smallint(4) unsigned NOT NULL DEFAULT '0',
+  `title` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên thể loại',
+  `keywords` mediumtext NOT NULL COMMENT 'Từ khóa của thể loại',
+  `description` varchar(255) NOT NULL DEFAULT '' COMMENT 'Mô tả thể loại',
+  `numsong` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát',
+  `weight` smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Thứ tự',
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM";
@@ -93,8 +94,8 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 // 4. Album HOT
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `albumid` mediumint( 8 ) NOT NULL DEFAULT '0',
-  `stt`mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `albumid` mediumint( 8 ) NOT NULL DEFAULT '0' COMMENT 'ID album',
+  `stt` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '' COMMENT 'Thứ tự',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
@@ -108,21 +109,21 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
 // 6. quang cao tren player
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `stt` mediumint(8) unsigned NOT NULL DEFAULT '0',
-  `link` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(100) NOT NULL DEFAULT '',
-  `url` varchar( 255 ) NOT NULL DEFAULT '',
+  `stt` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Số thứ tự',
+  `link` varchar(255) NOT NULL DEFAULT '' COMMENT 'Đường dẫn quảng cáo',
+  `name` varchar(100) NOT NULL DEFAULT '' COMMENT 'Tiêu đề quảng cáo',
+  `url` varchar( 255 ) NOT NULL DEFAULT '' COMMENT 'Đường dẫn file ảnh, flash',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
 // 7. binh luan bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song` (
-  `id`mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `body` text NOT NULL,
-  `dt` int(11) unsigned NOT NULL DEFAULT '0',
-  `what` varchar(255) NOT NULL DEFAULT '',
-  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
+  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người bình luận',
+  `body` text NOT NULL COMMENT 'Nội dung bình luận',
+  `dt` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian bình luận',
+  `what` varchar(255) NOT NULL DEFAULT '' COMMENT 'ID bài hát bình chọn',
+  `userid` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID thành viên bình luận',
   `active` smallint(2) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
