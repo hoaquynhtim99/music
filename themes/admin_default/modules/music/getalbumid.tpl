@@ -4,18 +4,14 @@
     <head>
         <meta http-equiv="Content-Language" content="vi" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>{LANG.pagetitle1}</title>
+		<title>{PAGE_TITLE}</title>
 		
 		<link rel="StyleSheet" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.admin_theme}/css/admin.css" type="text/css" />
 		<link type="text/css" href="{NV_BASE_SITEURL}js/ui/jquery.ui.core.css" rel="stylesheet" />
 		<link type="text/css" href="{NV_BASE_SITEURL}js/ui/jquery.ui.theme.css" rel="stylesheet" />
 		<link type="text/css" href="{NV_BASE_SITEURL}js/ui/jquery.ui.datepicker.css" rel="stylesheet" />
 		<link type="text/css" href="{NV_BASE_SITEURL}themes/{GLOBAL_CONFIG.module_theme}/css/{MODULE_FILE}.css" rel="stylesheet" />
-		<script type="text/javascript">
-			//<![CDATA[
-			var nv_siteroot = "{NV_BASE_SITEURL}";
-			//]]>
-		</script>
+		<script type="text/javascript">var nv_siteroot = "{NV_BASE_SITEURL}";</script>
 		<script type="text/javascript" src="{NV_BASE_SITEURL}js/language/{NV_LANG_INTERFACE}.js"></script>
 		<script type="text/javascript" src="{NV_BASE_SITEURL}js/global.js"></script>
 		<script type="text/javascript" src="{NV_BASE_SITEURL}js/admin.js"></script>
@@ -27,9 +23,7 @@
 		<script type="text/javascript" src="{NV_BASE_SITEURL}js/popcalendar/popcalendar.js"></script>
 		<script type="text/javascript" src="{NV_BASE_SITEURL}js/shadowbox/shadowbox.js"></script>
 		<link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}js/shadowbox/shadowbox.css" />
-		<script type="text/javascript">
-		Shadowbox.init();
-		</script>
+		<script type="text/javascript">Shadowbox.init();</script>
 	</head>
 	<body>
 		<div id="getuidcontent">
@@ -40,41 +34,23 @@
 			<table class="tab1">
 				<tbody>
 					<tr>
-						<td>
-							{LANG.album_name}
-						</td>
-						<td>
-							<input class="fixwidthinput" type="text" name="title" value="{SEARCH.title}" maxlength="100" />
-						</td>
-						<td>
-							{LANG.describle}
-						</td>
-						<td>
-							<input class="fixwidthinput" type="text" name="describe" value="{SEARCH.describe}" maxlength="100" />
-						</td>
+						<td>{LANG.album_name}</td>
+						<td><input class="music-input txt-fullmini" type="text" name="title" value="{SEARCH.title}" maxlength="100" /></td>
+						<td>{LANG.describle}</td>
+						<td><input class="music-input txt-fullmini" type="text" name="describe" value="{SEARCH.describe}" maxlength="100" /></td>
+					</tr>
+				</tbody>
+				<tbody class="second">
+					<tr>
+						<td>{LANG.who_up}</td>
+						<td><input class="music-input txt-fullmini" type="text" name="upboi" value="{SEARCH.upboi}" maxlength="100" /></td>
+						<td>{LANG.singer}</td>
+						<td><input class="music-input txt-fullmini" type="text" name="casi" value="{SEARCH.casi}" maxlength="100" /></td>
 					</tr>
 				</tbody>
 				<tbody>
 					<tr>
-						<td>
-							{LANG.who_up}
-						</td>
-						<td>
-							<input class="fixwidthinput" type="text" name="upboi" value="{SEARCH.upboi}" maxlength="100" />
-						</td>
-						<td>
-							{LANG.singer}
-						</td>
-						<td>
-							<input class="fixwidthinput" type="text" name="casi" value="{SEARCH.casi}" maxlength="100" />
-						</td>
-					</tr>
-				</tbody>
-				<tbody>
-					<tr>
-						<td colspan="4" class="center">
-							<input type="submit" name="submit" value="{LANG.search}"/>
-						</td>
+						<td colspan="4" class="center"><input type="submit" name="submit" value="{LANG.search}" class="music-button"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -98,18 +74,10 @@
 				<!-- BEGIN: row -->
 				<tbody{CLASS}>
 					<tr>
-						<td style="width:30px;">
-							<strong>{ROW.id}</strong>
-						</td>
-						<td>
-							{ROW.tname}
-						</td>
-						<td style="width:100px;">
-							{ROW.tenthat}
-						</td>
-						<td style="width:100px;white-space:nowrap;">
-							{ROW.upboi}
-						</td>
+						<td style="width:30px;"><strong>{ROW.id}</strong></td>
+						<td>{ROW.tname}</td>
+						<td style="width:100px;">{ROW.tenthat}</td>
+						<td style="width:100px;white-space:nowrap;">{ROW.upboi}</td>
 						<td style="width:50px;text-align:center">
 							<a title="" onclick="nv_close_pop('{ROW.id}');" href="javascript:void(0);">{LANG.select}</a>
 						</td>
@@ -129,7 +97,7 @@
 				<!-- END: generate_page -->
 			</table>
 			<script type="text/javascript">
-			function nv_close_pop ( name ) {
+			function nv_close_pop ( name ){
 			  $( "#{AREA}", opener.document ).val( name );
 			  window.close();
 			}

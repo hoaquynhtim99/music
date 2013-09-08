@@ -93,18 +93,6 @@ function getalbumbyNAME( $name )
 	return $album;
 }
 
-// Lay ca si tu id
-function getsingerbyID( $id )
-{
-	global $module_data, $db;
-
-	$singer = array();
-	$result = $db->sql_query( " SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $id );
-	$singer = $db->sql_fetchrow( $result );
-
-	return $singer;
-}
-
 // Them moi mot ca si
 function newsinger( $name, $tname )
 {

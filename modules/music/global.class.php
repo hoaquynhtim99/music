@@ -53,7 +53,9 @@ class nv_mod_music
 		$this->db_prefix_lang = $this->db_prefix . '_' . $this->lang_data;
 		$this->table_prefix = $this->db_prefix_lang . '_' . $this->mod_data;
 		$this->db = $db;
+		
 		$this->setting = $this->get_setting();
+		$this->setting['author_singer_defis'] = 'ft.'; // Tam thoi fix cung da
 		
 		$this->base_site_url = NV_BASE_SITEURL;
 		$this->root_dir = NV_ROOTDIR;
@@ -244,6 +246,77 @@ class nv_mod_music
 		}
 		
 		return $category;
+	}
+	
+	public function search_singer_id( $q, $limit = 0 )
+	{
+		// Gioi han khong qua lon
+		$limit = $limit ? ( int ) $limit : 1000;
+		$array = array();
+		
+		$sql = "SELECT `id` FROM `" . $this->table_prefix . "_singer` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$result = $this->db->sql_query( $sql );
+		while( $row = $this->db->sql_fetch_assoc( $result ) )
+		{
+			$array[] = $row['id'];
+		}
+		
+		return $array;
+	}
+	
+	public function string2array( $string, $split_char = ',' )
+	{
+		return array_filter( array_unique( array_map( "trim", explode( ",", $string ) ) ) );
+	}
+	
+	// Lay ca si tu id
+	public function getsingerbyID( $id )
+	{
+		$singer = array();
+		
+		if( is_array( $id ) )
+		{
+			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_singer` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			
+			while( $row = $this->db->sql_fetch_assoc( $result ) )
+			{
+				$singer[$row['id']] = $row;
+			}
+		}
+		else
+		{
+			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_singer` WHERE `id`=" . $id );
+			$singer = $this->db->sql_fetch_assoc( $result );
+		}
+
+		return $singer;
+	}
+	
+	public function build_author_singer_2string( $array, $string )
+	{
+		$id = $this->string2array( $string );
+		
+		$return = array();
+		
+		if( ! empty( $id ) )
+		{
+			foreach( $id as $_tmp )
+			{
+				if( isset( $array[$_tmp] ) )
+				{
+					$return[] = $array[$_tmp]['tenthat'];
+				}
+			}
+		}
+		
+		if( empty( $return ) )
+		{
+			return $this->lang('unknow');
+		}
+		else
+		{
+			return implode( " " . $this->setting['author_singer_defis'] . " ", $return );
+		}
 	}
 }
 
