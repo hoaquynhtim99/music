@@ -26,6 +26,7 @@ class nv_mod_music
 	private $base_site_url = null;
 	private $root_dir = null;
 	private $upload_dir = null;
+	private $currenttime = null;
 	
 	private $language = array();
 
@@ -61,6 +62,7 @@ class nv_mod_music
 		$this->root_dir = NV_ROOTDIR;
 		$this->upload_dir = NV_UPLOADS_DIR;
 		$this->language = $lang_module;
+		$this->currenttime = NV_CURRENTTIME;
 	}
 	
 	private function handle_error( $messgae = '' )
@@ -73,9 +75,19 @@ class nv_mod_music
 		if( ! defined( 'NV_IS_MODADMIN' ) ) $this->handle_error();
 	}
 	
+	private function nl2br( $string )
+	{
+		return nv_nl2br( $string );
+	}
+	
 	private function db_cache( $sql, $id = '', $module_name = '' )
 	{
 		return nv_db_cache( $sql, $id, $module_name );
+	}
+	
+	private function del_cache( $module_name )
+	{
+		return nv_del_moduleCache( $module_name );
 	}
 	
 	private function get_setting()
@@ -292,6 +304,26 @@ class nv_mod_music
 		return $singer;
 	}
 	
+	// Lay ca si tu ten
+	public function getsingerbyName( $name )
+	{
+		$singer = array();
+		$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_singer` WHERE `tenthat`=" . $this->db->dbescape( $name ) );
+		$singer = $this->db->sql_fetch_assoc( $result );
+
+		return $singer;
+	}
+	
+	// Lay nhac si tu ten
+	public function getauthorbyName( $name )
+	{
+		$author = array();
+		$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_author` WHERE `tenthat`=" . $this->db->dbescape( $name ) );
+		$author = $this->db->sql_fetch_assoc( $result );
+
+		return $author;
+	}
+	
 	public function build_author_singer_2string( $array, $string )
 	{
 		$id = $this->string2array( $string );
@@ -317,6 +349,375 @@ class nv_mod_music
 		{
 			return implode( " " . $this->setting['author_singer_defis'] . " ", $return );
 		}
+	}
+	
+	// Them moi mot ca si
+	public function newsinger( $name, $tname )
+	{
+		$sql = "INSERT INTO `" . $this->table_prefix . "_singer` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numalbum`, `numvideo` ) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0, 0 )";
+
+		$newid = $this->db->sql_query_insert_id( $sql );
+
+		if( $newid )
+		{
+			$this->db->sql_freeresult();
+			$this->del_cache( $this->mod_name );
+			return $newid;
+		}
+
+		return false;
+	}
+
+	// Them moi mot nhac si
+	public function newauthor( $name, $tname )
+	{
+		$sql = "INSERT INTO `" . $this->table_prefix . "_author` ( `id`, `ten`, `tenthat`, `thumb`, `introduction`, `numsong`, `numvideo`) VALUES ( NULL, " . $this->db->dbescape( $name ) . ", " . $this->db->dbescape( $tname ) . ", '', '', 0, 0 )";
+
+		$newid = $this->db->sql_query_insert_id( $sql );
+
+		if( $newid )
+		{
+			$this->db->sql_freeresult();
+			$this->del_cache( $this->mod_name );
+			return $newid;
+		}
+
+		return false;
+	}
+	
+	public function build_query_singer_author( $input )
+	{
+		if( empty( $input ) )
+		{
+			$input = array( 0 );
+		}
+		
+		return "0," . implode( ",", $input ) . ",0";
+	}
+	
+	public function fix_cat_song( $id )
+	{
+		if( ! is_array( $id ) )
+		{
+			$id = array( $id );
+		}
+		
+		foreach( $id as $_id )
+		{
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "` WHERE `theloai`=" . $_id . " OR `listcat` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_category` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+		}
+	}
+	
+	public function fix_singer( $id )
+	{
+		if( ! is_array( $id ) )
+		{
+			$id = array( $id );
+		}
+		
+		foreach( $id as $_id )
+		{
+			// Bai hat
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "` WHERE `casi` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_singer` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+			
+			// Album
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_album` WHERE `casi` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_singer` SET `numalbum`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+			
+			// Video
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_video` WHERE `casi` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_singer` SET `numvideo`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+		}
+	}
+	
+	public function fix_author( $id )
+	{
+		if( ! is_array( $id ) )
+		{
+			$id = array( $id );
+		}
+		
+		foreach( $id as $_id )
+		{
+			// Bai hat
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "` WHERE `nhacsi` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_author` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+			
+			// Video
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_video` WHERE `nhacsi` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_author` SET `numvideo`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+		}
+	}
+	
+	public function fix_album( $id )
+	{
+		if( ! is_array( $id ) )
+		{
+			$id = array( $id );
+		}
+		
+		foreach( $id as $_id )
+		{
+			// Lay bai hat cu
+			$sql = "SELECT `listsong` FROM `" . $this->table_prefix . "_album` WHERE `id`=" . $_id;
+			$result = $this->db->sql_query( $sql );
+			list( $list_song ) = $this->db->sql_fetchrow( $result );
+			$list_song = array_filter( array_unique( explode( ',', $list_song ) ) );
+			
+			// Lay cau hinh cua cac bai hat them vao danh sach bai hat cua album neu co
+			$sql = "SELECT `id` FROM `" . $this->table_prefix . "` WHERE `album`=" . $_id;
+			$result = $this->db->sql_query( $sql );
+			while( $row = $this->db->sql_fetchrow( $result ) )
+			{
+				if( ! in_array( $row['id'], $list_song ) )
+				{
+					$list_song[] = $row['id'];
+				}
+			}
+
+			// Cap nhat lai so bai hat va danh sach bai hat
+			$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_album` SET `listsong`='" . implode( ',', $list_song ) . "', `numsong`=" . sizeof( $list_song ) . " WHERE `id`=" . $_id );
+		}
+	}
+	
+	public function edit_song( $array_old, $array )
+	{
+		$array_old['casi'] = empty( $array_old['casi'] ) ? array( 0 ) : $array_old['casi'];
+		$array_old['nhacsi'] = empty( $array_old['nhacsi'] ) ? array( 0 ) : $array_old['nhacsi'];
+		$array_old['theloai'] = ! isset( $array_old['theloai'] ) ? 0 : $array_old['theloai'];
+		$array_old['lyric'] = ! isset( $array_old['lyric'] ) ? "" : $array_old['lyric'];
+		$array_old['listcat'] = ! isset( $array_old['listcat'] ) ? array() : ( array ) $array_old['listcat'];
+
+		$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
+		$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
+		$array['casi'] = empty( $array['casi'] ) ? array( 0 ) : $array['casi'];
+		$array['nhacsi'] = empty( $array['nhacsi'] ) ? array( 0 ) : $array['nhacsi'];
+		$array['album'] = ! isset( $array['album'] ) ? 0 : $array['album'];
+		$array['theloai'] = ! isset( $array['theloai'] ) ? 0 : $array['theloai'];
+		$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
+		$array['duongdan'] = ! isset( $array['duongdan'] ) ? "" : $array['duongdan'];
+		$array['bitrate'] = ! isset( $array['bitrate'] ) ? 0 : $array['bitrate'];
+		$array['size'] = ! isset( $array['size'] ) ? 0 : $array['size'];
+		$array['duration'] = ! isset( $array['duration'] ) ? 0 : $array['duration'];
+		$array['server'] = ! isset( $array['server'] ) ? 1 : $array['server'];
+		$array['userid'] = ! isset( $array['userid'] ) ? 1 : $array['userid'];
+		$array['upboi'] = ! isset( $array['upboi'] ) ? "N/A" : $array['upboi'];
+		$array['lyric'] = ! isset( $array['lyric'] ) ? "" : $array['lyric'];
+		$array['lyric_id'] = ! isset( $array['lyric_id'] ) ? 0 : $array['lyric_id'];
+		$array['id'] = ! isset( $array['id'] ) ? 0 : $array['id'];
+		$array['is_official'] = ! isset( $array['is_official'] ) ? 0 : $array['is_official'];
+
+		$sql = "UPDATE `" . $this->table_prefix . "` SET 
+			`ten`=" . $this->db->dbescape( $array['ten'] ) . ", 
+			`tenthat`=" . $this->db->dbescape( $array['tenthat'] ) . ", 
+			`casi`='" . $this->build_query_singer_author( $array['casi'] ) . "', 
+			`nhacsi`='" . $this->build_query_singer_author( $array['nhacsi'] ) . "', 
+			`album`=" . $array['album'] . ", 
+			`theloai`=" . $this->db->dbescape( $array['theloai'] ) . ", 
+			`listcat`='" . $this->build_query_singer_author( $array['listcat'] ) . "', 
+			`duongdan`=" . $this->db->dbescape( $array['duongdan'] ) . ", 
+			`bitrate`=" . $array['bitrate'] . " ,
+			`size`=" . $array['size'] . " ,
+			`duration`=" . $array['duration'] . ",
+			`server`=" . $array['server'] . ",
+			`userid`=" . $array['userid'] . ",
+			`upboi`=" . $this->db->dbescape( $array['upboi'] ) . ",
+			`is_official`=" . $array['is_official'] . "
+		WHERE `id`=" . $array['id'];
+
+		$check_update = $this->db->sql_query( $sql );
+
+		if( $check_update )
+		{
+			// Cap nhat chu de
+			$array_cat_update = array_unique( array_filter( array_merge_recursive( $array_old['listcat'], array( $array_old['theloai'] ), $array['listcat'], array( $array['theloai'] ) ) ) );
+			$this->fix_cat_song( $array_cat_update );
+			
+			// Cap nhat ca si
+			$array_singer_update = array_unique( array_filter( array_merge_recursive( $array_old['casi'], $array['casi'] ) ) );
+			$this->fix_singer( $array_singer_update );
+			
+			// Cap nhat nhac si
+			$array_author_update = array_unique( array_filter( array_merge_recursive( $array_old['nhacsi'], $array['nhacsi'] ) ) );
+			$this->fix_author( $array_author_update );
+			
+			// Cap nhat album
+			if( $array_old['album'] != $array['album'] ) $this->fix_album( array( $array_old['album'], $array['album'] ) );
+
+			if( $array['lyric'] != $array_old['lyric'] )
+			{
+				$array['lyric'] = $this->nl2br( strip_tags( $array['lyric'] ), "<br />" );
+
+				if( $array['lyric_id'] )
+				{
+					$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_lyric` SET `body`=" . $this->db->dbescape( $array['lyric'] ) . " WHERE `id`=" . $array['lyric_id'] );
+				}
+				else
+				{
+					$sql = "INSERT INTO `" . $this->table_prefix . "_lyric` ( `id`, `songid`, `user`, `body`, `active`, `dt` ) VALUES(
+						NULL,
+						" . $array['id'] . ",
+						" . $this->db->dbescape( $array['upboi'] ) . ",
+						" . $this->db->dbescape( $array['lyric'] ) . ",
+						1,
+						" . $this->currenttime . "
+					)";
+					$this->db->sql_query( $sql );
+				}
+			}
+
+			$this->db->sql_freeresult();
+		}
+
+		return $check_update;
+	}
+	
+	public function new_song( $array )
+	{
+		$array['ten'] = ! isset( $array['ten'] ) ? "" : $array['ten'];
+		$array['tenthat'] = ! isset( $array['tenthat'] ) ? "" : $array['tenthat'];
+		$array['casi'] = empty( $array['casi'] ) ? array( 0 ) : $array['casi'];
+		$array['nhacsi'] = empty( $array['nhacsi'] ) ? array( 0 ) : $array['nhacsi'];
+		$array['album'] = ! isset( $array['album'] ) ? 0 : $array['album'];
+		$array['theloai'] = ! isset( $array['theloai'] ) ? 0 : $array['theloai'];
+		$array['listcat'] = ! isset( $array['listcat'] ) ? array() : $array['listcat'];
+		$array['duongdan'] = ! isset( $array['duongdan'] ) ? "" : $array['duongdan'];
+		$array['upboi'] = ! isset( $array['upboi'] ) ? "N/A" : $array['upboi'];
+		$array['bitrate'] = ! isset( $array['bitrate'] ) ? "0" : $array['bitrate'];
+		$array['size'] = ! isset( $array['size'] ) ? "0" : $array['size'];
+		$array['duration'] = ! isset( $array['duration'] ) ? "0" : $array['duration'];
+		$array['server'] = ! isset( $array['server'] ) ? "1" : $array['server'];
+		$array['userid'] = ! isset( $array['userid'] ) ? "1" : $array['userid'];
+		$array['hit'] = ! isset( $array['hit'] ) ? "0-" . NV_CURRENTTIME : $array['hit'];
+		$array['lyric'] = ! isset( $array['lyric'] ) ? "" : $array['lyric'];
+		$array['lyric_id'] = ! isset( $array['lyric_id'] ) ? 0 : ( int ) $array['lyric_id'];
+		$array['is_official'] = ! isset( $array['is_official'] ) ? 0 : ( int ) $array['is_official'];
+
+		$sql = "INSERT INTO `" . $this->table_prefix . "` VALUES (
+			NULL, 
+			" . $this->db->dbescape( $array['ten'] ) . ", 
+			" . $this->db->dbescape( $array['tenthat'] ) . ", 
+			'" . $this->build_query_singer_author( $array['casi'] ) . "', 
+			'" . $this->build_query_singer_author( $array['nhacsi'] ) . "', 
+			" . $array['album'] . ", 
+			" . $this->db->dbescape( $array['theloai'] ) . ", 
+			'" . $this->build_query_singer_author( $array['listcat'] ) . "', 
+			" . $this->db->dbescape( $array['duongdan'] ) . ", 
+			" . $this->db->dbescape( $array['upboi'] ) . " ,
+			0,
+			1,
+			" . $this->db->dbescape( $array['bitrate'] ) . " ,
+			" . $this->db->dbescape( $array['size'] ) . " ,
+			" . $this->db->dbescape( $array['duration'] ) . ",
+			" . $array['server'] . ",
+			" . $array['userid'] . ",
+			" . NV_CURRENTTIME . ",
+			0,
+			" . $this->db->dbescape( $array['hit'] ) . ",
+			" . $array['is_official'] . "
+		)";
+
+		$songid = $this->db->sql_query_insert_id( $sql );
+
+		if( $songid )
+		{
+			$this->fix_cat_song( array_unique( array_filter( array_merge_recursive( array( $array['theloai'] ), $array['listcat'] ) ) ) );
+			$this->fix_singer( $array['casi'] );
+			$this->fix_author( $array['nhacsi'] );
+			$this->fix_album( $array['album'] );
+
+			if( ! empty( $array['lyric'] ) )
+			{
+				$array['lyric'] = $this->nl2br( strip_tags( $array['lyric'] ), "<br />" );
+				$sql = "INSERT INTO `" . $this->table_prefix . "_lyric` ( `id`, `songid`, `user`, `body`, `active`, `dt` ) VALUES(
+					NULL,
+					" . $songid . ",
+					" . $this->db->dbescape( $array['upboi'] ) . ",
+					" . $this->db->dbescape( $array['lyric'] ) . ",
+					1,
+					" . $this->currenttime . "
+				)";
+				$this->db->sql_query( $sql );
+			}
+
+			$this->db->sql_freeresult();
+		}
+
+		return $songid;
+	}
+	
+	// Tao duong dan tu mot chuoi
+	public function creatURL( $inputurl )
+	{
+		$songdata = array();
+		if( preg_match( '/^(ht|f)tp:\/\//', $inputurl ) )
+		{
+			$ftpdata = $this->getFTP();
+			$str_inurl = str_split( $inputurl );
+			$no_ftp = true;
+			
+			foreach( $ftpdata as $id => $data )
+			{
+				$this_host = $data['fulladdress'] . $data['subpart'];
+				$str_check = str_split( $this_host );
+				$check_ok = false;
+				foreach( $str_check as $stt => $char )
+				{
+					if( $char != $str_inurl[$stt] )
+					{
+						$check_ok = false;
+						break;
+					}
+					$check_ok = true;
+				}
+				if( $check_ok )
+				{
+					$lu = strlen( $this_host );
+					$songdata['duongdan'] = substr( $inputurl, $lu );
+					$songdata['server'] = $id;
+					$no_ftp = false;
+					break;
+				}
+			}
+			if( $no_ftp )
+			{
+				$songdata['duongdan'] = $inputurl;
+				$songdata['server'] = 0;
+			}
+		}
+		else
+		{
+			$lu = strlen( $this->base_site_url . $this->upload_dir . "/" . $this->mod_name . "/" . $this->setting['root_contain'] . "/" );
+			$songdata['duongdan'] = substr( $inputurl, $lu );
+			$songdata['server'] = 1;
+		}
+		return $songdata;
 	}
 }
 

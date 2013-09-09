@@ -117,7 +117,6 @@ $lang_module['error_link_ads'] = "Lỗi: Bạn chưa chọn quảng cáo";
 $lang_module['error_title'] = "Lỗi: Tiêu đề không được để trống";
 $lang_module['error_update'] = "Lỗi: Không thể cập nhật dữ liệu";
 $lang_module['error_what'] = "Link lỗi";
-$lang_module['error_exist_song'] = "Lỗi: Bài hát đã tồn tại";
 $lang_module['error_exist_video'] = "Lỗi: Video đã tồn tại";
 $lang_module['error_exist_singer'] = "Lỗi: Ca sĩ đã tồn tại";
 $lang_module['error_exist_author'] = "Lỗi: Nhạc sĩ đã tồn tại";
@@ -140,6 +139,8 @@ $lang_module['gift_error_who_receive'] = "Chưa có tên người nhận kìa";
 $lang_module['gift_error_body'] = "Chưa có lời nhắn kìa";
 
 $lang_module['info'] = "Thông tin";
+$lang_module['is_official'] = "Chính thức";
+
 $lang_module['hot_album'] = "Album HOT";
 $lang_module['hot_album_select'] = "Chọn một Album HOT";
 $lang_module['hot_album_add'] = "chọn album";

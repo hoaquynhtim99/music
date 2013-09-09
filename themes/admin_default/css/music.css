@@ -4,6 +4,7 @@ td.strong{font-weight:bold}
 .fl{float:left}
 .fr{float:right}
 .center{ text-align:center}
+.toupper{text-transform:uppercase}
 .infoerror, .requie{color:#FF0000}
 .atop{vertical-align:top!important}
 .fixwidthinput{width:98%}
@@ -16,8 +17,10 @@ a.nounderline{text-decoration:none!important}
 .txt-full{width:97.5%!important}
 .txt-half{width:45.5%!important}
 .txt-fullmini{width:91%!important}
+.txt-quater{width:20%!important}
 .middle{vertical-align:middle;cursor:pointer}
 .autoscroll{max-height:200px;overflow:auto}
+.textarea-animated{-webkit-transition: height 0.2s;-moz-transition: height 0.2s;transition: height 0.2s;}
 
 /* ICON */
 .select_icon {background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}

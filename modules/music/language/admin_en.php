@@ -117,7 +117,6 @@ $lang_module['error_link_ads'] = "Error: You haven't chosen any advertisements";
 $lang_module['error_title'] = "Error: Empty title!";
 $lang_module['error_update'] = "Error: Cannot update data";
 $lang_module['error_what'] = "Link error";
-$lang_module['error_exist_song'] = "Error: Song existed";
 $lang_module['error_exist_video'] = "Error: Video existed";
 $lang_module['error_exist_singer'] = "Error: Singer existed";
 $lang_module['error_exist_author'] = "Error: musician existed";
@@ -140,6 +139,8 @@ $lang_module['gift_error_who_receive'] = "You haven't enter a recipient name";
 $lang_module['gift_error_body'] = "You haven't enter a messages";
 
 $lang_module['info'] = "Information";
+$lang_module['is_official'] = "Official";
+
 $lang_module['hot_album'] = "HOT ALBUM";
 $lang_module['hot_album_select'] = "Select a hot album";
 $lang_module['hot_album_add'] = "select album";

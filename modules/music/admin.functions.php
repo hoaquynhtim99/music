@@ -33,6 +33,9 @@ $allow_func = array( 'main', 'content-song', 'category', 'del', 'delall', 'album
 
 define( 'NV_IS_MUSIC_ADMIN', true );
 
+$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
+$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
+
 // Class cua module
 require_once( NV_ROOTDIR . "/modules/" . $module_file . "/global.class.php" );
 $classMusic = new nv_mod_music();
