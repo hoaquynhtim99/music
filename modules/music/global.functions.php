@@ -9,7 +9,6 @@
 
 if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
-
 // Lay thong tin the loai video
 function get_videocategory()
 {
@@ -43,42 +42,6 @@ function get_videocategory()
 	return $category;
 }
 
-// Lay album tu id
-function getalbumbyID( $id )
-{
-	global $module_data, $db;
-
-	$album = array();
-	$result = $db->sql_query( " SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $id );
-	$album = $db->sql_fetchrow( $result );
-
-	return $album;
-}
-
-// Lay video tu id
-function getvideobyID( $id )
-{
-	global $module_data, $db;
-
-	$video = array();
-	$result = $db->sql_query( "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $id );
-	$video = $db->sql_fetchrow( $result );
-
-	return $video;
-}
-
-// Lay song tu id
-function getsongbyID( $id )
-{
-	global $module_data, $db;
-
-	$song = array();
-	$result = $db->sql_query( " SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id );
-	$song = $db->sql_fetchrow( $result );
-
-	return $song;
-}
-
 // Lay album tu ten
 function getalbumbyNAME( $name )
 {
@@ -89,50 +52,6 @@ function getalbumbyNAME( $name )
 	$album = $db->sql_fetchrow( $result );
 
 	return $album;
-}
-
-// Xoa cac binh luan
-function delcomment( $delwwhat, $where )
-{
-	global $module_data, $db;
-	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $delwwhat . "` WHERE `what`=" . $where;
-	$result = $db->sql_query( $sql );
-	
-	return $result;
-}
-
-// Xoa cac loi bai hat
-function dellyric( $songid )
-{
-	global $module_data, $db;
-	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $songid;
-	$result = $db->sql_query( $sql );
-	
-	return $result;
-}
-
-// Xoa cac bao loi
-function delerror( $where, $key )
-{
-	global $module_data, $db;
-	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
-	$result = $db->sql_query( $sql );
-	
-	return $result;
-}
-
-// Xoa cac qua tang am nhac
-function delgift( $songid )
-{
-	global $module_data, $db;
-	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `songid` =" . $songid;
-	$result = $db->sql_query( $sql );
-	
-	return;
 }
 
 // Xuat duong dan day du
@@ -431,40 +350,6 @@ function outputURL( $server, $inputurl )
 		}
 	}
 	return $output;
-}
-
-function unlinkSV( $server, $url )
-{
-	global $module_name, $setting;
-	
-	if( $server == 1 )
-	{
-		@unlink( NV_DOCUMENT_ROOT . NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $url );
-	}
-	elseif( $server != 0 )
-	{
-		$ftpdata = getFTP();
-
-		if( ! isset( $ftpdata[$server] ) ) return;
-
-		if( in_array( $ftpdata[$server]['host'], array(
-			'nhaccuatui',
-			'zing',
-			'nhacvui',
-			'nhacso' ) ) ) return;
-
-		require_once ( NV_ROOTDIR . "/modules/" . $module_name . "/class/ftp.class.php" );
-		$ftp = new FTP();
-		if( $ftp->connect( $ftpdata[$server]['host'] ) )
-		{
-			if( $ftp->login( $ftpdata[$server]['user'], $ftpdata[$server]['pass'] ) )
-			{
-				$ftp->delete( $ftpdata[$server]['ftppart'] . $ftpdata[$server]['subpart'] . $url );
-			}
-			$ftp->disconnect();
-		}
-	}
-	return;
 }
 
 function nv_get_URL_content( $target_url )

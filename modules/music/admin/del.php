@@ -15,14 +15,13 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) )
 $result = false;
 $id = $nv_Request->get_int( 'id', 'post,get' );
 $where = filter_text_input( 'where', 'get', '' );
-$setting = setting_music();
 
 if( empty( $id ) ) die( "Stop!!!" );
 
 if( $id > 0 )
 {
 	if( $where == '_album' )
-	{
+	{		
 		// Xoa trong album trang chu
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_main_album` WHERE `albumid`=" . $id;
 		$db->sql_query( $sql );
@@ -31,87 +30,69 @@ if( $id > 0 )
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` WHERE `albumid`=" . $id;
 		$db->sql_query( $sql );
 
-		$album = getalbumbyID( $id );
+		$album = $classMusic->getalbumbyID( $id );
+		
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
 
-		// Cap nhat lai so album cua ca si
-		updatesinger( $album['casi'], 'numalbum', '-1' );
+		$classMusic->fix_singer( $classMusic->string2array( $album['casi'] ) );
+		$classMusic->delcomment( 'album', $album['id'] );
+		$classMusic->delerror( 'album', $album['id'] );
 
-		// Xoa cac bao loi, binh luan
-		delcomment( 'album', $album['id'] );
-		delerror( 'album', $album['id'] );
-
-		// Cap nhat lai album thanh chua biet cho cac bai hat
-		updateSwhendelA( $id, 0 );
+		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=0 WHERE `album`=" . $id );
 	}
 	elseif( $where == '_video' )
 	{
-		$video = getvideobyID( $id );
-		updatesinger( $video['casi'], 'numvideo', '-1' );
-		updateauthor( $video['nhacsi'], 'numvideo', '-1' );
-		delcomment( 'video', $video['id'] );
-		unlinkSV( $video['server'], $video['duongdan'] );
+		$video = $classMusic->getvideobyID( $id );
 		
-		// Cap nhat lai chu de
-		$list_cat = $video['listcat'] ? explode( ',', $video['listcat'] ) : array();
-		$list_cat[] = $video['theloai'];
-		$list_cat = array_filter( array_unique( $list_cat ) );
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
 		
-		foreach( $list_cat as $_cid )
-		{
-			UpdateVideoCat( $_cid, '-1' );
-		}
+		$classMusic->fix_singer( $classMusic->string2array( $video['casi'] ) );
+		$classMusic->fix_author( $classMusic->string2array( $video['nhacsi'] ) );
+		$classMusic->delcomment( 'video', $video['id'] );
+		$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( $video['listcat'], array( $video['theloai'] ) ) ) ) );
+		$classMusic->unlinkSV( $video['server'], $video['duongdan'] );
 	}
 	elseif( $where == '_singer' )
 	{
-		$singer = getsingerbyID( $id );
-		updatewhendelS( $singer['id'], 0 );
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
 	}
 	elseif( $where == '_author' )
 	{
-		$author = getauthorbyID( $id );
-		updatewhendelA( $author['id'], 0 );
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
 	}
 	elseif( $where == '_ftp' )
 	{
-		updatewhendelFTP( $id, 0 );
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
+		$classMusic->updatewhendelFTP( $id, 0 );
 	}
 	elseif( $where == '' )
 	{
-		$song = getsongbyID( $id );
-		if( $song['album'] != 0 )
-		{
-			updatealbum( $song['album'], '-1' );
-		}
-
-		// Cap nhat so bai hat cua ca si, nhac si
-		updatesinger( $song['casi'], 'numsong', '-1' );
-		updateauthor( $song['nhacsi'], 'numsong', '-1' );
-
-		// Xoa binh luan, loi bai hat, qua tang am nhac, bao loi
-		delcomment( 'song', $song['id'] );
-		dellyric( $song['id'] );
-		delerror( 'song', $song['id'] );
-		delgift( $song['id'] );
-
-		// Xoa file nhac
-		unlinkSV( $song['server'], $song['duongdan'] );
+		$song = $classMusic->getsongbyID( $id );
 		
-		// Cap nhat lai chu de
-		$list_cat = $song['listcat'] ? explode( ',', $song['listcat'] ) : array();
-		$list_cat[] = $song['theloai'];
-		$list_cat = array_filter( array_unique( $list_cat ) );
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
 		
-		foreach( $list_cat as $_cid )
-		{
-			UpdateSongCat( $_cid, '-1' );
-		}
+		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
+		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
+		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
+		$classMusic->delcomment( 'song', $song['id'] );
+		$classMusic->dellyric( $song['id'] );
+		$classMusic->delerror( 'song', $song['id'] );
+		$classMusic->delgift( $song['id'] );
+		$classMusic->unlinkSV( $song['server'], $song['duongdan'] );
+		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( $song['listcat'], array( $song['theloai'] ) ) ) ) );
 	}
-	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
 	
 	if( $where == '_category' )
 	{
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
+		
 		// Cap nhat cac bai hat
 		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `theloai`=0 WHERE `theloai`=" . $id;
 		$db->sql_query( $sql );
@@ -128,6 +109,9 @@ if( $id > 0 )
 	}
 	elseif( $where == '_video_category' )
 	{
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
+		
 		// Cap nhat cac video
 		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `theloai`=0 WHERE `theloai`=" . $id;
 		$db->sql_query( $sql );
@@ -148,11 +132,11 @@ nv_del_moduleCache( $module_name );
 
 if( $result )
 {
-	echo $lang_module['del_success'];
+	echo $classMusic->lang('del_success');
 }
 else
 {
-	echo $lang_module['del_error'];
+	echo $classMusic->lang('del_error');
 }
 
 ?>

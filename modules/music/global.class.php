@@ -127,30 +127,6 @@ class nv_mod_music
 		return $this->db->sql_query( "UPDATE `" . $this->table_prefix . "_" . $table . "` SET `order` = " . $new . " WHERE `order` = " . $old );
 	}
 	
-	// Cap nhat bai hat khi xoa, sua album
-	public function updateSwhendelA( $id, $newid )
-	{
-		$this->check_admin();
-		return $this->db->sql_query( "UPDATE `" . $this->table_prefix . "` SET `album`=" . $newid . " WHERE `album`=" . $id );
-	}
-	
-	// Cap nhat bai hat, album, video khi xoa, sua ca si
-	public function updatewhendelS( $id, $newid )
-	{
-		$this->check_admin();
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "` SET `casi`=" . $newid . " WHERE `casi`=" . $id );
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_album` SET `casi`=" . $newid . " WHERE `casi`=" . $id );
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_video` SET `casi`=" . $newid . " WHERE `casi`=" . $id );
-	}
-	
-	// Cap nhat bai hat, album ,video khi xoa, sua nhac si
-	public function updatewhendelA( $id, $newid )
-	{
-		$this->check_admin();
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "` SET `nhacsi`=" . $newid . " WHERE `nhacsi`=" . $id );
-		$this->db->sql_query( "UPDATE `" . $this->table_prefix . "_video` SET `nhacsi`=" . $newid . " WHERE `nhacsi`=" . $id );
-	}
-	
 	// Lay nhac si tu id
 	public function getauthorbyID( $id )
 	{
@@ -161,6 +137,13 @@ class nv_mod_music
 		$author = $this->db->sql_fetchrow( $result );
 
 		return $author;
+	}
+
+	// Lay video tu id
+	public function getvideobyID( $id )
+	{
+		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_video` WHERE `id`=" . $id );
+		return $this->db->sql_fetchrow( $result );
 	}
 	
 	// Cap nhat bai hat, video khi xoa, sua host nhac
@@ -303,6 +286,13 @@ class nv_mod_music
 
 		return $singer;
 	}
+
+	// Lay song tu id
+	public function getsongbyID( $id )
+	{
+		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "` WHERE `id`=" . $id );
+		return $this->db->sql_fetch_assoc( $result );
+	}
 	
 	// Lay ca si tu ten
 	public function getsingerbyName( $name )
@@ -324,6 +314,13 @@ class nv_mod_music
 		return $author;
 	}
 	
+	// Lay album tu id
+	public function getalbumbyID( $id )
+	{
+		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_album` WHERE `id`=" . $id );
+		return $this->db->sql_fetchrow( $result );
+	}
+
 	public function build_author_singer_2string( $array, $string )
 	{
 		$id = $this->string2array( $string );
@@ -409,6 +406,24 @@ class nv_mod_music
 			list( $num ) = $this->db->sql_fetchrow( $result );
 			
 			$sql = "UPDATE `" . $this->table_prefix . "_category` SET `numsong`=" . $num . " WHERE `id`=" . $_id;
+			$this->db->sql_query( $sql );
+		}
+	}
+	
+	public function fix_cat_video( $id )
+	{
+		if( ! is_array( $id ) )
+		{
+			$id = array( $id );
+		}
+		
+		foreach( $id as $_id )
+		{
+			$sql = "SELECT COUNT(*) FROM `" . $this->table_prefix . "_video` WHERE `theloai`=" . $_id . " OR `listcat` LIKE '%," . $_id . ",%'";
+			$result = $this->db->sql_query( $sql );
+			list( $num ) = $this->db->sql_fetchrow( $result );
+			
+			$sql = "UPDATE `" . $this->table_prefix . "_video_category` SET `numvideo`=" . $num . " WHERE `id`=" . $_id;
 			$this->db->sql_query( $sql );
 		}
 	}
@@ -718,6 +733,63 @@ class nv_mod_music
 			$songdata['server'] = 1;
 		}
 		return $songdata;
+	}
+	
+	// Xoa cac binh luan
+	public function delcomment( $delwwhat, $where )
+	{
+		$sql = "DELETE FROM `" . $this->table_prefix . "_comment_" . $delwwhat . "` WHERE `what`=" . $where;
+		return $this->db->sql_query( $sql );
+	}
+	
+	// Xoa cac loi bai hat
+	public function dellyric( $songid )
+	{
+		$sql = "DELETE FROM `" . $this->table_prefix . "_lyric` WHERE `songid`=" . $songid;
+		$result = $this->db->sql_query( $sql );
+		return $result;
+	}
+	
+	// Xoa cac bao loi
+	public function delerror( $where, $key )
+	{
+		$sql = "DELETE FROM `" . $this->table_prefix . "_error` WHERE `where`= '" . $where . "' AND `sid`=" . $key;
+		return $this->db->sql_query( $sql );
+	}
+	
+	// Xoa cac qua tang am nhac
+	function delgift( $songid )
+	{
+		$sql = "DELETE FROM `" . $this->table_prefix . "_gift` WHERE `songid` =" . $songid;
+		return $this->db->sql_query( $sql );
+	}
+	
+	// Xoa file nhac va file video
+	public function unlinkSV( $server, $url )
+	{
+		if( $server == 1 )
+		{
+			@unlink( $this->root_dir . "/" . $this->upload_dir . "/" . $this->mod_name . "/" . $this->setting['root_contain'] . "/" . $url );
+		}
+		elseif( $server != 0 )
+		{
+			$ftpdata = $this->getFTP();
+
+			if( ! isset( $ftpdata[$server] ) ) return;
+
+			if( in_array( $ftpdata[$server]['host'], array( 'nhaccuatui', 'zing', 'nhacvui', 'nhacso', 'zingclip', 'nctclip' ) ) ) return;
+
+			require_once ( $this->root_dir . "/modules/" . $this->mod_file . "/class/ftp.class.php" );
+			$ftp = new FTP();
+			if( $ftp->connect( $ftpdata[$server]['host'] ) )
+			{
+				if( $ftp->login( $ftpdata[$server]['user'], $ftpdata[$server]['pass'] ) )
+				{
+					$ftp->delete( $ftpdata[$server]['ftppart'] . $ftpdata[$server]['subpart'] . $url );
+				}
+				$ftp->disconnect();
+			}
+		}
 	}
 }
 
