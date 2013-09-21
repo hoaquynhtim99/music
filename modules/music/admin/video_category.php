@@ -52,20 +52,20 @@ while( list( $id, $title, $keywords, $description, $numvideo, $weight ) = $db->s
 	for( $j = 1; $j <= $num; $j++ )
 	{
 		$list_weight[$j] = array(
-			"weight" => $j, //
-			"title" => $j, //
-			"selected" => ( $j == $weight ) ? " selected=\"selected\"" : "" //
+			"weight" => $j,
+			"title" => $j,
+			"selected" => ( $j == $weight ) ? " selected=\"selected\"" : ""
 		);
 	}
 
 	$array_data[$id] = array(
-		"id" => $id, //
-		"title" => $title, //
-		"description" => $description, //
-		"numvideo" => $numvideo, //
-		"weight" => $list_weight, //
+		"id" => $id,
+		"title" => $title,
+		"description" => $description,
+		"numvideo" => $numvideo,
+		"weight" => $list_weight,
 		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id . "#addeditarea", //
-		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : "" //
+		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""
 	);
 	$i++;
 }
@@ -87,10 +87,10 @@ if( $id )
 
 	list( $id, $title, $keywords, $description ) = $db->sql_fetchrow( $result );
 	$array_old = $array = array(
-		"id" => $id, //
-		"title" => $title, //
-		"keywords" => $keywords, //
-		"description" => $description //
+		"id" => $id,
+		"title" => $title,
+		"keywords" => $keywords,
+		"description" => $description
 	);
 
 	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
@@ -102,10 +102,10 @@ else
 	$table_caption = $lang_module['vcat_add'];
 
 	$array = array(
-		"id" => 0, //
-		"title" => "", //
-		"keywords" => "", //
-		"description" => "" //
+		"id" => 0,
+		"title" => "",
+		"keywords" => "",
+		"description" => ""
 	);
 }
 
