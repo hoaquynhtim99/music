@@ -11,6 +11,14 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 $page_title = $lang_module['singer_list'];
 
+if( ! defined( 'SHADOWBOX' ) )
+{
+	$my_head = "<link type=\"text/css\" rel=\"Stylesheet\" href=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.css\" />\n";
+	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "js/shadowbox/shadowbox.js\"></script>\n";
+	$my_head .= "<script type=\"text/javascript\">Shadowbox.init({ handleOversize: \"drag\" });</script>";
+	define( 'SHADOWBOX', true );
+}
+
 // Lay du lieu
 $contents = '';
 
@@ -54,7 +62,7 @@ $contents .= $lang_module['search_singer'] . ": ";
 // So ket qua hien thi tim kiem
 $i = 5;
 $contents .= "&nbsp;" . $lang_module['search_per_page'] . ":&nbsp;";
-$contents .= "<select name=\"numshow\">\n";
+$contents .= "<select class=\"music-input\" name=\"numshow\">\n";
 while( $i <= 1000 )
 {
 	$a = '';
@@ -65,8 +73,8 @@ while( $i <= 1000 )
 $contents .= "</select>\n";
 
 // Tu khoa tim kiem
-$contents .= $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" style=\"width: 265px\">\n";
-$contents .= "<input type=\"submit\" value=\"" . $lang_module['search'] . "\">\n";
+$contents .= $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" class=\"music-input\" style=\"width: 265px\">\n";
+$contents .= "<input class=\"music-button\" type=\"submit\" value=\"" . $lang_module['search'] . "\">\n";
 $contents .= "<input type=\"hidden\" name =\"do\" value=\"1\" />";
 $contents .= "</td></tr></tbody></table></form>\n";
 
@@ -84,7 +92,13 @@ $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_
 $result = $db->sql_query( $sql );
 while( $row = $db->sql_fetchrow( $result ) )
 {
+	if( empty( $row['thumb'] ) )
+	{
+		$row['thumb'] = NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
+	}
+
 	$xtpl->assign( 'id', $row['id'] );
+	$xtpl->assign( 'thumb', $row['thumb'] );
 	$xtpl->assign( 'ten', $row['tenthat'] );
 	$xtpl->assign( 'numsong', $row['numsong'] );
 	$xtpl->assign( 'numalbum', $row['numalbum'] );
@@ -92,7 +106,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 	$xtpl->assign( 'URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=casi&q=" . $row['tenthat'] );
 	$xtpl->assign( 'URL_VIDEO', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip&type_search=casi&q=" . $row['tenthat'] );
 	$xtpl->assign( 'URL_ALBUM', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album&type=singer&q=" . $row['tenthat'] );
-	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&casi=" . $row['id'] );
+	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=content-song&casi=" . $row['id'] );
 	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
 	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_singer&id=" . $row['id'] );
 	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );

@@ -3,6 +3,7 @@
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
+			<td width="40px" class="center">{LANG.singer_thumb}</td>
 			<td><a href="{ORDER_NAME}">{LANG.singer_name}</a></td>
 			<td>{LANG.info}</td>
 			<td width="250px" align="center">{LANG.feature}</td>
@@ -13,6 +14,7 @@
 	<tbody{class}>
 		<tr>
 			<td align="center"><input type="checkbox" class="filelist" value="{id}"></td>
+			<td align="center"><a href="{thumb}" rel="shadowbox"><img src="{thumb}" alt="{ten}" width="30"/></a></td>
 			<td>{ten}</td>
 			<td><a href="{URL_SONG}">({numsong}) {LANG.song}</a> - <a href="{URL_ALBUM}">({numalbum}) {LANG.album}</a> - <a href="{URL_VIDEO}">({numvideo}) {LANG.video}</a></td>
 			</td>			
@@ -48,70 +50,55 @@
 	</tfoot>
 </table>
 <script type='text/javascript'>
-	$(function()
-	{
-		$('#checkall').click(function()
-		{
-			$('input:checkbox').each(function()
-			{
-				$(this).attr('checked', 'checked');
-			});
-		});
-		
-		$('#uncheckall').click(function()
-		{
-			$('input:checkbox').each(function()
-			{
-				$(this).removeAttr('checked');
-			});
-		});
-		
-		$('#delfilelist').click(function()
-		{
-			if (confirm("{LANG.singer_del_confirm}"))
-			{
-				var listall = [];
-				$('input.filelist:checked').each(function()
-				{
-					listall.push($(this).val());
-				});
-				if (listall.length < 1)
-				{
-					alert("{LANG.singer_check_err}");
-					return false;
-				}
-				$.ajax(
-				{
-					type: 'POST',
-					url: '{URL_DEL}',
-					data: 'listall=' + listall,
-					success: function(data)
-					{
-						alert(data);
-						window.location = '{URL_DEL_BACK}';
-					}
-				});
-			}
-		});
-		$('a[class="delfile"]').click(function(event)
-		{
-			event.preventDefault();
-			if (confirm("{LANG.singer_del_confirm}"))
-			{
-				var href = $(this).attr('href');
-				$.ajax(
-				{
-					type: 'POST',
-					url: href,
-					data: '',
-					success: function(data)
-					{
-						alert(data);
-						window.location = '{URL_DEL_BACK}';
-					}
-				});
-			}
+$(function(){
+	$('#checkall').click(function(){
+		$('input:checkbox').each(function(){
+			$(this).attr('checked', 'checked');
 		});
 	});
+	
+	$('#uncheckall').click(function(){
+		$('input:checkbox').each(function(){
+			$(this).removeAttr('checked');
+		});
+	});
+	
+	$('#delfilelist').click(function(){
+		if (confirm("{LANG.singer_del_confirm}")){
+			var listall = [];
+			$('input.filelist:checked').each(function(){
+				listall.push($(this).val());
+			});
+			if (listall.length < 1){
+				alert("{LANG.singer_check_err}");
+				return false;
+			}
+			$.ajax({
+				type: 'POST',
+				url: '{URL_DEL}',
+				data: 'listall=' + listall,
+				success: function(data){
+					alert(data);
+					window.location = '{URL_DEL_BACK}';
+				}
+			});
+		}
+	});
+	$('a[class="delfile"]').click(function(event){
+		event.preventDefault();
+		if (confirm("{LANG.singer_del_confirm}")){
+			var href = $(this).attr('href');
+			$.ajax({
+				type: 'POST',
+				url: href,
+				data: '',
+				success: function(data){
+					alert(data);
+					window.location = '{URL_DEL_BACK}';
+				}
+			});
+		}
+	});
+});
 </script>
 <!-- END: main -->

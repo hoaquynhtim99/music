@@ -278,6 +278,7 @@ $lang_module['singer_add1'] = "Thêm ca sĩ";
 $lang_module['singer_edit'] = "Sửa ca sĩ";
 $lang_module['singer_info'] = "Thông tin ca sĩ";
 $lang_module['singer_name'] = "Tên của ca sĩ";
+$lang_module['singer_thumb'] = "Ảnh";
 $lang_module['singer_del_confirm'] = "Bạn có chắc xóa các ca sĩ này không?";
 $lang_module['singer_check_err'] = "Bạn phải chọn ít nhất một ca sĩ để xóa";
 $lang_module['video'] = "Video clip";

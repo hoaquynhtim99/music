@@ -278,6 +278,7 @@ $lang_module['singer_add1'] = "Add a singer";
 $lang_module['singer_edit'] = "Edit a singer";
 $lang_module['singer_info'] = "Singer information";
 $lang_module['singer_name'] = "Singer name";
+$lang_module['singer_thumb'] = "Avatar";
 $lang_module['singer_del_confirm'] = "Are you sure to delete this singer?";
 $lang_module['singer_check_err'] = "You have to choose at least one singer to delete";
 $lang_module['video'] = "Video clip";
