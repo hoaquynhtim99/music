@@ -14,9 +14,10 @@ $page_title = $mod_title = $lang_module['gift_list'];
 $description = $setting['description'];
 $key_words = $module_info['keywords'];
 
-$page = isset( $array_op[1] ) ? intval( end( explode( "-", $array_op[1] ) ) ) : 1;
+$page = 1;
 $per_page = 10;
 $base_url = $mainURL . "=" . $op;
+if( isset( $array_op[1] ) and preg_match( "/^page\-([0-9]+)$/i", $array_op[1], $m ) ) $page = intval( $m[1] );
 
 $sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS `songid`, b.ten AS `songname`, b.tenthat AS `songtitle`, b.casi AS `songsinger`, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ( $page - 1 ) * $per_page ) . "," . $per_page;
 
