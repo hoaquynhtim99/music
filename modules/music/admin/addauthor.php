@@ -25,13 +25,12 @@ if( defined( 'NV_EDITOR' ) )
 }
 
 // Khoi tao
-$contents = "";
 $error = "";
 $array_old = $array = array();
 
 // Lay gia tri
-$array['ten'] = filter_text_input( 'ten', 'get,post', '' );
-$array['tenthat'] = filter_text_input( 'tenthat', 'post', '' );
+$array['ten'] = filter_text_input( 'ten', 'get,post', '', 1, 255 );
+$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 255 );
 $array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
 $array['introduction'] = nv_editor_filter_textarea( 'introduction', '', NV_ALLOWED_HTML_TAGS );
 
@@ -65,7 +64,7 @@ else
 	}
 }
 
-//sua nhac si
+// Sua nhac si
 if( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 )
 {
 	$error .= nv_check_ok_author( $array );
@@ -76,6 +75,7 @@ if( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 )
 	{
 		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
 		list( $exist ) = $db->sql_fetchrow( $result );
+		
 		if( $exist )
 		{
 			$error = $lang_module['error_exist_author'];
@@ -149,87 +149,46 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	}
 }
 
-// Hien thong bao loi
-if( $error )
-{
-	$contents .= "<div class=\"quote\" style=\"width: 98%;\"><blockquote class=\"error\"><span>" . $error . "</span></blockquote></div><div class=\"clear\"></div>";
-}
-
-//
 if( ! empty( $array['introduction'] ) ) $array['introduction'] = nv_htmlspecialchars( $array['introduction'] );
 
-// Noi dung
-$contents .= "
-<form method=\"post\" name=\"add_pic\">
-	<table class=\"tab1\">
-		<thead>
-			<tr>
-				<td colspan=\"2\">" . $lang_module['author_info'] . "</td>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">" . $lang_module['author_name'] . "</td>
-				<td style=\"background: #eee;\">
-					<input id=\"idtitle\" name=\"tenthat\" style=\"width: 470px;\" value=\"" . $array['tenthat'] . "\" type=\"text\"><img height=\"16\" alt=\"\" onclick=\"get_alias('idtitle','res_get_alias');\" style=\"cursor: pointer; vertical-align: middle;\" width=\"16\" src=\"" . NV_BASE_SITEURL . "images/refresh.png\">
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">" . $lang_module['author_sort_name'] . "</td>
-				<td style=\"background: #eee;\">
-					<input id=\"idalias\" name=\"ten\" style=\"width: 470px;\" value=\"" . $array['ten'] . "\" type=\"text\" />
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">" . $lang_module['thumb'] . "</td>
-				<td style=\"background: #eee;\">
-				<input id=\"thumb\" name=\"thumb\" style=\"width: 370px;\" value=\"" . $array['thumb'] . "\" type=\"text\" />
-                <input name=\"select\" type=\"button\" value=\"" . $lang_module['select'] . "\" />
-				<script type=\"text/javascript\">			
-				$(\"input[name=select]\").click(function(){
-					var area = \"thumb\"; // return value area
-					var path = \"" . NV_UPLOADS_DIR . "/" . $module_name . "/authorthumb\";
-					nv_open_browse_file(\"" . NV_BASE_ADMINURL . 'index.php?' . NV_NAME_VARIABLE . '=upload&popup=1&area=" + area+"&path="+path+"&type=image", "NVImg", "850", "500","resizable=no,scrollbars=no,toolbar=no,location=no,status=no' . "\");
-					return false;
-				});
-				</script>
-				</td>
-			</tr>
-			<tr>
-				<td style=\"width: 150px; background: #eee;\">" . $lang_module['describle'] . "</td>
-				<td style=\"background: #eee;\">";
 if( defined( 'NV_EDITOR' ) and function_exists( 'nv_aleditor' ) )
 {
-	$contents .= nv_aleditor( 'introduction', '98%', '250px', $array['introduction'] );
+	$array['introduction'] = nv_aleditor( 'introduction', '98%', '250px', $array['introduction'] );
 }
 else
 {
-	$contents .= "<textarea style=\"width:98%\" name=\"introduction\" id=\"introduction\" cols=\"20\" rows=\"15\">" . $array['introduction'] . "</textarea>\n";
+	$array['introduction'] = "<textarea style=\"width:98%\" name=\"introduction\" id=\"introduction\" cols=\"20\" rows=\"15\">" . $array['introduction'] . "</textarea>\n";
 }
-$contents .= "
-				</td>
-			</tr>
-			<tr>
-				<td colspan=\"2\" align=\"center\" style=\"background: #eee;\">\n
-					<input name=\"confirm\" value=\"" . $lang_module['save'] . "\" type=\"submit\">\n";
-if( $id == 0 ) $contents .= "<input type=\"hidden\" name=\"add\" id=\"add\" value=\"1\">\n";
-else  $contents .= "<input type=\"hidden\" name=\"edit\" id=\"edit\" value=\"1\">\n";
-$contents .= "<span name=\"notice\" style=\"float: right; padding-right: 50px; color: red; font-weight: bold;\"></span>\n
-				</td>\n
-			</tr>\n
-		</tbody>\n
-	</table>\n
-</form>\n";
 
-// Neu khong co ten nhac si thi tu dong tao
+$xtpl = new XTemplate( "content-author.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
+$xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'GLANG', $lang_global );
+$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+$xtpl->assign( 'IMAGE_DIR', NV_UPLOADS_DIR . "/" . $module_name . "/authorthumb" );
+$xtpl->assign( 'DATA', $array );
+
+if( ! empty( $error ) )
+{
+	$xtpl->assign( 'ERROR', $error );
+	$xtpl->parse( 'main.error' );
+}
+
+if( $id == 0 )
+{
+	$xtpl->parse( 'main.add' );
+}
+else
+{
+	$xtpl->parse( 'main.edit' );
+}
+
 if( empty( $array['ten'] ) )
 {
-	$contents .= "<script type=\"text/javascript\">\n";
-	$contents .= '$("#idtitle").change(function(){
-                    get_alias(\'idtitle\', \'res_get_alias\');
-                });';
-	$contents .= "</script>\n";
+	$xtpl->parse( 'main.get_alias' );
 }
+
+$xtpl->parse( 'main' );
+$contents = $xtpl->text( 'main' );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );
