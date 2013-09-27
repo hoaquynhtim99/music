@@ -16,6 +16,7 @@ $lang_translator['copyright'] = "@Copyright (C) 2011 Free Ware";
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
+$lang_module['not_available'] = "N/A";
 $lang_module['weight'] = "Thứ tự";
 $lang_module['title'] = "Tiêu đề";
 $lang_module['submit'] = "Lưu lại";
@@ -34,6 +35,11 @@ $lang_module['view'] = "Xem";
 $lang_module['detail'] = "Chi tiết";
 $lang_module['images_mini'] = "Ảnh";
 $lang_module['back_page'] = "Trở về trang trước";
+$lang_module['upboi'] = "Người đăng";
+$lang_module['alert_check'] = "Bạn cần chọn ít nhất một dòng để thực hiện các thao tác";
+
+$lang_module['action_status_ok'] = "Cho hoạt động";
+$lang_module['action_status_no'] = "Cho ngưng hoạt động";
 
 $lang_module['author'] = "Nhạc sĩ";
 $lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
@@ -68,9 +74,9 @@ $lang_module['album_edit'] = "Sửa album";
 $lang_module['album_menu'] = "Album trên menu chính";
 $lang_module['album_name'] = "Tên album";
 $lang_module['album_info'] = "Thông tin về album";
+$lang_module['album_numsong'] = "Số bài hát";
 $lang_module['album_del_cofirm'] = "Bạn có chắc xóa các album này nếu xóa các dữ liệu liên quan sẽ bị xóa";
 
-$lang_module['comment_del_cofirm'] = "Bạn có chắc xóa các bình luận này";
 $lang_module['comment_time'] = "Gửi lúc";
 $lang_module['comment_error_name'] = "Người bình luận chưa nhập kìa";
 $lang_module['comment_error_body'] = "Nội dung bình luận chưa có kìa";
@@ -90,7 +96,7 @@ $lang_module['check_link_manual'] = "Hãy tự kiểm tra";
 $lang_module['content'] = "Nội dung";
 $lang_module['content_list'] = "Danh sách bài hát";
 $lang_module['delete'] = "Xóa";
-$lang_module['del_error'] = "Lỗi không thể xóa bài hát được";
+$lang_module['delete_song'] = "Xóa bài hát";
 $lang_module['del_success'] = "Xóa thành công";
 $lang_module['describle'] = "Giới thiệu";
 $lang_module['edit'] = "Sửa";
@@ -251,6 +257,7 @@ $lang_module['song_error_tenthat'] = "Tên đầy đủ còn trống kìa";
 $lang_module['song_error_theloai'] = "Bài hát chưa có thể loại kìa";
 $lang_module['song_error_duongdan'] = "Chưa có đường dẫn đến bài hát kìa";
 $lang_module['song_list_comment'] = "Danh sách các bình luận bài hát";
+$lang_module['song_numvew'] = "Lượt nghe";
 
 $lang_module['thumb'] = "Ảnh hiển thị";
 $lang_module['uncheckall'] = "Bỏ chọn";
@@ -386,5 +393,20 @@ $lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Thực hiệ
 $lang_module['addFromOtherSite_title'] = "Thêm nhạc từ Site khác";
 $lang_module['addFromOtherSite_listSong'] = "Danh sách các link nhạc";
 $lang_module['addFromOtherSite_site'] = "Site cần lấy";
+
+$lang_module['filter_song'] = "Tên bài hát, lời bài hát";
+$lang_module['filter_album'] = "Tên album, mô tả album";
+$lang_module['filter_singer'] = "Tên ca sĩ";
+$lang_module['filter_author'] = "Tên nhạc sĩ";
+$lang_module['filter_category'] = "Thể loại";
+$lang_module['filter_from'] = "từ";
+$lang_module['filter_to'] = "đến";
+$lang_module['filter_action'] = "Tìm kiếm";
+$lang_module['filter_cancel'] = "Hủy";
+$lang_module['filter_clear'] = "Xóa";
+$lang_module['filter_err_submit'] = "Bạn cần chọn ít nhất một điều kiện để lọc dữ liệu";
+$lang_module['filter_lang_asc'] = "tăng dần";
+$lang_module['filter_lang_desc'] = "giảm dần";
+$lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
 
 ?>

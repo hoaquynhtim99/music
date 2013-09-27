@@ -29,10 +29,11 @@ class nv_mod_music
 	private $currenttime = null;
 	
 	private $language = array();
+	private $glanguage = array();
 
 	public function __construct( $d = "", $n = "", $f = "", $lang = "" )
 	{
-		global $module_data, $module_name, $module_file, $db_config, $db, $lang_module;
+		global $module_data, $module_name, $module_file, $db_config, $db, $lang_module, $lang_global;
 		
 		// Ten CSDL
 		if( ! empty( $d ) ) $this->mod_data = $d;
@@ -62,6 +63,7 @@ class nv_mod_music
 		$this->root_dir = NV_ROOTDIR;
 		$this->upload_dir = NV_UPLOADS_DIR;
 		$this->language = $lang_module;
+		$this->glanguage = $lang_global;
 		$this->currenttime = NV_CURRENTTIME;
 	}
 	
@@ -120,23 +122,9 @@ class nv_mod_music
 		return isset( $this->language[$key] ) ? $this->language[$key] : $key;
 	}
 	
-	// Thay doi thu tu bai hat, ca si, video, album
-	public function changeorder( $old, $new, $table )
+	public function glang( $key )
 	{
-		$this->check_admin();
-		return $this->db->sql_query( "UPDATE `" . $this->table_prefix . "_" . $table . "` SET `order` = " . $new . " WHERE `order` = " . $old );
-	}
-	
-	// Lay nhac si tu id
-	public function getauthorbyID( $id )
-	{
-		$this->check_admin();
-		
-		$author = array();
-		$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_author WHERE id=" . $id );
-		$author = $this->db->sql_fetchrow( $result );
-
-		return $author;
+		return isset( $this->glanguage[$key] ) ? $this->glanguage[$key] : $key;
 	}
 
 	// Lay video tu id
@@ -246,7 +234,7 @@ class nv_mod_music
 	public function search_singer_id( $q, $limit = 0 )
 	{
 		// Gioi han khong qua lon
-		$limit = $limit ? ( int ) $limit : 1000;
+		$limit = $limit ? ( int ) $limit : 100;
 		$array = array();
 		
 		$sql = "SELECT `id` FROM `" . $this->table_prefix . "_singer` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
@@ -259,9 +247,50 @@ class nv_mod_music
 		return $array;
 	}
 	
+	public function search_author_id( $q, $limit = 0 )
+	{
+		// Gioi han khong qua lon
+		$limit = $limit ? ( int ) $limit : 100;
+		$array = array();
+		
+		$sql = "SELECT `id` FROM `" . $this->table_prefix . "_author` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$result = $this->db->sql_query( $sql );
+		while( $row = $this->db->sql_fetch_assoc( $result ) )
+		{
+			$array[] = $row['id'];
+		}
+		
+		return $array;
+	}
+	
 	public function string2array( $string, $split_char = ',' )
 	{
 		return array_filter( array_unique( array_map( "trim", explode( ",", $string ) ) ) );
+	}
+	
+	// Lay thong tin thanh vien
+	public function getuserbyID( $id )
+	{
+		$users = array();
+		
+		if( is_array( $id ) )
+		{
+			$result = $this->db->sql_query( " SELECT `userid`, `username`, `full_name` FROM `" . $this->db_prefix . "_users` WHERE `userid` IN(" . implode( ",", $id ) . ")" );
+			
+			while( $row = $this->db->sql_fetch_assoc( $result ) )
+			{
+				$row['full_name'] = $row['full_name'] == '' ? $row['username'] : $row['full_name'];
+				$users[$row['userid']] = $row;
+			}
+		}
+		else
+		{
+			$result = $this->db->sql_query( " SELECT `userid`, `username`, `full_name` FROM `" . $this->db_prefix . "_users` WHERE `userid`=" . $id );
+			$users = $this->db->sql_fetch_assoc( $result );
+			$users['full_name'] = $users['full_name'] == '' ? $users['username'] : $users['full_name'];
+		}
+
+		return $users;
 	}
 	
 	// Lay ca si tu id
@@ -286,12 +315,74 @@ class nv_mod_music
 
 		return $singer;
 	}
+	
+	// Lay nhac si tu id
+	public function getauthorbyID( $id )
+	{
+		$authors = array();
+		
+		if( is_array( $id ) )
+		{
+			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_author` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			
+			while( $row = $this->db->sql_fetch_assoc( $result ) )
+			{
+				$authors[$row['id']] = $row;
+			}
+		}
+		else
+		{
+			$result = $this->db->sql_query( " SELECT * FROM " . $this->table_prefix . "_author WHERE id=" . $id );
+			$authors = $this->db->sql_fetchrow( $result );
+		}
+
+		return $authors;
+	}
 
 	// Lay song tu id
 	public function getsongbyID( $id )
 	{
-		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "` WHERE `id`=" . $id );
-		return $this->db->sql_fetch_assoc( $result );
+		$songs = array();
+		
+		if( is_array( $id ) )
+		{
+			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			
+			while( $row = $this->db->sql_fetch_assoc( $result ) )
+			{
+				$songs[$row['id']] = $row;
+			}
+		}
+		else
+		{
+			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "` WHERE `id`=" . $id );
+			$songs = $this->db->sql_fetch_assoc( $result );
+		}
+		
+		return $songs;
+	}
+	
+	// Lay album tu id
+	public function getalbumbyID( $id )
+	{
+		$albums = array();
+		
+		if( is_array( $id ) )
+		{
+			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_album` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			
+			while( $row = $this->db->sql_fetch_assoc( $result ) )
+			{
+				$albums[$row['id']] = $row;
+			}
+		}
+		else
+		{
+			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_album` WHERE `id`=" . $id );
+			$albums = $this->db->sql_fetchrow( $result );
+		}
+		
+		return $albums;
 	}
 	
 	// Lay ca si tu ten
@@ -308,17 +399,10 @@ class nv_mod_music
 	public function getauthorbyName( $name )
 	{
 		$author = array();
-		$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_author` WHERE `tenthat`=" . $this->db->dbescape( $name ) );
+		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_author` WHERE `tenthat`=" . $this->db->dbescape( $name ) );
 		$author = $this->db->sql_fetch_assoc( $result );
 
 		return $author;
-	}
-	
-	// Lay album tu id
-	public function getalbumbyID( $id )
-	{
-		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_album` WHERE `id`=" . $id );
-		return $this->db->sql_fetchrow( $result );
 	}
 
 	public function build_author_singer_2string( $array, $string )
@@ -345,6 +429,87 @@ class nv_mod_music
 		else
 		{
 			return implode( " " . $this->setting['author_singer_defis'] . " ", $return );
+		}
+	}
+
+	public function build_album_2tring( $array, $string )
+	{
+		$id = $this->string2array( $string );
+		
+		$return = array();
+		
+		if( ! empty( $id ) )
+		{
+			foreach( $id as $_tmp )
+			{
+				if( isset( $array[$_tmp] ) )
+				{
+					$return[] = $array[$_tmp]['tname'];
+				}
+			}
+		}
+		
+		if( empty( $return ) )
+		{
+			return $this->lang('unknow');
+		}
+		else
+		{
+			return implode( ", ", $return );
+		}
+	}
+
+	public function build_categories_2tring( $array, $string )
+	{
+		$id = $this->string2array( $string );
+		
+		$return = array();
+		
+		if( ! empty( $id ) )
+		{
+			foreach( $id as $_tmp )
+			{
+				if( isset( $array[$_tmp] ) )
+				{
+					$return[] = $array[$_tmp]['title'];
+				}
+			}
+		}
+		
+		if( empty( $return ) )
+		{
+			return $this->lang('unknow');
+		}
+		else
+		{
+			return implode( ", ", $return );
+		}
+	}
+
+	public function build_user_2tring( $array, $string, $default = '' )
+	{
+		$id = $this->string2array( $string );
+		
+		$return = array();
+		
+		if( ! empty( $id ) )
+		{
+			foreach( $id as $_tmp )
+			{
+				if( isset( $array[$_tmp] ) )
+				{
+					$return[] = $array[$_tmp]['full_name'];
+				}
+			}
+		}
+		
+		if( empty( $return ) )
+		{
+			return $default == '' ? $this->lang('unknow') : $default;
+		}
+		else
+		{
+			return implode( ", ", $return );
 		}
 	}
 	
@@ -790,6 +955,42 @@ class nv_mod_music
 				$ftp->disconnect();
 			}
 		}
+	}
+	
+	public function convertfromBytes( $size )
+	{
+		return nv_convertfromBytes( $size );
+	}
+	
+	public function convert_bitrate( $bitrate )
+	{
+		return round( $bitrate / 1000 ) . " kbs";
+	}
+	
+	public function convert_duration( $duration )
+	{
+		return ( int ) ( $duration / 60 ) . ":" . round( $duration % 60 );
+	}
+	
+	public function build_query_search_id( $id, $field, $logic = 'OR' )
+	{
+		if( empty( $id ) ) return $field . "=''";
+		
+		if( is_array( $id ) )
+		{
+			$query = array();
+			foreach( $id as $_id )
+			{
+				$query[] = $field . " LIKE '%," . $_id . ",%'";
+			}
+			$query = implode( " " . $logic . " ", $query );
+		}
+		else
+		{
+			$query = $field . " LIKE '%," . $id . ",%'";
+		}
+		
+		return $query;
 	}
 }
 

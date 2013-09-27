@@ -2,150 +2,312 @@
 
 /**
  * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung (phantandung92@gmail.com)
+ * @Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011 Freeware
- * @Createdate 26/01/2011 09:09 AM
+ * @Createdate 26-01-2011 14:43
  */
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$page_title = $lang_module['list_album'];
-
-// lay du lieu
-$contents = '';
-$numshow = $nv_Request->get_int( 'numshow', 'get', 100 );
-$now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
-$q = filter_text_input( 'q', 'get', '' );
-$type = filter_text_input( 'type', 'get', 'name' );
-
-$order = filter_text_input( 'order', 'get', 'id' );
-
-if( $order == 'name' )
+// Xoa bai hat
+if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
-	$sort = "ORDER BY a.tname ASC";
+    if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+    
+    $id = $nv_Request->get_int( 'id', 'post', 0 );
+    $list_levelid = filter_text_input( 'listid', 'post', '' );
+    
+    if ( empty( $id ) and empty ( $list_levelid ) ) die( "NO" );
+    
+	$listid = array();
+	if ( $id )
+	{
+		$listid[] = $id;
+		$num = 1;
+	}
+	else
+	{
+		$list_levelid = explode ( ",", $list_levelid );
+		$list_levelid = array_map ( "trim", $list_levelid );
+		$list_levelid = array_filter ( $list_levelid );
+
+		$listid = $list_levelid;
+		$num = sizeof( $list_levelid );
+	}
+	
+	$songs = $classMusic->getsongbyID( $listid );
+	
+	if( sizeof( $songs ) != $num ) die( 'NO' );
+	
+	foreach( $songs as $id => $song )
+	{
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
+		
+		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
+		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
+		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
+		$classMusic->delcomment( 'song', $song['id'] );
+		$classMusic->dellyric( $song['id'] );
+		$classMusic->delerror( 'song', $song['id'] );
+		$classMusic->delgift( $song['id'] );
+		$classMusic->unlinkSV( $song['server'], $song['duongdan'] );
+		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( $song['listcat'], array( $song['theloai'] ) ) ) ) );
+	}	
+    
+    nv_del_moduleCache( $module_name );
+	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_song'), implode( ", ", array_keys( $songs ) ), $admin_info['userid'] );
+	
+    die( "OK" );
 }
-elseif( $order == 'casi' )
+
+// Thay doi hoat dong bai hat
+if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
-	$sort = "ORDER BY b.tenthat ASC";
+    if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+    
+    $id = $nv_Request->get_int( 'id', 'post', 0 );
+    $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
+    $array_id = filter_text_input( 'listid', 'post', '' );
+    
+    if ( empty( $id ) and empty ( $array_id ) ) die( "NO" );
+    
+	$listid = array();
+	if ( $id )
+	{
+		$listid[] = $id;
+		$num = 1;
+	}
+	else
+	{
+		$array_id = explode ( ",", $array_id );
+		$array_id = array_map ( "trim", $array_id );
+		$array_id = array_filter ( $array_id );
+
+		$listid = $array_id;
+		$num = count( $array_id );
+	}
+	
+	// Lay thong tin
+	$sql = "SELECT `id`, `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode ( ",", $listid ) . ")";
+	$result = $db->sql_query( $sql );
+	$check = $db->sql_numrows( $result );
+	
+	if ( $check != $num ) die( "NO" );
+	
+	$array_status = array();
+	$array_title = array();
+	while ( list( $id, $active ) = $db->sql_fetchrow( $result ) )
+	{		
+		if ( empty ( $controlstatus ) )
+		{
+			$array_status[$id] = $active ? 0 : 1;
+		}
+		else
+		{
+			$array_status[$id] = ( $controlstatus == 1 ) ? 1 : 0;
+		}
+	}
+	
+	foreach( $array_status as $id => $active )
+	{
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `active`=" . $active . " WHERE `id`=" . $id;
+		$db->sql_query( $sql );	
+	}	
+    
+    nv_del_moduleCache( $module_name );
+	
+    die( "OK" );
+}
+
+// Tieu de trang
+$page_title = $classMusic->lang('album');
+
+// Thong tin phan trang
+$page = $nv_Request->get_int( 'page', 'get', 0 );
+$per_page = 50;
+
+// Query, url co so
+$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`!=0";
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name;
+
+// Du lieu tim kiem
+$data_search = array(
+	"q" => filter_text_input( 'q', 'get', '', 1, 100 ),
+	"singer" => filter_text_input( 'singer', 'get', '', 1, 100 ),
+	"disabled" => " disabled=\"disabled\""
+);
+
+// Cam an nut huy tim kiem
+if( ! empty ( $data_search['q'] ) or ! empty ( $data_search['singer'] ) )
+{
+	$data_search['disabled'] = "";
+}
+
+// Query tim kiem
+if( ! empty ( $data_search['q'] ) )
+{
+	$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
+	$sql .= " AND `tenthat` LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%'";
+}
+
+if( ! empty ( $data_search['singer'] ) )
+{
+	$base_url .= "&amp;singer=" . urlencode( $data_search['singer'] );
+	$sql .= " AND ( " . $classMusic->build_query_search_id( $classMusic->search_singer_id( $data_search['singer'], 5 ), 'casi' ) . " )";
+}
+
+// Du lieu sap xep
+$order = array();
+$check_order = array( "ASC", "DESC", "NO" );
+$opposite_order = array(
+	"NO" => "ASC",
+	"DESC" => "ASC",
+	"ASC" => "DESC"
+);
+$lang_order_1 = array(
+	"NO" => $classMusic->lang('filter_lang_asc'),
+	"DESC" => $classMusic->lang('filter_lang_asc'),
+	"ASC" => $classMusic->lang('filter_lang_desc')
+);
+$lang_order_2 = array(
+	"title" => $classMusic->lang('song_name'),
+	"numview" => $classMusic->lang('song_numvew'),
+	"addtime" => $classMusic->lang('playlist_time')
+);
+
+$order['title']['order'] = filter_text_input( 'order_title', 'get', 'NO' );
+$order['numview']['order'] = filter_text_input( 'order_numview', 'get', 'NO' );
+$order['addtime']['order'] = filter_text_input( 'order_addtime', 'get', 'NO' );
+
+foreach ( $order as $key => $check )
+{
+	$order[$key]['data'] = array(
+		"class" => "order" . strtolower ( $order[$key]['order'] ),
+		"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
+		"title" => sprintf ( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
+	);
+	
+	if ( ! in_array ( $check['order'], $check_order ) )
+	{
+		$order[$key]['order'] = "NO";
+	}
+	else
+	{
+		$base_url .= "&amp;order_" . $key . "=" . $order[$key]['order'];
+	}
+}
+
+if( $order['title']['order'] != "NO" )
+{
+	$sql .= " ORDER BY `tname` " . $order['title']['order'];
+}
+elseif( $order['numview']['order'] != "NO" )
+{
+	$sql .= " ORDER BY `numview` " . $order['numview']['order'];
+}
+elseif( $order['addtime']['order'] != "NO" )
+{
+	$sql .= " ORDER BY `addtime` " . $order['addtime']['order'];
 }
 else
 {
-	$sort = "ORDER BY a.id DESC";
+	$sql .= " ORDER BY `id` DESC";
 }
 
-// xu li du lieu
-if( ! $now_page )
-{
-	$now_page = 1;
-	$first_page = 0;
-}
-else
-{
-	$first_page = ( $now_page - 1 ) * $numshow;
-}
+// Lay so row
+$sql1 = "SELECT COUNT(*) " . $sql;
+$result1 = $db->sql_query( $sql1 );
+list( $all_page ) = $db->sql_fetchrow( $result1 );
 
-if( $type == 'name' )
-{
-	$where = "a.tname LIKE '%" . $q . "%'";
-}
-else
-{
-	$where = "b.tenthat LIKE '%" . $q . "%'";
-}
-
-$sqlnum = "SELECT a.*, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE " . $where;
-$sql = $sqlnum . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
-
-$link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album&numshow=" . $numshow . "&q=" . $q . "&order=" . $order . "&type=" . $type;
-
-// tinh so trang
-$num = $db->sql_query( $sqlnum );
-$output = $db->sql_numrows( $num );
-$ts = ceil( $output / $numshow );
-
-// Form tim kiem
-$i = 5;
-$contents .= "
-<form action=\"\" method=\"get\">
-<input type=\"hidden\" name=\"" . NV_NAME_VARIABLE . "\" value=\"" . $module_name . "\"/>
-<input type=\"hidden\" name=\"" . NV_OP_VARIABLE . "\" value=\"" . $op . "\"/>
-<table class=\"tab1 fixbottomtable\">
-	<tbody>
-		<tr>
-			<td class=\"fixbg\">
-				<strong>" . $lang_module['search_album'] . ":&nbsp;&nbsp;&nbsp;</strong>
-				" . $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" style=\"width: 265px\">\n
-				" . $lang_module['search_per_page'] . "";
-$contents .= "
-<select name=\"numshow\">\n";
-while( $i <= 1000 )
-{
-	$a = '';
-	if( $i == $numshow ) $a = "selected=\"selected\"";
-	$contents .= "<option " . $a . " value=\"" . $i . "\" >" . $i . "</option>\n";
-	$i = $i + 10;
-}
-$contents .= "</select>\n";
-$contents .= "
-				<input type=\"submit\" value=\"" . $lang_module['search'] . "\"><br>\n
-			</td>
-		</tr>
-	</tbody>
-</table>
-";
-$contents .= "<input type=\"hidden\" name =\"data\" value=\"" . $sql . "\" />";
-$contents .= "<input type=\"hidden\" name =\"do\" value=\"1\" />";
-$contents .= "</form>\n";
-
-// Ket qua
-$xtpl = new XTemplate( "album.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addalbum" );
-$xtpl->assign( 'URL_DEL_BACK', $link );
-$xtpl->assign( 'URL_ACTIVE_LIST', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=listactive&where=_album" );
-$xtpl->assign( 'URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_album" );
-$xtpl->assign( 'ORDER_NAME', $link . "&order=name" );
-$xtpl->assign( 'ORDER_SINGER', $link . "&order=casi" );
-
-//lay du lieu
+// Xay dung du lieu album
+$i = 1;
+$sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
 $result = $db->sql_query( $sql );
-$num = $db->sql_numrows( $result );
 
-$link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
-$link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addalbum";
-$link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_album&id=";
-
-while( $rs = $db->sql_fetchrow( $result ) )
+$array = $array_singers =  array();
+$array_singer_ids = '';
+while( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'id', $rs['id'] );
-	$xtpl->assign( 'name', $rs['tname'] );
-	$xtpl->assign( 'singer', $rs['singername'] );
-	$xtpl->assign( 'numsong', $rs['numsong'] );
-	$xtpl->assign( 'URL', $mainURL . "=listenlist/" . $rs['id'] . "/" . $rs['name'] );
+	$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
+	
+	$array[] = array(
+		"id" => $row['id'],
+		"title" => $row['tname'],
+		"singers" => $row['casi'],
+		"thumb" => $row['thumb'],
+		"numview" => $row['numview'],
+		"numsong" => $row['numsong'],
+		"addtime" => nv_date( "H:i d/m/Y", $row['addtime'] ),
+		"status" => $row['active'] ? " checked=\"checked\"" : "",
+		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album&amp;id=" . $row['id'],
+		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""
+	);
+	$i ++;
+}
 
-	$xtpl->assign( 'URL_SONG', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&type_search=album&q=" . $rs['tname'] );
+// Cac thao tac
+$list_action = array(
+	0 => array(
+		"key" => 1,
+		"class" => "delete",
+		"title" => $classMusic->glang('delete')
+	),
+	1 => array(
+		"key" => 2,
+		"class" => "status-ok",
+		"title" => $classMusic->lang('action_status_ok')
+	),
+	2 => array(
+		"key" => 3,
+		"class" => "status-no",
+		"title" => $classMusic->lang('action_status_no')
+	)
+);
 
-	$xtpl->assign( 'url_add_song', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addsong&album=" . $rs['name'] );
-	$xtpl->assign( 'URL_ADD_TO_MAINALBUM', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=mainalbum&id=" . $rs['id'] );
+// Phan trang
+$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 
-	$class = ( $i % 2 ) ? " class=\"second\"" : "";
-	$xtpl->assign( 'class', $class );
-	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&where=_album&id=" . $rs['id'] );
-	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $rs['id'] );
+$xtpl = new XTemplate( "album.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
+$xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'GLANG', $lang_global );
+$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL );
+$xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
+$xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
+$xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
+$xtpl->assign( 'MODULE_NAME', $module_name );
+$xtpl->assign( 'OP', $op );
+$xtpl->assign( 'DATA_SEARCH', $data_search );
+$xtpl->assign( 'DATA_ORDER', $order );
+$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name  . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_ADD', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album" );
 
-	$str_ac = ( $rs['active'] == 1 ) ? $lang_module['active_yes'] : $lang_module['active_no'];
-	$xtpl->assign( 'active', $str_ac );
-	$xtpl->assign( 'URL_ACTIVE', $link_active . $rs['id'] );
+foreach( $list_action as $action )
+{
+	$xtpl->assign( 'ACTION', $action );
+	$xtpl->parse( 'main.action' );
+}
 
+// Lay thong tin ca si
+$array_singer_ids = $classMusic->string2array( $array_singer_ids );
+if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
+
+foreach( $array as $row )
+{
+	$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
+	
+	$xtpl->assign( 'ROW', $row );
 	$xtpl->parse( 'main.row' );
 }
 
-$xtpl->parse( 'main' );
-$contents .= $xtpl->text( 'main' );
+if( ! empty( $generate_page ) )
+{
+    $xtpl->assign( 'GENERATE_PAGE', $generate_page );
+    $xtpl->parse( 'main.generate_page' );
+}
 
-$contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto;\">\n ";
-$contents .= new_page_admin( $ts, $now_page, $link );
-$contents .= "</div>\n";
+$xtpl->parse( 'main' );
+$contents = $xtpl->text( 'main' );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );

@@ -259,7 +259,7 @@ foreach( $global_array_cat_song as $theloai )
 	}
 }
 
-// Prase error
+// Xuat thong bao loi
 if ( ! empty ( $error ) )
 {
 	$xtpl->assign( 'ERROR', $error );
