@@ -9,8 +9,13 @@
 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
+// Call jquery UI sortable
+$classMusic->callJqueryPlugin('jquery.ui.sortable');
+
+// Tieu de trang
 $page_title = $classMusic->lang('add_song');
 
+// Lay ID bai hat
 $id = $nv_Request->get_int( 'id', 'get', 0 );
 $error = "";
 
@@ -91,9 +96,9 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
 	$array['ten'] = filter_text_input( 'ten', 'post', '', 1, 255 );
 	$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 255 );
-	$array['casi'] = $nv_Request->get_typed_array( 'casi', 'post', 'int' );
+	$array['casi'] = filter_text_input( 'casi', 'post', '', 1, 255 );
 	$array['casimoi'] = filter_text_input( 'casimoi', 'post', '', 1, 255 );
-	$array['nhacsi'] = $nv_Request->get_typed_array( 'nhacsi', 'post', 'int' );
+	$array['nhacsi'] = filter_text_input( 'nhacsi', 'post', '', 1, 255 );
 	$array['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '', 1, 255 );
 	$array['album'] = $nv_Request->get_int( 'album', 'post', 0 );
 	$array['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
@@ -106,6 +111,10 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	$array['is_official'] = $nv_Request->get_int( 'is_official', 'post', 0 );
 	$array['lyric'] = filter_text_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
 
+	// Chuyen ca si, nhac si tu chuoi thanh mang
+	$array['casi'] = $classMusic->string2array( $array['casi'] );
+	$array['nhacsi'] = $classMusic->string2array( $array['nhacsi'] );
+	
 	// Kiem tra loi
 	if( empty( $array['ten'] ) )
 	{
@@ -228,6 +237,38 @@ $array['duongdan'] = $classMusic->admin_outputURL( $array['server'], $array['duo
 
 $my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "modules/" . $module_file . "/js/jquery.autosize.js\"></script>\n";
 
+// Lay danh sach ca si
+if( ! empty( $array['casi'] ) )
+{
+	$singers = $classMusic->getsingerbyID( $array['casi'], true );
+	
+	$array['casi'] = array();
+	foreach( $singers as $singer )
+	{
+		$array['casi'][$singer['id']] = $singer['tenthat'];
+	}
+}
+else
+{
+	$array['casi'] = array();
+}
+
+// Lay danh sach nhac si
+if( ! empty( $array['nhacsi'] ) )
+{
+	$authors = $classMusic->getauthorbyID( $array['nhacsi'], true );
+	
+	$array['nhacsi'] = array();
+	foreach( $authors as $author )
+	{
+		$array['nhacsi'][$author['id']] = $author['tenthat'];
+	}
+}
+else
+{
+	$array['nhacsi'] = array();
+}
+
 $xtpl = new XTemplate( "content-song.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'GLANG', $lang_global );
@@ -241,6 +282,9 @@ $xtpl->assign( 'SETTING', $classMusic->setting );
 
 $xtpl->assign( 'FILE_DIR', NV_UPLOADS_DIR . '/' . $module_name . '/files' );
 $xtpl->assign( 'IMG_DIR', NV_UPLOADS_DIR . '/' . $module_name . '/images' );
+
+$xtpl->assign( 'LISTSINGERS', implode( ",", array_keys( $array['casi'] ) ) );
+$xtpl->assign( 'LISTAUTHORS', implode( ",", array_keys( $array['nhacsi'] ) ) );
 
 // Xuat the loai bai hat
 $global_array_cat_song = $classMusic->get_category();
@@ -266,9 +310,30 @@ if ( ! empty ( $error ) )
 	$xtpl->parse( 'main.error' );
 }
 
+// Tao alias thu cong
 if( empty( $array['ten'] ) )
 {
 	$xtpl->parse( 'main.auto_get_alias' );
+}
+
+// Xuat ca si
+if( ! empty( $array['casi'] ) )
+{
+	foreach( $array['casi'] as $_id => $_tmp )
+	{
+		$xtpl->assign( 'SINGER', array( "id" => $_id, "title" => $_tmp ) );
+		$xtpl->parse( 'main.singer' );
+	}
+}
+
+// Xuat nhac si
+if( ! empty( $array['nhacsi'] ) )
+{
+	foreach( $array['nhacsi'] as $_id => $_tmp )
+	{
+		$xtpl->assign( 'AUTHOR', array( "id" => $_id, "title" => $_tmp ) );
+		$xtpl->parse( 'main.author' );
+	}
 }
 
 $xtpl->parse( 'main' );

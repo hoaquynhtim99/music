@@ -9,6 +9,261 @@
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
+// Tim kiem va them mot nhac si
+if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
+{
+	$authors = filter_text_input( 'authors', 'get', '', 1, 255 );
+	$returnArea = filter_text_input( 'area', 'get', '', 1, 255 );
+	$returnInput = filter_text_input( 'input', 'get', '', 1, 255 );
+
+	$page_title = $classMusic->lang('getauthorid_title');
+	$page = $nv_Request->get_int( 'page', 'get', 0 );
+	$per_page = 15;
+	$array = array();
+
+	// SQL va LINK co ban
+	$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `id`!=0";
+	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;findOneAndReturn=1&amp;area=" . $returnArea . "&amp;input=" . $returnInput . "&amp;authors=" . $authors;
+
+	// Du lieu tim kiem
+	$data_search = array( "q" => filter_text_input( 'q', 'get', '', 1, 255 ) );
+
+	if( ! empty( $authors ) ) $sql .= " AND `id` NOT IN(" . $authors . ")";
+
+	if( ! empty( $data_search['q'] ) )
+	{
+		$base_url .= "&amp;q=" . $data_search['q'];
+		$sql .= " AND ( `tenthat` LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%' )";
+	}
+
+	// Order data
+	$order = array();
+	$check_order = array( "ASC", "DESC", "NO" );
+	$opposite_order = array(
+		"NO" => "ASC",
+		"DESC" => "ASC",
+		"ASC" => "DESC"
+	);
+	$lang_order_1 = array(
+		"NO" => $classMusic->lang('filter_lang_asc'),
+		"DESC" => $classMusic->lang('filter_lang_asc'),
+		"ASC" => $classMusic->lang('filter_lang_desc'),
+	);
+	$lang_order_2 = array(
+		"title" => $classMusic->lang('filter_author'),
+	);
+
+	$order['title']['order'] = filter_text_input( 'order_title', 'get', 'NO' );
+
+	foreach( $order as $key => $check )
+	{
+		if( ! in_array( $check['order'], $check_order ) )
+		{
+			$order[$key]['order'] = "NO";
+		}
+
+		$order[$key]['data'] = array(
+			"class" => "order" . strtolower( $order[$key]['order'] ),
+			"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
+			"title" => sprintf( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
+		);
+	}
+
+	if( $order['title']['order'] != "NO" )
+	{
+		$sql .= " ORDER BY `tenthat` " . $order['title']['order'];
+	}
+	else
+	{
+		$sql .= " ORDER BY `id` DESC";
+	}
+
+	$array = array();
+
+	$sql1 = "SELECT COUNT(*) " . $sql;
+	$result1 = $db->sql_query( $sql1 );
+	list( $all_page ) = $db->sql_fetchrow( $result1 );
+
+	$sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
+	$result = $db->sql_query( $sql );
+
+	while( $row = $db->sql_fetchrow( $result ) )
+	{
+		$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
+	
+		$array[$row['id']] = array(
+			"id" => $row['id'],
+			"title" => $row['tenthat'],
+			"thumb" => $row['thumb'],
+		);
+	}
+
+	$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
+
+	$xtpl = new XTemplate( "find_one_author.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+	$xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
+	$xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
+	$xtpl->assign( 'GLOBAL_CONFIG', $global_config );
+	$xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
+	$xtpl->assign( 'MODULE_NAME', $module_name );
+	$xtpl->assign( 'OP', $op );
+	$xtpl->assign( 'MODULE_FILE', $module_file );
+	$xtpl->assign( 'AUTHORS', $authors );
+	$xtpl->assign( 'RETURNINPUT', $returnInput );
+	$xtpl->assign( 'RETURNAREA', $returnArea );
+	$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" );
+	$xtpl->assign( 'DATA_ORDER', $order );
+	$xtpl->assign( 'SEARCH', $data_search );
+	$xtpl->assign( 'URLCANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&findOneAndReturn=1&area=" . $returnArea . "&input=" . $returnInput . "&authors=" . $authors );
+
+	$a = 0;
+	foreach( $array as $row )
+	{
+		$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
+		$xtpl->assign( 'ROW', $row );
+		$xtpl->parse( 'main.row' );
+		$a++;
+	}
+
+	if( ! empty( $generate_page ) )
+	{
+		$xtpl->assign( 'GENERATE_PAGE', $generate_page );
+		$xtpl->parse( 'main.generate_page' );
+	}
+
+	$xtpl->parse( 'main' );
+	$contents = $xtpl->text( 'main' );
+
+	include ( NV_ROOTDIR . "/includes/header.php" );
+	echo $contents;
+	include ( NV_ROOTDIR . "/includes/footer.php" );
+	die();
+}
+
+// Tim kiem va them nhieu nhac si
+if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
+{
+	$authors = filter_text_input( 'authors', 'get', '', 1, 255 );
+	
+	$returnArea = filter_text_input( 'area', 'get', '', 1, 255 );
+	$returnInput = filter_text_input( 'input', 'get', '', 1, 255 );
+	
+	if( $nv_Request->isset_request( 'loadname', 'get' ) )
+	{		
+		$sql = "SELECT `id`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `id` IN(" . $authors . ")";
+		$result = $db->sql_query( $sql );
+
+		$list_author = array();
+		$_tmp = array();
+		while( list( $authorid, $authorname ) = $db->sql_fetchrow( $result ) )
+		{
+			$_tmp[$authorid] = $authorname;
+		}
+		
+		$authors = $classMusic->string2array( $authors );
+		foreach( $authors as $_sid )
+		{
+			if( isset( $_tmp[$_sid] ) ) $list_author[$_sid] = $_tmp[$_sid];
+		}
+
+		$return = "";
+		foreach( $list_author as $_id => $_name )
+		{
+			$return .= "<li class=\"" . $_id . "\">" . $_name . "<span onclick=\"nv_del_item_on_list(" . $_id . ", '" . $returnArea . "', '" . $classMusic->lang('author_del_confirm') . "', '" . $returnInput . "')\" class=\"delete-icon\">&nbsp;</span></li>";
+		}
+
+		include ( NV_ROOTDIR . "/includes/header.php" );
+		echo ( $return );
+		include ( NV_ROOTDIR . "/includes/footer.php" );
+		die();
+	}
+	
+	$authors = $classMusic->string2array( $authors );
+
+	$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author`";
+	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&findListAndReturn=1";
+
+	$sql1 = "SELECT COUNT(*) " . $sql;
+	$result1 = $db->sql_query( $sql1 );
+	list( $all_page ) = $db->sql_fetchrow( $result1 );
+
+	$sql .= " ORDER BY `id` DESC";
+
+	$page = $nv_Request->get_int( 'page', 'get', 0 );
+	$per_page = 5;
+
+	$sql2 = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
+	$query2 = $db->sql_query( $sql2 );
+
+	$array = array();
+	while( $row = $db->sql_fetchrow( $query2 ) )
+	{
+		$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
+
+		$array[$row['id']] = array(
+			"id" => $row['id'],
+			"title" => $row['tenthat'],
+			"thumb" => $row['thumb'],
+			"checked" => in_array( $row['id'], $authors ) ? " checked=\"checked\"" : ""
+		);
+	}
+
+	$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page, true, true, "nv_load_page", "data" );
+
+	$xtpl = new XTemplate( "find_list_author.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
+	$xtpl->assign( 'LANG', $lang_module );
+	$xtpl->assign( 'GLANG', $lang_global );
+	$xtpl->assign( 'GLOBAL_CONFIG', $global_config );
+	$xtpl->assign( 'NV_LANG_INTERFACE', NV_LANG_INTERFACE );
+	$xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
+	$xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
+	$xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
+	$xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
+	$xtpl->assign( 'OP', $op );
+	$xtpl->assign( 'MODULE_NAME', $module_name );
+	$xtpl->assign( 'MODULE_FILE', $module_file );
+	$xtpl->assign( 'AUTHORS', implode( ",", $authors ) );
+	$xtpl->assign( 'RETURNINPUT', $returnInput );
+	$xtpl->assign( 'RETURNAREA', $returnArea );
+
+	if( ! empty( $array ) )
+	{
+		$a = 0;
+		foreach( $array as $row )
+		{
+			$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
+			$xtpl->assign( 'ROW', $row );
+			$xtpl->parse( 'main.data.row' );
+			$a++;
+		}
+
+		if( ! empty( $generate_page ) )
+		{
+			$xtpl->assign( 'GENERATE_PAGE', $generate_page );
+			$xtpl->parse( 'main.data.generate_page' );
+		}
+
+		$xtpl->parse( 'main.data' );
+	}
+
+	if( $nv_Request->isset_request( 'getdata', 'get' ) )
+	{
+		$contents = $xtpl->text( 'main.data' );
+	}
+	else
+	{
+		$xtpl->parse( 'main' );
+		$contents = $xtpl->text( 'main' );
+	}
+
+	include ( NV_ROOTDIR . "/includes/header.php" );
+	echo ( $contents );
+	include ( NV_ROOTDIR . "/includes/footer.php" );
+	die();
+}
+
 $page_title = $lang_module['author_list'];
 
 if( ! defined( 'SHADOWBOX' ) )

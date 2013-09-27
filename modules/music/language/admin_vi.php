@@ -44,6 +44,8 @@ $lang_module['action_status_no'] = "Cho ngưng hoạt động";
 $lang_module['author'] = "Nhạc sĩ";
 $lang_module['author_new'] = "Nhập nhanh nhạc sĩ";
 $lang_module['author_add'] = "Thêm nhạc sĩ";
+$lang_module['author_add1'] = "Thêm một nhạc sĩ";
+$lang_module['author_add2'] = "Thêm nhiều nhạc sĩ";
 $lang_module['author_info'] = "Thông tin nhạc sĩ";
 $lang_module['author_edit'] = "Sửa thông tin nhạc sĩ";
 $lang_module['author_list'] = "Danh sách các nhạc sĩ";
@@ -282,6 +284,8 @@ $lang_module['get_info'] = "Lấy thông tin";
 $lang_module['singer_list'] = "Danh sách các ca sĩ";
 $lang_module['singer_add'] = "Thêm mới một ca sĩ";
 $lang_module['singer_add1'] = "Thêm ca sĩ";
+$lang_module['singer_add2'] = "Thêm một ca sĩ";
+$lang_module['singer_add3'] = "Thêm nhiều ca sĩ";
 $lang_module['singer_edit'] = "Sửa ca sĩ";
 $lang_module['singer_info'] = "Thông tin ca sĩ";
 $lang_module['singer_name'] = "Tên của ca sĩ";
@@ -306,6 +310,8 @@ $lang_module['complete'] = "Hoàn tất";
 $lang_module['error_exist_album'] = "Lỗi: Album này đã tồn tại";
 
 $lang_module['getaid_title'] = "Lấy album";
+$lang_module['getsingerid_title'] = "Tìm và thêm ca sĩ";
+$lang_module['getauthorid_title'] = "Tìm và thêm nhạc sĩ";
 
 $lang_module['cat_lits'] = "Danh sách thể loại bài hát";
 $lang_module['cat_edit'] = "Sửa thể loại bài hát";
@@ -324,17 +330,6 @@ $lang_module['album_confirm_delsong'] = "Bạn có muốn xóa không?";
 $lang_module['album_add_list_song'] = "Thêm nhiều bài hát";
 $lang_module['album_add_a_song'] = "Thêm một bài hát";
 $lang_module['album_list_comment'] = "Danh sách các bình luận Album";
-
-$lang_module['filter_enterkey'] = "Nhập từ khóa";
-$lang_module['filter_from'] = "Từ";
-$lang_module['filter_to'] = "Đến";
-$lang_module['filter_action'] = "Lọc";
-$lang_module['filter_cancel'] = "Hủy";
-$lang_module['filter_clear'] = "Xóa";
-$lang_module['filter_lang_asc'] = "tăng dần";
-$lang_module['filter_lang_desc'] = "giảm dần";
-$lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
-$lang_module['filter_all_cat'] = "- Tất cả thể loại -";
 
 $lang_module['guide_hot'] = "Quản lý các album HOT nhất trên trang chủ";
 $lang_module['guide_fourcategory'] = "Các thể loại sẽ hiển thị trên block TAB";
@@ -359,17 +354,6 @@ $lang_module['ads_add'] = "Thêm quảng cáo mới";
 $lang_module['ads_name'] = "Tên quảng cáo";
 
 $lang_module['error_check_viewed'] = "Đánh dấu là đã kiểm tra";
-
-$lang_module['filter_enterkey'] = "Nhập từ khóa";
-$lang_module['filter_from'] = "từ";
-$lang_module['filter_to'] = "đến";
-$lang_module['filter_action'] = "Lọc";
-$lang_module['filter_cancel'] = "Hủy";
-$lang_module['filter_clear'] = "Xóa";
-$lang_module['filter_err_submit'] = "Bạn cần chọn ít nhất một điều kiện để lọc dữ liệu";
-$lang_module['filter_lang_asc'] = "tăng dần";
-$lang_module['filter_lang_desc'] = "giảm dần";
-$lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
 
 $lang_module['info_check_curl'] = "Hệ thống của bạn không hỗ trợ thư viện CURL do đó sẽ không sử dụng được chức năng lấy nhạc từ các website khác";
 

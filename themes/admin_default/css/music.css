@@ -89,18 +89,21 @@ table.tab1 tbody:hover, table.tab1 tbody.second:hover{background:#efefef}
 .col-date{width:100px}
 .col-status{width:50px}
 .col-feature{width:100px}
-.col-number{width:50px}
+.col-number,.col-image{width:70px}
+.col-id{width:25px}
 
 /* ICON */
-.select-icon {background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}
-.unselect-icon {background: url('../images/music/unselect-icon.png') no-repeat left center;padding-left: 17px}
-.status-icon {background: url('../images/music/status-icon.png') no-repeat left center;padding-left: 17px}
-.status-ok-icon {background: url('../images/music/status-ok-icon.png') no-repeat left center;padding-left: 17px}
-.status-no-icon {background: url('../images/music/status-no-icon.png') no-repeat left center;padding-left: 17px}
-.delete-icon {background: url('../images/music/delete-icon.png') no-repeat left center;padding-left: 17px}
-.edit-icon {background: url('../images/music/edit-icon.png') no-repeat left center;padding-left: 17px}
-.check-icon {background: url('../images/music/check-icon.png') no-repeat left center;padding-left: 17px}
-.view-icon {background: url('../images/music/view-icon.png') no-repeat left center;padding-left: 17px}
+.select-icon{background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}
+.unselect-icon{background: url('../images/music/unselect-icon.png') no-repeat left center;padding-left: 17px}
+.status-icon{background: url('../images/music/status-icon.png') no-repeat left center;padding-left: 17px}
+.status-ok-icon{background: url('../images/music/status-ok-icon.png') no-repeat left center;padding-left: 17px}
+.status-no-icon{background: url('../images/music/status-no-icon.png') no-repeat left center;padding-left: 17px}
+.delete-icon{background: url('../images/music/delete-icon.png') no-repeat left center;padding-left: 17px}
+.edit-icon{background: url('../images/music/edit-icon.png') no-repeat left center;padding-left: 17px}
+.check-icon{background: url('../images/music/check-icon.png') no-repeat left center;padding-left: 17px}
+.view-icon{background: url('../images/music/view-icon.png') no-repeat left center;padding-left: 17px}
+.add-icon{background: url('../images/music/add-icon.png') no-repeat left center;padding-left: 17px}
+.list-icon{background: url('../images/music/list-icon.png') no-repeat left center;padding-left: 17px}
 
 /* SONG OF ALBUM */
 .list_song{list-style-type:none;padding:0;margin:0}

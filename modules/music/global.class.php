@@ -30,6 +30,8 @@ class nv_mod_music
 	
 	private $language = array();
 	private $glanguage = array();
+	
+	private $js_data = array();
 
 	public function __construct( $d = "", $n = "", $f = "", $lang = "" )
 	{
@@ -65,6 +67,13 @@ class nv_mod_music
 		$this->language = $lang_module;
 		$this->glanguage = $lang_global;
 		$this->currenttime = NV_CURRENTTIME;
+		
+		$this->js_data['jquery.ui.core'] = "";
+		$this->js_data['jquery.ui.core'] .= "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
+		$this->js_data['jquery.ui.core'] .= "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
+		$this->js_data['jquery.ui.core'] .= "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/ui/jquery.ui.core.min.js\"></script>\n";
+		
+		$this->js_data['jquery.ui.sortable'] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/ui/jquery.ui.sortable.min.js\"></script>\n";
 	}
 	
 	private function handle_error( $messgae = '' )
@@ -115,6 +124,50 @@ class nv_mod_music
 		}
 
 		return $setting;
+	}
+	
+	private function sortArrayFromArrayKeys( $keys, $array )
+	{
+		$return = array();
+		
+		foreach( $keys as $key )
+		{
+			if( isset( $array[$key] ) )
+			{
+				$return[$key] = $array[$key];
+			}
+		}
+		return $return;
+	}
+	
+	public function callJqueryPlugin()
+	{
+		global $my_head;
+		
+		$numargs = func_num_args();
+		$arg_list = func_get_args();
+		
+		$return = array();
+		for( $i = 0; $i < $numargs; $i ++ )
+		{
+			if( isset( $this->js_data[$arg_list[$i]] ) )
+			{
+				if( $arg_list[$i] == 'jquery.ui.sortable' ) $return['jquery.ui.core'] = $this->js_data['jquery.ui.core'];
+				$return[$arg_list[$i]] =  $this->js_data[$arg_list[$i]];
+			}
+		}
+		
+		if( ! empty( $return ) )
+		{
+			if( empty( $my_head ) )
+			{
+				$my_head = implode( "\n", $return );
+			}
+			else
+			{
+				$my_head .= implode( "\n", $return );
+			}
+		}
 	}
 	
 	public function lang( $key )
@@ -294,7 +347,7 @@ class nv_mod_music
 	}
 	
 	// Lay ca si tu id
-	public function getsingerbyID( $id )
+	public function getsingerbyID( $id, $sort = false )
 	{
 		$singer = array();
 		
@@ -306,6 +359,8 @@ class nv_mod_music
 			{
 				$singer[$row['id']] = $row;
 			}
+			
+			if( $sort === true ) $singer = $this->sortArrayFromArrayKeys( $id, $singer );
 		}
 		else
 		{
@@ -317,7 +372,7 @@ class nv_mod_music
 	}
 	
 	// Lay nhac si tu id
-	public function getauthorbyID( $id )
+	public function getauthorbyID( $id, $sort = false )
 	{
 		$authors = array();
 		
@@ -329,6 +384,8 @@ class nv_mod_music
 			{
 				$authors[$row['id']] = $row;
 			}
+			
+			if( $sort === true ) $authors = $this->sortArrayFromArrayKeys( $id, $authors );
 		}
 		else
 		{

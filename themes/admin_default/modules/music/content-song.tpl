@@ -30,8 +30,23 @@
 		</tbody>
 		<tbody class="second">
 			<tr>
-				<td class="aright"><strong>{LANG.singer}</strong></td>
-				<td></td>
+				<td class="aright atop"><strong>{LANG.singer}</strong></td>
+				<td>
+					<input type="hidden" name="casi" value="{LISTSINGERS}"/>
+					<p>
+						<strong>
+							<a href="javascript:void(0);" id="addonesinger" class="nounderline add-icon">{LANG.singer_add2}</a>
+							<a href="javascript:void(0);" id="addlistsinger" class="nounderline list-icon">{LANG.singer_add3}</a>
+						</strong>
+					</p>
+					<ul id="listsingers-area" class="fixbg list_song">
+						<!-- BEGIN: singer -->
+						<li class="{SINGER.id}">
+							{SINGER.title}<span onclick="nv_del_item_on_list({SINGER.id}, 'listsingers-area', '{LANG.author_del_confirm}', 'casi')" class="delete-icon">&nbsp;</span>
+						</li>
+						<!-- END: singer -->
+					</ul>
+				</td>
 			</tr>
 		</tbody>
 		<tbody>
@@ -42,8 +57,23 @@
 		</tbody>
 		<tbody class="second">
 			<tr>
-				<td class="aright"><strong>{LANG.author}</strong></td>
-				<td></td>
+				<td class="aright atop"><strong>{LANG.author}</strong></td>
+				<td>
+					<input type="hidden" name="nhacsi" value="{LISTAUTHORS}"/>
+					<p>
+						<strong>
+							<a href="javascript:void(0);" id="addoneauthor" class="nounderline add-icon">{LANG.author_add1}</a>
+							<a href="javascript:void(0);" id="addlistauthor" class="nounderline list-icon">{LANG.author_add2}</a>
+						</strong>
+					</p>
+					<ul id="listauthors-area" class="fixbg list_song">
+						<!-- BEGIN: author -->
+						<li class="{AUTHOR.id}">
+							{AUTHOR.title}<span onclick="nv_del_item_on_list({AUTHOR.id}, 'listauthors-area', '{LANG.author_del_confirm}', 'nhacsi')" class="delete-icon">&nbsp;</span>
+						</li>
+						<!-- END: author -->
+					</ul>
+				</td>
 			</tr>
 		</tbody>
 		<tbody>
@@ -130,7 +160,7 @@
 	</table>
 </form>
 <script type="text/javascript">
-$(function(){
+$(document).ready(function(){
 	$("input[name=select]").click(function(){
 		var area = "duongdan";
 		var path = "{NV_UPLOADS_DIR}/" + nv_module_name + "/{SETTING.root_contain}";
@@ -149,6 +179,36 @@ $(function(){
 		get_alias('idtitle', 'res_get_alias');
 	});
 	<!-- END: auto_get_alias -->
+	
+	$( "#listsingers-area" ).sortable({
+		cursor: "crosshair",
+		update: function(event, ui) { nv_sort_item('listsingers-area', 'casi'); }
+	});
+	$( "#listsingers-area" ).disableSelection();
+	
+	$( "#listauthors-area" ).sortable({
+		cursor: "crosshair",
+		update: function(event, ui) { nv_sort_item('listauthors-area', 'nhacsi'); }
+	});
+	$( "#listauthors-area" ).disableSelection();
+	
+	$("a#addonesinger").click(function(){
+		var singers = $("input[name=casi]").attr("value");
+		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=singer&findOneAndReturn=1&area=listsingers-area&input=casi&singers=" + singers, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+	});
+	$("a#addlistsinger").click(function(){
+		var singers = $("input[name=casi]").attr("value");
+		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=singer&findListAndReturn=1&area=listsingers-area&input=casi&singers=" + singers, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+	});
+	
+	$("a#addoneauthor").click(function(){
+		var authors = $("input[name=nhacsi]").attr("value");
+		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=author&findOneAndReturn=1&area=listauthors-area&input=nhacsi&authors=" + authors, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+	});
+	$("a#addlistauthor").click(function(){
+		var authors = $("input[name=nhacsi]").attr("value");
+		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=author&findListAndReturn=1&area=listauthors-area&input=nhacsi&authors=" + authors, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+	});
 });
 </script>
 <!-- END: main -->

@@ -107,22 +107,5 @@ $(document).ready(function(){
 		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=findasongtoalbum&songlist=" + songlist, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
 	});
 });
-function nv_soft_song(){
-	var list_song = new Array();
-	$("#listsong-area li").each(function(){
-		list_song.push($(this).attr("class"));
-	});
-	list_song = list_song.toString();
-	$("input[name=listsong]").val(list_song);
-	return;
-}
-function nv_del_song_fromalbum(songid){
-	if( confirm( "' . $lang_module['album_confirm_delsong'] . '" ) )
-	{
-		$("#listsong-area li." + songid).remove();
-		nv_soft_song();
-	}
-	return false;
-}
 </script>
 <!-- END: main -->

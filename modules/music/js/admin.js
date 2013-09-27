@@ -13,7 +13,7 @@ function get_alias( id, func ) {
 	}
 	return false;
 }
-// tra ve gia tri ten ngan gon
+// Tra ve gia tri ten ngan gon
 function res_get_alias(res) {
 	if (res != "") {
 		document.getElementById('idalias').value = res;
@@ -284,5 +284,24 @@ function nv_delete_song( id ){
 function nv_change_song_status( id ){
 	var nv_timer = nv_settimeout_disable( 'change_status' + id, 4000 );
 	nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=album&changestatus=1&id=' + id, '', 'nv_change_status_result' );
+	return;
+}
+
+// Xu ly cac item
+function nv_del_item_on_list( id, area, lang, inputname ){
+	if( confirm( lang ) )
+	{
+		$("#" + area + " li." + id).remove();
+		nv_sort_item( area, inputname );
+	}
+	return false;
+}
+function nv_sort_item( area, inputname ){
+	var list = new Array();
+	$("#" + area + " li").each(function(){
+		list.push($(this).attr("class"));
+	});
+	list = list.toString();
+	$("input[name=" + inputname + "]").val(list);
 	return;
 }
