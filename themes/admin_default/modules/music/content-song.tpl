@@ -17,7 +17,7 @@
 			<tr>
 				<td class="aright"><strong>{LANG.song_name}</strong></td>
 				<td>
-					<input type="text" class="music-input txt-half" id="idtitle" name="tenthat" value="{DATA.tenthat}"/>
+					<input type="text" class="music-input txt-half" id="idtitle" name="tenthat" value="{DATA.tenthat}" original-title="{LANG.tip_song_title}"/>
 					<img class="middle" width="16" height="16" alt="get" onclick="get_alias('idtitle','res_get_alias');" src="{NV_BASE_SITEURL}images/refresh.png"/>
 				</td>
 			</tr>
@@ -25,7 +25,7 @@
 		<tbody>
 			<tr>
 				<td class="aright"><strong>{LANG.song_name_short}</strong></td>
-				<td><input type="text" class="music-input txt-half" id="idalias" name="ten" value="{DATA.ten}"/></td>
+				<td><input type="text" class="music-input txt-half" id="idalias" name="ten" value="{DATA.ten}" original-title="{LANG.tip_song_alias}"/></td>
 			</tr>
 		</tbody>
 		<tbody class="second">
@@ -37,6 +37,7 @@
 						<strong>
 							<a href="javascript:void(0);" id="addonesinger" class="nounderline add-icon">{LANG.singer_add2}</a>
 							<a href="javascript:void(0);" id="addlistsinger" class="nounderline list-icon">{LANG.singer_add3}</a>
+							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_song_singer}">{LANG.info}</a>
 						</strong>
 					</p>
 					<ul id="listsingers-area" class="fixbg list_song">
@@ -52,7 +53,7 @@
 		<tbody>
 			<tr>
 				<td class="aright"><strong>{LANG.singer_new}</strong></td>
-				<td><input type="text" class="music-input txt-half" name="casimoi" value="{DATA.casimoi}"/></td>
+				<td><input type="text" class="music-input txt-half" name="casimoi" value="{DATA.casimoi}" original-title="{LANG.tip_new_singer}"/></td>
 			</tr>
 		</tbody>
 		<tbody class="second">
@@ -64,6 +65,7 @@
 						<strong>
 							<a href="javascript:void(0);" id="addoneauthor" class="nounderline add-icon">{LANG.author_add1}</a>
 							<a href="javascript:void(0);" id="addlistauthor" class="nounderline list-icon">{LANG.author_add2}</a>
+							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_song_author}">{LANG.info}</a>
 						</strong>
 					</p>
 					<ul id="listauthors-area" class="fixbg list_song">
@@ -79,7 +81,7 @@
 		<tbody>
 			<tr>
 				<td class="aright"><strong>{LANG.author_new}</strong></td>
-				<td><input type="text" class="music-input txt-half" name="nhacsimoi" value="{DATA.nhacsimoi}"/></td>
+				<td><input type="text" class="music-input txt-half" name="nhacsimoi" value="{DATA.nhacsimoi}" original-title="{LANG.tip_new_author}"/></td>
 			</tr>
 		</tbody>
 		<tbody class="second">
@@ -109,7 +111,7 @@
 				<td>
 					<div class="autoscroll">
 						<!-- BEGIN: listcat -->
-						<label><input type="checkbox" name="listcat[]" value="{THELOAI.id}"{THELOAI.checked}/> {THELOAI.title}</label>
+						<label><input type="checkbox" name="listcat[]" value="{THELOAI.id}"{THELOAI.checked}{THELOAI.disabled}/> {THELOAI.title}</label>
 						<!-- END: listcat -->
 						<div class="clear"></div>
 					</div>
@@ -161,6 +163,14 @@
 </form>
 <script type="text/javascript">
 $(document).ready(function(){
+	$('.music-input').tipsy({
+		trigger: 'focus',
+		gravity: 'e'
+	});
+	$('.tooltip').tipsy({
+		trigger: 'hover',
+		gravity: 's'
+	});
 	$("input[name=select]").click(function(){
 		var area = "duongdan";
 		var path = "{NV_UPLOADS_DIR}/" + nv_module_name + "/{SETTING.root_contain}";
@@ -208,6 +218,17 @@ $(document).ready(function(){
 	$("a#addlistauthor").click(function(){
 		var authors = $("input[name=nhacsi]").attr("value");
 		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=author&findListAndReturn=1&area=listauthors-area&input=nhacsi&authors=" + authors, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+	});
+	$('[name="theloai"]').change(function(){
+		var val = $(this).val();
+		$.each($('[name="listcat[]"]'), function(){
+			if( $(this).val() == val ){
+				$(this).attr('disabled', 'disabled');
+				$(this).removeAttr('checked');
+			}else{
+				$(this).removeAttr('disabled');
+			}
+		});
 	});
 });
 </script>

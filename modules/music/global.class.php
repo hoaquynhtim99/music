@@ -68,12 +68,14 @@ class nv_mod_music
 		$this->glanguage = $lang_global;
 		$this->currenttime = NV_CURRENTTIME;
 		
-		$this->js_data['jquery.ui.core'] = "";
-		$this->js_data['jquery.ui.core'] .= "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
-		$this->js_data['jquery.ui.core'] .= "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
-		$this->js_data['jquery.ui.core'] .= "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/ui/jquery.ui.core.min.js\"></script>\n";
+		$this->js_data['jquery.ui.core'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
+		$this->js_data['jquery.ui.core'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
+		$this->js_data['jquery.ui.core'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/ui/jquery.ui.core.min.js\"></script>\n";
 		
-		$this->js_data['jquery.ui.sortable'] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/ui/jquery.ui.sortable.min.js\"></script>\n";
+		$this->js_data['jquery.ui.sortable'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/ui/jquery.ui.sortable.min.js\"></script>\n";
+		
+		$this->js_data['jquery.tipsy'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/jquery.tipsy.js\"></script>\n";
+		$this->js_data['jquery.tipsy'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/tipsy.css\" rel=\"stylesheet\" />\n";
 	}
 	
 	private function handle_error( $messgae = '' )
@@ -152,8 +154,8 @@ class nv_mod_music
 		{
 			if( isset( $this->js_data[$arg_list[$i]] ) )
 			{
-				if( $arg_list[$i] == 'jquery.ui.sortable' ) $return['jquery.ui.core'] = $this->js_data['jquery.ui.core'];
-				$return[$arg_list[$i]] =  $this->js_data[$arg_list[$i]];
+				if( $arg_list[$i] == 'jquery.ui.sortable' ) $return['jquery.ui.core'] = implode( "", $this->js_data['jquery.ui.core'] );
+				$return[$arg_list[$i]] =  implode( "", $this->js_data[$arg_list[$i]] );
 			}
 		}
 		
@@ -161,11 +163,11 @@ class nv_mod_music
 		{
 			if( empty( $my_head ) )
 			{
-				$my_head = implode( "\n", $return );
+				$my_head = implode( "", $return );
 			}
 			else
 			{
-				$my_head .= implode( "\n", $return );
+				$my_head .= implode( "", $return );
 			}
 		}
 	}

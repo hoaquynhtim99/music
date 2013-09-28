@@ -10,7 +10,7 @@
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 // Call jquery UI sortable
-$classMusic->callJqueryPlugin('jquery.ui.sortable');
+$classMusic->callJqueryPlugin( 'jquery.ui.sortable', 'jquery.tipsy' );
 
 // Tieu de trang
 $page_title = $classMusic->lang('add_song');
@@ -291,6 +291,7 @@ $global_array_cat_song = $classMusic->get_category();
 foreach( $global_array_cat_song as $theloai )
 {
 	$theloai['selected'] = $array['theloai'] == $theloai['id'] ? " selected=\"selected\"" : "";
+	$theloai['disabled'] = $array['theloai'] == $theloai['id'] ? " disabled=\"disabled\"" : "";
 	$theloai['checked'] = in_array( $theloai['id'], $array['listcat'] ) ? " checked=\"checked\"" : "";
 	
 	$xtpl->assign( 'THELOAI', $theloai );
