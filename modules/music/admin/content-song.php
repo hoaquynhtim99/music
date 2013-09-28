@@ -10,7 +10,7 @@
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 // Call jquery UI sortable, Tipsy
-$classMusic->callJqueryPlugin( 'jquery.ui.sortable', 'jquery.tipsy' );
+$classMusic->callJqueryPlugin( 'jquery.ui.sortable', 'jquery.tipsy', 'jquery.autosize' );
 
 // Tieu de trang
 $page_title = $classMusic->lang('add_song');
@@ -237,8 +237,6 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 if ( ! empty( $array['lyric'] ) ) $array['lyric'] = nv_htmlspecialchars( $array['lyric'] );
 $array['is_official'] = $array['is_official'] ? " checked=\"checked\"" : "";
 $array['duongdan'] = $classMusic->admin_outputURL( $array['server'], $array['duongdan'] );
-
-$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "modules/" . $module_file . "/js/jquery.autosize.js\"></script>\n";
 
 // Lay danh sach ca si
 if( ! empty( $array['casi'] ) )
