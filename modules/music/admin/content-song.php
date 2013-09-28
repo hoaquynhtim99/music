@@ -9,7 +9,7 @@
 
 if ( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-// Call jquery UI sortable
+// Call jquery UI sortable, Tipsy
 $classMusic->callJqueryPlugin( 'jquery.ui.sortable', 'jquery.tipsy' );
 
 // Tieu de trang
@@ -110,6 +110,9 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	$array['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 	$array['is_official'] = $nv_Request->get_int( 'is_official', 'post', 0 );
 	$array['lyric'] = filter_text_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
+
+	// Chuan hoa alias
+	$array['ten'] = empty( $array['ten'] ) ? change_alias( $array['tenthat'] ) : change_alias( $array['ten'] );
 
 	// Chuyen ca si, nhac si tu chuoi thanh mang
 	$array['casi'] = $classMusic->string2array( $array['casi'] );
