@@ -396,11 +396,13 @@ $lang_module['filter_lang_desc'] = "giảm dần";
 $lang_module['filter_order_by'] = "Sắp xếp theo %s thứ tự";
 
 $lang_module['tip_song_title'] = "Nhập tên cho bài hát, nên viết hoa ký tự đầu tiên của mỗi từ, ví dụ: Câu Hò Bên Bờ Hiền Lương để đảm bảo tính thẩm mỹ";
-$lang_module['tip_song_alias'] = "Tên gọn của bài hát là giá trị sẽ xuất hiện trên địa chỉ của trình duyệt khi nghe bài hát, nếu không am hiểu về vấn đề này, tốt nhất hãy để hệ thống tự xác định";
+$lang_module['tip_alias'] = "Tên ngắn gọn gọn là giá trị sẽ xuất hiện trên địa chỉ của trình duyệt khi truy cập nội dung, nếu không am hiểu về vấn đề này, tốt nhất hãy để hệ thống tự xác định";
 $lang_module['tip_song_singer'] = "Bạn có thể chọn một hoặc nhiều ca sĩ cho bài hát, các ca sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_song_author'] = "Bạn có thể chọn một hoặc nhiều nhạc sĩ cho bài hát, các nhạc sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_new_singer'] = "Nhập tên ca sĩ vào đây nếu bạn biết chính xác tên ca sĩ hoặc ca sĩ không có trong dữ liệu của hệ thống. Chú ý nên viết hoa ký tự đầu tiên của mỗi từ";
 $lang_module['tip_new_author'] = "Nhập tên nhạc sĩ vào đây nếu bạn biết chính xác tên nhạc sĩ hoặc nhạc sĩ không có trong dữ liệu của hệ thống. Chú ý nên viết hoa ký tự đầu tiên của mỗi từ";
 $lang_module['tip_album_singer'] = "Bạn có thể chọn một hoặc nhiều ca sĩ cho album, các ca sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
+$lang_module['tip_album_song'] = "Chọn một hoặc nhiều bài hát cho album, nhấp chuột vào tên bài hát và kéo thả để sắp xếp thứ tự các bài hát trong album";
+$lang_module['tip_album_title'] = "Nhập tên cho album, nên viết hoa ký tự đầu tiên của mỗi từ, để đảm bảo tính thẩm mỹ";
 
 ?>

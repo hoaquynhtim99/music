@@ -25,7 +25,7 @@
 		<tbody>
 			<tr>
 				<td class="aright"><strong>{LANG.song_name_short}<span class="requie"> (*)</span></strong></td>
-				<td><input type="text" class="music-input txt-half" id="idalias" name="ten" value="{DATA.ten}" original-title="{LANG.tip_song_alias}"/></td>
+				<td><input type="text" class="music-input txt-half" id="idalias" name="ten" value="{DATA.ten}" original-title="{LANG.tip_alias}"/></td>
 			</tr>
 		</tbody>
 		<tbody class="second">

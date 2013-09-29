@@ -12,7 +12,7 @@
 			<tr>
 				<td class="strong aright">{LANG.album_name}<span class="requie"> (*)</span></td>
 				<td>
-					<input id="idtitle" name="tenthat" class="music-input txt-half" value="{DATA.tname}" type="text"/>
+					<input id="idtitle" name="tenthat" class="music-input txt-half" value="{DATA.tname}" type="text" original-title="{LANG.tip_album_title}"/>
 					<img alt="Select" onclick="get_alias('idtitle','res_get_alias');" class="middle" width="16" src="{NV_BASE_SITEURL}images/refresh.png"/>
 				</td>
 			</tr>
@@ -20,7 +20,7 @@
 		<tbody class="second">
 			<tr>
 				<td class="strong aright">{LANG.song_name_short}<span class="requie"> (*)</span></td>
-				<td><input id="idalias" name="ten" class="music-input txt-half" value="{DATA.name}" type="text" /></td>
+				<td><input id="idalias" name="ten" class="music-input txt-half" value="{DATA.name}" type="text" original-title="{LANG.tip_alias}"/></td>
 			</tr>
 		</tbody>
 		<tbody>
@@ -77,7 +77,7 @@
 						<strong>
 							<a href="javascript:void(0);" id="addonesong" class="nounderline add-icon">{LANG.album_add_a_song}</a>
 							<a href="javascript:void(0);" id="addlistsong" class="nounderline list-icon">{LANG.album_add_list_song}</a>
-							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_album_singer}">{LANG.info}</a>
+							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_album_song}">{LANG.info}</a>
 						</strong>
 					</p>
 					<ul id="listsong-area" class="fixbg list_song">
