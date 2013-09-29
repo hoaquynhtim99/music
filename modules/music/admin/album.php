@@ -128,6 +128,9 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 // Tieu de trang
 $page_title = $classMusic->lang('album');
 
+// Goi js
+$classMusic->callJqueryPlugin('shadowbox');
+
 // Thong tin phan trang
 $page = $nv_Request->get_int( 'page', 'get', 0 );
 $per_page = 50;
@@ -235,6 +238,7 @@ $array_singer_ids = '';
 while( $row = $db->sql_fetchrow( $result ) )
 {
 	$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
+	$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
 	
 	$array[] = array(
 		"id" => $row['id'],

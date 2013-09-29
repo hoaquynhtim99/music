@@ -40,6 +40,7 @@ $(document).ready(function(){
 				<td class="center col-check">
 					<input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
 				</td>
+				<td class="center col-image">{LANG.thumb}</td>
 				<td><a href="{DATA_ORDER.title.data.url}" title="{DATA_ORDER.title.data.title}" class="{DATA_ORDER.title.data.class}">{LANG.album_name}</a></td>
 				<td>{LANG.singer}</td>
 				<td class="col-number">{LANG.album_numsong}</td>
@@ -55,10 +56,11 @@ $(document).ready(function(){
 				<td class="center">
 					<input type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
 				</td>
+				<td class="center"><a href="{ROW.thumb}" title="{ROW.title}" rel="shadowbox"><img src="{ROW.thumb}" alt="{ROW.title}" width="50" height="50"/></a></td>
 				<td>{ROW.title}</td>
 				<td>{ROW.singers}</td>
-				<td><strong>{ROW.numsong}</strong></td>
-				<td><strong>{ROW.numview}</strong></td>
+				<td class="center"><strong>{ROW.numsong}</strong></td>
+				<td class="center"><strong>{ROW.numview}</strong></td>
 				<td class="aright">{ROW.addtime}</td>
 				<td class="center">
 					<input name="status" id="change_status{ROW.id}" value="1" type="checkbox"{ROW.status} onclick="nv_change_album_status({ROW.id})" />
@@ -73,7 +75,7 @@ $(document).ready(function(){
 		<!-- BEGIN: generate_page -->
 		<tbody>
 			<tr>
-				<td colspan="12">
+				<td colspan="9">
 					{GENERATE_PAGE}
 				</td>
 			</tr>
@@ -81,7 +83,7 @@ $(document).ready(function(){
 		<!-- END: generate_page -->
 		<tfoot>
 			<tr>
-				<td colspan="12">
+				<td colspan="9">
 					<!-- BEGIN: action -->
 					<span class="{ACTION.class}-icon"><a onclick="nv_album_action(document.getElementById('levelnone'), '{LANG.alert_check}', {ACTION.key});" href="javascript:void(0);" class="nounderline">{ACTION.title}</a>&nbsp;</span>
 					<!-- END: action -->

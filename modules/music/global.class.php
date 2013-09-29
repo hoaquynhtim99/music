@@ -78,6 +78,10 @@ class nv_mod_music
 		$this->js_data['jquery.tipsy'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/tipsy.css\" rel=\"stylesheet\" />\n";
 		
 		$this->js_data['jquery.autosize'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/jquery.autosize.js\"></script>\n";
+		
+		$this->js_data['shadowbox'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/shadowbox/shadowbox.js\"></script>\n";
+		$this->js_data['shadowbox'][] = "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $this->base_site_url . "js/shadowbox/shadowbox.css\" />\n";
+		$this->js_data['shadowbox'][] = "<script type=\"text/javascript\">Shadowbox.init();</script>\n";
 	}
 	
 	private function handle_error( $messgae = '' )
