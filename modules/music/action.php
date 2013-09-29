@@ -11,7 +11,6 @@ if( ! defined( 'NV_IS_FILE_MODULES' ) ) die( 'Stop!!!' );
 
 $sql_drop_module = array();
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "`";
-$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_4category`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot`";
@@ -96,13 +95,6 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `albumid` mediumint( 8 ) NOT NULL DEFAULT '0' COMMENT 'ID album',
   `stt` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '' COMMENT 'Thứ tự',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM";
-
-// 5. bon the loai tren trang chu
-$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_4category` (
-  `id` mediumint(8) NOT NULL AUTO_INCREMENT,
-  `cid` mediumint(8) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 

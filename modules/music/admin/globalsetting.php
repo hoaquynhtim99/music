@@ -24,13 +24,6 @@ $array[] = array(
 	"guide" => $lang_module['guide_hot'] //
 );
 
-// Cac the loai tren block TAB
-$array[] = array(
-	"title" => $lang_module['sub_fourcategory'], //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=fourcategory", //
-	"guide" => $lang_module['guide_fourcategory'] //
-);
-
 // Cac the loai tên block the loai
 $array[] = array(
 	"title" => $lang_module['sub_maincategory'], //

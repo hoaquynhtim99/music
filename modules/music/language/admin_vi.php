@@ -239,7 +239,6 @@ $lang_module['sub_edit_album'] = "Sửa album";
 $lang_module['sub_addsong'] = "Thêm bài hát";
 $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";
 $lang_module['sub_hotalbum'] = "HOT Album";
-$lang_module['sub_fourcategory'] = "Block Tags Music";
 $lang_module['sub_comment'] = "Quản lý bình luận";
 $lang_module['sub_commentsong'] = "Bình luận bài hát";
 $lang_module['sub_commentvideo'] = "Bình luận videoclip";
@@ -337,7 +336,6 @@ $lang_module['album_add_a_song'] = "Thêm một bài hát";
 $lang_module['album_list_comment'] = "Danh sách các bình luận Album";
 
 $lang_module['guide_hot'] = "Quản lý các album HOT nhất trên trang chủ";
-$lang_module['guide_fourcategory'] = "Các thể loại sẽ hiển thị trên block TAB";
 $lang_module['guide_maincategory'] = "Các thể loại trên block thể loại";
 $lang_module['guide_mainalbum'] = "Các album được dùng làm chủ đề trên block";
 $lang_module['guide_ftpsetting'] = "Quản lý tài khoản FTP, quản lý host nhạc, các host nhạc mặc định để lấy link nhạc";
