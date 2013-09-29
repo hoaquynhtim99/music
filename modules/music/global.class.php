@@ -187,13 +187,6 @@ class nv_mod_music
 	{
 		return isset( $this->glanguage[$key] ) ? $this->glanguage[$key] : $key;
 	}
-
-	// Lay video tu id
-	public function getvideobyID( $id )
-	{
-		$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_video` WHERE `id`=" . $id );
-		return $this->db->sql_fetchrow( $result );
-	}
 	
 	// Cap nhat bai hat, video khi xoa, sua host nhac
 	public function updatewhendelFTP( $server, $active )
@@ -458,6 +451,29 @@ class nv_mod_music
 		}
 		
 		return $songs;
+	}
+	
+	// Lay video tu id
+	public function getvideobyID( $id )
+	{
+		$videoclips = array();
+		
+		if( is_array( $id ) )
+		{
+			$result = $this->db->sql_query( " SELECT * FROM `" . $this->table_prefix . "_video` WHERE `id` IN(" . implode( ",", $id ) . ")" );
+			
+			while( $row = $this->db->sql_fetch_assoc( $result ) )
+			{
+				$videoclips[$row['id']] = $row;
+			}
+		}
+		else
+		{
+			$result = $this->db->sql_query( "SELECT * FROM `" . $this->table_prefix . "_video` WHERE `id`=" . $id );
+			$videoclips = $this->db->sql_fetch_assoc( $result );
+		}
+		
+		return $videoclips;
 	}
 	
 	// Lay album tu id

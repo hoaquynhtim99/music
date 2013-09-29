@@ -12,9 +12,7 @@ if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_M
 $submenu['album'] = $lang_module['sub_album'];
 $submenu['videoclip'] = $lang_module['video'];
 $submenu['singer'] = $lang_module['sub_singer'];
-$submenu['addsinger'] = $lang_module['singer_add'];
 $submenu['author'] = $lang_module['sub_author'];
-$submenu['addauthor'] = $lang_module['author_add'];
 $submenu['error'] = $lang_module['sub_error'];
 $submenu['ads'] = $lang_module['sub_ads'];
 $submenu['lyric'] = $lang_module['sub_lyric'];
@@ -25,7 +23,7 @@ $submenu['category'] = $lang_module['sub_category'];
 $submenu['video_category'] = $lang_module['sub_videocategory'];
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array( 'main', 'content-song', 'category', 'del', 'delall', 'album', 'content-album', 'alias', 'hotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite' );
+$allow_func = array( 'main', 'content-song', 'category', 'del', 'delall', 'album', 'content-album', 'alias', 'hotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'listactive', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite' );
 
 define( 'NV_IS_MUSIC_ADMIN', true );
 

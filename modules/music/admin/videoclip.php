@@ -35,28 +35,24 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$num = sizeof( $list_levelid );
 	}
 	
-	$songs = $classMusic->getsongbyID( $listid );
+	$videoclips = $classMusic->getsongbyID( $listid );
 	
-	if( sizeof( $songs ) != $num ) die( 'NO' );
+	if( sizeof( $videoclips ) != $num ) die( 'NO' );
 	
-	foreach( $songs as $id => $song )
+	foreach( $videoclips as $id => $video )
 	{
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $id;
 		$result = $db->sql_query( $sql );
 		
-		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
-		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
-		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
-		$classMusic->delcomment( 'song', $song['id'] );
-		$classMusic->dellyric( $song['id'] );
-		$classMusic->delerror( 'song', $song['id'] );
-		$classMusic->delgift( $song['id'] );
-		$classMusic->unlinkSV( $song['server'], $song['duongdan'] );
-		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( $song['listcat'], array( $song['theloai'] ) ) ) ) );
-	}	
+		$classMusic->fix_singer( $classMusic->string2array( $video['casi'] ) );
+		$classMusic->fix_author( $classMusic->string2array( $video['nhacsi'] ) );
+		$classMusic->delcomment( 'video', $video['id'] );
+		$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( $video['listcat'], array( $video['theloai'] ) ) ) ) );
+		$classMusic->unlinkSV( $video['server'], $video['duongdan'] );
+	}
     
     nv_del_moduleCache( $module_name );
-	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_song'), implode( ", ", array_keys( $songs ) ), $admin_info['userid'] );
+	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_video'), implode( ", ", array_keys( $videoclips ) ), $admin_info['userid'] );
 	
     die( "OK" );
 }
@@ -89,7 +85,7 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 	}
 	
 	// Lay thong tin
-	$sql = "SELECT `id`, `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode ( ",", $listid ) . ")";
+	$sql = "SELECT `id`, `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id` IN (" . implode ( ",", $listid ) . ")";
 	$result = $db->sql_query( $sql );
 	$check = $db->sql_numrows( $result );
 	
@@ -111,7 +107,7 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 	
 	foreach( $array_status as $id => $active )
 	{
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `active`=" . $active . " WHERE `id`=" . $id;
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `active`=" . $active . " WHERE `id`=" . $id;
 		$db->sql_query( $sql );	
 	}	
     

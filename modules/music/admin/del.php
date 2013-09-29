@@ -20,20 +20,7 @@ if( empty( $id ) ) die( "Stop!!!" );
 
 if( $id > 0 )
 {
-	if( $where == '_video' )
-	{
-		$video = $classMusic->getvideobyID( $id );
-		
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
-		$result = $db->sql_query( $sql );
-		
-		$classMusic->fix_singer( $classMusic->string2array( $video['casi'] ) );
-		$classMusic->fix_author( $classMusic->string2array( $video['nhacsi'] ) );
-		$classMusic->delcomment( 'video', $video['id'] );
-		$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( $video['listcat'], array( $video['theloai'] ) ) ) ) );
-		$classMusic->unlinkSV( $video['server'], $video['duongdan'] );
-	}
-	elseif( $where == '_singer' )
+	if( $where == '_singer' )
 	{
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
 		$result = $db->sql_query( $sql );

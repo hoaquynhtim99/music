@@ -99,6 +99,7 @@ $lang_module['content'] = "Nội dung";
 $lang_module['content_list'] = "Danh sách bài hát";
 $lang_module['delete'] = "Xóa";
 $lang_module['delete_song'] = "Xóa bài hát";
+$lang_module['delete_video'] = "Xóa videoclip";
 $lang_module['delete_album'] = "Xóa album";
 $lang_module['del_success'] = "Xóa thành công";
 $lang_module['describle'] = "Giới thiệu";
