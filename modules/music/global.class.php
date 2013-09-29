@@ -76,6 +76,8 @@ class nv_mod_music
 		
 		$this->js_data['jquery.tipsy'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/jquery.tipsy.js\"></script>\n";
 		$this->js_data['jquery.tipsy'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/tipsy.css\" rel=\"stylesheet\" />\n";
+		
+		$this->js_data['jquery.autosize'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/jquery.autosize.js\"></script>\n";
 	}
 	
 	private function handle_error( $messgae = '' )
@@ -399,7 +401,7 @@ class nv_mod_music
 	}
 
 	// Lay song tu id
-	public function getsongbyID( $id )
+	public function getsongbyID( $id, $sort = false )
 	{
 		$songs = array();
 		
@@ -411,6 +413,8 @@ class nv_mod_music
 			{
 				$songs[$row['id']] = $row;
 			}
+			
+			if( $sort === true ) $songs = $this->sortArrayFromArrayKeys( $id, $songs );
 		}
 		else
 		{

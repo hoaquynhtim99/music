@@ -89,6 +89,7 @@ table.tab1 tbody:hover, table.tab1 tbody.second:hover{background:#efefef}
 .col-date{width:100px}
 .col-status{width:50px}
 .col-feature{width:100px}
+.col-sathor{width:200px}
 .col-number,.col-image{width:70px}
 .col-id{width:25px}
 
@@ -104,6 +105,7 @@ table.tab1 tbody:hover, table.tab1 tbody.second:hover{background:#efefef}
 .view-icon{background: url('../images/music/view-icon.png') no-repeat left center;padding-left: 17px}
 .add-icon{background: url('../images/music/add-icon.png') no-repeat left center;padding-left: 17px}
 .list-icon{background: url('../images/music/list-icon.png') no-repeat left center;padding-left: 17px}
+.note-icon{background: url('../images/music/note-icon.png') no-repeat left center;padding-left: 17px}
 
 /* SONG OF ALBUM */
 .list_song{list-style-type:none;padding:0;margin:0}

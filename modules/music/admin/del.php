@@ -20,28 +20,7 @@ if( empty( $id ) ) die( "Stop!!!" );
 
 if( $id > 0 )
 {
-	if( $where == '_album' )
-	{		
-		// Xoa trong album trang chu
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_main_album` WHERE `albumid`=" . $id;
-		$db->sql_query( $sql );
-
-		// Xoa album HOT
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` WHERE `albumid`=" . $id;
-		$db->sql_query( $sql );
-
-		$album = $classMusic->getalbumbyID( $id );
-		
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
-		$result = $db->sql_query( $sql );
-
-		$classMusic->fix_singer( $classMusic->string2array( $album['casi'] ) );
-		$classMusic->delcomment( 'album', $album['id'] );
-		$classMusic->delerror( 'album', $album['id'] );
-
-		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=0 WHERE `album`=" . $id );
-	}
-	elseif( $where == '_video' )
+	if( $where == '_video' )
 	{
 		$video = $classMusic->getvideobyID( $id );
 		

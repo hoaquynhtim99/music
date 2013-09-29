@@ -9,7 +9,7 @@
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-// Xoa bai hat
+// Xoa album
 if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
@@ -35,33 +35,38 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$num = sizeof( $list_levelid );
 	}
 	
-	$songs = $classMusic->getsongbyID( $listid );
+	$albums = $classMusic->getalbumbyID( $listid );
 	
-	if( sizeof( $songs ) != $num ) die( 'NO' );
+	if( sizeof( $albums ) != $num ) die( 'NO' );
 	
-	foreach( $songs as $id => $song )
+	foreach( $albums as $id => $album )
 	{
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
-		$result = $db->sql_query( $sql );
-		
-		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
-		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
-		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
-		$classMusic->delcomment( 'song', $song['id'] );
-		$classMusic->dellyric( $song['id'] );
-		$classMusic->delerror( 'song', $song['id'] );
-		$classMusic->delgift( $song['id'] );
-		$classMusic->unlinkSV( $song['server'], $song['duongdan'] );
-		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( $song['listcat'], array( $song['theloai'] ) ) ) ) );
+		// Xoa trong album trang chu
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_main_album` WHERE `albumid`=" . $id;
+		$db->sql_query( $sql );
+
+		// Xoa album HOT
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` WHERE `albumid`=" . $id;
+		$db->sql_query( $sql );
+
+		// Xoa album
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $id;
+		$db->sql_query( $sql );
+
+		$classMusic->fix_singer( $classMusic->string2array( $album['casi'] ) );
+		$classMusic->delcomment( 'album', $album['id'] );
+		$classMusic->delerror( 'album', $album['id'] );
+
+		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=0 WHERE `album`=" . $id );
 	}	
     
     nv_del_moduleCache( $module_name );
-	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_song'), implode( ", ", array_keys( $songs ) ), $admin_info['userid'] );
+	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_album'), implode( ", ", array_keys( $albums ) ), $admin_info['userid'] );
 	
     die( "OK" );
 }
 
-// Thay doi hoat dong bai hat
+// Thay doi hoat dong album
 if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
@@ -85,20 +90,20 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 		$array_id = array_filter ( $array_id );
 
 		$listid = $array_id;
-		$num = count( $array_id );
+		$num = sizeof( $array_id );
 	}
 	
-	// Lay thong tin
-	$sql = "SELECT `id`, `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode ( ",", $listid ) . ")";
-	$result = $db->sql_query( $sql );
-	$check = $db->sql_numrows( $result );
+	$albums = $classMusic->getalbumbyID( $listid );
 	
-	if ( $check != $num ) die( "NO" );
+	if( sizeof( $albums ) != $num ) die( 'NO' );
 	
 	$array_status = array();
-	$array_title = array();
-	while ( list( $id, $active ) = $db->sql_fetchrow( $result ) )
-	{		
+	
+	foreach( $albums as $album )
+	{
+		$id = $album['id'];
+		$active = $album['active'];
+		
 		if ( empty ( $controlstatus ) )
 		{
 			$array_status[$id] = $active ? 0 : 1;
@@ -111,7 +116,7 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 	
 	foreach( $array_status as $id => $active )
 	{
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `active`=" . $active . " WHERE `id`=" . $id;
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `active`=" . $active . " WHERE `id`=" . $id;
 		$db->sql_query( $sql );	
 	}	
     
@@ -129,7 +134,7 @@ $per_page = 50;
 
 // Query, url co so
 $sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`!=0";
-$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name;
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 
 // Du lieu tim kiem
 $data_search = array(

@@ -99,6 +99,7 @@ $lang_module['content'] = "Nội dung";
 $lang_module['content_list'] = "Danh sách bài hát";
 $lang_module['delete'] = "Xóa";
 $lang_module['delete_song'] = "Xóa bài hát";
+$lang_module['delete_album'] = "Xóa album";
 $lang_module['del_success'] = "Xóa thành công";
 $lang_module['describle'] = "Giới thiệu";
 $lang_module['edit'] = "Sửa";
@@ -312,6 +313,7 @@ $lang_module['error_exist_album'] = "Lỗi: Album này đã tồn tại";
 $lang_module['getaid_title'] = "Lấy album";
 $lang_module['getsingerid_title'] = "Tìm và thêm ca sĩ";
 $lang_module['getauthorid_title'] = "Tìm và thêm nhạc sĩ";
+$lang_module['getsongid_title'] = "Tìm và thêm bài hát";
 
 $lang_module['cat_lits'] = "Danh sách thể loại bài hát";
 $lang_module['cat_edit'] = "Sửa thể loại bài hát";
@@ -399,5 +401,6 @@ $lang_module['tip_song_singer'] = "Bạn có thể chọn một hoặc nhiều c
 $lang_module['tip_song_author'] = "Bạn có thể chọn một hoặc nhiều nhạc sĩ cho bài hát, các nhạc sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_new_singer'] = "Nhập tên ca sĩ vào đây nếu bạn biết chính xác tên ca sĩ hoặc ca sĩ không có trong dữ liệu của hệ thống. Chú ý nên viết hoa ký tự đầu tiên của mỗi từ";
 $lang_module['tip_new_author'] = "Nhập tên nhạc sĩ vào đây nếu bạn biết chính xác tên nhạc sĩ hoặc nhạc sĩ không có trong dữ liệu của hệ thống. Chú ý nên viết hoa ký tự đầu tiên của mỗi từ";
+$lang_module['tip_album_singer'] = "Bạn có thể chọn một hoặc nhiều ca sĩ cho album, các ca sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 
 ?>

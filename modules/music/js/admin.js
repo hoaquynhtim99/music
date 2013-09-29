@@ -275,13 +275,13 @@ function nv_album_action(oForm, nv_message_no_check, key) {
 		alert(nv_message_no_check);
 	}
 }
-function nv_delete_song( id ){
+function nv_delete_album( id ){
 	if ( confirm( nv_is_del_confirm[0] ) ){
 		nv_ajax( 'post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=album&del=1&id=' + id, '', 'nv_delete_result' );
 	}
 	return false;
 }
-function nv_change_song_status( id ){
+function nv_change_album_status( id ){
 	var nv_timer = nv_settimeout_disable( 'change_status' + id, 4000 );
 	nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=album&changestatus=1&id=' + id, '', 'nv_change_status_result' );
 	return;

@@ -15,7 +15,7 @@
 		</tbody>
 		<tbody class="second">
 			<tr>
-				<td class="aright"><strong>{LANG.song_name}</strong></td>
+				<td class="aright"><strong>{LANG.song_name}<span class="requie"> (*)</span></strong></td>
 				<td>
 					<input type="text" class="music-input txt-half" id="idtitle" name="tenthat" value="{DATA.tenthat}" original-title="{LANG.tip_song_title}"/>
 					<img class="middle" width="16" height="16" alt="get" onclick="get_alias('idtitle','res_get_alias');" src="{NV_BASE_SITEURL}images/refresh.png"/>
@@ -24,7 +24,7 @@
 		</tbody>
 		<tbody>
 			<tr>
-				<td class="aright"><strong>{LANG.song_name_short}</strong></td>
+				<td class="aright"><strong>{LANG.song_name_short}<span class="requie"> (*)</span></strong></td>
 				<td><input type="text" class="music-input txt-half" id="idalias" name="ten" value="{DATA.ten}" original-title="{LANG.tip_song_alias}"/></td>
 			</tr>
 		</tbody>
@@ -120,7 +120,7 @@
 		</tbody>
 		<tbody>
 			<tr>
-				<td class="aright"><strong>{LANG.link}</strong></td>
+				<td class="aright"><strong>{LANG.link}<span class="requie"> (*)</span></strong></td>
 				<td>
 					<input type="text" class="music-input txt-half" id="duongdan" name="duongdan" value="{DATA.duongdan}"/>
 					<input type="button" class="music-button-2" name="select" value="{LANG.select}" /> &raquo;
