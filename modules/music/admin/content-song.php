@@ -281,7 +281,7 @@ $xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
 $xtpl->assign( 'NV_UPLOADS_DIR', NV_UPLOADS_DIR );
 $xtpl->assign( 'SETTING', $classMusic->setting );
 
-$xtpl->assign( 'FILE_DIR', NV_UPLOADS_DIR . '/' . $module_name . '/files' );
+$xtpl->assign( 'FILE_DIR', NV_UPLOADS_DIR . '/' . $module_name . '/' . $classMusic->setting['root_contain'] );
 $xtpl->assign( 'IMG_DIR', NV_UPLOADS_DIR . '/' . $module_name . '/images' );
 
 $xtpl->assign( 'LISTSINGERS', implode( ",", array_keys( $array['casi'] ) ) );

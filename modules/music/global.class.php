@@ -221,7 +221,7 @@ class nv_mod_music
 		}
 		else
 		{
-			$ftpdata = getFTP();
+			$ftpdata = $this->getFTP();
 			foreach( $ftpdata as $id => $data )
 			{
 				if( $id == $server )
@@ -292,7 +292,7 @@ class nv_mod_music
 		return $category;
 	}
 	
-	// Lay thong tin the loai video
+	// Lay thong tin the loai videoclip
 	public function get_videocategory()
 	{
 		$category = array();

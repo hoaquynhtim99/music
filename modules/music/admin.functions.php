@@ -11,7 +11,6 @@ if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_M
 
 $submenu['album'] = $lang_module['sub_album'];
 $submenu['videoclip'] = $lang_module['video'];
-$submenu['addvideo'] = $lang_module['video_add'];
 $submenu['singer'] = $lang_module['sub_singer'];
 $submenu['addsinger'] = $lang_module['singer_add'];
 $submenu['author'] = $lang_module['sub_author'];
@@ -26,7 +25,7 @@ $submenu['category'] = $lang_module['sub_category'];
 $submenu['video_category'] = $lang_module['sub_videocategory'];
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array( 'main', 'content-song', 'category', 'del', 'delall', 'album', 'content-album', 'alias', 'hotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'addvideo', 'videoclip', 'checklink', 'checksonglist', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite' );
+$allow_func = array( 'main', 'content-song', 'category', 'del', 'delall', 'album', 'content-album', 'alias', 'hotalbum', 'fourcategory', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'sort', 'sortmainalbum', 'ads', 'delads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'editlyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'addsinger', 'commentvideo', 'comment', 'globalsetting', 'author', 'addauthor', 'listactive', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite' );
 
 define( 'NV_IS_MUSIC_ADMIN', true );
 

@@ -257,6 +257,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"id" => $row['id'],
 		"theloai" => $row['theloai'] . "," . $row['listcat'],
 		"title" => $row['tname'],
+		"thumb" => $row['thumb'],
 		"singers" => $row['casi'],
 		"authors" => $row['nhacsi'],
 		"numview" => $row['view'],

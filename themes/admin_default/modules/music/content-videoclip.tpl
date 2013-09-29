@@ -10,22 +10,22 @@
 		<col width="200px"/>
 		<tbody>
 			<tr>
-				<td colspan="2"><strong class="toupper">{LANG.song_info}</strong></td>
+				<td colspan="2"><strong class="toupper">{LANG.video_info}</strong></td>
 			</tr>
 		</tbody>
 		<tbody class="second">
 			<tr>
-				<td class="aright"><strong>{LANG.song_name}<span class="requie"> (*)</span></strong></td>
+				<td class="aright"><strong>{LANG.video_name}<span class="requie"> (*)</span></strong></td>
 				<td>
-					<input type="text" class="music-input txt-half" id="idtitle" name="tenthat" value="{DATA.tenthat}" original-title="{LANG.tip_song_title}"/>
+					<input type="text" class="music-input txt-half" id="idtitle" name="tname" value="{DATA.tname}" original-title="{LANG.tip_video_title}"/>
 					<img class="middle" width="16" height="16" alt="get" onclick="get_alias('idtitle','res_get_alias');" src="{NV_BASE_SITEURL}images/refresh.png"/>
 				</td>
 			</tr>
 		</tbody>
 		<tbody>
 			<tr>
-				<td class="aright"><strong>{LANG.song_name_short}<span class="requie"> (*)</span></strong></td>
-				<td><input type="text" class="music-input txt-half" id="idalias" name="ten" value="{DATA.ten}" original-title="{LANG.tip_alias}"/></td>
+				<td class="aright"><strong>{LANG.video_name_short}<span class="requie"> (*)</span></strong></td>
+				<td><input type="text" class="music-input txt-half" id="idalias" name="name" value="{DATA.name}" original-title="{LANG.tip_alias}"/></td>
 			</tr>
 		</tbody>
 		<tbody class="second">
@@ -37,7 +37,7 @@
 						<strong>
 							<a href="javascript:void(0);" id="addonesinger" class="nounderline add-icon">{LANG.singer_add2}</a>
 							<a href="javascript:void(0);" id="addlistsinger" class="nounderline list-icon">{LANG.singer_add3}</a>
-							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_song_singer}">{LANG.info}</a>
+							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_video_singer}">{LANG.info}</a>
 						</strong>
 					</p>
 					<ul id="listsingers-area" class="fixbg list_song">
@@ -65,7 +65,7 @@
 						<strong>
 							<a href="javascript:void(0);" id="addoneauthor" class="nounderline add-icon">{LANG.author_add1}</a>
 							<a href="javascript:void(0);" id="addlistauthor" class="nounderline list-icon">{LANG.author_add2}</a>
-							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_song_author}">{LANG.info}</a>
+							<a href="javascript:void(0);" class="nounderline note-icon tooltip" original-title="{LANG.tip_video_author}">{LANG.info}</a>
 						</strong>
 					</p>
 					<ul id="listauthors-area" class="fixbg list_song">
@@ -86,15 +86,6 @@
 		</tbody>
 		<tbody class="second">
 			<tr>
-				<td class="aright"><strong>{LANG.album}</strong></td>
-				<td>
-					<input class="music-input txt-half" name="album" id="album" type="text" readonly="readonly" value="{DATA.album}"/>
-					<input class="music-button-2" type="button" name="selectalbum" value="{LANG.select}"/>
-				</td>
-			</tr>
-		</tbody>
-		<tbody>
-			<tr>
 				<td class="aright"><strong>{LANG.category_base}</strong></td>
 				<td>
 					<select class="music-input" name="theloai">
@@ -105,7 +96,7 @@
 				</td>
 			</tr>
 		</tbody>
-		<tbody class="second">
+		<tbody>
 			<tr>
 				<td class="aright"><strong>{LANG.category_sub}</strong></td>
 				<td>
@@ -118,40 +109,22 @@
 				</td>
 			</tr>
 		</tbody>
-		<tbody>
+		<tbody class="second">
 			<tr>
 				<td class="aright"><strong>{LANG.link}<span class="requie"> (*)</span></strong></td>
 				<td>
 					<input type="text" class="music-input txt-half" id="duongdan" name="duongdan" value="{DATA.duongdan}"/>
-					<input type="button" class="music-button-2" name="select" value="{LANG.select}" /> &raquo;
-					<input id="get_info" name="get_info" type="button" class="music-button-2" value="{LANG.get_info}" />
+					<input type="button" class="music-button-2" name="select" value="{LANG.select}" />
 				</td>
 			</tr>
 		</tbody>
-		<tbody class="second">
+		<tbody>
 			<tr>
-				<td class="aright"><strong>{LANG.bitrate} - {LANG.duration} - {LANG.size}</strong></td>
+				<td class="strong aright">{LANG.thumb}<span class="requie"> (*)</span></td>
 				<td>
-					<input type="text" class="music-input txt-quater" name="bitrate" id="bitrate" value="{DATA.bitrate}"/> bps
-					<input type="text" class="music-input txt-quater" name="duration" id="duration" value="{DATA.duration}"/> {GLANG.sec}
-					<input type="text" class="music-input txt-quater" name="size" id="size" value="{DATA.size}"/> byte
+					<input id="thumb" name="thumb" class="music-input txt-half" value="{DATA.thumb}" type="text" readonly="readonly"/>
+					<input name="selectthumb" type="button" value="{LANG.select}" class="music-button-2"/>
 				</td>
-			</tr>
-		</tbody>
-		<tbody>
-			<tr>
-				<td class="aright"><strong>{LANG.is_official}</strong></td>
-				<td><input type="checkbox" name="is_official" value="1"{DATA.is_official}/></td>
-			</tr>
-		</tbody>
-		<tbody class="second">
-			<tr>
-				<td colspan="2"><strong class="toupper">{LANG.add_lyric}</strong></td>
-			</tr>
-		</tbody>
-		<tbody>
-			<tr>
-				<td colspan="2"><textarea class="music-input txt-full autoresize textarea-animated" name="lyric" rows="5"/>{DATA.lyric}</textarea>
 			</tr>
 		</tbody>
 		<tfoot>
@@ -175,12 +148,9 @@ $(document).ready(function(){
 		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=upload&popup=1&area=duongdan&path={FILE_DIR}", "NVImg", "850", "500", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
 		return false;
 	});
-	$("input[name=selectalbum]").click( function(){
-		nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "=" + nv_module_name + "&" + nv_fc_variable + "=getalbumid&area=album", "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+	$("input[name=selectthumb]").click(function(){
+		nv_open_browse_file('{NV_BASE_ADMINURL}index.php?' + nv_name_variable + '=upload&popup=1&area=thumb&path={IMG_DIR}&type=image', 'NVImg', '850', '500', 'resizable=no,scrollbars=no,toolbar=no,location=no,status=no');
 		return false;
-	});
-	$("#get_info").click(function(){
-		getsonginfo();
 	});
 	<!-- BEGIN: auto_get_alias -->
 	$("#idtitle").change(function(){

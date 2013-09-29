@@ -11,6 +11,9 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
 if( defined( 'NV_EDITOR' ) ) require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
 
+// Danh dau menu duoc active
+$set_active_op = "album";
+
 // Call jquery UI sortable, Tipsy
 $classMusic->callJqueryPlugin( 'jquery.ui.sortable', 'jquery.tipsy' );
 
@@ -116,11 +119,11 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		// Kiem tra ton tai
 		if( $id )
 		{
-			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $db->dbescape( $array['casi'] ) . " AND `name`=" . $db->dbescape( $array['name'] ) . " AND `id`!=" . $id;
+			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND `name`=" . $db->dbescape( $array['name'] ) . " AND `id`!=" . $id;
 		}
 		else
 		{
-			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $db->dbescape( $array['casi'] ) . " AND `name`=" . $db->dbescape( $array['name'] );
+			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND `name`=" . $db->dbescape( $array['name'] );
 		}
 		
 		$result = $db->sql_query( $sql );
