@@ -128,7 +128,7 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 // Tieu de trang
 $page_title = $classMusic->lang('album');
 
-// Goi js
+// Goi Shadowbox
 $classMusic->callJqueryPlugin('shadowbox');
 
 // Thong tin phan trang

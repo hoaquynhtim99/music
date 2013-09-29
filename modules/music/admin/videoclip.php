@@ -4,172 +4,346 @@
  * @Project NUKEVIET-MUSIC
  * @Phan Tan Dung (phantandung92@gmail.com)
  * @Copyright (C) 2011 Freeware
- * @Createdate 26/01/2011 06:37 PM
+ * @Createdate 26-01-2011 14:43
  */
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$page_title = $lang_module['video_list'];
-
-$contents = '';
-
-$category = get_videocategory();
-if( empty( $category ) )
+// Xoa videoclip
+if ( $nv_Request->isset_request( 'del', 'post' ) )
 {
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=video_category" );
-	die();
+    if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+    
+    $id = $nv_Request->get_int( 'id', 'post', 0 );
+    $list_levelid = filter_text_input( 'listid', 'post', '' );
+    
+    if ( empty( $id ) and empty ( $list_levelid ) ) die( "NO" );
+    
+	$listid = array();
+	if ( $id )
+	{
+		$listid[] = $id;
+		$num = 1;
+	}
+	else
+	{
+		$list_levelid = explode ( ",", $list_levelid );
+		$list_levelid = array_map ( "trim", $list_levelid );
+		$list_levelid = array_filter ( $list_levelid );
+
+		$listid = $list_levelid;
+		$num = sizeof( $list_levelid );
+	}
+	
+	$songs = $classMusic->getsongbyID( $listid );
+	
+	if( sizeof( $songs ) != $num ) die( 'NO' );
+	
+	foreach( $songs as $id => $song )
+	{
+		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
+		$result = $db->sql_query( $sql );
+		
+		if( $song['album'] != 0 ) $classMusic->fix_album( $song['album'] );
+		$classMusic->fix_singer( $classMusic->string2array( $song['casi'] ) );
+		$classMusic->fix_author( $classMusic->string2array( $song['nhacsi'] ) );
+		$classMusic->delcomment( 'song', $song['id'] );
+		$classMusic->dellyric( $song['id'] );
+		$classMusic->delerror( 'song', $song['id'] );
+		$classMusic->delgift( $song['id'] );
+		$classMusic->unlinkSV( $song['server'], $song['duongdan'] );
+		$classMusic->fix_cat_song( array_unique( array_filter( array_merge_recursive( $song['listcat'], array( $song['theloai'] ) ) ) ) );
+	}	
+    
+    nv_del_moduleCache( $module_name );
+	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_song'), implode( ", ", array_keys( $songs ) ), $admin_info['userid'] );
+	
+    die( "OK" );
 }
 
-$numshow = $nv_Request->get_int( 'numshow', 'get', 50 );
-
-$order = filter_text_input( 'order', 'get', 'id' );
-
-if( $order == 'name' )
+// Thay doi hoat dong videoclip
+if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 {
-	$sort = "ORDER BY a.tname ASC";
+    if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
+    
+    $id = $nv_Request->get_int( 'id', 'post', 0 );
+    $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
+    $array_id = filter_text_input( 'listid', 'post', '' );
+    
+    if ( empty( $id ) and empty ( $array_id ) ) die( "NO" );
+    
+	$listid = array();
+	if ( $id )
+	{
+		$listid[] = $id;
+		$num = 1;
+	}
+	else
+	{
+		$array_id = explode ( ",", $array_id );
+		$array_id = array_map ( "trim", $array_id );
+		$array_id = array_filter ( $array_id );
+
+		$listid = $array_id;
+		$num = count( $array_id );
+	}
+	
+	// Lay thong tin
+	$sql = "SELECT `id`, `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode ( ",", $listid ) . ")";
+	$result = $db->sql_query( $sql );
+	$check = $db->sql_numrows( $result );
+	
+	if ( $check != $num ) die( "NO" );
+	
+	$array_status = array();
+	$array_title = array();
+	while ( list( $id, $active ) = $db->sql_fetchrow( $result ) )
+	{		
+		if ( empty ( $controlstatus ) )
+		{
+			$array_status[$id] = $active ? 0 : 1;
+		}
+		else
+		{
+			$array_status[$id] = ( $controlstatus == 1 ) ? 1 : 0;
+		}
+	}
+	
+	foreach( $array_status as $id => $active )
+	{
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `active`=" . $active . " WHERE `id`=" . $id;
+		$db->sql_query( $sql );	
+	}	
+    
+    nv_del_moduleCache( $module_name );
+	
+    die( "OK" );
 }
-elseif( $order == 'casi' )
+
+// Tieu de trang
+$page_title = $classMusic->lang('video_list');
+
+// Goi Shadowbox
+$classMusic->callJqueryPlugin('shadowbox');
+
+// Thong tin phan trang
+$page = $nv_Request->get_int( 'page', 'get', 0 );
+$per_page = 50;
+
+// Query, url co so
+$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`!=0";
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+
+// Du lieu tim kiem
+$data_search = array(
+	"q" => filter_text_input( 'q', 'get', '', 1, 100 ),
+	"singer" => filter_text_input( 'singer', 'get', '', 1, 100 ),
+	"author" => filter_text_input( 'author', 'get', '', 1, 100 ),
+	"theloai" => $nv_Request->get_int( 'theloai', 'get', -1 ),
+	"disabled" => " disabled=\"disabled\""
+);
+
+// Cam an nut huy tim kiem
+if( ! empty ( $data_search['q'] ) or ! empty ( $data_search['singer'] ) or ! empty ( $data_search['author'] ) or $data_search['theloai'] > -1 )
 {
-	$sort = "ORDER BY b.tenthat ASC";
+	$data_search['disabled'] = "";
+}
+
+// Query tim kiem
+if( ! empty ( $data_search['q'] ) )
+{
+	$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
+	
+	// Tim theo ten videoclip
+	$sql .= " AND ( `tname` LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%' )";
+}
+
+if( ! empty ( $data_search['singer'] ) )
+{
+	$base_url .= "&amp;singer=" . urlencode( $data_search['singer'] );
+	$sql .= " AND ( " . $classMusic->build_query_search_id( $classMusic->search_singer_id( $data_search['singer'], 5 ), 'casi' ) . " )";
+}
+
+if( ! empty ( $data_search['author'] ) )
+{
+	$base_url .= "&amp;author=" . urlencode( $data_search['author'] );
+	$sql .= " AND ( " . $classMusic->build_query_search_id( $classMusic->search_author_id( $data_search['author'], 5 ), 'nhacsi' ) . " )";
+}
+
+if( $data_search['theloai'] > -1 )
+{
+	$base_url .= "&amp;theloai=" . $data_search['theloai'];
+	$sql .= " AND (`theloai`=" . $data_search['theloai'] . " OR " . $classMusic->build_query_search_id( $data_search['theloai'], 'listcat' ) . " )";
+}
+
+// Du lieu sap xep
+$order = array();
+$check_order = array( "ASC", "DESC", "NO" );
+$opposite_order = array(
+	"NO" => "ASC",
+	"DESC" => "ASC",
+	"ASC" => "DESC"
+);
+$lang_order_1 = array(
+	"NO" => $classMusic->lang('filter_lang_asc'),
+	"DESC" => $classMusic->lang('filter_lang_asc'),
+	"ASC" => $classMusic->lang('filter_lang_desc')
+);
+$lang_order_2 = array(
+	"title" => $classMusic->lang('video_name'),
+	"numview" => $classMusic->lang('song_numvew'),
+	"dt" => $classMusic->lang('playlist_time')
+);
+
+$order['title']['order'] = filter_text_input( 'order_title', 'get', 'NO' );
+$order['numview']['order'] = filter_text_input( 'order_numview', 'get', 'NO' );
+$order['dt']['order'] = filter_text_input( 'order_dt', 'get', 'NO' );
+
+foreach ( $order as $key => $check )
+{
+	$order[$key]['data'] = array(
+		"class" => "order" . strtolower ( $order[$key]['order'] ),
+		"url" => $base_url . "&amp;order_" . $key . "=" . $opposite_order[$order[$key]['order']],
+		"title" => sprintf ( $lang_module['filter_order_by'], "&quot;" . $lang_order_2[$key] . "&quot;" ) . " " . $lang_order_1[$order[$key]['order']]
+	);
+	
+	if ( ! in_array ( $check['order'], $check_order ) )
+	{
+		$order[$key]['order'] = "NO";
+	}
+	else
+	{
+		$base_url .= "&amp;order_" . $key . "=" . $order[$key]['order'];
+	}
+}
+
+if( $order['title']['order'] != "NO" )
+{
+	$sql .= " ORDER BY `tname` " . $order['title']['order'];
+}
+elseif( $order['numview']['order'] != "NO" )
+{
+	$sql .= " ORDER BY `view` " . $order['numview']['order'];
+}
+elseif( $order['dt']['order'] != "NO" )
+{
+	$sql .= " ORDER BY `dt` " . $order['dt']['order'];
 }
 else
 {
-	$sort = "ORDER BY a.id DESC";
+	$sql .= " ORDER BY `id` DESC";
 }
 
-$now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
-$where_search = $nv_Request->get_int( 'where_search', 'get', 0 );
-$type_search = filter_text_input( 'type_search', 'get', 'name' );
-$q = filter_text_input( 'q', 'get', '' );
+// Lay so row
+$sql1 = "SELECT COUNT(*) " . $sql;
+$result1 = $db->sql_query( $sql1 );
+list( $all_page ) = $db->sql_fetchrow( $result1 );
 
-if( $where_search == 0 ) $theloai = "";
-else  $theloai = "a.theloai = " . $where_search . " AND";
-
-if( $type_search == 'name' )
-{
-	$where = "a.tname LIKE '%" . $q . "%'";
-}
-elseif( $type_search == 'casi' )
-{
-	$where = "b.tenthat LIKE '%" . $q . "%'";
-}
-elseif( $type_search == 'nhacsi' )
-{
-	$where = "c.tenthat LIKE '%" . $q . "%'";
-}
-else
-{
-	$where = "a.id!=0";
-}
-
-// Xu li du lieu
-if( $now_page == 0 )
-{
-	$now_page = 1;
-	$first_page = 0;
-}
-else
-{
-	$first_page = ( $now_page - 1 ) * $numshow;
-}
-
-$link = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=videoclip&amp;numshow=" . $numshow . "&amp;where_search=" . $where_search . "&amp;type_search=" . $type_search . "&amp;q=" . $q . "&amp;order=" . $order;
-
-$sql = " FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_author` AS c ON a.nhacsi=c.id WHERE " . $theloai . " " . $where;
-$sqlnum = "SELECT COUNT(*) " . $sql;
-$sql = "SELECT a.*, b.tenthat AS singername " . $sql . " " . $sort . " LIMIT " . $first_page . "," . $numshow;
-
-$num = $db->sql_query( $sqlnum );
-list( $output ) = $db->sql_fetchrow( $num );
-$ts = ceil( $output / $numshow );
-
-// Form tim kiem
-$contents .= "<form action=\"" . NV_BASE_ADMINURL . "index.php?\" method=\"get\">
-<input type=\"hidden\" name=\"" . NV_NAME_VARIABLE . "\" value=\"" . $module_name . "\"/>
-<input type=\"hidden\" name=\"" . NV_OP_VARIABLE . "\" value=\"" . $op . "\"/>
-<table class=\"tab1 fixbottomtable\"><tbody><tr><td>";
-$contents .= $lang_module['search_video'] . ": ";
-
-// Tim theo the loai
-$contents .= "<select name=\"where_search\">\n";
-$contents .= "<option value=\"0\" >" . $lang_module['select_category'] . "</option>\n";
-foreach( $category as $id => $title )
-{
-	$a = '';
-	if( $id == $where_search ) $a = " selected=\"selected\"";
-	$contents .= "<option" . $a . " value=\"" . $id . "\" >" . $title['title'] . "</option>\n";
-}
-$contents .= "</select>";
-
-// Kieu tim
-$contents .= "<select name=\"type_search\">";
-$contents .= "<option";
-( $type_search == 'name' ) ? ( $contents .= " selected=\"selected\"" ) : '';
-$contents .= " value=\"name\" >" . $lang_module['search_with_name'] . "</option>\n";
-$contents .= "<option";
-( $type_search == 'casi' ) ? ( $contents .= " selected=\"selected\"" ) : '';
-$contents .= " value=\"casi\" >" . $lang_module['search_with_singer'] . "</option>\n";
-$contents .= "<option";
-( $type_search == 'nhacsi' ) ? ( $contents .= " selected=\"selected\"" ) : '';
-$contents .= " value=\"nhacsi\" >" . $lang_module['search_with_author'] . "</option>\n";
-$contents .= "</select>";
-
-// So ket qua hien thi
-$i = 5;
-$contents .= "&nbsp;" . $lang_module['search_per_page'] . ": ";
-$contents .= "<select name=\"numshow\">\n";
-while( $i <= 1000 )
-{
-	$a = '';
-	if( $i == $numshow ) $a = "selected=\"selected\"";
-	$contents .= "<option " . $a . " value=\"" . $i . "\" >" . $i . "</option>\n";
-	$i = $i + 10;
-}
-$contents .= "</select>\n";
-
-$contents .= $lang_module['search_key'] . ": <input type=\"text\" value=\"" . $q . "\" maxlength=\"64\" name=\"q\" style=\"width: 265px\">\n";
-$contents .= "<input type=\"submit\" value=\"" . $lang_module['search'] . "\"><br>\n";
-$contents .= "<input type=\"hidden\" name =\"do\" value=\"1\" />";
-$contents .= "</td></tr></tbody></table></form>\n";
-
-$xtpl = new XTemplate( "video.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
-$xtpl->assign( 'LANG', $lang_module );
-$xtpl->assign( 'LINK_ADD', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addvideo" );
-$xtpl->assign( 'URL_DEL_BACK', str_replace( "&amp;", "&", $link ) );
-$xtpl->assign( 'URL_DEL', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delall&where=_video" );
-$xtpl->assign( 'URL_ACTIVE_LIST', "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=listactive&where=_video" );
-$xtpl->assign( 'ORDER_NAME', $link . "&order=name" );
-$xtpl->assign( 'ORDER_SINGER', $link . "&order=casi" );
-
-//lay du lieu
+// Xay dung du lieu videoclip
+$i = 1;
+$sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
 $result = $db->sql_query( $sql );
 
-$link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del&where=_video";
-$link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=addvideo";
-$link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_video&id=";
-
+$array = $array_singers = $array_authors =  array();
+$array_singer_ids = $array_author_ids = '';
 while( $row = $db->sql_fetchrow( $result ) )
 {
-	$xtpl->assign( 'id', $row['id'] );
-	$xtpl->assign( 'name', $row['tname'] );
-	$xtpl->assign( 'singer', $row['singername'] );
-	$xtpl->assign( 'URL', $mainURL . "=viewvideo/" . $row['id'] . "/" . $row['name'] );
-	$xtpl->assign( 'category', $category[$row['theloai']]['title'] );
-	$xtpl->assign( 'class', ( $i % 2 ) ? " class=\"second\"" : "" );
-	$xtpl->assign( 'URL_DEL_ONE', $link_del . "&id=" . $row['id'] );
-	$xtpl->assign( 'URL_EDIT', $link_edit . "&id=" . $row['id'] );
-	$xtpl->assign( 'active', ( $row['active'] == 1 ) ? $lang_module['active_yes'] : $lang_module['active_no'] );
-	$xtpl->assign( 'URL_ACTIVE', $link_active . $row['id'] );
+	$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
+	$array_author_ids = $array_author_ids == '' ? $row['nhacsi'] : $array_author_ids . "," . $row['nhacsi'];
 
+	$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-videoclip.png";
+	
+	$array[] = array(
+		"id" => $row['id'],
+		"theloai" => $row['theloai'] . "," . $row['listcat'],
+		"title" => $row['tname'],
+		"singers" => $row['casi'],
+		"authors" => $row['nhacsi'],
+		"numview" => $row['view'],
+		"addtime" => nv_date( "H:i d/m/Y", $row['dt'] ),
+		"status" => $row['active'] ? " checked=\"checked\"" : "",
+		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-videoclip&amp;id=" . $row['id'],
+		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""
+	);
+	$i ++;
+}
+
+// Cac thao tac
+$list_action = array(
+	0 => array(
+		"key" => 1,
+		"class" => "delete",
+		"title" => $classMusic->glang('delete')
+	),
+	1 => array(
+		"key" => 2,
+		"class" => "status-ok",
+		"title" => $classMusic->lang('action_status_ok')
+	),
+	2 => array(
+		"key" => 3,
+		"class" => "status-no",
+		"title" => $classMusic->lang('action_status_no')
+	)
+);
+
+// Phan trang
+$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
+
+$xtpl = new XTemplate( "videoclip.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
+$xtpl->assign( 'LANG', $lang_module );
+$xtpl->assign( 'GLANG', $lang_global );
+$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL );
+$xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
+$xtpl->assign( 'NV_NAME_VARIABLE', NV_NAME_VARIABLE );
+$xtpl->assign( 'NV_OP_VARIABLE', NV_OP_VARIABLE );
+$xtpl->assign( 'MODULE_NAME', $module_name );
+$xtpl->assign( 'OP', $op );
+$xtpl->assign( 'DATA_SEARCH', $data_search );
+$xtpl->assign( 'DATA_ORDER', $order );
+$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_ADD', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=content-videoclip" );
+
+$global_array_cat_videoclip = $classMusic->get_videocategory();
+foreach( $global_array_cat_videoclip as $cat )
+{
+	$cat['selected'] = $cat['id'] == $data_search['theloai'] ? " selected=\"selected\"" : "";
+	
+	$xtpl->assign( 'CAT', $cat );
+	$xtpl->parse( 'main.cat' );
+}
+
+foreach( $list_action as $action )
+{
+	$xtpl->assign( 'ACTION', $action );
+	$xtpl->parse( 'main.action' );
+}
+
+// Lay thong tin ca si, nhac si
+$array_singer_ids = $classMusic->string2array( $array_singer_ids );
+$array_author_ids = $classMusic->string2array( $array_author_ids );
+
+if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
+if( ! empty( $array_author_ids ) ) $array_authors = $classMusic->getauthorbyID( $array_author_ids );
+
+foreach( $array as $row )
+{
+	$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
+	$row['authors'] = $classMusic->build_author_singer_2string( $array_authors, $row['authors'] );
+	$row['theloai'] = $classMusic->build_categories_2tring( $global_array_cat_videoclip, $row['theloai'] );
+	
+	$xtpl->assign( 'ROW', $row );
 	$xtpl->parse( 'main.row' );
 }
 
-$xtpl->parse( 'main' );
-$contents .= $xtpl->text( 'main' );
+if( ! empty( $generate_page ) )
+{
+    $xtpl->assign( 'GENERATE_PAGE', $generate_page );
+    $xtpl->parse( 'main.generate_page' );
+}
 
-$contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto;\">\n";
-$contents .= new_page_admin( $ts, $now_page, $link );
-$contents .= "</div>\n";
+$xtpl->parse( 'main' );
+$contents = $xtpl->text( 'main' );
 
 include ( NV_ROOTDIR . "/includes/header.php" );
 echo nv_admin_theme( $contents );

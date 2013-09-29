@@ -261,7 +261,7 @@ class nv_mod_music
 		return $ftpdata;
 	}
 	
-	// Lay thong tin the loai
+	// Lay thong tin the loai bai hat
 	public function get_category()
 	{
 		$category = array();
@@ -289,6 +289,37 @@ class nv_mod_music
 			}
 		}
 		
+		return $category;
+	}
+	
+	// Lay thong tin the loai video
+	public function get_videocategory()
+	{
+		$category = array();
+
+		$sql = "SELECT * FROM `" . $this->table_prefix . "_video_category` ORDER BY `weight` ASC";
+		$result = $this->db_cache( $sql, 'id' );
+		
+		$category[0] = array(
+			'id' => 0,
+			'title' => $this->lang('unknow'),
+			'keywords' => '',
+			'description' => ''
+		);
+
+		if( ! empty( $result ) )
+		{
+			foreach( $result as $row )
+			{
+				$category[$row['id']] = array(
+					'id' => $row['id'],
+					'title' => $row['title'],
+					'keywords' => $row['keywords'],
+					'description' => $row['description']
+				);
+			}
+		}
+
 		return $category;
 	}
 	

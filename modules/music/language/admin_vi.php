@@ -294,8 +294,7 @@ $lang_module['singer_thumb'] = "Ảnh";
 $lang_module['singer_del_confirm'] = "Bạn có chắc xóa các ca sĩ này không?";
 $lang_module['singer_check_err'] = "Bạn phải chọn ít nhất một ca sĩ để xóa";
 $lang_module['video'] = "Video clip";
-$lang_module['video_add'] = "Thêm clip";
-$lang_module['video_listadd'] = "Thêm nhiều clip";
+$lang_module['video_add'] = "Thêm videoclip";
 $lang_module['video_name'] = "Tên video clip";
 $lang_module['video_name_short'] = "Tên gọn clip";
 $lang_module['video_edit'] = "Sửa video";
@@ -305,6 +304,7 @@ $lang_module['video_list_comment'] = "Danh sách các bình luận video";
 $lang_module['video_del_confirm'] = "Bạn có chắc xóa video này";
 $lang_module['video_error_check'] = "Bạn chưa chọn video nào";
 $lang_module['video_comment_edit'] = "Sửa bình luận video";
+$lang_module['video_numview'] = "Lượt xem";
 
 $lang_module['add_lyric'] = "Lời bài hát";
 $lang_module['complete'] = "Hoàn tất";

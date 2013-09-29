@@ -86,12 +86,11 @@ table.tab1 tbody:hover, table.tab1 tbody.second:hover{background:#efefef}
 
 /* TABLE COLUM */
 .col-check{width:10px}
-.col-date{width:100px}
-.col-status{width:50px}
-.col-feature{width:100px}
-.col-sathor{width:200px}
-.col-number,.col-image{width:70px}
 .col-id{width:25px}
+.col-status{width:50px}
+.col-number,.col-image{width:70px}
+.col-date,.col-image-clip,.col-feature{width:100px}
+.col-sathor{width:200px}
 
 /* ICON */
 .select-icon{background: url('../images/music/select-icon.png') no-repeat left center;padding-left: 17px}
