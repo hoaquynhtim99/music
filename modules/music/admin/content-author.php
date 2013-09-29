@@ -9,12 +9,12 @@
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-function nv_check_ok_singer( $array )
+function nv_check_ok_author( $array )
 {
 	global $lang_module;
 
-	if( empty( $array['ten'] ) ) return $lang_module['singer_error_ten'];
-	if( empty( $array['tenthat'] ) ) return $lang_module['singer_error_tenthat'];
+	if( empty( $array['ten'] ) ) return $lang_module['author_error_ten'];
+	if( empty( $array['tenthat'] ) ) return $lang_module['author_error_tenthat'];
 
 	return "";
 }
@@ -24,13 +24,16 @@ if( defined( 'NV_EDITOR' ) )
 	require_once ( NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php' );
 }
 
+// Danh dau menu duoc active
+$set_active_op = "author";
+
 // Khoi tao
 $error = "";
-$array = $array_old = array();
+$array_old = $array = array();
 
 // Lay gia tri
-$array['ten'] = filter_text_input( 'ten', 'get,post', '', 1, 100 );
-$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 100 );
+$array['ten'] = filter_text_input( 'ten', 'get,post', '', 1, 255 );
+$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 255 );
 $array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
 $array['introduction'] = nv_editor_filter_textarea( 'introduction', '', NV_ALLOWED_HTML_TAGS );
 
@@ -39,13 +42,13 @@ $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 if( $id == 0 )
 {
-	$page_title = $lang_module['singer_add'];
+	$page_title = $lang_module['author_add'];
 }
 else
 {
-	$page_title = $lang_module['singer_edit'];
+	$page_title = $lang_module['author_edit'];
 
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id` = " . $id;
+	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `id`=" . $id;
 	$result = $db->sql_query( $sql );
 	$check = $db->sql_numrows( $result );
 
@@ -64,26 +67,27 @@ else
 	}
 }
 
-// Sua ca si
-if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
+// Sua nhac si
+if( ( $nv_Request->get_int( 'edit', 'post', 0 ) ) == 1 )
 {
-	$error .= nv_check_ok_singer( $array );
+	$error .= nv_check_ok_author( $array );
 	$array['introduction'] = nv_editor_nl2br( $array['introduction'] );
 
-	// Kiem tra xem ca si da ton tai chua
+	// Kiem tra xem nhac si da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
 		list( $exist ) = $db->sql_fetchrow( $result );
+		
 		if( $exist )
 		{
-			$error = $lang_module['error_exist_singer'];
+			$error = $lang_module['error_exist_author'];
 		}
 	}
 
 	if( empty( $error ) )
 	{
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET
+		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_author` SET
 			`ten`=" . $db->dbescape( $array['ten'] ) . ", 
 			`tenthat`=" . $db->dbescape( $array['tenthat'] ) . ", 
 			`thumb`=" . $db->dbescape( $array['thumb'] ) . ", 
@@ -95,7 +99,7 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 		{
 			nv_del_moduleCache( $module_name );
 
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer" );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=author" );
 			die();
 		}
 		else
@@ -106,39 +110,39 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 	}
 }
 
-// Them moi ca si
+// Them nhac si
 if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 {
-	$error .= nv_check_ok_singer( $array );
+	$error .= nv_check_ok_author( $array );
 	$array['introduction'] = nv_editor_nl2br( $array['introduction'] );
 
 	// Kiem tra xem ca si da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) );
+		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_author` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) );
 		list( $exist ) = $db->sql_fetchrow( $result );
 		if( $exist )
 		{
-			$error = $lang_module['error_exist_singer'];
+			$error = $lang_module['error_exist_author'];
 		}
 	}
 
 	if( empty( $error ) )
 	{
-		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` VALUES ( 
+		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_author` VALUES ( 
 			NULL, 
 			" . $db->dbescape( $array['ten'] ) . ", 
 			" . $db->dbescape( $array['tenthat'] ) . ", 
 			" . $db->dbescape( $array['thumb'] ) . ", 
 			" . $db->dbescape( $array['introduction'] ) . ", 
-			0, 0, 0
+			0, 0
 		)";
 
 		if( $db->sql_query_insert_id( $sql ) )
 		{
-			$db->sql_freeresult();
 			nv_del_moduleCache( $module_name );
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer" );
+			$db->sql_freeresult();
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=author" );
 			die();
 		}
 		else
@@ -159,11 +163,11 @@ else
 	$array['introduction'] = "<textarea style=\"width:98%\" name=\"introduction\" id=\"introduction\" cols=\"20\" rows=\"15\">" . $array['introduction'] . "</textarea>\n";
 }
 
-$xtpl = new XTemplate( "content-singer.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
+$xtpl = new XTemplate( "content-author.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'GLANG', $lang_global );
 $xtpl->assign( 'NV_BASE_SITEURL', NV_BASE_SITEURL );
-$xtpl->assign( 'IMAGE_DIR', NV_UPLOADS_DIR . "/" . $module_name . "/singerthumb" );
+$xtpl->assign( 'IMAGE_DIR', NV_UPLOADS_DIR . "/" . $module_name . "/authorthumb" );
 $xtpl->assign( 'DATA', $array );
 
 if( ! empty( $error ) )

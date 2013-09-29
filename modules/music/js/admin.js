@@ -330,6 +330,74 @@ function nv_change_videoclip_status( id ){
 	return;
 }
 
+// Thao tac voi ca si
+function nv_singer_action(oForm, nv_message_no_check, key) {
+	var fa = oForm['idcheck[]'];
+	var listid = [];
+	
+	if (fa.length){
+		for ( var i = 0; i < fa.length; i++){
+			if (fa[i].checked){
+				listid.push(fa[i].value);
+			}
+		}
+	}else{
+		if(fa.checked){
+			listid.push(fa.value);
+		}
+	}
+	
+	if (listid != ''){
+		if (key == 1){
+			if ( confirm(nv_is_del_confirm[0]) ){
+				nv_ajax('post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=singer&del=1&listid=' + listid, '', 'nv_delete_result');
+			}
+		}
+	}else{
+		alert(nv_message_no_check);
+	}
+}
+function nv_delete_singer( id ){
+	if ( confirm( nv_is_del_confirm[0] ) ){
+		nv_ajax( 'post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=singer&del=1&id=' + id, '', 'nv_delete_result' );
+	}
+	return false;
+}
+
+// Thao tac voi nhac si
+function nv_author_action(oForm, nv_message_no_check, key) {
+	var fa = oForm['idcheck[]'];
+	var listid = [];
+	
+	if (fa.length){
+		for ( var i = 0; i < fa.length; i++){
+			if (fa[i].checked){
+				listid.push(fa[i].value);
+			}
+		}
+	}else{
+		if(fa.checked){
+			listid.push(fa.value);
+		}
+	}
+	
+	if (listid != ''){
+		if (key == 1){
+			if ( confirm(nv_is_del_confirm[0]) ){
+				nv_ajax('post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=author&del=1&listid=' + listid, '', 'nv_delete_result');
+			}
+		}
+	}else{
+		alert(nv_message_no_check);
+	}
+}
+function nv_delete_author( id ){
+	if ( confirm( nv_is_del_confirm[0] ) ){
+		nv_ajax( 'post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=author&del=1&id=' + id, '', 'nv_delete_result' );
+	}
+	return false;
+}
+
 // Xu ly cac item
 function nv_del_item_on_list( id, area, lang, inputname ){
 	if( confirm( lang ) )

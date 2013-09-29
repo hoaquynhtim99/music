@@ -20,17 +20,7 @@ if( empty( $id ) ) die( "Stop!!!" );
 
 if( $id > 0 )
 {
-	if( $where == '_singer' )
-	{
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
-		$result = $db->sql_query( $sql );
-	}
-	elseif( $where == '_author' )
-	{
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
-		$result = $db->sql_query( $sql );
-	}
-	elseif( $where == '_ftp' )
+	if( $where == '_ftp' )
 	{
 		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
 		$result = $db->sql_query( $sql );
