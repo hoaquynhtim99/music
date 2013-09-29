@@ -37,6 +37,7 @@ $lang_module['images_mini'] = "Ảnh";
 $lang_module['back_page'] = "Trở về trang trước";
 $lang_module['upboi'] = "Người đăng";
 $lang_module['alert_check'] = "Bạn cần chọn ít nhất một dòng để thực hiện các thao tác";
+$lang_module['checkall'] = "Chọn tất cả";
 
 $lang_module['action_status_ok'] = "Cho hoạt động";
 $lang_module['action_status_no'] = "Cho ngưng hoạt động";
@@ -73,7 +74,6 @@ $lang_module['add_to_main_album'] = "Thêm danh mục menu";
 $lang_module['add_song'] = "Thêm bài hát mới";
 $lang_module['album'] = "Album";
 $lang_module['album_edit'] = "Sửa album";
-$lang_module['album_menu'] = "Album trên menu chính";
 $lang_module['album_name'] = "Tên album";
 $lang_module['album_info'] = "Thông tin về album";
 $lang_module['album_numsong'] = "Số bài hát";
@@ -86,9 +86,6 @@ $lang_module['comment_error_body'] = "Nội dung bình luận chưa có kìa";
 $lang_module['category'] = "Thể loại";
 $lang_module['category_base'] = "Thể loại chính";
 $lang_module['category_sub'] = "Thể loại con";
-$lang_module['category_main'] = "Thể loại trên menu trái";
-$lang_module['category_main_del_confim'] = "Bạn có chắc chắc xóa thể loại này";
-$lang_module['checkall'] = "Chọn tất cả";
 
 $lang_module['check_link_suc'] = "Link tồn tại";
 $lang_module['check_link_err'] = "Link bài hát này không tồn tại";
@@ -167,7 +164,6 @@ $lang_module['lyric_error_name'] = "Lỗi: Tên người gửi còn trống";
 $lang_module['lyric_error_body'] = "Lỗi: Nội dung lời bài hát còn trống";
 
 $lang_module['manager_category'] = "Quản lý thể loại bài hát";
-$lang_module['manager_category_info'] = "Lưu ý khi thêm thể loại bạn sẽ không thể xóa";
 $lang_module['music_setting'] = "Cấu hình module";
 $lang_module['no_any_album'] = "Không thuộc album nào";
 $lang_module['order'] = "Thứ tự";
@@ -243,8 +239,6 @@ $lang_module['sub_comment'] = "Quản lý bình luận";
 $lang_module['sub_commentsong'] = "Bình luận bài hát";
 $lang_module['sub_commentvideo'] = "Bình luận videoclip";
 $lang_module['sub_commentalbum'] = "Bình luận Album";
-$lang_module['sub_maincategory'] = "Thể loại trang chủ";
-$lang_module['sub_mainalbum'] = "Album trang chủ";
 $lang_module['sub_ads'] = "Quảng cáo";
 $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
@@ -336,8 +330,6 @@ $lang_module['album_add_a_song'] = "Thêm một bài hát";
 $lang_module['album_list_comment'] = "Danh sách các bình luận Album";
 
 $lang_module['guide_hot'] = "Quản lý các album HOT nhất trên trang chủ";
-$lang_module['guide_maincategory'] = "Các thể loại trên block thể loại";
-$lang_module['guide_mainalbum'] = "Các album được dùng làm chủ đề trên block";
 $lang_module['guide_ftpsetting'] = "Quản lý tài khoản FTP, quản lý host nhạc, các host nhạc mặc định để lấy link nhạc";
 $lang_module['guide_setting'] = "Thiết lập chức năng của module như cấp phép đăng nhạc, tải nhạc, bình luận...";
 

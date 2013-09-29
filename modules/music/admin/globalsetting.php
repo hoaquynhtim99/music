@@ -24,20 +24,6 @@ $array[] = array(
 	"guide" => $lang_module['guide_hot'] //
 );
 
-// Cac the loai tên block the loai
-$array[] = array(
-	"title" => $lang_module['sub_maincategory'], //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=maincategory", //
-	"guide" => $lang_module['guide_maincategory'] //
-);
-
-// Cac album duoc dung lam the loai tren block
-$array[] = array(
-	"title" => $lang_module['sub_mainalbum'], //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=mainalbum", //
-	"guide" => $lang_module['guide_mainalbum'] //
-);
-
 // Cau hinh FTP
 $array[] = array(
 	"title" => $lang_module['ftpsetting'], //
