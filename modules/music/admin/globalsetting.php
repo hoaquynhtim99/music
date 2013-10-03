@@ -17,13 +17,6 @@ $xtpl->assign( 'GLANG', $lang_global );
 
 $array = array();
 
-// Album HOT
-$array[] = array(
-	"title" => $lang_module['sub_hotalbum'], //
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=hotalbum", //
-	"guide" => $lang_module['guide_hot'] //
-);
-
 // Cau hinh FTP
 $array[] = array(
 	"title" => $lang_module['ftpsetting'], //

@@ -329,7 +329,6 @@ $lang_module['album_add_list_song'] = "Thêm nhiều bài hát";
 $lang_module['album_add_a_song'] = "Thêm một bài hát";
 $lang_module['album_list_comment'] = "Danh sách các bình luận Album";
 
-$lang_module['guide_hot'] = "Quản lý các album HOT nhất trên trang chủ";
 $lang_module['guide_ftpsetting'] = "Quản lý tài khoản FTP, quản lý host nhạc, các host nhạc mặc định để lấy link nhạc";
 $lang_module['guide_setting'] = "Thiết lập chức năng của module như cấp phép đăng nhạc, tải nhạc, bình luận...";
 
