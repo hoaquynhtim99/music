@@ -430,3 +430,45 @@ function nv_change_ftp_status( id ){
 	return;
 }
 
+// Thao tac voi lyric
+function nv_lyric_action(oForm, nv_message_no_check, key) {
+	var fa = oForm['idcheck[]'];
+	var listid = [];
+	
+	if (fa.length){
+		for ( var i = 0; i < fa.length; i++){
+			if (fa[i].checked){
+				listid.push(fa[i].value);
+			}
+		}
+	}else{
+		if(fa.checked){
+			listid.push(fa.value);
+		}
+	}
+	
+	if (listid != ''){
+		if (key == 1){
+			if ( confirm(nv_is_del_confirm[0]) ){
+				nv_ajax('post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=lyric&del=1&listid=' + listid, '', 'nv_delete_result');
+			}
+		}else if (key == 2){
+			nv_ajax('post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=lyric&changestatus=1&status=1&listid=' + listid, '', 'nv_change_status_list_result');
+		}else if (key == 3){
+			nv_ajax('post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=lyric&changestatus=1&status=2&listid=' + listid, '', 'nv_change_status_list_result');
+		}
+	}else{
+		alert(nv_message_no_check);
+	}
+}
+function nv_delete_lyric( id ){
+	if ( confirm( nv_is_del_confirm[0] ) ){
+		nv_ajax( 'post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=lyric&del=1&id=' + id, '', 'nv_delete_result' );
+	}
+	return false;
+}
+function nv_change_lyric_status( id ){
+	var nv_timer = nv_settimeout_disable( 'change_status' + id, 4000 );
+	nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=lyric&changestatus=1&id=' + id, '', 'nv_change_status_result' );
+	return;
+}

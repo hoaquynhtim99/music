@@ -349,6 +349,22 @@ class nv_mod_music
 		return $array;
 	}
 	
+	public function search_song_id( $q, $limit = 0 )
+	{
+		// Gioi han khong qua lon
+		$limit = $limit ? ( int ) $limit : 100;
+		$array = array();
+		
+		$sql = "SELECT `id` FROM `" . $this->table_prefix . "` WHERE `tenthat` LIKE '%" . $this->db->dblikeescape( $q ) . "%' LIMIT 0," . $limit;
+		$result = $this->db->sql_query( $sql );
+		while( $row = $this->db->sql_fetch_assoc( $result ) )
+		{
+			$array[] = $row['id'];
+		}
+		
+		return $array;
+	}
+	
 	public function string2array( $string, $split_char = ',' )
 	{
 		return array_filter( array_unique( array_map( "trim", explode( ",", $string ) ) ) );

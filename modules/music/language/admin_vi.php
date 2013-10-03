@@ -242,7 +242,7 @@ $lang_module['sub_commentalbum'] = "Bình luận Album";
 $lang_module['sub_ads'] = "Quảng cáo";
 $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
-$lang_module['sub_lyric'] = "Quản lý lyric";
+$lang_module['sub_lyric'] = "Quản lý lời bài hát";
 $lang_module['sub_singer'] = "Quản lý ca sĩ";
 $lang_module['sub_videocategory'] = "Quản lý thể loại clip";
 
@@ -398,5 +398,6 @@ $lang_module['tip_album_title'] = "Nhập tên cho album, nên viết hoa ký t�
 $lang_module['tip_video_title'] = "Nhập tên cho videoclip, nên viết hoa ký tự đầu tiên của mỗi từ, để đảm bảo tính thẩm mỹ";
 $lang_module['tip_video_singer'] = "Bạn có thể chọn một hoặc nhiều ca sĩ cho videoclip, các ca sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_video_author'] = "Bạn có thể chọn một hoặc nhiều nhạc sĩ cho videoclip, các nhạc sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
+$lang_module['tip_user'] = "Nhập tên người đăng, khuyến cáo nên nhập tên đăng nhập của thành viên";
 
 ?>
