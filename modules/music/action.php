@@ -32,7 +32,7 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 
 $sql_create_module = $sql_drop_module;
 
-// 1. bang bai hat
+// Bang bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) NOT NULL DEFAULT '' COMMENT 'Alias bài hát',
@@ -58,7 +58,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 2. album
+// Album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Alias của album',
@@ -76,7 +76,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 3. The loai
+// The loai
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category` (
   `id` int(255) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên thể loại',
@@ -88,7 +88,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM";
 
-// 4. Album HOT
+// Album HOT
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `albumid` mediumint( 8 ) NOT NULL DEFAULT '0' COMMENT 'ID album',
@@ -96,7 +96,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 6. quang cao tren player
+// Quang cao tren player
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `stt` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'Số thứ tự',
@@ -106,7 +106,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 7. binh luan bai hat
+// Binh luan bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người bình luận',
@@ -118,7 +118,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 8. binh luan album
+// Binh luan album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_album` (
   `id`mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -130,7 +130,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 9. qua tang
+// Qua tang
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_gift` (
   `id`mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `who_send` varchar(255) NOT NULL DEFAULT '',
@@ -142,7 +142,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 10. bao loi
+// Bao loi
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_error` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `sid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -157,7 +157,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   KEY `userid`(`userid`)
 ) ENGINE=MyISAM";
 
-// 11. loi bai hat
+// Loi bai hat
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_lyric` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `songid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -168,7 +168,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 15. playlist
+// Playlist
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_playlist` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `userid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -184,7 +184,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 16. video
+// Videoclip
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -204,7 +204,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 17 the loai video
+// The loai video
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL DEFAULT '',
@@ -216,7 +216,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM";
 
-// 18. binh luan album
+// Binh luan album
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_video` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL DEFAULT '',
@@ -228,16 +228,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 19 cau hinh module
-$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `key` varchar(50) NOT NULL DEFAULT '',
-  `value` bigint(20) NOT NULL DEFAULT '0',
-  `char` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM";
-
-// 20 ca si
+// Ca si
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_singer` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ten` varchar(100) NOT NULL DEFAULT '',
@@ -250,7 +241,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 21 nhac si
+// Nhac si
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_author` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `ten` varchar(255) NOT NULL DEFAULT '',
@@ -262,7 +253,7 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM";
 
-// 22 FTP
+// FTP
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ftp` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `host` varchar(30) NOT NULL DEFAULT '',
@@ -286,8 +277,7 @@ $sql_create_module[] = "INSERT INTO `" . $db_config['prefix'] . "_" . $lang . "_
 (6, 'zingclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/video-clip', '/', '/', 1),
 (7, 'nctclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/video', '/', '/', 1)";
 
-
-// 22 FTP
+// Bang xep hang
 $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_topsong` (
   `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
   `songid` mediumint(8) unsigned NOT NULL DEFAULT '0',
@@ -297,46 +287,45 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `songid` (`songid`)
 ) ENGINE=MyISAM";
 
-// 1. them vao hot album
+// Cau hinh module
+$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting` (
+  `key` varchar(60) NOT NULL DEFAULT '' COMMENT 'Khóa cấu hình',
+  `value` varchar(255) NOT NULL DEFAULT '' COMMENT 'Giá trị được thiết lập',
+  UNIQUE KEY `key` (`key`)
+) ENGINE=MyISAM";
+
+// Them vao hot album
 $i = 1;
 while( $i <= 9 )
 {
-	$sql_create_module[] = "
-	INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` 
-	(
-	`id` ,
-	`albumid` ,
-	`stt`
-	)
-	VALUES 
-	(
-	'" . $i . "',  '0',  '" . $i . "'
-	)";
-	$i++;
+	$sql_create_module[] = "INSERT INTO `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` (`id`,`albumid`,`stt`) VALUES ('" . $i . "', '0', '" . $i . "')";
+	$i ++;
 }
 
-// them vao cau hinh
-$sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting` (`id`, `key`, `value`, `char`) VALUES
-(1, 'who_comment', 0, ''),
-(2, 'auto_comment', 0, ''),
-(3, 'root_contain', 0, 'data'),
-(4, 'who_lyric', 0, ''),
-(5, 'auto_lyric', 0, ''),
-(6, 'who_gift', 0, ''),
-(7, 'auto_gift', 0, ''),
-(8, 'auto_album', 0, ''),
-(9, 'who_download', 0, ''),
-(10, 'upload_max', 2, ''),
-(11, 'who_upload', 0, ''),
-(12, 'auto_upload', 0, ''),
-(13, 'default_server', 1, ''),
-(14, 'playlist_max', 2, ''),
-(15, 'del_cache_time_out', 21600, ''),
-(16, 'version', 0, '3.3.01'),
-(17, 'revision', 284, ''),
-(18, 'num_blocktab', 10, ''),
-(19, 'description', 0, 'The Professional Module Music For Nukeviet 3.x, Developed By Phan Tan Dung - phantandung92@gmail.com' ),
-(20, 'type_main', 0, '')
+// Them vao cau hinh
+$sql_create_module[] = "INSERT INTO  `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting` (`key`, `value`) VALUES
+('who_comment', '0'),
+('auto_comment', '0'),
+('root_contain', 'data'),
+('who_lyric', '0'),
+('auto_lyric', '0'),
+('who_gift', '0'),
+('auto_gift', '0'),
+('auto_album', '0'),
+('who_download', '0'),
+('upload_max', '2'),
+('who_upload', '0'),
+('auto_upload', '0'),
+('default_server', '1'),
+('playlist_max', '2'),
+('del_cache_time_out', '21600'),
+('num_blocktab', '10'),
+('description', 'The Professional Module Music For Nukeviet 3.x, Developed By Phan Tan Dung - phantandung92@gmail.com' ),
+('type_main', '0'),
+('author_singer_defis', 'ft.'),
+('alias_listen_song', 'bai-hat'),
+('alias_view_album', 'album'),
+('alias_view_videoclip', 'video-clip')
 ";
 
 ?>

@@ -59,7 +59,6 @@ class nv_mod_music
 		$this->db = $db;
 		
 		$this->setting = $this->get_setting();
-		$this->setting['author_singer_defis'] = 'ft.'; // Tam thoi fix cung da
 		
 		$this->base_site_url = NV_BASE_SITEURL;
 		$this->root_dir = NV_ROOTDIR;
@@ -114,20 +113,13 @@ class nv_mod_music
 		$setting = array();
 
 		$sql = "SELECT * FROM `" . $this->table_prefix . "_setting`";
-		$result = $this->db_cache( $sql, 'id' );
+		$result = $this->db_cache( $sql, 'key' );
 
 		if( ! empty( $result ) )
 		{
 			foreach( $result as $row )
 			{
-				if( in_array( $row['key'], array( "root_contain", "description" ) ) )
-				{
-					$setting[$row['key']] = $row['char'];
-				}
-				else
-				{
-					$setting[$row['key']] = $row['value'];
-				}
+				$setting[$row['key']] = $row['value'];
 			}
 		}
 
