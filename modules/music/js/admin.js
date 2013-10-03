@@ -416,3 +416,17 @@ function nv_sort_item( area, inputname ){
 	$("input[name=" + inputname + "]").val(list);
 	return;
 }
+
+// Thao tac voi FTP
+function nv_delete_ftp( id ){
+	if ( confirm( nv_is_del_confirm[0] ) ){
+		nv_ajax( 'post', script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ftpsetting&del=1&id=' + id, '', 'nv_delete_result' );
+	}
+	return false;
+}
+function nv_change_ftp_status( id ){
+	var nv_timer = nv_settimeout_disable( 'change_status' + id, 4000 );
+	nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ftpsetting&changestatus=1&id=' + id, '', 'nv_change_status_result' );
+	return;
+}
+

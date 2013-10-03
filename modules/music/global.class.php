@@ -247,6 +247,7 @@ class nv_mod_music
 					"fulladdress" => $row['fulladdress'],
 					"subpart" => $row['subpart'],
 					"ftppart" => $row['ftppart'],
+					"status" => $row['active'],
 					"active" => ( $row['active'] == 1 ) ? $this->lang('active_yes') : $this->lang('active_no')
 				);
 			}

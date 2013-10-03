@@ -20,13 +20,7 @@ if( empty( $id ) ) die( "Stop!!!" );
 
 if( $id > 0 )
 {
-	if( $where == '_ftp' )
-	{
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . $where . "` WHERE `id`=" . $id;
-		$result = $db->sql_query( $sql );
-		$classMusic->updatewhendelFTP( $id, 0 );
-	}
-	elseif( $where == '' )
+	if( $where == '' )
 	{
 		$song = $classMusic->getsongbyID( $id );
 		
