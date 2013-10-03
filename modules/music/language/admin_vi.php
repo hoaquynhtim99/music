@@ -38,6 +38,7 @@ $lang_module['back_page'] = "Trở về trang trước";
 $lang_module['upboi'] = "Người đăng";
 $lang_module['alert_check'] = "Bạn cần chọn ít nhất một dòng để thực hiện các thao tác";
 $lang_module['checkall'] = "Chọn tất cả";
+$lang_module['active'] = "Hoạt động";
 
 $lang_module['action_status_ok'] = "Cho hoạt động";
 $lang_module['action_status_no'] = "Cho ngưng hoạt động";
@@ -54,17 +55,10 @@ $lang_module['author_name'] = "Tên nhạc sĩ";
 $lang_module['author_search'] = "Tìm một nhạc sĩ";
 $lang_module['author_sort_name'] = "Tên gọn nhạc sĩ";
 $lang_module['author_del_confirm'] = "Bạn có chắc chắn xóa không";
-$lang_module['author_check_err'] = "Bạn chưa chọn nhạc sĩ nào";
+
 $lang_module['check'] = "Kiểm tra";
 $lang_module['check_song'] = "Kiểm tra các phần bị lỗi";
-$lang_module['active'] = "Hoạt động";
-$lang_module['active1'] = "Thay đổi hoạt động";
-$lang_module['active_yes'] = "Có";
-$lang_module['active_no'] = "Không";
-$lang_module['active_confirm'] = "Bạn muốn thay đổi hoạt động?";
-$lang_module['active_error'] = "Hệ thống không thực hiện được yêu cầu của bạn";
-$lang_module['active_succer'] = "Đã thay đổi hoạt động thành";
-$lang_module['active_succer1'] = "Đã thay đổi hoạt động thành công";
+
 $lang_module['add_album'] = "Thêm Album mới";
 $lang_module['ads_name'] = "Tên quảng cáo";
 $lang_module['ads_title'] = "Quảng cáo trên player";
@@ -77,7 +71,6 @@ $lang_module['album_edit'] = "Sửa album";
 $lang_module['album_name'] = "Tên album";
 $lang_module['album_info'] = "Thông tin về album";
 $lang_module['album_numsong'] = "Số bài hát";
-$lang_module['album_del_cofirm'] = "Bạn có chắc xóa các album này nếu xóa các dữ liệu liên quan sẽ bị xóa";
 
 $lang_module['comment_time'] = "Gửi lúc";
 $lang_module['comment_error_name'] = "Người bình luận chưa nhập kìa";
@@ -135,7 +128,6 @@ $lang_module['error_add_new_singer'] = "Lỗi: Không thể tạo ca sĩ mới";
 $lang_module['feature'] = "Chức năng";
 $lang_module['ftpsetting'] = "Cấu hình FTP";
 $lang_module['ftp_host'] = "Tên host";
-$lang_module['ftp_del_confirm'] = "Bạn có chắc chắn xóa host này không? Nếu xóa tất cả các dữ liệu liên quan sẽ bị tạm ngưng hoạt động";
 $lang_module['ftp_user'] = "Tài khoản";
 $lang_module['ftp_pass'] = "Mật khẩu";
 $lang_module['ftp_full_address'] = "Địa chỉ tới thư mục chứa file";
@@ -159,27 +151,21 @@ $lang_module['link'] = "Đường dẫn";
 $lang_module['list_album'] = "Danh sách các album";
 $lang_module['list_gift'] = "Danh sách các quà tặng";
 
-$lang_module['lyric_del_confirm'] = "Bạn có chắc xóa lời bài hát này";
 $lang_module['lyric_error_name'] = "Lỗi: Tên người gửi còn trống";
 $lang_module['lyric_error_body'] = "Lỗi: Nội dung lời bài hát còn trống";
 
 $lang_module['manager_category'] = "Quản lý thể loại bài hát";
 $lang_module['music_setting'] = "Cấu hình module";
 $lang_module['no_any_album'] = "Không thuộc album nào";
+
 $lang_module['order'] = "Thứ tự";
 $lang_module['save'] = "Lưu";
+
 $lang_module['search'] = "Tìm";
 $lang_module['search_music'] = "Tìm bài hát";
 $lang_module['search_singer'] = "Tìm một ca sĩ";
 $lang_module['search_video'] = "Tìm videoclip";
 $lang_module['search_album'] = "Tìm album";
-$lang_module['search_note'] = "Để tìm chính xác các bạn nhập từ khóa không viết hoa, không có dấu";
-$lang_module['search_key'] = "Nhập từ khóa";
-$lang_module['search_per_page'] = "Số kết quả";
-$lang_module['search_with_name'] = "Tìm theo tên";
-$lang_module['search_with_singer'] = "Tìm theo ca sĩ";
-$lang_module['search_with_album'] = "Tìm theo album";
-$lang_module['search_with_author'] = "Tìm theo nhạc sĩ";
 
 $lang_module['select'] = "Chọn";
 $lang_module['select_category'] = "Chọn thể loại";
@@ -188,12 +174,9 @@ $lang_module['setting_description'] = "Mô tả module";
 
 $lang_module['singer'] = "Ca sĩ";
 $lang_module['singer_new'] = "Nhập nhanh tên ca sĩ";
-$lang_module['singer_new_added'] = "Ca sĩ này đã tồn tại, bạn hãy chọn từ danh sách ca sĩ";
 $lang_module['song_add'] = "Thêm bài hát";
-$lang_module['song_del_confirm'] = "Bạn có chắc chắn xóa các bài hát này, nếu xóa các dữ liệu liên quan cũng sẽ bị xóa";
-$lang_module['playlist_del_confirm'] = "Bạn có chắc chắn xóa các playlist này";
-$lang_module['ads_del_confirm'] = "Bạn có chắc chắn xóa quảng cáo này";
 $lang_module['sort_content'] = "Nội dung ngắn gọn";
+
 $lang_module['siteinfo_numsong'] = "Tổng số bài hát";
 $lang_module['siteinfo_numvideo'] = "Tổng số videoclip";
 $lang_module['siteinfo_numalbum'] = "Tổng số album";
@@ -201,7 +184,9 @@ $lang_module['siteinfo_commentsong'] = "Tổng số bình luận cho bài hát";
 $lang_module['siteinfo_commentalbum'] = "Tổng số bình luận cho album";
 $lang_module['siteinfo_error'] = "Tổng số báo lỗi";
 $lang_module['siteinfo_gift'] = "Tổng số quà tặng âm nhạc";
+
 $lang_module['state'] = "Tình trạng";
+
 $lang_module['set_who_comment'] = "Ai được bình luận";
 $lang_module['set_who_lyric'] = "Ai được gửi lời bài hát";
 $lang_module['set_who_download'] = "Quyền download";
@@ -262,8 +247,6 @@ $lang_module['thumb'] = "Ảnh hiển thị";
 $lang_module['uncheckall'] = "Bỏ chọn";
 $lang_module['update_success'] = "Cập nhật thành công";
 $lang_module['who_up'] = "Upload bởi";
-$lang_module['error_del_confirm'] = "Bạn có chắc chắn xóa những báo lỗi này";
-$lang_module['error_check_error'] = "Bạn chưa chọn báo lỗi nào";
 $lang_module['user_comment'] = "Người bình luận";
 $lang_module['user_send_gift'] = "Người tặng";
 $lang_module['user_send_lyric'] = "Người gửi";
@@ -287,8 +270,6 @@ $lang_module['singer_edit'] = "Sửa ca sĩ";
 $lang_module['singer_info'] = "Thông tin ca sĩ";
 $lang_module['singer_name'] = "Tên của ca sĩ";
 $lang_module['singer_thumb'] = "Ảnh";
-$lang_module['singer_del_confirm'] = "Bạn có chắc xóa các ca sĩ này không?";
-$lang_module['singer_check_err'] = "Bạn phải chọn ít nhất một ca sĩ để xóa";
 $lang_module['video'] = "Videoclip";
 $lang_module['video_add'] = "Thêm videoclip";
 $lang_module['video_name'] = "Tên videoclip";
@@ -324,7 +305,6 @@ $lang_module['vcat_error_exist'] = "Lỗi: Thể loại clip này đã có";
 $lang_module['album_error_title'] = "Lỗi: Tên đầy đủ của album còn trống";
 $lang_module['album_error_alias'] = "Lỗi: Tên ngắn gọn của album còn trống";
 $lang_module['album_error_thumb'] = "Lỗi: Chưa có ảnh hiển thị cho album";
-$lang_module['album_confirm_delsong'] = "Bạn có muốn xóa không?";
 $lang_module['album_add_list_song'] = "Thêm nhiều bài hát";
 $lang_module['album_add_a_song'] = "Thêm một bài hát";
 $lang_module['album_list_comment'] = "Danh sách các bình luận Album";
