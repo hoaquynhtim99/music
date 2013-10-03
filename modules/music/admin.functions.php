@@ -22,9 +22,10 @@ $submenu['comment'] = $lang_module['sub_comment'];
 $submenu['userplaylist'] = $lang_module['userplaylist'];
 $submenu['category'] = $lang_module['sub_category'];
 $submenu['video_category'] = $lang_module['sub_videocategory'];
+$submenu['utilities'] = $lang_module['utilities'];
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'hotalbum', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite' );
+$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'hotalbum', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities' );
 
 define( 'NV_IS_MUSIC_ADMIN', true );
 

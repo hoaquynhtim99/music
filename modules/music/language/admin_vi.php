@@ -196,7 +196,7 @@ $lang_module['set_uploadmax'] = "Dung lượng tối đa được upload (Tính 
 $lang_module['set_user'] = "Thành viên";
 $lang_module['set_all'] = "Tất cả";
 $lang_module['set_no'] = "Tắt";
-$lang_module['set_global'] = "Quản lý chung";
+$lang_module['set_global'] = "Thiết lập cấu hình";
 $lang_module['set_root_server'] = "Cùng server";
 $lang_module['set_default_server'] = "Server mặc định";
 $lang_module['set_auto_comment'] = "Tự động đăng bình luận";
@@ -229,7 +229,7 @@ $lang_module['sub_error'] = "Báo lỗi";
 $lang_module['sub_gift'] = "Quà tặng âm nhạc";
 $lang_module['sub_lyric'] = "Quản lý lời bài hát";
 $lang_module['sub_singer'] = "Quản lý ca sĩ";
-$lang_module['sub_videocategory'] = "Quản lý thể loại clip";
+$lang_module['sub_videocategory'] = "Quản lý thể loại videoclip";
 
 $lang_module['song'] = "Bài hát";
 $lang_module['song_name'] = "Tên bài hát";
@@ -329,6 +329,8 @@ $lang_module['ads_name'] = "Tên quảng cáo";
 $lang_module['error_check_viewed'] = "Đánh dấu là đã kiểm tra";
 
 $lang_module['info_check_curl'] = "Hệ thống của bạn không hỗ trợ thư viện CURL do đó sẽ không sử dụng được chức năng lấy nhạc từ các website khác";
+
+$lang_module['utilities'] = "Bộ công cụ";
 
 $lang_module['ex_do'] = "Thực hiện";
 $lang_module['ex_delete_cat'] = "Tiện ích xóa chủ đề bài hát";

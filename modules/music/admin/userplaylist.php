@@ -82,7 +82,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 $contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto;\">\n";
-$contents .= new_page_admin( $ts, $now_page, $link );
+// $contents .= new_page_admin( $ts, $now_page, $link );
 $contents .= "</div>\n";
 
 include ( NV_ROOTDIR . "/includes/header.php" );
