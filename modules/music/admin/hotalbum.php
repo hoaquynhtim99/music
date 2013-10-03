@@ -18,7 +18,7 @@ if( $nv_Request->isset_request( 'selectalbum', 'get' ) )
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	}
 
-	$page_title = $lang_module['getaid_title'];
+	$page_title = $classMusic->lang('getaid_title');
 
 	$xtpl = new XTemplate( "hotalbum.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
 	$xtpl->assign( 'LANG', $lang_module );
@@ -38,44 +38,42 @@ if( $nv_Request->isset_request( 'selectalbum', 'get' ) )
 	$array = array();
 
 	// Base data
-	$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.id!=0";
+	$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`!=0";
 	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;selectalbum=1&amp;stt=" . $stt;
 
 	// Search data
 	$data_search = array(
-		"title" => filter_text_input( 'title', 'get', '', 1, 255 ), //
-		"casi" => filter_text_input( 'casi', 'get', '', 1, 255 ), //
-		"describe" => filter_text_input( 'describe', 'get', '', 1, 255 ), //
-		"upboi" => filter_text_input( 'upboi', 'get', '', 1, 255 ), //
-		);
+		"title" => filter_text_input( 'title', 'get', '', 1, 255 ),
+		"casi" => filter_text_input( 'casi', 'get', '', 1, 255 ),
+		"describe" => filter_text_input( 'describe', 'get', '', 1, 255 ),
+		"upboi" => filter_text_input( 'upboi', 'get', '', 1, 255 ),
+	);
 
 	$xtpl->assign( 'SEARCH', $data_search );
 
 	if( ! empty( $data_search['title'] ) )
 	{
-		$base_url .= "&amp;title=" . $data_search['title'];
-		$sql .= " AND ( a.tname LIKE '%" . $db->dblikeescape( $data_search['title'] ) . "%' )";
+		$base_url .= "&amp;title=" . urlencode( $data_search['title'] );
+		$sql .= " AND ( `tname` LIKE '%" . $db->dblikeescape( $data_search['title'] ) . "%' )";
 	}
 
 	if( ! empty( $data_search['casi'] ) )
 	{
-		$base_url .= "&amp;casi=" . $data_search['casi'];
-		$sql .= " AND ( b.tenthat LIKE '%" . $db->dblikeescape( $data_search['casi'] ) . "%' )";
+		$base_url .= "&amp;casi=" . urlencode( $data_search['casi'] );
+		$sql .= " AND ( " . $classMusic->build_query_search_id( $classMusic->search_singer_id( $data_search['casi'], 5 ), 'casi' ) . " )";
 	}
 
 	if( ! empty( $data_search['describe'] ) )
 	{
-		$base_url .= "&amp;describe=" . $data_search['describe'];
-		$sql .= " AND ( a.describe LIKE '%" . $db->dblikeescape( $data_search['describe'] ) . "%' )";
+		$base_url .= "&amp;describe=" . urlencode( $data_search['describe'] );
+		$sql .= " AND ( `describe` LIKE '%" . $db->dblikeescape( $data_search['describe'] ) . "%' )";
 	}
 
 	if( ! empty( $data_search['upboi'] ) )
 	{
 		$base_url .= "&amp;upboi=" . $data_search['upboi'];
-		$sql .= " AND ( a.upboi LIKE '%" . $db->dblikeescape( $data_search['upboi'] ) . "%' )";
+		$sql .= " AND ( `upboi` LIKE '%" . $db->dblikeescape( $data_search['upboi'] ) . "%' )";
 	}
-
-	$array = array();
 
 	$sql1 = "SELECT COUNT(*) " . $sql;
 	$result1 = $db->sql_query( $sql1 );
@@ -84,27 +82,41 @@ if( $nv_Request->isset_request( 'selectalbum', 'get' ) )
 	$page = $nv_Request->get_int( 'page', 'get', 0 );
 	$per_page = 15;
 
-	$sql2 = "SELECT a.id, a.name, a.tname, a.upboi, b.tenthat " . $sql . " ORDER BY a.id DESC LIMIT " . $page . ", " . $per_page;
+	$sql2 = "SELECT * " . $sql . " ORDER BY `id` DESC LIMIT " . $page . ", " . $per_page;
 	$query2 = $db->sql_query( $sql2 );
 
+	$array = $array_singers = array();
+	$array_singer_ids = '';
 	while( $row = $db->sql_fetchrow( $query2 ) )
 	{
+		$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
+		$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
+
 		$array[$row['id']] = array(
-			"id" => $row['id'], //
-			"name" => $row['name'], //
-			"tname" => $row['tname'], //
-			"upboi" => $row['upboi'], //
-			"tenthat" => $row['tenthat'] //
-				);
+			"id" => $row['id'],
+			"singers" => $row['casi'],
+			"name" => $row['name'],
+			"tname" => $row['tname'],
+			"upboi" => $row['upboi'],
+			"thumb" => $row['thumb'],
+			"tenthat" => $row['tenthat']
+		);
 	}
 
 	$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 
 	if( ! empty( $array ) )
 	{
+		// Lay thong tin ca si
+		$array_singer_ids = $classMusic->string2array( $array_singer_ids );
+		
+		if( ! empty( $array_singer_ids ) ) $array_singers = $classMusic->getsingerbyID( $array_singer_ids );
+	
 		$a = 0;
 		foreach( $array as $row )
 		{
+			$row['singers'] = $classMusic->build_author_singer_2string( $array_singers, $row['singers'] );
+			
 			$xtpl->assign( 'CLASS', ( $a % 2 == 1 ) ? " class=\"second\"" : "" );
 			$xtpl->assign( 'ROW', $row );
 			$xtpl->parse( 'getalbum.resultdata.data.row' );
@@ -177,7 +189,7 @@ if( $nv_Request->isset_request( 'update', 'post' ) )
 	$result ? die( "OK" ) : die( "NO" );
 }
 
-$page_title = $lang_module['hot_album'];
+$page_title = $classMusic->lang('hot_album');
 
 $xtpl = new XTemplate( "hotalbum.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 $xtpl->assign( 'LANG', $lang_module );

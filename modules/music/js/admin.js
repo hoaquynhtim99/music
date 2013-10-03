@@ -87,25 +87,23 @@ function returnsonginfo1(res) {
 	return false;
 }
 
-//  ---------------------------------------
-function nv_chang_hotalbum_weight( id )
-{
-   var nv_timer = nv_settimeout_disable( 'weight' + id, 5000 );
-   var newpos = document.getElementById( 'weight' + id ).options[document.getElementById( 'weight' + id ).selectedIndex].value;
-   nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=hotalbum&changeweight=1&id=' + id + '&new=' + newpos + '&num=' + nv_randomPassword( 8 ), '', 'nv_chang_hotalbum_weight_result' );
-   return;
+// Thao tac HOT album
+function nv_chang_hotalbum_weight( id ){
+	var nv_timer = nv_settimeout_disable( 'weight' + id, 5000 );
+	var newpos = document.getElementById( 'weight' + id ).options[document.getElementById( 'weight' + id ).selectedIndex].value;
+	nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=hotalbum&changeweight=1&id=' + id + '&new=' + newpos + '&num=' + nv_randomPassword( 8 ), '', 'nv_chang_weight_result' );
+	return;
 }
-
-//  ---------------------------------------
-
-function nv_chang_hotalbum_weight_result( res )
-{
-   if ( res != 'OK' )
-   {
-      alert( nv_is_change_act_confirm[2] );
-   }
-   clearTimeout( nv_timer );
-   window.location.href = window.location.href;
+function nv_update_hot_album(stt,id){
+	nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=hotalbum&update=1&id=' + id + '&stt=' + stt + '&num=' + nv_randomPassword( 8 ), '', 'nv_update_hot_album_result' );
+	return;
+}
+function nv_update_hot_album_result( res ){
+	if ( res != 'OK' ){
+		alert( nv_is_change_act_confirm[2] );
+	}else{
+	   window.location.href = window.location.href;
+	}
    return;
 }
 
@@ -147,23 +145,6 @@ function nv_change_vcat_weight_result( res )
    return;
 }
 
-// Cap nhat lai album HOT
-function nv_update_hot_album(stt,id)
-{
-   nv_ajax( "post", script_name, nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=hotalbum&update=1&id=' + id + '&stt=' + stt + '&num=' + nv_randomPassword( 8 ), '', 'nv_update_hot_album_result' );
-   return;
-}
-function nv_update_hot_album_result( res )
-{
-	if ( res != 'OK' )
-	{
-		alert( nv_is_change_act_confirm[2] );
-	}else{
-	   window.location.href = window.location.href;
-	}
-   return;
-}
-
 // Xoa chu de bai hat
 function nv_delete_category( id, where ){
 	if ( confirm( nv_is_del_confirm[0] ) ){
@@ -197,6 +178,14 @@ function nv_change_status_list_result( res ){
 	if( res != 'OK' ){
 		alert( nv_is_change_act_confirm[2] );
 	}
+	window.location.href = window.location.href;
+	return;
+}
+function nv_chang_weight_result( res ){
+	if ( res != 'OK' ){
+		alert( nv_is_change_act_confirm[2] );
+	}
+	clearTimeout( nv_timer );
 	window.location.href = window.location.href;
 	return;
 }
