@@ -569,6 +569,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"id" => $row['id'],
 		"theloai" => $row['theloai'] . "," . $row['listcat'],
 		"title" => $row['tenthat'],
+		"link" => $mainURL . "=" . $classMusic->setting['alias_listen_song'] . "/" . $row['ten'] . "-" . $row['id'],
 		"album" => $row['album'],
 		"singers" => $row['casi'],
 		"authors" => $row['nhacsi'],

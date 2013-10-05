@@ -9,6 +9,9 @@
 
 if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
+$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
+$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
+
 // Lay album tu ten
 function getalbumbyNAME( $name )
 {
@@ -24,7 +27,7 @@ function getalbumbyNAME( $name )
 // Xuat duong dan day du
 function outputURL( $server, $inputurl )
 {
-	global $module_name, $setting;
+	global $module_name, $classMusic;
 	$output = "";
 	if( $server == 0 )
 	{
@@ -32,7 +35,7 @@ function outputURL( $server, $inputurl )
 	}
 	elseif( $server == 1 )
 	{
-		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $inputurl;
+		$output = NV_BASE_SITEURL . NV_UPLOADS_DIR . "/" . $module_name . "/" . $classMusic->setting['root_contain'] . "/" . $inputurl;
 	}
 	else
 	{
@@ -47,7 +50,7 @@ function outputURL( $server, $inputurl )
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $classMusic->setting['del_cache_time_out'] ) and $classMusic->setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
@@ -91,7 +94,7 @@ function outputURL( $server, $inputurl )
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $classMusic->setting['del_cache_time_out'] ) and $classMusic->setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
@@ -138,7 +141,7 @@ function outputURL( $server, $inputurl )
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $classMusic->setting['del_cache_time_out'] ) and $classMusic->setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
@@ -184,7 +187,7 @@ function outputURL( $server, $inputurl )
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $classMusic->setting['del_cache_time_out'] ) and $classMusic->setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
@@ -233,7 +236,7 @@ function outputURL( $server, $inputurl )
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $classMusic->setting['del_cache_time_out'] ) and $classMusic->setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}
@@ -270,7 +273,7 @@ function outputURL( $server, $inputurl )
 
 					if( file_exists( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) )
 					{
-						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $setting['del_cache_time_out'] ) and $setting['del_cache_time_out'] != 0 )
+						if( ( ( NV_CURRENTTIME - filemtime( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file ) ) > $classMusic->setting['del_cache_time_out'] ) and $classMusic->setting['del_cache_time_out'] != 0 )
 						{
 							nv_deletefile( NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . $cache_file );
 						}

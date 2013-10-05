@@ -68,7 +68,7 @@ $(document).ready(function(){
 				<td class="center">
 					<input type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
 				</td>
-				<td>{ROW.title}</td>
+				<td><a href="{ROW.link}" onclick="this.target='_blank'">{ROW.title}</a></td>
 				<td>{ROW.singers}</td>
 				<td>{ROW.authors}</td>
 				<td>{ROW.album}</td>

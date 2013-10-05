@@ -9,9 +9,15 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-// Get song id
-$id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
-$alias = isset( $array_op[2] ) ? $array_op[2] : "";
+$id = 0;
+$alias = '';
+
+if( isset( $array_op[1] ) )
+{
+	$id = explode( "-", $array_op[1] );
+	$id = intval( end( $id ) );
+	$alias = preg_replace( "/\-([0-9]+)$/", "", $array_op[1] );
+}
 
 if( ! $id ) module_info_die();
 
@@ -29,7 +35,7 @@ if( $check_exit != 1 or $db->unfixdb( $row['ten'] ) != $alias )
 updateHIT_VIEW( $id, '', false );
 
 // Global data
-$category = get_category();
+$category = $classMusic->get_category();
 
 // Info user
 $name = ( defined( 'NV_IS_USER' ) ) ? $user_info['username'] : "";

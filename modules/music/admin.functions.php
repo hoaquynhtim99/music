@@ -25,15 +25,15 @@ $submenu['video_category'] = $lang_module['sub_videocategory'];
 $submenu['utilities'] = $lang_module['utilities'];
 $submenu['globalsetting'] = $lang_module['set_global'];
 
-$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'hotalbum', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities' );
+$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'hotalbum', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities', 'setting-alias' );
 
 define( 'NV_IS_MUSIC_ADMIN', true );
-
-$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
-$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
 
 // Class cua module
 require_once( NV_ROOTDIR . "/modules/" . $module_file . "/global.class.php" );
 $classMusic = new nv_mod_music();
+
+$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
+$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
 
 ?>

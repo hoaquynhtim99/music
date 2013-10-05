@@ -9,7 +9,7 @@
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$page_title = $lang_module['set_global'];
+$page_title = $classMusic->lang('set_global');
 
 $xtpl = new XTemplate( "global_setting.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 $xtpl->assign( 'LANG', $lang_module );
@@ -19,16 +19,23 @@ $array = array();
 
 // Cau hinh FTP
 $array[] = array(
-	"title" => $lang_module['ftpsetting'],
+	"title" => $classMusic->lang('ftpsetting'),
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ftpsetting",
-	"guide" => $lang_module['guide_ftpsetting']
+	"guide" => $classMusic->lang('guide_ftpsetting')
+);
+
+// Cau hinh lien ket tinh
+$array[] = array(
+	"title" => $classMusic->lang('setting_alias'),
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting-alias",
+	"guide" => ""
 );
 
 // Cau hinh chinh cua module
 $array[] = array(
-	"title" => $lang_module['music_setting'],
+	"title" => $classMusic->lang('music_setting'),
 	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=setting",
-	"guide" => $lang_module['guide_setting']
+	"guide" => $classMusic->lang('guide_setting')
 );
 
 $i = 1;

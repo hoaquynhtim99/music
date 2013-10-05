@@ -171,6 +171,13 @@ $lang_module['select'] = "Chọn";
 $lang_module['select_category'] = "Chọn thể loại";
 $lang_module['setting_num_blocktab'] = "Block tabs: Số bài hát/Trang";
 $lang_module['setting_description'] = "Mô tả module";
+$lang_module['setting_alias'] = "Cấu hình liên kết tĩnh";
+$lang_module['setting_alias_note'] = "Phần này là phần cấu hình quan trọng cho hệ thống và chúng tôi khuyến cáo bạn chỉ nên thay đổi chúng một lần duy nhất, nó ảnh hưởng rất nhiều đến người dùng, do vậy bạn cần phải cân nhắc kỹ trước khi thực hiện. Các giá trị bên dưới đây là tên thay thế tương ứng cho tên mặc định của các function trong module. Nếu bạn không hiểu gì về vấn đề này, đơn giản hãy để chúng mặc định";
+$lang_module['setting_alias_viewsong'] = "Nghe một bài hát";
+$lang_module['setting_alias_viewvideoclip'] = "Xem một videoclip";
+$lang_module['setting_alias_viewalbum'] = "Nghe một album";
+$lang_module['setting_alias_error'] = "Bạn chưa nhập một trong số các giá trị bên dưới hoặc giá trị không hợp lệ, giá trị nhập vào chỉ bao gồm chữ cái, số và dấu -";
+$lang_module['setting_alias_error_exists'] = "Trong các giá trị bạn đã nhập, có giá trị trùng lặp, điều đó là không thể, bạn cần chọn giá trị khác";
 
 $lang_module['singer'] = "Ca sĩ";
 $lang_module['singer_new'] = "Nhập nhanh tên ca sĩ";

@@ -22,7 +22,7 @@ $globaldata = array();
 
 if( $where == 'song' )
 {
-	$song = getsongbyID( $id );
+	$song = $classMusic->getsongbyID( $id );
 	if( $db->unfixdb( $song['ten'] ) != $name )
 	{
 		module_info_die();
