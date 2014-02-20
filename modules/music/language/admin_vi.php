@@ -142,10 +142,6 @@ $lang_module['gift_error_body'] = "Chưa có lời nhắn kìa";
 $lang_module['info'] = "Thông tin";
 $lang_module['is_official'] = "Chính thức";
 
-$lang_module['hot_album'] = "Album HOT";
-$lang_module['hot_album_select'] = "Chọn một Album HOT";
-$lang_module['hot_album_add'] = "chọn album";
-
 $lang_module['fillin'] = "Điền thông tin";
 $lang_module['link'] = "Đường dẫn";
 $lang_module['list_album'] = "Danh sách các album";
@@ -226,7 +222,6 @@ $lang_module['sub_add_album'] = "Thêm album";
 $lang_module['sub_edit_album'] = "Sửa album";
 $lang_module['sub_addsong'] = "Thêm bài hát";
 $lang_module['sub_addlistsong'] = "Thêm nhiều bài hát";
-$lang_module['sub_hotalbum'] = "HOT Album";
 $lang_module['sub_comment'] = "Quản lý bình luận";
 $lang_module['sub_commentsong'] = "Bình luận bài hát";
 $lang_module['sub_commentvideo'] = "Bình luận videoclip";
@@ -298,6 +293,8 @@ $lang_module['getaid_title'] = "Lấy album";
 $lang_module['getsingerid_title'] = "Tìm và thêm ca sĩ";
 $lang_module['getauthorid_title'] = "Tìm và thêm nhạc sĩ";
 $lang_module['getsongid_title'] = "Tìm và thêm bài hát";
+$lang_module['getvideoid_title'] = "Tìm và thêm videoclip";
+$lang_module['getalbumid_title'] = "Tìm và thêm album";
 
 $lang_module['cat_lits'] = "Danh sách thể loại bài hát";
 $lang_module['cat_edit'] = "Sửa thể loại bài hát";
@@ -388,5 +385,11 @@ $lang_module['tip_video_title'] = "Nhập tên cho videoclip, nên viết hoa k�
 $lang_module['tip_video_singer'] = "Bạn có thể chọn một hoặc nhiều ca sĩ cho videoclip, các ca sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_video_author'] = "Bạn có thể chọn một hoặc nhiều nhạc sĩ cho videoclip, các nhạc sĩ hiển thị bên dưới, nhấn giữ và kéo thả để sắp xếp vị trí theo ý của bạn";
 $lang_module['tip_user'] = "Nhập tên người đăng, khuyến cáo nên nhập tên đăng nhập của thành viên";
+
+$lang_module['home_setting'] = "Quản lý dữ liệu trang chủ";
+$lang_module['home_setting_note'] = "Nếu trên trang chủ của module, bạn chỉ muốn hiển thị các album và videoclip với thứ tự sắp xếp theo ý muốn hãy sử dụng khu vực này. Dể sử dụng dữ liệu tại khu vực này bạn cần thêm block ngoài site, sau đó chọn kiểu hiển thị dữ liệu trong cấu hình trang chủ. Lưu ý: Nếu bạn chưa cấu hình hoặc cấu hình không đủ số lượng album hoặc videoclip thì có thể số lượng lấy được sẽ ít hơn với số lượng thiết đặt lúc thêm block";
+$lang_module['home_setting_order_note'] = "Ghi chú: Kéo thả các album hoặc video để sắp xếp thứ tự";
+$lang_module['home_setting_select_one'] = "Chọn một";
+$lang_module['home_setting_select_more'] = "Chọn nhiều";
 
 ?>

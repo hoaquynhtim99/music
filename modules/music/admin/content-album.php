@@ -191,8 +191,6 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		}
 		else
 		{
-			$classMusic->fix_singer( $array['casi'] );
-
 			$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_album` VALUES (
 				NULL, 
 				" . $db->dbescape( $array['name'] ) . ", 
@@ -214,7 +212,10 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 			if( $newid )
 			{
 				$db->sql_freeresult();
-
+				
+				// Cap nhat ca si
+				$classMusic->fix_singer( $array['casi'] );
+				
 				// Cap nhat album cho cac bai hat
 				if( ! empty( $array['listsong'] ) )
 				{

@@ -13,7 +13,6 @@ $sql_drop_module = array();
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_ads`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album`";
-$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_category`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_album`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_comment_song`";
@@ -23,6 +22,7 @@ $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $la
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_lyric`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_playlist`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting`";
+$sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting_home`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_video_category`";
 $sql_drop_module[] = "DROP TABLE IF EXISTS `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_singer`";
@@ -88,12 +88,12 @@ $sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "
   UNIQUE KEY `title` (`title`)
 ) ENGINE=MyISAM";
 
-// Album HOT
-$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_album_hot` (
-  `id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  `albumid` mediumint( 8 ) NOT NULL DEFAULT '0' COMMENT 'ID album',
-  `stt` mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT '' COMMENT 'Thứ tự',
-  PRIMARY KEY (`id`)
+// Home Setting
+$sql_create_module[] = "CREATE TABLE `" . $db_config['prefix'] . "_" . $lang . "_" . $module_data . "_setting_home` (
+  `object_type` smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Loại: 0 - Album, 1 - Videoclip',
+  `object_id` mediumint(8) NOT NULL DEFAULT '0' COMMENT 'ID album hoặc video',
+  `weight` smallint(4) unsigned NOT NULL DEFAULT '1' COMMENT 'Thứ tự',
+  UNIQUE KEY `object` (`object_type`, `object_id`)
 ) ENGINE=MyISAM";
 
 // Quang cao tren player

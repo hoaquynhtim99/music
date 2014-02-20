@@ -463,7 +463,7 @@ class nv_mod_music
 	}
 	
 	// Lay video tu id
-	public function getvideobyID( $id )
+	public function getvideobyID( $id, $sort = false )
 	{
 		$videoclips = array();
 		
@@ -475,6 +475,8 @@ class nv_mod_music
 			{
 				$videoclips[$row['id']] = $row;
 			}
+			
+			if( $sort === true ) $videoclips = $this->sortArrayFromArrayKeys( $id, $videoclips );
 		}
 		else
 		{
@@ -486,7 +488,7 @@ class nv_mod_music
 	}
 	
 	// Lay album tu id
-	public function getalbumbyID( $id )
+	public function getalbumbyID( $id, $sort = false )
 	{
 		$albums = array();
 		
@@ -498,6 +500,8 @@ class nv_mod_music
 			{
 				$albums[$row['id']] = $row;
 			}
+			
+			if( $sort === true ) $albums = $this->sortArrayFromArrayKeys( $id, $albums );
 		}
 		else
 		{
