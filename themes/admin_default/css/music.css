@@ -13,6 +13,7 @@ td.strong{font-weight:bold}
 .aright{text-align: right!important}
 .fixbottomtable{margin:0px 0px 3px 0px!important}
 a.nounderline{text-decoration:none!important}
+.hide{display:none}
 
 /* TABLE */
 table.tab1{
