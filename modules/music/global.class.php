@@ -11,7 +11,6 @@ if ( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
 
 class nv_mod_music
 {
-	private $lang_data = '';
 	private $mod_data = '';
 	private $mod_name = '';
 	private $mod_file = '';
@@ -24,18 +23,25 @@ class nv_mod_music
 	public $setting = null;
 	
 	private $base_site_url = null;
+	private $base_admin_url = null;
+	
 	private $root_dir = null;
 	private $upload_dir = null;
 	private $currenttime = null;
 	
-	private $language = array();
-	private $glanguage = array();
+	public $language = array();
+	public $glanguage = array();
 	
 	private $js_data = array();
+	
+	private $lang_variable = null;
+	private $lang_data = null;
+	private $name_variable = null;
+	private $op_variable = null;
 
-	public function __construct( $d = "", $n = "", $f = "", $lang = "" )
+	public function __construct( $d = "", $n = "", $f = "", $lang = "", $get_lang = false )
 	{
-		global $module_data, $module_name, $module_file, $db_config, $db, $lang_module, $lang_global;
+		global $module_data, $module_name, $module_file, $db_config, $db, $lang_global;
 		
 		// Ten CSDL
 		if( ! empty( $d ) ) $this->mod_data = $d;
@@ -53,6 +59,10 @@ class nv_mod_music
 		if( ! empty( $lang ) ) $this->lang_data = $lang;
 		else $this->lang_data = NV_LANG_DATA;
 		
+		$this->lang_variable = NV_LANG_VARIABLE;
+		$this->name_variable = NV_NAME_VARIABLE;
+		$this->op_variable = NV_OP_VARIABLE;
+		
 		$this->db_prefix = $db_config['prefix'];
 		$this->db_prefix_lang = $this->db_prefix . '_' . $this->lang_data;
 		$this->table_prefix = $this->db_prefix_lang . '_' . $this->mod_data;
@@ -61,11 +71,31 @@ class nv_mod_music
 		$this->setting = $this->get_setting();
 		
 		$this->base_site_url = NV_BASE_SITEURL;
+		$this->base_admin_url = NV_BASE_ADMINURL;
 		$this->root_dir = NV_ROOTDIR;
 		$this->upload_dir = NV_UPLOADS_DIR;
+		$this->currenttime = NV_CURRENTTIME;
+		
+		// Ngon ngu
+		if( $get_lang === false )
+		{
+			global $lang_module;
+		}
+		else
+		{
+			$file_lang_path = $this->root_dir . "/modules/" . $this->mod_file . "/language/";
+			$file_lang_name = defined( 'NV_ADMIN' ) ? "admin_" . $this->lang_data . ".php" : $this->lang_data . ".php";
+			if( is_file( $file_lang_path . $file_lang_name ) )
+			{
+				include( $file_lang_path . $file_lang_name );
+			}
+			else
+			{
+				$lang_module = array();
+			}
+		}
 		$this->language = $lang_module;
 		$this->glanguage = $lang_global;
-		$this->currenttime = NV_CURRENTTIME;
 		
 		$this->js_data['jquery.ui.core'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.core.css\" rel=\"stylesheet\" />\n";
 		$this->js_data['jquery.ui.core'][] = "<link type=\"text/css\" href=\"" . $this->base_site_url . "js/ui/jquery.ui.theme.css\" rel=\"stylesheet\" />\n";
@@ -81,6 +111,9 @@ class nv_mod_music
 		$this->js_data['shadowbox'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "js/shadowbox/shadowbox.js\"></script>\n";
 		$this->js_data['shadowbox'][] = "<link rel=\"stylesheet\" type=\"text/css\" href=\"" . $this->base_site_url . "js/shadowbox/shadowbox.css\" />\n";
 		$this->js_data['shadowbox'][] = "<script type=\"text/javascript\">Shadowbox.init();</script>\n";
+		
+		$this->js_data['root_admin'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/admin.js\"></script>\n";
+		$this->js_data['root_site'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/user.js\"></script>\n";
 	}
 	
 	private function handle_error( $messgae = '' )
@@ -90,7 +123,7 @@ class nv_mod_music
 	
 	private function check_admin()
 	{
-		if( ! defined( 'NV_IS_MODADMIN' ) ) $this->handle_error();
+		if( ! defined( 'NV_ADMIN' ) ) $this->handle_error();
 	}
 	
 	private function nl2br( $string )
@@ -140,13 +173,8 @@ class nv_mod_music
 		return $return;
 	}
 	
-	public function callJqueryPlugin()
+	private function checkJqueryPlugin( $numargs, $arg_list )
 	{
-		global $my_head;
-		
-		$numargs = func_num_args();
-		$arg_list = func_get_args();
-		
 		$return = array();
 		for( $i = 0; $i < $numargs; $i ++ )
 		{
@@ -156,6 +184,60 @@ class nv_mod_music
 				$return[$arg_list[$i]] =  implode( "", $this->js_data[$arg_list[$i]] );
 			}
 		}
+		return $return;
+	}
+	
+	public function getLink( $lev = 1, $opval = "", $arg = array(), $encode = true, $isAdmin = false )
+	{
+		$return = array();
+		
+		// Ky tu phan giua
+		if( $encode == true )
+		{
+			$andItem = "&amp;";
+		}
+		else
+		{
+			$andItem = "&";
+		}
+		
+		// Item co ban
+		if( $isAdmin == true )
+		{
+			$this->check_admin(); // Kiem tra tu cach admin
+			$return[] = $this->base_admin_url . "index.php?" . $this->name_variable . "=" . $this->mod_name;
+		}
+		else
+		{
+			$return[] = $this->base_site_url . "index.php?" . $this->lang_variable . "=" . $this->lang_data;
+		}
+		
+		if( $lev >= 2 and $isAdmin == false )
+		{
+			$return[] = $this->name_variable . "=" . $this->mod_name;
+		}
+		
+		if( $lev >= 3 and ! empty( $opval ) )
+		{
+			$return[] = $this->op_variable . "=" . ( string ) $opval;
+		}
+		
+		if( ! empty( $arg ) )
+		{
+			foreach( $arg as $key => $val )
+			{
+				$return[] = ( string ) $key . "=" . ( string ) $val;
+			}
+		}
+		
+		return implode( $andItem, $return );
+	}
+	
+	public function callJqueryPlugin()
+	{
+		global $my_head;
+		
+		$return = $this->checkJqueryPlugin( func_num_args(), func_get_args() );
 		
 		if( ! empty( $return ) )
 		{
@@ -168,6 +250,12 @@ class nv_mod_music
 				$my_head .= implode( "", $return );
 			}
 		}
+	}
+	
+	public function getJqueryPlugin()
+	{
+		$return = $this->checkJqueryPlugin( func_num_args(), func_get_args() );
+		return implode( "", $return );
 	}
 	
 	public function lang( $key )

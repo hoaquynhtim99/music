@@ -392,4 +392,8 @@ $lang_module['home_setting_order_note'] = "Ghi chú: Kéo thả các album hoặ
 $lang_module['home_setting_select_one'] = "Chọn một";
 $lang_module['home_setting_select_more'] = "Chọn nhiều";
 
+// Block album language
+$lang_module['block_album_display_type'] = "Kiểu hiển thị";
+$lang_module['block_album_display_type_0'] = "Album dạng menu dọc đơn giản";
+
 ?>
