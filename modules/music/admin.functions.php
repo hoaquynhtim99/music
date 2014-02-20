@@ -33,7 +33,4 @@ $submenu['globalsetting'] = $classMusic->lang('set_global');
 
 $allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities', 'setting-alias', 'setting-home' );
 
-$mainURL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . '&amp;' . NV_OP_VARIABLE;
-$main_header_URL = NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . '&' . NV_OP_VARIABLE;
-
 ?>
