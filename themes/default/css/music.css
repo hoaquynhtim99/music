@@ -60,6 +60,12 @@ textarea.txt-full{width:98%!important}
 .musictable .comment-left{width:60px}
 .mtcomment td{border-bottom:1px #dadada solid;vertical-align:top;padding:8px 0}
 
+/* LIST */
+ul.music-list-item{padding:0;margin:0;list-style:none}
+ul.music-list-item li{padding:7px 0;border-bottom:1px #dadada solid}
+ul.music-list-item li h3{font-size:inherit;padding:0;margin:0}
+ul.music-list-item li.first{border-top:1px #dadada solid}
+
 /* ICON PACK */
 .miconiblock{line-height:16px;display:inline-block}
 .musicicon{padding-left:16px;background-repeat:no-repeat}
