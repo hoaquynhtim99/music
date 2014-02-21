@@ -13,10 +13,6 @@ define( 'NV_IS_MOD_MUSIC', true );
 
 require_once NV_ROOTDIR . "/modules/" . $module_file . '/global.class.php';
 require_once NV_ROOTDIR . "/modules/" . $module_file . '/global.functions.php';
-require_once NV_ROOTDIR . "/modules/" . $module_file . '/data.functions.php';
-
-// Menu site
-$nv_vertical_menu = nv_music_global_menu( $module_name, $lang_module );
 
 $classMusic = new nv_mod_music();
 

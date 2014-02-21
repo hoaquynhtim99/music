@@ -16,10 +16,6 @@ $lang_translator['copyright'] = "@Copyright (C) 2011 Freeware";
 $lang_translator['info'] = "";
 $lang_translator['langtype'] = "lang_module";
 
-$lang_module['menu1'] = "Nhạc";
-$lang_module['menu3'] = "Bài hát của bạn";
-$lang_module['menu4'] = "Playlist của bạn";
-
 $lang_module['album'] = "Album";
 $lang_module['author'] = "Sáng tác";
 $lang_module['author_1'] = "Nhạc sĩ";
@@ -313,5 +309,10 @@ $lang_module['search_adv'] = "Nâng cao";
 $lang_module['search_adv_search_with'] = "Tìm theo";
 $lang_module['search_adv_search_name'] = "Tên";
 $lang_module['search_adv_info_use'] = "Nếu kết quả không như mong đợi hãy dùng chức năng tìm kiếm nâng cao";
+
+$lang_module['rss_music'] = "Thể loại âm nhạc";
+$lang_module['rss_video'] = "Thể loại video";
+$lang_module['rss_gift'] = "Quà tặng âm nhạc";
+$lang_module['rss_play_list'] = "Playlist";
 
 ?>
