@@ -13,7 +13,7 @@
 </tr>
 <tr id="albums-manual" class="hide">
 	<td class="atop">
-		<p>{LANG.album}</p>
+		<p>{LANG.block_album_select_album}</p>
 		<p><a href="javascript:void(0);" id="addonealbum" class="nounderline add-icon">{LANG.home_setting_select_one}</a></p>
 		<p><a href="javascript:void(0);" id="addlistalbum" class="nounderline list-icon">{LANG.home_setting_select_more}</a></p>
 	</td>
@@ -28,6 +28,38 @@
 		</ul>
 	</td>
 </tr>
+<tr>
+	<td>{LANG.block_album_str_length}</td>
+	<td>
+		<input name="config_str_length" class="music-input txt-half" value="{DATA.str_length}"/>
+	</td>
+</tr>
+<tr id="albums-cappos">
+	<td>{LANG.block_album_cap_pos}</td>
+	<td>
+		<select name="config_cap_position" class="music-input">	
+			<!-- BEGIN: cap_position --><option value="{CAP_POSITION.key}"{CAP_POSITION.selected}>{CAP_POSITION.title}</option><!-- END: cap_position -->
+		</select>
+	</td>
+</tr>
+<tr id="albums-nums">
+	<td>{LANG.block_album_num_albums}</td>
+	<td>
+		<input name="config_num_albums" class="music-input col-number" value="{DATA.num_albums}"/>
+	</td>
+</tr>
+<tr id="albums-cols">
+	<td>{LANG.block_album_num_cols}</td>
+	<td>
+		<input name="config_num_cols" class="music-input col-number" value="{DATA.num_cols}"/>
+	</td>
+</tr>
+<tr id="albums-size">
+	<td>{LANG.block_album_image_size}</td>
+	<td>
+		<input name="config_image_size" class="music-input col-number" value="{DATA.image_size}"/>
+	</td>
+</tr>
 <tr style=display:none>
 	<td></td>
 	<td>
@@ -36,6 +68,28 @@
 			var type = $('select[name="config_display_type"]').val();
 			if( type == '0' ){
 				$('#albums-manual').show();
+				$('#albums-cappos').hide();
+				$('#albums-nums').hide();
+				$('#albums-cols').hide();
+				$('#albums-size').hide();
+			}else if( type == '1' ){
+				$('#albums-manual').hide();
+				$('#albums-cappos').show();
+				$('#albums-nums').hide();
+				$('#albums-cols').show();
+				$('#albums-size').show();
+			}else if( type == '2' ){
+				$('#albums-manual').hide();
+				$('#albums-cappos').hide();
+				$('#albums-nums').hide();
+				$('#albums-cols').hide();
+				$('#albums-size').hide();
+			}else if( type == '3' ){
+				$('#albums-manual').hide();
+				$('#albums-cappos').hide();
+				$('#albums-nums').show();
+				$('#albums-cols').hide();
+				$('#albums-size').hide();
 			}
 		}
 		$(document).ready(function(){

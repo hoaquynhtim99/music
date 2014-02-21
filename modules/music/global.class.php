@@ -41,7 +41,7 @@ class nv_mod_music
 
 	public function __construct( $d = "", $n = "", $f = "", $lang = "", $get_lang = false )
 	{
-		global $module_data, $module_name, $module_file, $db_config, $db, $lang_global;
+		global $module_data, $module_name, $module_file, $db_config, $db, $lang_global, $my_head;
 		
 		// Ten CSDL
 		if( ! empty( $d ) ) $this->mod_data = $d;
@@ -114,6 +114,21 @@ class nv_mod_music
 		
 		$this->js_data['root_admin'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/admin.js\"></script>\n";
 		$this->js_data['root_site'][] = "<script type=\"text/javascript\" src=\"" . $this->base_site_url . "modules/" . $this->mod_file . "/js/user.js\"></script>\n";
+		
+		// Khoi tao JS module neu khong phai la admin
+		if( ! defined( "NV_ADMIN" ) )
+		{
+			$my_head .= "<script type=\"text/javascript\">";
+			$my_head .= "NVMS = {};";
+			$my_head .= "NVMS.data = {};";
+			$my_head .= "NVMS.data.siteRoot = '" . $this->base_site_url . "';";
+			$my_head .= "NVMS.data.langVar = '" . $this->lang_variable . "';";
+			$my_head .= "NVMS.data.langSite = '" . $this->lang_data . "';";
+			$my_head .= "NVMS.data.nameVar = '" . $this->name_variable . "';";
+			$my_head .= "NVMS.data.opVar = '" . $this->op_variable . "';";
+			$my_head .= "NVMS.data.module = '" . $this->mod_name . "';";
+			$my_head .= "</script>\n";
+		}
 	}
 	
 	private function handle_error( $messgae = '' )

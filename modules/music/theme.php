@@ -9,17 +9,15 @@
 
 if( ! defined( 'NV_IS_MOD_MUSIC' ) ) die( 'Stop!!!' );
 
-global $my_head;
-if( file_exists( NV_ROOTDIR . "/themes/" . $module_info['template'] . "/js/music/music.js" ) )
+if( file_exists( NV_ROOTDIR . "/themes/" . $module_info['template'] . "/js/module.music.js" ) )
 {
-	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/js/music/music.js\"></script>\n";
+	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/js/module.music.js\"></script>\n";
 }
 else
 {
-	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "themes/default/js/music/music.js\"></script>\n";
+	$my_head .= "<script type=\"text/javascript\" src=\"" . NV_BASE_SITEURL . "modules/" . $module_file . "/js/music.js\"></script>\n";
 }
 
-// Giao dien
 // Nghe mot bai hat
 function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $array_video, $array_singer )
 {
@@ -176,7 +174,6 @@ function nv_music_listenone( $gdata, $sdata, $cdata, $ldata, $array_album, $arra
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Nghe playlist cua thanh vien
 function nv_music_listen_playlist( $gdata, $sdata )
 {
@@ -212,7 +209,6 @@ function nv_music_listen_playlist( $gdata, $sdata )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Danh sach cac album
 function nv_music_album( $g_array, $array )
 {
@@ -252,7 +248,6 @@ function nv_music_album( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Tat cac cac playlist
 function nv_music_allplaylist( $g_array, $array )
 {
@@ -285,7 +280,6 @@ function nv_music_allplaylist( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Hien thi binh luan
 function nv_music_showcomment( $g_array, $array )
 {
@@ -327,7 +321,6 @@ function nv_music_showcomment( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Quan ly playlist cua thanh vien
 function nv_music_creatalbum( $g_array, $array )
 {
@@ -374,7 +367,6 @@ function nv_music_creatalbum( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Sua playlist
 function nv_music_editplaylist( $g_array, $array, $row )
 {
@@ -405,7 +397,6 @@ function nv_music_editplaylist( $g_array, $array, $row )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Nghe album
 function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer )
 {
@@ -507,7 +498,6 @@ function nv_music_listenlist( $g_array, $album_array, $song_array, $array_album,
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Quan ly bai hat
 function nv_music_managersong( $g_array, $array_song, $data_song )
 {
@@ -572,7 +562,6 @@ function nv_music_managersong( $g_array, $array_song, $data_song )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Nghe gio nhac
 function nv_music_playlist( $g_array, $array )
 {
@@ -608,7 +597,6 @@ function nv_music_playlist( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Tiem kiem bai hat
 function nv_music_search( $array_song, $array_album, $array_video, $array_singer, $array_playlist, $query_search, $all_page, $ts, $base_url )
 {
@@ -786,7 +774,6 @@ function nv_music_search( $array_song, $array_album, $array_video, $array_singer
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Tim kiem video
 function nv_music_searchvideo( $g_array, $array )
 {
@@ -814,7 +801,6 @@ function nv_music_searchvideo( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Gui email bai hat
 function nv_sendmail_themme( $sendmail )
 {
@@ -859,7 +845,6 @@ function nv_sendmail_themme( $sendmail )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Hien thi danh sach cac bai hat trong playlist cookie
 function nv_music_showplaylist( $array )
 {
@@ -879,7 +864,6 @@ function nv_music_showplaylist( $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Tat cac cac bai hat
 function nv_music_song( $g_array, $array )
 {
@@ -925,7 +909,6 @@ function nv_music_song( $g_array, $array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Upload bai hat
 function nv_music_upload( $g_array )
 {
@@ -958,7 +941,6 @@ function nv_music_upload( $g_array )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Gui email video
 function nv_sendmail_video_themme( $sendmail )
 {
@@ -1003,7 +985,7 @@ function nv_sendmail_video_themme( $sendmail )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien trang chu video
+// Trang chu video
 function nv_music_video( $category, $array_new, $array_hot )
 {
 	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $lang_global, $downURL, $mainURL;
@@ -1046,7 +1028,6 @@ function nv_music_video( $category, $array_new, $array_hot )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Xem video
 function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $array_singer )
 {
@@ -1139,7 +1120,6 @@ function nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $arra
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Danh sach qua tang am nhac
 function nv_music_gift( $array, $generate_page )
 {
@@ -1172,71 +1152,6 @@ function nv_music_gift( $array, $generate_page )
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
-// Trang chu module
-function nv_music_main( $array, $array_album, $first_album_data )
-{
-	global $global_config, $lang_module, $lang_global, $module_info, $module_name, $module_file, $setting, $downURL, $op, $main_header_URL, $nv_Request, $array_op;
-
-	$xtpl = new XTemplate( "main.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
-	$xtpl->assign( 'LANG', $lang_module );
-	$xtpl->assign( 'GLANG', $lang_global );
-	$xtpl->assign( 'DATA', $array );
-	$xtpl->assign( 'URL_DOWN', $downURL );
-	$xtpl->assign( 'URL_LOAD', $main_header_URL . "=" . ( empty( $array_op ) ? $op : implode( "/", $array_op ) ) . "&load_main_song=" );
-
-	if( empty( $setting['type_main'] ) )
-	{
-		$xtpl->parse( 'main.type_tab1' );
-	}
-	else
-	{
-		$xtpl->parse( 'main.type_tab2' );
-	}
-	
-	$i = 1;
-	$j = 0;
-	if( ! empty( $array_album ) )
-	{
-		foreach( $array_album as $album )
-		{
-			$album['tname1'] = nv_clean60( $album['tname'], 30 );
-			$album['casi1'] = nv_clean60( $album['casi'], 30 );
-			$album['tname2'] = nv_clean60( $album['tname'], 40 );
-			$album['casi2'] = nv_clean60( $album['casi'], 40 );
-
-			$xtpl->assign( 'ALBUM', $album );
-
-			if( ( $i++ ) == 1 )
-			{
-				foreach( $first_album_data as $song )
-				{
-					$song['tenthat1'] = nv_clean60( $song['tenthat'], 23 );
-					$xtpl->assign( 'SONG', $song );
-					$xtpl->parse( 'main.data.first.song' );
-				}
-				$xtpl->parse( 'main.data.first' );
-			}
-			else
-			{
-				if( ++$j % 4 == 0 ) $xtpl->parse( 'main.data.old.break' );
-				$xtpl->parse( 'main.data.old' );
-			}
-		}
-
-		$xtpl->parse( 'main.data' );
-		if( $nv_Request->isset_request( 'load_main_song', 'get' ) ) die( $xtpl->text( 'main.data' ) );
-	}
-	elseif( $nv_Request->isset_request( 'load_main_song', 'get' ) )
-	{
-		die( "" );
-	}
-
-	$xtpl->parse( 'main' );
-	return $xtpl->text( 'main' );
-}
-
-// Giao dien
 // Hien thi bieu tuong cam xuc
 function nv_emotion_theme()
 {
@@ -1265,7 +1180,6 @@ function nv_emotion_theme()
 	return $xtpl->text( 'main' );
 }
 
-// Giao dien
 // Tim kiem nhanh
 function nv_quicksearch_theme( $q, $array_singer, $array_song, $array_album, $array_video, $array_playlist )
 {

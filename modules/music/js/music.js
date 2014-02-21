@@ -12,12 +12,10 @@ $(window).load(function() {
 	$("img").each(function(){
 		var image = $(this);
 		if(image.context.naturalWidth == 0 || image.readyState == 'uninitialized'){
-			$(image).unbind("error").attr("src", nv_siteroot + "images/logo.png");
+			$(image).unbind("error").attr("src", NVMS.data.siteRoot + "images/logo.png");
 		}
 	});
 });
-
-var NVMS = {};
 
 function Select_all(id){ document.getElementById(id).focus(); document.getElementById(id).select(); }
 
@@ -56,7 +54,7 @@ function nv_show_emotions(target){
 	if($("#"+target).css("display")=="none"){
 		$("#"+target).css("display","block");
 		if($("#"+target).html()==""){
-			nv_ajax('post', nv_siteroot + 'index.php', nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=main&loademotion=1', target, '');
+			nv_ajax('post', NVMS.data.siteRoot + 'index.php', NVMS.data.langVar + '=' + NVMS.data.langSite + '&' + NVMS.data.nameVar + '=' + NVMS.data.module + '&' + NVMS.data.opVar + '=main&loademotion=1', target, '');
 		}
 	}else{
 		$("#"+target).css("display","none");
@@ -92,7 +90,7 @@ NVMS.search.timer = null;
 NVMS.search.allowclose = true;
 
 NVMS.search.load = function(){
-	$('#msressearch').load( nv_siteroot + 'index.php?' + nv_lang_variable + '=' + nv_sitelang + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=data&quicksearch&checksess=' + NVMS.search.txtsearch.attr('accesskey') + '&q=' + encodeURIComponent( NVMS.search.q ), function(){
+	$('#msressearch').load( NVMS.data.siteRoot + 'index.php?' + NVMS.data.langVar + '=' + NVMS.data.langSite + '&' + NVMS.data.nameVar + '=' + NVMS.data.module + '&' + NVMS.data.opVar + '=data&quicksearch&checksess=' + NVMS.search.txtsearch.attr('accesskey') + '&q=' + encodeURIComponent( NVMS.search.q ), function(){
 		NVMS.search.imgloader.hide();
 		
 		if( NVMS.search.showres == false ){
@@ -102,7 +100,31 @@ NVMS.search.load = function(){
 	} );
 };
 
+NVMS.common = {
+    strCut: function () {
+        $(".msStrCut").each(function () {
+            var b = parseInt($(this).attr("strlength"));
+            var e = $(this).html();
+            var a = e.lastIndexOf("/");
+            if (a < b) {
+                b = b - a
+            }
+            if (e.length > b) {
+                var c = e.substring(0, b);
+                if (c.lastIndexOf(" ") != -1) {
+                    c = c.substring(0, c.lastIndexOf(" "))
+                } else {
+                    c = e.substring(0, a > (b + a) / 2 ? Math.floor((b + a) / 2) : a)
+                }
+                $(this).html(c + "...")
+            }
+        })
+    },
+};
+
 $(document).ready(function(){
+	NVMS.common.strCut();
+
 	// Set add song to BOX
 	$("ul.mtool a.madd").click(function(){
 		$(this).removeClass("madd").addClass("madded"); 

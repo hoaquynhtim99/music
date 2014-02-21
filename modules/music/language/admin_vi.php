@@ -395,5 +395,16 @@ $lang_module['home_setting_select_more'] = "Chọn nhiều";
 // Block album language
 $lang_module['block_album_display_type'] = "Kiểu hiển thị";
 $lang_module['block_album_display_type_0'] = "Album dạng menu dọc đơn giản";
+$lang_module['block_album_display_type_1'] = "Album theo cấu hình trang chủ, dạng lưới";
+$lang_module['block_album_display_type_2'] = "Album theo cấu hình trang chủ, dạng đơn giản";
+$lang_module['block_album_display_type_3'] = "Album có số lượt nghe lớn nhất, dạng danh sách";
+$lang_module['block_album_select_album'] = "Chọn các album để hiển thị album";
+$lang_module['block_album_str_length'] = "Số ký tự tối đa";
+$lang_module['block_album_cap_pos'] = "Vị trí của tiêu đề";
+$lang_module['block_album_cap_pos_0'] = "Nằm trong ảnh";
+$lang_module['block_album_cap_pos_1'] = "Nằm bên dưới ảnh";
+$lang_module['block_album_num_cols'] = "Số album trên một hàng";
+$lang_module['block_album_image_size'] = "Kích thước ảnh";
+$lang_module['block_album_num_albums'] = "Số album";
 
 ?>
