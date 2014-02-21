@@ -87,7 +87,6 @@ if( ! nv_function_exists( 'nv_music_block_album' ) )
 		$return['config']['str_length'] = $nv_Request->get_int( 'config_str_length', 'post', 0 );
 		$return['config']['cap_position'] = $nv_Request->get_int( 'config_cap_position', 'post', 0 );
 		$return['config']['num_cols'] = $nv_Request->get_int( 'config_num_cols', 'post', 3 );
-		$return['config']['num_rows'] = $nv_Request->get_int( 'config_num_rows', 'post', 3 );
 		$return['config']['image_size'] = $nv_Request->get_int( 'config_image_size', 'post', 128 );
 		$return['config']['num_albums'] = $nv_Request->get_int( 'config_num_albums', 'post', 10 );
 		
