@@ -13,7 +13,7 @@ $contents = "";
 $error = "";
 $comment = array();
 
-$where = filter_text_input( 'where', 'get,post', '' );
+$where = $nv_Request->get_title( 'where', 'get,post', '' );
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 if( $where == 'song' )
@@ -36,9 +36,9 @@ elseif( $where == 'video' )
 }
 else  die( 'Stop!!!' );
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` WHERE `id` = " . $id;
-$result = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $result );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . " WHERE id = " . $id;
+$result = $db->query( $sql );
+$row = $result->fetch();
 $comment['name'] = $row['name'];
 $comment['body'] = nv_br2nl( $row['body'] );
 
@@ -63,8 +63,8 @@ elseif( $where == 'video' )
 // Sua
 if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
-	$comment['name'] = filter_text_input( 'name', 'post', '', 1, 100 );
-	$comment['body'] = filter_text_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
+	$comment['name'] = nv_substr( $nv_Request->get_title( 'name', 'post', '', 1 ), 0, 100);
+	$comment['body'] = $nv_Request->get_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
 
 	if( empty( $comment['name'] ) )
 	{
@@ -77,20 +77,20 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	else
 	{
 		$array['body'] = nv_nl2br( $array['body'] );
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` SET
-			`name`=" . $db->dbescape( $comment['name'] ) . ",
-			`body`=" . $db->dbescape( $comment['body'] ) . "
-		WHERE `id` =" . $id;
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . " SET
+			name=" . $db->quote( $comment['name'] ) . ",
+			body=" . $db->quote( $comment['body'] ) . "
+		WHERE id =" . $id;
 
-		if( $db->sql_query( $sql ) )
+		if( $db->query( $sql ) )
 		{
-			$db->sql_freeresult();
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $back );
+			//$xxx->closeCursor();
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $back );
 			die();
 		}
 		else
 		{
-			$db->sql_freeresult();
+			//$xxx->closeCursor();
 			$error = $lang_module['error_save'];
 		}
 	}
@@ -153,8 +153,6 @@ $contents .= "
 	</table>
 </form>";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

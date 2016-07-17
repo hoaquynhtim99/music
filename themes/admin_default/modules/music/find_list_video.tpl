@@ -15,7 +15,7 @@
 	</head>
 	<body>
 	<div style="padding:5px">
-	<table class="tab1">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<tr>
 				<td class="col-id center">ID</td>
@@ -28,9 +28,9 @@
 	</table>
 	<div id="data">
 		<!-- BEGIN: data -->
-		<table class="tab1">
+		<table class="table table-striped table-bordered table-hover">
+			<tbody>
 			<!-- BEGIN: row -->
-			<tbody{CLASS}>
 				<tr>
 					<td class="center col-id"><strong>{ROW.id}</strong></td>
 					<td>{ROW.title}</td>
@@ -38,17 +38,17 @@
 					<td class="col-sathor">{ROW.authors}</td>
 					<td class="center col-feature"><input type="checkbox" name="videoid" value="{ROW.id}"{ROW.checked} /></td>
 				</tr>
-			</tbody>
 			<!-- END: row -->
+			</tbody>
 			<!-- BEGIN: generate_page -->
 			<tbody>
 				<tr>
-					<td colspan="5" class="center">
+					<td colspan="5" class="text-center">
 						<div id="loadpage">{GENERATE_PAGE}</div>
 					</td>
 				</tr>
-			</tbody>
 			<!-- END: generate_page -->
+			</tbody>
 			<tfoot>
 				<tr>
 					<td colspan="5" style="text-align:right">

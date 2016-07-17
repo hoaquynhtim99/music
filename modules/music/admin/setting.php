@@ -13,7 +13,7 @@ $page_title = $classMusic->lang('music_setting');
 
 if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
-	$array['root_contain'] = md5( filter_text_input( 'root_contain', 'post', '' ) );
+	$array['root_contain'] = md5( $nv_Request->get_title( 'root_contain', 'post', '' ) );
 	$array['who_comment'] = $nv_Request->get_int( 'who_comment', 'post', 0 );
 	$array['who_download'] = $nv_Request->get_int( 'who_download', 'post', 0 );
 	$array['auto_comment'] = $nv_Request->get_int( 'auto_comment', 'post', 0 );
@@ -29,7 +29,7 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	$array['playlist_max'] = $nv_Request->get_int( 'playlist_max', 'post', 0 );
 	$array['del_cache_time_out'] = $nv_Request->get_int( 'del_cache_time_out', 'post', 0 );
 	$array['num_blocktab'] = $nv_Request->get_int( 'num_blocktab', 'post', 0 );
-	$array['description'] = filter_text_input( 'description', 'post', '', 1, 255 );
+	$array['description'] = nv_substr( $nv_Request->get_title( 'description', 'post', '', 1 ), 0, 255);
 	$array['type_main'] = $nv_Request->get_int( 'type_main', 'post', 0 );
 
 	$array['del_cache_time_out'] = $array['del_cache_time_out'] * 60;
@@ -44,21 +44,21 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 		if( $key == "root_contain" )
 		{
 			@rename( NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $classMusic->setting['root_contain'], NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $value );
-			$query = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET char = " . $db->quote( $value ) . " WHERE key = \"" . $key . "\"  LIMIT 1 " );
 		}
 		elseif( $key == "description" )
 		{
-			$query = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `char` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET char = " . $db->quote( $value ) . " WHERE key = \"" . $key . "\"  LIMIT 1 " );
 		}
 		else
 		{
-			$query = $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_setting` SET `value` = " . $db->dbescape( $value ) . " WHERE `key` = \"" . $key . "\"  LIMIT 1 " );
+			$query = $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_setting SET value = " . $db->quote( $value ) . " WHERE key = \"" . $key . "\"  LIMIT 1 " );
 		}
 	}
 	if( $query )
 	{
-		nv_del_moduleCache( $module_name );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+		$nv_Cache->delMod( $module_name );
+		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 		die();
 	}
 	else
@@ -248,8 +248,6 @@ $contents .= "
 </div>
 </form>";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

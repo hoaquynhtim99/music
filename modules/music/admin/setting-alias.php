@@ -29,9 +29,9 @@ $error = '';
 // Lay thong tin submit
 if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
-	$array['alias_listen_song'] = filter_text_input( 'alias_listen_song', 'post', '', 1, 255 );
-	$array['alias_view_album'] = filter_text_input( 'alias_view_album', 'post', '', 1, 255 );
-	$array['alias_view_videoclip'] = filter_text_input( 'alias_view_videoclip', 'post', '', 1, 255 );
+	$array['alias_listen_song'] = nv_substr( $nv_Request->get_title( 'alias_listen_song', 'post', '', 1 ), 0, 255);
+	$array['alias_view_album'] = nv_substr( $nv_Request->get_title( 'alias_view_album', 'post', '', 1 ), 0, 255);
+	$array['alias_view_videoclip'] = nv_substr( $nv_Request->get_title( 'alias_view_videoclip', 'post', '', 1 ), 0, 255);
 
 	// Kiem tra hop le
 	foreach( $array as $key => $value )
@@ -53,19 +53,19 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	{
 		foreach( $array as $key => $value )
 		{
-			$sql = "REPLACE INTO `" . NV_PREFIXLANG . "_" . $module_data . "_setting` VALUES ('" . $key . "','" . $value . "')";
-			$db->sql_query( $sql );
+			$sql = "REPLACE INTO " . NV_PREFIXLANG . "_" . $module_data . "_setting VALUES ('" . $key . "','" . $value . "')";
+			$db->query( $sql );
 		}
 
-		nv_del_moduleCache( $module_name );
+		$nv_Cache->delMod( $module_name );
 
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 		die();
 	}
 }
 
 $xtpl = new XTemplate( "setting-alias.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
-$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'DATA', $array );
 
@@ -78,8 +78,6 @@ if( ! empty( $error ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

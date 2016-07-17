@@ -19,11 +19,11 @@ $per_page = 10;
 $base_url = $mainURL . "=" . $op;
 if( isset( $array_op[1] ) and preg_match( "/^page\-([0-9]+)$/i", $array_op[1], $m ) ) $page = intval( $m[1] );
 
-$sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS `songid`, b.ten AS `songname`, b.tenthat AS `songtitle`, b.casi AS `songsinger`, c.ten AS singeralias, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ( $page - 1 ) * $per_page ) . "," . $per_page;
+$sql = "SELECT SQL_CALC_FOUND_ROWS a.who_send, a.who_receive, a.time, a.body, b.id AS songid, b.ten AS songname, b.tenthat AS songtitle, b.casi AS songsinger, c.ten AS singeralias, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_gift AS a INNER JOIN " . NV_PREFIXLANG . "_" . $module_data . " AS b ON a.songid=b.id LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT " . ( ( $page - 1 ) * $per_page ) . "," . $per_page;
 
-$result = $db->sql_query( $sql );
-$query = $db->sql_query( "SELECT FOUND_ROWS()" );
-list( $all_page ) = $db->sql_fetchrow( $query );
+$result = $db->query( $sql );
+$query = $db->query( "SELECT FOUND_ROWS()" );
+$all_page = $query->fetchColumn();
 
 if( ( ( $page - 1 ) * $per_page ) > $all_page and $page > 1 )
 {
@@ -39,7 +39,7 @@ if( $page > 1 )
 $generate_page = nv_alias_page( $lang_module['goto'], $base_url, $all_page, $per_page, $page );
 
 $array = array();
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$row['singer'] = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 	$row['url_listen'] = $mainURL . "=listenone/" . $row['songid'] . "/" . $row['songname'];
@@ -49,8 +49,6 @@ while( $row = $db->sql_fetchrow( $result ) )
 
 $contents = nv_music_gift( $array, $generate_page );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

@@ -54,12 +54,12 @@ if( ! empty( $userid ) )
 		if( $song['userid'] != $userid ) die( 'Stop!!!' );
 		if( $nv_Request->get_int( 'ok', 'post', 0 ) == 1 )
 		{
-			$song['tenthat'] = $songdata['tenthat'] = filter_text_input( 'name', 'post', '' );
+			$song['tenthat'] = $songdata['tenthat'] = $nv_Request->get_title( 'name', 'post', '' );
 			$song['ten'] = $songdata['ten'] = change_alias( $songdata['tenthat'] . "-" . $id );
 			$song['casi'] = $songdata['casi'] = $nv_Request->get_int( 'singer', 'post', 0 );
-			$songdata['casimoi'] = filter_text_input( 'newsinger', 'post', '' );
+			$songdata['casimoi'] = $nv_Request->get_title( 'newsinger', 'post', '' );
 			$song['nhacsi'] = $songdata['nhacsi'] = $nv_Request->get_int( 'nhacsi', 'post', 0 );
-			$songdata['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '' );
+			$songdata['nhacsimoi'] = $nv_Request->get_title( 'nhacsimoi', 'post', '' );
 			$song['theloai'] = $songdata['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
 			
 			if( $songdata['casimoi'] != '' )
@@ -72,14 +72,14 @@ if( ! empty( $userid ) )
 				$song['nhacsi'] = $songdata['nhacsi'] = newauthor( change_alias( $songdata['nhacsimoi'] ), $songdata['nhacsimoi'] );
 			}
 
-			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET 
-				`tenthat`=" . $db->dbescape( $song['tenthat'] ) . ", 
-				`ten`=" . $db->dbescape( $song['ten'] ) . ", 
-				`casi`=" . $song['casi'] . ", 
-				`theloai`=" . $db->dbescape( $song['theloai'] ) . ", 
-				`nhacsi`=" . $song['nhacsi'] . "
-			WHERE `id`=" . $id;
-			$update = $db->sql_query( $sql );
+			$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET 
+				tenthat=" . $db->quote( $song['tenthat'] ) . ", 
+				ten=" . $db->quote( $song['ten'] ) . ", 
+				casi=" . $song['casi'] . ", 
+				theloai=" . $db->quote( $song['theloai'] ) . ", 
+				nhacsi=" . $song['nhacsi'] . "
+			WHERE id=" . $id;
+			$update = $db->query( $sql );
 
 			if( $update )
 			{
@@ -97,7 +97,7 @@ if( ! empty( $userid ) )
 					updateauthor( $song['nhacsi'], 'numsong', '+1' );
 				}
 
-				nv_del_moduleCache( $module_name );
+				$nv_Cache->delMod( $module_name );
 				$g_array['updateok'] = true;
 			}
 		}
@@ -139,15 +139,15 @@ if( ! empty( $userid ) )
 		{
 			$first_page = ( $now_page - 1 ) * 20;
 		}
-		$sql = "SELECT a.*, b.ten AS singeralias FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.userid=" . $userid . " ORDER BY a.id DESC LIMIT " . $first_page . ",20";
-		$sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `userid` = " . $userid;
+		$sql = "SELECT a.*, b.ten AS singeralias FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.userid=" . $userid . " ORDER BY a.id DESC LIMIT " . $first_page . ",20";
+		$sqlnum = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE userid = " . $userid;
 
-		$num = $db->sql_query( $sqlnum );
-		list( $output ) = $db->sql_fetchrow( $num );
+		$num = $db->query( $sqlnum );
+		$output = $num->fetchColumn();
 		$ts = ceil( $output / 20 );
 		
-		$result = $db->sql_query( $sql );
-		while( $row = $db->sql_fetchrow( $result ) )
+		$result = $db->query( $sql );
+		while( $row = $result->fetch() )
 		{
 			$array_song[] = array(
 				"id" => $row['id'], //
@@ -171,8 +171,6 @@ if( ! empty( $userid ) )
 $contents = nv_music_managersong( $g_array, $array_song, $data_song );
 if( $userid != 0 and $id == 0 ) $contents .= new_page( $ts, $now_page, $link );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

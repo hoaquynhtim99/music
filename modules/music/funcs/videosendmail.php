@@ -28,22 +28,22 @@ if( $id > 0 )
 	}
 	else
 	{
-		$name = filter_text_input( 'name', 'post', '', 1 );
-		$youremail = filter_text_input( 'youremail', 'post', '' );
+		$name = $nv_Request->get_title( 'name', 'post', '', 1 );
+		$youremail = $nv_Request->get_title( 'youremail', 'post', '' );
 	}
 	$to_mail = $content = "";
 
-	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id = " . $id;
-	$query = $db->sql_query( $sql );
-	$video = $db->sql_fetchrow( $query );
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.id = " . $id;
+	$query = $db->query( $sql );
+	$video = $query->fetch();
 
 	if( $nv_Request->get_int( 'send', 'post', 0 ) == 1 )
 	{
 		$link = NV_MY_DOMAIN . nv_url_rewrite( $mainURL . "=viewvideo/" . $id . "/" . $video['ten'], true );
 		$link = "<a href=\"$link\">$link</a>\n";
-		$nv_seccode = filter_text_input( 'nv_seccode', 'post', '' );
-		$to_mail = filter_text_input( 'email', 'post', '' );
-		$content = filter_text_input( 'content', 'post', '', 1 );
+		$nv_seccode = $nv_Request->get_title( 'nv_seccode', 'post', '' );
+		$to_mail = $nv_Request->get_title( 'email', 'post', '' );
+		$content = $nv_Request->get_title( 'content', 'post', '', 1 );
 		$err_email = nv_check_valid_email( $to_mail );
 		$err_youremail = nv_check_valid_email( $youremail );
 		$err_name = "";
@@ -102,12 +102,10 @@ if( $id > 0 )
 
 	$contents = nv_sendmail_video_themme( $sendmail );
 	
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo $contents;
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 }
 
 Header( "Location: " . $global_config['site_url'] );
 exit();
-
-?>

@@ -1643,5 +1643,3 @@ function RemoveID3v1($filename, $showerrors=FALSE) {
 		return FALSE;
 	}
 }
-
-?>

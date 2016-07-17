@@ -13,7 +13,7 @@ if( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
 $difftimeout = 360;
 $id = $nv_Request->get_int( 'id', 'post', 0 );
 $body = $nv_Request->get_string( 'body', 'post', '' );
-$where = filter_text_input( 'where', 'post', '', 1 );
+$where = $nv_Request->get_title( 'where', 'post', '', 1 );
 
 if( ! in_array( $where, array( "song", "album", "video" ) ) )
 {
@@ -27,7 +27,7 @@ if( defined( 'NV_IS_USER' ) )
 }
 else
 {
-	$name = filter_text_input( 'name', 'post', '', 1 );
+	$name = $nv_Request->get_title( 'name', 'post', '', 1 );
 	$userid = 0;
 }
 
@@ -37,8 +37,8 @@ $timeout = $nv_Request->get_int( $module_name . '_' . $op . '_' . $where . '_' .
 
 if( $timeout == 0 or NV_CURRENTTIME - $timeout > $difftimeout )
 {
-	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . "` (`id`, `name`, `body`, `dt`, `what`, `userid`, `active`) VALUES (NULL, " . $db->dbescape( $name ) . ", " . $db->dbescape( $body ) . ", " . NV_CURRENTTIME . " , " . $db->dbescape( $id ) . ",  " . $userid . ", " . $setting['auto_comment'] . " )";
-	$result = $db->sql_query( $sql );
+	$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_comment_" . $where . " (id, name, body, dt, what, userid, active) VALUES (NULL, " . $db->quote( $name ) . ", " . $db->quote( $body ) . ", " . NV_CURRENTTIME . " , " . $db->quote( $id ) . ",  " . $userid . ", " . $setting['auto_comment'] . " )";
+	$result = $db->query( $sql );
 	if( $result )
 	{
 		$nv_Request->set_Cookie( $module_name . '_' . $op . '_' . $where . '_' . $id, NV_CURRENTTIME );
@@ -54,8 +54,6 @@ else
 	$contents = "ERR_" . $lang_module['comment_timeouts'];
 }
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo $contents;
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

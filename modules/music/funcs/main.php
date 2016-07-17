@@ -16,9 +16,9 @@ if( $nv_Request->isset_request( 'loademotion', 'post' ) )
 
 	$contents = nv_emotion_theme();
 
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo ( $contents );
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 	exit();
 }
 
@@ -29,8 +29,6 @@ $key_words = $module_info['keywords'];
 
 $contents = "";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

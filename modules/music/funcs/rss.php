@@ -37,11 +37,11 @@ if( $xml !== false and $module_info['rss'] )
 
 		if( $type == change_alias( $lang_rss['rss_gift'] ) )
 		{
-			$sql = "SELECT a.who_send AS who_send, a.who_receive AS who_receive, a.time AS time, a.body AS body, b.id AS songid, b.ten AS song_alias, b.tenthat AS song_title, b.casi AS casi, c.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "` AS b ON a.songid=b.id LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 30";
+			$sql = "SELECT a.who_send AS who_send, a.who_receive AS who_receive, a.time AS time, a.body AS body, b.id AS songid, b.ten AS song_alias, b.tenthat AS song_title, b.casi AS casi, c.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_gift AS a INNER JOIN " . NV_PREFIXLANG . "_" . $module_data . " AS b ON a.songid=b.id LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS c ON b.casi=c.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 30";
 
-			if( ( $result = $db->sql_query( $sql ) ) !== false )
+			if( ( $result = $db->query( $sql ) ) !== false )
 			{
-				while( list( $who_send, $who_receive, $time, $body, $songid, $song_alias, $song_title, $casi, $singername ) = $db->sql_fetchrow( $result ) )
+				while( list( $who_send, $who_receive, $time, $body, $songid, $song_alias, $song_title, $casi, $singername ) = $result->fetch( 3 ) )
 				{
 					$items[] = array( //
 						'title' => $song_title . " - " . ( $singername ? $singername : $lang_module['unknow'] ), //
@@ -55,11 +55,11 @@ if( $xml !== false and $module_info['rss'] )
 		}
 		elseif( $type == change_alias( $lang_rss['rss_play_list'] ) )
 		{
-			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active`=1 ORDER BY `time` DESC LIMIT 30";
+			$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE active=1 ORDER BY time DESC LIMIT 30";
 
-			if( ( $result = $db->sql_query( $sql ) ) !== false )
+			if( ( $result = $db->query( $sql ) ) !== false )
 			{
-				while( $row = $db->sql_fetchrow( $result ) )
+				while( $row = $result->fetch() )
 				{
 					$rimages = "<img src=\"" . NV_MY_DOMAIN . NV_BASE_SITEURL . "themes/" . $module_info['template'] . "/images/" . $module_file . "/randimg/img(" . rand( 1, 10 ) . ").jpg\" width=\"100\" align=\"left\" border=\"0\">";
 
@@ -90,11 +90,11 @@ if( $xml !== false and $module_info['rss'] )
 				}
 			}
 
-			$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
+			$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
 
-			if( ( $result = $db->sql_query( $sql ) ) !== false )
+			if( ( $result = $db->query( $sql ) ) !== false )
 			{
-				while( list( $id, $ten, $tenthat, $casithat, $add_time ) = $db->sql_fetchrow( $result ) )
+				while( list( $id, $ten, $tenthat, $casithat, $add_time ) = $result->fetch( 3 ) )
 				{
 					$items[] = array( //
 						'title' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
@@ -123,11 +123,11 @@ if( $xml !== false and $module_info['rss'] )
 				}
 			}
 
-			$sql = "SELECT a.id AS id, a.name AS ten, a.tname AS tenthat, b.tenthat AS casithat, a.dt AS add_time, a.thumb AS thumb FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
+			$sql = "SELECT a.id AS id, a.name AS ten, a.tname AS tenthat, b.tenthat AS casithat, a.dt AS add_time, a.thumb AS thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.ten WHERE a.active=1" . $sql_cat . " ORDER BY a.id DESC LIMIT 30";
 
-			if( ( $result = $db->sql_query( $sql ) ) !== false )
+			if( ( $result = $db->query( $sql ) ) !== false )
 			{
-				while( list( $id, $ten, $tenthat, $casithat, $add_time, $thumb ) = $db->sql_fetchrow( $result ) )
+				while( list( $id, $ten, $tenthat, $casithat, $add_time, $thumb ) = $result->fetch( 3 ) )
 				{
 					$rimages = "<img src=\"" . NV_MY_DOMAIN . $thumb . "\" width=\"100\" align=\"left\" border=\"0\">";
 
@@ -144,11 +144,11 @@ if( $xml !== false and $module_info['rss'] )
 	}
 	else
 	{
-		$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.ten ORDER BY a.id DESC LIMIT 30";
+		$sql = "SELECT a.id AS id, a.ten AS ten, a.tenthat AS tenthat, b.tenthat AS casithat, a.dt AS add_time FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.ten ORDER BY a.id DESC LIMIT 30";
 
-		if( ( $result = $db->sql_query( $sql ) ) !== false )
+		if( ( $result = $db->query( $sql ) ) !== false )
 		{
-			while( list( $id, $ten, $tenthat, $casithat, $add_time ) = $db->sql_fetchrow( $result ) )
+			while( list( $id, $ten, $tenthat, $casithat, $add_time ) = $result->fetch( 3 ) )
 			{
 				$items[] = array( //
 					'title' => $tenthat . " - " . ( $casithat ? $casithat : $lang_module['unknow'] ), //
@@ -164,5 +164,3 @@ if( $xml !== false and $module_info['rss'] )
 
 nv_rss_generate( $channel, $items );
 die();
-
-?>

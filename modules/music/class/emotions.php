@@ -83,5 +83,3 @@ function m_htmlchars( $str )
 		$str
 	);
 }
-
-?>

@@ -18,11 +18,11 @@ $userfile = $_FILES['uploadfile'];
 
 if( empty( $userfile ) ) nv_return_upload( $lang_module['upload_error_file'], false );
 
-$songname = filter_text_input( 'song', 'get,post', '', 1, 255 );
+$songname = nv_substr( $nv_Request->get_title( 'song', 'get,post', '', 1 ), 0, 255);
 $singer = $nv_Request->get_int( 'singer', 'get,post', 0 );
-$newsinger = filter_text_input( 'newsinger', 'get,post', '', 1, 255 );
+$newsinger = nv_substr( $nv_Request->get_title( 'newsinger', 'get,post', '', 1 ), 0, 255);
 $author = $nv_Request->get_int( 'author', 'get,post', 0 );
-$newauthor = filter_text_input( 'newauthor', 'get,post', '', 1, 255 );
+$newauthor = nv_substr( $nv_Request->get_title( 'newauthor', 'get,post', '', 1 ), 0, 255);
 $category = $nv_Request->get_int( 'category', 'get,post', 0 );
 
 if( empty( $songname ) ) nv_return_upload( $lang_module['upload_notsong'], false );
@@ -150,13 +150,13 @@ if( $upload_success )
 	$duongdan = $check_url['duongdan'];
 	$server = $check_url['server'];
 
-	$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "` ( `id`, `ten`, `tenthat`, `casi`, `nhacsi`, `album`, `theloai`, `listcat`, `duongdan`, `upboi`, `numview`, `active`, `bitrate`, `size`, `duration`, `server`, `userid`, `dt`, `binhchon`, `hit` ) VALUES ( NULL, " . $db->dbescape( change_alias( $songname ) ) . ", " . $db->dbescape( $songname ) . ", " . $singer . ", " . $author . ", 0, " . $db->dbescape( $category ) . ", '', " . $db->dbescape( $duongdan ) . ", " . $db->dbescape( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", " . $server . ", " . $userid . ", UNIX_TIMESTAMP() , 0, " . $db->dbescape( $hit ) . " ) ";
+	$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . " ( id, ten, tenthat, casi, nhacsi, album, theloai, listcat, duongdan, upboi, numview, active, bitrate, size, duration, server, userid, dt, binhchon, hit ) VALUES ( NULL, " . $db->quote( change_alias( $songname ) ) . ", " . $db->quote( $songname ) . ", " . $singer . ", " . $author . ", 0, " . $db->quote( $category ) . ", '', " . $db->quote( $duongdan ) . ", " . $db->quote( $name ) . " , 0, " . $setting['auto_upload'] . ", " . $bitrate . " , " . $filesize . " , " . $duration . ", " . $server . ", " . $userid . ", UNIX_TIMESTAMP() , 0, " . $db->quote( $hit ) . " ) ";
 
-	$songid = $db->sql_query_insert_id( $sql );
+	$songid = $db->insert_id( $sql );
 
 	if( $songid )
 	{
-		$db->sql_freeresult();
+		//$xxx->closeCursor();
 		$saved = true;
 		updatesinger( $singer, 'numsong', '+1' );
 		updateauthor( $author, 'numsong', '+1' );
@@ -170,7 +170,7 @@ if( $saved )
 	echo '<div id="output">success</div>';
 	if( $setting['auto_upload'] == 1 )
 	{
-		$song = $db->sql_fetchrow( $db->sql_query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `id`=" . $songid ) );
+		$song = $db->query( " SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id=" . $songid )->fetch();
 		echo '<div id="message">' . $lang_module['upload_ok4'] . ' <a href="' . nv_url_rewrite( $mainURL . '=listenone/' . $song['id'] . '/' . $song['ten'], true ) . '" target="_blank">' . $lang_module['upload_ok1'] . '</a> ' . $lang_module['upload_ok2'] . ' <a href="' . nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name, true ) . '">' . $lang_module['upload_ok3'] . '</a></div>';
 	}
 	else
@@ -183,5 +183,3 @@ else
 	echo '<div id="output">failed</div>';
 	echo '<div id="message">' . $lang_module['upload_error_un'] . '</div>';
 }
-
-?>

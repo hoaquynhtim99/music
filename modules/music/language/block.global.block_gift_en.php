@@ -8,7 +8,8 @@
  * @Createdate 26/01/2011 09:41 AM
  */
 
-if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if (!defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "22/06/2010, 09:22";
@@ -22,5 +23,3 @@ $lang_block['message'] = "The message";
 $lang_block['readmore'] = "Read more";
 
 $lang_block['listen'] = "Listen to musical gift";
-
-?>

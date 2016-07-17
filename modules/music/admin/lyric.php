@@ -15,9 +15,9 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
     
     $id = $nv_Request->get_int( 'id', 'post', 0 );
-    $list_levelid = filter_text_input( 'listid', 'post', '' );
+    $list_levelid = $nv_Request->get_title( 'listid', 'post', '' );
     
-    if ( empty( $id ) and empty ( $list_levelid ) ) die( "NO" );
+    if ( empty( $id ) and empty ( $list_levelid ) ) die( 'NO' );
     
 	$listid = array();
 	if ( $id )
@@ -35,13 +35,13 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 		$num = sizeof( $list_levelid );
 	}
 	
-	$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `id` IN(" . implode( ", ", $listid ) . ")";
-	$db->sql_query( $sql );
+	$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE id IN(" . implode( ", ", $listid ) . ")";
+	$db->query( $sql );
     
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, 'Delete Lyric', implode( ", ", $listid ), $admin_info['userid'] );
 	
-    die( "OK" );
+    die( 'OK' );
 }
 
 // Thay doi hoat dong lyric
@@ -51,9 +51,9 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
     
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
-    $array_id = filter_text_input( 'listid', 'post', '' );
+    $array_id = $nv_Request->get_title( 'listid', 'post', '' );
     
-    if ( empty( $id ) and empty ( $array_id ) ) die( "NO" );
+    if ( empty( $id ) and empty ( $array_id ) ) die( 'NO' );
     
 	$listid = array();
 	if ( $id )
@@ -71,11 +71,11 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 		$num = sizeof( $array_id );
 	}
 	
-	$sql = "SELECT `id`, `active` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `id` IN(" . implode( ", ", $listid ) . ")";
-	$result = $db->sql_query( $sql );
+	$sql = "SELECT id, active FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE id IN(" . implode( ", ", $listid ) . ")";
+	$result = $db->query( $sql );
 	
 	$array_status = array();
-	while( list( $id, $active ) = $db->sql_fetchrow( $result ) )
+	while( list( $id, $active ) = $result->fetch( 3 ) )
 	{
 		if ( empty ( $controlstatus ) )
 		{
@@ -89,13 +89,13 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 	
 	foreach( $array_status as $id => $active )
 	{
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` SET `active`=" . $active . " WHERE `id`=" . $id;
-		$db->sql_query( $sql );	
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_lyric SET active=" . $active . " WHERE id=" . $id;
+		$db->query( $sql );	
 	}	
     
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
 	
-    die( "OK" );
+    die( 'OK' );
 }
 
 // Tieu de trang
@@ -106,13 +106,13 @@ $page = $nv_Request->get_int( 'page', 'get', 0 );
 $per_page = 50;
 
 // Query, url co so
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `id`!=0";
-$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE id!=0";
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 
 // Du lieu tim kiem
 $data_search = array(
-	"q" => filter_text_input( 'q', 'get', '', 1, 100 ),
-	"song" => filter_text_input( 'song', 'get', '', 1, 100 ),
+	"q" => nv_substr( $nv_Request->get_title( 'q', 'get', '', 1 ), 0, 100),
+	"song" => nv_substr( $nv_Request->get_title( 'song', 'get', '', 1 ), 0, 100),
 	"disabled" => " disabled=\"disabled\""
 );
 
@@ -126,7 +126,7 @@ if( ! empty ( $data_search['q'] ) or ! empty ( $data_search['song'] ) )
 if( ! empty ( $data_search['q'] ) )
 {
 	$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
-	$sql .= " AND `body` LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%'";
+	$sql .= " AND body LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%'";
 }
 
 if( ! empty ( $data_search['song'] ) )
@@ -136,11 +136,11 @@ if( ! empty ( $data_search['song'] ) )
 	
 	if( ! empty( $songid ) )
 	{
-		$sql .= " AND `songid` IN(" . implode( ",", $songid ) . ")";
+		$sql .= " AND songid IN(" . implode( ",", $songid ) . ")";
 	}
 	else
 	{
-		$sql .= " AND `songid`=0";
+		$sql .= " AND songid=0";
 	}
 }
 
@@ -161,7 +161,7 @@ $lang_order_2 = array(
 	"addtime" => $classMusic->lang('playlist_time')
 );
 
-$order['addtime']['order'] = filter_text_input( 'order_addtime', 'get', 'NO' );
+$order['addtime']['order'] = $nv_Request->get_title( 'order_addtime', 'get', 'NO' );
 
 foreach ( $order as $key => $check )
 {
@@ -183,26 +183,26 @@ foreach ( $order as $key => $check )
 
 if( $order['addtime']['order'] != "NO" )
 {
-	$sql .= " ORDER BY `dt` " . $order['addtime']['order'];
+	$sql .= " ORDER BY dt " . $order['addtime']['order'];
 }
 else
 {
-	$sql .= " ORDER BY `id` DESC";
+	$sql .= " ORDER BY id DESC";
 }
 
 // Lay so row
 $sql1 = "SELECT COUNT(*) " . $sql;
-$result1 = $db->sql_query( $sql1 );
-list( $all_page ) = $db->sql_fetchrow( $result1 );
+$result1 = $db->query( $sql1 );
+$all_page = $result1->fetchColumn();
 
 // Xay dung du lieu album
 $i = 1;
 $sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
 $array = $array_songs = $array_song_ids = array();
 
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$array_song_ids[$row['songid']] = $row['songid'];
 	
@@ -213,7 +213,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"song" => $row['songid'],
 		"addtime" => nv_date( "H:i d/m/Y", $row['dt'] ),
 		"status" => $row['active'] ? " checked=\"checked\"" : "",
-		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-lyric&amp;id=" . $row['id'],
+		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-lyric&amp;id=" . $row['id'],
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""
 	);
 	$i ++;
@@ -252,7 +252,7 @@ $xtpl->assign( 'MODULE_NAME', $module_name );
 $xtpl->assign( 'OP', $op );
 $xtpl->assign( 'DATA_SEARCH', $data_search );
 $xtpl->assign( 'DATA_ORDER', $order );
-$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name  . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name  . "&" . NV_OP_VARIABLE . "=" . $op );
 
 foreach( $list_action as $action )
 {
@@ -282,8 +282,6 @@ if( ! empty( $generate_page ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

@@ -20,5 +20,3 @@ $xtpl->assign( 'URL_CREAT', $mainURL . "=creatalbum" );
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
-?>

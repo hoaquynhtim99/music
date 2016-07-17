@@ -1,5 +1,5 @@
 <!-- BEGIN: main -->
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
@@ -9,28 +9,28 @@
 			<td style="width:100px">{LANG.addtime}</td>
 			<td style="width:60px">{LANG.ip}</td>
 			<td style="width:80px">{LANG.status1}</td>
-			<td width="150px" align="center">{LANG.feature}</td>
+			<td width="150px" class="text-center">{LANG.feature}</td>
 		</tr>
 	</thead>
+	<tbody>
 	<!-- BEGIN: row -->
-	<tbody{class}>
 		<tr>
-			<td align="center"><input type="checkbox" class="filelist" value="{id}"></td>
+			<td class="text-center"><input type="checkbox" class="filelist" value="{id}"></td>
 			<td>{name}</td>
 			<td><a href="{url_edit}" title="{what}">{what}</a></td>
 			<td>{body}</td>
 			<td>{addtime}</td>
 			<td>{ip}</td>
 			<td><span class="text">{status}</span>&nbsp;<a class="nounderline" title="{atitle}" href="javascript:void(0);" onclick="nv_checkviewed($(this),'{id}');"><span class="{icon}_icon">&nbsp;</span></a></td>
-			<td align="center">
+			<td class="text-center">
 				<!-- BEGIN: check -->
 				<span class="check_icon"><a href="javascript:void(0);" onclick="checksong('{SONG}');" class="checkfile">{LANG.check}</a></span>
 				<!-- END: check -->
 				<span class="delete_icon"><a class="delfile" href="{URL_DEL_ONE}">{LANG.delete}</a></span>
 			</td>
 		</tr>
-	</tbody>
 	<!-- END: row -->
+	</tbody>
 	<!-- BEGIN: generate_page -->
 	<tfoot>
 		<tr>
@@ -41,7 +41,7 @@
 	</tfoot>
 <!-- END: generate_page -->
 </table>
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<tfoot>
 		<tr>
 			<td>

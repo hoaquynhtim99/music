@@ -23,7 +23,7 @@ $globaldata = array();
 if( $where == 'song' )
 {
 	$song = $classMusic->getsongbyID( $id );
-	if( $db->unfixdb( $song['ten'] ) != $name )
+	if( $song['ten'] != $name )
 	{
 		module_info_die();
 	}
@@ -35,13 +35,13 @@ if( $where == 'song' )
 	}
 
 	$song['casi'] = $song['casi'];
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `numview` = numview+1 WHERE `id` =" . $id );
+	$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET numview = numview+1 WHERE id =" . $id );
 	$globaldata[] = $song;
 }
 elseif( $where == 'video' )
 {
 	$song = getvideobyID( $id );
-	if( $db->unfixdb( $song['name'] ) != $name )
+	if( $song['name'] != $name )
 	{
 		module_info_die();
 	}
@@ -55,21 +55,21 @@ elseif( $where == 'video' )
 	$song['casi'] = $song['casi'];
 	$song['tenthat'] = $song['tname'];
 	
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET view = view+1 WHERE `id` =" . $id );
+	$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_video SET view = view+1 WHERE id =" . $id );
 	$globaldata[] = $song;
 }
 elseif( $where == 'album' )
 {
 	$albumdata = getalbumbyID( $id );
-	if( $db->unfixdb( $albumdata['name'] ) != $name )
+	if( $albumdata['name'] != $name )
 	{
 		module_info_die();
 	}
 
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `numview` = numview+1 WHERE `id` =" . $id );
-	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE `id` IN(" . $albumdata['listsong'] . ") AND `active` = 1 ORDER BY id DESC";
-	$querysong = $db->sql_query( $sqlsong );
-	while( $song = $db->sql_fetchrow( $querysong ) )
+	$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET numview = numview+1 WHERE id =" . $id );
+	$sqlsong = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id IN(" . $albumdata['listsong'] . ") AND active = 1 ORDER BY id DESC";
+	$querysong = $db->query( $sqlsong );
+	while( $song = $querysong->fetch() )
 	{
 		$song['duongdan'] = outputURL( $song['server'], $song['duongdan'] );
 		if( $song['server'] == 1 )
@@ -83,26 +83,26 @@ elseif( $where == 'album' )
 }
 elseif( $where == 'playlist' )
 {
-	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE `active`=1 AND `id` = " . $id;
-	$result = $db->sql_query( $sql );
-	$check_exit = $db->sql_numrows( $result );
-	$row = $db->sql_fetchrow( $result );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE active=1 AND id = " . $id;
+	$result = $db->query( $sql );
+	$check_exit = $result->rowCount();
+	$row = $result->fetch();
 
-	if( $check_exit != 1 or $db->unfixdb( $row['keyname'] ) != $name )
+	if( $check_exit != 1 or $row['keyname'] != $name )
 	{
 		module_info_die();
 	}
 
-	$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view` = view+1 WHERE `id` =" . $id );
+	$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_playlist SET view = view+1 WHERE id =" . $id );
 
 	$listsong_id = explode( "/", $row['songdata'] );
 	$listsong_id = array_filter( $listsong_id );
 	$listsong_id = implode( ",", $listsong_id );
 
-	$sql = "SELECT `tenthat`, `casi`, `server`, `duongdan` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . $listsong_id . ") AND `active`=1";
-	$result = $db->sql_query( $sql );
+	$sql = "SELECT tenthat, casi, server, duongdan FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id IN (" . $listsong_id . ") AND active=1";
+	$result = $db->query( $sql );
 
-	while( list( $tenthat, $casi, $server, $duongdan ) = $db->sql_fetchrow( $result ) )
+	while( list( $tenthat, $casi, $server, $duongdan ) = $result->fetch( 3 ) )
 	{
 		$duongdan = outputURL( $server, $duongdan );
 		if( $server == 1 )
@@ -147,5 +147,3 @@ foreach( $globaldata as $song )
 
 echo "	</channel>";
 echo "</rss>";
-
-?>

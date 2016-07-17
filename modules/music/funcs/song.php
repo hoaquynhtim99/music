@@ -29,20 +29,20 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a." . $type . " DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `active`=1";
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a." . $type . " DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE active=1";
 
 // tinh so trang
-$num = $db->sql_query( $sqlnum );
-list( $output ) = $db->sql_fetchrow( $num );
+$num = $db->query( $sqlnum );
+$output = $num->fetchColumn();
 $ts = ceil( $output / 20 );
 
 // ket qua
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 $g_array['num'] = $output;
 
 $array = array();
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$checkhit = explode( "-", $row['hit'] );
 	$checkhit = $checkhit[0];
@@ -90,8 +90,6 @@ $description = $setting['description'];
 $contents = nv_music_song( $g_array, $array );
 $contents .= new_page( $ts, $now_page, $link );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

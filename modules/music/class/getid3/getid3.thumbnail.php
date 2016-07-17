@@ -150,5 +150,3 @@ if (isset($filename) && isset($frameoffset)) {
 } else {
 	errorimage('No image data specified');
 }
-
-?>

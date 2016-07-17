@@ -252,4 +252,3 @@ function getMIDIHeaderFilepointer(&$fd, &$MP3fileInfo, $scanwholefile=TRUE) {
 		return TRUE;
 	}
 }
-?>

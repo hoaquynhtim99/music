@@ -71,22 +71,22 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $data . " a.active=1 ORDER BY " . $order . " DESC LIMIT " . $first_page . ",20";
-$sqlnum = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $data . " a.active = 1 ";
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id " . $data . " a.active=1 ORDER BY " . $order . " DESC LIMIT " . $first_page . ",20";
+$sqlnum = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id " . $data . " a.active = 1 ";
 
 // Tinh so trang
-$num = $db->sql_query( $sqlnum );
-$output = $db->sql_numrows( $num );
+$num = $db->query( $sqlnum );
+$output = $num->rowCount();
 $ts = ceil( $output / 20 );
 
 // Ket qua
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
 $g_array = array();
 $g_array['num'] = $output;
 
 $array = array();
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	// Check HIT
 	$checkhit = explode( "-", $row['hit'] );
@@ -107,8 +107,6 @@ while( $row = $db->sql_fetchrow( $result ) )
 $contents = nv_music_searchvideo( $g_array, $array );
 $contents .= new_page( $ts, $now_page, $link );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

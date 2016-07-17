@@ -32,9 +32,9 @@ if( $contents != "" )
 	$page_title = $lang_module['down_info3'] . " - " . $id . " - " . $module_info['custom_title'];
 	$key_words = $module_info['keywords'];
 
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo nv_site_theme( $contents );
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 }
 else
 {
@@ -66,12 +66,8 @@ else
 			$base .= $add . $x[$i];
 		}
 		$base = NV_ROOTDIR . "/" . NV_UPLOADS_DIR . "/" . $module_name . "/" . $setting['root_contain'] . "/" . $base;
-		$download = new download( $song_url, $base, $song_name, true );
+		$download = new NukeViet\Files\Download( $song_url, $base, $song_name, true );
 		$download->download_file();
 	}
 	exit();
 }
-
-?>
-
-

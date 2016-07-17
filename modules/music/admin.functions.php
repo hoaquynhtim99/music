@@ -7,12 +7,13 @@
  * @Createdate 26/01/2011 09:09 AM
  */
 
-if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) or ! defined( 'NV_IS_MODADMIN' ) ) die( 'Stop!!!' );
+if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'))
+    die('Stop!!!');
 
-define( 'NV_IS_MUSIC_ADMIN', true );
+define('NV_IS_MUSIC_ADMIN', true);
 
 // Class cua module
-require_once( NV_ROOTDIR . "/modules/" . $module_file . "/global.class.php" );
+require_once (NV_ROOTDIR . "/modules/" . $module_file . "/global.class.php");
 $classMusic = new nv_mod_music();
 
 $submenu['album'] = $classMusic->lang('sub_album');
@@ -31,6 +32,46 @@ $submenu['video_category'] = $classMusic->lang('sub_videocategory');
 $submenu['utilities'] = $classMusic->lang('utilities');
 $submenu['globalsetting'] = $classMusic->lang('set_global');
 
-$allow_func = array( 'main', 'content-song', 'category', 'album', 'content-album', 'alias', 'commentsong', 'commentalbum', 'maincategory', 'mainalbum', 'ads', 'error', 'gift', 'lyric', 'setting', 'active', 'editcomment', 'content-lyric', 'getsonginfo', 'getsonginfolist', 'editgift', 'userplaylist', 'editplaylist', 'video_category', 'content-videoclip', 'videoclip', 'checklink', 'checksonglist', 'singer', 'content-singer', 'commentvideo', 'comment', 'globalsetting', 'author', 'content-author', 'ftpsetting', 'getalbumid', 'ex', 'addFromOtherSite', 'utilities', 'setting-alias', 'setting-home' );
-
-?>
+$allow_func = array(
+    'main',
+    'content-song',
+    'category',
+    'album',
+    'content-album',
+    'alias',
+    'commentsong',
+    'commentalbum',
+    'maincategory',
+    'mainalbum',
+    'ads',
+    'error',
+    'gift',
+    'lyric',
+    'setting',
+    'active',
+    'editcomment',
+    'content-lyric',
+    'getsonginfo',
+    'getsonginfolist',
+    'editgift',
+    'userplaylist',
+    'editplaylist',
+    'video_category',
+    'content-videoclip',
+    'videoclip',
+    'checklink',
+    'checksonglist',
+    'singer',
+    'content-singer',
+    'commentvideo',
+    'comment',
+    'globalsetting',
+    'author',
+    'content-author',
+    'ftpsetting',
+    'getalbumid',
+    'ex',
+    'addFromOtherSite',
+    'utilities',
+    'setting-alias',
+    'setting-home');

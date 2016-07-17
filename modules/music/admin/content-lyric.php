@@ -26,18 +26,18 @@ $id = $nv_Request->get_int( 'id', 'get', 0 );
 
 if( ! empty( $id ) )
 {
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
-	$row = $db->sql_fetchrow( $result );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE id=" . $id;
+	$result = $db->query( $sql );
+	$row = $result->fetch();
 	
-	if( $db->sql_numrows( $result ) != 1 ) nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
+	if( $result->rowCount() != 1 ) nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	
 	$array = $array_old = array(
 		"user" => $row['user'],
 		"body" => nv_editor_br2nl( $row['body'] ),
 	);
 	
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $page_title = $classMusic->lang('edit_lyric');
 }
 else
@@ -47,8 +47,8 @@ else
 
 if( $nv_Request->isset_request( "submit", "post" ) )
 {
-	$array['user'] = filter_text_input( 'user', 'post', '', 1, 255 );
-	$array['body'] = nv_editor_filter_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
+	$array['user'] = nv_substr( $nv_Request->get_title( 'user', 'post', '', 1 ), 0, 255);
+	$array['body'] = $nv_Request->get_editor( 'body', '', NV_ALLOWED_HTML_TAGS );
 	
 	// Kiem tra loi
 	if( empty( $array['user'] ) )
@@ -63,20 +63,20 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 	{
 		$array['body'] = nv_editor_nl2br( $array['body'] );
 		
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` SET
-			`user`=" . $db->dbescape( $array['user'] ) . ",
-			`body`=" . $db->dbescape( $array['body'] ) . "
-		WHERE `id` =" . $id;
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_lyric SET
+			user=" . $db->quote( $array['user'] ) . ",
+			body=" . $db->quote( $array['body'] ) . "
+		WHERE id =" . $id;
 
-		if( $db->sql_query( $sql ) )
+		if( $db->query( $sql ) )
 		{
-			$db->sql_freeresult();
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=lyric" );
+			//$xxx->closeCursor();
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=lyric" );
 			die();
 		}
 		else
 		{
-			$db->sql_freeresult();
+			//$xxx->closeCursor();
 			$error = $classMusic->lang('error_save');
 		}
 	}
@@ -111,8 +111,6 @@ if( ! empty ( $error ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

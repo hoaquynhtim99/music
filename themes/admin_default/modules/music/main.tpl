@@ -1,13 +1,13 @@
 <!-- BEGIN: main -->
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<tbody>
 		<tr>
 			<td>
-				<form id="filter-form" method="get" action="" onsubmit="return false;">
-					<input class="music-input text size1" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.filter_song}"/>
-					<input class="music-input text size1" type="text" name="singer" value="{DATA_SEARCH.singer}" placeholder="{LANG.filter_singer}"/>
-					<input class="music-input text size1" type="text" name="author" value="{DATA_SEARCH.author}" placeholder="{LANG.filter_author}"/>
-					<select class="text music-input size1" name="theloai">
+				<form class="form-inline" id="filter-form" method="get" action="" onsubmit="return false;">
+					<input class="form-control music-input text size1" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.filter_song}"/>
+					<input class="form-control music-input text size1" type="text" name="singer" value="{DATA_SEARCH.singer}" placeholder="{LANG.filter_singer}"/>
+					<input class="form-control music-input text size1" type="text" name="author" value="{DATA_SEARCH.author}" placeholder="{LANG.filter_author}"/>
+					<select class="form-control text music-input size1" name="theloai">
 						<option value="-1">{LANG.filter_category}</option>
 						<!-- BEGIN: cat --><option value="{CAT.id}"{CAT.selected}>{CAT.title}</option><!-- END: cat -->
 					</select>
@@ -42,8 +42,8 @@ $(document).ready(function(){
 	});
 });
 </script>
-<form action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
-	<table class="tab1">
+<form class="form-inline" action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<tr>
 				<td class="center col-check">
@@ -62,10 +62,10 @@ $(document).ready(function(){
 				<td class="center col-feature">{LANG.feature}</td>
 			</tr>
 		</thead>
+		<tbody>
 		<!-- BEGIN: row -->
-		<tbody{ROW.class}>
 			<tr class="topalign">
-				<td class="center">
+				<td class="text-center">
 					<input type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
 				</td>
 				<td><a href="{ROW.link}" onclick="this.target='_blank'">{ROW.title}</a></td>
@@ -77,16 +77,16 @@ $(document).ready(function(){
 				<td>{ROW.bitrate} - {ROW.duration} - {ROW.size}</td>
 				<td><strong>{ROW.numview}</strong></td>
 				<td class="aright">{ROW.addtime}</td>
-				<td class="center">
+				<td class="text-center">
 					<input name="status" id="change_status{ROW.id}" value="1" type="checkbox"{ROW.status} onclick="nv_change_song_status({ROW.id})" />
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<span class="edit-icon"><a class="nounderline" href="{ROW.url_edit}">{GLANG.edit}</a></span>
 					<span class="delete-icon"><a class="nounderline" href="javascript:void(0);" onclick="nv_delete_song({ROW.id});">{GLANG.delete}</a></span>
 				</td>
 			</tr>
-		</tbody>
 		<!-- END: row -->
+		</tbody>
 		<!-- BEGIN: generate_page -->
 		<tbody>
 			<tr>
@@ -94,8 +94,8 @@ $(document).ready(function(){
 					{GENERATE_PAGE}
 				</td>
 			</tr>
-		</tbody>
 		<!-- END: generate_page -->
+		</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="12">

@@ -188,4 +188,3 @@ function ParseAsThisFormat($format, $assumedFormat, $allowedFormats, $formattest
 	}
 	return FALSE;
 }
-?>

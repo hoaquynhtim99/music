@@ -271,4 +271,3 @@ function getRIFFHeaderFilepointer(&$fd, &$MP3fileInfo) {
 
 	return TRUE;
 }
-?>

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES., JSC. All rights reserved
+ * @Copyright (C) 2016 VINADES., JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate 3/9/2010 23:25
  */
 
@@ -83,7 +84,7 @@ if( ! nv_function_exists( 'nv_music_block_album' ) )
 		$return['config'] = array();
 		
 		$return['config']['display_type'] = $nv_Request->get_int( 'config_display_type', 'post', 0 );
-		$return['config']['albums'] = filter_text_input( 'config_albums', 'post', '', 1, 255 );
+		$return['config']['albums'] = nv_substr( $nv_Request->get_title( 'config_albums', 'post', '', 1 ), 0, 255);
 		$return['config']['str_length'] = $nv_Request->get_int( 'config_str_length', 'post', 0 );
 		$return['config']['cap_position'] = $nv_Request->get_int( 'config_cap_position', 'post', 0 );
 		$return['config']['num_cols'] = $nv_Request->get_int( 'config_num_cols', 'post', 3 );
@@ -120,10 +121,10 @@ if( ! nv_function_exists( 'nv_music_block_album' ) )
 		{
 			// Lay cau hinh trong admin
 			$sql = "SELECT * FROM " . $classMusic->table_prefix . "_setting_home WHERE object_type = 0 ORDER BY weight ASC";
-			$result = $db->sql_query( $sql );
+			$result = $db->query( $sql );
 			
 			$albums_id = array();
-			while( $row = $db->sql_fetchrow( $result ) )
+			while( $row = $result->fetch() )
 			{
 				$albums_id[] = $row['object_id'];
 			}
@@ -132,9 +133,9 @@ if( ! nv_function_exists( 'nv_music_block_album' ) )
 		elseif( $block_config['display_type'] == 3 and ! empty( $block_config['num_albums'] ) )
 		{
 			$sql = "SELECT * FROM " . $classMusic->table_prefix . "_album WHERE active = 1 ORDER BY numview DESC LIMIT 0, " . $block_config['num_albums'];
-			$result = $db->sql_query( $sql );
+			$result = $db->query( $sql );
 			
-			while( $row = $db->sql_fetchrow( $result ) )
+			while( $row = $result->fetch() )
 			{
 				$array[$row['id']] = $row;
 			}
@@ -265,5 +266,3 @@ if( defined( 'NV_SYSTEM' ) )
 {
 	$content = nv_music_block_album( $block_config );
 }
-
-?>

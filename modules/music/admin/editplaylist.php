@@ -23,12 +23,12 @@ $error = "";
 $array = array();
 
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `id`=" . $id;
-$result = $db->sql_query( $sql );
-$check = $db->sql_numrows( $result );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE id=" . $id;
+$result = $db->query( $sql );
+$check = $result->rowCount();
 if( $check != 1 ) nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 
-$row = $db->sql_fetchrow( $result );
+$row = $result->fetch();
 $array['name'] = $row['name'];
 $array['singer'] = $row['singer'];
 $array['username'] = $row['username'];
@@ -41,22 +41,22 @@ $array['time'] = nv_date( "d/m/Y H:i", $row['time'] );
 if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
 	$array = array();
-	$array['name'] = filter_text_input( 'name', 'post', '' );
-	$array['singer'] = filter_text_input( 'singer', 'post', '' );
+	$array['name'] = $nv_Request->get_title( 'name', 'post', '' );
+	$array['singer'] = $nv_Request->get_title( 'singer', 'post', '' );
 	$array['message'] = $nv_Request->get_string( 'message', 'post', '' );
 	$array['songdata'] = $nv_Request->get_string( 'listsong', 'post', '' );
 
-	$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET
-		`name`=" . $db->dbescape( $array['name'] ) . ", 
-		`singer`=" . $db->dbescape( $array['singer'] ) . ", 
-		`message`=" . $db->dbescape( $array['message'] ) . ", 
-		`songdata`=" . $db->dbescape( $array['songdata'] ) . "
-	WHERE `id`=" . $id;
+	$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_playlist SET
+		name=" . $db->quote( $array['name'] ) . ", 
+		singer=" . $db->quote( $array['singer'] ) . ", 
+		message=" . $db->quote( $array['message'] ) . ", 
+		songdata=" . $db->quote( $array['songdata'] ) . "
+	WHERE id=" . $id;
 
-	if( $db->sql_query( $sql ) )
+	if( $db->query( $sql ) )
 	{
-		nv_del_moduleCache( $module_name );
-		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=userplaylist" );
+		$nv_Cache->delMod( $module_name );
+		Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=userplaylist" );
 		die();
 	}
 	else
@@ -72,9 +72,9 @@ if( ! empty( $array['songdata'] ) )
 	$array['songdata'] = array();
 	$_tmp = array();
 
-	$sql = "SELECT `id`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN(" . $songdata . ")";
-	$result = $db->sql_query( $sql );
-	while( list( $songid, $songname ) = $db->sql_fetchrow( $result ) )
+	$sql = "SELECT id, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id IN(" . $songdata . ")";
+	$result = $db->query( $sql );
+	while( list( $songid, $songname ) = $result->fetch( 3 ) )
 	{
 		$_tmp[$songid] = $songname;
 	}
@@ -195,8 +195,6 @@ function nv_del_song_fromalbum(songid){
 }
 </script>';
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

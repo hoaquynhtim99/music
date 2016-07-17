@@ -29,33 +29,33 @@ if( $q == 'deletecatsong' )
 		if( ! isset( $array_cat[$cat1] ) or ! isset( $array_cat[$cat2] ) ) die( $lang_module['ex_delete_cat_error_exists'] );
 		
 		// Lay tong so (tu bang bai hat cho chinh xac)
-		$sql = "SELECT COUNT(*) AS `numsong` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `theloai`=" . $cat1;
-		$result = $db->sql_query( $sql );
-		$row = $db->sql_fetchrow( $result );
+		$sql = "SELECT COUNT(*) AS numsong FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE theloai=" . $cat1;
+		$result = $db->query( $sql );
+		$row = $result->fetch();
 		
 		// Cap nhat cho the loai moi
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET `numsong`=`numsong`+" . ( ( int ) $row['numsong'] ) . " WHERE `id`=" . $cat2;
-		$db->sql_query( $sql );
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_category SET numsong=numsong+" . ( ( int ) $row['numsong'] ) . " WHERE id=" . $cat2;
+		$db->query( $sql );
 		
 		// Cap nhat cac bai hat sang the loai moi
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `theloai`=" . $cat2 . " WHERE `theloai`=" . $cat1;
-		$db->sql_query( $sql );
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET theloai=" . $cat2 . " WHERE theloai=" . $cat1;
+		$db->query( $sql );
 		
 		// Xoa the loai
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_category` WHERE `id`=" . $cat1;
-		$db->sql_query( $sql );
+		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_category WHERE id=" . $cat1;
+		$db->query( $sql );
 		
 		// Sap xep lai thu tu
-		$sql = "SELECT `id` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_category` ORDER BY `weight` ASC";
-		$result = $db->sql_query( $sql );
+		$sql = "SELECT id FROM " . NV_PREFIXLANG . "_" . $module_data . "_category ORDER BY weight ASC";
+		$result = $db->query( $sql );
 		$weight = 0;
-		while ( $row = $db->sql_fetchrow( $result ) )
+		while ( $row = $result->fetch() )
 		{
 			$weight ++;
-			$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_category` SET `weight`=" . $weight . " WHERE `id`=" . $row['id'] );
+			$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_category SET weight=" . $weight . " WHERE id=" . $row['id'] );
 		}
 		
-		nv_del_moduleCache( $module_name );
+		$nv_Cache->delMod( $module_name );
 		die('<div class="infook">' . $lang_module['ex_delete_cat_ok'] . '</div>');
 	}
 
@@ -64,7 +64,7 @@ if( $q == 'deletecatsong' )
 	$xtpl = new XTemplate( "exdeletecat.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
-	$xtpl->assign( 'URL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=ex&q=deletecatsong" );
+	$xtpl->assign( 'URL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=ex&q=deletecatsong" );
 	
 	foreach( $array_cat as $cat )
 	{
@@ -76,9 +76,9 @@ if( $q == 'deletecatsong' )
 	$xtpl->parse( 'main' );
 	$contents = $xtpl->text( 'main' );
 	
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo nv_admin_theme( $contents );
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 	exit();
 }
 elseif( $q == 'detected-and-delete-duplicate-singer' )
@@ -99,7 +99,7 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 	$xtpl = new XTemplate( "exdetected_and_delete_duplicate_singer.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
 	$xtpl->assign( 'LANG', $lang_module );
 	$xtpl->assign( 'GLANG', $lang_global );
-	$xtpl->assign( 'URL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=ex&q=detected-and-delete-duplicate-singer" );
+	$xtpl->assign( 'URL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=ex&q=detected-and-delete-duplicate-singer" );
 	
 	$checksess = md5( $global_config['sitekey'] . $nv_Request->session_id );
 	
@@ -110,13 +110,13 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 		$tokend = $nv_Request->get_string( 'checksess', 'get', '' );
 		if( ! empty( $singer ) and $tokend == $checksess )
 		{
-			$page_title = "<a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer\">" . $lang_module['ex_detected_and_delete_duplicate_singer'] . "</a> ►► <a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer&singer=" . urlencode( $singer ) . "&amp;checksess=" . $checksess . "\">" . sprintf( $lang_module['ex_detected_and_delete_duplicate_singer_detail'], $singer ) . "</a>";
+			$page_title = "<a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer\">" . $lang_module['ex_detected_and_delete_duplicate_singer'] . "</a> ►► <a href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer&singer=" . urlencode( $singer ) . "&amp;checksess=" . $checksess . "\">" . sprintf( $lang_module['ex_detected_and_delete_duplicate_singer_detail'], $singer ) . "</a>";
 		
-			$sql = "SELECT `id`, `tenthat`, `thumb`, `numsong`, `numalbum`, `numvideo` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat`=" . $db->dbescape( $singer );
-			$result = $db->sql_query( $sql );
+			$sql = "SELECT id, tenthat, thumb, numsong, numalbum, numvideo FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE tenthat=" . $db->quote( $singer );
+			$result = $db->query( $sql );
 			
 			$array_allow_singer_id = array();
-			while( $row = $db->sql_fetchrow( $result ) )
+			while( $row = $result->fetch() )
 			{
 				$row['class'] = $i ++ % 2 ? " class=\"second\"" : "";
 				$array_allow_singer_id[$row['id']] = $row['id'];
@@ -146,21 +146,21 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 					if( ! empty( $deleteid ) )
 					{
 						// Lay tong so video, song, album
-						list( $numsong ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `casi` IN( " . implode( ",", $deleteid ) . " )" ) );
-						list( $numalbum ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi` IN( " . implode( ",", $deleteid ) . " )" ) );
-						list( $numvideo ) = $db->sql_fetchrow( $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi` IN( " . implode( ",", $deleteid ) . " )" ) );
+						$numsong = $db->query( "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE casi IN( " . implode( ",", $deleteid ) . " )" )->fetchColumn();
+						$numalbum = $db->query( "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi IN( " . implode( ",", $deleteid ) . " )" )->fetchColumn();
+						$numvideo = $db->query( "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE casi IN( " . implode( ",", $deleteid ) . " )" )->fetchColumn();
 						
 						// Cap nhat so song, album, video cho ca si moi
-						if( $numsong > 0 ) $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET `numsong`=`numsong`+" . $numsong . " WHERE `id`=" . $toid );
-						if( $numalbum > 0 ) $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET `numalbum`=`numalbum`+" . $numalbum . " WHERE `id`=" . $toid );
-						if( $numvideo > 0 ) $db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET `numvideo`=`numvideo`+" . $numvideo . " WHERE `id`=" . $toid );
+						if( $numsong > 0 ) $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_singer SET numsong=numsong+" . $numsong . " WHERE id=" . $toid );
+						if( $numalbum > 0 ) $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_singer SET numalbum=numalbum+" . $numalbum . " WHERE id=" . $toid );
+						if( $numvideo > 0 ) $db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_singer SET numvideo=numvideo+" . $numvideo . " WHERE id=" . $toid );
 						
 						// Xoa anh ca si
-						$sql = "SELECT `id`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id` IN( " . implode( ",", $deleteid ) . " )";
-						$result = $db->sql_query( $sql );
-						while( $row = $db->sql_fetchrow( $result ) )
+						$sql = "SELECT id, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id IN( " . implode( ",", $deleteid ) . " )";
+						$result = $db->query( $sql );
+						while( $row = $result->fetch() )
 						{
-							if( ! $db->sql_numrows( $db->sql_query( "SELECT `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `thumb`=" . $db->dbescape( $row['thumb'] ) . " AND `id`!=" . $row['id'] ) ) )
+							if( ! $db->query( "SELECT thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE thumb=" . $db->quote( $row['thumb'] ) . " AND id!=" . $row['id'] )->rowCount() )
 							{
 								$thumb = NV_DOCUMENT_ROOT . $row['thumb'];
 								if( is_file( $thumb ) )
@@ -171,22 +171,22 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 						}
 						
 						// Xoa ca si
-						$db->sql_query( "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id` IN( " . implode( ",", $deleteid ) . " )" );
+						$db->query( "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id IN( " . implode( ",", $deleteid ) . " )" );
 						
 						// Cap nhat lai song, album, video
-						$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `casi`=" . $toid . " WHERE `casi` IN( " . implode( ",", $deleteid ) . " )" );
-						$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `casi`=" . $toid . " WHERE `casi` IN( " . implode( ",", $deleteid ) . " )" );
-						$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET `casi`=" . $toid . " WHERE `casi` IN( " . implode( ",", $deleteid ) . " )" );
+						$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET casi=" . $toid . " WHERE casi IN( " . implode( ",", $deleteid ) . " )" );
+						$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET casi=" . $toid . " WHERE casi IN( " . implode( ",", $deleteid ) . " )" );
+						$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_video SET casi=" . $toid . " WHERE casi IN( " . implode( ",", $deleteid ) . " )" );
 						
 						// Xoa cache
-						nv_del_moduleCache( $module_name );
+						$nv_Cache->delMod( $module_name );
 						
 						$xtpl->parse( 'complete_duplicate' );
 						$contents = $xtpl->text( 'complete_duplicate' );
 						
-						include ( NV_ROOTDIR . "/includes/header.php" );
+						include NV_ROOTDIR . '/includes/header.php';
 						echo nv_admin_theme( $contents );
-						include ( NV_ROOTDIR . "/includes/footer.php" );
+						include NV_ROOTDIR . '/includes/footer.php';
 						exit();
 					}
 				}
@@ -195,9 +195,9 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 			$xtpl->parse( 'main' );
 			$contents = $xtpl->text( 'main' );
 			
-			include ( NV_ROOTDIR . "/includes/header.php" );
+			include NV_ROOTDIR . '/includes/header.php';
 			echo nv_admin_theme( $contents );
-			include ( NV_ROOTDIR . "/includes/footer.php" );
+			include NV_ROOTDIR . '/includes/footer.php';
 			exit();
 		}
 	}
@@ -205,23 +205,23 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 	// Lay ca si trung
 	$page = $nv_Request->get_int( 'page', 'get', 0 );
 	$per_page = 20;
-	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer";
+	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer";
 	
-	$sql = "SELECT SQL_CALC_FOUND_ROWS `id`, `tenthat`, `thumb`, `numsong`, `numalbum`, `numvideo`, COUNT(*) AS `duplicate` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` GROUP BY `tenthat` ORDER BY `duplicate` DESC LIMIT " . $page . ", " . $per_page;
+	$sql = "SELECT SQL_CALC_FOUND_ROWS id, tenthat, thumb, numsong, numalbum, numvideo, COUNT(*) AS duplicate FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer GROUP BY tenthat ORDER BY duplicate DESC LIMIT " . $page . ", " . $per_page;
 	
-	$result = $db->sql_query( $sql );
-	$query = $db->sql_query( "SELECT FOUND_ROWS()" );
-	list( $all_page ) = $db->sql_fetchrow( $query );
+	$result = $db->query( $sql );
+	$query = $db->query( "SELECT FOUND_ROWS()" );
+	$all_page = $query->fetchColumn();
 
 	$generate_page = nv_generate_page( $base_url, $all_page, $per_page, $page );
 	
 	$array = array();
 	$i = 1;
 	
-	while( $row = $db->sql_fetchrow( $result ) )
+	while( $row = $result->fetch() )
 	{
 		$row['class'] = $i ++ % 2 ? " class=\"second\"" : "";
-		$row['link'] = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer&singer=" . urlencode( $row['tenthat'] ) . "&amp;checksess=" . $checksess;
+		$row['link'] = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer&singer=" . urlencode( $row['tenthat'] ) . "&amp;checksess=" . $checksess;
 		
 		$xtpl->assign( 'ROW', $row );
 		
@@ -245,12 +245,10 @@ elseif( $q == 'detected-and-delete-duplicate-singer' )
 	$xtpl->parse( 'main' );
 	$contents = $xtpl->text( 'main' );
 	
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo nv_admin_theme( $contents );
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 	exit();
 }
 
 nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
-
-?>

@@ -14,14 +14,14 @@ $page_title = $lang_module['ads_title'];
 $contents = "";
 $error = "";
 
-$name = filter_text_input( 'name', 'post', '' );
+$name = $nv_Request->get_title( 'name', 'post', '' );
 $link = $nv_Request->get_string( 'link', 'post', '' );
 $url = $nv_Request->get_string( 'url', 'post', '' );
 
 // Xu li
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_ads` ORDER BY `stt`";
-$result = $db->sql_query( $sql );
-$num = $db->sql_numrows( $result );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_ads ORDER BY stt";
+$result = $db->query( $sql );
+$num = $result->rowCount();
 $numadd = $num + 1;
 
 if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
@@ -36,19 +36,19 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	}
 	else
 	{
-		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_ads` VALUES (
+		$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_ads VALUES (
 			NULL, 
-			" . $db->dbescape( $numadd ) . ", 
-			" . $db->dbescape( $link ) . ", 
-			" . $db->dbescape( $name ) . ",
-			" . $db->dbescape( $url ) . "
+			" . $db->quote( $numadd ) . ", 
+			" . $db->quote( $link ) . ", 
+			" . $db->quote( $name ) . ",
+			" . $db->quote( $url ) . "
 		)";
 
-		if( $db->sql_query_insert_id( $sql ) )
+		if( $db->insert_id( $sql ) )
 		{
-			$db->sql_freeresult();
-			nv_del_moduleCache( $module_name );
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+			//$xxx->closeCursor();
+			$nv_Cache->delMod( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 			die();
 		}
 		else
@@ -73,7 +73,7 @@ $contents .= "<table class=\"tab1\">
 	</thead>
 	<tbody>";
 $i = 1;
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$contents .= "
 	<tr>
@@ -81,7 +81,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		<td>" . $row['name'] . "</td>
 		<td align=\"center\">
 			<span class=\"delete_icon\">
-				<a class=\"delfile\" href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delads&id=" . $row['id'] . "\">" . $lang_module['delete'] . "</a>
+				<a class=\"delfile\" href=\"" . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=delads&id=" . $row['id'] . "\">" . $lang_module['delete'] . "</a>
 			</span>
 		</td>
 	</tr>";
@@ -146,7 +146,7 @@ $contents .= "</tbody>
 					data: '',
 					success: function(data){
 						alert(data);
-						window.location = '" . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=ads';
+						window.location = '" . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=ads';
 					}
 				});
 			}
@@ -154,8 +154,6 @@ $contents .= "</tbody>
 	});
 </script>";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

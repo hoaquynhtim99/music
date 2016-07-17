@@ -72,15 +72,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">{LANG.link_song}:</td>
-				<td><input class="txt-full" id="linksong" onclick="Select_all('linksong');" type="text" value="{GDATA.selfurl_base}" readonly="readonly"/></td>
+				<td><input class="form-control" id="linksong" onclick="Select_all('linksong');" type="text" value="{GDATA.selfurl_base}" readonly="readonly"/></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.blog_song}:</td>
-				<td><input class="txt-full" id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{GDATA.full_data_url}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{GDATA.full_data_url}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /></td>
+				<td><input class="form-control" id="blogsong" onclick="Select_all('blogsong');" type="text" value="&lt;object id=&quot;player&quot; classid=&quot;clsid:D27CDB6E-AE6D-11cf-96B8-444553540000&quot; name=&quot;player&quot; width=&quot;500&quot; height=&quot;60&quot;&gt; &lt;param name=&quot;movie&quot; value=&quot;{GDATA.full_data_url}player.swf&quot; /&gt; &lt;param name=&quot;allowfullscreen&quot; value=&quot;false&quot; /&gt; &lt;param name=&quot;allowscriptaccess&quot; value=&quot;always&quot; /&gt; &lt;param name=&quot;flashvars&quot; value=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt; &lt;embed  type=&quot;application/x-shockwave-flash&quot; id=&quot;player2&quot; name=&quot;player2&quot; src=&quot;{GDATA.full_data_url}player.swf&quot; width=&quot;500&quot; height=&quot;60&quot; allowscriptaccess=&quot;always&quot; allowfullscreen=&quot;false&quot; flashvars=&quot;playlistfile={GDATA.creat_link_url}&amp;amp;bufferlength=10&amp;amp;volume=100&amp;amp;playlist=bottom&amp;amp;playlistsize=60&amp;amp;autostart=true&amp;amp;repeat=always&amp;amp;controlbar=bottom&amp;amp;dock=false&quot; /&gt;&lt;/object&gt;" readonly="readonly" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.forum_song}:</td>
-				<td><input class="txt-full" id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{GDATA.full_data_url}player.swf?playlistfile={GDATA.creat_link_url}[/FLASH]" readonly="readonly"/></td>
+				<td><input class="form-control" id="songforum" onclick="Select_all('songforum');" type="text" value="[FLASH]{GDATA.full_data_url}player.swf?playlistfile={GDATA.creat_link_url}[/FLASH]" readonly="readonly"/></td>
 			</tr>
 		</table>
 		<div class="hr"></div>
@@ -89,15 +89,15 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="who-send-gift" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
+				<td><input class="form-control" id="who-send-gift" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.who_recive}:</td>
-				<td><input class="txt-full" id="who-receive-gift" type="text" value="" /></td>
+				<td><input class="form-control" id="who-receive-gift" type="text" value="" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.email_receive}:</td>
-				<td><input class="txt-full" id="email-receive-gift" type="text" value="" /></td>
+				<td><input class="form-control" id="email-receive-gift" type="text" value="" /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.message}:</td>
@@ -193,7 +193,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table id="sendlyric" cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="user_lyric" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
+				<td><input class="form-control" id="user_lyric" type="text" value="{GDATA.username}" {CDATA.no_change} /></td>
 			</tr>
 			<tr>
 				<td class="left">{LANG.content}:</td>
@@ -264,7 +264,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td colspan="2">
-					<select class="txt-full" id="root_error" name="root_error">
+					<select class="form-control" id="root_error" name="root_error">
 						<option value="">{LANG.error_choose}</option>
 						<option value="check">{LANG.error_s_1}</option>
 						<option>{LANG.error_s_2}</option>
@@ -280,7 +280,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 			</tr>
 			<tr>
 				<td class="left">{LANG.enter_name}:</td>
-				<td><input class="txt-full" id="user" type="text" value="{GDATA.username}" {CDATA.no_change}/></td>
+				<td><input class="form-control" id="user" type="text" value="{GDATA.username}" {CDATA.no_change}/></td>
 			</tr>
 			<tr>
 				<td colspan="2">{LANG.give_error_diff}</td>
@@ -397,7 +397,7 @@ $(document).ready(function() {
 			<table cellpadding="0" cellspacing="0" class="musictable">
 				<tr>
 					<td class="left">{LANG.your_name}:</td>
-					<td><input class="txt-full" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
+					<td><input class="form-control" type="text" name="name" id="name" value="{GDATA.username}" {CDATA.no_change}/></td>
 				</tr>
 				<tr>
 					<td class="left">{LANG.content}:</td>

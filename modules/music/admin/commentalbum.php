@@ -32,14 +32,14 @@ else
 	$first_page = ( $now_page - 1 ) * 50;
 }
 
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_comment_album` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_album` AS b ON a.what=b.id WHERE a.id!=0";
-$link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_comment_album AS a INNER JOIN " . NV_PREFIXLANG . "_" . $module_data . "_album AS b ON a.what=b.id WHERE a.id!=0";
+$link = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 
 // Search data
 $data_search = array(
-	"q" => filter_text_input( 'q', 'get', $lang_module['filter_enterkey'], 1, 100 ), //
-	"from" => filter_text_input( 'from', 'get', '', 1, 100 ), //
-	"to" => filter_text_input( 'to', 'get', '', 1, 100 ), //
+	"q" => nv_substr( $nv_Request->get_title( 'q', 'get', $lang_module['filter_enterkey'], 1 ), 0, 100), //
+	"from" => nv_substr( $nv_Request->get_title( 'from', 'get', '', 1 ), 0, 100), //
+	"to" => nv_substr( $nv_Request->get_title( 'to', 'get', '', 1 ), 0, 100), //
 	"disabled" => " disabled=\"disabled\"" //
 		);
 
@@ -81,8 +81,8 @@ $sql .= " ORDER BY a.id DESC";
 
 // Get num row
 $sql1 = "SELECT COUNT(*) " . $sql;
-$result1 = $db->sql_query( $sql1 );
-list( $output ) = $db->sql_fetchrow( $result1 );
+$result1 = $db->query( $sql1 );
+$output = $result1->fetchColumn();
 $ts = ceil( $output / 50 );
 
 $xtpl = new XTemplate( "comment_album.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
@@ -98,16 +98,16 @@ $xtpl->assign( 'MODULE_NAME', $module_name );
 $xtpl->assign( 'OP', $op );
 
 $xtpl->assign( 'DATA_SEARCH', $data_search );
-$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 
 $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=del";
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=editcomment&where=album";
 $link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_comment_album&id=";
 
 $sql = "SELECT a.*, b.tname " . $sql . " LIMIT " . $first_page . ", 50";
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$xtpl->assign( 'id', $row['id'] );
 	$xtpl->assign( 'body', nv_clean60( strip_tags( $row['body'] ), 200 ) );
@@ -132,8 +132,6 @@ $contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto
 $contents .= new_page_admin( $ts, $now_page, $link );
 $contents .= "</div>\n";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

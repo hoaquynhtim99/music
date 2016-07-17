@@ -22,9 +22,9 @@ $array = array(
 );
 
 $sql = "SELECT * FROM " . $classMusic->table_prefix . "_setting_home ORDER BY object_type, weight ASC";
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	if( $row['object_type'] == 0 )
 	{
@@ -39,22 +39,22 @@ while( $row = $db->sql_fetchrow( $result ) )
 // Lay thong tin submit
 if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
-	$array['albums'] = filter_text_input( 'albums', 'post', '', 1, 255 );
-	$array['videos'] = filter_text_input( 'videos', 'post', '', 1, 255 );
+	$array['albums'] = nv_substr( $nv_Request->get_title( 'albums', 'post', '', 1 ), 0, 255);
+	$array['videos'] = nv_substr( $nv_Request->get_title( 'videos', 'post', '', 1 ), 0, 255);
 	
 	// Chuyen chuoi thanh mang
 	$array['albums'] = $classMusic->string2array( $array['albums'] );
 	$array['videos'] = $classMusic->string2array( $array['videos'] );
 	
 	// Xoa het du lieu
-	$db->sql_query( "TRUNCATE TABLE " . $classMusic->table_prefix . "_setting_home" );
+	$db->query( "TRUNCATE TABLE " . $classMusic->table_prefix . "_setting_home" );
 	
 	// Luu album
 	$i = 1;
 	foreach( $array['albums'] as $albumid )
 	{
 		$sql = "REPLACE INTO " . $classMusic->table_prefix . "_setting_home VALUES (0, " . intval( $albumid ) . ", " . $i . ")";
-		$db->sql_query( $sql );
+		$db->query( $sql );
 		$i ++;
 	}
 	
@@ -63,18 +63,18 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 	foreach( $array['videos'] as $videoid )
 	{
 		$sql = "REPLACE INTO " . $classMusic->table_prefix . "_setting_home VALUES (1, " . intval( $videoid ) . ", " . $i . ")";
-		$db->sql_query( $sql );
+		$db->query( $sql );
 		$i ++;
 	}
 
-	nv_del_moduleCache( $module_name );
+	$nv_Cache->delMod( $module_name );
 
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
+	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op );
 	die();
 }
 
 $xtpl = new XTemplate( "setting-home.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_file );
-$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
 $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'DATA', $array );
 
@@ -101,8 +101,6 @@ foreach( $array['videos'] as $tmp )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

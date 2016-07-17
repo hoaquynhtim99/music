@@ -43,10 +43,10 @@ if( $userid )
 
 		if( ! empty( $list_song ) )
 		{
-			$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 AND a.id IN(" . $list_song . ") ORDER BY a.ten ASC";
-			$result = $db->sql_query( $sql );
+			$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 AND a.id IN(" . $list_song . ") ORDER BY a.ten ASC";
+			$result = $db->query( $sql );
 			$i = 1;
-			while( $row = $db->sql_fetchrow( $result ) )
+			while( $row = $result->fetch() )
 			{
 				$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 			
@@ -62,13 +62,13 @@ if( $userid )
 		}
 	}
 
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active` = 1 AND `userid` = " . $userid . " ORDER BY `id` DESC";
-	$result = $db->sql_query( $sql );
-	$numlist = $db->sql_numrows( $result );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE active = 1 AND userid = " . $userid . " ORDER BY id DESC";
+	$result = $db->query( $sql );
+	$numlist = $result->rowCount();
 	$g_array['num'] = $numlist;
 	$g_array['playlist_max'] = $setting['playlist_max'];
 
-	while( $row = $db->sql_fetchrow( $result ) )
+	while( $row = $result->fetch() )
 	{
 		$array['playlist'][] = array(
 			"playlist_img" => "", //
@@ -85,8 +85,6 @@ if( $userid )
 
 $contents = nv_music_creatalbum( $g_array, $array );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

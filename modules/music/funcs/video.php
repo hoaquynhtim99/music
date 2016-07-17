@@ -14,15 +14,15 @@ $key_words = $module_info['keywords'];
 
 $category = get_videocategory();
 
-$sqlhot = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.view DESC LIMIT 0,12";
-$sqlnew = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 0,12";
+$sqlhot = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.view DESC LIMIT 0,12";
+$sqlnew = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.id DESC LIMIT 0,12";
 
 $array_new = array();
 $array_hot = array();
 
 // Video moi
-$result = $db->sql_query( $sqlnew );
-while( $row = $db->sql_fetchrow( $result ) )
+$result = $db->query( $sqlnew );
+while( $row = $result->fetch() )
 {
 	$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 
@@ -36,8 +36,8 @@ while( $row = $db->sql_fetchrow( $result ) )
 }
 
 // Video hot
-$result = $db->sql_query( $sqlhot );
-while( $row = $db->sql_fetchrow( $result ) )
+$result = $db->query( $sqlhot );
+while( $row = $result->fetch() )
 {
 	$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 
@@ -52,8 +52,6 @@ while( $row = $db->sql_fetchrow( $result ) )
 
 $contents = nv_music_video( $category, $array_new, $array_hot );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

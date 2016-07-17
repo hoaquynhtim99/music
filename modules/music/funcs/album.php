@@ -45,23 +45,23 @@ else
 	$first_page = ( $now_page - 1 ) * 20;
 }
 
-$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id " . $data;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id " . $data;
 $sqlnum = "SELECT COUNT(*) AS num " . $sql;
 $sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername " . $sql . " ORDER BY " . $type . " DESC LIMIT " . $first_page . ",20";
 
 // Tinh so trang
-$list = nv_db_cache( $sqlnum, 0, $module_name );
+$list = $nv_Cache->db( $sqlnum, 0, $module_name );
 $output = empty( $list ) ? 0 : $list[0]['num'];
 if( empty( $output ) and ( $now_page > 1 ) ) module_info_die();
 $ts = ceil( $output / 20 );
 
 // Ket qua
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
 $g_array['num'] = $output;
 
 $array = array();
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$singername = empty( $row['singername'] ) ? $lang_module['unknow'] : $row['singername'];
 	
@@ -105,8 +105,6 @@ $description = $setting['description'];
 $contents = nv_music_album( $g_array, $array );
 $contents .= new_page( $ts, $now_page, $link );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

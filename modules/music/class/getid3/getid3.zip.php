@@ -33,4 +33,3 @@ function getZipHeaderFilepointer($filename, &$MP3fileInfo) {
 		return FALSE;
 	}
 }
-?>

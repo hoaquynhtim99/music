@@ -3,12 +3,12 @@
 	<tbody>
 		<tr>
 			<td>
-				<form id="filter-form" method="get" action="" onsubmit="return false;">
-					<input style="width:300px" type="text" name="q" value="{DATA_SEARCH.q}" onfocus="if(this.value == '{LANG.filter_enterkey}') {this.value = '';}" onblur="if (this.value == '') {this.value = '{LANG.filter_enterkey}';}"/>
+				<form class="form-inline" id="filter-form" method="get" action="" onsubmit="return false;">
+					<input class="form-control" style="width:300px" type="text" name="q" value="{DATA_SEARCH.q}" onfocus="if(this.value == '{LANG.filter_enterkey}') {this.value = '';}" onblur="if (this.value == '') {this.value = '{LANG.filter_enterkey}';}"/>
 					{LANG.filter_from}
-					<input class="text" value="{DATA_SEARCH.from}" type="text" id="from" name="from" readonly="readonly" style="width:70px" />
+					<input class="form-control text" value="{DATA_SEARCH.from}" type="text" id="from" name="from" readonly="readonly" style="width:70px" />
 					{LANG.filter_to}
-					<input class="text" value="{DATA_SEARCH.to}" type="text" id="to" name="to" readonly="readonly" style="width:70px" />
+					<input class="form-control text" value="{DATA_SEARCH.to}" type="text" id="to" name="to" readonly="readonly" style="width:70px" />
 					<input type="button" name="do" value="{LANG.filter_action}"/>
 					<input type="button" name="cancel" value="{LANG.filter_cancel}" onclick="window.location='{URL_CANCEL}';"{DATA_SEARCH.disabled}/>
 					<input type="button" name="clear" value="{LANG.filter_clear}"/>
@@ -49,7 +49,7 @@ $(document).ready(function(){
 	});
 });
 </script>
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
@@ -57,19 +57,19 @@ $(document).ready(function(){
 			<td>{LANG.sort_content}</td>
 			<td>Album</td>
 			<td>{LANG.active}</td>
-			<td width="100px" align="center">{LANG.feature}</td>
+			<td width="100px" class="text-center">{LANG.feature}</td>
 		</tr>
 	</thead>
+	<tbody>
 	<!-- BEGIN: row -->
-	<tbody{class}>
 		<tr>
-			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
+			<td class="text-center"><input type='checkbox' class='filelist' value="{id}"></td>
 			<td>{name}</td>
 			<td>{body}</td>
 			<td>{album}</td>
-			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
+			<td width="50px" class="text-center"><a href="{URL_ACTIVE}" class="active">{active}</a>
 			</td>
-			<td align="center">
+			<td class="text-center">
 				<span class="edit_icon">
 					<a class='editfile' href="{URL_EDIT}">{LANG.edit}</a>
 				</span>
@@ -79,10 +79,10 @@ $(document).ready(function(){
 				</span>
 			</td>
 		</tr>
-	</tbody>
 	<!-- END: row -->
+	</tbody>
 </table>
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<tfoot>
 		<tr>
 			<td>

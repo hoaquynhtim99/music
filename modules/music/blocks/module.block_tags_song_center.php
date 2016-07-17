@@ -18,8 +18,8 @@ $xtpl->assign( 'URL_DOWN', $downURL );
 $xtpl->assign( 'ALL_NEW_SONG', $mainURL . "=song/id" );
 
 // Lay du lieu
-$sql = "SELECT a.id, a.cid, b.title FROM `" . NV_PREFIXLANG . "_" . $module_data . "_4category` AS a INNER JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_category` AS b ON a.cid=b.id ORDER BY a.id ASC";
-$list = nv_db_cache( $sql, 'id', $module_name );
+$sql = "SELECT a.id, a.cid, b.title FROM " . NV_PREFIXLANG . "_" . $module_data . "_4category AS a INNER JOIN " . NV_PREFIXLANG . "_" . $module_data . "_category AS b ON a.cid=b.id ORDER BY a.id ASC";
+$list = $nv_Cache->db( $sql, 'id', $module_name );
 
 $item_width = sizeof( $list );
 $item_width = $item_width ? ( 100 / $item_width ) : 100;
@@ -42,9 +42,9 @@ if( ! empty( $list ) )
 if( $nv_Request->isset_request( 'loadblocktabsong', 'get' ) )
 {
 	$id = $nv_Request->get_int( 'loadblocktabsong', 'get', 0 );
-	$sql = "SELECT `cid` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_4category` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
-	list( $cid ) = $db->sql_fetchrow( $result );
+	$sql = "SELECT cid FROM " . NV_PREFIXLANG . "_" . $module_data . "_4category WHERE id=" . $id;
+	$result = $db->query( $sql );
+	$cid = $result->fetchColumn();
 	if( empty( $cid ) ) nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 
 	$first_cat = $cid;
@@ -53,9 +53,9 @@ if( $nv_Request->isset_request( 'loadblocktabsong', 'get' ) )
 // Xuat bai hat cua Tab dau tien
 if( ! empty( $first_cat ) )
 {
-	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.theloai=" . $first_cat . " AND a.active=1 ORDER BY a.dt DESC LIMIT 0," . $setting['num_blocktab'];
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.theloai=" . $first_cat . " AND a.active=1 ORDER BY a.dt DESC LIMIT 0," . $setting['num_blocktab'];
 
-	$list = nv_db_cache( $sql, 'id', $module_name );
+	$list = $nv_Cache->db( $sql, 'id', $module_name );
 
 	if( ! empty( $list ) )
 	{
@@ -88,5 +88,3 @@ if( ! empty( $first_cat ) )
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
-?>

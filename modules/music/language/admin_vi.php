@@ -8,7 +8,8 @@
  * @Createdate 26/01/2011 09:41 AM
  */
 
-if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if (!defined('NV_ADMIN') or !defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "04/03/2010, 15:22";
@@ -406,5 +407,3 @@ $lang_module['block_album_cap_pos_1'] = "Nằm bên dưới ảnh";
 $lang_module['block_album_num_cols'] = "Số album trên một hàng";
 $lang_module['block_album_image_size'] = "Kích thước ảnh";
 $lang_module['block_album_num_albums'] = "Số album";
-
-?>

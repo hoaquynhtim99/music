@@ -120,5 +120,3 @@ function GetDataImageSize($imgData) {
 
 	return array($width, $height, $type);
 }; // end function
-
-?>

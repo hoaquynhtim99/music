@@ -22,8 +22,8 @@ $row['singeralias'] = '';
 $row['singername'] = $lang_module['unknow'];
 
 // Lay ca si
-$sql = "SELECT `ten`, `tenthat` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $row['casi'];
-$list = nv_db_cache( $sql );
+$sql = "SELECT ten, tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $row['casi'];
+$list = $nv_Cache->db( $sql );
 
 if( ! empty( $list ) )
 {
@@ -69,8 +69,8 @@ if( empty( $row ) )
 updateHIT_VIEW( $id, '_album', true );
 
 // Cac bai hat cua album
-$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN(" . $row['listsong'] . ") AND a.active=1";
-$list = nv_db_cache( $sql, 'id' );
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.id IN(" . $row['listsong'] . ") AND a.active=1";
+$list = $nv_Cache->db( $sql, 'id' );
 
 $album_array['numsong'] = sizeof( $list );
 $song_array = array();
@@ -98,8 +98,8 @@ $array_album = $array_video = $array_singer = array();
 if( $album_array['singerid'] != 0 )
 {
 	// Danh sach album
-	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $album_array['singerid'] . " AND `active`=1 ORDER BY `addtime` DESC LIMIT 0,4";
-	$list = nv_db_cache( $sql, 'id' );
+	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $album_array['singerid'] . " AND active=1 ORDER BY addtime DESC LIMIT 0,4";
+	$list = $nv_Cache->db( $sql, 'id' );
 	
 	foreach( $list as $r )
 	{
@@ -112,8 +112,8 @@ if( $album_array['singerid'] != 0 )
 	}
 	
 	// Danh sach video
-	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $album_array['singerid'] . " AND `active`=1 ORDER BY `dt` DESC LIMIT 0,3";
-	$list = nv_db_cache( $sql, 'id' );
+	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE casi=" . $album_array['singerid'] . " AND active=1 ORDER BY dt DESC LIMIT 0,3";
+	$list = $nv_Cache->db( $sql, 'id' );
 	
 	foreach( $list as $r )
 	{
@@ -126,8 +126,8 @@ if( $album_array['singerid'] != 0 )
 	}
 	
 	// Chi tiet ca si
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $album_array['singerid'] . " AND `thumb`!='' AND `introduction`!=''";
-	$list = nv_db_cache( $sql, 'id' );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $album_array['singerid'] . " AND thumb!='' AND introduction!=''";
+	$list = $nv_Cache->db( $sql, 'id' );
 	
 	foreach( $list as $r )
 	{
@@ -142,8 +142,6 @@ $description = isset( $album_array['describe']{50} ) ? $album_array['describe'] 
 
 $contents = nv_music_listenlist( $g_array, $album_array, $song_array, $array_album, $array_video, $array_singer );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

@@ -507,5 +507,3 @@ function RoughTranslateUnicodeToASCII($rawdata, $frame_textencoding) {
 	}
 	return str_replace(chr(0), '', $asciidata); // just in case any nulls slipped through
 }
-
-?>

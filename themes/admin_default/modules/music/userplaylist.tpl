@@ -1,19 +1,19 @@
 <!-- BEGIN: main -->
-<form action="{FORM_ACTION}" method="get"/>
+<form class="form-inline" action="{FORM_ACTION}" method="get"/>
 	<table class="tab1 fixbottomtable">
 		<tbody>
 			<tr>
 				<td>
-					<input type="text" name="q" value="{Q}" style="width:200px"/>
+					<input class="form-control" type="text" name="q" value="{Q}" style="width:200px"/>
 					<input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}"/>
 					<input type="hidden" name="{OP}" value="{OP1}"/>
-					<input type="submit" value="{LANG.search}"/>
+					<input class="btn btn-primary" type="submit" value="{LANG.search}"/>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 </form>
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<thead>
 		<tr>
 			<td width="20px">{LANG.select}</td>
@@ -21,28 +21,28 @@
 			<td>{LANG.singer}</td>
 			<td>{LANG.user_send_lyric}</td>
 			<td>{LANG.active}</td>
-			<td width="100px" align="center">{LANG.feature}</td>
+			<td width="100px" class="text-center">{LANG.feature}</td>
 		</tr>
 	</thead>
+	<tbody>
 	<!-- BEGIN: row -->
-	<tbody{class}>
 		<tr>
-			<td align="center"><input type='checkbox' class='filelist' value="{id}"></td>
+			<td class="text-center"><input type='checkbox' class='filelist' value="{id}"></td>
 			<td>{name}</td>
 			<td>{singer}</td>
 			<td>{username}</td>
-			<td width="50px" align="center"><a href="{URL_ACTIVE}" class="active">{active}</a>
+			<td width="50px" class="text-center"><a href="{URL_ACTIVE}" class="active">{active}</a>
 			</td>
-			<td align="center">
+			<td class="text-center">
 				<span class="edit_icon"><a class="editfile" href="{URL_EDIT}">{LANG.edit}</a></span>
 				&nbsp;-&nbsp; 
 				<span class="delete_icon"><a class="delfile" href="{URL_DEL_ONE}">{LANG.delete}</a></span>
 			</td>
 		</tr>
-	</tbody>
 	<!-- END: row -->
+	</tbody>
 </table>
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<tfoot>
 		<tr>
 			<td>

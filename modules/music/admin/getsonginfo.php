@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES.,JSC. All rights reserved
+ * @Copyright (C) 2016 VINADES.,JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate 7-17-2010 14:43
  */
 
@@ -71,5 +72,3 @@ else
 $au = GetAllMP3info( $data );
 
 echo $au['fileformat'] . "_" . $au['bitrate'] . "_" . $au['filesize'] . "_" . $au['playtime_seconds'] . "_" . $lang_module['error_file_type'];
-
-?>

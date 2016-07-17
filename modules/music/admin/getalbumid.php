@@ -9,7 +9,7 @@
 
 if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 
-$area = filter_text_input( 'area', 'get', '' );
+$area = $nv_Request->get_title( 'area', 'get', '' );
 if( empty( $area ) )
 {
 	nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
@@ -36,15 +36,15 @@ $per_page = 30;
 $array = array();
 
 // Base data
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`!=0";
-$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;area=" . $area;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id!=0";
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;area=" . $area;
 
 // Search data
 $data_search = array(
-	"title" => filter_text_input( 'title', 'get', '', 1, 255 ),
-	"casi" => filter_text_input( 'casi', 'get', '', 1, 255 ),
-	"describe" => filter_text_input( 'describe', 'get', '', 1, 255 ),
-	"upboi" => filter_text_input( 'upboi', 'get', '', 1, 255 ),
+	"title" => nv_substr( $nv_Request->get_title( 'title', 'get', '', 1 ), 0, 255),
+	"casi" => nv_substr( $nv_Request->get_title( 'casi', 'get', '', 1 ), 0, 255),
+	"describe" => nv_substr( $nv_Request->get_title( 'describe', 'get', '', 1 ), 0, 255),
+	"upboi" => nv_substr( $nv_Request->get_title( 'upboi', 'get', '', 1 ), 0, 255),
 );
 
 $xtpl->assign( 'SEARCH', $data_search );
@@ -53,7 +53,7 @@ $xtpl->assign( 'SEARCH', $data_search );
 if( ! empty( $data_search['title'] ) )
 {
 	$base_url .= "&amp;title=" . $data_search['title'];
-	$sql .= " AND ( `tname` LIKE '%" . $db->dblikeescape( $data_search['title'] ) . "%' )";
+	$sql .= " AND ( tname LIKE '%" . $db->dblikeescape( $data_search['title'] ) . "%' )";
 }
 
 // Tim theo ca si
@@ -65,40 +65,40 @@ if( ! empty( $data_search['casi'] ) )
 	$singer_id = $classMusic->search_singer_id( $data_search['casi'], 3 );
 	if( $singer_id )
 	{
-		$sql .= " AND ( `casi` LIKE '%," . implode( ",%' OR `casi` LIKE '%,", $singer_id ) . ",%' )";
+		$sql .= " AND ( casi LIKE '%," . implode( ",%' OR casi LIKE '%,", $singer_id ) . ",%' )";
 	}
 	else
 	{
-		$sql .= " AND `casi`=''";
+		$sql .= " AND casi=''";
 	}
 }
 
 if( ! empty( $data_search['describe'] ) )
 {
 	$base_url .= "&amp;describe=" . $data_search['describe'];
-	$sql .= " AND ( `describe` LIKE '%" . $db->dblikeescape( $data_search['describe'] ) . "%' )";
+	$sql .= " AND ( describe LIKE '%" . $db->dblikeescape( $data_search['describe'] ) . "%' )";
 }
 
 if( ! empty( $data_search['upboi'] ) )
 {
 	$base_url .= "&amp;upboi=" . $data_search['upboi'];
-	$sql .= " AND ( `upboi` LIKE '%" . $db->dblikeescape( $data_search['upboi'] ) . "%' )";
+	$sql .= " AND ( upboi LIKE '%" . $db->dblikeescape( $data_search['upboi'] ) . "%' )";
 }
 
 $array = array();
 
 $sql1 = "SELECT COUNT(*) " . $sql;
-$result1 = $db->sql_query( $sql1 );
-list( $all_page ) = $db->sql_fetchrow( $result1 );
+$result1 = $db->query( $sql1 );
+$all_page = $result1->fetchColumn();
 
 $page = $nv_Request->get_int( 'page', 'get', 0 );
 $per_page = 15;
 
-$sql2 = "SELECT `id`, `name`, `tname`, `upboi`, `casi` " . $sql . " ORDER BY `id` DESC LIMIT " . $page . ", " . $per_page;
-$query2 = $db->sql_query( $sql2 );
+$sql2 = "SELECT id, name, tname, upboi, casi " . $sql . " ORDER BY id DESC LIMIT " . $page . ", " . $per_page;
+$query2 = $db->query( $sql2 );
 
 $array_singer_id = array();
-while( $row = $db->sql_fetchrow( $query2 ) )
+while( $row = $query2->fetch() )
 {
 	$array_singer_id[] = $row['casi'];
 
@@ -152,9 +152,7 @@ $xtpl->parse( 'main.resultdata' );
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo $contents;
-include ( NV_ROOTDIR . "/includes/footer.php" );
+include NV_ROOTDIR . '/includes/footer.php';
 exit();
-
-?>

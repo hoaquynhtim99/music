@@ -149,5 +149,3 @@ if ($EditorFilename) {
 	echo '<TR><TD ALIGN="CENTER" COLSPAN="2"><INPUT TYPE="SUBMIT" VALUE="Find File"></TD></TR>';
 }
 echo '</FORM></TABLE>';
-
-?>

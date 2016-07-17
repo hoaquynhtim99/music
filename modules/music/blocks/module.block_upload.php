@@ -21,5 +21,3 @@ $xtpl->assign( 'MODULE_FILE', $module_file );
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
-?>

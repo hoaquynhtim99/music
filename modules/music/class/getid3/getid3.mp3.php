@@ -485,4 +485,3 @@ function MPEGaudioHeaderValid($rawarray) {
 	
 	return TRUE;
 }
-?>

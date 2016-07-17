@@ -1,11 +1,11 @@
 <!-- BEGIN: main -->
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<tbody>
 		<tr>
 			<td>
-				<form id="filter-form" method="get" action="" onsubmit="return false;">
-					<input class="music-input text size2" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.add_lyric}"/>
-					<input class="music-input text size2" type="text" name="song" value="{DATA_SEARCH.song}" placeholder="{LANG.song_name}"/>
+				<form class="form-inline" id="filter-form" method="get" action="" onsubmit="return false;">
+					<input class="form-control music-input text size2" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.add_lyric}"/>
+					<input class="form-control music-input text size2" type="text" name="song" value="{DATA_SEARCH.song}" placeholder="{LANG.song_name}"/>
 					<input class="music-button" type="button" name="do" value="{LANG.filter_action}"/>
 					<input class="music-button" type="button" name="cancel" value="{LANG.filter_cancel}" onclick="window.location='{URL_CANCEL}';"{DATA_SEARCH.disabled}/>
 					<input class="music-button" type="button" name="clear" value="{LANG.filter_clear}"/>
@@ -32,8 +32,8 @@ $(document).ready(function(){
 	});
 });
 </script>
-<form action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
-	<table class="tab1">
+<form class="form-inline" action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<tr>
 				<td class="center col-check">
@@ -47,26 +47,26 @@ $(document).ready(function(){
 				<td class="center col-feature">{LANG.feature}</td>
 			</tr>
 		</thead>
+		<tbody>
 		<!-- BEGIN: row -->
-		<tbody{ROW.class}>
 			<tr class="topalign">
-				<td class="center">
+				<td class="text-center">
 					<input type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
 				</td>
 				<td>{ROW.song}</td>
 				<td>{ROW.body}</td>
 				<td>{ROW.user}</td>
 				<td class="aright">{ROW.addtime}</td>
-				<td class="center">
+				<td class="text-center">
 					<input name="status" id="change_status{ROW.id}" value="1" type="checkbox"{ROW.status} onclick="nv_change_lyric_status({ROW.id})" />
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<span class="edit-icon"><a class="nounderline" href="{ROW.url_edit}">{GLANG.edit}</a></span>
 					<span class="delete-icon"><a class="nounderline" href="javascript:void(0);" onclick="nv_delete_lyric({ROW.id});">{GLANG.delete}</a></span>
 				</td>
 			</tr>
-		</tbody>
 		<!-- END: row -->
+		</tbody>
 		<!-- BEGIN: generate_page -->
 		<tbody>
 			<tr>
@@ -74,8 +74,8 @@ $(document).ready(function(){
 					{GENERATE_PAGE}
 				</td>
 			</tr>
-		</tbody>
 		<!-- END: generate_page -->
+		</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="7">

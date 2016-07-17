@@ -21,16 +21,16 @@ $error = "";
 
 if( $id )
 {
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
-	$check = $db->sql_numrows( $result );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id=" . $id;
+	$result = $db->query( $sql );
+	$check = $result->rowCount();
 	
 	if ( $check != 1 )
 	{
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	}
 	
-	$row = $db->sql_fetchrow( $result );
+	$row = $result->fetch();
 	
 	$array_old = $array = array(
 		"ten" => $row['ten'],
@@ -53,22 +53,22 @@ if( $id )
 	);
 	
 	// Lay loi bai hat
-	$sql = "SELECT `id`, `body` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_lyric` WHERE `songid`=" . $id . " ORDER BY `dt` ASC LIMIT 0,1";
-	$result = $db->sql_query( $sql );
+	$sql = "SELECT id, body FROM " . NV_PREFIXLANG . "_" . $module_data . "_lyric WHERE songid=" . $id . " ORDER BY dt ASC LIMIT 0,1";
+	$result = $db->query( $sql );
 	
-	if( $db->sql_numrows( $result ) )
+	if( $result->rowCount() )
 	{
-		list( $lyric_id, $lyric_body ) = $db->sql_fetchrow( $result );
+		list( $lyric_id, $lyric_body ) = $result->fetch( 3 );
 		$array_old['lyric'] = $array['lyric'] = nv_br2nl( $lyric_body );
 		$array_old['lyric_id'] = $array['lyric_id'] = $lyric_id;
 	}
 	
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $classMusic->lang('edit_song');
 }
 else
 {
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 	$table_caption = $classMusic->lang('add_song');
 	
 	$array = array(
@@ -94,22 +94,22 @@ else
 
 if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
-	$array['ten'] = filter_text_input( 'ten', 'post', '', 1, 255 );
-	$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 255 );
-	$array['casi'] = filter_text_input( 'casi', 'post', '', 1, 255 );
-	$array['casimoi'] = filter_text_input( 'casimoi', 'post', '', 1, 255 );
-	$array['nhacsi'] = filter_text_input( 'nhacsi', 'post', '', 1, 255 );
-	$array['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '', 1, 255 );
+	$array['ten'] = nv_substr( $nv_Request->get_title( 'ten', 'post', '', 1 ), 0, 255);
+	$array['tenthat'] = nv_substr( $nv_Request->get_title( 'tenthat', 'post', '', 1 ), 0, 255);
+	$array['casi'] = nv_substr( $nv_Request->get_title( 'casi', 'post', '', 1 ), 0, 255);
+	$array['casimoi'] = nv_substr( $nv_Request->get_title( 'casimoi', 'post', '', 1 ), 0, 255);
+	$array['nhacsi'] = nv_substr( $nv_Request->get_title( 'nhacsi', 'post', '', 1 ), 0, 255);
+	$array['nhacsimoi'] = nv_substr( $nv_Request->get_title( 'nhacsimoi', 'post', '', 1 ), 0, 255);
 	$array['album'] = $nv_Request->get_int( 'album', 'post', 0 );
 	$array['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
 	$array['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
 	$array['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
-	$array['upboi'] = filter_text_input( 'upboi', 'post', '', 1, 255 );
+	$array['upboi'] = nv_substr( $nv_Request->get_title( 'upboi', 'post', '', 1 ), 0, 255);
 	$array['bitrate'] = $nv_Request->get_int( 'bitrate', 'post', 0 );
 	$array['size'] = $nv_Request->get_int( 'size', 'post', 0 );
 	$array['duration'] = $nv_Request->get_int( 'duration', 'post', 0 );
 	$array['is_official'] = $nv_Request->get_int( 'is_official', 'post', 0 );
-	$array['lyric'] = filter_text_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
+	$array['lyric'] = $nv_Request->get_textarea( 'lyric', '', NV_ALLOWED_HTML_TAGS );
 
 	// Chuan hoa alias
 	$array['ten'] = empty( $array['ten'] ) ? change_alias( $array['tenthat'] ) : change_alias( $array['ten'] );
@@ -196,8 +196,8 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 
 			if( $check )
 			{
-				nv_del_moduleCache( $module_name );
-				Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
+				$nv_Cache->delMod( $module_name );
+				Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
 				die();
 			}
 			else
@@ -222,8 +222,8 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 
 			if( $result_song_id )
 			{
-				nv_del_moduleCache( $module_name );
-				Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
+				$nv_Cache->delMod( $module_name );
+				Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
 				die();
 			}
 			else
@@ -341,8 +341,6 @@ if( ! empty( $array['nhacsi'] ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

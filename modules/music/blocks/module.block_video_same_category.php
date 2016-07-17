@@ -18,12 +18,12 @@ if( $op == "viewvideo" )
 {
 	$videoid = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
-	$sql = "SELECT a.id, a.name, a.tname, a.casi, a.thumb, a.view, b.ten AS singeralias, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 AND a.id!=" . $videoid . " AND a.theloai =( SELECT `theloai` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $videoid . " LIMIT 1 ) ORDER BY a.id DESC LIMIT 0,5";
+	$sql = "SELECT a.id, a.name, a.tname, a.casi, a.thumb, a.view, b.ten AS singeralias, b.tenthat FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 AND a.id!=" . $videoid . " AND a.theloai =( SELECT theloai FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id=" . $videoid . " LIMIT 1 ) ORDER BY a.id DESC LIMIT 0,5";
 
-	$result = $db->sql_query( $sql );
-	if( $db->sql_numrows( $result ) )
+	$result = $db->query( $sql );
+	if( $result->rowCount() )
 	{
-		while( $row = $db->sql_fetchrow( $result ) )
+		while( $row = $result->fetch() )
 		{
 			$singername = empty( $row['tenthat'] ) ? $lang_module['unknow'] : $row['tenthat'];
 			
@@ -40,5 +40,3 @@ if( $op == "viewvideo" )
 		$content = $xtpl->text( 'main' );
 	}
 }
-
-?>

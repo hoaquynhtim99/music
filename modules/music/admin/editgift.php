@@ -19,9 +19,9 @@ $id = $nv_Request->get_int( 'id', 'get,post', 0 );
 
 $page_title = $lang_module['edit_gift'];
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_gift` WHERE `id` = " . $id . "";
-$result = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $result );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_gift WHERE id = " . $id . "";
+$result = $db->query( $sql );
+$row = $result->fetch();
 
 $gift['who_send'] = $row['who_send'];
 $gift['who_receive'] = $row['who_receive'];
@@ -35,9 +35,9 @@ $gift['songname'] = $tmp['tenthat'];
 // Sua
 if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 {
-	$gift['who_send'] = filter_text_input( 'who_send', 'post', '', 1, 100 );
-	$gift['who_receive'] = filter_text_input( 'who_receive', 'post', '', 1, 100 );
-	$gift['body'] = filter_text_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
+	$gift['who_send'] = nv_substr( $nv_Request->get_title( 'who_send', 'post', '', 1 ), 0, 100);
+	$gift['who_receive'] = nv_substr( $nv_Request->get_title( 'who_receive', 'post', '', 1 ), 0, 100);
+	$gift['body'] = $nv_Request->get_textarea( 'body', '', NV_ALLOWED_HTML_TAGS );
 
 	if( empty( $gift['who_send'] ) )
 	{
@@ -54,21 +54,21 @@ if( ( $nv_Request->get_int( 'save', 'post', 0 ) ) == 1 )
 	else
 	{
 		$array['body'] = nv_nl2br( $array['body'] );
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_gift` SET
-			`who_send`=" . $db->dbescape( $gift['who_send'] ) . ",
-			`who_receive`=" . $db->dbescape( $gift['who_receive'] ) . ",
-			`body`=" . $db->dbescape( $gift['body'] ) . "
-		WHERE `id` =" . $id;
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_gift SET
+			who_send=" . $db->quote( $gift['who_send'] ) . ",
+			who_receive=" . $db->quote( $gift['who_receive'] ) . ",
+			body=" . $db->quote( $gift['body'] ) . "
+		WHERE id =" . $id;
 
-		if( $db->sql_query( $sql ) )
+		if( $db->query( $sql ) )
 		{
-			$db->sql_freeresult();
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=gift" );
+			//$xxx->closeCursor();
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=gift" );
 			die();
 		}
 		else
 		{
-			$db->sql_freeresult();
+			//$xxx->closeCursor();
 			$error = $lang_module['error_save'];
 		}
 	}
@@ -138,8 +138,6 @@ $contents .= "
 	</table>
 </form>";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

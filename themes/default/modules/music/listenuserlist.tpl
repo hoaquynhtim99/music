@@ -73,7 +73,7 @@ function share_zingme(){window.open("http://link.apps.zing.vn/share?url="+encode
 		<table cellpadding="0" cellspacing="0" class="musictable">
 			<tr>
 				<td class="left">Link Album:</td>
-				<td><input class="txt-full" id="albumlink" onclick="Select_all('albumlink')" type="text" value="{GDATA.selfurl_base}" readonly="readonly"/></td>
+				<td><input class="form-control" id="albumlink" onclick="Select_all('albumlink')" type="text" value="{GDATA.selfurl_base}" readonly="readonly"/></td>
 			</tr>
 		</table>
 	</div>

@@ -79,7 +79,7 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 				if( $result_song_id )
 				{
 					$list_song[] = $result_song_id;
-					$db->sql_freeresult();
+					//$xxx->closeCursor();
 				}
 			}
 		}
@@ -129,7 +129,7 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 				if( $result_song_id )
 				{
 					$list_song[] = $result_song_id;
-					$db->sql_freeresult();
+					//$xxx->closeCursor();
 				}
 			}
 		}
@@ -185,7 +185,7 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 				if( $result_song_id )
 				{
 					$list_song[] = $result_song_id;
-					$db->sql_freeresult();
+					//$xxx->closeCursor();
 				}
 			}
 		}
@@ -265,15 +265,15 @@ if( $nv_Request->isset_request( 'submit', 'post' ) )
 				if( $result_song_id )
 				{
 					$list_song[] = $result_song_id;
-					$db->sql_freeresult();
+					//$xxx->closeCursor();
 				}
 			}
 		}
 	}
 
 	nv_insert_logs( NV_LANG_DATA, $module_name, "Add song from " . $site, "List song", $admin_info['userid'] );
-	nv_del_moduleCache( $module_name );
-	Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name );
+	$nv_Cache->delMod( $module_name );
+	Header( 'Location: ' . NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name );
 	exit();
 }
 else
@@ -287,7 +287,7 @@ $xtpl->assign( 'LANG', $lang_module );
 $xtpl->assign( 'GLANG', $lang_global );
 $xtpl->assign( 'TABLE_CAPTION', $page_title );
 $xtpl->assign( 'NV_BASE_ADMINURL', NV_BASE_ADMINURL );
-$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op );
 
 foreach( $all_cat as $id => $cat )
 {
@@ -301,8 +301,6 @@ foreach( $all_cat as $id => $cat )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

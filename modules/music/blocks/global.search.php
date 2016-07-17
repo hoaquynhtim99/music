@@ -79,7 +79,7 @@ if( ! nv_function_exists( 'nv_music_block_search' ) )
 
 		$xtpl->assign( 'MODULE_FILE', $module_file );
 		$xtpl->assign( 'MODULE_NAME', $module );
-		$xtpl->assign( 'KEY', filter_text_input( 'q', 'get', '', 0, NV_MAX_SEARCH_LENGTH ) );
+		$xtpl->assign( 'KEY', nv_substr( $nv_Request->get_title( 'q', 'get', '', 0 ), 0, NV_MAX_SEARCH_LENGTH ));
 		$xtpl->assign( 'CHECKSESS', md5( $global_config['sitekey'] . session_id() ) );
 
 		$xtpl->parse( 'main' );
@@ -91,5 +91,3 @@ if( defined( 'NV_SYSTEM' ) )
 {
 	$content = nv_music_block_search( $block_config );
 }
-
-?>

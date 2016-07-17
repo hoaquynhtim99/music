@@ -113,5 +113,3 @@ function Lyrics3LyricsTimestampParse(&$mp3info) {
 	}
 	return $mp3info;
 }
-
-?>

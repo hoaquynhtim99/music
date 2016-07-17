@@ -350,5 +350,3 @@ function ParseID3v2GenreString($genrestring) {
 
 	return $returnarray;
 }
-
-?>

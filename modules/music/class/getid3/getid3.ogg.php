@@ -160,4 +160,3 @@ function getOggHeaderFilepointer(&$fd, &$MP3fileInfo) {
 	}
 	return TRUE;
 }
-?>

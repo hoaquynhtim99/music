@@ -17,18 +17,18 @@ if( $type == "album" )
 	$cacheFile = NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . NV_LANG_DATA . "_" . $module_data . "_album_Sitemap.cache";
 	$pa = NV_CURRENTTIME - 7200;
 
-	if( ( $cache = nv_get_cache( $cacheFile ) ) != false and filemtime( $cacheFile ) >= $pa )
+	if( ( $cache = $nv_Cache->getItem($module_name,  $cacheFile ) ) != false and filemtime( $cacheFile ) >= $pa )
 	{
 		$url = unserialize( $cache );
 	}
 	else
 	{
 
-		$sql = "SELECT `id`, `name`, `addtime` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `active`=1 ORDER BY `addtime` DESC LIMIT 1000";
-		$result = $db->sql_query( $sql );
+		$sql = "SELECT id, name, addtime FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE active=1 ORDER BY addtime DESC LIMIT 1000";
+		$result = $db->query( $sql );
 		$url = array();
 
-		while( list( $id, $ten, $dt ) = $db->sql_fetchrow( $result ) )
+		while( list( $id, $ten, $dt ) = $result->fetch( 3 ) )
 		{
 			$url[] = array( //
 				'link' => $mainURL . "=listenlist" . '/' . $id . '/' . $ten, //
@@ -37,7 +37,7 @@ if( $type == "album" )
 		}
 
 		$cache = serialize( $url );
-		nv_set_cache( $cacheFile, $cache );
+		$nv_Cache->setItem($module_name,  $cacheFile, $cache );
 	}
 
 	nv_xmlSitemap_generate( $url );
@@ -49,17 +49,17 @@ elseif( $type == "video" )
 	$cacheFile = NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . NV_LANG_DATA . "_" . $module_data . "_video_Sitemap.cache";
 	$pa = NV_CURRENTTIME - 7200;
 
-	if( ( $cache = nv_get_cache( $cacheFile ) ) != false and filemtime( $cacheFile ) >= $pa )
+	if( ( $cache = $nv_Cache->getItem($module_name,  $cacheFile ) ) != false and filemtime( $cacheFile ) >= $pa )
 	{
 		$url = unserialize( $cache );
 	}
 	else
 	{
-		$sql = "SELECT `id`, `name`, `dt` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `active`=1 ORDER BY `dt` DESC LIMIT 1000";
-		$result = $db->sql_query( $sql );
+		$sql = "SELECT id, name, dt FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE active=1 ORDER BY dt DESC LIMIT 1000";
+		$result = $db->query( $sql );
 		$url = array();
 
-		while( list( $id, $ten, $dt ) = $db->sql_fetchrow( $result ) )
+		while( list( $id, $ten, $dt ) = $result->fetch( 3 ) )
 		{
 			$url[] = array( //
 				'link' => $mainURL . "=viewvideo" . '/' . $id . '/' . $ten, //
@@ -68,7 +68,7 @@ elseif( $type == "video" )
 		}
 
 		$cache = serialize( $url );
-		nv_set_cache( $cacheFile, $cache );
+		$nv_Cache->setItem($module_name,  $cacheFile, $cache );
 	}
 
 	nv_xmlSitemap_generate( $url );
@@ -79,17 +79,17 @@ $url = array();
 $cacheFile = NV_ROOTDIR . "/" . NV_CACHEDIR . "/" . NV_LANG_DATA . "_" . $module_data . "_Sitemap.cache";
 $pa = NV_CURRENTTIME - 7200;
 
-if( ( $cache = nv_get_cache( $cacheFile ) ) != false and filemtime( $cacheFile ) >= $pa )
+if( ( $cache = $nv_Cache->getItem($module_name,  $cacheFile ) ) != false and filemtime( $cacheFile ) >= $pa )
 {
 	$url = unserialize( $cache );
 }
 else
 {
-	$sql = "SELECT `id`, `ten`, `dt` FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `active`=1 ORDER BY `dt` DESC LIMIT 1000";
-	$result = $db->sql_query( $sql );
+	$sql = "SELECT id, ten, dt FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE active=1 ORDER BY dt DESC LIMIT 1000";
+	$result = $db->query( $sql );
 	$url = array();
 
-	while( list( $id, $ten, $dt ) = $db->sql_fetchrow( $result ) )
+	while( list( $id, $ten, $dt ) = $result->fetch( 3 ) )
 	{
 		$url[] = array( //
 			'link' => $mainURL . "=listenone" . '/' . $id . '/' . $ten, //
@@ -98,10 +98,8 @@ else
 	}
 
 	$cache = serialize( $url );
-	nv_set_cache( $cacheFile, $cache );
+	$nv_Cache->setItem($module_name,  $cacheFile, $cache );
 }
 
 nv_xmlSitemap_generate( $url );
 die();
-
-?>

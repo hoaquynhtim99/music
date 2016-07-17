@@ -8,7 +8,8 @@
  * @Createdate 26/01/2011 09:41 AM
  */
 
-if( ! defined( 'NV_ADMIN' ) or ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if (!defined('NV_ADMIN') or !defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "04/03/2010, 15:22";
@@ -386,5 +387,3 @@ $lang_module['ex_detected_and_delete_duplicate_singer_complete'] = "Successfuly 
 $lang_module['addFromOtherSite_title'] = "Add song from other sites";
 $lang_module['addFromOtherSite_listSong'] = "List song url";
 $lang_module['addFromOtherSite_site'] = "Choose site";
-
-?>

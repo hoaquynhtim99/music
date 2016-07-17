@@ -8,7 +8,8 @@
  * @Createdate 26/01/2011 09:41 AM
  */
 
-if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if (!defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 $lang_translator['author'] = "Phan Tan Dung (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "01/01/2011, 15:22";
@@ -306,5 +307,3 @@ $lang_module['gift_list'] = "The list of musical gifts";
 $lang_module['down_info1'] = "Click at";
 $lang_module['down_info2'] = "to download the song";
 $lang_module['down_info3'] = "Download song";
-
-?>

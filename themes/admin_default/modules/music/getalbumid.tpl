@@ -27,30 +27,26 @@
 	</head>
 	<body>
 		<div id="getuidcontent">
-			<form id="formgetuid" method="get" action="{FORM_ACTION}">
+			<form class="form-inline" id="formgetuid" method="get" action="{FORM_ACTION}">
 			<input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}" />
 			<input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}" />
 			<input type="hidden" name="area" value="{AREA}" />
-			<table class="tab1">
+			<table class="table table-striped table-bordered table-hover">
 				<tbody>
 					<tr>
 						<td>{LANG.album_name}</td>
-						<td><input class="music-input txt-fullmini" type="text" name="title" value="{SEARCH.title}" maxlength="100" /></td>
+						<td><input class="form-control music-input txt-fullmini" type="text" name="title" value="{SEARCH.title}" maxlength="100" /></td>
 						<td>{LANG.describle}</td>
-						<td><input class="music-input txt-fullmini" type="text" name="describe" value="{SEARCH.describe}" maxlength="100" /></td>
+						<td><input class="form-control music-input txt-fullmini" type="text" name="describe" value="{SEARCH.describe}" maxlength="100" /></td>
 					</tr>
-				</tbody>
-				<tbody class="second">
 					<tr>
 						<td>{LANG.who_up}</td>
-						<td><input class="music-input txt-fullmini" type="text" name="upboi" value="{SEARCH.upboi}" maxlength="100" /></td>
+						<td><input class="form-control music-input txt-fullmini" type="text" name="upboi" value="{SEARCH.upboi}" maxlength="100" /></td>
 						<td>{LANG.singer}</td>
-						<td><input class="music-input txt-fullmini" type="text" name="casi" value="{SEARCH.casi}" maxlength="100" /></td>
+						<td><input class="form-control music-input txt-fullmini" type="text" name="casi" value="{SEARCH.casi}" maxlength="100" /></td>
 					</tr>
-				</tbody>
-				<tbody>
 					<tr>
-						<td colspan="4" class="center"><input type="submit" name="submit" value="{LANG.search}" class="music-button"/></td>
+						<td colspan="4" class="text-center"><input type="submit" name="submit" value="{LANG.search}" class="music-button"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -59,20 +55,20 @@
 		<div id="resultdata">
 			<!-- BEGIN: resultdata -->
             <!-- BEGIN: data -->
-			<table class="tab1">
+			<table class="table table-striped table-bordered table-hover">
 				<thead>
 					<tr>
 						<td>ID</td>
 						<td>{LANG.album_name}</td>
 						<td>{LANG.singer}</td>
 						<td>{LANG.who_up}</td>
-						<td class="center">
+						<td class="text-center">
 							{LANG.select}
 						</td>
 					</tr>
 				</thead>
+				<tbody>
 				<!-- BEGIN: row -->
-				<tbody{CLASS}>
 					<tr>
 						<td style="width:30px;"><strong>{ROW.id}</strong></td>
 						<td>{ROW.tname}</td>
@@ -82,8 +78,8 @@
 							<a title="" onclick="nv_close_pop('{ROW.id}');" href="javascript:void(0);">{LANG.select}</a>
 						</td>
 					</tr>
-				</tbody>
 				<!-- END: row -->
+				</tbody>
 				<!-- BEGIN: generate_page -->
 				<tbody>
 					<tr>
@@ -93,8 +89,8 @@
 							</div>
 						</td>
 					</tr>
-				</tbody>
 				<!-- END: generate_page -->
+				</tbody>
 			</table>
 			<script type="text/javascript">
 			function nv_close_pop ( name ){
@@ -104,10 +100,10 @@
 			</script>
 			<!-- END: data -->
 			<!-- BEGIN: nodata -->
-			<table class="tab1">
+			<table class="table table-striped table-bordered table-hover">
 				<tbody>
 					<tr>
-						<td class="center">
+						<td class="text-center">
 							{LANG.noresult}
 						</td>
 					</tr>

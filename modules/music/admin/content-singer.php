@@ -32,10 +32,10 @@ $error = "";
 $array = $array_old = array();
 
 // Lay gia tri
-$array['ten'] = filter_text_input( 'ten', 'get,post', '', 1, 100 );
-$array['tenthat'] = filter_text_input( 'tenthat', 'post', '', 1, 100 );
+$array['ten'] = nv_substr( $nv_Request->get_title( 'ten', 'get,post', '', 1 ), 0, 100);
+$array['tenthat'] = nv_substr( $nv_Request->get_title( 'tenthat', 'post', '', 1 ), 0, 100);
 $array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
-$array['introduction'] = nv_editor_filter_textarea( 'introduction', '', NV_ALLOWED_HTML_TAGS );
+$array['introduction'] = $nv_Request->get_editor( 'introduction', '', NV_ALLOWED_HTML_TAGS );
 
 // Lay du lieu
 $id = $nv_Request->get_int( 'id', 'get,post', 0 );
@@ -48,15 +48,15 @@ else
 {
 	$page_title = $lang_module['singer_edit'];
 
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id` = " . $id;
-	$result = $db->sql_query( $sql );
-	$check = $db->sql_numrows( $result );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id = " . $id;
+	$result = $db->query( $sql );
+	$check = $result->rowCount();
 
 	if( $check != 1 )
 	{
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	}
-	$row = $db->sql_fetchrow( $result );
+	$row = $result->fetch();
 
 	if( ! $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 	{
@@ -76,8 +76,8 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 	// Kiem tra xem ca si da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) . " AND `id`!=" . $id );
-		list( $exist ) = $db->sql_fetchrow( $result );
+		$result = $db->query( "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE tenthat=" . $db->quote( $array['tenthat'] ) . " AND introduction=" . $db->quote( $array['introduction'] ) . " AND id!=" . $id );
+		$exist = $result->fetchColumn();
 		if( $exist )
 		{
 			$error = $lang_module['error_exist_singer'];
@@ -86,19 +86,19 @@ if( $nv_Request->get_int( 'edit', 'post', 0 ) == 1 )
 
 	if( empty( $error ) )
 	{
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_singer` SET
-			`ten`=" . $db->dbescape( $array['ten'] ) . ", 
-			`tenthat`=" . $db->dbescape( $array['tenthat'] ) . ", 
-			`thumb`=" . $db->dbescape( $array['thumb'] ) . ", 
-			`introduction`=" . $db->dbescape( $array['introduction'] ) . " 
-		WHERE `id` =" . $id;
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_singer SET
+			ten=" . $db->quote( $array['ten'] ) . ", 
+			tenthat=" . $db->quote( $array['tenthat'] ) . ", 
+			thumb=" . $db->quote( $array['thumb'] ) . ", 
+			introduction=" . $db->quote( $array['introduction'] ) . " 
+		WHERE id =" . $id;
 
-		$result = $db->sql_query( $sql );
+		$result = $db->query( $sql );
 		if( $result )
 		{
-			nv_del_moduleCache( $module_name );
+			$nv_Cache->delMod( $module_name );
 
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer" );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer" );
 			die();
 		}
 		else
@@ -118,8 +118,8 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 	// Kiem tra xem ca si da ton tai chua
 	if( empty( $error ) )
 	{
-		$result = $db->sql_query( "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `tenthat`=" . $db->dbescape( $array['tenthat'] ) . " AND `introduction`=" . $db->dbescape( $array['introduction'] ) );
-		list( $exist ) = $db->sql_fetchrow( $result );
+		$result = $db->query( "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE tenthat=" . $db->quote( $array['tenthat'] ) . " AND introduction=" . $db->quote( $array['introduction'] ) );
+		$exist = $result->fetchColumn();
 		if( $exist )
 		{
 			$error = $lang_module['error_exist_singer'];
@@ -128,20 +128,20 @@ if( $nv_Request->get_int( 'add', 'post', 0 ) == 1 )
 
 	if( empty( $error ) )
 	{
-		$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_singer` VALUES ( 
+		$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_singer VALUES ( 
 			NULL, 
-			" . $db->dbescape( $array['ten'] ) . ", 
-			" . $db->dbescape( $array['tenthat'] ) . ", 
-			" . $db->dbescape( $array['thumb'] ) . ", 
-			" . $db->dbescape( $array['introduction'] ) . ", 
+			" . $db->quote( $array['ten'] ) . ", 
+			" . $db->quote( $array['tenthat'] ) . ", 
+			" . $db->quote( $array['thumb'] ) . ", 
+			" . $db->quote( $array['introduction'] ) . ", 
 			0, 0, 0
 		)";
 
-		if( $db->sql_query_insert_id( $sql ) )
+		if( $db->insert_id( $sql ) )
 		{
-			$db->sql_freeresult();
-			nv_del_moduleCache( $module_name );
-			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer" );
+			//$xxx->closeCursor();
+			$nv_Cache->delMod( $module_name );
+			Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=singer" );
 			die();
 		}
 		else
@@ -192,8 +192,6 @@ if( empty( $array['ten'] ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

@@ -1,9 +1,10 @@
 <?php
 
 /**
- * @Project NUKEVIET 3.0
+ * @Project NUKEVIET 4.x
  * @Author VINADES.,JSC (contact@vinades.vn)
- * @Copyright (C) 2010 VINADES., JSC. All rights reserved
+ * @Copyright (C) 2016 VINADES., JSC. All rights reserved
+ * @License GNU/GPL version 2 or any later version
  * @Createdate 3/9/2010 23:25
  */
 
@@ -57,7 +58,7 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 
 		$load_type = $nv_Request->get_int( 'loadblocktabvideo', 'get', 0 );
 
-		$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat FROM `" . NV_PREFIXLANG . "_" . $data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY";
+		$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat FROM " . NV_PREFIXLANG . "_" . $data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $data . "_singer AS b ON a.casi=b.id WHERE a.active=1 ORDER BY";
 
 		switch( $load_type )
 		{
@@ -71,9 +72,9 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 				$sql .= " a.id DESC";
 		}
 		$sql .= " LIMIT 0," . ( $block_config['col'] * $block_config['row'] );
-		$result = $db->sql_query( $sql );
+		$result = $db->query( $sql );
 
-		if( $db->sql_numrows( $result ) )
+		if( $result->rowCount() )
 		{
 			if( file_exists( NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $file . "/block_tab_video.tpl" ) )
 			{
@@ -93,7 +94,7 @@ if( ! nv_function_exists( 'nv_scroll_tabvideo' ) )
 			$xtpl->assign( 'URL_ALL', NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module . "&amp;" . NV_OP_VARIABLE . "=searchvideo/id" );
 
 			$i = 0;
-			while( $row = $db->sql_fetchrow( $result ) )
+			while( $row = $result->fetch() )
 			{
 				$row['url_view'] = nv_url_rewrite( NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module . "&" . NV_OP_VARIABLE . "=viewvideo/" . $row['id'] . "/" . $row['name'], true );
 
@@ -127,5 +128,3 @@ if( defined( 'NV_SYSTEM' ) )
 {
 	$content = nv_scroll_tabvideo( $block_config );
 }
-
-?>

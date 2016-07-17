@@ -24,16 +24,16 @@ $id = $nv_Request->get_int( 'id', 'get', 0 );
 
 if( $id )
 {
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `id`=" . $id;
-	$result = $db->sql_query( $sql );
-	$check = $db->sql_numrows( $result );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE id=" . $id;
+	$result = $db->query( $sql );
+	$check = $result->rowCount();
 	
 	if ( $check != 1 )
 	{
 		nv_info_die( $lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] );
 	}
 	
-	$row = $db->sql_fetchrow( $result );
+	$row = $result->fetch();
 	
 	$array_old = $array = array(
 		"name" => $row['name'],
@@ -47,12 +47,12 @@ if( $id )
 		"server" => $row['server'],
 	);
 	
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $page_title = $classMusic->lang('video_edit');
 }
 else
 {
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 	$table_caption = $page_title = $classMusic->lang('video_add');
 	
 	$array = array(
@@ -71,12 +71,12 @@ else
 // Xu ly khi submit form
 if ( $nv_Request->isset_request( 'submit', 'post' ) )
 {
-	$array['name'] = filter_text_input( 'name', 'post', '', 1, 255 );
-	$array['tname'] = filter_text_input( 'tname', 'post', '', 1, 255 );
-	$array['casi'] = filter_text_input( 'casi', 'post', '', 1, 255 );
-	$array['casimoi'] = filter_text_input( 'casimoi', 'post', '', 1, 255 );
-	$array['nhacsi'] = filter_text_input( 'nhacsi', 'post', '', 1, 255 );
-	$array['nhacsimoi'] = filter_text_input( 'nhacsimoi', 'post', '', 1, 255 );
+	$array['name'] = nv_substr( $nv_Request->get_title( 'name', 'post', '', 1 ), 0, 255);
+	$array['tname'] = nv_substr( $nv_Request->get_title( 'tname', 'post', '', 1 ), 0, 255);
+	$array['casi'] = nv_substr( $nv_Request->get_title( 'casi', 'post', '', 1 ), 0, 255);
+	$array['casimoi'] = nv_substr( $nv_Request->get_title( 'casimoi', 'post', '', 1 ), 0, 255);
+	$array['nhacsi'] = nv_substr( $nv_Request->get_title( 'nhacsi', 'post', '', 1 ), 0, 255);
+	$array['nhacsimoi'] = nv_substr( $nv_Request->get_title( 'nhacsimoi', 'post', '', 1 ), 0, 255);
 	$array['theloai'] = $nv_Request->get_int( 'theloai', 'post', 0 );
 	$array['listcat'] = $nv_Request->get_typed_array( 'listcat', 'post', 'int' );
 	$array['duongdan'] = $nv_Request->get_string( 'duongdan', 'post', '' );
@@ -158,15 +158,15 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 		{
 			if( $id )
 			{
-				$sql = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND `tname`=" . $db->dbescape( $array['tname'] ) . " AND `id`!=" . $id;
+				$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND tname=" . $db->quote( $array['tname'] ) . " AND id!=" . $id;
 			}
 			else
 			{
-				$sql = "SELECT COUNT(*) FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND `tname`=" . $db->dbescape( $array['tname'] );
+				$sql = "SELECT COUNT(*) FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND tname=" . $db->quote( $array['tname'] );
 			}
 			
-			$result = $db->sql_query( $sql );
-			list( $exist ) = $db->sql_fetchrow( $result );
+			$result = $db->query( $sql );
+			$exist = $result->fetchColumn();
 			if( $exist )
 			{
 				$error = $classMusic->lang('error_exist_video');
@@ -181,19 +181,19 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 				$array['duongdan'] = $check_url['duongdan'];
 				$array['server'] = $check_url['server'];
 
-				$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_video` SET 
-					`name`=" . $db->dbescape( $array['name'] ) . ", 
-					`tname`=" . $db->dbescape( $array['tname'] ) . ", 
-					`casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
-					`nhacsi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['nhacsi'] ) ) . ", 
-					`theloai`=" . $db->dbescape( $array['theloai'] ) . ", 
-					`listcat`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['listcat'] ) ) . ", 
-					`duongdan`=" . $db->dbescape( $array['duongdan'] ) . ", 
-					`thumb`=" . $db->dbescape( $array['thumb'] ) . ", 
-					`server`=" . $array['server'] . "
-				WHERE `id`=" . $id;
+				$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_video SET 
+					name=" . $db->quote( $array['name'] ) . ", 
+					tname=" . $db->quote( $array['tname'] ) . ", 
+					casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
+					nhacsi=" . $db->quote( $classMusic->build_query_singer_author( $array['nhacsi'] ) ) . ", 
+					theloai=" . $db->quote( $array['theloai'] ) . ", 
+					listcat=" . $db->quote( $classMusic->build_query_singer_author( $array['listcat'] ) ) . ", 
+					duongdan=" . $db->quote( $array['duongdan'] ) . ", 
+					thumb=" . $db->quote( $array['thumb'] ) . ", 
+					server=" . $array['server'] . "
+				WHERE id=" . $id;
 
-				if( $db->sql_query( $sql ) )
+				if( $db->query( $sql ) )
 				{
 					// Cap nhat chu de
 					$array_cat_update = array_unique( array_filter( array_merge_recursive( $array_old['listcat'], array( $array_old['theloai'] ), $array['listcat'], array( $array['theloai'] ) ) ) );
@@ -207,8 +207,8 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 					$array_author_update = array_unique( array_filter( array_merge_recursive( $array_old['nhacsi'], $array['nhacsi'] ) ) );
 					$classMusic->fix_author( $array_author_update );
 
-					nv_del_moduleCache( $module_name );
-					Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" );
+					$nv_Cache->delMod( $module_name );
+					Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" );
 					die();
 				}
 				else
@@ -220,32 +220,32 @@ if ( $nv_Request->isset_request( 'submit', 'post' ) )
 			{
 				$check_url = $classMusic->creatURL( $array['duongdan'] );
 
-				$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_video` VALUES (
+				$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_video VALUES (
 					NULL, 
-					" . $db->dbescape( $array['name'] ) . ", 
-					" . $db->dbescape( $array['tname'] ) . ", 
-					" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
-					" . $db->dbescape( $classMusic->build_query_singer_author( $array['nhacsi'] ) ) . ", 
-					" . $db->dbescape( $array['theloai'] ) . ", 
-					" . $db->dbescape( $classMusic->build_query_singer_author( $array['listcat'] ) ) . ",
-					" . $db->dbescape( $check_url['duongdan'] ) . ", 
-					" . $db->dbescape( $array['thumb'] ) . " ,
+					" . $db->quote( $array['name'] ) . ", 
+					" . $db->quote( $array['tname'] ) . ", 
+					" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
+					" . $db->quote( $classMusic->build_query_singer_author( $array['nhacsi'] ) ) . ", 
+					" . $db->quote( $array['theloai'] ) . ", 
+					" . $db->quote( $classMusic->build_query_singer_author( $array['listcat'] ) ) . ",
+					" . $db->quote( $check_url['duongdan'] ) . ", 
+					" . $db->quote( $array['thumb'] ) . " ,
 					0,
 					1,
 					" . NV_CURRENTTIME . ",
 					" . $check_url['server'] . ",
 					0,
-					" . $db->dbescape( "0-" . NV_CURRENTTIME ) . "			
+					" . $db->quote( "0-" . NV_CURRENTTIME ) . "			
 				)";
 
-				if( $db->sql_query_insert_id( $sql ) )
+				if( $db->insert_id( $sql ) )
 				{
 					$classMusic->fix_cat_video( array_unique( array_filter( array_merge_recursive( array( $array['theloai'] ), $array['listcat'] ) ) ) );
 					$classMusic->fix_singer( $array['casi'] );
 					$classMusic->fix_author( $array['nhacsi'] );
 
-					nv_del_moduleCache( $module_name );
-					Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" );
+					$nv_Cache->delMod( $module_name );
+					Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=videoclip" );
 					die();
 				}
 				else
@@ -361,8 +361,6 @@ if( ! empty( $array['nhacsi'] ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

@@ -30,10 +30,10 @@ if( ! empty( $num ) )
 
 	$songid = implode( ",", $songid );
 
-	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN (" . $songid . ") AND a.active=1";
-	$result = $db->sql_query( $sql );
+	$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.id IN (" . $songid . ") AND a.active=1";
+	$result = $db->query( $sql );
 
-	while( $row = $db->sql_fetchrow( $result ) )
+	while( $row = $result->fetch() )
 	{
 		$singername = $row['singername'] ? $row['singername'] : $lang_module['unknow'];
 	
@@ -50,8 +50,6 @@ if( ! empty( $num ) )
 
 $contents = nv_music_playlist( $g_array, $array );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

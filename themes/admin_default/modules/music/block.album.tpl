@@ -6,7 +6,7 @@
 <tr>
 	<td>{LANG.block_album_display_type}</td>
 	<td>
-		<select name="config_display_type" class="music-input">	
+		<select name="config_display_type" class="form-control music-input">	
 			<!-- BEGIN: display_type --><option value="{DISPLAY_TYPE.key}"{DISPLAY_TYPE.selected}>{DISPLAY_TYPE.title}</option><!-- END: display_type -->
 		</select>
 	</td>
@@ -37,7 +37,7 @@
 <tr id="albums-cappos">
 	<td>{LANG.block_album_cap_pos}</td>
 	<td>
-		<select name="config_cap_position" class="music-input">	
+		<select name="config_cap_position" class="form-control music-input">	
 			<!-- BEGIN: cap_position --><option value="{CAP_POSITION.key}"{CAP_POSITION.selected}>{CAP_POSITION.title}</option><!-- END: cap_position -->
 		</select>
 	</td>
@@ -61,7 +61,7 @@
 	</td>
 </tr>
 <tr style=display:none>
-	<td></td>
+	<td>&nbsp;</td>
 	<td>
 		<script type="text/javascript">
 		function controlDisplay(){
@@ -106,11 +106,11 @@
 			
 			$("a#addonealbum").click(function(){
 				var listalbum = $("input[name=config_albums]").attr("value");
-				nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "={MODULE_NAME}&" + nv_fc_variable + "=album&findOneAndReturn=1&area=listalbums-area&input=config_albums&listalbum=" + listalbum, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+				nv_open_browse( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "={MODULE_NAME}&" + nv_fc_variable + "=album&findOneAndReturn=1&area=listalbums-area&input=config_albums&listalbum=" + listalbum, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
 			});
 			$("a#addlistalbum").click(function(){
 				var listalbum = $("input[name=config_albums]").attr("value");
-				nv_open_browse_file( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "={MODULE_NAME}&" + nv_fc_variable + "=album&findListAndReturn=1&area=listalbums-area&input=config_albums&listalbum=" + listalbum, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
+				nv_open_browse( "{NV_BASE_ADMINURL}index.php?" + nv_name_variable + "={MODULE_NAME}&" + nv_fc_variable + "=album&findListAndReturn=1&area=listalbums-area&input=config_albums&listalbum=" + listalbum, "NVImg", "850", "600", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no" );
 			});
 		});
 		</script>

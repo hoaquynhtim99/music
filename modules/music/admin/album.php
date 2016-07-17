@@ -12,9 +12,9 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 // Tim kiem va them mot album
 if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 {
-	$listalbum = filter_text_input( 'listalbum', 'get', '', 1, 255 );
-	$returnArea = filter_text_input( 'area', 'get', '', 1, 255 );
-	$returnInput = filter_text_input( 'input', 'get', '', 1, 255 );
+	$listalbum = nv_substr( $nv_Request->get_title( 'listalbum', 'get', '', 1 ), 0, 255);
+	$returnArea = nv_substr( $nv_Request->get_title( 'area', 'get', '', 1 ), 0, 255);
+	$returnInput = nv_substr( $nv_Request->get_title( 'input', 'get', '', 1 ), 0, 255);
 
 	$page_title = $classMusic->lang('getalbumid_title');
 	$page = $nv_Request->get_int( 'page', 'get', 0 );
@@ -22,22 +22,22 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	$array = array();
 
 	// SQL va LINK co ban
-	$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`!=0";
-	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&amp;findOneAndReturn=1&amp;area=" . $returnArea . "&amp;input=" . $returnInput . "&amp;listalbum=" . $listalbum;
+	$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id!=0";
+	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&amp;findOneAndReturn=1&amp;area=" . $returnArea . "&amp;input=" . $returnInput . "&amp;listalbum=" . $listalbum;
 
 	// Du lieu tim kiem
 	$data_search = array(
-		"q" => filter_text_input( 'q', 'get', '', 1, 255 ),
-		"singer" => filter_text_input( 'singer', 'get', '', 1, 255 ),
+		"q" => nv_substr( $nv_Request->get_title( 'q', 'get', '', 1 ), 0, 255),
+		"singer" => nv_substr( $nv_Request->get_title( 'singer', 'get', '', 1 ), 0, 255),
 	);
 
-	if( ! empty( $listalbum ) ) $sql .= " AND `id` NOT IN(" . $listalbum . ")";
+	if( ! empty( $listalbum ) ) $sql .= " AND id NOT IN(" . $listalbum . ")";
 
 	// Tim ten video
 	if( ! empty( $data_search['q'] ) )
 	{
 		$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
-		$sql .= " AND ( `tname` LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%' )";
+		$sql .= " AND ( tname LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%' )";
 	}
 
 	// Tim theo ca si
@@ -64,7 +64,7 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 		"title" => $classMusic->lang('album_name'),
 	);
 
-	$order['title']['order'] = filter_text_input( 'order_title', 'get', 'NO' );
+	$order['title']['order'] = $nv_Request->get_title( 'order_title', 'get', 'NO' );
 
 	foreach( $order as $key => $check )
 	{
@@ -82,23 +82,23 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 
 	if( $order['title']['order'] != "NO" )
 	{
-		$sql .= " ORDER BY `tname` " . $order['title']['order'];
+		$sql .= " ORDER BY tname " . $order['title']['order'];
 	}
 	else
 	{
-		$sql .= " ORDER BY `id` DESC";
+		$sql .= " ORDER BY id DESC";
 	}
 
 	$sql1 = "SELECT COUNT(*) " . $sql;
-	$result1 = $db->sql_query( $sql1 );
-	list( $all_page ) = $db->sql_fetchrow( $result1 );
+	$result1 = $db->query( $sql1 );
+	$all_page = $result1->fetchColumn();
 
 	$sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
-	$result = $db->sql_query( $sql );
+	$result = $db->query( $sql );
 
 	$array = $array_singers = $array_authors =  array();
 	$array_singer_ids = '';
-	while( $row = $db->sql_fetchrow( $result ) )
+	while( $row = $result->fetch() )
 	{
 		$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
 
@@ -128,7 +128,7 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	$xtpl->assign( 'FORM_ACTION', NV_BASE_ADMINURL . "index.php?" );
 	$xtpl->assign( 'DATA_ORDER', $order );
 	$xtpl->assign( 'SEARCH', $data_search );
-	$xtpl->assign( 'URLCANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&findOneAndReturn=1&area=" . $returnArea . "&input=" . $returnInput . "&listalbum=" . $listalbum );
+	$xtpl->assign( 'URLCANCEL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&findOneAndReturn=1&area=" . $returnArea . "&input=" . $returnInput . "&listalbum=" . $listalbum );
 
 	// Lay thong tin ca si
 	$array_singer_ids = $classMusic->string2array( $array_singer_ids );
@@ -155,28 +155,28 @@ if( $nv_Request->isset_request( 'findOneAndReturn', 'get' ) )
 	$xtpl->parse( 'main' );
 	$contents = $xtpl->text( 'main' );
 
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo $contents;
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 	die();
 }
 
 // Tim kiem va them nhieu album
 if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 {
-	$listalbum = filter_text_input( 'listalbum', 'get', '', 1, 255 );
+	$listalbum = nv_substr( $nv_Request->get_title( 'listalbum', 'get', '', 1 ), 0, 255);
 	
-	$returnArea = filter_text_input( 'area', 'get', '', 1, 255 );
-	$returnInput = filter_text_input( 'input', 'get', '', 1, 255 );
+	$returnArea = nv_substr( $nv_Request->get_title( 'area', 'get', '', 1 ), 0, 255);
+	$returnInput = nv_substr( $nv_Request->get_title( 'input', 'get', '', 1 ), 0, 255);
 	
 	if( $nv_Request->isset_request( 'loadname', 'get' ) )
 	{		
-		$sql = "SELECT `id`, `tname` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id` IN(" . $listalbum . ")";
-		$result = $db->sql_query( $sql );
+		$sql = "SELECT id, tname FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id IN(" . $listalbum . ")";
+		$result = $db->query( $sql );
 
 		$list_album = array();
 		$_tmp = array();
-		while( list( $albumid, $albumname ) = $db->sql_fetchrow( $result ) )
+		while( list( $albumid, $albumname ) = $result->fetch( 3 ) )
 		{
 			$_tmp[$albumid] = $albumname;
 		}
@@ -193,32 +193,32 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 			$return .= "<li class=\"" . $_id . "\">" . $_name . "<span onclick=\"nv_del_item_on_list(" . $_id . ", '" . $returnArea . "', '" . $classMusic->lang('author_del_confirm') . "', '" . $returnInput . "')\" class=\"delete-icon\">&nbsp;</span></li>";
 		}
 
-		include ( NV_ROOTDIR . "/includes/header.php" );
+		include NV_ROOTDIR . '/includes/header.php';
 		echo ( $return );
-		include ( NV_ROOTDIR . "/includes/footer.php" );
+		include NV_ROOTDIR . '/includes/footer.php';
 		die();
 	}
 	
 	$listalbum = $classMusic->string2array( $listalbum );
 
-	$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album`";
-	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&findListAndReturn=1";
+	$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album";
+	$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=" . $op . "&findListAndReturn=1";
 
 	$sql1 = "SELECT COUNT(*) " . $sql;
-	$result1 = $db->sql_query( $sql1 );
-	list( $all_page ) = $db->sql_fetchrow( $result1 );
+	$result1 = $db->query( $sql1 );
+	$all_page = $result1->fetchColumn();
 
-	$sql .= " ORDER BY `id` DESC";
+	$sql .= " ORDER BY id DESC";
 
 	$page = $nv_Request->get_int( 'page', 'get', 0 );
 	$per_page = 5;
 
 	$sql2 = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
-	$query2 = $db->sql_query( $sql2 );
+	$query2 = $db->query( $sql2 );
 
 	$array = $array_singers = $array_authors =  array();
 	$array_singer_ids = '';
-	while( $row = $db->sql_fetchrow( $query2 ) )
+	while( $row = $query2->fetch() )
 	{
 		$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
 
@@ -286,9 +286,9 @@ if( $nv_Request->isset_request( 'findListAndReturn', 'get' ) )
 		$contents = $xtpl->text( 'main' );
 	}
 
-	include ( NV_ROOTDIR . "/includes/header.php" );
+	include NV_ROOTDIR . '/includes/header.php';
 	echo ( $contents );
-	include ( NV_ROOTDIR . "/includes/footer.php" );
+	include NV_ROOTDIR . '/includes/footer.php';
 	die();
 }
 
@@ -298,9 +298,9 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
     if ( ! defined( 'NV_IS_AJAX' ) ) die( 'Wrong URL' );
     
     $id = $nv_Request->get_int( 'id', 'post', 0 );
-    $list_levelid = filter_text_input( 'listid', 'post', '' );
+    $list_levelid = $nv_Request->get_title( 'listid', 'post', '' );
     
-    if ( empty( $id ) and empty ( $list_levelid ) ) die( "NO" );
+    if ( empty( $id ) and empty ( $list_levelid ) ) die( 'NO' );
     
 	$listid = array();
 	if ( $id )
@@ -325,28 +325,28 @@ if ( $nv_Request->isset_request( 'del', 'post' ) )
 	foreach( $albums as $id => $album )
 	{
 		// Xoa trong album trang chu
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_main_album` WHERE `albumid`=" . $id;
-		$db->sql_query( $sql );
+		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_main_album WHERE albumid=" . $id;
+		$db->query( $sql );
 
 		// Xoa album HOT
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album_hot` WHERE `albumid`=" . $id;
-		$db->sql_query( $sql );
+		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_album_hot WHERE albumid=" . $id;
+		$db->query( $sql );
 
 		// Xoa album
-		$sql = "DELETE FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`=" . $id;
-		$db->sql_query( $sql );
+		$sql = "DELETE FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id=" . $id;
+		$db->query( $sql );
 
 		$classMusic->fix_singer( $classMusic->string2array( $album['casi'] ) );
 		$classMusic->delcomment( 'album', $album['id'] );
 		$classMusic->delerror( 'album', $album['id'] );
 
-		$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=0 WHERE `album`=" . $id );
+		$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=0 WHERE album=" . $id );
 	}	
     
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
 	nv_insert_logs( NV_LANG_DATA, $module_name, $classMusic->lang('delete_album'), implode( ", ", array_keys( $albums ) ), $admin_info['userid'] );
 	
-    die( "OK" );
+    die( 'OK' );
 }
 
 // Thay doi hoat dong album
@@ -356,9 +356,9 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
     
     $id = $nv_Request->get_int( 'id', 'post', 0 );
     $controlstatus = $nv_Request->get_int( 'status', 'post', 0 );
-    $array_id = filter_text_input( 'listid', 'post', '' );
+    $array_id = $nv_Request->get_title( 'listid', 'post', '' );
     
-    if ( empty( $id ) and empty ( $array_id ) ) die( "NO" );
+    if ( empty( $id ) and empty ( $array_id ) ) die( 'NO' );
     
 	$listid = array();
 	if ( $id )
@@ -399,13 +399,13 @@ if ( $nv_Request->isset_request( 'changestatus', 'post' ) )
 	
 	foreach( $array_status as $id => $active )
 	{
-		$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET `active`=" . $active . " WHERE `id`=" . $id;
-		$db->sql_query( $sql );	
+		$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET active=" . $active . " WHERE id=" . $id;
+		$db->query( $sql );	
 	}	
     
-    nv_del_moduleCache( $module_name );
+    $nv_Cache->delMod( $module_name );
 	
-    die( "OK" );
+    die( 'OK' );
 }
 
 // Tieu de trang
@@ -419,13 +419,13 @@ $page = $nv_Request->get_int( 'page', 'get', 0 );
 $per_page = 50;
 
 // Query, url co so
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `id`!=0";
-$base_url = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE id!=0";
+$base_url = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 
 // Du lieu tim kiem
 $data_search = array(
-	"q" => filter_text_input( 'q', 'get', '', 1, 100 ),
-	"singer" => filter_text_input( 'singer', 'get', '', 1, 100 ),
+	"q" => nv_substr( $nv_Request->get_title( 'q', 'get', '', 1 ), 0, 100),
+	"singer" => nv_substr( $nv_Request->get_title( 'singer', 'get', '', 1 ), 0, 100),
 	"disabled" => " disabled=\"disabled\""
 );
 
@@ -439,7 +439,7 @@ if( ! empty ( $data_search['q'] ) or ! empty ( $data_search['singer'] ) )
 if( ! empty ( $data_search['q'] ) )
 {
 	$base_url .= "&amp;q=" . urlencode( $data_search['q'] );
-	$sql .= " AND `tenthat` LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%'";
+	$sql .= " AND tenthat LIKE '%" . $db->dblikeescape( $data_search['q'] ) . "%'";
 }
 
 if( ! empty ( $data_search['singer'] ) )
@@ -467,9 +467,9 @@ $lang_order_2 = array(
 	"addtime" => $classMusic->lang('playlist_time')
 );
 
-$order['title']['order'] = filter_text_input( 'order_title', 'get', 'NO' );
-$order['numview']['order'] = filter_text_input( 'order_numview', 'get', 'NO' );
-$order['addtime']['order'] = filter_text_input( 'order_addtime', 'get', 'NO' );
+$order['title']['order'] = $nv_Request->get_title( 'order_title', 'get', 'NO' );
+$order['numview']['order'] = $nv_Request->get_title( 'order_numview', 'get', 'NO' );
+$order['addtime']['order'] = $nv_Request->get_title( 'order_addtime', 'get', 'NO' );
 
 foreach ( $order as $key => $check )
 {
@@ -491,34 +491,34 @@ foreach ( $order as $key => $check )
 
 if( $order['title']['order'] != "NO" )
 {
-	$sql .= " ORDER BY `tname` " . $order['title']['order'];
+	$sql .= " ORDER BY tname " . $order['title']['order'];
 }
 elseif( $order['numview']['order'] != "NO" )
 {
-	$sql .= " ORDER BY `numview` " . $order['numview']['order'];
+	$sql .= " ORDER BY numview " . $order['numview']['order'];
 }
 elseif( $order['addtime']['order'] != "NO" )
 {
-	$sql .= " ORDER BY `addtime` " . $order['addtime']['order'];
+	$sql .= " ORDER BY addtime " . $order['addtime']['order'];
 }
 else
 {
-	$sql .= " ORDER BY `id` DESC";
+	$sql .= " ORDER BY id DESC";
 }
 
 // Lay so row
 $sql1 = "SELECT COUNT(*) " . $sql;
-$result1 = $db->sql_query( $sql1 );
-list( $all_page ) = $db->sql_fetchrow( $result1 );
+$result1 = $db->query( $sql1 );
+$all_page = $result1->fetchColumn();
 
 // Xay dung du lieu album
 $i = 1;
 $sql = "SELECT * " . $sql . " LIMIT " . $page . ", " . $per_page;
-$result = $db->sql_query( $sql );
+$result = $db->query( $sql );
 
 $array = $array_singers =  array();
 $array_singer_ids = '';
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$array_singer_ids = $array_singer_ids == '' ? $row['casi'] : $array_singer_ids . "," . $row['casi'];
 	$row['thumb'] = $row['thumb'] ? $row['thumb'] : NV_BASE_SITEURL . "themes/" . $global_config['module_theme'] . "/images/" . $module_file . "/d-avatar.gif";
@@ -532,7 +532,7 @@ while( $row = $db->sql_fetchrow( $result ) )
 		"numsong" => $row['numsong'],
 		"addtime" => nv_date( "H:i d/m/Y", $row['addtime'] ),
 		"status" => $row['active'] ? " checked=\"checked\"" : "",
-		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album&amp;id=" . $row['id'],
+		"url_edit" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album&amp;id=" . $row['id'],
 		"class" => ( $i % 2 == 0 ) ? " class=\"second\"" : ""
 	);
 	$i ++;
@@ -571,8 +571,8 @@ $xtpl->assign( 'MODULE_NAME', $module_name );
 $xtpl->assign( 'OP', $op );
 $xtpl->assign( 'DATA_SEARCH', $data_search );
 $xtpl->assign( 'DATA_ORDER', $order );
-$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name  . "&" . NV_OP_VARIABLE . "=" . $op );
-$xtpl->assign( 'URL_ADD', NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album" );
+$xtpl->assign( 'URL_CANCEL', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name  . "&" . NV_OP_VARIABLE . "=" . $op );
+$xtpl->assign( 'URL_ADD', NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=content-album" );
 
 foreach( $list_action as $action )
 {
@@ -601,8 +601,6 @@ if( ! empty( $generate_page ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

@@ -168,14 +168,14 @@
 				var formId = "pxupload" + itr;
 				var iframeId = "pxupload" + itr + "_frame";
 				var inputId = "pxupload" + itr + "_input";
-				var contents = '<form method="post" id="'+ formId +'" action="'+ px.formAction +'" enctype="multipart/form-data" target="'+ iframeId +'">' +
+				var contents = '<form class="form-inline" method="post" id="'+ formId +'" action="'+ px.formAction +'" enctype="multipart/form-data" target="'+ iframeId +'">' +
 				'<table cellpadding="0" cellspacing="0" class="musictable">' +
-				'<tr><td style="width:150px">{LANG.song_name}</td><td><input class="txt-full" id="song' + itr + '" name="song" type="text" value=""/></td></tr>' +
-				'<tr><td>{LANG.singer}</td><td><select class="txt-full" name="singer" id="singer' + itr + '">{GDATA.singerdata}</td></tr>' +
-				'<tr><td>{LANG.upload_quicksinger}</td><td><input class="txt-full" id="newsinger' + itr + '" name="newsinger" type="text" value=""/></td></tr>' +
-				'<tr><td>{LANG.author}</td><td><select class="txt-full" name="author" id="author' + itr + '">{GDATA.authordata}</td></tr>' +
-				'<tr><td>{LANG.upload_quickauthor}</td><td><input class="txt-full" id="newauthor' + itr + '" name="newauthor" type="text" value=""/></td></tr>' +
-				'<tr><td>{LANG.category_2}</td><td><select class="txt-full" name="category" id="category' + itr + '">{GDATA.category}</td></tr>' +
+				'<tr><td style="width:150px">{LANG.song_name}</td><td><input class="form-control" id="song' + itr + '" name="song" type="text" value=""/></td></tr>' +
+				'<tr><td>{LANG.singer}</td><td><select class="form-control" name="singer" id="singer' + itr + '">{GDATA.singerdata}</td></tr>' +
+				'<tr><td>{LANG.upload_quicksinger}</td><td><input class="form-control" id="newsinger' + itr + '" name="newsinger" type="text" value=""/></td></tr>' +
+				'<tr><td>{LANG.author}</td><td><select class="form-control" name="author" id="author' + itr + '">{GDATA.authordata}</td></tr>' +
+				'<tr><td>{LANG.upload_quickauthor}</td><td><input class="form-control" id="newauthor' + itr + '" name="newauthor" type="text" value=""/></td></tr>' +
+				'<tr><td>{LANG.category_2}</td><td><select class="form-control" name="category" id="category' + itr + '">{GDATA.category}</td></tr>' +
 				'<tr><td>{LANG.upload_selectfile}</td><td><input class="txt-full" type="file" name="'+ config.inputName +'" id="'+ inputId +'" size="'+ config.inputSize +'" /></td></tr>' +
 				'<tr><td colspan="2" class="mcenter"><input class="mbutton" id="add' + itr + '" type="button" value="{LANG.add}" onclick="$.fileUploader.change();" /></td></tr>' +
 				'</table>' +
@@ -202,7 +202,7 @@
 	}
 })(jQuery);
 </script>
-<form action="{DATA_ACTION}" method="post" enctype="multipart/form-data">
+<form class="form-inline" action="{DATA_ACTION}" method="post" enctype="multipart/form-data">
 	<input id="yourInputFileId" name="uploadfile" type="file" />
 	<input class="mbutton" type="submit" value="{LANG.upload_ok}" id="pxUpload" />
 	<input class="mbutton" type="reset" value="{LANG.cancel}" id="pxClear" />

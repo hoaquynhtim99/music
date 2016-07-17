@@ -39,11 +39,11 @@
 					<table cellpadding="0" cellspacing="0" class="musictable">
 						<tr>
 							<td style="width:100px">{LANG.album_name}</td>
-							<td><input class="txt-full" type="text" name="name" id="name"/></td>
+							<td><input class="form-control" type="text" name="name" id="name"/></td>
 						</tr>
 						<tr>
 							<td>{LANG.album_singer}</td>
-							<td><input class="txt-full" type="text" name="singer" id="singer"/></td>
+							<td><input class="form-control" type="text" name="singer" id="singer"/></td>
 						</tr>
 						<tr>
 							<td>{LANG.message}</td>

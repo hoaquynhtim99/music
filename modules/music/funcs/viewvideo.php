@@ -22,9 +22,9 @@ $id = isset( $array_op[1] ) ? intval( $array_op[1] ) : 0;
 
 if( empty( $id ) ) module_info_die();
 
-$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id=" . $id . " AND a.active=1";
-$result = $db->sql_query( $sql );
-$row = $db->sql_fetchrow( $result );
+$sql = "SELECT a.*, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . "_video AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.id=" . $id . " AND a.active=1";
+$result = $db->query( $sql );
+$row = $result->fetch();
 
 if( empty( $row ) ) module_info_die();
 
@@ -74,8 +74,8 @@ $array_album = $array_video = $array_singer = array();
 if( $row['casi'] != 0 )
 {
 	// Danh sach album
-	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $row['casi'] . " AND `active`=1 ORDER BY `addtime` DESC LIMIT 0,4";
-	$list = nv_db_cache( $sql, 'id' );
+	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $row['casi'] . " AND active=1 ORDER BY addtime DESC LIMIT 0,4";
+	$list = $nv_Cache->db( $sql, 'id' );
 	
 	foreach( $list as $r )
 	{
@@ -88,8 +88,8 @@ if( $row['casi'] != 0 )
 	}
 	
 	// Danh sach video
-	$sql = "SELECT `id`, `name`, `tname`, `casi`, `thumb` FROM `" . NV_PREFIXLANG . "_" . $module_data . "_video` WHERE `casi`=" . $row['casi'] . " AND `active`=1 ORDER BY `dt` DESC LIMIT 0,3";
-	$list = nv_db_cache( $sql, 'id' );
+	$sql = "SELECT id, name, tname, casi, thumb FROM " . NV_PREFIXLANG . "_" . $module_data . "_video WHERE casi=" . $row['casi'] . " AND active=1 ORDER BY dt DESC LIMIT 0,3";
+	$list = $nv_Cache->db( $sql, 'id' );
 	
 	foreach( $list as $r )
 	{
@@ -102,8 +102,8 @@ if( $row['casi'] != 0 )
 	}
 	
 	// Chi tiet ca si
-	$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_singer` WHERE `id`=" . $row['casi'] . " AND `thumb`!='' AND `introduction`!=''";
-	$list = nv_db_cache( $sql, 'id' );
+	$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_singer WHERE id=" . $row['casi'] . " AND thumb!='' AND introduction!=''";
+	$list = $nv_Cache->db( $sql, 'id' );
 	
 	foreach( $list as $r )
 	{
@@ -117,8 +117,6 @@ $key_words = $row['tname'] . " - " . $array['singer'];
 
 $contents = nv_music_viewvideo( $g_array, $array, $array_album, $array_video, $array_singer );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

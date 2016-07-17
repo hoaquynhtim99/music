@@ -1,11 +1,11 @@
 <!-- BEGIN: main -->
-<table class="tab1">
+<table class="table table-striped table-bordered table-hover">
 	<tbody>
 		<tr>
 			<td>
-				<form id="filter-form" method="get" action="" onsubmit="return false;">
-					<input class="music-input text size2" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.filter_album}"/>
-					<input class="music-input text size2" type="text" name="singer" value="{DATA_SEARCH.singer}" placeholder="{LANG.filter_singer}"/>
+				<form class="form-inline" id="filter-form" method="get" action="" onsubmit="return false;">
+					<input class="form-control music-input text size2" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.filter_album}"/>
+					<input class="form-control music-input text size2" type="text" name="singer" value="{DATA_SEARCH.singer}" placeholder="{LANG.filter_singer}"/>
 					<input class="music-button" type="button" name="do" value="{LANG.filter_action}"/>
 					<input class="music-button" type="button" name="cancel" value="{LANG.filter_cancel}" onclick="window.location='{URL_CANCEL}';"{DATA_SEARCH.disabled}/>
 					<input class="music-button" type="button" name="clear" value="{LANG.filter_clear}"/>
@@ -33,8 +33,8 @@ $(document).ready(function(){
 	});
 });
 </script>
-<form action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
-	<table class="tab1">
+<form class="form-inline" action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<tr>
 				<td class="center col-check">
@@ -50,28 +50,28 @@ $(document).ready(function(){
 				<td class="center col-feature">{LANG.feature}</td>
 			</tr>
 		</thead>
+		<tbody>
 		<!-- BEGIN: row -->
-		<tbody{ROW.class}>
 			<tr class="topalign">
-				<td class="center">
+				<td class="text-center">
 					<input type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
 				</td>
-				<td class="center"><a href="{ROW.thumb}" title="{ROW.title}" rel="shadowbox"><img src="{ROW.thumb}" alt="{ROW.title}" width="50" height="50"/></a></td>
+				<td class="text-center"><a href="{ROW.thumb}" title="{ROW.title}" rel="shadowbox"><img src="{ROW.thumb}" alt="{ROW.title}" width="50" height="50"/></a></td>
 				<td>{ROW.title}</td>
 				<td>{ROW.singers}</td>
-				<td class="center"><strong>{ROW.numsong}</strong></td>
-				<td class="center"><strong>{ROW.numview}</strong></td>
+				<td class="text-center"><strong>{ROW.numsong}</strong></td>
+				<td class="text-center"><strong>{ROW.numview}</strong></td>
 				<td class="aright">{ROW.addtime}</td>
-				<td class="center">
+				<td class="text-center">
 					<input name="status" id="change_status{ROW.id}" value="1" type="checkbox"{ROW.status} onclick="nv_change_album_status({ROW.id})" />
 				</td>
-				<td class="center">
+				<td class="text-center">
 					<span class="edit-icon"><a class="nounderline" href="{ROW.url_edit}">{GLANG.edit}</a></span>
 					<span class="delete-icon"><a class="nounderline" href="javascript:void(0);" onclick="nv_delete_album({ROW.id});">{GLANG.delete}</a></span>
 				</td>
 			</tr>
-		</tbody>
 		<!-- END: row -->
+		</tbody>
 		<!-- BEGIN: generate_page -->
 		<tbody>
 			<tr>
@@ -79,8 +79,8 @@ $(document).ready(function(){
 					{GENERATE_PAGE}
 				</td>
 			</tr>
-		</tbody>
 		<!-- END: generate_page -->
+		</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="9">

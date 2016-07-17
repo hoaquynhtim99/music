@@ -14,10 +14,10 @@ global $lang_module, $module_data, $module_file, $module_info, $mainURL, $db;
 $xtpl = new XTemplate( "block_top_song.tpl", NV_ROOTDIR . "/themes/" . $module_info['template'] . "/modules/" . $module_file );
 $xtpl->assign( 'LANG', $lang_module );
 
-$sql = "SELECT a.id, a.ten, a.tenthat, a.casi, a.numview, b.ten AS singeralias, b.tenthat AS casithat FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.numview DESC LIMIT 0,10";
-$result = $db->sql_query( $sql );
+$sql = "SELECT a.id, a.ten, a.tenthat, a.casi, a.numview, b.ten AS singeralias, b.tenthat AS casithat FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.active=1 ORDER BY a.numview DESC LIMIT 0,10";
+$result = $db->query( $sql );
 
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$singername = empty( $row['casithat'] ) ? $lang_module['unknow'] : $row['casithat'];
 
@@ -32,5 +32,3 @@ while( $row = $db->sql_fetchrow( $result ) )
 
 $xtpl->parse( 'main' );
 $content = $xtpl->text( 'main' );
-
-?>

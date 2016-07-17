@@ -17,17 +17,17 @@ if( empty( $id ) or empty( $playlist_alias ) )
 	module_info_die();
 }
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` WHERE `active`=1 AND `id`=" . $id;
-$result = $db->sql_query( $sql );
-$check_exit = $db->sql_numrows( $result );
-$row = $db->sql_fetchrow( $result );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist WHERE active=1 AND id=" . $id;
+$result = $db->query( $sql );
+$check_exit = $result->rowCount();
+$row = $result->fetch();
 
-if( $check_exit != 1 or $db->unfixdb( $row['keyname'] ) != $playlist_alias )
+if( $check_exit != 1 or $row['keyname'] != $playlist_alias )
 {
 	module_info_die();
 }
 
-$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_playlist` SET `view`=view+1 WHERE `id`=" . $id );
+$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_playlist SET view=view+1 WHERE id=" . $id );
 
 // Page info
 $page_title = "Playlist " . $row['name'] . " - " . $row['singer'] . " - " . $row['username'];
@@ -57,8 +57,8 @@ $sdata = array();
 $listsong_id = explode( ",", $row['songdata'] );
 $listsong_id = array_filter( $listsong_id );
 
-$sql = "SELECT a.id, a.ten, a.tenthat, a.casi, b.ten AS singeralias, b.tenthat AS singername FROM `" . NV_PREFIXLANG . "_" . $module_data . "` AS a LEFT JOIN `" . NV_PREFIXLANG . "_" . $module_data . "_singer` AS b ON a.casi=b.id WHERE a.id IN (" . implode( ",", $listsong_id ) . ") AND a.active=1";
-$list = nv_db_cache( $sql, 'id' );
+$sql = "SELECT a.id, a.ten, a.tenthat, a.casi, b.ten AS singeralias, b.tenthat AS singername FROM " . NV_PREFIXLANG . "_" . $module_data . " AS a LEFT JOIN " . NV_PREFIXLANG . "_" . $module_data . "_singer AS b ON a.casi=b.id WHERE a.id IN (" . implode( ",", $listsong_id ) . ") AND a.active=1";
+$list = $nv_Cache->db( $sql, 'id' );
 $gdata['numsong'] = sizeof( $list );
 
 foreach( $listsong_id as $sid )
@@ -80,8 +80,6 @@ foreach( $listsong_id as $sid )
 
 $contents = nv_music_listen_playlist( $gdata, $sdata );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

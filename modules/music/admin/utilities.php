@@ -20,14 +20,14 @@ $array = array();
 // Tien ich xoa chu de
 $array[] = array(
 	"title" => $lang_module['ex_delete_cat'],
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=deletecatsong",
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=deletecatsong",
 	"guide" => $lang_module['ex_delete_cat_explain']
 );
 
 // Tien ich phat hien va xoa ca si trung ten
 $array[] = array(
 	"title" => $lang_module['ex_detected_and_delete_duplicate_singer'],
-	"link" => NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer",
+	"link" => NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=ex&amp;q=detected-and-delete-duplicate-singer",
 	"guide" => $lang_module['ex_detected_and_delete_duplicate_singer_guide']
 );
 
@@ -44,8 +44,6 @@ foreach( $array as $row )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

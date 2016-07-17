@@ -86,4 +86,3 @@ function getMPEGHeaderFilepointer(&$fd, &$MP3fileInfo) {
 		return TRUE;
 	}
 }
-?>

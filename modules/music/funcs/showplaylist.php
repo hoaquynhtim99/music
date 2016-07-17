@@ -18,11 +18,11 @@ for( $i = 1; $i <= $num; $i++ )
 	$id[] = $nv_Request->get_int( $module_name . '_song' . $i, 'cookie', 0 );
 }
 
-$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "` WHERE `id` IN (" . implode( ",", $id ) . ") AND `active`=1";
-$result = $db->sql_query( $sql );
+$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . " WHERE id IN (" . implode( ",", $id ) . ") AND active=1";
+$result = $db->query( $sql );
 
 $array = array();
-while( $row = $db->sql_fetchrow( $result ) )
+while( $row = $result->fetch() )
 {
 	$array[] = array(
 		"name" => $row['tenthat'], //
@@ -32,8 +32,6 @@ while( $row = $db->sql_fetchrow( $result ) )
 
 $contents = nv_music_showplaylist( $array );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo $contents;
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

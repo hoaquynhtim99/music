@@ -8,7 +8,8 @@
  * @Createdate 29/01/2011 02:41 AM
  */
 
-if( ! defined( 'NV_MAINFILE' ) ) die( 'Stop!!!' );
+if (!defined('NV_MAINFILE'))
+    die('Stop!!!');
 
 $lang_translator['author'] = "PHAN TAN DUNG (phantandung92@gmail.com)";
 $lang_translator['createdate'] = "29/01/2012, 09:22";
@@ -24,5 +25,3 @@ $lang_block['view_all'] = "Xem tất cả";
 $lang_block['hot_video'] = "Video HOT nhất";
 $lang_block['new_video'] = "Video mới nhất";
 $lang_block['ns'] = "Chưa biết";
-
-?>

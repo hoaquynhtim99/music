@@ -2075,5 +2075,3 @@ function GeneralMIDIpercussionLookup($instrumentid) {
 
 	return (isset($GeneralMIDIpercussionLookup["$instrumentid"]) ? $GeneralMIDIpercussionLookup["$instrumentid"] : '');
 }
-
-?>

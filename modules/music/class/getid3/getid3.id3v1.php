@@ -30,4 +30,3 @@ function getID3v1Filepointer($fd) {
 
 	return $id3v1info;
 }
-?>

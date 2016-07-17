@@ -1432,4 +1432,3 @@ function ID3v2FrameProcessing($frame_name, $frame_flags, &$MP3fileInfo) {
 
 	return TRUE;
 }
-?>

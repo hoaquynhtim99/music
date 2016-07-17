@@ -12,17 +12,17 @@ if( ! defined( 'NV_IS_MUSIC_ADMIN' ) ) die( 'Stop!!!' );
 $page_title = $lang_module['userplaylist'];
 
 // Lay du lieu
-$sql = "FROM `" . NV_PREFIXLANG . "_" . $module_data . "_playlist`";
+$sql = "FROM " . NV_PREFIXLANG . "_" . $module_data . "_playlist";
 $now_page = $nv_Request->get_int( 'now_page', 'get', 0 );
-$link = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=userplaylist";
+$link = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=userplaylist";
 
 // Tim kiem
-$q = filter_text_input( 'q', 'get', '', 0, NV_MAX_SEARCH_LENGTH );
+$q = nv_substr( $nv_Request->get_title( 'q', 'get', '', 0 ), 0, NV_MAX_SEARCH_LENGTH);
 
 if( isset( $q{NV_MIN_SEARCH_LENGTH - 1} ) and ! isset( $q{NV_MAX_SEARCH_LENGTH} ) )
 {
 	$link .= "&q=" . $q;
-	$sql .= " WHERE `name` LIKE '%" . $db->dblikeescape( $q ) . "%'";
+	$sql .= " WHERE name LIKE '%" . $db->dblikeescape( $q ) . "%'";
 }
 
 if( ! $now_page )
@@ -37,8 +37,8 @@ else
 
 // Tinh so trang
 $sql1 = "SELECT COUNT(*) " . $sql;
-$result = $db->sql_query( $sql1 );
-list( $output ) = $db->sql_fetchrow( $result );
+$result = $db->query( $sql1 );
+$output = $result->fetchColumn();
 $ts = ceil( $output / 50 );
 
 $xtpl = new XTemplate( "userplaylist.tpl", NV_ROOTDIR . "/themes/" . $global_config['module_theme'] . "/modules/" . $module_name );
@@ -60,9 +60,9 @@ $link_del = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_V
 $link_edit = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=editplaylist";
 $link_active = "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=active&where=_playlist&id=";
 
-$sql = "SELECT * " . $sql . " ORDER BY `active` ASC, `time` DESC LIMIT " . $first_page . ",50";
-$result = $db->sql_query( $sql );
-while( $row = $db->sql_fetchrow( $result ) )
+$sql = "SELECT * " . $sql . " ORDER BY active ASC, time DESC LIMIT " . $first_page . ",50";
+$result = $db->query( $sql );
+while( $row = $result->fetch() )
 {
 	$xtpl->assign( 'id', $row['id'] );
 	$xtpl->assign( 'name', $row['name'] );
@@ -85,8 +85,6 @@ $contents .= "<div align=\"center\" style=\"width:300px;margin:0px auto 0px auto
 // $contents .= new_page_admin( $ts, $now_page, $link );
 $contents .= "</div>\n";
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';

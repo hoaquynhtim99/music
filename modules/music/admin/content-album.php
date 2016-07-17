@@ -40,7 +40,7 @@ if( ! empty( $id ) )
 		"listsong" => $classMusic->string2array( $row['listsong'] ),
 	);
 	
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op . "&amp;id=" . $id;
 	$table_caption = $page_title = $classMusic->lang('edit_album');
 }
 else
@@ -55,19 +55,19 @@ else
 		"listsong" => array(),
 	);
 	
-	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
+	$form_action = NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&amp;" . NV_NAME_VARIABLE . "=" . $module_name . "&amp;" . NV_OP_VARIABLE . "=" . $op;
 	$table_caption = $page_title = $classMusic->lang('add_album');
 }
 
 if( $nv_Request->isset_request( "submit", "post" ) )
 {
-	$array['name'] = filter_text_input( 'ten', 'post', '', 1, 255 );
-	$array['tname'] = filter_text_input( 'tenthat', 'post', '', 1, 255 );
-	$array['casi'] = filter_text_input( 'casi', 'post', '', 1, 255 );
-	$array['casimoi'] = filter_text_input( 'casimoi', 'post', '', 1, 255 );
+	$array['name'] = nv_substr( $nv_Request->get_title( 'ten', 'post', '', 1 ), 0, 255);
+	$array['tname'] = nv_substr( $nv_Request->get_title( 'tenthat', 'post', '', 1 ), 0, 255);
+	$array['casi'] = nv_substr( $nv_Request->get_title( 'casi', 'post', '', 1 ), 0, 255);
+	$array['casimoi'] = nv_substr( $nv_Request->get_title( 'casimoi', 'post', '', 1 ), 0, 255);
 	$array['thumb'] = $nv_Request->get_string( 'thumb', 'post', '' );
-	$array['describe'] = nv_editor_filter_textarea( 'describe', '', NV_ALLOWED_HTML_TAGS );
-	$array['listsong'] = filter_text_input( 'listsong', 'post', '', 1, 255 );
+	$array['describe'] = $nv_Request->get_editor( 'describe', '', NV_ALLOWED_HTML_TAGS );
+	$array['listsong'] = nv_substr( $nv_Request->get_title( 'listsong', 'post', '', 1 ), 0, 255);
 	
 	$array['name'] = empty( $array['name'] ) ? change_alias( $array['tname'] ) : change_alias( $array['name'] );
 	
@@ -119,15 +119,15 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		// Kiem tra ton tai
 		if( $id )
 		{
-			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND `name`=" . $db->dbescape( $array['name'] ) . " AND `id`!=" . $id;
+			$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND name=" . $db->quote( $array['name'] ) . " AND id!=" . $id;
 		}
 		else
 		{
-			$sql = "SELECT * FROM `" . NV_PREFIXLANG . "_" . $module_data . "_album` WHERE `casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND `name`=" . $db->dbescape( $array['name'] );
+			$sql = "SELECT * FROM " . NV_PREFIXLANG . "_" . $module_data . "_album WHERE casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . " AND name=" . $db->quote( $array['name'] );
 		}
 		
-		$result = $db->sql_query( $sql );
-		if( $db->sql_numrows( $result ) )
+		$result = $db->query( $sql );
+		if( $result->rowCount() )
 		{
 			$error = $classMusic->lang('error_exist_album');
 		}
@@ -141,22 +141,22 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		// Sua album
 		if( $id )
 		{
-			$sql = "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "_album` SET 
-				`name`=" . $db->dbescape( $array['name'] ) . ",
-				`tname`=" . $db->dbescape( $array['tname'] ) . ",
-				`casi`=" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . ",
-				`thumb`=" . $db->dbescape( $array['thumb'] ) . ",
-				`numsong`=" . sizeof( $array['listsong'] ) . ",
-				`describe`=" . $db->dbescape( $array['describe'] ) . ",
-				`listsong`=" . $db->dbescape( implode( ",", $array['listsong'] ) ) . "
-			WHERE `id` =" . $id;
-			$result = $db->sql_query( $sql );
+			$sql = "UPDATE " . NV_PREFIXLANG . "_" . $module_data . "_album SET 
+				name=" . $db->quote( $array['name'] ) . ",
+				tname=" . $db->quote( $array['tname'] ) . ",
+				casi=" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ",
+				thumb=" . $db->quote( $array['thumb'] ) . ",
+				numsong=" . sizeof( $array['listsong'] ) . ",
+				describe=" . $db->quote( $array['describe'] ) . ",
+				listsong=" . $db->quote( implode( ",", $array['listsong'] ) ) . "
+			WHERE id =" . $id;
+			$result = $db->query( $sql );
 
 			if( $result )
 			{
 				if( ! empty( $array['listsong'] ) )
 				{
-					$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=" . $id . " WHERE `id` IN(" . implode( ",", $array['listsong'] ) . ") AND `album`=0" );
+					$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=" . $id . " WHERE id IN(" . implode( ",", $array['listsong'] ) . ") AND album=0" );
 				}
 
 				// Cap nhat ca si
@@ -170,18 +170,18 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 				if( ! empty( $diff_old_song ) )
 				{
 					$diff_old_song = implode( ",", $diff_old_song );
-					$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=0 WHERE `id` IN(" . $diff_old_song . ") AND `album`=" . $id );
+					$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=0 WHERE id IN(" . $diff_old_song . ") AND album=" . $id );
 				}
 
 				// Cap nhat album cho cac bai hat duoc them moi
 				if( ! empty( $diff_new_song ) )
 				{
 					$diff_new_song = implode( ",", $diff_new_song );
-					$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=" . $id . " WHERE `id` IN(" . $diff_new_song . ") AND `album`=0" );
+					$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=" . $id . " WHERE id IN(" . $diff_new_song . ") AND album=0" );
 				}
 
-				nv_del_moduleCache( $module_name );
-				Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album" );
+				$nv_Cache->delMod( $module_name );
+				Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album" );
 				die();
 			}
 			else
@@ -191,27 +191,27 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 		}
 		else
 		{
-			$sql = "INSERT INTO `" . NV_PREFIXLANG . "_" . $module_data . "_album` VALUES (
+			$sql = "INSERT INTO " . NV_PREFIXLANG . "_" . $module_data . "_album VALUES (
 				NULL, 
-				" . $db->dbescape( $array['name'] ) . ", 
-				" . $db->dbescape( $array['tname'] ) . ", 
-				" . $db->dbescape( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
-				" . $db->dbescape( $array['thumb'] ) . ", 
+				" . $db->quote( $array['name'] ) . ", 
+				" . $db->quote( $array['tname'] ) . ", 
+				" . $db->quote( $classMusic->build_query_singer_author( $array['casi'] ) ) . ", 
+				" . $db->quote( $array['thumb'] ) . ", 
 				0, 
-				" . $db->dbescape( $admin_info['username'] ) . ",	
-				" . $db->dbescape( $array['describe'] ) . "	,
+				" . $db->quote( $admin_info['username'] ) . ",	
+				" . $db->quote( $array['describe'] ) . "	,
 				1,
 				" . sizeof( $array['listsong'] ) . ",
-				" . $db->dbescape( implode( ",", $array['listsong'] ) ) . ",
+				" . $db->quote( implode( ",", $array['listsong'] ) ) . ",
 				" . NV_CURRENTTIME . ",
 				'0-" . NV_CURRENTTIME . "'
 			)";
 
-			$newid = $db->sql_query_insert_id( $sql );
+			$newid = $db->insert_id( $sql );
 
 			if( $newid )
 			{
-				$db->sql_freeresult();
+				//$xxx->closeCursor();
 				
 				// Cap nhat ca si
 				$classMusic->fix_singer( $array['casi'] );
@@ -219,11 +219,11 @@ if( $nv_Request->isset_request( "submit", "post" ) )
 				// Cap nhat album cho cac bai hat
 				if( ! empty( $array['listsong'] ) )
 				{
-					$db->sql_query( "UPDATE `" . NV_PREFIXLANG . "_" . $module_data . "` SET `album`=" . $newid . " WHERE `id` IN(" . implode( ",", $array['listsong'] ) . ") AND `album`=0" );
+					$db->query( "UPDATE " . NV_PREFIXLANG . "_" . $module_data . " SET album=" . $newid . " WHERE id IN(" . implode( ",", $array['listsong'] ) . ") AND album=0" );
 				}
 
-				nv_del_moduleCache( $module_name );
-				Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album" );
+				$nv_Cache->delMod( $module_name );
+				Header( "Location: " . NV_BASE_ADMINURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=" . $module_name . "&" . NV_OP_VARIABLE . "=album" );
 				die();
 			}
 			else
@@ -330,8 +330,6 @@ if( ! empty( $array['casi'] ) )
 $xtpl->parse( 'main' );
 $contents = $xtpl->text( 'main' );
 
-include ( NV_ROOTDIR . "/includes/header.php" );
+include NV_ROOTDIR . '/includes/header.php';
 echo nv_admin_theme( $contents );
-include ( NV_ROOTDIR . "/includes/footer.php" );
-
-?>
+include NV_ROOTDIR . '/includes/footer.php';
