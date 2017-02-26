@@ -15,47 +15,50 @@ $sql_drop_module = array();
 
 global $op, $db, $global_config, $db_config;
 
-// Lay nhung ngon ngu da co
-$sql = "SHOW TABLE STATUS LIKE '" . $db_config['prefix'] . "\_" . str_replace("_", "\_", $module_data) . "\_config\_%'";
-$result = $db->query($sql);
-$num_table = $result->rowCount();
+$array_lang_module_setup = array(); // Những ngôn ngữ mà module này đã cài đặt vào
+$set_lang_data = ''; // Ngôn ngữ mặc định sẽ copy các cột vào
 
-$array_lang_module_setup = array(); // Cac ngon ngu da cai
-$set_lang_data = ""; // Ngon ngu mac dinh
+// Xác định các ngôn ngữ đã cài đặt
+$_sql = "SELECT * FROM " . $db_config['prefix'] . "_setup_language WHERE setup=1";
+$_result = $db->query($_sql);
+$array_lang_setup = array();
+while ($_row = $_result->fetch()) {
+    $array_lang_setup[$_row['lang']] = $_row['lang'];
+}
 
-if ($num_table > 0) {
-    // Cac ngon ngu da cai dat
-    while ($item = $result->fetch()) {
-        $array_lang_module_setup[] = str_replace($db_config['prefix'] . "_" . $module_data . "_config_", "", $item['name']);
+// Xác định các ngôn ngữ đã cài module
+foreach ($array_lang_setup as $_lang) {
+    $is_setup = $db->query("SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $_lang . "_modules WHERE module_data=" . $db->quote($module_data))->fetchColumn();
+    if ($is_setup) {
+        $array_lang_module_setup[$_lang] = $_lang;
     }
+}
 
-    // Ngon ngu mac dinh de copy du lieu
-    if ($lang != $global_config['site_lang'] and in_array($global_config['site_lang'], $array_lang_module_setup)) {
-        $set_lang_data = $global_config['site_lang'];
-    } else {
-        foreach ($array_lang_module_setup as $lang_i) {
-            if ($lang != $lang_i) {
-                $set_lang_data = $lang_i;
-                break;
-            }
+// Xác định ngôn ngữ mặc định sẽ copy các cột vào
+if ($lang != $global_config['site_lang'] and in_array($global_config['site_lang'], $array_lang_module_setup)) {
+    $set_lang_data = $global_config['site_lang'];
+} else {
+    foreach ($array_lang_module_setup as $_lang) {
+        if ($lang != $_lang) {
+            $set_lang_data = $_lang;
+            break;
         }
     }
 }
 
-// Xóa các trường dữ liệu khi xóa module ở ngôn ngữ đã cài
-if (in_array($lang, $array_lang_module_setup) and $num_table > 1) {
+// Xóa các trường dữ liệu khi xóa module ở ngôn ngữ đã cài (có từ 2 module đã cài trở lên)
+if (in_array($lang, $array_lang_module_setup) and sizeof($array_lang_module_setup) > 1) {
 
 } elseif ($op != "setup") {
     // Xóa hết bảng dữ liệu
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_categories";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_config";
 }
-
-$sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_config_" . $lang;
 
 $sql_create_module = $sql_drop_module;
 
-// Danh mục bài hát, video, albums
+// Danh mục nói chung
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_categories (
   cat_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
   cat_parentid smallint(4) unsigned NOT NULL DEFAULT '0',
@@ -117,99 +120,6 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY is_official (is_official),
   KEY status (status)
 ) ENGINE=MyISAM";
-
-/*
-// Album
-$sql_create_module[] = " CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums (
-  album_id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  album_code varchar(10) NOT NULL DEFAULT '' COMMENT 'Mã album 8 ký tự',
-  album_name varchar(250) NOT NULL DEFAULT '' COMMENT 'Tên gọi của album',
-  album_image varchar(250) NOT NULL DEFAULT '' COMMENT 'Ảnh bìa của album',
-  album_description mediumtext NOT NULL COMMENT 'Mô tả album',
-  song_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách id bài hát có dạng id1,id2,id3...',
-  singer_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của ca sĩ có dạng 0,id1,id2,id3,...,0',
-  uploader_id mediumint(8) unsigned NOT NULL DEFAULT '0' COMMENT 'ID người đăng',
-  uploader_name varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người đăng bài hát nếu là bài hát do khách upload',
-  stat_views int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
-  stat_likes int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt like',
-  stat_numsongs smallint(4) NOT NULL DEFAULT '0' COMMENT 'Số bài hát',
-  stat_hit varchar(50) NOT NULL DEFAULT '' COMMENT 'Thông tin HIT của album',
-  status tinyint(1) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
-  addtime int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
-  updatetime int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật',
-  PRIMARY KEY (album_id),
-  UNIQUE KEY album_code (album_code),
-  KEY album_name (album_name),
-  KEY song_ids (song_ids),
-  KEY singer_ids (singer_ids),
-) ENGINE=MyISAM";
-
-// Loi bai hat
-$sql_create_module[] = " CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_lyrics (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  songid mediumint(8) unsigned NOT NULL DEFAULT '0',
-  user varchar(255) NOT NULL DEFAULT '',
-  body text NOT NULL,
-  active smallint(2) unsigned NOT NULL DEFAULT '0',
-  dt int(11) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-// Videoclip
-$sql_create_module[] = " CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  name varchar(255) NOT NULL DEFAULT '',
-  tname varchar(255) NOT NULL DEFAULT '',
-  casi varchar(255) NOT NULL DEFAULT '',
-  nhacsi varchar(255) NOT NULL DEFAULT '',
-  theloai mediumint(8) unsigned NOT NULL DEFAULT '0',
-  listcat varchar(255) NOT NULL DEFAULT '',
-  duongdan varchar(255) NOT NULL DEFAULT '',
-  thumb varchar(255) NOT NULL DEFAULT '',
-  view mediumint(8) unsigned NOT NULL DEFAULT '0',
-  active smallint(2) unsigned NOT NULL DEFAULT '0',
-  dt int(11) unsigned NOT NULL DEFAULT '0',
-  server mediumint(8) unsigned NOT NULL DEFAULT '0',
-  binhchon mediumint(8) unsigned NOT NULL DEFAULT '0',
-  hit varchar(50) NOT NULL DEFAULT '',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-// Ca si
-$sql_create_module[] = " CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_singers (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  ten varchar(100) NOT NULL DEFAULT '',
-  tenthat varchar(100) NOT NULL DEFAULT '',
-  thumb varchar(255) NOT NULL DEFAULT '',
-  introduction text NOT NULL,
-  numsong mediumint(8) unsigned NOT NULL DEFAULT '0',
-  numalbum mediumint(8) unsigned NOT NULL DEFAULT '0',
-  numvideo mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-// Nhac si
-$sql_create_module[] = " CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_authors (
-  id mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
-  ten varchar(255) NOT NULL DEFAULT '',
-  tenthat varchar(255) NOT NULL DEFAULT '',
-  thumb varchar(255) NOT NULL DEFAULT '',
-  introduction text NOT NULL ,
-  numsong mediumint(8) unsigned NOT NULL DEFAULT '0',
-  numvideo mediumint(8) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (id)
-) ENGINE=MyISAM";
-
-// Cau hinh FTP mac dinh
-$sql_create_module[] = "INSERT INTO " . $db_config['prefix'] . "_" . $module_data . "_ftp 
-(id, host, user, pass, fulladdress, subpart, ftppart, active) VALUES
-(2, 'nhaccuatui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/', 'bai-hat', '/', 1),
-(3, 'zing', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/', 'bai-hat', '/', 1),
-(4, 'nhacvui', 'hoaquynhtim99', 'hoaquynhtim99', 'http://hcm.nhac.vui.vn', '/', '/', 1),
-(5, 'nhacso', 'hoaquynhtim99', 'hoaquynhtim99', 'http://nhacso.net/', 'nghe-nhac', '/', 1),
-(6, 'zingclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://mp3.zing.vn/video-clip', '/', '/', 1),
-(7, 'nctclip', 'hoaquynhtim99', 'hoaquynhtim99', 'http://www.nhaccuatui.com/video', '/', '/', 1)";
-*/
 
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_config_" . $lang . " (
   config_name varchar(100) NOT NULL,
