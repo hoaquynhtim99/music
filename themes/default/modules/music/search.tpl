@@ -115,7 +115,7 @@
 		<!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit -->
 	</h2>
 	<p>{LANG.who_create_1}: <a class="singer" title="{ALBUM.upboi}" href="{ALBUM.url_search_upload}">{ALBUM.upboi}</a> | {LANG.view}: {ALBUM.numview}</p>
-	{ALBUM.describe}
+	{ALBUM.description}
 	<div class="clear"></div>
 	<div class="hr"></div>
 <!-- END: loop -->

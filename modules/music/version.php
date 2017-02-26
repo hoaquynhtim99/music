@@ -1,10 +1,11 @@
 <?php
 
 /**
- * @Project NUKEVIET-MUSIC
- * @Author Phan Tan Dung (phantandung92@gmail.com)
- * @copyright 2011 Freeware
- * @createdate 05/12/2010 09:47
+ * @Project NUKEVIET MUSIC 4.X
+ * @Author PHAN TAN DUNG (phantandung92@gmail.com)
+ * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
+ * @License GNU/GPL version 2 or any later version
+ * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
 if (!defined('NV_ADMIN') or !defined('NV_MAINFILE'))
@@ -12,21 +13,14 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE'))
 
 $module_version = array(
     "name" => "NukeViet Music",
-    "modfuncs" => "main, listenone, listenlist, search, playlist, album, song, creatalbum, listenuserlist, allplaylist, viewvideo, video, upload, searchvideo, editplaylist, managersong, gift, down",
+    "modfuncs" => "main",
     "is_sysmod" => 0,
     "virtual" => 1,
-    "version" => "3.5.01",
-    "date" => "Sun, 08 Apr 2012 00:00:00 GMT",
+    "version" => "4.1.00",
+    "date" => "Sun, 26 Feb 2017 14:04:32 GMT",
     "author" => "PHAN TAN DUNG (phantandung92@gmail.com)",
     "note" => "",
     "uploads_dir" => array(
-        $module_name,
-        $module_name . "/data",
-        $module_name . "/clipthumb",
-        $module_name . "/thumb",
-        $module_name . "/data/video",
-        $module_name . "/data/upload",
-        $module_name . "/ads",
-        $module_name . "/tmp",
-        $module_name . "/singerthumb",
-        $module_name . "/authorthumb"));
+        $module_name
+    )
+);

@@ -9,7 +9,7 @@
 		<div class="ms-shdetail" id="singersdetail">
 			<h2 class="medium greencolor mlotitle">{ALBUM.name} - <a class="singer" href="{ALBUM.url_search_singer}" title="{ALBUM.singer}">{ALBUM.singer}</a><!-- BEGIN: hit --><span class="musicicon mhit hitsong">&nbsp;&nbsp;&nbsp;</span><!-- END: hit --></h2>
 			<span class="msmall">{LANG.who_post}: <a class="singer" href="{ALBUM.url_search_upload}" title="{ALBUM.who_post}">{ALBUM.who_post}</a> | {LANG.view}: {ALBUM.numview}</span><br />
-			{ALBUM.describe}
+			{ALBUM.description}
 		</div>
 		<div class="ms-shshow">
 			<a href="javascript:void(0);" rel="0|{LANG.view_expand}|{LANG.view_collapse}|singersdetail" class="musicicon zoomin greencolor ms-shd" title="{LANG.view_expand}">{LANG.view_expand}</a>
