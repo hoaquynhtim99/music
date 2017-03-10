@@ -214,10 +214,12 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   stat_videos int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số video của ca sĩ',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
+  show_inhome tinyint(1) NOT NULL DEFAULT '0',
   status smallint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (singer_id),
   UNIQUE KEY singer_code (singer_code),
   KEY nation_id (nation_id),
+  KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_singers 
@@ -316,6 +318,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   is_official tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1: Chính thức, 0: Thành viên đăng',
+  show_inhome tinyint(1) NOT NULL DEFAULT '0',
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (song_id),
   UNIQUE KEY song_code (song_code),
@@ -326,6 +329,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY cat_ids (cat_ids),
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
+  KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs 
@@ -366,6 +370,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   is_official tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1: Chính thức, 0: Thành viên đăng',
+  show_inhome tinyint(1) NOT NULL DEFAULT '0',
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (album_id),
   UNIQUE KEY album_code (album_code),
@@ -373,6 +378,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY cat_ids (cat_ids),
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
+  KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_albums 
@@ -413,6 +419,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   is_official tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1: Chính thức, 0: Thành viên đăng',
+  show_inhome tinyint(1) NOT NULL DEFAULT '0',
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (video_id),
   UNIQUE KEY video_code (video_code),
@@ -422,6 +429,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY cat_ids (cat_ids),
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
+  KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_videos 
@@ -454,7 +462,18 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config ADD config_value_" . $lang . " varchar(255) NOT NULL DEFAULT ''";
 
 $default_config = array();
-$default_config['type_main'] = '1';
+$default_config['home_albums_display'] = '1';
+$default_config['home_singers_display'] = '1';
+$default_config['home_songs_display'] = '1';
+$default_config['home_videos_display'] = '1';
+$default_config['home_albums_weight'] = '1';
+$default_config['home_singers_weight'] = '4';
+$default_config['home_songs_weight'] = '3';
+$default_config['home_videos_weight'] = '2';
+$default_config['home_albums_nums'] = '12';
+$default_config['home_singers_nums'] = '9';
+$default_config['home_songs_nums'] = '24';
+$default_config['home_videos_nums'] = '12';
 
 foreach ($default_config as $config_name => $config_value) {
     $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_config (config_name, config_value_default) VALUES('" . $config_name . "', '" . $config_value . "')";
