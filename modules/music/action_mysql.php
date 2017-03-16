@@ -274,10 +274,13 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   quality_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
+  online_supported tinyint(1) NOT NULL DEFAULT '0',
   is_default tinyint(1) NOT NULL DEFAULT '0',
+  weight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Sắp thứ tự',
   status smallint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (quality_id),
   KEY is_default (is_default),
+  KEY online_supported (online_supported),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song 
@@ -290,10 +293,13 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   quality_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
+  online_supported tinyint(1) NOT NULL DEFAULT '0',
   is_default tinyint(1) NOT NULL DEFAULT '0',
+  weight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Sắp thứ tự',
   status smallint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (quality_id),
   KEY is_default (is_default),
+  KEY online_supported (online_supported),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video 

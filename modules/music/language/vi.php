@@ -18,4 +18,8 @@ $lang_translator['copyright'] = '@Copyright (C) 2011 Freeware';
 $lang_translator['info'] = '';
 $lang_translator['langtype'] = 'lang_module';
 
+$lang_module['list-albums'] = 'Album';
+$lang_module['list-singers'] = 'Nghệ sĩ';
+$lang_module['list-videos'] = 'Video';
+
 $lang_module['album'] = 'Album';
