@@ -73,6 +73,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_singer_nickname,
       DROP " . $lang . "_singer_realname,
       DROP " . $lang . "_singer_hometown,
+      DROP " . $lang . "_singer_prize,
       DROP " . $lang . "_singer_info,
       DROP " . $lang . "_singer_introtext,
       DROP " . $lang . "_singer_keywords,
@@ -176,7 +177,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_cat_introtext mediumtext NOT NULL,
-	ADD " . $lang . "_cat_keywords mediumtext NOT NULL
+	ADD " . $lang . "_cat_keywords text NOT NULL
 ";
 
 // Quốc gia: Áp dụng cho ca sĩ nhạc sĩ
@@ -197,7 +198,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_nation_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_nation_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_nation_introtext mediumtext NOT NULL,
-	ADD " . $lang . "_nation_keywords mediumtext NOT NULL
+	ADD " . $lang . "_nation_keywords text NOT NULL
 ";
 
 // Bảng ca sĩ
@@ -229,9 +230,10 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_singer_nickname varchar(255) NOT NULL DEFAULT '',
 	ADD " . $lang . "_singer_realname varchar(255) NOT NULL DEFAULT '',
 	ADD " . $lang . "_singer_hometown varchar(255) NOT NULL DEFAULT '',
+	ADD " . $lang . "_singer_prize text NOT NULL,
 	ADD " . $lang . "_singer_info mediumtext NOT NULL,
-	ADD " . $lang . "_singer_introtext mediumtext NOT NULL,
-	ADD " . $lang . "_singer_keywords mediumtext NOT NULL,
+	ADD " . $lang . "_singer_introtext text NOT NULL,
+	ADD " . $lang . "_singer_keywords text NOT NULL,
     ADD INDEX " . $lang . "_singer_searchkey (" . $lang . "_singer_searchkey)
 ";
 
@@ -263,7 +265,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_author_hometown varchar(255) NOT NULL DEFAULT '',
 	ADD " . $lang . "_author_info mediumtext NOT NULL,
 	ADD " . $lang . "_author_introtext mediumtext NOT NULL,
-	ADD " . $lang . "_author_keywords mediumtext NOT NULL,
+	ADD " . $lang . "_author_keywords text NOT NULL,
     ADD INDEX " . $lang . "_author_searchkey (" . $lang . "_author_searchkey)
 ";
 
@@ -306,7 +308,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   cat_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách ID phụ của thể loại có dạng id1,id2,...',
   singer_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của ca sĩ có dạng id1,id2,id3,...',
   author_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của nhạc sĩ có dạng id1,id2,id3,...',
-  album_id int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID album của bài hát',
+  album_id varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách album của bài hát có dạng id1,id2,id3,...',
   video_id int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID video của bài hát',
   resource_avatar varchar(255) NOT NULL COMMENT 'Avatar',
   resource_cover varchar(255) NOT NULL COMMENT 'Cover',
@@ -337,7 +339,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_song_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_song_searchkey varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_song_introtext mediumtext NOT NULL,
-	ADD " . $lang . "_song_keywords mediumtext NOT NULL,
+	ADD " . $lang . "_song_keywords text NOT NULL,
     ADD INDEX " . $lang . "_song_searchkey (" . $lang . "_song_searchkey)
 ";
 
@@ -387,7 +389,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_album_searchkey varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_album_introtext mediumtext NOT NULL,
 	ADD " . $lang . "_album_description mediumtext NOT NULL,
-	ADD " . $lang . "_album_keywords mediumtext NOT NULL,
+	ADD " . $lang . " text NOT NULL,
     ADD INDEX " . $lang . "_album_searchkey (" . $lang . "_album_searchkey)
 ";
 
@@ -437,7 +439,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_video_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_video_searchkey varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_video_introtext mediumtext NOT NULL,
-	ADD " . $lang . "_video_keywords mediumtext NOT NULL,
+	ADD " . $lang . "_video text NOT NULL,
     ADD INDEX " . $lang . "_video_searchkey (" . $lang . "_video_searchkey)
 ";
 
