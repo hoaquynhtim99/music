@@ -23,3 +23,6 @@ $lang_module['list-singers'] = 'Nghệ sĩ';
 $lang_module['list-videos'] = 'Video';
 
 $lang_module['album'] = 'Album';
+$lang_module['song'] = 'Bài hát';
+$lang_module['singer'] = 'Ca sĩ';
+$lang_module['video'] = 'Video';
