@@ -13,4 +13,118 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
 
 define('NV_IS_MUSIC_ADMIN', true);
 
-$allow_func = array('main');
+$allow_func = array('main', 'config');
+
+define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
+
+/**
+ * Class ajaxRespon
+ * 
+ * @package NUKEVIET MUSIC
+ * @author PHAN TAN DUNG (phantandung92@gmail.com)
+ * @copyright (C) 2016 PHAN TAN DUNG. All rights reserved
+ * @version 1.0
+ * @access public
+ */
+class ajaxRespon
+{
+    private $jsonDefault = array(
+        'status' => 'error',
+        'message' => '',
+        'input' => '',
+        'redirect' => ''
+    );
+
+    private $json = array();
+
+    /**
+     * ajaxRespon::__construct()
+     * 
+     * @return
+     */
+    public function __construct()
+    {
+        $this->json = $this->jsonDefault;
+    }
+
+    /**
+     * ajaxRespon::setMessage()
+     * 
+     * @param mixed $message
+     * @return
+     */
+    public function setMessage($message)
+    {
+        $this->json['message'] = $message;
+        return $this;
+    }
+
+    /**
+     * ajaxRespon::setInput()
+     * 
+     * @param mixed $input
+     * @return
+     */
+    public function setInput($input)
+    {
+        $this->json['input'] = $input;
+        return $this;
+    }
+
+    /**
+     * ajaxRespon::setRedirect()
+     * 
+     * @param mixed $redirect
+     * @return
+     */
+    public function setRedirect($redirect)
+    {
+        $this->json['redirect'] = $redirect;
+        return $this;
+    }
+
+    /**
+     * ajaxRespon::setSuccess()
+     * 
+     * @return
+     */
+    public function setSuccess()
+    {
+        $this->json['status'] = 'ok';
+        return $this;
+    }
+
+    /**
+     * ajaxRespon::setError()
+     * 
+     * @return
+     */
+    public function setError()
+    {
+        $this->json['status'] = 'error';
+        return $this;
+    }
+
+    /**
+     * ajaxRespon::reset()
+     * 
+     * @return
+     */
+    public function reset()
+    {
+        $this->json = $this->jsonDefault;
+        return $this;
+    }
+
+    /**
+     * ajaxRespon::respon()
+     * 
+     * @return
+     */
+    public function respon()
+    {
+        die(json_encode($this->json));
+    }
+}
+
+$ajaxRespon = new ajaxRespon();

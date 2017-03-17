@@ -5,3 +5,146 @@
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
+
+/*--- Fix Form ---*/
+.form-horizontal .control-label{
+    font-weight: 700;
+}
+.form-horizontal .control-label .fa{
+    color: #B0171F;
+    font-weight: normal;
+    font-size: 10px;
+}
+.form-horizontal .ckeditor .control-label{
+    padding-top: 0;
+    margin-bottom: 7px;
+}
+.form-horizontal .ckeditor .control-label .fa{
+    position: relative;
+    top: -1px;
+}
+.form-horizontal .checkbox input[type="checkbox"]{
+    margin-top: 1px;
+}
+.form-horizontal .help-block{
+    margin-bottom: 0;
+}
+.form-horizontal .loading{
+    display: none;
+}
+div.tooltip.bottom{
+    left: 5px!important;
+}
+div.tooltip.bottom div.tooltip-arrow{
+    left: 15px!important;
+}
+
+/*--- Responsive list items ---*/
+.panel .panel-heading h1,
+.panel .panel-heading h2,
+.panel .panel-heading h3,
+.panel .panel-heading h4,
+.panel .panel-heading h5,
+.panel .panel-heading h6{
+    margin: 0;
+}
+.panel .panel-body.items{
+    padding: 0!important;
+    background: #fff;
+    margin-left: -1px;
+}
+.items .loop-item{
+    float: left;
+    padding: 10px 15px 10px 13px;
+    width: 100%;
+    line-height: 20px;
+    border-left: 2px solid #D5D5D5;
+}
+.items .loop-item:nth-child(2n) {
+    background: #F9F9F9;
+}
+.items .loop-item.item-danger{
+    border-left-color: #b64645;
+}
+.items .loop-item.item-header{
+    font-weight: 700;
+}
+.items .loop-item .item-checkbox {
+    float: left;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    text-align: center;
+}
+.items .loop-item .item-order{
+    float: left;
+    width: 50px;
+    height: 20px;
+    margin-right: 10px;
+    text-align: center;
+}
+.items .loop-item .item-order select{
+    height: 20px;
+    padding: 0;
+}
+.items .loop-item .item-title{
+    float: left;
+    width: 250px;
+    margin-right: 10px;
+}
+.items .loop-item .item-title.item-title-nowrap{
+    height: 20px;
+    overflow: hidden;
+}
+.items .loop-item .item-time{
+    float: left;
+    width: 110px;
+    margin-right: 10px;
+}
+.items .loop-item .item-description{
+    display: inline-block;
+}
+.items .loop-item .item-status{
+    float: right;
+    margin-right: 10px;
+    min-width: 60px;
+    height: 20px;
+    text-align: center;
+}
+.items .loop-item .item-status input[type="checkbox"]{
+    position: relative;
+    top: 2px;
+}
+.items .loop-item .item-tools{
+    float: right;
+    height: 20px;
+    text-align: center;
+    min-width: 60px;
+}
+.items .loop-item .item-tools>*{
+    margin-left: 5px;
+}
+.items .loop-item .item-tools>*:first-child{
+    margin-left: 0;
+}
+.items .loop-item .item-tools .fa:before{
+    position: relative;
+    font-size: 18px;
+    line-height: 20px;
+}
+.items .loop-item .item-tools .fa-edit:before{
+    top: 2px;
+}
+
+/*--- CAPTION ---*/
+.page-title{
+    padding: 0 0 15px 0;
+}
+.page-title h1,
+.page-title h2,
+.page-title h3,
+.page-title h4,
+.page-title h5,
+.page-title h6{
+    margin: 0;
+}

@@ -467,7 +467,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   config_value_default varchar(255) NOT NULL DEFAULT '',
   UNIQUE KEY config_name (config_name)
 )ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config ADD config_value_" . $lang . " varchar(255) NOT NULL DEFAULT ''";
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config ADD config_value_" . $lang . " varchar(255) NULL DEFAULT NULL";
 
 $default_config = array();
 $default_config['home_albums_display'] = '1';
