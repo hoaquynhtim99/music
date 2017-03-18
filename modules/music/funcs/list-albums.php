@@ -26,7 +26,7 @@ $page = 1;
 $all_pages = 0;
 $per_page = $global_array_config['gird_albums_incat_nums'];
 
-// X? l? khi xem theo danh m?c
+// Xử lý khi xem theo danh mục
 if (isset($array_op[1])) {
     if (preg_match("/^([a-zA-Z0-9\-]+)\-" . nv_preg_quote($global_array_config['code_prefix']['cat']) . "([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
         $catcode = $m[2];
@@ -45,7 +45,7 @@ if (isset($array_op[1])) {
     }
 }
 
-// X? l? ph�n trang
+// Xử lý phân trang
 if (isset($array_op[2])) {
     if (preg_match("/^page\-([0-9]{1,7})$/", $array_op[2], $m)) {
         $page = intval($m[1]);
@@ -56,7 +56,7 @@ if (isset($array_op[2])) {
     }
 }
 
-// Ch?nh l?i ��?ng d?n n?u Alias thay �?i ho?c �?t page sai
+// Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
 if (isset($array_op[3]) or $catalias != $request_catalias) {
     header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-albums'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode . ($page > 1 ? '/page-' . $page : ''), true));
     die();
@@ -111,13 +111,13 @@ foreach ($global_array_cat as $cat) {
     }
 }
 
-// X? l? n?u t�y ? �?t gi� tr? page sai
+// Xử lý nếu tùy ý đặt giá trị page sai
 if ($page > 1 and empty($array)) {
     header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-albums'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode, true));
     die();
 }
 
-// X�c �?nh ca s?
+// Xác định ca sĩ
 $array_singers = nv_get_singers($array_singer_ids);
 
 foreach ($array as $id1 => $row1) {
@@ -140,7 +140,7 @@ $array_mod_title[] = array(
     'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums']
 );
 
-// Ph�n trang, ti�u �? trang
+// Phân trang, tiêu đề trang
 if (!empty($catid)) {
     $page_title = $global_array_cat[$catid]['cat_name'];
     $generate_page = nv_alias_page($page_title, $base_url, $all_pages, $per_page, $page);
