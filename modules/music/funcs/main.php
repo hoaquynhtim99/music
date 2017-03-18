@@ -20,7 +20,7 @@ $array_singer_ids = $array_singers = array();
 
 if (!empty($global_array_config['home_albums_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND show_inhome=1 AND status=1");
-    $db->order("time_add DESC")->limit($global_array_config['home_albums_nums'])->offset(0);
+    $db->order("album_id DESC")->limit($global_array_config['home_albums_nums'])->offset(0);
     
     $array_select_fields = array('album_id', 'album_code', 'cat_ids', 'singer_ids', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_hit', 'time_add', 'time_update');
     $array_select_fields[] = NV_LANG_DATA . '_album_name album_name';
@@ -53,6 +53,8 @@ if (!empty($global_array_config['home_albums_display'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
         
+        $row['album_link'] = nv_get_detail_album_link($row);
+        
         $array[$row['album_id']] = $row;
     }
     
@@ -71,8 +73,20 @@ if (!empty($global_array_config['home_videos_display'])) {
     
 }
 
-// X�c �?nh ca s?
+// Xác định ca sĩ
+$array_singers = nv_get_singers($array_singer_ids);
 
+foreach ($content_albums as $id => $row) {
+    if (!empty($row['singer_ids'])) {
+        foreach ($row['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $row['singers'][$singer_id] = $array_singers[$singer_id];
+                $row['singers'][$singer_id]['singer_link'] = nv_get_view_singer_link($array_singers[$singer_id]);
+            }
+        }
+    }
+    $content_albums[$id] = $row;
+}
 
 //print_r($content_albums);
 //die();

@@ -30,6 +30,34 @@ function nv_theme_gird_albums($array)
         $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
         
         $xtpl->assign('ROW', $row);
+        
+        $num_singers = sizeof($row['singers']);
+        if ($num_singers > $global_array_config['limit_singers_displayed']) {
+            $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+            
+            foreach ($row['singers'] as $singer) {
+                $xtpl->assign('SINGER', $singer);
+                $xtpl->parse('main.loop.va_singer.loop');
+            }
+            
+            $xtpl->parse('main.loop.va_singer');
+        } elseif (!empty($row['singers'])) {
+            $i = 0;
+            foreach ($row['singers'] as $singer) {
+                $i++;
+                $xtpl->assign('SINGER', $singer);
+                
+                if ($i > 1) {
+                    $xtpl->parse('main.loop.show_singer.loop.separate');
+                }
+                $xtpl->parse('main.loop.show_singer.loop');
+            }
+            $xtpl->parse('main.loop.show_singer');
+        } else {
+            $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+            $xtpl->parse('main.loop.no_singer');
+        }
+        
         $xtpl->parse('main.loop');
     }
 
@@ -78,7 +106,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
         $contents[$global_array_config['home_videos_weight']] = $xtpl->text('videos');
     }
     
-    // S?p x?p l?i theo th? t? c?u h?nh
+    // Sắp xếp lại theo thứ tự cấu hình
     ksort($contents);
     return implode("\n", $contents);
 }

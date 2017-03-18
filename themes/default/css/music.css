@@ -16,6 +16,12 @@
     color: #888;
     font-weight: normal;
 }
+.ms-second-title:hover,
+.ms-second-title a:hover,
+.ms-third-title:hover,
+.ms-third-title a:hover {
+    color: #428bca;
+}
 .ms-title-section h2 a {
     border-color: #428bca;
 }
@@ -117,4 +123,24 @@
 }
 .ms-gird-albums-description h4 {
     margin: 0;
+}
+
+/* SINGERS IN MODAL */
+.ms-singer-listgr-modal {
+    min-width: 320px;
+    margin: -15px;
+}
+.ms-singer-listgr-modal .list-group-item {
+    border-left: 0;
+    border-right: 0;
+}
+.ms-singer-listgr-modal .list-group-item:first-child {
+    border-top: 0;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+}
+.ms-singer-listgr-modal .list-group-item:last-child {
+    border-bottom: 0;
+    border-bottom-right-radius: 6px;
+    border-bottom-left-radius: 6px;
 }

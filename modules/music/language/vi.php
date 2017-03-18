@@ -25,4 +25,5 @@ $lang_module['list-videos'] = 'Video';
 $lang_module['album'] = 'Album';
 $lang_module['song'] = 'Bài hát';
 $lang_module['singer'] = 'Ca sĩ';
+$lang_module['singer_list'] = 'Danh sách ca sĩ';
 $lang_module['video'] = 'Video';

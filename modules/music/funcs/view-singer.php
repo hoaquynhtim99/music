@@ -1,3 +1,5 @@
+<?php
+
 /**
  * @Project NUKEVIET MUSIC 4.X
  * @Author PHAN TAN DUNG (phantandung92@gmail.com)
@@ -6,9 +8,13 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-$(document).ready(function() {
-    $('[data-toggle="show-va-singer"]').click(function(e) {
-        e.preventDefault();
-        modalShowByObj($(this).data('target'));
-    });
-});
+if (!defined('NV_IS_MOD_MUSIC'))
+    die('Stop!!!');
+
+$page_title = $module_info['custom_title'];
+
+$contents = "";
+
+include NV_ROOTDIR . '/includes/header.php';
+echo nv_site_theme($contents);
+include NV_ROOTDIR . '/includes/footer.php';

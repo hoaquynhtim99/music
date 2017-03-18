@@ -53,6 +53,16 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $nv_Cache->setItem($module_name, $cacheFile, serialize($global_array_config), $cacheTTL);
 }
 
+$global_array_config['limit_singers_displayed'] = 2;
+$global_array_config['various_artists'] = "Various Artists";
+$global_array_config['unknow_singer'] = "Unknow Singer";
+$global_array_config['code_prefix'] = array(
+    'singer' => 'at',
+    'playlist' => 'pl',
+    'album' => 'ab',
+    'video' => 'mv'
+);
+
 // Danh mục
 $cacheFile = NV_LANG_DATA . '_cats_' . NV_CACHE_PREFIX . '.cache';
 $cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
@@ -98,3 +108,77 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
 
 //print_r($global_array_cat);
 //die();
+
+/**
+ * nv_get_singers()
+ * 
+ * @param mixed $array_ids
+ * @return
+ */
+function nv_get_singers($array_ids)
+{
+    global $global_array_config, $db;
+    
+    $array_singers = array();
+    $array_ids = array_filter(array_unique($array_ids));
+    
+    if (!empty($array_ids)) {
+        $array_select_fields = array('singer_id', 'singer_code', 'singer_birthday', 'singer_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_albums', 'stat_songs', 'stat_videos');
+        $array_select_fields[] = NV_LANG_DATA . '_singer_name singer_name';
+        $array_select_fields[] = NV_LANG_DATA . '_singer_alias singer_alias';
+        $array_select_fields[] = NV_LANG_DATA . '_singer_nickname singer_nickname';
+        $array_select_fields[] = NV_LANG_DATA . '_singer_realname singer_realname';
+        if (NV_LANG_DATA != $global_array_config['default_language']) {
+            $array_select_fields[] = $global_array_config['default_language'] . '_singer_name default_singer_name';
+            $array_select_fields[] = $global_array_config['default_language'] . '_singer_alias default_singer_alias';
+            $array_select_fields[] = $global_array_config['default_language'] . '_singer_nickname default_singer_nickname';
+            $array_select_fields[] = $global_array_config['default_language'] . '_singer_realname default_singer_realname';
+        }
+        
+        $sql = "SELECT " . implode(', ', $array_select_fields) . " FROM " . NV_MOD_TABLE . "_singers WHERE singer_id IN(" . implode(',', $array_ids) . ")";
+        $result = $db->query($sql);
+        
+        while ($row = $result->fetch()) {
+            if (empty($row['singer_name']) and !empty($row['default_singer_name'])) {
+                $row['singer_name'] = $row['default_singer_name'];
+            }
+            if (empty($row['singer_alias']) and !empty($row['default_singer_alias'])) {
+                $row['singer_alias'] = $row['default_singer_alias'];
+            }
+            if (empty($row['singer_nickname']) and !empty($row['default_singer_nickname'])) {
+                $row['singer_nickname'] = $row['default_singer_nickname'];
+            }
+            if (empty($row['singer_realname']) and !empty($row['default_singer_realname'])) {
+                $row['singer_realname'] = $row['default_singer_realname'];
+            }
+            unset($row['default_singer_name'], $row['default_singer_alias'], $row['default_singer_nickname'], $row['default_singer_realname']);
+            $array_singers[$row['singer_id']] = $row;
+        }
+    }
+    
+    return $array_singers;
+}
+
+/**
+ * nv_get_view_singer_link()
+ * 
+ * @param mixed $singer
+ * @return
+ */
+function nv_get_view_singer_link($singer)
+{
+    global $global_config, $module_info, $global_array_config;
+    return NV_MOD_FULLLINK_AMP . $module_info['alias']['view-singer'] . '/' . $singer['singer_alias'] . '-' . $global_array_config['code_prefix']['singer'] . $singer['singer_code'] . $global_config['rewrite_exturl'];
+}
+
+/**
+ * nv_get_detail_album_link()
+ * 
+ * @param mixed $album
+ * @return
+ */
+function nv_get_detail_album_link($album)
+{
+    global $global_config, $module_info, $global_array_config;
+    return NV_MOD_FULLLINK_AMP . $module_info['alias']['detail-album'] . '/' . $album['album_alias'] . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'];
+}
