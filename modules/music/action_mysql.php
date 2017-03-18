@@ -55,8 +55,12 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_categories
       DROP " . $lang . "_cat_name,
       DROP " . $lang . "_cat_alias,
-      DROP " . $lang . "_cat_introtext,
-      DROP " . $lang . "_cat_keywords
+      DROP " . $lang . "_cat_absitetitle,
+      DROP " . $lang . "_cat_abintrotext,
+      DROP " . $lang . "_cat_abkeywords,
+      DROP " . $lang . "_cat_mvsitetitle,
+      DROP " . $lang . "_cat_mvintrotext,
+      DROP " . $lang . "_cat_mvkeywords
     ";
     
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_nations
@@ -178,8 +182,12 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_categories 
 	ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_cat_introtext text NOT NULL,
-	ADD " . $lang . "_cat_keywords text NOT NULL
+	ADD " . $lang . "_cat_absitetitle varchar(250) NOT NULL DEFAULT '',
+	ADD " . $lang . "_cat_abintrotext text NOT NULL,
+	ADD " . $lang . "_cat_abkeywords text NOT NULL,
+	ADD " . $lang . "_cat_mvsitetitle varchar(250) NOT NULL DEFAULT '',
+	ADD " . $lang . "_cat_mvintrotext text NOT NULL,
+	ADD " . $lang . "_cat_mvkeywords text NOT NULL
 ";
 
 // Quốc gia: Áp dụng cho ca sĩ nhạc sĩ

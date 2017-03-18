@@ -72,6 +72,12 @@ $global_array_config['gird_albums_incat_nums'] = 24;
 $global_array_config['funcs_sitetitle'] = array(
     'album' => 'Album mới, album hot nhiều ca sỹ'
 );
+$global_array_config['funcs_keywords'] = array(
+    'album' => 'album, album moi, album hot'
+);
+$global_array_config['funcs_description'] = array(
+    'album' => 'Album mới , album hot tuyển chọn các ca sỹ Việt Nam và quốc tế.'
+);
 
 // Danh mục
 $cacheFile = NV_LANG_DATA . '_cats_' . NV_CACHE_PREFIX . '.cache';
@@ -82,38 +88,26 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $global_array_cat_alias = $global_array_cat[1];
     $global_array_cat = $global_array_cat[0];
 } else {
-    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'show_inalbum', 'show_invideo', 'status');
-    $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_introtext cat_introtext';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_keywords cat_keywords';
-    if (NV_LANG_DATA != $global_array_config['default_language']) {
-        $array_select_fields[] = $global_array_config['default_language'] . '_cat_name default_cat_name';
-        $array_select_fields[] = $global_array_config['default_language'] . '_cat_alias default_cat_alias';
-        $array_select_fields[] = $global_array_config['default_language'] . '_cat_introtext default_cat_introtext';
-        $array_select_fields[] = $global_array_config['default_language'] . '_cat_keywords default_cat_keywords';
-    }
-    
-    $sql = "SELECT " . implode(', ', $array_select_fields) . " FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
+    $array_select_fields = nv_get_cat_select_fields();
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
     $result = $db->query($sql);
     
     $global_array_cat = array(); 
     $global_array_cat_alias = array();
        
     while ($row = $result->fetch()) {
-        if (empty($row['cat_name']) and !empty($row['default_cat_name'])) {
-            $row['cat_name'] = $row['default_cat_name'];
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
         }
-        if (empty($row['cat_alias']) and !empty($row['default_cat_alias'])) {
-            $row['cat_alias'] = $row['default_cat_alias'];
+        if (empty($row['cat_absitetitle'])) {
+            $row['cat_absitetitle'] = $row['cat_name'];
         }
-        if (empty($row['cat_introtext']) and !empty($row['default_cat_introtext'])) {
-            $row['cat_introtext'] = $row['default_cat_introtext'];
+        if (empty($row['cat_mvsitetitle'])) {
+            $row['cat_mvsitetitle'] = $row['cat_name'];
         }
-        if (empty($row['cat_keywords']) and !empty($row['default_cat_keywords'])) {
-            $row['cat_keywords'] = $row['default_cat_keywords'];
-        }
-        unset($row['default_cat_name'], $row['default_cat_alias'], $row['default_cat_introtext'], $row['default_cat_keywords']);
         $global_array_cat[$row['cat_id']] = $row;
         $global_array_cat_alias[$row['cat_code']] = $row['cat_id'];
     }
@@ -121,7 +115,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_cat, $global_array_cat_alias)), $cacheTTL);
 }
 
-//print_r($module_info);
+//print_r($global_array_cat);
 //die();
 
 /**
@@ -197,6 +191,40 @@ function nv_get_album_select_fields($full_fields = false)
     }
     
     $array_lang_fields = array('album_name', 'album_alias', 'album_description');
+    
+    return array($array_select_fields, $array_lang_fields);
+}
+
+/**
+ * nv_get_cat_select_fields()
+ * 
+ * @param bool $full_fields
+ * @return
+ */
+function nv_get_cat_select_fields($full_fields = false)
+{
+    global $global_array_config;
+    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'show_inalbum', 'show_invideo', 'status');
+    $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_absitetitle cat_absitetitle';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_abintrotext cat_abintrotext';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_abkeywords cat_abkeywords';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_mvsitetitle cat_mvsitetitle';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_mvintrotext cat_mvintrotext';
+    $array_select_fields[] = NV_LANG_DATA . '_cat_mvkeywords cat_mvkeywords';
+    if (NV_LANG_DATA != $global_array_config['default_language']) {
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_name default_cat_name';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_alias default_cat_alias';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_absitetitle default_cat_absitetitle';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_abintrotext default_cat_abintrotext';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_abkeywords default_cat_abkeywords';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_mvsitetitle default_cat_mvsitetitle';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_mvintrotext default_cat_mvintrotext';
+        $array_select_fields[] = $global_array_config['default_language'] . '_cat_mvkeywords default_cat_mvkeywords';
+    }
+    
+    $array_lang_fields = array('cat_absitetitle', 'cat_abintrotext', 'cat_abkeywords', 'cat_mvsitetitle', 'cat_mvintrotext', 'cat_mvkeywords');
     
     return array($array_select_fields, $array_lang_fields);
 }

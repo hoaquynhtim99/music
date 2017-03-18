@@ -12,6 +12,8 @@ if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
 $page_title = $global_array_config['funcs_sitetitle']['album'];
+$key_words = $global_array_config['funcs_keywords']['album'];
+$description = $global_array_config['funcs_description']['album'];
 
 $array = array();
 $array_select_fields = nv_get_album_select_fields();
@@ -142,7 +144,9 @@ $array_mod_title[] = array(
 
 // Phân trang, tiêu đề trang
 if (!empty($catid)) {
-    $page_title = $global_array_cat[$catid]['cat_name'];
+    $page_title = $global_array_cat[$catid]['cat_absitetitle'];
+    $key_words = $global_array_cat[$catid]['cat_abkeywords'];
+    $description = $global_array_cat[$catid]['cat_abintrotext'];
     $generate_page = nv_alias_page($page_title, $base_url, $all_pages, $per_page, $page);
     
     $array_mod_title[] = array(
@@ -153,7 +157,9 @@ if (!empty($catid)) {
 }
 
 if ($page > 1) {
-    $page_title .= NV_TITLEBAR_DEFIS . $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_title .= NV_TITLEBAR_DEFIS . $page_text;
+    $description .= NV_TITLEBAR_DEFIS . $page_text;
 }
 
 $contents = nv_theme_list_albums($array, !empty($catid), $generate_page);
