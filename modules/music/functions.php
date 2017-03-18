@@ -18,6 +18,8 @@ define('NV_MOD_LINK_AMP', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=
 define('NV_MOD_FULLLINK', NV_MOD_LINK . '&' . NV_OP_VARIABLE . '=');
 define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&' . NV_OP_VARIABLE . '=');
 
+$array_mod_title = array();
+
 // Cấu hình module
 $cacheFile = NV_LANG_DATA . '_config_' . NV_CACHE_PREFIX . '.cache';
 $cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
@@ -60,7 +62,15 @@ $global_array_config['code_prefix'] = array(
     'singer' => 'at',
     'playlist' => 'pl',
     'album' => 'ab',
-    'video' => 'mv'
+    'video' => 'mv',
+    'cat' => 'gr'
+);
+
+$global_array_config['gird_albums_percat_nums'] = 12;
+$global_array_config['gird_albums_incat_nums'] = 24;
+
+$global_array_config['funcs_sitetitle'] = array(
+    'album' => 'Album mới, album hot nhiều ca sỹ'
 );
 
 // Danh mục
@@ -69,8 +79,10 @@ $cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
 
 if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
     $global_array_cat = unserialize($cache);
+    $global_array_cat_alias = $global_array_cat[1];
+    $global_array_cat = $global_array_cat[0];
 } else {
-    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'status');
+    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'show_inalbum', 'show_invideo', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
     $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
     $array_select_fields[] = NV_LANG_DATA . '_cat_introtext cat_introtext';
@@ -85,7 +97,9 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $sql = "SELECT " . implode(', ', $array_select_fields) . " FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
     $result = $db->query($sql);
     
-    $global_array_cat = array();    
+    $global_array_cat = array(); 
+    $global_array_cat_alias = array();
+       
     while ($row = $result->fetch()) {
         if (empty($row['cat_name']) and !empty($row['default_cat_name'])) {
             $row['cat_name'] = $row['default_cat_name'];
@@ -101,12 +115,13 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
         }
         unset($row['default_cat_name'], $row['default_cat_alias'], $row['default_cat_introtext'], $row['default_cat_keywords']);
         $global_array_cat[$row['cat_id']] = $row;
+        $global_array_cat_alias[$row['cat_code']] = $row['cat_id'];
     }
     
-    $nv_Cache->setItem($module_name, $cacheFile, serialize($global_array_cat), $cacheTTL);
+    $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_cat, $global_array_cat_alias)), $cacheTTL);
 }
 
-//print_r($global_array_cat);
+//print_r($module_info);
 //die();
 
 /**
@@ -152,11 +167,38 @@ function nv_get_singers($array_ids)
                 $row['singer_realname'] = $row['default_singer_realname'];
             }
             unset($row['default_singer_name'], $row['default_singer_alias'], $row['default_singer_nickname'], $row['default_singer_realname']);
+            
+            $row['singer_link'] = nv_get_view_singer_link($row);
+            
             $array_singers[$row['singer_id']] = $row;
         }
     }
     
     return $array_singers;
+}
+
+/**
+ * nv_get_album_select_fields()
+ * 
+ * @param bool $full_fields
+ * @return
+ */
+function nv_get_album_select_fields($full_fields = false)
+{
+    global $global_array_config;
+    $array_select_fields = array('album_id', 'album_code', 'cat_ids', 'singer_ids', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_hit', 'time_add', 'time_update');
+    $array_select_fields[] = NV_LANG_DATA . '_album_name album_name';
+    $array_select_fields[] = NV_LANG_DATA . '_album_alias album_alias';
+    $array_select_fields[] = NV_LANG_DATA . '_album_description album_description';
+    if (NV_LANG_DATA != $global_array_config['default_language']) {
+        $array_select_fields[] = $global_array_config['default_language'] . '_album_name default_album_name';
+        $array_select_fields[] = $global_array_config['default_language'] . '_album_alias default_album_alias';
+        $array_select_fields[] = $global_array_config['default_language'] . '_album_description default_album_description';
+    }
+    
+    $array_lang_fields = array('album_name', 'album_alias', 'album_description');
+    
+    return array($array_select_fields, $array_lang_fields);
 }
 
 /**

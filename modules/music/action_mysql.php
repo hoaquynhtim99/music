@@ -167,6 +167,8 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   stat_videos int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số video',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
+  show_inalbum tinyint(1) unsigned NOT NULL DEFAULT '0',
+  show_invideo tinyint(1) unsigned NOT NULL DEFAULT '0',
   weight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Sắp thứ tự',
   status smallint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (cat_id),

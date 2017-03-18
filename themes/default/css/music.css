@@ -22,7 +22,8 @@
 .ms-third-title a:hover {
     color: #428bca;
 }
-.ms-title-section h2 a {
+.ms-title-section h2 a,
+.ms-title-section h2 span {
     border-color: #428bca;
 }
 
@@ -39,7 +40,8 @@
 .ms-title-section h2 {
     margin-bottom: -1px;
 }
-.ms-title-section h2 a {
+.ms-title-section h2 a,
+.ms-title-section h2 span {
     border-bottom-width: 1px;
     border-bottom-style: solid;
     line-height: 30px;
