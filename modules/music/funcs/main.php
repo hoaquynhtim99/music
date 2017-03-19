@@ -37,7 +37,7 @@ if (!empty($global_array_config['home_albums_display'])) {
         
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
-        $row['album_link'] = nv_get_detail_album_link($row);
+        $row['album_link'] = '';
         
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
@@ -69,8 +69,14 @@ foreach ($content_albums as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
+                if (empty($row['album_link'])) {
+                    $row['album_link'] = nv_get_detail_album_link($row, $array_singers[$singer_id]);
+                }
             }
         }
+    }
+    if (empty($row['album_link'])) {
+        $row['album_link'] = nv_get_detail_album_link($row);
     }
     $content_albums[$id] = $row;
 }

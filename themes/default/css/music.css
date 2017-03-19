@@ -19,12 +19,31 @@
 .ms-second-title:hover,
 .ms-second-title a:hover,
 .ms-third-title:hover,
-.ms-third-title a:hover {
+.ms-third-title a:hover,
+.ms-artist-header-nav ul li a.active,
+.ms-list-song-title h3:hover a,
+.ms-list-song-title h3:hover .ms-sg,
+.ms-list-song-action ul li a:hover {
     color: #428bca;
 }
 .ms-title-section h2 a,
-.ms-title-section h2 span {
+.ms-title-section h2 span,
+.ms-artist-header-nav ul li a.active {
     border-color: #428bca;
+}
+.ms-gird-albums-iconplay,
+.ms-artist-header-top h1,
+.ms-artist-header-top p {
+    color: #fff;
+}
+.ms-artist-header-top p a {
+    color: #DFDFDF;
+}
+.ms-list-song-title h3 .ms-sg {
+    color: #505050;
+}
+.ms-list-song-action ul li a {
+    color: #c0c0c0;
 }
 
 /* GLOBAL */
@@ -49,6 +68,9 @@
     text-transform: uppercase;
     font-weight: 300;
 }
+.ms-inline-paragraph {
+    margin-bottom: 4px;
+}
 
 /* ALBUMS GIRD */
 .ms-gird-albums-item {
@@ -63,13 +85,14 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-color: #000;
+    background-position: center top;
     margin-bottom: 8px;
 }
 .ms-gird-albums-fw img {
     width: 100%;
     height: auto;
 }
-.ms-gird-cover {
+.ms-gird-albums-cover {
     display: none;
 }
 .ms-gird-albums-iconplay {
@@ -94,7 +117,6 @@
     -o-transition: all .3s ease-in;
     -ms-transition: all .3s ease-in;
     transition: all .3s ease-in;
-    color: #fff;
     text-decoration: none;
     font-size: 50px;
     line-height: 50px;
@@ -131,6 +153,7 @@
 .ms-singer-listgr-modal {
     min-width: 320px;
     margin: -15px;
+    display: block;
 }
 .ms-singer-listgr-modal .list-group-item {
     border-left: 0;
@@ -145,4 +168,142 @@
     border-bottom: 0;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
+}
+
+/* VIEW SINGER */
+.ms-artist-header-top {
+    position: relative;
+    width: 100%;
+    height: 295px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    background-position: center top;
+}
+.ms-artist-header-info {
+    position: absolute;
+    bottom: 0;
+    left: 181px;
+    z-index: 998;
+    margin: 10px 20px;
+}
+.ms-artist-header-top h1 {
+    font-size: 32px;
+    font-weight: normal;
+}
+.ms-artist-header-mask {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 181px;
+    background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJod…BoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
+    background: -moz-linear-gradient(top,transparent 0%,rgba(0,0,0,0.09) 14%,rgba(0,0,0,0.43) 47%,rgba(0,0,0,0.5) 59%,rgba(0,0,0,0.5) 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,transparent),color-stop(14%,rgba(0,0,0,0.09)),color-stop(47%,rgba(0,0,0,0.43)),color-stop(59%,rgba(0,0,0,0.5)),color-stop(100%,rgba(0,0,0,0.5)));
+    background: -webkit-linear-gradient(top,transparent 0%,rgba(0,0,0,0.09) 14%,rgba(0,0,0,0.43) 47%,rgba(0,0,0,0.5) 59%,rgba(0,0,0,0.5) 100%);
+    background: -o-linear-gradient(top,transparent 0%,rgba(0,0,0,0.09) 14%,rgba(0,0,0,0.43) 47%,rgba(0,0,0,0.5) 59%,rgba(0,0,0,0.5) 100%);
+    background: -ms-linear-gradient(top,transparent 0%,rgba(0,0,0,0.09) 14%,rgba(0,0,0,0.43) 47%,rgba(0,0,0,0.5) 59%,rgba(0,0,0,0.5) 100%);
+    background: linear-gradient(to bottom,transparent 0%,rgba(0,0,0,0.09) 14%,rgba(0,0,0,0.43) 47%,rgba(0,0,0,0.5) 59%,rgba(0,0,0,0.5) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#00000000',endColorstr='#80000000',GradientType=0);
+}
+.ms-artist-header-nav {
+    height: 43px;
+    background-color: #F9F9F9;
+    border-bottom: 1px solid #EDEDED;
+    position: relative;
+}
+.ms-artist-avatar {
+    position: absolute;
+    bottom: 15px;
+    left: 18px;
+    padding: 4px;
+    background: #fff;
+    border: 1px solid #C7C7C7;
+}
+.ms-artist-avatar span {
+    display: block;
+    height: 150px;
+    width: 150px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.ms-artist-avatar span img {
+    width: 100%;
+    height: auto;
+}
+.ms-artist-header-nav ul {
+    margin: 0;
+    padding: 0;
+    margin-left: 195px;
+    overflow: hidden;
+    float: left;
+}
+.ms-artist-header-nav ul li {
+    float: left;
+    display: inline-block;
+    padding: 0 17px;
+}
+.ms-artist-header-nav ul li a {
+    text-transform: uppercase;
+    padding: 0px;
+    line-height: 41px;
+    display: block;
+    font-size: 13px;
+    border-bottom: 2px solid transparent;
+}
+.ms-artist-header-nav ul li a.active {
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+}
+
+/* LIST SONG */
+ul.ms-list-song {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul.ms-list-song li {
+    display: block;
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #EEE;
+    position: relative;
+}
+ul.ms-list-song li:last-child {
+    border-bottom: 0;
+}
+.ms-list-song-title {
+    width: 100%;
+    display: block;
+    padding-right: 110px;
+}
+.ms-list-song-title h3 {
+    margin: 0;
+    padding: 0;
+    line-height: 50px;
+    font-size: 14px;
+    font-weight: normal;
+}
+.ms-list-song-title h3 .ms-sg {
+    font-size: 13px;
+}
+.ms-list-song-action {
+    float: right;
+}
+.ms-list-song-action ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.ms-list-song-action ul li {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    margin-left: 10px;
+}
+.ms-list-song-action ul li:first-child {
+    margin-left: 0;
 }

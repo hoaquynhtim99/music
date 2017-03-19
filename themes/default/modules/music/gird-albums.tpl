@@ -10,7 +10,7 @@
                     </span>
                     <span class="ms-gird-albums-iconplay"><i class="fa fa-play-circle-o"></i></span>
                 </a>
-                <img src="{ROW.resource_avatar}" class="ms-gird-cover"/>
+                <img src="{ROW.resource_avatar}" class="ms-gird-albums-cover"/>
             </div>
             <div class="ms-gird-albums-description">
                 <h3 class="ms-ellipsis ms-second-title">
@@ -25,8 +25,8 @@
                     <!-- END: show_singer -->
                     
                     <!-- BEGIN: va_singer -->
-                    <div class="h4 ms-third-title"><a href="#" data-toggle="show-va-singer" data-target="#main-gird-albums-singers-{ROW.album_code}">{VA_SINGERS}</a></div>
-                    <div class="hidden" id="main-gird-albums-singers-{ROW.album_code}" title="{LANG.singer_list}">
+                    <div class="h4 ms-third-title"><a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-gird-albums-singers-{ROW.album_code}">{VA_SINGERS}</a></div>
+                    <div class="hidden" id="{UNIQUEID}-gird-albums-singers-{ROW.album_code}" title="{LANG.singer_list}">
                         <div class="list-group ms-singer-listgr-modal">
                             <!-- BEGIN: loop -->
                             <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.singer_name}</a>

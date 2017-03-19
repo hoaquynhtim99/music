@@ -26,7 +26,7 @@ $generate_page = '';
 $base_url = '';
 $page = 1;
 $all_pages = 0;
-$per_page = $global_array_config['gird_albums_incat_nums'];
+$per_page = 1;
 
 // Xử lý khi xem theo danh mục
 if (isset($array_op[1])) {
@@ -66,6 +66,7 @@ if (isset($array_op[3]) or $catalias != $request_catalias) {
 
 foreach ($global_array_cat as $cat) {
     if (!empty($cat['status']) and !empty($cat['show_inalbum']) and (empty($catid) or $cat['cat_id'] == $catid)) {
+        $per_page = empty($catid) ? $global_array_config['gird_albums_percat_nums'] : $global_array_config['gird_albums_incat_nums'];
         $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $cat['cat_id'] . ", cat_ids)");
         
         if (!empty($catid)) {
@@ -73,14 +74,7 @@ foreach ($global_array_cat as $cat) {
             $all_pages = $db->query($db->sql())->fetchColumn();
         }
 
-        $db->order("album_id DESC")->offset(($page - 1) * $per_page);
-        
-        if (empty($catid)) {
-            $db->limit($global_array_config['gird_albums_percat_nums']);
-        } else {
-            $db->limit($global_array_config['gird_albums_incat_nums']);
-        }
-        
+        $db->order("album_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);        
         $db->select(implode(', ', $array_select_fields[0]));
         
         $array_albums = array();
@@ -95,7 +89,7 @@ foreach ($global_array_cat as $cat) {
             
             $row['singers'] = array();
             $row['singer_ids'] = explode(',', $row['singer_ids']);
-            $row['album_link'] = nv_get_detail_album_link($row);
+            $row['album_link'] = '';
             
             if (!empty($row['singer_ids'])) {
                 $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
@@ -128,8 +122,14 @@ foreach ($array as $id1 => $row1) {
             foreach ($row['singer_ids'] as $singer_id) {
                 if (isset($array_singers[$singer_id])) {
                     $row['singers'][$singer_id] = $array_singers[$singer_id];
+                    if (empty($row['album_link'])) {
+                        $row['album_link'] = nv_get_detail_album_link($row, $array_singers[$singer_id]);
+                    }
                 }
             }
+        }
+        if (empty($row['album_link'])) {
+            $row['album_link'] = nv_get_detail_album_link($row);
         }
         $array[$id1]['albums'][$id] = $row;
     }
