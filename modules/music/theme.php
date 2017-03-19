@@ -129,7 +129,7 @@ function nv_theme_list_songs($array)
  */
 function nv_theme_main($content_albums, $content_videos, $content_singers, $content_songs)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $global_array_config;
+    global $module_file, $lang_module, $lang_global, $module_info, $global_array_config, $module_upload;
     
     $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
     $xtpl->assign('LANG', $lang_module);
@@ -145,6 +145,23 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     }
     
     if (!empty($content_singers)) {
+        $xtpl->assign('SINGERS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers']);
+        
+        $i = 0;
+        foreach ($content_singers as $singer) {
+            $singer['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $singer['resource_avatar'];
+            
+            $xtpl->assign('SINGER', $singer);
+            
+            if ($i++ % 9 == 0) {
+                $xtpl->parse('singers.loop.x2');
+            } else {
+                $xtpl->parse('singers.loop.x1');
+            }
+            
+            $xtpl->parse('singers.loop');
+        }
+        
         $xtpl->parse('singers');
         $contents[$global_array_config['home_singers_weight']] = $xtpl->text('singers');
     }

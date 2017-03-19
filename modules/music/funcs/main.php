@@ -50,7 +50,27 @@ if (!empty($global_array_config['home_albums_display'])) {
 }
 
 if (!empty($global_array_config['home_singers_display'])) {
+    $db->sqlreset()->from(NV_MOD_TABLE . "_singers")->where("show_inhome=1 AND status=1");
+    $db->order("RAND()")->limit($global_array_config['home_singers_nums'])->offset(0);
     
+    $array_select_fields = nv_get_singer_select_fields();
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $array = array();
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        
+        $row['singer_link'] = nv_get_view_singer_link($row);
+        $array[$row['singer_id']] = $row;
+    }
+    
+    $content_singers = $array;
 }
 
 if (!empty($global_array_config['home_songs_display'])) {

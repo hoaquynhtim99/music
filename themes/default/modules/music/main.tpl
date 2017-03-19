@@ -13,7 +13,22 @@
         <a href="{SINGERS_LINK}">{LANG.singer}</a>
     </h2>
 </div>
-{SINGERS_HTML}
+<div class="row ms-main-singer">
+    <!-- BEGIN: loop -->
+    <div class="<!-- BEGIN: x1 -->col-xs-12 col-sm-8 col-md-4<!-- END: x1 --><!-- BEGIN: x2 -->col-sm-8 col-md-8 visible-sm visible-md visible-lg<!-- END: x2 --> ms-main-singer-item">
+        <article>
+            <div class="ms-main-singer-thumb" style="background-image:url({SINGER.resource_avatar});">
+                <a class="ms-main-singer-fw" href="{SINGER.singer_link}">
+                    <span class="ms-main-singer-mask">
+                        <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
+                    </span>
+                </a>
+                <h4><a href="{SINGER.singer_link}">{SINGER.singer_name}</a></h4>
+            </div>
+        </article>
+    </div>
+    <!-- END: loop -->
+</div>
 <!-- END: singers -->
 
 <!-- BEGIN: songs -->
