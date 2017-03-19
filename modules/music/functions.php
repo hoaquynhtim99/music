@@ -75,7 +75,7 @@ $global_array_config['gird_albums_percat_nums'] = 12;
 $global_array_config['gird_albums_incat_nums'] = 24;
 
 $global_array_config['view_singer_show_header'] = false;
-$global_array_config['view_singer_headtext_length'] = 240;
+$global_array_config['view_singer_headtext_length'] = 220;
 $global_array_config['view_singer_tabs_alias'] = array(
     'song' => 'bai-hat',
     'video' => 'video',

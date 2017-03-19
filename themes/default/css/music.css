@@ -12,7 +12,8 @@
     font-weight: normal;
 }
 .ms-third-title,
-.ms-third-title a {
+.ms-third-title a,
+.ms-main-list-song-title h4 .ms-sg {
     color: #888;
     font-weight: normal;
 }
@@ -23,7 +24,9 @@
 .ms-artist-header-nav ul li a.active,
 .ms-list-song-title h3:hover a,
 .ms-list-song-title h3:hover .ms-sg,
-.ms-list-song-action ul li a:hover {
+.ms-list-song-action ul li a:hover,
+.ms-main-list-song-title h4 a:hover,
+.ms-main-list-song-title h3 a:hover {
     color: #428bca;
 }
 .ms-title-section h2 a,
@@ -31,10 +34,14 @@
 .ms-artist-header-nav ul li a.active {
     border-color: #428bca;
 }
+.ms-main-list-song-item article {
+    border-color: #f2f2f2;
+}
 .ms-gird-albums-iconplay,
 .ms-artist-header-top h1,
 .ms-artist-header-top p,
-.ms-main-singer-thumb h4 a {
+.ms-main-singer-thumb h4 a,
+.ms-main-list-song-iconplay {
     color: #fff;
 }
 .ms-artist-header-top p a {
@@ -43,7 +50,8 @@
 .ms-list-song-title h3 .ms-sg {
     color: #505050;
 }
-.ms-list-song-action ul li a {
+.ms-list-song-action ul li a,
+.ms-main-list-song-action ul li a {
     color: #c0c0c0;
 }
 
@@ -121,6 +129,7 @@
     text-decoration: none;
     font-size: 50px;
     line-height: 50px;
+    text-align: center;
 }
 .ms-gird-albums-fw:hover .ms-gird-albums-iconplay {
     opacity: 1;
@@ -264,7 +273,7 @@ ul.ms-list-song {
     padding: 0;
     list-style: none;
 }
-ul.ms-list-song li {
+ul.ms-list-song > li {
     display: block;
     margin: 0;
     padding: 0;
@@ -273,7 +282,7 @@ ul.ms-list-song li {
     border-bottom: 1px solid #EEE;
     position: relative;
 }
-ul.ms-list-song li:last-child {
+ul.ms-list-song > li:last-child {
     border-bottom: 0;
 }
 .ms-list-song-title {
@@ -371,4 +380,122 @@ ul.ms-list-song li:last-child {
     -ms-transform: scale(1);
     -o-transform: scale(1);
     transform: scale(1);
+}
+.ms-main-singer-thumb h4 a {
+    display: block;
+    padding: 0 4px;
+}
+
+.ms-main-list-song-item article {
+    padding: 5px 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+}
+.ms-main-list-song .ms-main-list-song-item:last-child article {
+    border: 0;
+}
+@media (min-width: 768px) {
+.ms-main-list-song .ms-main-list-song-item:nth-last-child(2) article {
+    border: 0;
+}
+}
+.ms-main-list-song-thumb {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    position: relative;
+    display: block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: #000;
+    background-position: center top;
+}
+.ms-main-list-song-fw img {
+    width: 100%;
+    height: auto;
+}
+.ms-main-list-song-cover {
+    display: none;
+}
+.ms-main-list-song-iconplay {
+    display: block;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -15px 0 0 -15px;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -webkit-transform: scale(0);
+    -moz-transform: scale(0);
+    -ms-transform: scale(0);
+    -o-transform: scale(0);
+    transform: scale(0);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+    text-decoration: none;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+.ms-main-list-song-fw:hover .ms-main-list-song-iconplay {
+    opacity: 1;
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -webkit-transform: scale(1);
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    transform: scale(1);
+}
+.ms-main-list-song-mask {
+    display: block;
+    -webkit-transition: all .3s ease-in;
+    -moz-transition: all .3s ease-in;
+    -o-transition: all .3s ease-in;
+    -ms-transition: all .3s ease-in;
+    transition: all .3s ease-in;
+}
+.ms-main-list-song-fw:hover .ms-main-list-song-mask {
+    background: rgba(0, 0, 0, .3);
+}
+.ms-main-list-song-title {
+    display: block;
+    padding-right: 110px;
+}
+.ms-main-list-song-title h3 {
+    margin-top: 5px;
+    font-weight: normal;
+}
+.ms-main-list-song-title h4 {
+    font-weight: normal;
+}
+.ms-main-list-song-action {
+    float: right;
+    line-height: 50px;
+    display: none;
+}
+.ms-main-list-song-action ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.ms-main-list-song-action ul li {
+    padding: 0;
+    margin: 0;
+    display: inline-block;
+    margin-left: 10px;
+}
+.ms-main-list-song-action ul li:first-child {
+    margin-left: 0;
+}
+.ms-main-list-song-item:hover .ms-main-list-song-action {
+    display: block;
 }

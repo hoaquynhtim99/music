@@ -167,6 +167,41 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     }
     
     if (!empty($content_songs)) {
+        foreach ($content_songs as $row) {
+            $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+            
+            $xtpl->assign('ROW', $row);
+            
+            $num_singers = sizeof($row['singers']);
+            if ($num_singers > $global_array_config['limit_singers_displayed']) {
+                $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+                
+                foreach ($row['singers'] as $singer) {
+                    $xtpl->assign('SINGER', $singer);
+                    $xtpl->parse('songs.loop.va_singer.loop');
+                }
+                
+                $xtpl->parse('songs.loop.va_singer');
+            } elseif (!empty($row['singers'])) {
+                $i = 0;
+                foreach ($row['singers'] as $singer) {
+                    $i++;
+                    $xtpl->assign('SINGER', $singer);
+                    
+                    if ($i > 1) {
+                        $xtpl->parse('songs.loop.show_singer.loop.separate');
+                    }
+                    $xtpl->parse('songs.loop.show_singer.loop');
+                }
+                $xtpl->parse('songs.loop.show_singer');
+            } else {
+                $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+                $xtpl->parse('songs.loop.no_singer');
+            }
+            
+            $xtpl->parse('songs.loop');
+        }
+        
         $xtpl->parse('songs');
         $contents[$global_array_config['home_songs_weight']] = $xtpl->text('songs');
     }
