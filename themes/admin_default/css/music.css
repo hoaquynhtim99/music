@@ -148,3 +148,9 @@ div.tooltip.bottom div.tooltip-arrow{
 .page-title h6{
     margin: 0;
 }
+
+/* CUSTOM BOOTSTRAP */
+hr.sm {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}

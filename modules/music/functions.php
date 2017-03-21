@@ -37,6 +37,14 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
         } else {
             $global_array_config[$row['config_name']] = $row['config_value_' . NV_LANG_DATA];
         }
+        
+        if (preg_match('/^arr\_([a-zA-Z0-9\_]+)\_(singer|playlist|album|video|cat|song|profile)$/', $row['config_name'], $m)) {
+            if (!isset($global_array_config[$m[1]])) {
+                $global_array_config[$m[1]] = array();
+            }
+            $global_array_config[$m[1]][$m[2]] = $global_array_config[$row['config_name']];
+            unset($global_array_config[$row['config_name']]);
+        }
     }
     
     $global_array_config['default_language'] = NV_LANG_DATA;
@@ -54,50 +62,6 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     
     $nv_Cache->setItem($module_name, $cacheFile, serialize($global_array_config), $cacheTTL);
 }
-
-$global_array_config['limit_singers_displayed'] = 3;
-$global_array_config['various_artists'] = "Various Artists";
-$global_array_config['unknow_singer'] = "Unknow Singer";
-$global_array_config['code_prefix'] = array(
-    'singer' => 'at',
-    'playlist' => 'pl',
-    'album' => 'ab',
-    'video' => 'mv',
-    'cat' => 'gr',
-    'song' => 'so'
-);
-$global_array_config['op_alias_prefix'] = array(
-    'song' => '',
-    'album' => 'album-'
-);
-
-$global_array_config['gird_albums_percat_nums'] = 12;
-$global_array_config['gird_albums_incat_nums'] = 24;
-
-$global_array_config['view_singer_show_header'] = false;
-$global_array_config['view_singer_headtext_length'] = 220;
-$global_array_config['view_singer_tabs_alias'] = array(
-    'song' => 'bai-hat',
-    'video' => 'video',
-    'album' => 'album',
-    'profile' => 'tieu-su'
-);
-$global_array_config['view_singer_main_num_songs'] = 10;
-$global_array_config['view_singer_main_num_videos'] = 12;
-$global_array_config['view_singer_main_num_albums'] = 12;
-$global_array_config['view_singer_detail_num_songs'] = 30;
-$global_array_config['view_singer_detail_num_videos'] = 24;
-$global_array_config['view_singer_detail_num_albums'] = 24;
-
-$global_array_config['funcs_sitetitle'] = array(
-    'album' => 'Album mới, album hot nhiều ca sỹ'
-);
-$global_array_config['funcs_keywords'] = array(
-    'album' => 'album, album moi, album hot'
-);
-$global_array_config['funcs_description'] = array(
-    'album' => 'Album mới , album hot tuyển chọn các ca sỹ Việt Nam và quốc tế.'
-);
 
 // Danh mục
 $cacheFile = NV_LANG_DATA . '_cats_' . NV_CACHE_PREFIX . '.cache';
@@ -138,7 +102,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
 // Quốc gia
 $global_array_nation = array();
 
-//print_r($global_array_cat);
+//print_r($global_array_config);
 //die();
 
 /**

@@ -28,6 +28,44 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['home_songs_nums'] = $nv_Request->get_int('home_songs_nums', 'post', 0);
     $array['home_videos_nums'] = $nv_Request->get_int('home_videos_nums', 'post', 0);
     
+    $array['limit_singers_displayed'] = $nv_Request->get_int('limit_singers_displayed', 'post', 0);
+    $array['various_artists'] = $nv_Request->get_title('various_artists', 'post', '');
+    $array['unknow_singer'] = $nv_Request->get_title('unknow_singer', 'post', '');
+    
+    $array['arr_code_prefix_singer'] = $nv_Request->get_title('arr_code_prefix_singer', 'post', '');
+    $array['arr_code_prefix_playlist'] = $nv_Request->get_title('arr_code_prefix_playlist', 'post', '');
+    $array['arr_code_prefix_album'] = $nv_Request->get_title('arr_code_prefix_album', 'post', '');
+    $array['arr_code_prefix_video'] = $nv_Request->get_title('arr_code_prefix_video', 'post', '');
+    $array['arr_code_prefix_cat'] = $nv_Request->get_title('arr_code_prefix_cat', 'post', '');
+    $array['arr_code_prefix_song'] = $nv_Request->get_title('arr_code_prefix_song', 'post', '');
+    
+    $array['arr_op_alias_prefix_song'] = $nv_Request->get_title('arr_op_alias_prefix_song', 'post', '');
+    $array['arr_op_alias_prefix_album'] = $nv_Request->get_title('arr_op_alias_prefix_album', 'post', '');
+    
+    $array['gird_albums_percat_nums'] = $nv_Request->get_int('gird_albums_percat_nums', 'post', 0);
+    $array['gird_albums_incat_nums'] = $nv_Request->get_int('gird_albums_incat_nums', 'post', 0);
+    $array['view_singer_show_header'] = $nv_Request->get_int('view_singer_show_header', 'post', 0);
+    $array['view_singer_headtext_length'] = $nv_Request->get_int('view_singer_headtext_length', 'post', 0);
+
+    $array['arr_view_singer_tabs_alias_song'] = $nv_Request->get_title('arr_view_singer_tabs_alias_song', 'post', '');
+    $array['arr_view_singer_tabs_alias_album'] = $nv_Request->get_title('arr_view_singer_tabs_alias_album', 'post', '');
+    $array['arr_view_singer_tabs_alias_video'] = $nv_Request->get_title('arr_view_singer_tabs_alias_video', 'post', '');
+    $array['arr_view_singer_tabs_alias_profile'] = $nv_Request->get_title('arr_view_singer_tabs_alias_profile', 'post', '');
+
+    $array['view_singer_main_num_songs'] = $nv_Request->get_int('view_singer_main_num_songs', 'post', 0);
+    $array['view_singer_main_num_videos'] = $nv_Request->get_int('view_singer_main_num_videos', 'post', 0);
+    $array['view_singer_main_num_albums'] = $nv_Request->get_int('view_singer_main_num_albums', 'post', 0);
+    $array['view_singer_detail_num_songs'] = $nv_Request->get_int('view_singer_detail_num_songs', 'post', 0);
+    $array['view_singer_detail_num_videos'] = $nv_Request->get_int('view_singer_detail_num_videos', 'post', 0);
+    $array['view_singer_detail_num_albums'] = $nv_Request->get_int('view_singer_detail_num_albums', 'post', 0);
+
+    $array['arr_funcs_sitetitle_album'] = $nv_Request->get_title('arr_funcs_sitetitle_album', 'post', '');
+    $array['arr_funcs_keywords_album'] = $nv_Request->get_title('arr_funcs_keywords_album', 'post', '');
+    $array['arr_funcs_description_album'] = $nv_Request->get_title('arr_funcs_description_album', 'post', '');
+    
+    //$ajaxRespon->reset()->setError()->setInput('home_videos_nums')->setMessage('DAU XANH NO')->respon();
+    //$ajaxRespon->reset()->setError()->setMessage('DAU XANH NO')->respon();
+    
     $sth = $db->prepare("UPDATE " . NV_MOD_TABLE . "_config SET config_value_" . NV_LANG_DATA . "=:config_value WHERE config_name=:config_name");
     foreach ($array as $config_name => $config_value) {
         $sth->bindParam(':config_value', $config_value, PDO::PARAM_STR);
@@ -63,6 +101,9 @@ $array['home_videos_display'] = empty($array['home_videos_display']) ? '' : ' ch
 
 $xtpl->assign('DATA', $array);
 
+$xtpl->assign('OPEN_BRACKET', '{');
+$xtpl->assign('CLOSE_BRACKET', '}');
+
 $xtpl->assign('CONFIG_NOTE', sprintf($lang_module['config_note'], $language_array[NV_LANG_DATA]['name']));
 
 for ($i = 1; $i <= 4; $i++) {
@@ -75,6 +116,16 @@ for ($i = 1; $i <= 4; $i++) {
     $xtpl->parse('main.home_singers_weight');
     $xtpl->parse('main.home_songs_weight');
     $xtpl->parse('main.home_videos_weight');
+}
+
+for ($i = 1; $i <= 10; $i++) {
+    $limit_singers_displayed = array(
+        'key' => $i,
+        'title' => $i,
+        'selected' => $i == $array['limit_singers_displayed'] ? ' selected="selected"' : ''
+    );
+    $xtpl->assign('LIMIT_SINGERS_DISPLAYED', $limit_singers_displayed);
+    $xtpl->parse('main.limit_singers_displayed');
 }
 
 $xtpl->parse('main');
