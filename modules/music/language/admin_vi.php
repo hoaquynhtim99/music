@@ -66,12 +66,15 @@ $lang_module['arr_code_prefix_album'] = 'Tiếp đầu tố mã album';
 $lang_module['arr_code_prefix_video'] = 'Tiếp đầu tố mã video';
 $lang_module['arr_code_prefix_cat'] = 'Tiếp đầu tố mã danh mục';
 $lang_module['arr_code_prefix_song'] = 'Tiếp đầu tố mã bài hát';
+$lang_module['arr_code_prefix_error'] = 'Giá trị này và giá trị ở cả 5 ô bên dưới không được trùng nhau';
 $lang_module['arr_op_alias_prefix_song'] = 'Tiếp đầu tố alias bài hát';
 $lang_module['arr_op_alias_prefix_album'] = 'Tiếp đầu tố alias album';
+$lang_module['arr_op_alias_prefix_error'] = 'Giá trị này và giá trị bên dưới nó không được trùng nhau';
 $lang_module['arr_view_singer_tabs_alias_song'] = 'Tiếp đầu tố alias bài hát';
 $lang_module['arr_view_singer_tabs_alias_video'] = 'Tiếp đầu tố alias video';
 $lang_module['arr_view_singer_tabs_alias_album'] = 'Tiếp đầu tố alias album';
 $lang_module['arr_view_singer_tabs_alias_profile'] = 'Tiếp đầu tố alias tiểu sử';
+$lang_module['arr_view_singer_tabs_alias_error'] = 'Giá trị này và giá trị ở cả 3 ô bên dưới không được trùng nhau';
 
 $lang_module['view_singer_show_header'] = 'Hiển thị phần đầu';
 $lang_module['view_singer_show_header_help'] = 'Nếu không hiển thị phần thông tin đầu tại trang xem chi tiết ca sĩ bạn có thể thêm block module.view_singer_header để thay thế. Khuyến cáo nên chọn không hiển thị, sau đó thêm block để hiển thị nội dung lớn hơn';
