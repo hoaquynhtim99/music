@@ -106,18 +106,18 @@ $global_array_nation = array();
 //die();
 
 /**
- * nv_get_singers()
+ * nv_get_artists()
  * 
  * @param mixed $array_ids
  * @param bool $full_info
  * @param bool $get_by_code
  * @return
  */
-function nv_get_singers($array_ids, $full_info = false, $get_by_code = false)
+function nv_get_artists($array_ids, $full_info = false, $get_by_code = false)
 {
     global $global_array_config, $db;
     
-    $array_singers = array();
+    $array_artists = array();
     
     if (!is_array($array_ids)) {
         $array_ids = array($array_ids);
@@ -129,12 +129,12 @@ function nv_get_singers($array_ids, $full_info = false, $get_by_code = false)
     $array_ids = array_filter(array_unique($array_ids));
     
     if (!empty($array_ids)) {
-        $array_select_fields = nv_get_singer_select_fields((bool)$full_info);
-        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_singers WHERE status=1 AND ";
+        $array_select_fields = nv_get_artist_select_fields((bool)$full_info);
+        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_artists WHERE status=1 AND ";
         if (!$get_by_code) {
-            $sql .= "singer_id IN(" . implode(',', $array_ids) . ")";
+            $sql .= "artist_id IN(" . implode(',', $array_ids) . ")";
         } else {
-            $sql .= "singer_code IN('" . implode("', '", $array_ids) . "')";
+            $sql .= "artist_code IN('" . implode("', '", $array_ids) . "')";
         }
         $result = $db->query($sql);
         
@@ -152,11 +152,11 @@ function nv_get_singers($array_ids, $full_info = false, $get_by_code = false)
                 return $row;
             }
             
-            $array_singers[$row['singer_id']] = $row;
+            $array_artists[$row['artist_id']] = $row;
         }
     }
     
-    return $array_singers;
+    return $array_artists;
 }
 
 /**
@@ -240,47 +240,61 @@ function nv_get_cat_select_fields($full_fields = false)
 }
 
 /**
- * nv_get_singer_select_fields()
+ * nv_get_artist_select_fields()
  * 
  * @param bool $full_fields
  * @return
  */
-function nv_get_singer_select_fields($full_fields = false)
+function nv_get_artist_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('singer_id', 'singer_code', 'singer_birthday', 'singer_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_albums', 'stat_songs', 'stat_videos');
-    $array_select_fields[] = NV_LANG_DATA . '_singer_name singer_name';
-    $array_select_fields[] = NV_LANG_DATA . '_singer_alias singer_alias';
+    $array_select_fields = array('artist_id', 'artist_code', 'artist_type', 'artist_birthday', 'artist_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_singer_albums', 'stat_singer_songs', 'stat_singer_videos', 'stat_author_songs', 'stat_author_videos');
+    $array_select_fields[] = NV_LANG_DATA . '_artist_name artist_name';
+    $array_select_fields[] = NV_LANG_DATA . '_artist_alias artist_alias';
+    $array_select_fields[] = NV_LANG_DATA . '_artist_realname artist_realname';
     $array_select_fields[] = NV_LANG_DATA . '_singer_nickname singer_nickname';
-    $array_select_fields[] = NV_LANG_DATA . '_singer_realname singer_realname';
+    $array_select_fields[] = NV_LANG_DATA . '_author_nickname author_nickname';
     if (NV_LANG_DATA != $global_array_config['default_language']) {
-        $array_select_fields[] = $global_array_config['default_language'] . '_singer_name default_singer_name';
-        $array_select_fields[] = $global_array_config['default_language'] . '_singer_alias default_singer_alias';
+        $array_select_fields[] = $global_array_config['default_language'] . '_artist_name default_artist_name';
+        $array_select_fields[] = $global_array_config['default_language'] . '_artist_alias default_artist_alias';
+        $array_select_fields[] = $global_array_config['default_language'] . '_artist_realname default_artist_realname';
         $array_select_fields[] = $global_array_config['default_language'] . '_singer_nickname default_singer_nickname';
-        $array_select_fields[] = $global_array_config['default_language'] . '_singer_realname default_singer_realname';
+        $array_select_fields[] = $global_array_config['default_language'] . '_author_nickname default_author_nickname';
     }
     
-    $array_lang_fields = array('singer_name', 'singer_alias', 'singer_nickname', 'singer_realname');
+    $array_lang_fields = array('artist_name', 'artist_alias', 'artist_realname', 'singer_nickname', 'author_nickname');
     
     if ($full_fields) {
-        $array_select_fields[] = NV_LANG_DATA . '_singer_hometown singer_hometown';
+        $array_select_fields[] = NV_LANG_DATA . '_artist_hometown artist_hometown';
         $array_select_fields[] = NV_LANG_DATA . '_singer_prize singer_prize';
         $array_select_fields[] = NV_LANG_DATA . '_singer_info singer_info';
         $array_select_fields[] = NV_LANG_DATA . '_singer_introtext singer_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_singer_keywords singer_keywords';
+        $array_select_fields[] = NV_LANG_DATA . '_author_prize author_prize';
+        $array_select_fields[] = NV_LANG_DATA . '_author_info author_info';
+        $array_select_fields[] = NV_LANG_DATA . '_author_introtext author_introtext';
+        $array_select_fields[] = NV_LANG_DATA . '_author_keywords author_keywords';
         if (NV_LANG_DATA != $global_array_config['default_language']) {
-            $array_select_fields[] = $global_array_config['default_language'] . '_singer_hometown default_singer_hometown';
+            $array_select_fields[] = $global_array_config['default_language'] . '_artist_hometown default_artist_hometown';
             $array_select_fields[] = $global_array_config['default_language'] . '_singer_prize default_singer_prize';
             $array_select_fields[] = $global_array_config['default_language'] . '_singer_info default_singer_info';
             $array_select_fields[] = $global_array_config['default_language'] . '_singer_introtext default_singer_introtext';
             $array_select_fields[] = $global_array_config['default_language'] . '_singer_keywords default_singer_keywords';
+            $array_select_fields[] = $global_array_config['default_language'] . '_author_prize default_author_prize';
+            $array_select_fields[] = $global_array_config['default_language'] . '_author_info default_author_info';
+            $array_select_fields[] = $global_array_config['default_language'] . '_author_introtext default_author_introtext';
+            $array_select_fields[] = $global_array_config['default_language'] . '_author_keywords default_author_keywords';
         }
         
-        $array_lang_fields[] = 'singer_hometown';
+        $array_lang_fields[] = 'artist_hometown';
         $array_lang_fields[] = 'singer_prize';
         $array_lang_fields[] = 'singer_info';
         $array_lang_fields[] = 'singer_introtext';
         $array_lang_fields[] = 'singer_keywords';
+        $array_lang_fields[] = 'author_prize';
+        $array_lang_fields[] = 'author_info';
+        $array_lang_fields[] = 'author_introtext';
+        $array_lang_fields[] = 'author_keywords';
     }
     
     return array($array_select_fields, $array_lang_fields);
@@ -297,7 +311,7 @@ function nv_get_singer_select_fields($full_fields = false)
 function nv_get_view_singer_link($singer, $amp = true, $tab = '')
 {
     global $global_config, $module_info, $global_array_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $module_info['alias']['view-singer'] . '/' . $singer['singer_alias'] . '-' . $global_array_config['code_prefix']['singer'] . $singer['singer_code'] . (($tab and isset($global_array_config['view_singer_tabs_alias'][$tab])) ? '/' . $global_array_config['view_singer_tabs_alias'][$tab] : $global_config['rewrite_exturl']);
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $module_info['alias']['view-singer'] . '/' . $singer['artist_alias'] . '-' . $global_array_config['code_prefix']['singer'] . $singer['artist_code'] . (($tab and isset($global_array_config['view_singer_tabs_alias'][$tab])) ? '/' . $global_array_config['view_singer_tabs_alias'][$tab] : $global_config['rewrite_exturl']);
 }
 
 /**
@@ -311,7 +325,7 @@ function nv_get_view_singer_link($singer, $amp = true, $tab = '')
 function nv_get_detail_album_link($album, $singer = array(), $amp = true)
 {
     global $global_config, $module_info, $global_array_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . (empty($singer['singer_alias']) ? '' : '-' . $singer['singer_alias']) . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'];
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . (empty($singer['artist_alias']) ? '' : '-' . $singer['artist_alias']) . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'];
 }
 
 /**

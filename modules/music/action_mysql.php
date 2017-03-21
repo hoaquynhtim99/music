@@ -70,31 +70,23 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_nation_keywords
     ";
     
-    $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_singers
-      DROP " . $lang . "_singer_name,
-      DROP " . $lang . "_singer_alias,
-      DROP " . $lang . "_singer_searchkey,
+    $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists
+      DROP " . $lang . "_artist_name,
+      DROP " . $lang . "_artist_alias,
+      DROP " . $lang . "_artist_searchkey,
+      DROP " . $lang . "_artist_realname,
+      DROP " . $lang . "_artist_hometown,
       DROP " . $lang . "_singer_nickname,
-      DROP " . $lang . "_singer_realname,
-      DROP " . $lang . "_singer_hometown,
       DROP " . $lang . "_singer_prize,
       DROP " . $lang . "_singer_info,
       DROP " . $lang . "_singer_introtext,
       DROP " . $lang . "_singer_keywords,
-      DROP INDEX " . $lang . "_singer_searchkey
-    ";
-    
-    $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_authors
-      DROP " . $lang . "_author_name,
-      DROP " . $lang . "_author_alias,
-      DROP " . $lang . "_author_searchkey,
       DROP " . $lang . "_author_nickname,
-      DROP " . $lang . "_author_realname,
-      DROP " . $lang . "_author_hometown,
+      DROP " . $lang . "_author_prize,
       DROP " . $lang . "_author_info,
       DROP " . $lang . "_author_introtext,
       DROP " . $lang . "_author_keywords,
-      DROP INDEX " . $lang . "_author_searchkey
+      DROP INDEX " . $lang . "_artist_searchkey
     ";
     
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song
@@ -144,8 +136,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     // Xóa hết bảng dữ liệu
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_categories";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_nations";
-    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_singers";
-    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_authors";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_artists";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_quality_song";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_quality_video";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs";
@@ -211,72 +202,49 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_nation_keywords text NOT NULL
 ";
 
-// Bảng ca sĩ
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_singers (
-  singer_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
-  singer_code varchar(5) NOT NULL COMMENT 'Ký tự A-Z0-9. Độ dài 5 ký tự.',
-  singer_birthday int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Sinh nhật',
-  singer_birthday_lev smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '1,2,3',
+// Bảng ca+nhạc sĩ
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_artists (
+  artist_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  artist_code varchar(5) NOT NULL COMMENT 'Ký tự A-Z0-9. Độ dài 5 ký tự.',
+  artist_type smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '0: Ca sĩ, 1: Nhạc sĩ, 2: Ca+Nhạc sĩ',
+  artist_birthday int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Sinh nhật',
+  artist_birthday_lev smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '1,2,3',
   nation_id smallint(4) unsigned NOT NULL DEFAULT '0',
   resource_avatar varchar(255) NOT NULL COMMENT 'Avatar',
   resource_cover varchar(255) NOT NULL COMMENT 'Cover',
-  stat_albums int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số albums của ca sĩ',
-  stat_songs int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát của ca sĩ',
-  stat_videos int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số video của ca sĩ',
+  stat_singer_albums int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số albums của ca sĩ',
+  stat_singer_songs int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát của ca sĩ',
+  stat_singer_videos int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số video của ca sĩ',
+  stat_author_songs int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát của nhạc sĩ',
+  stat_author_videos int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số video của nhạc sĩ',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
   show_inhome tinyint(1) NOT NULL DEFAULT '0',
   status smallint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (singer_id),
-  UNIQUE KEY singer_code (singer_code),
+  PRIMARY KEY (artist_id),
+  UNIQUE KEY artist_code (artist_code),
+  KEY artist_type (artist_type),
   KEY nation_id (nation_id),
   KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_singers 
-	ADD " . $lang . "_singer_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_singer_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_singer_searchkey varchar(250) NOT NULL DEFAULT '',
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists 
+	ADD " . $lang . "_artist_name varchar(250) NOT NULL DEFAULT '',
+	ADD " . $lang . "_artist_alias varchar(250) NOT NULL DEFAULT '',
+	ADD " . $lang . "_artist_searchkey varchar(250) NOT NULL DEFAULT '',
+	ADD " . $lang . "_artist_realname varchar(255) NOT NULL DEFAULT '',
+	ADD " . $lang . "_artist_hometown varchar(255) NOT NULL DEFAULT '',
 	ADD " . $lang . "_singer_nickname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_singer_realname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_singer_hometown varchar(255) NOT NULL DEFAULT '',
 	ADD " . $lang . "_singer_prize text NOT NULL,
 	ADD " . $lang . "_singer_info mediumtext NOT NULL,
 	ADD " . $lang . "_singer_introtext text NOT NULL,
 	ADD " . $lang . "_singer_keywords text NOT NULL,
-    ADD INDEX " . $lang . "_singer_searchkey (" . $lang . "_singer_searchkey)
-";
-
-// Bảng nhạc sĩ
-$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_authors (
-  author_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
-  author_code varchar(5) NOT NULL COMMENT 'Ký tự A-Z0-9. Độ dài 5 ký tự.',
-  author_birthday int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Sinh nhật',
-  author_birthday_lev smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT '1,2,3',
-  nation_id smallint(4) unsigned NOT NULL DEFAULT '0',
-  resource_avatar varchar(255) NOT NULL COMMENT 'Avatar',
-  resource_cover varchar(255) NOT NULL COMMENT 'Cover',
-  stat_songs int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát của ca sĩ',
-  stat_videos int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số video của ca sĩ',
-  time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
-  time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
-  status smallint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (author_id),
-  UNIQUE KEY author_code (author_code),
-  KEY nation_id (nation_id),
-  KEY status (status)
-) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_authors 
-	ADD " . $lang . "_author_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_author_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_author_searchkey varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_author_nickname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_author_realname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_author_hometown varchar(255) NOT NULL DEFAULT '',
+	ADD " . $lang . "_author_prize text NOT NULL,
 	ADD " . $lang . "_author_info mediumtext NOT NULL,
 	ADD " . $lang . "_author_introtext text NOT NULL,
 	ADD " . $lang . "_author_keywords text NOT NULL,
-    ADD INDEX " . $lang . "_author_searchkey (" . $lang . "_author_searchkey)
+    ADD INDEX " . $lang . "_artist_searchkey (" . $lang . "_artist_searchkey)
 ";
 
 // Bảng chất lượng bài hát
@@ -527,11 +495,8 @@ foreach ($default_config as $config_name => $config_value) {
 
 // Copy dữ liệu vào các bảng cần fill
 if (!empty($set_lang_data)) {
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_singers SET 
-		" . $lang . "_singer_searchkey = " . $set_lang_data . "_singer_searchkey 
-	";
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_authors SET 
-		" . $lang . "_author_searchkey = " . $set_lang_data . "_author_searchkey 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_artists SET 
+		" . $lang . "_artist_searchkey = " . $set_lang_data . "_artist_searchkey 
 	";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_songs SET 
 		" . $lang . "_song_searchkey = " . $set_lang_data . "_song_searchkey 

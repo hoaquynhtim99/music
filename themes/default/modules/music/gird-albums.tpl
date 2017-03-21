@@ -20,7 +20,7 @@
                     <!-- BEGIN: show_singer -->
                     <h4 class="ms-third-title ms-ellipsis">
                         <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
-                        <a href="{SINGER.singer_link}" title="{SINGER.singer_name}">{SINGER.singer_name}</a><!-- END: loop -->
+                        <a href="{SINGER.singer_link}" title="{SINGER.artist_name}">{SINGER.artist_name}</a><!-- END: loop -->
                     </h4>
                     <!-- END: show_singer -->
                     
@@ -29,7 +29,7 @@
                     <div class="hidden" id="{UNIQUEID}-gird-albums-singers-{ROW.album_code}" title="{LANG.singer_list}">
                         <div class="list-group ms-singer-listgr-modal">
                             <!-- BEGIN: loop -->
-                            <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.singer_name}</a>
+                            <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.artist_name}</a>
                             <!-- END: loop -->
                         </div>
                     </div>

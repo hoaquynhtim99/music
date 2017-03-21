@@ -23,7 +23,7 @@
                         <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
                     </span>
                 </a>
-                <h4><a href="{SINGER.singer_link}">{SINGER.singer_name}</a></h4>
+                <h4><a href="{SINGER.singer_link}">{SINGER.artist_name}</a></h4>
             </div>
         </article>
     </div>
@@ -65,7 +65,7 @@
                 <h4 class="ms-ellipsis ms-third-title">
                     <!-- BEGIN: show_singer -->
                     <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
-                    <a href="{SINGER.singer_link}" title="{SINGER.singer_name}" class="ms-sg">{SINGER.singer_name}</a><!-- END: loop -->
+                    <a href="{SINGER.singer_link}" title="{SINGER.artist_name}" class="ms-sg">{SINGER.artist_name}</a><!-- END: loop -->
                     <!-- END: show_singer -->
                     
                     <!-- BEGIN: va_singer -->
@@ -73,7 +73,7 @@
                     <span class="hidden" id="{UNIQUEID}-mainlist-songs-singers-{ROW.song_code}" title="{LANG.singer_list}">
                         <span class="list-group ms-singer-listgr-modal">
                             <!-- BEGIN: loop -->
-                            <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.singer_name}</a>
+                            <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.artist_name}</a>
                             <!-- END: loop -->
                         </span>
                     </span>

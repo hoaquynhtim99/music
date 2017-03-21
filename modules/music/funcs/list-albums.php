@@ -114,7 +114,7 @@ if ($page > 1 and empty($array)) {
 }
 
 // Xác định ca sĩ
-$array_singers = nv_get_singers($array_singer_ids);
+$array_singers = nv_get_artists($array_singer_ids);
 
 foreach ($array as $id1 => $row1) {
     foreach ($row1['albums'] as $id => $row) {

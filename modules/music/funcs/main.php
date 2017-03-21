@@ -50,10 +50,10 @@ if (!empty($global_array_config['home_albums_display'])) {
 }
 
 if (!empty($global_array_config['home_singers_display'])) {
-    $db->sqlreset()->from(NV_MOD_TABLE . "_singers")->where("show_inhome=1 AND status=1");
+    $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where("show_inhome=1 AND status=1 AND (artist_type=0 OR artist_type=2)");
     $db->order("RAND()")->limit($global_array_config['home_singers_nums'])->offset(0);
     
-    $array_select_fields = nv_get_singer_select_fields();
+    $array_select_fields = nv_get_artist_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
     $array = array();
@@ -67,7 +67,7 @@ if (!empty($global_array_config['home_singers_display'])) {
         }
         
         $row['singer_link'] = nv_get_view_singer_link($row);
-        $array[$row['singer_id']] = $row;
+        $array[$row['artist_id']] = $row;
     }
     
     $content_singers = $array;
@@ -110,7 +110,7 @@ if (!empty($global_array_config['home_videos_display'])) {
 }
 
 // Xác định ca sĩ
-$array_singers = nv_get_singers($array_singer_ids);
+$array_singers = nv_get_artists($array_singer_ids);
 
 foreach ($content_albums as $id => $row) {
     if (!empty($row['singer_ids'])) {

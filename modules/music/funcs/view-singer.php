@@ -14,14 +14,14 @@ if (!defined('NV_IS_MOD_MUSIC'))
 $page_title = $module_info['custom_title'];
 
 $data_singer = array();
-$request_singer_alias = '';
+$request_artist_alias = '';
 $request_tab = '';
 $page = 1;
 
 if (isset($array_op[1])) {
     if (preg_match("/^([a-zA-Z0-9\-]+)\-" . nv_preg_quote($global_array_config['code_prefix']['singer']) . "([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
-        $data_singer = nv_get_singers($m[2], true, true);
-        $request_singer_alias = $m[1];
+        $data_singer = nv_get_artists($m[2], true, true);
+        $request_artist_alias = $m[1];
     }
 }
 
@@ -56,7 +56,7 @@ if (isset($array_op[3])) {
 }
 
 // Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
-if (isset($array_op[4]) or $data_singer['singer_alias'] != $request_singer_alias or (empty($request_tab) and $_SERVER['REQUEST_URI'] != nv_url_rewrite(nv_get_view_singer_link($data_singer, false), true))) {
+if (isset($array_op[4]) or $data_singer['artist_alias'] != $request_artist_alias or (empty($request_tab) and $_SERVER['REQUEST_URI'] != nv_url_rewrite(nv_get_view_singer_link($data_singer, false), true))) {
     header('Location: ' . nv_url_rewrite(nv_get_view_singer_link($data_singer, false, $request_tab), true));
     die();
 }
@@ -71,7 +71,7 @@ $array_singers = $array_singer_ids = array();
 // Lấy các album
 if (empty($request_tab) or $request_tab == 'album') {
     $per_page = empty($request_tab) ? $global_array_config['view_singer_main_num_albums'] : $global_array_config['view_singer_detail_num_albums'];
-    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['singer_id'] . ", singer_ids)");
+    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
     
     if (!empty($request_tab)) {
         $db->select("COUNT(*)");
@@ -106,7 +106,7 @@ if (empty($request_tab) or $request_tab == 'album') {
 // Lấy các bài hát
 if (empty($request_tab) or $request_tab == 'song') {
     $per_page = empty($request_tab) ? $global_array_config['view_singer_main_num_songs'] : $global_array_config['view_singer_detail_num_songs'];
-    $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['singer_id'] . ", singer_ids)");
+    $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
     
     if (!empty($request_tab)) {
         $db->select("COUNT(*)");
@@ -139,7 +139,7 @@ if (empty($request_tab) or $request_tab == 'song') {
 }
 
 // Xác định ca sĩ
-$array_singers = nv_get_singers($array_singer_ids);
+$array_singers = nv_get_artists($array_singer_ids);
 
 foreach ($array_albums as $id => $row) {
     if (!empty($row['singer_ids'])) {

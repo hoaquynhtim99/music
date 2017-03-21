@@ -281,13 +281,13 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
             $num_info_had++;
             $xtpl->parse('main.profile.singer_nickname');
         }
-        if (!empty($data_singer['singer_realname'])) {
+        if (!empty($data_singer['artist_realname'])) {
             $num_info_had++;
-            $xtpl->parse('main.profile.singer_realname');
+            $xtpl->parse('main.profile.artist_realname');
         }
-        if (!empty($data_singer['singer_hometown'])) {
+        if (!empty($data_singer['artist_hometown'])) {
             $num_info_had++;
-            $xtpl->parse('main.profile.singer_hometown');
+            $xtpl->parse('main.profile.artist_hometown');
         }
         if (!empty($data_singer['singer_prize'])) {
             $num_info_had++;
@@ -304,21 +304,21 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
             $xtpl->parse('main.profile.nation');
         }
         
-        if (!empty($data_singer['singer_birthday']) and !empty($data_singer['singer_birthday_lev'])) {
+        if (!empty($data_singer['artist_birthday']) and !empty($data_singer['artist_birthday_lev'])) {
             $num_info_had++;
-            if ($data_singer['singer_birthday_lev'] == 3) {
+            if ($data_singer['artist_birthday_lev'] == 3) {
                 $format_date = 'd/m/Y';
-            } elseif ($data_singer['singer_birthday_lev'] == 2) {
+            } elseif ($data_singer['artist_birthday_lev'] == 2) {
                 $format_date = 'm/Y';
             } else {
                 $format_date = 'Y';
             }
-            $xtpl->assign('SINGER_BIRTHDAY', nv_date($format_date, $data_singer['singer_birthday']));
-            $xtpl->parse('main.profile.singer_birthday');
+            $xtpl->assign('artist_birthday', nv_date($format_date, $data_singer['artist_birthday']));
+            $xtpl->parse('main.profile.artist_birthday');
         }
         
         if (empty($num_info_had)) {
-            $xtpl->assign('EMPTY_MESSAGE', sprintf($lang_module['view_singer_empty_profile'], $data_singer['singer_name']));
+            $xtpl->assign('EMPTY_MESSAGE', sprintf($lang_module['view_singer_empty_profile'], $data_singer['artist_name']));
             $xtpl->parse('main.profile.empty');
         }
         

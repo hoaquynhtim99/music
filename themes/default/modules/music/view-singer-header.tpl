@@ -2,7 +2,7 @@
 <div class="ms-artist-header">
     <div class="ms-artist-header-top" style="background-image:url({SINGER.resource_cover});">
         <div class="ms-artist-header-info">
-            <h1>{SINGER.singer_name}</h1>
+            <h1>{SINGER.artist_name}</h1>
             <!-- BEGIN: headtext -->
             <p>{HEADTEXT} <a href="{LINK_PROFILE_TAB}">{LANG.view_biography}</a></p>
             <!-- END: headtext -->

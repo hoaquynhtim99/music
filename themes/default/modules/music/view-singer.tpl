@@ -8,15 +8,15 @@
 <!-- BEGIN: profile -->
 <div class="ms-title-section">
     <h2>
-        <span>{LANG.biography} {SINGER.singer_name}</span>
+        <span>{LANG.biography} {SINGER.artist_name}</span>
     </h2>
 </div>
 <div class="margin-top-sm">
-    <!-- BEGIN: singer_realname --><p class="ms-inline-paragraph"><strong>{LANG.realname}:</strong> {SINGER.singer_realname}</p><!-- END: singer_realname -->
-    <p class="ms-inline-paragraph"><strong>{LANG.artist_name}:</strong> {SINGER.singer_name}</p>
+    <!-- BEGIN: artist_realname --><p class="ms-inline-paragraph"><strong>{LANG.realname}:</strong> {SINGER.artist_realname}</p><!-- END: artist_realname -->
+    <p class="ms-inline-paragraph"><strong>{LANG.artist_name}:</strong> {SINGER.artist_name}</p>
     <!-- BEGIN: singer_nickname --><p class="ms-inline-paragraph"><strong>{LANG.nickname}:</strong> {SINGER.singer_nickname}</p><!-- END: singer_nickname -->
-    <!-- BEGIN: singer_hometown --><p class="ms-inline-paragraph"><strong>{LANG.hometown}:</strong> {SINGER.singer_hometown}</p><!-- END: singer_hometown -->
-    <!-- BEGIN: singer_birthday --><p class="ms-inline-paragraph"><strong>{LANG.birthday}:</strong> {SINGER_BIRTHDAY}</p><!-- END: singer_birthday -->
+    <!-- BEGIN: artist_hometown --><p class="ms-inline-paragraph"><strong>{LANG.hometown}:</strong> {SINGER.artist_hometown}</p><!-- END: artist_hometown -->
+    <!-- BEGIN: artist_birthday --><p class="ms-inline-paragraph"><strong>{LANG.birthday}:</strong> {artist_birthday}</p><!-- END: artist_birthday -->
     <!-- BEGIN: nation --><p class="ms-inline-paragraph"><strong>{LANG.nation}:</strong> {NATION_NAME}</p><!-- END: nation -->
     
     <!-- BEGIN: singer_prize -->
