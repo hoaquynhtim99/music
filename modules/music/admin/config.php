@@ -45,10 +45,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     
     $array['arr_op_alias_prefix_song'] = $nv_Request->get_title('arr_op_alias_prefix_song', 'post', '');
     $array['arr_op_alias_prefix_album'] = $nv_Request->get_title('arr_op_alias_prefix_album', 'post', '');
-    
-    if (sizeof(array_unique(array($array['arr_op_alias_prefix_song'], $array['arr_op_alias_prefix_album']))) != 2) {
-        $ajaxRespon->reset()->setError()->setInput('arr_op_alias_prefix_song')->setMessage($lang_module['arr_op_alias_prefix_error'])->respon();
-    }
+    $array['arr_op_alias_prefix_video'] = $nv_Request->get_title('arr_op_alias_prefix_video', 'post', '');
     
     $array['gird_albums_percat_nums'] = $nv_Request->get_int('gird_albums_percat_nums', 'post', 0);
     $array['gird_albums_incat_nums'] = $nv_Request->get_int('gird_albums_incat_nums', 'post', 0);

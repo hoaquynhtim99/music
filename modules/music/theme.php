@@ -67,6 +67,67 @@ function nv_theme_gird_albums($array)
 }
 
 /**
+ * nv_theme_gird_videos()
+ * 
+ * @param mixed $array
+ * @return
+ */
+function nv_theme_gird_videos($array)
+{
+    global $module_file, $lang_module, $lang_global, $module_info, $global_array_config, $module_upload, $op;
+
+    $xtpl = new XTemplate('gird-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+
+    if (is_file(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/images/' . $module_file . '/pix-16-9.gif')) {
+        $pix_image = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_file . '/pix-16-9.gif';
+    } else {
+        $pix_image = NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/pix-16-9.gif';
+    }
+    $xtpl->assign('PIX_IMAGE', $pix_image);
+
+    foreach ($array as $row) {
+        $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+        
+        $xtpl->assign('ROW', $row);
+        
+        $num_singers = sizeof($row['singers']);
+        if ($num_singers > $global_array_config['limit_singers_displayed']) {
+            $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+            
+            foreach ($row['singers'] as $singer) {
+                $xtpl->assign('SINGER', $singer);
+                $xtpl->parse('main.loop.va_singer.loop');
+            }
+            
+            $xtpl->parse('main.loop.va_singer');
+        } elseif (!empty($row['singers'])) {
+            $i = 0;
+            foreach ($row['singers'] as $singer) {
+                $i++;
+                $xtpl->assign('SINGER', $singer);
+                
+                if ($i > 1) {
+                    $xtpl->parse('main.loop.show_singer.loop.separate');
+                }
+                $xtpl->parse('main.loop.show_singer.loop');
+            }
+            $xtpl->parse('main.loop.show_singer');
+        } else {
+            $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+            $xtpl->parse('main.loop.no_singer');
+        }
+        
+        $xtpl->parse('main.loop');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
  * nv_theme_list_songs()
  * 
  * @param mixed $array
@@ -207,6 +268,8 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     }
     
     if (!empty($content_videos)) {
+        $xtpl->assign('VIDEOS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos']);
+        $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($content_videos));
         $xtpl->parse('videos');
         $contents[$global_array_config['home_videos_weight']] = $xtpl->text('videos');
     }

@@ -74,7 +74,7 @@ if (!empty($global_array_config['home_singers_display'])) {
 }
 
 if (!empty($global_array_config['home_songs_display'])) {
-    $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1");
+    $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("song_id DESC")->limit($global_array_config['home_songs_nums'])->offset(0);
     
     $array_select_fields = nv_get_song_select_fields();
@@ -106,7 +106,34 @@ if (!empty($global_array_config['home_songs_display'])) {
 }
 
 if (!empty($global_array_config['home_videos_display'])) {
+    $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("show_inhome=1 AND status=1 AND is_official=1");
+    $db->order("video_id DESC")->limit($global_array_config['home_videos_nums'])->offset(0);
     
+    $array_select_fields = nv_get_video_select_fields();
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $array = array();
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        
+        $row['singers'] = array();
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['video_link'] = '';
+        
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+        
+        $array[$row['video_id']] = $row;
+    }
+    
+    $content_videos = $array;
 }
 
 // Xác định ca sĩ
@@ -148,6 +175,23 @@ foreach ($content_songs as $id => $row) {
         $row['song_link'] = nv_get_detail_song_link($row);
     }
     $content_songs[$id] = $row;
+}
+
+foreach ($content_videos as $id => $row) {
+    if (!empty($row['singer_ids'])) {
+        foreach ($row['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $row['singers'][$singer_id] = $array_singers[$singer_id];
+                if (empty($row['video_link'])) {
+                    $row['video_link'] = nv_get_detail_video_link($row, $array_singers[$singer_id]);
+                }
+            }
+        }
+    }
+    if (empty($row['video_link'])) {
+        $row['video_link'] = nv_get_detail_video_link($row);
+    }
+    $content_videos[$id] = $row;
 }
 
 $contents = nv_theme_main($content_albums, $content_videos, $content_singers, $content_songs);

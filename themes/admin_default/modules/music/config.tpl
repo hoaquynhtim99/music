@@ -169,6 +169,12 @@
                                 <input class="form-control required" type="text" name="arr_op_alias_prefix_album" id="arr_op_alias_prefix_album" value="{DATA.arr_op_alias_prefix_album}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
                             </div>
                         </div>    
+                        <div class="form-group">
+                            <label for="arr_op_alias_prefix_video" class="control-label col-sm-8">{LANG.arr_op_alias_prefix_video}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control required" type="text" name="arr_op_alias_prefix_video" id="arr_op_alias_prefix_video" value="{DATA.arr_op_alias_prefix_video}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
+                            </div>
+                        </div>    
                     </div>
                 </div>
             </div>
