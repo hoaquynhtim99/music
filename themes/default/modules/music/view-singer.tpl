@@ -42,16 +42,28 @@
 <!-- BEGIN: songs -->
 <div class="ms-title-section">
     <h2>
-        <span>{LANG.song}</span>
+        <!-- BEGIN: link --><a href="{SONG_LINK}">{LANG.song}</a><!-- END: link -->
+        <!-- BEGIN: text --><span>{LANG.song}</span><!-- END: text -->
     </h2>
 </div>
 {SONG_HTML}
 <!-- END: songs -->
 
+<!-- BEGIN: videos -->
+<div class="ms-title-section">
+    <h2>
+        <!-- BEGIN: link --><a href="{VIDEO_LINK}">{LANG.video}</a><!-- END: link -->
+        <!-- BEGIN: text --><span>{LANG.video}</span><!-- END: text -->
+    </h2>
+</div>
+{VIDEO_HTML}
+<!-- END: videos -->
+
 <!-- BEGIN: albums -->
 <div class="ms-title-section">
     <h2>
-        <span>{LANG.album}</span>
+        <!-- BEGIN: link --><a href="{ALBUM_LINK}">{LANG.album}</a><!-- END: link -->
+        <!-- BEGIN: text --><span>{LANG.album}</span><!-- END: text -->
     </h2>
 </div>
 {ALBUM_HTML}

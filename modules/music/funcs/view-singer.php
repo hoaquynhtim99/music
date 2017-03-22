@@ -138,6 +138,41 @@ if (empty($request_tab) or $request_tab == 'song') {
     }
 }
 
+// Lấy các video
+if (empty($request_tab) or $request_tab == 'video') {
+    $per_page = empty($request_tab) ? $global_array_config['view_singer_main_num_videos'] : $global_array_config['view_singer_detail_num_videos'];
+    $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
+    
+    if (!empty($request_tab)) {
+        $db->select("COUNT(*)");
+        $all_pages = $db->query($db->sql())->fetchColumn();
+    }
+
+    $array_select_fields = nv_get_video_select_fields();
+    $db->order("video_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);    
+    $db->select(implode(', ', $array_select_fields[0]));
+    
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        
+        $row['singers'] = array();
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['video_link'] = '';
+        
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+        
+        $array_videos[$row['video_id']] = $row;
+    }
+}
+
 // Xác định ca sĩ
 $array_singers = nv_get_artists($array_singer_ids);
 
@@ -173,6 +208,23 @@ foreach ($array_songs as $id => $row) {
         $row['song_link'] = nv_get_detail_song_link($row);
     }
     $array_songs[$id] = $row;
+}
+
+foreach ($array_videos as $id => $row) {
+    if (!empty($row['singer_ids'])) {
+        foreach ($row['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $row['singers'][$singer_id] = $array_singers[$singer_id];
+                if (empty($row['video_link'])) {
+                    $row['video_link'] = nv_get_detail_video_link($row, $array_singers[$singer_id]);
+                }
+            }
+        }
+    }
+    if (empty($row['video_link'])) {
+        $row['video_link'] = nv_get_detail_video_link($row);
+    }
+    $array_videos[$id] = $row;
 }
 
 // Phân trang

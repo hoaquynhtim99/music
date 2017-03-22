@@ -390,12 +390,41 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
     
     if (!empty($array_albums)) {
         $xtpl->assign('ALBUM_HTML', nv_theme_gird_albums($array_albums));
+        
+        if (empty($request_tab)) {
+            $xtpl->assign('ALBUM_LINK', nv_get_view_singer_link($data_singer, true, 'album'));
+            $xtpl->parse('main.albums.link');
+        } else {
+            $xtpl->parse('main.albums.text');
+        }
+        
         $xtpl->parse('main.albums');
     }
     
     if (!empty($array_songs)) {
         $xtpl->assign('SONG_HTML', nv_theme_list_songs($array_songs));
+        
+        if (empty($request_tab)) {
+            $xtpl->assign('SONG_LINK', nv_get_view_singer_link($data_singer, true, 'song'));
+            $xtpl->parse('main.songs.link');
+        } else {
+            $xtpl->parse('main.songs.text');
+        }
+        
         $xtpl->parse('main.songs');
+    }
+    
+    if (!empty($array_videos)) {
+        $xtpl->assign('VIDEO_HTML', nv_theme_gird_videos($array_videos));
+        
+        if (empty($request_tab)) {
+            $xtpl->assign('VIDEO_LINK', nv_get_view_singer_link($data_singer, true, 'video'));
+            $xtpl->parse('main.videos.link');
+        } else {
+            $xtpl->parse('main.videos.text');
+        }
+        
+        $xtpl->parse('main.videos');
     }
 
     if (!empty($generate_page)) {
