@@ -489,6 +489,10 @@ $default_config['view_singer_detail_num_albums'] = '24';
 $default_config['arr_funcs_sitetitle_album'] = 'Album mới, album hot nhiều ca sỹ';
 $default_config['arr_funcs_keywords_album'] = 'album, album moi, album hot';
 $default_config['arr_funcs_description_album'] = 'Album mới , album hot tuyển chọn các ca sỹ Việt Nam và quốc tế.';
+$default_config['fb_share_image'] = NV_BASE_SITEURL . 'themes/default/images/music/fb-share.jpg';
+$default_config['fb_share_image_witdh'] = '1910';
+$default_config['fb_share_image_height'] = '1000';
+$default_config['fb_share_image_mime'] = 'image/jpeg';
 
 foreach ($default_config as $config_name => $config_value) {
     $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_config (config_name, config_value_default) VALUES('" . $config_name . "', '" . $config_value . "')";

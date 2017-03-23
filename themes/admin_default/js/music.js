@@ -420,6 +420,43 @@ $(document).ready(function() {
         });
         $this.data('value', setVar);
     });
+    $('[data-toggle="msclearval"]').click(function(e) {
+        e.preventDefault();
+        $($(this).data('target')).val('');
+    });
+    $('[data-toggle="msviewimg"]').click(function(e) {
+        e.preventDefault();
+        var title = $(this).data('title');
+        if (typeof title == "undefined") {
+            title = 'Image';
+        }
+        var src = $($(this).data('target')).val();
+        if (typeof src == "undefined" || src == '' || !src) {
+            return false;
+        }
+        modalShow($(this).data('title'), '<img src="' + src + '" class="img-responsive"/>');
+    });
+    $('[data-toggle="msbrserver"]').click(function(e) {
+        e.preventDefault();
+		var area = alt = path = currentpath = "";
+		var type = "image";
+        if (typeof $(this).data('area') != "undefined") {
+            area = $(this).data('area');
+        }
+        if (typeof $(this).data('alt') != "undefined") {
+            alt = $(this).data('alt');
+        }
+        if (typeof $(this).data('path') != "undefined") {
+            path = $(this).data('path');
+        }
+        if (typeof $(this).data('currentpath') != "undefined") {
+            currentpath = $(this).data('currentpath');
+        }
+        if (typeof $(this).data('type') != "undefined") {
+            type = $(this).data('type');
+        }
+		nv_open_browse(script_name + "?" + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + "=upload&popup=1&area=" + area + "&alt=" + alt + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath, "NVImg", 850, 420, "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
+    });
 });
 
 $(window).on('load', function() {

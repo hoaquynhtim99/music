@@ -336,6 +336,25 @@
                         </div>    
                     </div>
                 </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>{LANG.config_others}</strong></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="fb_share_image" class="control-label col-sm-8">{LANG.fb_share_image}:</label>
+                            <div class="col-sm-16">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="fb_share_image" id="fb_share_image" value="{DATA.fb_share_image}" readonly="readonly"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        <button class="btn btn-default" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
+                                    </span>
+                                </div>
+                                <i class="help-block">{LANG.fb_share_image_help}</i>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">

@@ -21,6 +21,10 @@ $lang_translator['langtype'] = 'lang_module';
 $lang_module['not_available'] = 'N/A';
 $lang_module['successfully_saved'] = 'Dữ liệu đã được lưu lại, hệ thống sẽ chuyển trang trong giây lát';
 $lang_module['save'] = 'Lưu lại';
+$lang_module['browse_server'] = 'Duyệt máy chủ';
+$lang_module['view_image'] = 'Xem ảnh';
+$lang_module['delete_value'] = 'Xóa dữ liệu';
+$lang_module['image'] = 'Hình ảnh';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';
@@ -39,6 +43,7 @@ $lang_module['config_urls_system'] = 'Cấu hình URL';
 $lang_module['config_alert_change'] = 'Các giá trị ở nhóm cấu hình này chỉ nên chọn một lần duy nhất trước khi site hoạt động. Thay đổi trong khi site đang hoạt động sẽ dẫn tới lỗi ở các máy chủ tìm kiếm';
 $lang_module['config_view_singer'] = 'Cấu hình tại trang xem chi tiết ca sĩ';
 $lang_module['config_list_albums'] = 'Cấu hình tại trang xem danh sách album';
+$lang_module['config_others'] = 'Các thiết lập khác';
 
 $lang_module['limit_singers_displayed'] = 'Số ca sĩ tối đa hiển thị';
 $lang_module['limit_singers_displayed_help'] = 'Nếu một bài hát, video, album có nhiều ca sĩ thể hiện hơn giá trị đã chọn, hệ thống sẽ hiển thị ca sĩ là giá trị ở ô bên dưới. Người dùng nhấp vào để hiển thị danh sách các ca sĩ thể hiện';
@@ -46,6 +51,11 @@ $lang_module['various_artists'] = 'Nhiều ca sĩ';
 $lang_module['various_artists_help'] = 'Nội dung sẽ hiển thị nếu bài hát, album, video có nhiều hơn số ca sĩ thể hiện được chọn bên trên';
 $lang_module['unknow_singer'] = 'Ca sĩ không xác định';
 $lang_module['unknow_singer_help'] = 'Nội dung sẽ hiển thị nếu bài hát, album, video chưa có/chưa biết ca sĩ thể hiện';
+$lang_module['fb_share_image'] = 'Ảnh chia sẻ MXH';
+$lang_module['fb_share_image_help'] = 'Ảnh mặc định sẽ hiển thị khi chia sẻ nội dung lên mạng xã hội, được sử dụng ở trang chính và các trang thành phần nếu không được chỉ định cụ thể. Ảnh chọn cần có kích thước tối thiểu 600x315 pixel và tỉ lệ 1.91:1';
+$lang_module['fb_share_image_error'] = 'Ảnh không tồn tại';
+$lang_module['fb_share_image_error1'] = 'Ảnh không hợp lệ';
+$lang_module['fb_share_image_error2'] = 'Ảnh quá nhỏ, ảnh chọn cần có kích thước tối thiểu 600x315 pixel và tỉ lệ 1.91:1';
 
 $lang_module['home_albums_display'] = 'Hiển thị các albums ở trang chủ';
 $lang_module['home_singers_display'] = 'Hiển thị các ca sĩ ở trang chủ';

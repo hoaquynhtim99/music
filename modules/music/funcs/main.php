@@ -15,6 +15,15 @@ $page_title = $module_info['custom_title'];
 $key_words = $module_info['keywords'];
 $description = $module_info['description'];
 
+// Các thẻ meta Open Graph
+if (!empty($global_array_config['fb_share_image'])) {
+    $meta_property['og:image'] = NV_MY_DOMAIN . $global_array_config['fb_share_image'];
+    $meta_property['og:image:url'] = NV_MY_DOMAIN . $global_array_config['fb_share_image'];
+    $meta_property['og:image:width'] = $global_array_config['fb_share_image_witdh'];
+    $meta_property['og:image:height'] = $global_array_config['fb_share_image_height'];
+    $meta_property['og:image:type'] = $global_array_config['fb_share_image_mime'];
+}
+
 $content_albums = $content_videos = $content_singers = $content_songs = array();
 $array_singer_ids = $array_singers = array();
 

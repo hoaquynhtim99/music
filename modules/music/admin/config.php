@@ -72,6 +72,24 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['arr_funcs_keywords_album'] = $nv_Request->get_title('arr_funcs_keywords_album', 'post', '');
     $array['arr_funcs_description_album'] = $nv_Request->get_title('arr_funcs_description_album', 'post', '');
     
+    $array['fb_share_image'] = $nv_Request->get_title('fb_share_image', 'post', '');
+    $default_fb_share_image = $db->query("SELECT config_value_default FROM " . NV_MOD_TABLE . "_config WHERE config_name='fb_share_image'")->fetchColumn();
+    
+    if (!empty($array['fb_share_image']) and $array['fb_share_image'] != $default_fb_share_image and !nv_is_file($array['fb_share_image'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+        $ajaxRespon->reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error'])->respon();
+    }
+    
+    $image_info = @getimagesize(NV_DOCUMENT_ROOT . $array['fb_share_image']);
+    if (!isset($image_info[0]) or !isset($image_info[1]) or !isset($image_info['mime'])) {
+        $ajaxRespon->reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error1'])->respon();
+    }
+    if ($image_info[0] < 600 or $image_info[1] < 315) {
+        $ajaxRespon->reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error2'])->respon();
+    }
+    $array['fb_share_image_witdh'] = $image_info[0];
+    $array['fb_share_image_height'] = $image_info[1];
+    $array['fb_share_image_mime'] = $image_info['mime'];
+    
     $sth = $db->prepare("UPDATE " . NV_MOD_TABLE . "_config SET config_value_" . NV_LANG_DATA . "=:config_value WHERE config_name=:config_name");
     foreach ($array as $config_name => $config_value) {
         $sth->bindParam(':config_value', $config_value, PDO::PARAM_STR);
@@ -99,6 +117,7 @@ while ($row = $result->fetch()) {
 $xtpl = new XTemplate('config.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('FORM_ACTION', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op);
+$xtpl->assign('UPLOAD_DIR', NV_UPLOADS_DIR . '/' . $module_upload);
 
 $array['home_albums_display'] = empty($array['home_albums_display']) ? '' : ' checked="checked"';
 $array['home_singers_display'] = empty($array['home_singers_display']) ? '' : ' checked="checked"';
