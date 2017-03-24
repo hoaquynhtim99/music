@@ -98,6 +98,8 @@ $lang_module['view_singer_detail_num_videos'] = 'Số video ở tab video';
 $lang_module['view_singer_detail_num_albums'] = 'Số album ở tab album';
 
 $lang_module['funcs_album'] = 'Trang danh sách các album';
+$lang_module['funcs_video'] = 'Trang danh sách các video';
+$lang_module['funcs_singer'] = 'Trang danh sách các ca sĩ';
 $lang_module['funcs_sitetitle'] = 'Tiêu đề trang';
 $lang_module['funcs_sitetitle_help'] = 'Nội dung của thẻ &lt;title&gt;&lt;/title&gt;';
 $lang_module['funcs_keywords'] = 'Từ khóa';

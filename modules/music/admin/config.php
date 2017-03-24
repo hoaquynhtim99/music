@@ -71,6 +71,12 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['arr_funcs_sitetitle_album'] = $nv_Request->get_title('arr_funcs_sitetitle_album', 'post', '');
     $array['arr_funcs_keywords_album'] = $nv_Request->get_title('arr_funcs_keywords_album', 'post', '');
     $array['arr_funcs_description_album'] = $nv_Request->get_title('arr_funcs_description_album', 'post', '');
+    $array['arr_funcs_sitetitle_video'] = $nv_Request->get_title('arr_funcs_sitetitle_video', 'post', '');
+    $array['arr_funcs_keywords_video'] = $nv_Request->get_title('arr_funcs_keywords_video', 'post', '');
+    $array['arr_funcs_description_video'] = $nv_Request->get_title('arr_funcs_description_video', 'post', '');
+    $array['arr_funcs_sitetitle_singer'] = $nv_Request->get_title('arr_funcs_sitetitle_singer', 'post', '');
+    $array['arr_funcs_keywords_singer'] = $nv_Request->get_title('arr_funcs_keywords_singer', 'post', '');
+    $array['arr_funcs_description_singer'] = $nv_Request->get_title('arr_funcs_description_singer', 'post', '');
     
     $array['fb_share_image'] = $nv_Request->get_title('fb_share_image', 'post', '');
     $default_fb_share_image = $db->query("SELECT config_value_default FROM " . NV_MOD_TABLE . "_config WHERE config_name='fb_share_image'")->fetchColumn();

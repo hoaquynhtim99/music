@@ -334,6 +334,52 @@
                                 <i class="help-block">{LANG.funcs_description_help}</i>
                             </div>
                         </div>    
+                        <strong>{LANG.funcs_video}:</strong>
+                        <hr class="sm"/>
+                        <div class="form-group">
+                            <label for="arr_funcs_sitetitle_video" class="control-label col-sm-8">{LANG.funcs_sitetitle}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_funcs_sitetitle_video" id="arr_funcs_sitetitle_video" value="{DATA.arr_funcs_sitetitle_video}"/>
+                                <i class="help-block">{LANG.funcs_sitetitle_help}</i> 
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label for="arr_funcs_keywords_video" class="control-label col-sm-8">{LANG.funcs_keywords}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_funcs_keywords_video" id="arr_funcs_keywords_video" value="{DATA.arr_funcs_keywords_video}"/>
+                                <i class="help-block">{LANG.funcs_keywords_help}</i> 
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label for="arr_funcs_description_video" class="control-label col-sm-8">{LANG.funcs_description}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_funcs_description_video" id="arr_funcs_description_video" value="{DATA.arr_funcs_description_video}"/>
+                                <i class="help-block">{LANG.funcs_description_help}</i>
+                            </div>
+                        </div>    
+                        <strong>{LANG.funcs_singer}:</strong>
+                        <hr class="sm"/>
+                        <div class="form-group">
+                            <label for="arr_funcs_sitetitle_singer" class="control-label col-sm-8">{LANG.funcs_sitetitle}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_funcs_sitetitle_singer" id="arr_funcs_sitetitle_singer" value="{DATA.arr_funcs_sitetitle_singer}"/>
+                                <i class="help-block">{LANG.funcs_sitetitle_help}</i> 
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label for="arr_funcs_keywords_singer" class="control-label col-sm-8">{LANG.funcs_keywords}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_funcs_keywords_singer" id="arr_funcs_keywords_singer" value="{DATA.arr_funcs_keywords_singer}"/>
+                                <i class="help-block">{LANG.funcs_keywords_help}</i> 
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label for="arr_funcs_description_singer" class="control-label col-sm-8">{LANG.funcs_description}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_funcs_description_singer" id="arr_funcs_description_singer" value="{DATA.arr_funcs_description_singer}"/>
+                                <i class="help-block">{LANG.funcs_description_help}</i>
+                            </div>
+                        </div>    
                     </div>
                 </div>
                 <div class="panel panel-info">
