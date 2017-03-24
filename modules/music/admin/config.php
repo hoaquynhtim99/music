@@ -49,6 +49,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
     
     $array['gird_albums_percat_nums'] = $nv_Request->get_int('gird_albums_percat_nums', 'post', 0);
     $array['gird_albums_incat_nums'] = $nv_Request->get_int('gird_albums_incat_nums', 'post', 0);
+    $array['gird_videos_percat_nums'] = $nv_Request->get_int('gird_videos_percat_nums', 'post', 0);
+    $array['gird_videos_incat_nums'] = $nv_Request->get_int('gird_videos_incat_nums', 'post', 0);
     $array['view_singer_show_header'] = $nv_Request->get_int('view_singer_show_header', 'post', 0);
     $array['view_singer_headtext_length'] = $nv_Request->get_int('view_singer_headtext_length', 'post', 0);
 

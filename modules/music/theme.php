@@ -279,6 +279,14 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     return implode("\n", $contents);
 }
 
+/**
+ * nv_theme_list_albums()
+ * 
+ * @param mixed $array
+ * @param bool $is_detail_cat
+ * @param mixed $generate_page
+ * @return
+ */
 function nv_theme_list_albums($array, $is_detail_cat = false, $generate_page)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $global_array_config;
@@ -293,6 +301,45 @@ function nv_theme_list_albums($array, $is_detail_cat = false, $generate_page)
         
         if (empty($is_detail_cat)) {
             $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $cat['cat']['cat_alias'] . '-' . $global_array_config['code_prefix']['cat'] . $cat['cat']['cat_code']);
+            $xtpl->parse('main.loopcat.cat_link');
+        } else {
+            $xtpl->parse('main.loopcat.cat_text');
+        }
+        
+        $xtpl->parse('main.loopcat');
+    }
+
+    if (!empty($generate_page)) {
+        $xtpl->assign('GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.generate_page');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
+ * nv_theme_list_videos()
+ * 
+ * @param mixed $array
+ * @param bool $is_detail_cat
+ * @param mixed $generate_page
+ * @return
+ */
+function nv_theme_list_videos($array, $is_detail_cat = false, $generate_page)
+{
+    global $module_file, $lang_module, $lang_global, $module_info, $global_array_config;
+    
+    $xtpl = new XTemplate('list-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    foreach ($array as $cat) {
+        $xtpl->assign('CAT', $cat['cat']);
+        $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($cat['videos']));
+        
+        if (empty($is_detail_cat)) {
+            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $cat['cat']['cat_alias'] . '-' . $global_array_config['code_prefix']['cat'] . $cat['cat']['cat_code']);
             $xtpl->parse('main.loopcat.cat_link');
         } else {
             $xtpl->parse('main.loopcat.cat_text');

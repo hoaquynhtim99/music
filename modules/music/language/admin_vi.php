@@ -43,6 +43,7 @@ $lang_module['config_urls_system'] = 'Cấu hình URL';
 $lang_module['config_alert_change'] = 'Các giá trị ở nhóm cấu hình này chỉ nên chọn một lần duy nhất trước khi site hoạt động. Thay đổi trong khi site đang hoạt động sẽ dẫn tới lỗi ở các máy chủ tìm kiếm';
 $lang_module['config_view_singer'] = 'Cấu hình tại trang xem chi tiết ca sĩ';
 $lang_module['config_list_albums'] = 'Cấu hình tại trang xem danh sách album';
+$lang_module['config_list_videos'] = 'Cấu hình tại trang xem danh sách video';
 $lang_module['config_others'] = 'Các thiết lập khác';
 
 $lang_module['limit_singers_displayed'] = 'Số ca sĩ tối đa hiển thị';
@@ -112,3 +113,7 @@ $lang_module['gird_albums_percat_nums'] = 'Số album mỗi danh mục';
 $lang_module['gird_albums_percat_nums_help'] = 'Số album hiển thị ở mỗi danh mục tại trang chính';
 $lang_module['gird_albums_incat_nums'] = 'Số album ở danh mục';
 $lang_module['gird_albums_incat_nums_help'] = 'Số album hiển thị mỗi trang khi xem từng danh mục';
+$lang_module['gird_videos_percat_nums'] = 'Số video mỗi danh mục';
+$lang_module['gird_videos_percat_nums_help'] = 'Số video hiển thị ở mỗi danh mục tại trang chính';
+$lang_module['gird_videos_incat_nums'] = 'Số video ở danh mục';
+$lang_module['gird_videos_incat_nums_help'] = 'Số video hiển thị mỗi trang khi xem từng danh mục';

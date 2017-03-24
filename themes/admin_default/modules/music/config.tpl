@@ -177,6 +177,25 @@
                         </div>    
                     </div>
                 </div>
+                <div class="panel panel-info">
+                    <div class="panel-heading"><strong>{LANG.config_others}</strong></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="fb_share_image" class="control-label col-sm-8">{LANG.fb_share_image}:</label>
+                            <div class="col-sm-16">
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="fb_share_image" id="fb_share_image" value="{DATA.fb_share_image}" readonly="readonly"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                        <button class="btn btn-default" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
+                                    </span>
+                                </div>
+                                <i class="help-block">{LANG.fb_share_image_help}</i>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
             </div>
             <div class="col-md-12 col-lg-12">
                 <div class="panel panel-info">
@@ -308,6 +327,25 @@
                     </div>
                 </div>
                 <div class="panel panel-info">
+                    <div class="panel-heading"><strong>{LANG.config_list_videos}</strong></div>
+                    <div class="panel-body">
+                        <div class="form-group">
+                            <label for="gird_videos_percat_nums" class="control-label col-sm-8">{LANG.gird_videos_percat_nums}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control required" type="text" name="gird_videos_percat_nums" id="gird_videos_percat_nums" value="{DATA.gird_videos_percat_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
+                                <i class="help-block">{LANG.gird_videos_percat_nums_help}</i>
+                            </div>
+                        </div>    
+                        <div class="form-group">
+                            <label for="gird_videos_incat_nums" class="control-label col-sm-8">{LANG.gird_videos_incat_nums}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control required" type="text" name="gird_videos_incat_nums" id="gird_videos_incat_nums" value="{DATA.gird_videos_incat_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
+                                <i class="help-block">{LANG.gird_videos_incat_nums_help}</i>
+                            </div>
+                        </div>    
+                    </div>
+                </div>
+                <div class="panel panel-info">
                     <div class="panel-heading"><strong>{LANG.config_structre_data_page_title}</strong></div>
                     <div class="panel-body">
                         <div class="alert alert-warning"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>
@@ -378,25 +416,6 @@
                             <div class="col-sm-16">
                                 <input class="form-control" type="text" name="arr_funcs_description_singer" id="arr_funcs_description_singer" value="{DATA.arr_funcs_description_singer}"/>
                                 <i class="help-block">{LANG.funcs_description_help}</i>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-heading"><strong>{LANG.config_others}</strong></div>
-                    <div class="panel-body">
-                        <div class="form-group">
-                            <label for="fb_share_image" class="control-label col-sm-8">{LANG.fb_share_image}:</label>
-                            <div class="col-sm-16">
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="fb_share_image" id="fb_share_image" value="{DATA.fb_share_image}" readonly="readonly"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-default" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        <button class="btn btn-default" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
-                                    </span>
-                                </div>
-                                <i class="help-block">{LANG.fb_share_image_help}</i>
                             </div>
                         </div>    
                     </div>
