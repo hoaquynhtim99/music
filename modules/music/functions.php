@@ -377,3 +377,34 @@ function nv_get_detail_video_link($video, $singer = array(), $amp = true)
     global $global_config, $module_info, $global_array_config;
     return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'];
 }
+
+/**
+ * nv_get_fb_share_image()
+ * 
+ * @param mixed $data
+ * @return
+ */
+function nv_get_fb_share_image($data = array())
+{
+    global $meta_property, $global_array_config, $module_upload;
+    
+    if (!empty($data['resource_avatar']) and is_file(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $data['resource_avatar'])) {
+        $image_info = @getimagesize(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $data['resource_avatar']);
+        if (isset($image_info[0]) and isset($image_info[1]) and isset($image_info['mime']) and $image_info[0] >= 600 or $image_info[1] >= 315) {
+            $meta_property['og:image'] = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data['resource_avatar'];
+            $meta_property['og:image:url'] = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data['resource_avatar'];
+            $meta_property['og:image:width'] = $image_info[0];
+            $meta_property['og:image:height'] = $image_info[1];
+            $meta_property['og:image:type'] = $image_info['mime'];
+            return true;
+        }
+    }
+    
+    if (!empty($global_array_config['fb_share_image'])) {
+        $meta_property['og:image'] = NV_MY_DOMAIN . $global_array_config['fb_share_image'];
+        $meta_property['og:image:url'] = NV_MY_DOMAIN . $global_array_config['fb_share_image'];
+        $meta_property['og:image:width'] = $global_array_config['fb_share_image_witdh'];
+        $meta_property['og:image:height'] = $global_array_config['fb_share_image_height'];
+        $meta_property['og:image:type'] = $global_array_config['fb_share_image_mime'];
+    }
+}

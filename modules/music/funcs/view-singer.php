@@ -11,8 +11,6 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
-$page_title = $module_info['custom_title'];
-
 $data_singer = array();
 $request_artist_alias = '';
 $request_tab = '';
@@ -229,6 +227,51 @@ foreach ($array_videos as $id => $row) {
 
 // Phân trang
 $generate_page = nv_alias_page($page_title, $base_url, $all_pages, $per_page, $page);
+
+// Open Graph
+nv_get_fb_share_image($data_singer);
+
+// Thông tin trang, thẻ meta
+$key_words = $data_singer['singer_keywords'];
+if (!empty($data_singer['singer_introtext'])) {
+    $description = $data_singer['singer_introtext'];
+} else {
+    $description = nv_clean60(strip_tags($data_singer['singer_info'], $global_config['description_length']));
+}
+
+if (empty($request_tab)) {
+    $page_title = sprintf($lang_module['site_title_singer'], $data_singer['artist_name'], $data_singer['artist_name']);
+} elseif ($request_tab == 'song') {
+    $page_title = sprintf($lang_module['site_title_singer_song'], $data_singer['artist_name'], $data_singer['artist_name']);
+} elseif ($request_tab == 'album') {
+    $page_title = sprintf($lang_module['site_title_singer_album'], $data_singer['artist_name'], $data_singer['artist_name']);
+} elseif ($request_tab == 'video') {
+    $page_title = sprintf($lang_module['site_title_singer_video'], $data_singer['artist_name'], $data_singer['artist_name']);
+} else {
+    $page_title = sprintf($lang_module['site_title_singer_profile'], $data_singer['artist_name'], $data_singer['artist_name']);
+}
+
+if (!empty($description) and !empty($request_tab)) {
+    $description = nv_clean60($description, $global_config['description_length'] - 50);
+    if ($request_tab == 'song') {
+        $description .= $lang_module['des_singer_add_song'];
+    } elseif ($request_tab == 'album') {
+        $description .= $lang_module['des_singer_add_album'];
+    } elseif ($request_tab == 'video') {
+        $description .= $lang_module['des_singer_add_video'];
+    } elseif ($request_tab == 'profile') {
+        $description .= $lang_module['des_singer_add_profile'];
+    }
+}
+
+if ($page > 1) {
+    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_title .= NV_TITLEBAR_DEFIS . $page_text;
+    if (!empty($description)) {
+        $description = nv_clean60($description, $global_config['description_length'] - 20);
+        $description .= NV_TITLEBAR_DEFIS . $page_text;
+    }
+}
 
 $contents = nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_videos, $array_albums, $generate_page);
 
