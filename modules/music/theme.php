@@ -127,6 +127,15 @@ function nv_theme_gird_videos($array)
     return $xtpl->text('main');
 }
 
+/**
+ * nv_theme_gird_singers()
+ * 
+ * @param mixed $array_singers
+ * @param mixed $nation_id
+ * @param mixed $alphabet
+ * @param mixed $generate_page
+ * @return
+ */
 function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_page)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $global_array_config, $module_upload, $op, $global_array_nation, $array_alphabets;
