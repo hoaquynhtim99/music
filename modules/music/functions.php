@@ -19,6 +19,7 @@ define('NV_MOD_FULLLINK', NV_MOD_LINK . '&' . NV_OP_VARIABLE . '=');
 define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&' . NV_OP_VARIABLE . '=');
 
 $array_mod_title = array();
+$array_alphabets = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
 // Cấu hình module
 $cacheFile = NV_LANG_DATA . '_config_' . NV_CACHE_PREFIX . '.cache';
@@ -100,9 +101,36 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
 }
 
 // Quốc gia
-$global_array_nation = array();
+$cacheFile = NV_LANG_DATA . '_nations_' . NV_CACHE_PREFIX . '.cache';
+$cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
 
-//print_r($global_array_config);
+if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
+    $global_array_nation = unserialize($cache);
+    $global_array_nation_alias = $global_array_nation[1];
+    $global_array_nation = $global_array_nation[0];
+} else {
+    $array_select_fields = nv_get_nation_select_fields();
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
+    $result = $db->query($sql);
+    
+    $global_array_nation = array(); 
+    $global_array_nation_alias = array(); 
+       
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        $global_array_nation[$row['nation_id']] = $row;
+        $global_array_nation_alias[$row['nation_code']] = $row['nation_id'];
+    }
+    
+    $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_nation, $global_array_nation_alias)), $cacheTTL);
+}
+
+//print_r($global_array_nation_alias);
 //die();
 
 /**
@@ -257,6 +285,32 @@ function nv_get_cat_select_fields($full_fields = false)
     }
     
     $array_lang_fields = array('cat_absitetitle', 'cat_abintrotext', 'cat_abkeywords', 'cat_mvsitetitle', 'cat_mvintrotext', 'cat_mvkeywords');
+    
+    return array($array_select_fields, $array_lang_fields);
+}
+
+/**
+ * nv_get_nation_select_fields()
+ * 
+ * @param bool $full_fields
+ * @return
+ */
+function nv_get_nation_select_fields($full_fields = false)
+{
+    global $global_array_config;
+    $array_select_fields = array('nation_id', 'nation_code', 'stat_singers', 'stat_authors', 'status');
+    $array_select_fields[] = NV_LANG_DATA . '_nation_name nation_name';
+    $array_select_fields[] = NV_LANG_DATA . '_nation_alias nation_alias';
+    $array_select_fields[] = NV_LANG_DATA . '_nation_introtext nation_introtext';
+    $array_select_fields[] = NV_LANG_DATA . '_nation_keywords nation_keywords';
+    if (NV_LANG_DATA != $global_array_config['default_language']) {
+        $array_select_fields[] = $global_array_config['default_language'] . '_nation_name default_nation_name';
+        $array_select_fields[] = $global_array_config['default_language'] . '_nation_alias default_nation_alias';
+        $array_select_fields[] = $global_array_config['default_language'] . '_nation_sitetitle default_nation_sitetitle';
+        $array_select_fields[] = $global_array_config['default_language'] . '_nation_introtext default_nation_introtext';
+    }
+    
+    $array_lang_fields = array('nation_name', 'nation_alias', 'nation_introtext', 'nation_keywords');
     
     return array($array_select_fields, $array_lang_fields);
 }

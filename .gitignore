@@ -22,6 +22,7 @@
 /composer.json
 /modules/*
 /themes/*
+/tool
 
 # Ignore fix module files and directories.
 !/modules/music

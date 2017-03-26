@@ -23,6 +23,7 @@ $lang_module['list-singers'] = 'Nghệ sĩ';
 $lang_module['list-videos'] = 'Video';
 
 $lang_module['add_song_tolikelist'] = 'Thêm bài hát vào danh sách yêu thích';
+$lang_module['all'] = 'Tất cả';
 $lang_module['album'] = 'Album';
 $lang_module['artist_name'] = 'Nghệ danh';
 $lang_module['biography'] = 'Tiểu sử';
@@ -37,8 +38,10 @@ $lang_module['prize'] = 'Giải thưởng';
 $lang_module['song'] = 'Bài hát';
 $lang_module['realname'] = 'Tên thật';
 $lang_module['singer'] = 'Ca sĩ';
+$lang_module['singers'] = 'Các ca sĩ';
 $lang_module['share_song_fb'] = 'Chia sẻ bài hát lên Facebook';
 $lang_module['singer_list'] = 'Danh sách ca sĩ';
+$lang_module['singer_alphabet'] = 'vần %s';
 $lang_module['video'] = 'Video';
 $lang_module['view_biography'] = 'Xem tiểu sử';
 

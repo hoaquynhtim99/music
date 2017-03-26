@@ -127,6 +127,70 @@ function nv_theme_gird_videos($array)
     return $xtpl->text('main');
 }
 
+function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_page)
+{
+    global $module_file, $lang_module, $lang_global, $module_info, $global_array_config, $module_upload, $op, $global_array_nation, $array_alphabets;
+
+    $xtpl = new XTemplate('gird-singers.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_file);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    
+    $xtpl->assign('NATION_ALL_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers']);
+    if (empty($nation_id)) {
+        $xtpl->parse('main.nav.all_active');
+    }
+    
+    foreach ($global_array_nation as $nation) {
+        $nation['nation_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . $nation['nation_alias'] . '-' . $nation['nation_code'];
+        $xtpl->assign('NATION', $nation);
+        
+        if ($nation['nation_id'] == $nation_id) {
+            $xtpl->parse('main.nav.loop.active');
+        }
+        
+        $xtpl->parse('main.nav.loop');
+    }
+    $xtpl->parse('main.nav');
+    
+    $base_alphabet_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'];
+    if (!empty($nation_id)) {
+        $base_alphabet_url .= '/' . $global_array_nation[$nation_id]['nation_alias'] . '-' . $global_array_nation[$nation_id]['nation_code'];
+    }
+    
+    $xtpl->assign('ALPHABET_ALL_TITLE', '#');
+    $xtpl->assign('ALPHABET_ALL_LINK', $base_alphabet_url);
+    if (empty($alphabet)) {
+        $xtpl->parse('main.alphabet.all_active');
+    }
+    
+    foreach ($array_alphabets as $alphabet_i) {
+        $xtpl->assign('ALPHABET_TITLE', $alphabet_i);
+        $xtpl->assign('ALPHABET_LINK', $base_alphabet_url . '/' . $alphabet_i);
+        
+        if ($alphabet_i == $alphabet) {
+            $xtpl->parse('main.alphabet.loop.active');
+        }
+        
+        $xtpl->parse('main.alphabet.loop');
+    }
+    $xtpl->parse('main.alphabet');
+
+    foreach ($array_singers as $row) {
+        $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+        
+        $xtpl->assign('ROW', $row);
+        $xtpl->parse('main.loop');
+    }
+
+    if (!empty($generate_page)) {
+        $xtpl->assign('GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.generate_page');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
 /**
  * nv_theme_list_songs()
  * 
