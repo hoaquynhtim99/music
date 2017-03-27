@@ -73,6 +73,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists
       DROP " . $lang . "_artist_name,
       DROP " . $lang . "_artist_alias,
+      DROP " . $lang . "_artist_alphabet,
       DROP " . $lang . "_artist_searchkey,
       DROP " . $lang . "_artist_realname,
       DROP " . $lang . "_artist_hometown,
@@ -86,6 +87,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_author_info,
       DROP " . $lang . "_author_introtext,
       DROP " . $lang . "_author_keywords,
+      DROP INDEX " . $lang . "_artist_alphabet,
       DROP INDEX " . $lang . "_artist_searchkey
     ";
     
@@ -231,6 +233,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists 
 	ADD " . $lang . "_artist_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_artist_alias varchar(250) NOT NULL DEFAULT '',
+	ADD " . $lang . "_artist_alphabet varchar(1) NOT NULL DEFAULT '',
 	ADD " . $lang . "_artist_searchkey varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_artist_realname varchar(255) NOT NULL DEFAULT '',
 	ADD " . $lang . "_artist_hometown varchar(255) NOT NULL DEFAULT '',
@@ -244,6 +247,7 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_author_info mediumtext NOT NULL,
 	ADD " . $lang . "_author_introtext text NOT NULL,
 	ADD " . $lang . "_author_keywords text NOT NULL,
+    ADD INDEX " . $lang . "_artist_alphabet (" . $lang . "_artist_alphabet),
     ADD INDEX " . $lang . "_artist_searchkey (" . $lang . "_artist_searchkey)
 ";
 
@@ -509,6 +513,7 @@ foreach ($default_config as $config_name => $config_value) {
 // Copy dữ liệu vào các bảng cần fill
 if (!empty($set_lang_data)) {
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_artists SET 
+		" . $lang . "_artist_alphabet = " . $set_lang_data . "_artist_alphabet, 
 		" . $lang . "_artist_searchkey = " . $set_lang_data . "_artist_searchkey 
 	";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_songs SET 

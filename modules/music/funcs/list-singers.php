@@ -106,6 +106,9 @@ $array_where[] = 'status=1';
 if ($nation_id) {
     $array_where[] = 'nation_id=' . $nation_id;
 }
+if ($alphabet) {
+    $array_where[] = NV_LANG_DATA . "_artist_alphabet='" . $alphabet . "'";
+}
 
 $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where(implode(' AND ', $array_where));
 
