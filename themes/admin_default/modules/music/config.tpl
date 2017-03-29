@@ -11,7 +11,7 @@
                         <div class="form-group">
                             <label for="limit_singers_displayed" class="control-label col-sm-8">{LANG.limit_singers_displayed}:</label>
                             <div class="col-sm-16">
-                                <select name="limit_singers_displayed" id="limit_singers_displayed" class="form-control" data-toggle="mscfgmainweight" data-value="{DATA.limit_singers_displayed}">
+                                <select name="limit_singers_displayed" id="limit_singers_displayed" class="form-control">
                                     <!-- BEGIN: limit_singers_displayed -->
                                     <option value="{LIMIT_SINGERS_DISPLAYED.key}"{LIMIT_SINGERS_DISPLAYED.selected}>{LIMIT_SINGERS_DISPLAYED.title}</option>
                                     <!-- END: limit_singers_displayed -->

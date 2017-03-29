@@ -11,4 +11,20 @@ $(document).ready(function() {
         e.preventDefault();
         modalShowByObj($(this).data('target'));
     });
+    $('[data-toggle="togglehview"]').click(function(e) {
+        e.preventDefault();
+        var tg = $(this).data('target');
+        var uq = $(this).data('unique');
+        var md = $(this).data('mode');
+        $(tg).toggleClass('open');
+        $('[data-toggle="togglehview"]').each(function() {
+            if ($(this).data('unique') == uq) {
+                if ($(this).data('mode') == md) {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            }
+        });
+    });
 });

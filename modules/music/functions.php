@@ -130,6 +130,43 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_nation, $global_array_nation_alias)), $cacheTTL);
 }
 
+$global_array_config['detail_song_albums_nums'] = 12;
+$global_array_config['detail_song_videos_nums'] = 12;
+$global_array_config['limit_authors_displayed'] = 3;
+$global_array_config['various_artists_authors'] = 'Nhóm tác giả';
+$global_array_config['unknow_author'] = 'Đang cập nhật';
+$global_array_config['unknow_cat'] = 'Đang cập nhật';
+
+// Điều khiển các OP
+if ($op == 'main' and isset($array_op[0])) {
+    unset($m);
+    if (isset($array_op[1]) or !preg_match('/^([a-zA-Z0-9\-]+)\-(' . $global_array_config['code_prefix']['album'] . '|' . $global_array_config['code_prefix']['video'] . '|' . $global_array_config['code_prefix']['song'] . ')([a-zA-Z0-9\-]+)$/', $array_op[0], $m)) {
+        nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+    }
+    
+    $ms_detail_op_alias = $m[1];
+    $ms_detail_prefix = $m[2];
+    $ms_detail_code = $m[3];
+    $ms_detail_data = array();
+    
+    if ($ms_detail_prefix == $global_array_config['code_prefix']['song']) {
+        $array_select_fields = nv_get_song_select_fields(true);
+        
+        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=:song_code";
+        $sth = $db->prepare($sql);
+        $sth->bindParam(':song_code', $ms_detail_code, PDO::PARAM_STR);
+        $sth->execute();
+        
+        if ($sth->rowCount() != 1) {
+            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+        }
+        
+        $ms_detail_data = $sth->fetch();
+        $op = 'detail-song';
+        define('NV_IS_DETAIL_SONG', true);
+    }
+}
+
 //print_r($global_array_nation_alias);
 //die();
 
@@ -229,6 +266,23 @@ function nv_get_song_select_fields($full_fields = false)
     }
     
     $array_lang_fields = array('song_name', 'song_alias');
+    
+    if ($full_fields) {
+        $array_select_fields[] = 'uploader_id';
+        $array_select_fields[] = 'uploader_name';
+        $array_select_fields[] = 'time_add';
+        $array_select_fields[] = 'time_update';
+        $array_select_fields[] = 'is_official';
+        $array_select_fields[] = NV_LANG_DATA . '_song_introtext song_introtext';
+        $array_select_fields[] = NV_LANG_DATA . '_song_keywords song_keywords';
+        if (NV_LANG_DATA != $global_array_config['default_language']) {
+            $array_select_fields[] = $global_array_config['default_language'] . '_song_introtext default_song_introtext';
+            $array_select_fields[] = $global_array_config['default_language'] . '_song_keywords default_song_keywords';
+        }
+        
+        $array_lang_fields[] = 'song_introtext';
+        $array_lang_fields[] = 'song_keywords';
+    }
     
     return array($array_select_fields, $array_lang_fields);
 }
