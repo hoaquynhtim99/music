@@ -11,8 +11,6 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
-$page_title = $module_info['custom_title'];
-
 if (!defined('NV_IS_DETAIL_SONG')) {
     header('Location: ' . nv_url_rewrite(NV_MOD_LINK, true));
     die();
@@ -24,6 +22,8 @@ $array_videos = $array_albums = array();
 // Thiết lập lại một số thông tin cho bài hát
 $ms_detail_data['singers'] = array();
 $ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
+$ms_detail_data['cats'] = array();
+$ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
 $ms_detail_data['authors'] = array();
 $ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
@@ -152,8 +152,31 @@ if (isset($array_singers[$ms_detail_data['singer_id']])) {
     $ms_detail_data['singer_name'] = $array_singers[$ms_detail_data['singer_id']]['artist_name'];
 }
 
-//print_r($ms_detail_data);
-//die();
+// Xác định lại chủ đề bài hát
+foreach ($ms_detail_data['cat_ids'] as $cid) {
+    if (isset($global_array_cat[$cid])) {
+        $ms_detail_data['cats'][$cid] = $global_array_cat[$cid];
+    }
+}
+
+// Open Graph
+nv_get_fb_share_image($ms_detail_data);
+
+$page_title = $ms_detail_data['song_name'];
+if (!empty($ms_detail_data['singers'])) {
+    $page_title .= NV_TITLEBAR_DEFIS;
+    if (sizeof($ms_detail_data['singers']) > $global_array_config['limit_singers_displayed']) {
+        $page_title .= $global_array_config['various_artists'];
+    } else {
+        $singers = array();
+        foreach ($ms_detail_data['singers'] as $singer) {
+            $singers[] = $singer['artist_name'];
+        }
+        $page_title .= implode(', ', $singers);
+    }
+}
+$key_words = $ms_detail_data['song_keywords'];
+$description = strip_tags(preg_replace('/\<br[^\>]*\>/i', ' ', $ms_detail_data['song_introtext']));
 
 $contents = nv_theme_detail_song($ms_detail_data, $array_albums, $array_videos);
 

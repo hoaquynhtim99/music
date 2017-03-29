@@ -620,6 +620,7 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
     
     $xtpl->assign('SONG', $array);
     
+    // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
     if ($num_singers > $global_array_config['limit_singers_displayed']) {
         $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
@@ -647,6 +648,7 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
         $xtpl->parse('main.no_singer');
     }
     
+    // Xuất nhạc sĩ
     $num_authors = sizeof($array['authors']);
     if ($num_authors > $global_array_config['limit_authors_displayed']) {
         $xtpl->assign('VA_AUTHORS', $global_array_config['various_artists_authors']);
@@ -672,6 +674,25 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
     } else {
         $xtpl->assign('UNKNOW_AUTHOR', $global_array_config['unknow_author']);
         $xtpl->parse('main.no_author');
+    }
+    
+    // Xuất thể loại
+    $num_cats = sizeof($array['cats']);
+    if ($num_cats > 0) {
+        $i = 0;
+        foreach ($array['cats'] as $cat) {
+            $i++;
+            $xtpl->assign('CAT', $cat);
+            
+            if ($i > 1) {
+                $xtpl->parse('main.show_cat.loop.separate');
+            }
+            $xtpl->parse('main.show_cat.loop');
+        }
+        $xtpl->parse('main.show_cat');
+    } else {
+        $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
+        $xtpl->parse('main.no_cat');
     }
     
     // Xuất các album liên quan

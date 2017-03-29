@@ -60,7 +60,8 @@ ul.ms-singers-nation-nav li a:hover {
 .ms-artist-header-top p a {
     color: #DFDFDF;
 }
-.ms-list-song-title h3 .ms-sg {
+.ms-list-song-title h3 .ms-sg,
+ul.ms-detailso-header-info h2 .tit {
     color: #505050;
 }
 .ms-list-song-action ul li a,

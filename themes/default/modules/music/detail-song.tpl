@@ -28,7 +28,7 @@
     <ul class="ms-detailso-header-info">
         <li>
             <h2>
-                <span>{LANG.author}:</span> 
+                <span class="tit">{LANG.author}:</span> 
                 <!-- BEGIN: show_author -->
                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{AUTHOR.artist_name}<!-- END: loop -->
                 <!-- END: show_author -->
@@ -47,7 +47,16 @@
                 <!-- BEGIN: no_author -->{UNKNOW_AUTHOR}<!-- END: no_author -->
             </h2>
         </li>
-        <li><h2><span>{LANG.categories}:</span> <span><a href="#">Việt Nam</a></span></h2></li>
+        <li>
+            <h2>
+                <span class="tit">{LANG.categories}:</span> 
+                <!-- BEGIN: show_cat -->
+                <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{CAT.cat_name}<!-- END: loop -->
+                <!-- END: show_cat -->
+                
+                <!-- BEGIN: no_cat -->{UNKNOW_CAT}<!-- END: no_cat -->
+            </h2>
+        </li>
     </ul>
 </div>
 <div class="ms-audio-player">
@@ -62,10 +71,9 @@ var songplayer = jwplayer('songplayer').setup({
     stretching: 'fill',
     image: '{SONG.resource_cover}',
     sources: [
-        {"file": "/uploads/ca-nhac/Trai-Qua-Khoi-My-Pudding-Vu.mp3", "label": "320K"},
-        /*{"file": "/uploads/ca-nhac/Trai-Qua-Khoi-My-Pudding-Vu.mp3", "label": "321K"},
-        {"file": "/uploads/ca-nhac/Trai-Qua-Khoi-My-Pudding-Vu.mp3", "label": "322K"},
-        {"file": "/uploads/ca-nhac/Trai-Qua-Khoi-My-Pudding-Vu.mp3", "label": "323K"}*/
+        {"file": "/uploads/ca-nhac/Cho-Em-Gan-Anh-Them-Chut-Nua-Cho-Em-Gan-Anh-Them-Chut-Nua-OST-Huong-Tram.mp3", "label": "128K"},
+        {"file": "/uploads/ca-nhac/Cho-Em-Gan-Anh-Them-Chut-Nua-Cho-Em-Gan-Anh-Them-Chut-Nua-OST-Huong-Tram.mp3", "label": "320K"},
+        {"file": "/uploads/ca-nhac/Cho-Em-Gan-Anh-Them-Chut-Nua-Cho-Em-Gan-Anh-Them-Chut-Nua-OST-Huong-Tram.mp3", "label": "Losless"}
     ],
     autostart: true,
     primary: 'html5',
