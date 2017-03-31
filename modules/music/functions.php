@@ -448,42 +448,79 @@ function nv_get_view_singer_link($singer, $amp = true, $tab = '')
  * nv_get_detail_album_link()
  * 
  * @param mixed $album
- * @param array $singer
+ * @param array $singers
  * @param bool $amp
  * @return
  */
-function nv_get_detail_album_link($album, $singer = array(), $amp = true)
+function nv_get_detail_album_link($album, $singers = array(), $amp = true)
 {
     global $global_config, $module_info, $global_array_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . (empty($singer['artist_alias']) ? '' : '-' . $singer['artist_alias']) . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'];
+    $num_singers = sizeof($singers);
+    if ($num_singers > $global_array_config['limit_singers_displayed']) {
+        $singer_alias = '-' . strtolower(change_alias($global_array_config['various_artists']));
+    } elseif ($num_singers > 0) {
+        $singer_alias = array();
+        foreach ($singers as $singer) {
+            $singer_alias[] = $singer['artist_alias'];
+        }
+        $singer_alias = '-' . implode('-', $singer_alias);
+    } else {
+        $singer_alias = '';
+    }
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'];
 }
 
 /**
  * nv_get_detail_song_link()
  * 
  * @param mixed $song
- * @param array $singer
+ * @param array $singers
  * @param bool $amp
+ * @param string $query_string
  * @return
  */
-function nv_get_detail_song_link($song, $singer = array(), $amp = true)
+function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_string = '')
 {
     global $global_config, $module_info, $global_array_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['song'] . $song['song_alias'] . '-' . $global_array_config['code_prefix']['song'] . $song['song_code'] . $global_config['rewrite_exturl'];
+    $num_singers = sizeof($singers);
+    if ($num_singers > $global_array_config['limit_singers_displayed']) {
+        $singer_alias = '-' . strtolower(change_alias($global_array_config['various_artists']));
+    } elseif ($num_singers > 0) {
+        $singer_alias = array();
+        foreach ($singers as $singer) {
+            $singer_alias[] = $singer['artist_alias'];
+        }
+        $singer_alias = '-' . implode('-', $singer_alias);
+    } else {
+        $singer_alias = '';
+    }
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['song'] . $song['song_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['song'] . $song['song_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
  * nv_get_detail_video_link()
  * 
  * @param mixed $video
- * @param array $singer
+ * @param array $singers
  * @param bool $amp
  * @return
  */
-function nv_get_detail_video_link($video, $singer = array(), $amp = true)
+function nv_get_detail_video_link($video, $singers = array(), $amp = true)
 {
     global $global_config, $module_info, $global_array_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'];
+    $num_singers = sizeof($singers);
+    if ($num_singers > $global_array_config['limit_singers_displayed']) {
+        $singer_alias = '-' . strtolower(change_alias($global_array_config['various_artists']));
+    } elseif ($num_singers > 0) {
+        $singer_alias = array();
+        foreach ($singers as $singer) {
+            $singer_alias[] = $singer['artist_alias'];
+        }
+        $singer_alias = '-' . implode('-', $singer_alias);
+    } else {
+        $singer_alias = '';
+    }
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'];
 }
 
 /**

@@ -125,15 +125,10 @@ foreach ($array as $id1 => $row1) {
             foreach ($row['singer_ids'] as $singer_id) {
                 if (isset($array_singers[$singer_id])) {
                     $row['singers'][$singer_id] = $array_singers[$singer_id];
-                    if (empty($row['album_link'])) {
-                        $row['album_link'] = nv_get_detail_album_link($row, $array_singers[$singer_id]);
-                    }
                 }
             }
         }
-        if (empty($row['album_link'])) {
-            $row['album_link'] = nv_get_detail_album_link($row);
-        }
+        $row['album_link'] = nv_get_detail_album_link($row, $row['singers']);
         $array[$id1]['albums'][$id] = $row;
     }
 }

@@ -679,6 +679,7 @@ ul.ms-list-song > li:last-child {
 /* DETAIL SONG */
 .ms-detailso-header {
     margin-bottom: 10px;
+    position: relative;
 }
 h1.ms-detailso-header-name {
     font-weight: 400;
@@ -705,6 +706,14 @@ ul.ms-detailso-header-info {
 ul.ms-detailso-header-info h2 {
     font-weight: 400;
     font-size: 14px;
+}
+.ms-detailso-header-tool {
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+}
+.ms-detailso-ember-code {
+    min-width: 320px;
 }
 .ms-audio-player {
     height: 219px;

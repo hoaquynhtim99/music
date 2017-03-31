@@ -27,4 +27,7 @@ $(document).ready(function() {
             }
         });
     });
+    $(document).delegate('[data-toggle="select-all"]', 'click focus', function() {
+        $(this).select();
+    });
 });

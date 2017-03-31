@@ -29,6 +29,8 @@ $ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
 $ms_detail_data['album_link'] = '';
 $ms_detail_data['video_link'] = '';
+$ms_detail_data['song_link'] = '';
+$ms_detail_data['song_link_ember'] = '';
 $ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
 
 if (!empty($ms_detail_data['singer_ids'])) {
@@ -119,15 +121,10 @@ foreach ($array_albums as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
-                if (empty($row['album_link'])) {
-                    $row['album_link'] = nv_get_detail_album_link($row, $array_singers[$singer_id]);
-                }
             }
         }
     }
-    if (empty($row['album_link'])) {
-        $row['album_link'] = nv_get_detail_album_link($row);
-    }
+    $row['album_link'] = nv_get_detail_album_link($row, $row['singers']);
     $array_albums[$id] = $row;
 }
 foreach ($array_videos as $id => $row) {
@@ -135,15 +132,10 @@ foreach ($array_videos as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
-                if (empty($row['video_link'])) {
-                    $row['video_link'] = nv_get_detail_video_link($row, $array_singers[$singer_id]);
-                }
             }
         }
     }
-    if (empty($row['video_link'])) {
-        $row['video_link'] = nv_get_detail_video_link($row);
-    }
+    $row['video_link'] = nv_get_detail_video_link($row, $row['singers']);
     $array_videos[$id] = $row;
 }
 if (isset($array_singers[$ms_detail_data['singer_id']])) {
@@ -158,6 +150,10 @@ foreach ($ms_detail_data['cat_ids'] as $cid) {
         $ms_detail_data['cats'][$cid] = $global_array_cat[$cid];
     }
 }
+
+// Các phần khác
+$ms_detail_data['song_link'] = nv_get_detail_song_link($ms_detail_data, $ms_detail_data['singers']);
+$ms_detail_data['song_link_ember'] = NV_MY_DOMAIN . nv_url_rewrite(nv_get_detail_song_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
 
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);

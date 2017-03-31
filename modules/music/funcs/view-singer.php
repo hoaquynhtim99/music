@@ -179,15 +179,10 @@ foreach ($array_albums as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
-                if (empty($row['album_link'])) {
-                    $row['album_link'] = nv_get_detail_album_link($row, $array_singers[$singer_id]);
-                }
             }
         }
     }
-    if (empty($row['album_link'])) {
-        $row['album_link'] = nv_get_detail_album_link($row);
-    }
+    $row['album_link'] = nv_get_detail_album_link($row, $row['singers']);
     $array_albums[$id] = $row;
 }
 
@@ -196,15 +191,10 @@ foreach ($array_songs as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
-                if (empty($row['song_link'])) {
-                    $row['song_link'] = nv_get_detail_song_link($row, $array_singers[$singer_id]);
-                }
             }
         }
     }
-    if (empty($row['song_link'])) {
-        $row['song_link'] = nv_get_detail_song_link($row);
-    }
+    $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
     $array_songs[$id] = $row;
 }
 
@@ -213,15 +203,10 @@ foreach ($array_videos as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
-                if (empty($row['video_link'])) {
-                    $row['video_link'] = nv_get_detail_video_link($row, $array_singers[$singer_id]);
-                }
             }
         }
     }
-    if (empty($row['video_link'])) {
-        $row['video_link'] = nv_get_detail_video_link($row);
-    }
+    $row['video_link'] = nv_get_detail_video_link($row, $row['singers']);
     $array_videos[$id] = $row;
 }
 
