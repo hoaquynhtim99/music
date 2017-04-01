@@ -22,6 +22,7 @@ $lang_module['list-albums'] = 'Album';
 $lang_module['list-singers'] = 'Nghệ sĩ';
 $lang_module['list-videos'] = 'Video';
 
+$lang_module['add_to'] = 'Thêm vào';
 $lang_module['add_song_tolikelist'] = 'Thêm bài hát vào danh sách yêu thích';
 $lang_module['all'] = 'Tất cả';
 $lang_module['album'] = 'Album';
@@ -31,6 +32,8 @@ $lang_module['author_list'] = 'Danh sách các nhạc sĩ';
 $lang_module['biography'] = 'Tiểu sử';
 $lang_module['birthday'] = 'Sinh nhật';
 $lang_module['categories'] = 'Thể loại';
+$lang_module['comment'] = 'Bình luận';
+$lang_module['download'] = 'Tải về';
 $lang_module['download_this_song'] = 'Tải bài hát này';
 $lang_module['ember_code'] = 'Mã nhúng';
 $lang_module['get_ember_code'] = 'Lấy mã nhúng';
@@ -52,6 +55,7 @@ $lang_module['video'] = 'Video';
 $lang_module['view_biography'] = 'Xem tiểu sử';
 $lang_module['view_full'] = 'Đầy đủ';
 $lang_module['view_haft'] = 'Rút gọn';
+$lang_module['view_video'] = 'Xem MV';
 
 $lang_module['des_singer_add_song'] = '. Các bài hát thể hiện';
 $lang_module['des_singer_add_album'] = '. Các album online';

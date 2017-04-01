@@ -28,6 +28,7 @@ $ms_detail_data['authors'] = array();
 $ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
 $ms_detail_data['album_link'] = '';
+$ms_detail_data['video'] = array();
 $ms_detail_data['video_link'] = '';
 $ms_detail_data['song_link'] = '';
 $ms_detail_data['song_link_ember'] = '';
@@ -38,6 +39,33 @@ if (!empty($ms_detail_data['singer_ids'])) {
 }
 if (!empty($ms_detail_data['author_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['author_ids']);
+}
+
+// Video liên quan của bài hát
+if (!empty($ms_detail_data['video_id'])) {
+    $array_select_fields = nv_get_video_select_fields();
+    
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE is_official=1 AND status=1 AND video_id=" . $ms_detail_data['video_id'];
+    $result = $db->query($sql);
+    $video = $result->fetch();
+    
+    if (!empty($video)) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($video[$f]) and !empty($video['default_' . $f])) {
+                $video[$f] = $video['default_' . $f];
+            }
+            unset($video['default_' . $f]);
+        }
+        
+        $video['singers'] = array();
+        $video['singer_ids'] = explode(',', $video['singer_ids']);
+        $video['video_link'] = '';
+        
+        if (!empty($video['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $video['singer_ids']);
+        }
+        $ms_detail_data['video'] = $video;
+    }
 }
 
 if (!empty($ms_detail_data['singer_id'])) {
@@ -142,6 +170,16 @@ if (isset($array_singers[$ms_detail_data['singer_id']])) {
     $ms_detail_data['album_link'] = nv_get_view_singer_link($array_singers[$ms_detail_data['singer_id']], true, 'album');
     $ms_detail_data['video_link'] = nv_get_view_singer_link($array_singers[$ms_detail_data['singer_id']], true, 'video');
     $ms_detail_data['singer_name'] = $array_singers[$ms_detail_data['singer_id']]['artist_name'];
+}
+if (!empty($ms_detail_data['video'])) {
+    if (!empty($ms_detail_data['video']['singer_ids'])) {
+        foreach ($ms_detail_data['video']['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $ms_detail_data['video']['singers'][$singer_id] = $array_singers[$singer_id];
+            }
+        }
+    }
+    $ms_detail_data['video']['video_link'] = nv_get_detail_video_link($ms_detail_data['video'], $ms_detail_data['video']['singers']);
 }
 
 // Xác định lại chủ đề bài hát

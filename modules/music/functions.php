@@ -136,6 +136,8 @@ $global_array_config['limit_authors_displayed'] = 3;
 $global_array_config['various_artists_authors'] = 'Nhóm tác giả';
 $global_array_config['unknow_author'] = 'Đang cập nhật';
 $global_array_config['unknow_cat'] = 'Đang cập nhật';
+$global_array_config['shareport'] = 'addthis';
+$global_array_config['addthis_pubid'] = 'addthis';
 
 // Điều khiển các OP
 if ($op == 'main' and isset($array_op[0])) {

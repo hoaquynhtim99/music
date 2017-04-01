@@ -76,6 +76,9 @@ ul.ms-detailso-header-info h2 .tit {
 .ms-detailso-header-thumb {
     background-color: #c4ccdf;
 }
+a.btn-default {
+    color: #333;
+}
 
 /* GLOBAL */
 .ms-ellipsis {
@@ -736,6 +739,9 @@ ul.ms-detailso-header-info h2 {
 }
 .ms-detailso-lrt-control-h {
     display: none;
+}
+.ms-detailso-action {
+    margin-bottom: 10px;
 }
 
 /* SONG PLAYER SKIN */

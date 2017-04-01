@@ -602,6 +602,14 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
     return $xtpl->text('main');
 }
 
+/**
+ * nv_theme_detail_song()
+ * 
+ * @param mixed $array
+ * @param mixed $array_albums
+ * @param mixed $array_videos
+ * @return
+ */
 function nv_theme_detail_song($array, $array_albums, $array_videos)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
@@ -693,6 +701,11 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
     } else {
         $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
         $xtpl->parse('main.no_cat');
+    }
+    
+    // Video của bài hát
+    if (!empty($array['video'])) {
+        $xtpl->parse('main.video');
     }
     
     // Xuất các album liên quan

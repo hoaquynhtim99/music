@@ -78,6 +78,14 @@
 <div class="ms-audio-player">
     <div id="songplayer"></div>
 </div>
+<div class="ms-detailso-action">
+    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
+    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}</a>
+    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
+    <!-- BEGIN: video -->
+    <a href="{SONG.video.video_link}" class="btn btn-primary btn-xs"><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.view_video}</a>
+    <!-- END: video -->
+</div>
 <script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
 <script type="text/javascript">jwplayer.key="KzcW0VrDegOG/Vl8Wb9X3JLUql+72MdP1coaag==";</script>
 <script type="text/javascript">
