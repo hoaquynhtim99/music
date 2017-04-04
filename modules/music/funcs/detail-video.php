@@ -11,9 +11,125 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
-$page_title = $module_info['custom_title'];
+if (!defined('NV_IS_DETAIL_VIDEO')) {
+    header('Location: ' . nv_url_rewrite(NV_MOD_LINK, true));
+    die();
+}
 
-$contents = "";
+$array_singer_ids = $array_singers = array();
+$array_videos = array();
+
+// Thiết lập lại một số thông tin cho video
+$ms_detail_data['singers'] = array();
+$ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
+$ms_detail_data['cats'] = array();
+$ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
+$ms_detail_data['authors'] = array();
+$ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
+$ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
+$ms_detail_data['album_link'] = '';
+$ms_detail_data['song'] = array();
+$ms_detail_data['song_link'] = '';
+$ms_detail_data['video_link'] = '';
+$ms_detail_data['video_link_ember'] = '';
+$ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
+
+if (!empty($ms_detail_data['singer_ids'])) {
+    $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
+}
+if (!empty($ms_detail_data['author_ids'])) {
+    $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['author_ids']);
+}
+
+// Bài hát liên quan của video
+if (!empty($ms_detail_data['song_id'])) {
+    $array_select_fields = nv_get_song_select_fields();
+    
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE is_official=1 AND status=1 AND song_id=" . $ms_detail_data['song_id'];
+    $result = $db->query($sql);
+    $song = $result->fetch();
+    
+    if (!empty($song)) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($song[$f]) and !empty($song['default_' . $f])) {
+                $song[$f] = $song['default_' . $f];
+            }
+            unset($song['default_' . $f]);
+        }
+        
+        $song['singers'] = array();
+        $song['singer_ids'] = explode(',', $song['singer_ids']);
+        $song['song_link'] = '';
+        
+        if (!empty($song['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $song['singer_ids']);
+        }
+        $ms_detail_data['song'] = $song;
+    }
+}
+
+// Xác định ca sĩ
+$array_singers = nv_get_artists($array_singer_ids);
+
+// Xác định lại ảnh và tác giả, ca sĩ
+foreach ($ms_detail_data['singer_ids'] as $singer_id) {
+    if (isset($array_singers[$singer_id])) {
+        if (empty($ms_detail_data['resource_avatar']) and !empty($array_singers[$singer_id]['resource_avatar'])) {
+            $ms_detail_data['resource_avatar'] = $array_singers[$singer_id]['resource_avatar'];
+        }
+        if (empty($ms_detail_data['resource_cover']) and !empty($array_singers[$singer_id]['resource_cover'])) {
+            $ms_detail_data['resource_cover'] = $array_singers[$singer_id]['resource_cover'];
+        }
+        $ms_detail_data['singers'][$singer_id] = $array_singers[$singer_id];
+    }
+}
+foreach ($ms_detail_data['author_ids'] as $author_id) {
+    if (isset($array_singers[$author_id])) {
+        $ms_detail_data['authors'][$author_id] = $array_singers[$author_id];
+    }
+}
+if (!empty($ms_detail_data['song'])) {
+    if (!empty($ms_detail_data['song']['singer_ids'])) {
+        foreach ($ms_detail_data['song']['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $ms_detail_data['song']['singers'][$singer_id] = $array_singers[$singer_id];
+            }
+        }
+    }
+    $ms_detail_data['song']['song_link'] = nv_get_detail_song_link($ms_detail_data['song'], $ms_detail_data['song']['singers']);
+}
+
+// Xác định lại chủ đề video
+foreach ($ms_detail_data['cat_ids'] as $cid) {
+    if (isset($global_array_cat[$cid])) {
+        $ms_detail_data['cats'][$cid] = $global_array_cat[$cid];
+    }
+}
+
+// Các phần khác
+$ms_detail_data['video_link'] = nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers']);
+$ms_detail_data['video_link_ember'] = NV_MY_DOMAIN . nv_url_rewrite(nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
+
+// Open Graph
+nv_get_fb_share_image($ms_detail_data);
+
+$page_title = $ms_detail_data['video_name'] . ' ' . $lang_module['video_alias'];
+if (!empty($ms_detail_data['singers'])) {
+    $page_title .= NV_TITLEBAR_DEFIS;
+    if (sizeof($ms_detail_data['singers']) > $global_array_config['limit_singers_displayed']) {
+        $page_title .= $global_array_config['various_artists'];
+    } else {
+        $singers = array();
+        foreach ($ms_detail_data['singers'] as $singer) {
+            $singers[] = $singer['artist_name'];
+        }
+        $page_title .= implode(', ', $singers);
+    }
+}
+$key_words = $ms_detail_data['video_keywords'];
+$description = strip_tags(preg_replace('/\<br[^\>]*\>/i', ' ', $ms_detail_data['video_introtext']));
+
+$contents = nv_theme_detail_video($ms_detail_data, $array_videos);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

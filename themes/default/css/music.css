@@ -61,7 +61,8 @@ ul.ms-singers-nation-nav li a:hover {
     color: #DFDFDF;
 }
 .ms-list-song-title h3 .ms-sg,
-ul.ms-detailso-header-info h2 .tit {
+ul.ms-detailso-header-info h2 .tit,
+ul.ms-detailmv-header-info h2 .tit {
     color: #505050;
 }
 .ms-list-song-action ul li a,
@@ -810,4 +811,46 @@ ul.ms-detailso-header-info h2 {
     transition: 0.3s;
 }
 .jw-skin-nvmsso .jw-button-color:hover {
+}
+
+
+/* DETAIL VIDEO */
+.ms-video-player {
+    margin-bottom: 10px;
+    min-height: 400px;
+}
+.ms-detailmv-header {
+    margin-bottom: 10px;
+    position: relative;
+}
+h1.ms-detailmv-header-name {
+    font-weight: 400;
+    font-size: 20px;
+}
+.ms-detailmv-header-singer {
+    font-weight: 300;
+}
+h1.ms-detailmv-header-name {
+    font-weight: 400;
+    font-size: 20px;
+}
+.ms-detailmv-header-singer {
+    font-weight: 300;
+}
+ul.ms-detailmv-header-info {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul.ms-detailmv-header-info h2 {
+    font-weight: 400;
+    font-size: 14px;
+}
+.ms-detailmv-header-tool {
+    position: absolute;
+    right: 5px;
+    bottom: 0;
+}
+.ms-detailmv-ember-code {
+    min-width: 320px;
 }

@@ -166,6 +166,23 @@ if ($op == 'main' and isset($array_op[0])) {
         $ms_detail_data = $sth->fetch();
         $op = 'detail-song';
         define('NV_IS_DETAIL_SONG', true);
+    } elseif ($ms_detail_prefix == $global_array_config['code_prefix']['video']) {
+        $array_select_fields = nv_get_video_select_fields(true);
+        
+        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE status=1 AND video_code=:video_code";
+        $sth = $db->prepare($sql);
+        $sth->bindParam(':video_code', $ms_detail_code, PDO::PARAM_STR);
+        $sth->execute();
+        
+        if ($sth->rowCount() != 1) {
+            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+        }
+        
+        $ms_detail_data = $sth->fetch();
+        $op = 'detail-video';
+        define('NV_IS_DETAIL_VIDEO', true);
+    } else {
+        nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
     }
 }
 
@@ -307,6 +324,23 @@ function nv_get_video_select_fields($full_fields = false)
     }
     
     $array_lang_fields = array('video_name', 'video_alias');
+    
+    if ($full_fields) {
+        $array_select_fields[] = 'uploader_id';
+        $array_select_fields[] = 'uploader_name';
+        $array_select_fields[] = 'time_add';
+        $array_select_fields[] = 'time_update';
+        $array_select_fields[] = 'is_official';
+        $array_select_fields[] = NV_LANG_DATA . '_video_introtext video_introtext';
+        $array_select_fields[] = NV_LANG_DATA . '_video_keywords video_keywords';
+        if (NV_LANG_DATA != $global_array_config['default_language']) {
+            $array_select_fields[] = $global_array_config['default_language'] . '_video_introtext default_video_introtext';
+            $array_select_fields[] = $global_array_config['default_language'] . '_video_keywords default_video_keywords';
+        }
+        
+        $array_lang_fields[] = 'video_introtext';
+        $array_lang_fields[] = 'video_keywords';
+    }
     
     return array($array_select_fields, $array_lang_fields);
 }
@@ -505,9 +539,10 @@ function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_
  * @param mixed $video
  * @param array $singers
  * @param bool $amp
+ * @param string $query_string
  * @return
  */
-function nv_get_detail_video_link($video, $singers = array(), $amp = true)
+function nv_get_detail_video_link($video, $singers = array(), $amp = true, $query_string = '')
 {
     global $global_config, $module_info, $global_array_config;
     $num_singers = sizeof($singers);
@@ -522,7 +557,7 @@ function nv_get_detail_video_link($video, $singers = array(), $amp = true)
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'];
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**

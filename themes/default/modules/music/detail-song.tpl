@@ -95,9 +95,9 @@ var songplayer = jwplayer('songplayer').setup({
     stretching: 'fill',
     image: '{SONG.resource_cover}',
     sources: [
-        {"file": "/uploads/ca-nhac/Cho-Em-Gan-Anh-Them-Chut-Nua-Cho-Em-Gan-Anh-Them-Chut-Nua-OST-Huong-Tram.mp3", "label": "128K"},
-        {"file": "/uploads/ca-nhac/Cho-Em-Gan-Anh-Them-Chut-Nua-Cho-Em-Gan-Anh-Them-Chut-Nua-OST-Huong-Tram.mp3", "label": "320K"},
-        {"file": "/uploads/ca-nhac/Cho-Em-Gan-Anh-Them-Chut-Nua-Cho-Em-Gan-Anh-Them-Chut-Nua-OST-Huong-Tram.mp3", "label": "Losless"}
+        {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "128K"},
+        {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "320K"},
+        {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
     ],
     autostart: true,
     primary: 'html5',
