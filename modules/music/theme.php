@@ -729,10 +729,11 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
  * nv_theme_detail_video()
  * 
  * @param mixed $array
+ * @param mixed $array_albums
  * @param mixed $array_videos
  * @return
  */
-function nv_theme_detail_video($array, $array_videos)
+function nv_theme_detail_video($array, $array_albums, $array_videos)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
     
@@ -828,6 +829,18 @@ function nv_theme_detail_video($array, $array_videos)
     // Bài hát của video
     if (!empty($array['song'])) {
         $xtpl->parse('main.song');
+    }
+    
+    // Xuất các album liên quan
+    if (!empty($array_albums)) {
+        $xtpl->assign('ALBUM_HTML', nv_theme_gird_albums($array_albums));
+        $xtpl->parse('main.albums');
+    }
+    
+    // Xuất các video liên quan
+    if (!empty($array_videos)) {
+        $xtpl->assign('VIDEO_HTML', nv_theme_gird_videos($array_videos));
+        $xtpl->parse('main.videos');
     }
 
     $xtpl->parse('main');

@@ -104,4 +104,18 @@ var videoplayer = jwplayer('videoplayer').setup({
     </div>
 </div>
 
+<!-- BEGIN: videos -->
+<div class="ms-title-section">
+    <h2><a href="{VIDEO.other_video_link}">{LANG.video} {VIDEO.singer_name}</a></h2>
+</div>
+{VIDEO_HTML}
+<!-- END: videos -->
+
+<!-- BEGIN: albums -->
+<div class="ms-title-section">
+    <h2><a href="{VIDEO.album_link}">{LANG.album} {VIDEO.singer_name}</a></h2>
+</div>
+{ALBUM_HTML}
+<!-- END: albums -->
+
 <!-- END: main -->

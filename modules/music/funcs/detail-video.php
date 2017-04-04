@@ -17,7 +17,7 @@ if (!defined('NV_IS_DETAIL_VIDEO')) {
 }
 
 $array_singer_ids = $array_singers = array();
-$array_videos = array();
+$array_videos = $array_albums = array();
 
 // Thiết lập lại một số thông tin cho video
 $ms_detail_data['singers'] = array();
@@ -68,6 +68,62 @@ if (!empty($ms_detail_data['song_id'])) {
     }
 }
 
+if (!empty($ms_detail_data['singer_id'])) {
+    // Các album liên quan
+    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
+    
+    $array_select_fields = nv_get_album_select_fields();
+    $db->order("album_id DESC")->limit($global_array_config['detail_song_albums_nums']);    
+    $db->select(implode(', ', $array_select_fields[0]));
+    
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        
+        $row['singers'] = array();
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['album_link'] = '';
+        
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+        
+        $array_albums[$row['album_id']] = $row;
+    }
+    
+    // Các video liên quan
+    $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
+
+    $array_select_fields = nv_get_video_select_fields();
+    $db->order("video_id DESC")->limit($global_array_config['detail_song_videos_nums']);    
+    $db->select(implode(', ', $array_select_fields[0]));
+    
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        
+        $row['singers'] = array();
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['video_link'] = '';
+        
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+        
+        $array_videos[$row['video_id']] = $row;
+    }
+}
+
 // Xác định ca sĩ
 $array_singers = nv_get_artists($array_singer_ids);
 
@@ -87,6 +143,33 @@ foreach ($ms_detail_data['author_ids'] as $author_id) {
     if (isset($array_singers[$author_id])) {
         $ms_detail_data['authors'][$author_id] = $array_singers[$author_id];
     }
+}
+foreach ($array_albums as $id => $row) {
+    if (!empty($row['singer_ids'])) {
+        foreach ($row['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $row['singers'][$singer_id] = $array_singers[$singer_id];
+            }
+        }
+    }
+    $row['album_link'] = nv_get_detail_album_link($row, $row['singers']);
+    $array_albums[$id] = $row;
+}
+foreach ($array_videos as $id => $row) {
+    if (!empty($row['singer_ids'])) {
+        foreach ($row['singer_ids'] as $singer_id) {
+            if (isset($array_singers[$singer_id])) {
+                $row['singers'][$singer_id] = $array_singers[$singer_id];
+            }
+        }
+    }
+    $row['video_link'] = nv_get_detail_video_link($row, $row['singers']);
+    $array_videos[$id] = $row;
+}
+if (isset($array_singers[$ms_detail_data['singer_id']])) {
+    $ms_detail_data['album_link'] = nv_get_view_singer_link($array_singers[$ms_detail_data['singer_id']], true, 'album');
+    $ms_detail_data['other_video_link'] = nv_get_view_singer_link($array_singers[$ms_detail_data['singer_id']], true, 'video');
+    $ms_detail_data['singer_name'] = $array_singers[$ms_detail_data['singer_id']]['artist_name'];
 }
 if (!empty($ms_detail_data['song'])) {
     if (!empty($ms_detail_data['song']['singer_ids'])) {
@@ -129,7 +212,7 @@ if (!empty($ms_detail_data['singers'])) {
 $key_words = $ms_detail_data['video_keywords'];
 $description = strip_tags(preg_replace('/\<br[^\>]*\>/i', ' ', $ms_detail_data['video_introtext']));
 
-$contents = nv_theme_detail_video($ms_detail_data, $array_videos);
+$contents = nv_theme_detail_video($ms_detail_data, $array_albums, $array_videos);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);
