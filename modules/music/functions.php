@@ -181,6 +181,21 @@ if ($op == 'main' and isset($array_op[0])) {
         $ms_detail_data = $sth->fetch();
         $op = 'detail-video';
         define('NV_IS_DETAIL_VIDEO', true);
+    } elseif ($ms_detail_prefix == $global_array_config['code_prefix']['album']) {
+        $array_select_fields = nv_get_album_select_fields(true);
+        
+        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE status=1 AND album_code=:album_code";
+        $sth = $db->prepare($sql);
+        $sth->bindParam(':album_code', $ms_detail_code, PDO::PARAM_STR);
+        $sth->execute();
+        
+        if ($sth->rowCount() != 1) {
+            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+        }
+        
+        $ms_detail_data = $sth->fetch();
+        $op = 'detail-album';
+        define('NV_IS_DETAIL_ALBUM', true);
     } else {
         nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
     }
@@ -263,6 +278,20 @@ function nv_get_album_select_fields($full_fields = false)
     }
     
     $array_lang_fields = array('album_name', 'album_alias', 'album_description');
+    
+    if ($full_fields) {
+        $array_select_fields[] = 'uploader_id';
+        $array_select_fields[] = 'uploader_name';
+        $array_select_fields[] = NV_LANG_DATA . '_album_introtext album_introtext';
+        $array_select_fields[] = NV_LANG_DATA . '_album_keywords album_keywords';
+        if (NV_LANG_DATA != $global_array_config['default_language']) {
+            $array_select_fields[] = $global_array_config['default_language'] . '_album_introtext default_album_introtext';
+            $array_select_fields[] = $global_array_config['default_language'] . '_album_keywords default_album_keywords';
+        }
+        
+        $array_lang_fields[] = 'album_introtext';
+        $array_lang_fields[] = 'album_keywords';
+    }
     
     return array($array_select_fields, $array_lang_fields);
 }

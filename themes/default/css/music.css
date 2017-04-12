@@ -62,7 +62,8 @@ ul.ms-singers-nation-nav li a:hover {
 }
 .ms-list-song-title h3 .ms-sg,
 ul.ms-detailso-header-info h2 .tit,
-ul.ms-detailmv-header-info h2 .tit {
+ul.ms-detailmv-header-info h2 .tit,
+ul.ms-detailab-header-info h2 .tit {
     color: #505050;
 }
 .ms-list-song-action ul li a,
@@ -74,7 +75,8 @@ ul.ms-detailmv-header-info h2 .tit {
 .ms-gird-singers-thumb,
 .ms-main-singer-thumb,
 .ms-main-list-song-thumb,
-.ms-detailso-header-thumb {
+.ms-detailso-header-thumb,
+.ms-detailab-header-thumb {
     background-color: #c4ccdf;
 }
 a.btn-default {
@@ -853,4 +855,41 @@ ul.ms-detailmv-header-info h2 {
 }
 .ms-detailmv-ember-code {
     min-width: 320px;
+}
+
+/* DETAIL ALBUM */
+.ms-detailab-header {
+    margin-bottom: 10px;
+    position: relative;
+}
+.ms-detailab-header-thumb {
+    float: left;
+    margin-right: 10px;
+    margin-top: 4px;
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
+}
+h1.ms-detailab-header-name {
+    font-weight: 400;
+    font-size: 20px;
+}
+.ms-detailab-header-singer {
+    font-weight: 300;
+}
+ul.ms-detailab-header-info {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+ul.ms-detailab-header-info h2 {
+    font-weight: 400;
+    font-size: 14px;
+}
+.ms-detailab-header-tool {
+    position: absolute;
+    right: 5px;
+    bottom: 0;
 }
