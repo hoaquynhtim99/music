@@ -24,8 +24,7 @@ if (isset($array_op[1])) {
 }
 
 if (empty($data_singer)) {
-    header('Location: ' . nv_url_rewrite(NV_MOD_LINK, true));
-    die();
+    nv_redirect_location(NV_MOD_LINK);
 }
 
 // Các tab
@@ -37,8 +36,7 @@ if (isset($array_op[2])) {
         }
     }
     if (empty($request_tab)) {
-        header('Location: ' . nv_url_rewrite(nv_get_view_singer_link($data_singer, false), true));
-        die();
+        nv_redirect_location(nv_get_view_singer_link($data_singer, false));
     }
 }
 
@@ -48,15 +46,13 @@ if (isset($array_op[3])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        header('Location: ' . nv_url_rewrite(nv_get_view_singer_link($data_singer, false, $request_tab), true));
-        die();
+        nv_redirect_location(nv_get_view_singer_link($data_singer, false, $request_tab));
     }
 }
 
 // Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
 if (isset($array_op[4]) or $data_singer['artist_alias'] != $request_artist_alias or (empty($request_tab) and $_SERVER['REQUEST_URI'] != nv_url_rewrite(nv_get_view_singer_link($data_singer, false), true))) {
-    header('Location: ' . nv_url_rewrite(nv_get_view_singer_link($data_singer, false, $request_tab), true));
-    die();
+    nv_redirect_location(nv_get_view_singer_link($data_singer, false, $request_tab));
 }
 
 $base_url = nv_get_view_singer_link($data_singer, true, $request_tab);

@@ -40,24 +40,21 @@ if (isset($array_op[1])) {
         // Phân trang
         $page = intval($m[1]);
         if ($page <= 1) {
-            header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'], true));
-            die();
+            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
         }
     } else {
         if (preg_match("/^([a-zA-Z0-9\-]+)\-([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
             $nation_code = $m[2];
 
             if (!isset($global_array_nation_alias[$nation_code])) {
-                header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'], true));
-                die();
+                nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
             }
             
             $nation_id = $global_array_nation_alias[$nation_code];
             $nation_alias = $global_array_nation[$nation_id]['nation_alias'];
             $request_nation_alias = $m[1];
         } else {
-            header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'], true));
-            die();
+            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
         }
     }
 }
@@ -67,14 +64,12 @@ if (isset($array_op[2])) {
     if (preg_match("/^page\-([0-9]{1,7})$/", $array_op[2], $m)) {
         $page = intval($m[1]);
         if ($page <= 1) {
-            header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')), true));
-            die();
+            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')));
         }
     } elseif (in_array($array_op[2], $array_alphabets)) {
         $alphabet = $array_op[2];
     } else {
-        header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')), true));
-        die();
+        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')));
     }
 }
 
@@ -82,19 +77,16 @@ if (isset($array_op[3])) {
     if (preg_match("/^page\-([0-9]{1,7})$/", $array_op[3], $m)) {
         $page = intval($m[1]);
         if ($page <= 1) {
-            header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''), true));
-            die();
+            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
         }
     } else {
-        header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''), true));
-        die();
+        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
     }
 }
 
 // Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
 if (isset($array_op[4]) or $nation_alias != $request_nation_alias) {
-    header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''), true));
-    die();
+    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
 }
 
 $global_array_config['gird_singers_nums'] = 36;
@@ -135,8 +127,7 @@ while ($row = $result->fetch()) {
 
 // Xử lý nếu tùy ý đặt giá trị page sai
 if ($page > 1 and empty($array_singers)) {
-    header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''), true));
-    die();
+    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
 }
 
 // Breadcrumb

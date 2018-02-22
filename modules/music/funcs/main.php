@@ -11,7 +11,7 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
-$page_title = $module_info['custom_title'];
+$page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $description = $module_info['description'];
 
@@ -24,7 +24,7 @@ $array_singer_ids = $array_singers = array();
 if (!empty($global_array_config['home_albums_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND show_inhome=1 AND status=1");
     $db->order("album_id DESC")->limit($global_array_config['home_albums_nums'])->offset(0);
-    
+
     $array_select_fields = nv_get_album_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
@@ -37,25 +37,25 @@ if (!empty($global_array_config['home_albums_display'])) {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array[$row['album_id']] = $row;
     }
-    
+
     $content_albums = $array;
 }
 
 if (!empty($global_array_config['home_singers_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where("show_inhome=1 AND status=1 AND (artist_type=0 OR artist_type=2)");
     $db->order("RAND()")->limit($global_array_config['home_singers_nums'])->offset(0);
-    
+
     $array_select_fields = nv_get_artist_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
@@ -68,18 +68,18 @@ if (!empty($global_array_config['home_singers_display'])) {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singer_link'] = nv_get_view_singer_link($row);
         $array[$row['artist_id']] = $row;
     }
-    
+
     $content_singers = $array;
 }
 
 if (!empty($global_array_config['home_songs_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("song_id DESC")->limit($global_array_config['home_songs_nums'])->offset(0);
-    
+
     $array_select_fields = nv_get_song_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
@@ -92,26 +92,26 @@ if (!empty($global_array_config['home_songs_display'])) {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['song_link'] = '';
         $row['resource_mode'] = 'song';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array[$row['song_id']] = $row;
     }
-    
+
     $content_songs = $array;
 }
 
 if (!empty($global_array_config['home_videos_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("video_id DESC")->limit($global_array_config['home_videos_nums'])->offset(0);
-    
+
     $array_select_fields = nv_get_video_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
@@ -124,18 +124,18 @@ if (!empty($global_array_config['home_videos_display'])) {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['video_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array[$row['video_id']] = $row;
     }
-    
+
     $content_videos = $array;
 }
 

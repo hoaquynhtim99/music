@@ -36,8 +36,7 @@ if (isset($array_op[1])) {
     if (preg_match("/^([a-zA-Z0-9\-]+)\-" . nv_preg_quote($global_array_config['code_prefix']['cat']) . "([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
         $catcode = $m[2];
         if (!isset($global_array_cat_alias[$catcode])) {
-            header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-videos'], true));
-            die();
+            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos']);
         }
         
         $catid = $global_array_cat_alias[$catcode];
@@ -45,8 +44,7 @@ if (isset($array_op[1])) {
         $request_catalias = $m[1];
         $base_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode;
     } else {
-        header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-videos'], true));
-        die();
+        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos']);
     }
 }
 
@@ -56,15 +54,13 @@ if (isset($array_op[2])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode, true));
-        die();
+        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode);
     }
 }
 
 // Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
 if (isset($array_op[3]) or $catalias != $request_catalias) {
-    header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode . ($page > 1 ? '/page-' . $page : ''), true));
-    die();
+    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode . ($page > 1 ? '/page-' . $page : ''));
 }
 
 foreach ($global_array_cat as $cat) {
@@ -112,8 +108,7 @@ foreach ($global_array_cat as $cat) {
 
 // Xử lý nếu tùy ý đặt giá trị page sai
 if ($page > 1 and empty($array)) {
-    header('Location: ' . nv_url_rewrite(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode, true));
-    die();
+    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $global_array_config['code_prefix']['cat'] . $catcode);
 }
 
 // Xác định ca sĩ

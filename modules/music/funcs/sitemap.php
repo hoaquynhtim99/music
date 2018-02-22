@@ -11,7 +11,7 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
-$page_title = $module_info['custom_title'];
+$page_title = $module_info['site_title'];
 
 $contents = "";
 

@@ -12,8 +12,7 @@ if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
 if (!defined('NV_IS_DETAIL_ALBUM')) {
-    header('Location: ' . nv_url_rewrite(NV_MOD_LINK, true));
-    die();
+    nv_redirect_location(NV_MOD_LINK);
 }
 
 $array_singer_ids = $array_singers = array();
