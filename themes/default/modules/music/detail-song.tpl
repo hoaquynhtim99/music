@@ -1,16 +1,16 @@
 <!-- BEGIN: main -->
 <div class="ms-detailso-header clearfix">
-    <div class="ms-detailso-header-thumb" style="background-image:url({SONG.resource_avatar});">
+    <div class="ms-detailso-header-thumb" style="background-image:url({SONG.resource_avatar_thumb});">
         <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
     </div>
     <h1 class="ms-detailso-header-name">
-        {SONG.song_name} - 
+        {SONG.song_name} -
         <span class="ms-detailso-header-singer">
         <!-- BEGIN: show_singer -->
         <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
         <a href="{SINGER.singer_link}" title="{SINGER.artist_name}">{SINGER.artist_name}</a><!-- END: loop -->
         <!-- END: show_singer -->
-        
+
         <!-- BEGIN: va_singer -->
         <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-detail-song-singers-{SONG.song_code}">{VA_SINGERS}</a>
         <span class="hidden" id="{UNIQUEID}-detail-song-singers-{SONG.song_code}" title="{LANG.singer_list}">
@@ -21,18 +21,18 @@
             </span>
         </span>
         <!-- END: va_singer -->
-        
+
         <!-- BEGIN: no_singer -->{UNKNOW_SINGER}<!-- END: no_singer -->
         </span>
     </h1>
     <ul class="ms-detailso-header-info">
         <li>
             <h2>
-                <span class="tit">{LANG.author}:</span> 
+                <span class="tit">{LANG.author}:</span>
                 <!-- BEGIN: show_author -->
                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{AUTHOR.artist_name}<!-- END: loop -->
                 <!-- END: show_author -->
-                
+
                 <!-- BEGIN: va_author -->
                 <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-detail-song-authors-{SONG.song_code}">{VA_AUTHORS}</a>
                 <span class="hidden" id="{UNIQUEID}-detail-song-authors-{SONG.song_code}" title="{LANG.author_list}">
@@ -43,17 +43,17 @@
                     </span>
                 </span>
                 <!-- END: va_author -->
-                
+
                 <!-- BEGIN: no_author -->{UNKNOW_AUTHOR}<!-- END: no_author -->
             </h2>
         </li>
         <li>
             <h2>
-                <span class="tit">{LANG.categories}:</span> 
+                <span class="tit">{LANG.categories}:</span>
                 <!-- BEGIN: show_cat -->
                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{CAT.cat_name}<!-- END: loop -->
                 <!-- END: show_cat -->
-                
+
                 <!-- BEGIN: no_cat -->{UNKNOW_CAT}<!-- END: no_cat -->
             </h2>
         </li>

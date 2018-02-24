@@ -62,14 +62,14 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_cat_mvintrotext,
       DROP " . $lang . "_cat_mvkeywords
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_nations
       DROP " . $lang . "_nation_name,
       DROP " . $lang . "_nation_alias,
       DROP " . $lang . "_nation_introtext,
       DROP " . $lang . "_nation_keywords
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists
       DROP " . $lang . "_artist_name,
       DROP " . $lang . "_artist_alias,
@@ -90,19 +90,19 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP INDEX " . $lang . "_artist_alphabet,
       DROP INDEX " . $lang . "_artist_searchkey
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song
       DROP " . $lang . "_quality_name,
       DROP " . $lang . "_quality_alias,
       DROP INDEX " . $lang . "_quality_alias
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video
       DROP " . $lang . "_quality_name,
       DROP " . $lang . "_quality_alias,
       DROP INDEX " . $lang . "_quality_alias
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs
       DROP " . $lang . "_song_name,
       DROP " . $lang . "_song_alias,
@@ -111,7 +111,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_song_keywords,
       DROP INDEX " . $lang . "_song_searchkey
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_albums
       DROP " . $lang . "_album_name,
       DROP " . $lang . "_album_alias,
@@ -121,7 +121,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_album_keywords,
       DROP INDEX " . $lang . "_album_searchkey
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_videos
       DROP " . $lang . "_video_name,
       DROP " . $lang . "_video_alias,
@@ -130,7 +130,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_video_keywords,
       DROP INDEX " . $lang . "_video_searchkey
     ";
-    
+
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config
       DROP config_value_" . $lang . "
     ";
@@ -172,7 +172,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   UNIQUE KEY cat_code (cat_code),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_categories 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_categories
 	ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_cat_absitetitle varchar(250) NOT NULL DEFAULT '',
@@ -197,7 +197,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   UNIQUE KEY nation_code (nation_code),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_nations 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_nations
 	ADD " . $lang . "_nation_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_nation_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_nation_introtext text NOT NULL,
@@ -230,7 +230,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists
 	ADD " . $lang . "_artist_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_artist_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_artist_alphabet varchar(1) NOT NULL DEFAULT '',
@@ -265,7 +265,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY online_supported (online_supported),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song
 	ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
 ";
@@ -284,7 +284,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY online_supported (online_supported),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video
 	ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
 ";
@@ -322,7 +322,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs
 	ADD " . $lang . "_song_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_song_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_song_searchkey varchar(250) NOT NULL DEFAULT '',
@@ -371,7 +371,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_albums 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_albums
 	ADD " . $lang . "_album_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_album_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_album_searchkey varchar(250) NOT NULL DEFAULT '',
@@ -422,7 +422,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY show_inhome (show_inhome),
   KEY status (status)
 ) ENGINE=MyISAM";
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_videos 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_videos
 	ADD " . $lang . "_video_name varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_video_alias varchar(250) NOT NULL DEFAULT '',
 	ADD " . $lang . "_video_searchkey varchar(250) NOT NULL DEFAULT '',
@@ -501,10 +501,14 @@ $default_config['arr_funcs_description_video'] = 'Video, MV mới nhất tuyển
 $default_config['arr_funcs_sitetitle_singer'] = 'Nghệ sĩ, ca sĩ Việt Nam và quốc tế';
 $default_config['arr_funcs_keywords_singer'] = 'ca sy, nghe sy, profile nghe sy';
 $default_config['arr_funcs_description_singer'] = 'Nghệ sĩ, ca sĩ thông tin các nghệ sỹ, ca sỹ trong nước và quốc tế';
-$default_config['fb_share_image'] = NV_BASE_SITEURL . 'themes/default/images/music/fb-share.jpg';
+$default_config['fb_share_image'] = 'fb-share.jpg';
 $default_config['fb_share_image_witdh'] = '1910';
 $default_config['fb_share_image_height'] = '1000';
 $default_config['fb_share_image_mime'] = 'image/jpeg';
+$default_config['res_default_album_avatar'] = 'albums/album-art-cover.jpg';
+$default_config['res_default_singer_avatar'] = 'artists/singer-art.jpg';
+$default_config['res_default_author_avatar'] = 'artists/singer-art.jpg';
+$default_config['res_default_video_avatar'] = 'videos/video-art-cover.jpg';
 
 foreach ($default_config as $config_name => $config_value) {
     $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_config (config_name, config_value_default) VALUES('" . $config_name . "', '" . $config_value . "')";
@@ -512,32 +516,32 @@ foreach ($default_config as $config_name => $config_value) {
 
 // Copy dữ liệu vào các bảng cần fill
 if (!empty($set_lang_data)) {
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_artists SET 
-		" . $lang . "_artist_alphabet = " . $set_lang_data . "_artist_alphabet, 
-		" . $lang . "_artist_searchkey = " . $set_lang_data . "_artist_searchkey 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_artists SET
+		" . $lang . "_artist_alphabet = " . $set_lang_data . "_artist_alphabet,
+		" . $lang . "_artist_searchkey = " . $set_lang_data . "_artist_searchkey
 	";
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_songs SET 
-		" . $lang . "_song_searchkey = " . $set_lang_data . "_song_searchkey 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_songs SET
+		" . $lang . "_song_searchkey = " . $set_lang_data . "_song_searchkey
 	";
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_albums SET 
-		" . $lang . "_album_searchkey = " . $set_lang_data . "_album_searchkey 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_albums SET
+		" . $lang . "_album_searchkey = " . $set_lang_data . "_album_searchkey
 	";
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_videos SET 
-		" . $lang . "_video_searchkey = " . $set_lang_data . "_video_searchkey 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_videos SET
+		" . $lang . "_video_searchkey = " . $set_lang_data . "_video_searchkey
 	";
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_quality_song SET 
-		" . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_quality_song SET
+		" . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias
 	";
-    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_quality_video SET 
-		" . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias 
+    $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_quality_video SET
+		" . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias
 	";
 }
 
 // Thêm khóa UNIQUE vào các bảng, các khóa này chạy sau khi copy dữ liệu
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song
     ADD UNIQUE " . $lang . "_quality_alias (" . $lang . "_quality_alias)
 ";
 
-$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video 
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video
     ADD UNIQUE " . $lang . "_quality_alias (" . $lang . "_quality_alias)
 ";

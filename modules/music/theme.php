@@ -28,7 +28,8 @@ function nv_theme_gird_albums($array)
     $xtpl->assign('UNIQUEID', nv_genpass(6));
 
     foreach ($array as $row) {
-        $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+        $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'album', true);
+        $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'album');
 
         $xtpl->assign('ROW', $row);
 
@@ -89,7 +90,8 @@ function nv_theme_gird_videos($array)
     $xtpl->assign('PIX_IMAGE', $pix_image);
 
     foreach ($array as $row) {
-        $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+        $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'video', true);
+        $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'video');
 
         $xtpl->assign('ROW', $row);
 
@@ -185,7 +187,8 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
     $xtpl->parse('main.alphabet');
 
     foreach ($array_singers as $row) {
-        $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+        $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'singer', true);
+        $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'singer');
 
         $xtpl->assign('ROW', $row);
         $xtpl->parse('main.loop');
@@ -283,7 +286,12 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
 
         $i = 0;
         foreach ($content_singers as $singer) {
-            $singer['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $singer['resource_avatar'];
+            $singer['resource_avatar_thumb'] = nv_get_resource_url($singer['resource_avatar'], 'singer', true);
+            $singer['resource_avatar'] = nv_get_resource_url($singer['resource_avatar'], 'singer');
+
+            if ($i == 0) {
+                $singer['resource_avatar_thumb'] = $singer['resource_avatar'];
+            }
 
             $xtpl->assign('SINGER', $singer);
 
@@ -302,7 +310,8 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
 
     if (!empty($content_songs)) {
         foreach ($content_songs as $row) {
-            $row['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $row['resource_avatar'];
+            $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], $row['resource_mode'], true);
+            $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], $row['resource_mode']);
 
             $xtpl->assign('ROW', $row);
 
@@ -589,8 +598,9 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
         $xtpl->parse('main.tabloop');
     }
 
-    $data_singer['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data_singer['resource_avatar'];
-    $data_singer['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $data_singer['resource_cover'];
+    $data_singer['resource_avatar_thumb'] = nv_get_resource_url($data_singer['resource_avatar'], 'singer', true);
+    $data_singer['resource_avatar'] = nv_get_resource_url($data_singer['resource_avatar'], 'singer');
+    $data_singer['resource_cover'] = nv_get_resource_url($data_singer['resource_cover'], '----');
     $xtpl->assign('SINGER', $data_singer);
 
     if (!empty($data_singer['singer_info'])) {
@@ -623,8 +633,9 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
 
     $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
 
-    $array['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_avatar'];
-    $array['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_cover'];
+    $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'singer', true);
+    $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'singer');
+    $array['resource_cover'] = nv_get_resource_url($array['resource_cover'], '----');
 
     $xtpl->assign('SONG', $array);
 
@@ -745,7 +756,8 @@ function nv_theme_detail_video($array, $array_albums, $array_videos)
 
     $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
 
-    $array['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_avatar'];
+    $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'video', true);
+    $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'video');
     $array['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_cover'];
 
     $xtpl->assign('VIDEO', $array);
@@ -867,8 +879,9 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
 
     $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
 
-    $array['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_avatar'];
-    $array['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_cover'];
+    $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'album', true);
+    $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'album');
+    $array['resource_cover'] = nv_get_resource_url($array['resource_cover'], '----');
 
     $xtpl->assign('ALBUM', $array);
 

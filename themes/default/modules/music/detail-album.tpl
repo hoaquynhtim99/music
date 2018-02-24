@@ -1,16 +1,16 @@
 <!-- BEGIN: main -->
 <div class="ms-detailab-header clearfix">
-    <div class="ms-detailab-header-thumb" style="background-image:url({ALBUM.resource_avatar});">
+    <div class="ms-detailab-header-thumb" style="background-image:url({ALBUM.resource_avatar_thumb});">
         <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
     </div>
     <h1 class="ms-detailab-header-name">
-        {ALBUM.album_name} - 
+        {ALBUM.album_name} -
         <span class="ms-detailab-header-singer">
         <!-- BEGIN: show_singer -->
         <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
         <a href="{SINGER.singer_link}" title="{SINGER.artist_name}">{SINGER.artist_name}</a><!-- END: loop -->
         <!-- END: show_singer -->
-        
+
         <!-- BEGIN: va_singer -->
         <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-detail-album-singers-{ALBUM.album_code}">{VA_SINGERS}</a>
         <span class="hidden" id="{UNIQUEID}-detail-album-singers-{ALBUM.album_code}" title="{LANG.singer_list}">
@@ -21,18 +21,18 @@
             </span>
         </span>
         <!-- END: va_singer -->
-        
+
         <!-- BEGIN: no_singer -->{UNKNOW_SINGER}<!-- END: no_singer -->
         </span>
     </h1>
     <ul class="ms-detailso-header-info">
         <li>
             <h2>
-                <span class="tit">{LANG.categories}:</span> 
+                <span class="tit">{LANG.categories}:</span>
                 <!-- BEGIN: show_cat -->
                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate --><a href="{CAT.cat_link}">{CAT.cat_name}</a><!-- END: loop -->
                 <!-- END: show_cat -->
-                
+
                 <!-- BEGIN: no_cat -->{UNKNOW_CAT}<!-- END: no_cat -->
             </h2>
         </li>

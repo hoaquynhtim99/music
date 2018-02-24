@@ -19,7 +19,7 @@ define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
 
 /**
  * Class ajaxRespon
- * 
+ *
  * @package NUKEVIET MUSIC
  * @Author PHAN TAN DUNG <phantandung92@gmail.com>
  * @copyright (C) 2016 PHAN TAN DUNG. All rights reserved
@@ -39,7 +39,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::__construct()
-     * 
+     *
      * @return
      */
     public function __construct()
@@ -49,7 +49,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::setMessage()
-     * 
+     *
      * @param mixed $message
      * @return
      */
@@ -61,7 +61,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::setInput()
-     * 
+     *
      * @param mixed $input
      * @return
      */
@@ -73,7 +73,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::setRedirect()
-     * 
+     *
      * @param mixed $redirect
      * @return
      */
@@ -85,7 +85,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::setSuccess()
-     * 
+     *
      * @return
      */
     public function setSuccess()
@@ -96,7 +96,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::setError()
-     * 
+     *
      * @return
      */
     public function setError()
@@ -107,7 +107,7 @@ class ajaxRespon
 
     /**
      * ajaxRespon::reset()
-     * 
+     *
      * @return
      */
     public function reset()
@@ -118,12 +118,12 @@ class ajaxRespon
 
     /**
      * ajaxRespon::respon()
-     * 
+     *
      * @return
      */
     public function respon()
     {
-        die(json_encode($this->json));
+        nv_jsonOutput($this->json);
     }
 }
 

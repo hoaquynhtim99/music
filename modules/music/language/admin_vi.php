@@ -57,6 +57,11 @@ $lang_module['fb_share_image_help'] = 'Ảnh mặc định sẽ hiển thị khi
 $lang_module['fb_share_image_error'] = 'Ảnh không tồn tại';
 $lang_module['fb_share_image_error1'] = 'Ảnh không hợp lệ';
 $lang_module['fb_share_image_error2'] = 'Ảnh quá nhỏ, ảnh chọn cần có kích thước tối thiểu 600x315 pixel và tỉ lệ 1.91:1';
+$lang_module['res_default_album_avatar'] = 'Ảnh mặc định Album';
+$lang_module['res_default_singer_avatar'] = 'Ảnh mặc định Ca Sĩ';
+$lang_module['res_default_author_avatar'] = 'Ảnh mặc định Tác Giả';
+$lang_module['res_default_video_avatar'] = 'Ảnh mặc định MV';
+$lang_module['res_default_help'] = 'Hiển thị nếu không có ảnh cụ thể được chỉ định. Nếu để trống, hệ thống sẽ tự lấy ảnh có sẵn theo quy định của tác giả module';
 
 $lang_module['home_albums_display'] = 'Hiển thị các albums ở trang chủ';
 $lang_module['home_singers_display'] = 'Hiển thị các ca sĩ ở trang chủ';

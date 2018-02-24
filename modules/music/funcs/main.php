@@ -21,6 +21,7 @@ nv_get_fb_share_image();
 $content_albums = $content_videos = $content_singers = $content_songs = array();
 $array_singer_ids = $array_singers = array();
 
+// Các albums
 if (!empty($global_array_config['home_albums_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND show_inhome=1 AND status=1");
     $db->order("album_id DESC")->limit($global_array_config['home_albums_nums'])->offset(0);

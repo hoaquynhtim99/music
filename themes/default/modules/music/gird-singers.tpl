@@ -23,13 +23,13 @@
     <!-- BEGIN: loop -->
     <div class="col-xs-12 col-sm-8 col-md-6 ms-gird-singers-item">
         <article>
-            <div class="ms-gird-singers-thumb" style="background-image:url({ROW.resource_avatar});">
+            <div class="ms-gird-singers-thumb" style="background-image:url({ROW.resource_avatar_thumb});">
                 <a class="ms-gird-singers-fw" href="{ROW.singer_link}" title="{ROW.artist_name}">
                     <span class="ms-gird-singers-mask">
                         <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
                     </span>
                 </a>
-                <img src="{ROW.resource_avatar}" class="ms-gird-singers-cover"/>
+                <img src="{ROW.resource_avatar_thumb}" class="ms-gird-singers-cover"/>
             </div>
             <div class="ms-gird-singers-description">
                 <h3 class="ms-ellipsis ms-second-title">

@@ -11,7 +11,7 @@
     </div>
     <div class="ms-artist-header-nav">
         <div class="ms-artist-avatar">
-            <span style="background-image:url({SINGER.resource_avatar});">
+            <span style="background-image:url({SINGER.resource_avatar_thumb});">
                 <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
             </span>
         </div>
