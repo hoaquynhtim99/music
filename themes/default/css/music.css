@@ -67,7 +67,8 @@ ul.ms-detailab-header-info h2 .tit {
     color: #505050;
 }
 .ms-list-song-action ul li a,
-.ms-main-list-song-action ul li a {
+.ms-main-list-song-action ul li a,
+.ms-detailab-solists .ctn > ul > li ._actions ul li a {
     color: #c0c0c0;
 }
 .ms-gird-albums-thumb,
@@ -764,7 +765,7 @@ ul.ms-detailso-header-info h2 {
     padding-right: 0;
 }
 .jw-skin-nvmsso .jw-progress {
-    
+
 }
 .jw-skin-nvmsso .jw-controlbar-left-group {
 }
@@ -785,9 +786,9 @@ ul.ms-detailso-header-info h2 {
     content: "\f013";
     font-family: FontAwesome;
 }
-.jw-skin-nvmsso .jw-text-elapsed, 
-.jw-skin-nvmsso .jw-text-duration, 
-.jw-skin-nvmsso .jw-icon-inline, 
+.jw-skin-nvmsso .jw-text-elapsed,
+.jw-skin-nvmsso .jw-text-duration,
+.jw-skin-nvmsso .jw-icon-inline,
 .jw-skin-nvmsso .jw-icon-tooltip {
     height: 32px;
     line-height: 32px;
@@ -859,7 +860,7 @@ ul.ms-detailmv-header-info h2 {
 
 /* DETAIL ALBUM */
 .ms-detailab-header {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     position: relative;
 }
 .ms-detailab-header-thumb {
@@ -892,4 +893,91 @@ ul.ms-detailab-header-info h2 {
     position: absolute;
     right: 5px;
     bottom: 0;
+}
+.ms-detailab-action {
+    margin-bottom: 10px;
+}
+.ms-detailab-playlist {
+    border-right: 1px solid #EEE;
+    border-left: 1px solid #EEE;
+    border-bottom: 1px solid #EEE;
+    margin-bottom: 20px;
+}
+.ms-detailab-solists {
+    width: 100%;
+    max-height: 400px;
+    overflow: auto;
+}
+
+.jspScrollable,
+.jspScrollable:focus,
+.jspContainer,
+.jspContainer:focus,
+.jspPane,
+.jspPane:focus {
+    outline: 0!important;
+}
+.jspVerticalBar {
+    width: 8px!important;
+}
+.jspTrack {
+    background: #E0E0E0!important;
+}
+.jspDrag {
+    background: #C0C0C0!important;
+}
+
+.ms-detailab-solists .ctn > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.ms-detailab-solists .ctn > ul > li {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid #EEE;
+    position: relative;
+    overflow: hidden;
+}
+.ms-detailab-solists .ctn > ul > li:last-child {
+    border-bottom: 0;
+}
+.ms-detailab-solists .ctn > ul > li h4 {
+    max-width: 500px;
+    line-height: 50px;
+}
+.ms-detailab-solists .ctn > ul > li ._stt {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    width: 40px;
+    text-align: center;
+}
+.ms-detailab-solists .ctn > ul > li ._actions {
+    position: absolute;
+    right: 10px;
+    top: 0;
+}
+.ms-detailab-solists .ctn > ul > li ._actions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.ms-detailab-solists .ctn > ul > li ._actions ul li {
+    float: left;
+    height: 50px;
+    line-height: 50px;
+    padding: 0;
+    margin: 0 0 0 15px;
+}
+.ms-detailab-solists .ctn > ul > li ._actions ul li:first-child {
+    margin-left: 0;
+}
+.ms-playlist-player {
+    height: 219px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center top;
 }

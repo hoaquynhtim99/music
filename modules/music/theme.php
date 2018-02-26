@@ -878,6 +878,7 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
     $xtpl->assign('UNIQUEID', nv_genpass(6));
 
     $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
+    $xtpl->assign('PLUGINS_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/');
 
     $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'album', true);
     $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'album');
