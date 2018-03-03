@@ -76,3 +76,7 @@ $lang_module['site_title_singer_song'] = 'Bài hát %s nghe nhạc %s';
 $lang_module['site_title_singer_album'] = 'Abum %s nghe nhạc %s';
 $lang_module['site_title_singer_video'] = 'MV %s xem video %s';
 $lang_module['site_title_singer_profile'] = 'Tiểu sử %s con đường âm nhạc %s';
+
+$lang_module['player_lang_fullscreen'] = 'Toàn màn hình';
+$lang_module['player_lang_settings'] = 'Chất lượng';
+$lang_module['player_lang_hd'] = 'Chất lượng';

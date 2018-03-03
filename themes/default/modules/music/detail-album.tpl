@@ -259,7 +259,6 @@
 <script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/jquery.mousewheel.js"></script>
 <script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/mwheelIntent.js"></script>
 <script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/jquery.jscrollpane.min.js"></script>
-<script type="text/javascript">jwplayer.key="KzcW0VrDegOG/Vl8Wb9X3JLUql+72MdP1coaag==";</script>
 <script type="text/javascript">
 $(document).ready(function() {
     $('#soplaylists').jScrollPane({
@@ -270,45 +269,47 @@ $(document).ready(function() {
         height: '219',
         stretching: 'fill',
         image: '{ALBUM.resource_avatar}',
-        playlist: [
-            {
-                sources: [
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "128K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "320K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
-                ],
-                image: '{ALBUM.resource_avatar}',
-                title: 'Âm Thầm Yêu Anh'
-            }, {
-                sources: [
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "128K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "320K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
-                ],
-                image: '{ALBUM.resource_avatar}',
-                title: 'Âm Thầm Yêu Anh'
-            }, {
-                sources: [
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "128K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "320K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
-                ],
-                image: '{ALBUM.resource_avatar}',
-                title: 'Âm Thầm Yêu Anh'
-            }, {
-                sources: [
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "128K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "320K"},
-                    {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
-                ],
-                image: '{ALBUM.resource_avatar}',
-                title: 'Âm Thầm Yêu Anh'
-            }
-        ],
+        playlist: [{
+            sources: [
+                {"file": "/uploads/ca-nhac/1.mp3", "label": "128K"},
+                {"file": "/uploads/ca-nhac/1.mp3", "label": "320K"},
+                {"file": "/uploads/ca-nhac/1.mp3", "label": "Losless"}
+            ],
+            image: '{ALBUM.resource_avatar}',
+            title: 'Âm Thầm Yêu Anh'
+        }, {
+            sources: [
+                {"file": "/uploads/ca-nhac/2.mp3", "label": "128K"},
+                {"file": "/uploads/ca-nhac/2.mp3", "label": "320K"},
+                {"file": "/uploads/ca-nhac/2.mp3", "label": "Losless"}
+            ],
+            image: '{ALBUM.resource_avatar}',
+            title: 'Âm Thầm Yêu Anh'
+        }, {
+            sources: [
+                {"file": "/uploads/ca-nhac/3.mp3", "label": "128K"},
+                {"file": "/uploads/ca-nhac/3.mp3", "label": "320K"},
+                {"file": "/uploads/ca-nhac/3.mp3", "label": "Losless"}
+            ],
+            image: '{ALBUM.resource_avatar}',
+            title: 'Âm Thầm Yêu Anh'
+        }, {
+            sources: [
+                {"file": "/uploads/ca-nhac/4.mp3", "label": "128K"},
+                {"file": "/uploads/ca-nhac/4.mp3", "label": "320K"},
+                {"file": "/uploads/ca-nhac/5.mp3", "label": "Losless"}
+            ],
+            image: '{ALBUM.resource_avatar}',
+            title: 'Âm Thầm Yêu Anh'
+        }],
         autostart: true,
-        primary: 'html5',
         repeat: true,
-        skin: {name: "nvmsso"}
+        skin: {name: "nvmsso"},
+        localization: {
+            fullscreen: '{LANG.player_lang_fullscreen}',
+            settings: '{LANG.player_lang_settings}',
+            hd: '{LANG.player_lang_hd}'
+        }
     });
 });
 </script>

@@ -4,7 +4,6 @@
     <div id="videoplayer"></div>
 </div>
 <script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
-<script type="text/javascript">jwplayer.key="KzcW0VrDegOG/Vl8Wb9X3JLUql+72MdP1coaag==";</script>
 <script type="text/javascript">
 var videoplayer = jwplayer('videoplayer').setup({
     width: '100%',
@@ -18,19 +17,24 @@ var videoplayer = jwplayer('videoplayer').setup({
     autostart: true,
     primary: 'html5',
     repeat: true,
-    skin: {name: "nvmsmv"}
+    skin: {name: "nvmsmv"},
+    localization: {
+        fullscreen: '{LANG.player_lang_fullscreen}',
+        settings: '{LANG.player_lang_settings}',
+        hd: '{LANG.player_lang_hd}'
+    }
 });
 </script>
 
 <div class="ms-detailmv-header clearfix">
     <h1 class="ms-detailmv-header-name">
-        {VIDEO.video_name} - 
+        {VIDEO.video_name} -
         <span class="ms-detailmv-header-singer">
         <!-- BEGIN: show_singer -->
         <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
         <a href="{SINGER.singer_link}" title="{SINGER.artist_name}">{SINGER.artist_name}</a><!-- END: loop -->
         <!-- END: show_singer -->
-        
+
         <!-- BEGIN: va_singer -->
         <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-detail-video-singers-{VIDEO.video_code}">{VA_SINGERS}</a>
         <span class="hidden" id="{UNIQUEID}-detail-video-singers-{VIDEO.video_code}" title="{LANG.singer_list}">
@@ -41,18 +45,18 @@ var videoplayer = jwplayer('videoplayer').setup({
             </span>
         </span>
         <!-- END: va_singer -->
-        
+
         <!-- BEGIN: no_singer -->{UNKNOW_SINGER}<!-- END: no_singer -->
         </span>
     </h1>
     <ul class="ms-detailmv-header-info">
         <li>
             <h2>
-                <span class="tit">{LANG.author}:</span> 
+                <span class="tit">{LANG.author}:</span>
                 <!-- BEGIN: show_author -->
                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{AUTHOR.artist_name}<!-- END: loop -->
                 <!-- END: show_author -->
-                
+
                 <!-- BEGIN: va_author -->
                 <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-detail-video-authors-{VIDEO.video_code}">{VA_AUTHORS}</a>
                 <span class="hidden" id="{UNIQUEID}-detail-video-authors-{VIDEO.video_code}" title="{LANG.author_list}">
@@ -63,17 +67,17 @@ var videoplayer = jwplayer('videoplayer').setup({
                     </span>
                 </span>
                 <!-- END: va_author -->
-                
+
                 <!-- BEGIN: no_author -->{UNKNOW_AUTHOR}<!-- END: no_author -->
             </h2>
         </li>
         <li>
             <h2>
-                <span class="tit">{LANG.categories}:</span> 
+                <span class="tit">{LANG.categories}:</span>
                 <!-- BEGIN: show_cat -->
                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{CAT.cat_name}<!-- END: loop -->
                 <!-- END: show_cat -->
-                
+
                 <!-- BEGIN: no_cat -->{UNKNOW_CAT}<!-- END: no_cat -->
             </h2>
         </li>

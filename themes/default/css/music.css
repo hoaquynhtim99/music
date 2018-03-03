@@ -29,6 +29,7 @@
 .ms-main-list-song-title h3 a:hover,
 ul.ms-singers-alphabet li a.active,
 .jw-skin-nvmsso .jw-button-color:hover,
+.jw-skin-nvmsmv .jw-button-color:hover,
 a.ms-detailso-lrt-control-f,
 a.ms-detailso-lrt-control-h {
     color: #428bca;
@@ -40,10 +41,12 @@ ul.ms-singers-nation-nav li a.active,
 ul.ms-singers-nation-nav li a:hover {
     border-color: #428bca;
 }
-.jw-skin-nvmsso .jw-progress {
+.jw-skin-nvmsso .jw-progress,
+.jw-skin-nvmsmv .jw-progress {
     background-color: #428bca;
 }
-.jw-skin-nvmsso .jw-buffer {
+.jw-skin-nvmsso .jw-buffer,
+.jw-skin-nvmsmv .jw-buffer {
     background-color: #84acd0;
 }
 .ms-main-list-song-item article {
@@ -749,73 +752,38 @@ ul.ms-detailso-header-info h2 {
 }
 
 /* SONG PLAYER SKIN */
-.jw-skin-nvmsso .jw-preview {
+.jw-skin-nvmsso .jw-preview,
+.jw-skin-nvmsmv .jw-preview {
     opacity: 0.4;
 }
-.jw-skin-nvmsso .jw-controlbar {
-    padding-left: 0;
-    padding-right: 0;
-    background-color: transparent;
+.jw-skin-nvmsso .jw-icon-rewind,
+.jw-skin-nvmsmv .jw-icon-rewind {
+    display: none!important;
 }
-.jw-skin-nvmsso .jw-controlbar-center-group {
-    position: absolute;
-    left: 0;
-    top: -8px;
-    padding-left: 0;
-    padding-right: 0;
+.jw-skin-nvmsso.jw-breakpoint-2 .jw-settings-menu,
+.jw-skin-nvmsso.jw-breakpoint-3 .jw-settings-menu,
+.jw-skin-nvmsso.jw-breakpoint-4 .jw-settings-menu,
+.jw-skin-nvmsmv.jw-breakpoint-2 .jw-settings-menu,
+.jw-skin-nvmsmv.jw-breakpoint-3 .jw-settings-menu,
+.jw-skin-nvmsmv.jw-breakpoint-4 .jw-settings-menu {
+    height: 142px!important;
 }
-.jw-skin-nvmsso .jw-progress {
+.jw-skin-nvmsso .jw-settings-menu .jw-tooltip,
+.jw-skin-nvmsmv.jw-breakpoint-2 .jw-settings-menu .jw-tooltip {
+    bottom: 0!important;
+    margin-bottom: 10px!important;
+}
+.jw-skin-nvmsso .jw-settings-menu .jw-tooltip:after,
+.jw-skin-nvmsmv.jw-breakpoint-2 .jw-settings-menu .jw-tooltip:after {
+    left: 0!important;
+    top: 60.5%!important;
 
 }
-.jw-skin-nvmsso .jw-controlbar-left-group {
+.jw-skin-nvmsso .jw-settings-menu .jw-tooltip.jw-open,
+.jw-skin-nvmsmv.jw-breakpoint-2 .jw-settings-menu .jw-tooltip.jw-open {
+    -webkit-transform: translate(50%, 0)!important;
+    transform: translate(50%, 0)!important;
 }
-.jw-skin-nvmsso .jw-controlbar-right-group {
-    width: 100%;
-}
-.jw-skin-nvmsso .jw-icon-rewind {
-    display: none;
-}
-.jw-skin-nvmsso .jw-icon-fullscreen {
-    display: none;
-}
-.jw-skin-nvmsso .jw-icon-hd {
-    float: right;
-    margin-right: 10px;
-}
-.jw-skin-nvmsso .jw-icon-hd:before {
-    content: "\f013";
-    font-family: FontAwesome;
-}
-.jw-skin-nvmsso .jw-text-elapsed,
-.jw-skin-nvmsso .jw-text-duration,
-.jw-skin-nvmsso .jw-icon-inline,
-.jw-skin-nvmsso .jw-icon-tooltip {
-    height: 32px;
-    line-height: 32px;
-    margin-top: 4px;
-}
-.jw-skin-nvmsso .jw-text-duration {
-    padding-left: 0;
-    margin-left: -3px;
-}
-.jw-skin-nvmsso .jw-text-duration:before {
-    content: "/";
-    display: inline-block;
-    margin-right: 5px;
-}
-.jw-skin-nvmsso .jw-controlbar .jw-overlay {
-    bottom: 32px;
-}
-.jw-skin-nvmsso .jw-button-color {
-    color: #fff;
-    -moz-transition: 0.3s;
-    -o-transition: 0.3s;
-    -webkit-transition: 0.3s;
-    transition: 0.3s;
-}
-.jw-skin-nvmsso .jw-button-color:hover {
-}
-
 
 /* DETAIL VIDEO */
 .ms-video-player {

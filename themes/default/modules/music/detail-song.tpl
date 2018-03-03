@@ -87,7 +87,6 @@
     <!-- END: video -->
 </div>
 <script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
-<script type="text/javascript">jwplayer.key="KzcW0VrDegOG/Vl8Wb9X3JLUql+72MdP1coaag==";</script>
 <script type="text/javascript">
 var songplayer = jwplayer('songplayer').setup({
     width: '100%',
@@ -100,9 +99,13 @@ var songplayer = jwplayer('songplayer').setup({
         {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
     ],
     autostart: true,
-    primary: 'html5',
     repeat: true,
-    skin: {name: "nvmsso"}
+    skin: {name: "nvmsso"},
+    localization: {
+        fullscreen: '{LANG.player_lang_fullscreen}',
+        settings: '{LANG.player_lang_settings}',
+        hd: '{LANG.player_lang_hd}'
+    }
 });
 </script>
 <div class="well ms-detailso-lrt">
