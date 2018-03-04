@@ -94,9 +94,7 @@ var songplayer = jwplayer('songplayer').setup({
     stretching: 'fill',
     image: '{SONG.resource_cover}',
     sources: [
-        {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "128K"},
-        {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "320K"},
-        {"file": "/uploads/ca-nhac/Neu-Mai-Nay-Duong-Hoang-Yen.mp3", "label": "Losless"}
+        <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->,<!-- END: comma --><!-- END: filesdata -->
     ],
     autostart: true,
     repeat: true,

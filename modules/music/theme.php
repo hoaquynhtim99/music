@@ -714,6 +714,20 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
         $xtpl->parse('main.no_cat');
     }
 
+    // Xuất đường dẫn cho player
+    $numfile = sizeof($array['filesdata']);
+    $i = 0;
+    foreach ($array['filesdata'] as $_fileinfo) {
+        $i++;
+        $_fileinfo['resource_path'] = str_replace('"', '\"', $_fileinfo['resource_path']);
+        $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
+        $xtpl->assign('FILESDATA', $_fileinfo);
+        if ($i < $numfile) {
+            $xtpl->parse('main.filesdata.comma');
+        }
+        $xtpl->parse('main.filesdata');
+    }
+
     // Video của bài hát
     if (!empty($array['video'])) {
         $xtpl->parse('main.video');

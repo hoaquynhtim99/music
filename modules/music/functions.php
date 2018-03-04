@@ -130,6 +130,14 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_nation, $global_array_nation_alias)), $cacheTTL);
 }
 
+// Chất lượng bài hát
+$sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_song ORDER BY weight ASC";
+$global_array_soquality = $nv_Cache->db($sql, 'quality_id', $module_name);
+
+// Chất lượng video
+$sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_video ORDER BY weight ASC";
+$global_array_mvquality = $nv_Cache->db($sql, 'quality_id', $module_name);
+
 $global_array_config['detail_song_albums_nums'] = 12;
 $global_array_config['detail_song_videos_nums'] = 12;
 $global_array_config['limit_authors_displayed'] = 3;
@@ -138,6 +146,7 @@ $global_array_config['unknow_author'] = 'Đang cập nhật';
 $global_array_config['unknow_cat'] = 'Đang cập nhật';
 $global_array_config['shareport'] = 'addthis';
 $global_array_config['addthis_pubid'] = 'addthis';
+$global_array_config['uploads_folder'] = 'dataup.default123';
 
 // Điều khiển các OP
 if ($op == 'main' and isset($array_op[0])) {

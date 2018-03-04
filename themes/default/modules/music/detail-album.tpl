@@ -309,7 +309,8 @@ $(document).ready(function() {
             fullscreen: '{LANG.player_lang_fullscreen}',
             settings: '{LANG.player_lang_settings}',
             hd: '{LANG.player_lang_hd}'
-        }
+        },
+        displaytitle: true
     });
 });
 </script>
