@@ -66,182 +66,51 @@
     <div id="playlistplayer"></div>
 </div>
 
+<!-- BEGIN: playlist -->
 <div class="ms-detailab-playlist">
     <div class="ms-detailab-solists" id="soplaylists">
         <div class="ctn">
             <ul>
+                <!-- BEGIN: loop -->
                 <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
+                    <span class="_stt">{PLSO_STT}</span>
+                    <h4 class="ms-ellipsis">
+                        <a href="{PLSO_DATA.song_link}" class="ms-so" title="{PLSO_DATA.song_name}">{PLSO_DATA.song_name}</a> -
+                        <!-- BEGIN: show_singer -->
+                        <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
+                        <a href="{PLSO_SINGER.singer_link}" title="{PLSO_SINGER.artist_name}" class="ms-sg">{PLSO_SINGER.artist_name}</a><!-- END: loop -->
+                        <!-- END: show_singer -->
+
+                        <!-- BEGIN: va_singer -->
+                        <a href="#" data-toggle="show-va-singer" data-target="#{PLUNIQUEID}-mainlist-songs-singers-{PLSO_DATA.song_code}" class="ms-sg">{PLSO_VA_SINGERS}</a>
+                        <span class="hidden" id="{PLUNIQUEID}-mainlist-songs-singers-{PLSO_DATA.song_code}" title="{LANG.singer_list}">
+                            <span class="list-group ms-singer-listgr-modal">
+                                <!-- BEGIN: loop -->
+                                <a href="{PLSO_SINGER.singer_link}" class="list-group-item">{PLSO_SINGER.artist_name}</a>
+                                <!-- END: loop -->
+                            </span>
+                        </span>
+                        <!-- END: va_singer -->
+
+                        <!-- BEGIN: no_singer -->
+                        <span class="ms-sg">{PLSO_UNKNOW_SINGER}</span>
+                        <!-- END: no_singer -->
+                    </h4>
                     <div class="_actions">
                         <ul>
                             <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
                             <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
                             <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
+                            <li><a href="{PLSO_DATA.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
                         </ul>
                     </div>
                 </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li>
-                    <span class="_stt">1</span>
-                    <h4 class="ms-ellipsis">Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm Duyên Đầu Năm </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
+                <!-- END: loop -->
             </ul>
         </div>
     </div>
 </div>
+<!-- END: playlist -->
 
 <div class="well ms-detailso-lrt">
     <h3 class="ms-detailso-lrt-title">Lời bài hát: {SONG.song_name}</h3>
@@ -269,39 +138,14 @@ $(document).ready(function() {
         height: '219',
         stretching: 'fill',
         image: '{ALBUM.resource_avatar}',
-        playlist: [{
+        <!-- BEGIN: playlist_js -->playlist: [<!-- BEGIN: loop -->{
             sources: [
-                {"file": "/uploads/ca-nhac/1.mp3", "label": "128K"},
-                {"file": "/uploads/ca-nhac/1.mp3", "label": "320K"},
-                {"file": "/uploads/ca-nhac/1.mp3", "label": "Losless"}
+                <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: filesdata -->
             ],
-            image: '{ALBUM.resource_avatar}',
-            title: 'Âm Thầm Yêu Anh'
-        }, {
-            sources: [
-                {"file": "/uploads/ca-nhac/2.mp3", "label": "128K"},
-                {"file": "/uploads/ca-nhac/2.mp3", "label": "320K"},
-                {"file": "/uploads/ca-nhac/2.mp3", "label": "Losless"}
-            ],
-            image: '{ALBUM.resource_avatar}',
-            title: 'Âm Thầm Yêu Anh'
-        }, {
-            sources: [
-                {"file": "/uploads/ca-nhac/3.mp3", "label": "128K"},
-                {"file": "/uploads/ca-nhac/3.mp3", "label": "320K"},
-                {"file": "/uploads/ca-nhac/3.mp3", "label": "Losless"}
-            ],
-            image: '{ALBUM.resource_avatar}',
-            title: 'Âm Thầm Yêu Anh'
-        }, {
-            sources: [
-                {"file": "/uploads/ca-nhac/4.mp3", "label": "128K"},
-                {"file": "/uploads/ca-nhac/4.mp3", "label": "320K"},
-                {"file": "/uploads/ca-nhac/5.mp3", "label": "Losless"}
-            ],
-            image: '{ALBUM.resource_avatar}',
-            title: 'Âm Thầm Yêu Anh'
-        }],
+            image: "{PLSO_DATA.resource_cover}",
+            title: ""
+        }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],
+        <!-- END: playlist_js -->
         autostart: true,
         repeat: true,
         skin: {name: "nvmsso"},

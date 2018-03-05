@@ -32,6 +32,7 @@ $ms_detail_data['song_link'] = '';
 $ms_detail_data['video_link'] = '';
 $ms_detail_data['video_link_ember'] = '';
 $ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
+$ms_detail_data['filesdata'] = array();
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
@@ -43,11 +44,11 @@ if (!empty($ms_detail_data['author_ids'])) {
 // Bài hát liên quan của video
 if (!empty($ms_detail_data['song_id'])) {
     $array_select_fields = nv_get_song_select_fields();
-    
+
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE is_official=1 AND status=1 AND song_id=" . $ms_detail_data['song_id'];
     $result = $db->query($sql);
     $song = $result->fetch();
-    
+
     if (!empty($song)) {
         foreach ($array_select_fields[1] as $f) {
             if (empty($song[$f]) and !empty($song['default_' . $f])) {
@@ -55,11 +56,11 @@ if (!empty($ms_detail_data['song_id'])) {
             }
             unset($song['default_' . $f]);
         }
-        
+
         $song['singers'] = array();
         $song['singer_ids'] = explode(',', $song['singer_ids']);
         $song['song_link'] = '';
-        
+
         if (!empty($song['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $song['singer_ids']);
         }
@@ -70,11 +71,11 @@ if (!empty($ms_detail_data['song_id'])) {
 if (!empty($ms_detail_data['singer_id'])) {
     // Các album liên quan
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
-    
+
     $array_select_fields = nv_get_album_select_fields();
-    $db->order("album_id DESC")->limit($global_array_config['detail_song_albums_nums']);    
+    $db->order("album_id DESC")->limit($global_array_config['detail_song_albums_nums']);
     $db->select(implode(', ', $array_select_fields[0]));
-    
+
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -83,25 +84,25 @@ if (!empty($ms_detail_data['singer_id'])) {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array_albums[$row['album_id']] = $row;
     }
-    
+
     // Các video liên quan
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_video_select_fields();
-    $db->order("video_id DESC")->limit($global_array_config['detail_song_videos_nums']);    
+    $db->order("video_id DESC")->limit($global_array_config['detail_song_videos_nums']);
     $db->select(implode(', ', $array_select_fields[0]));
-    
+
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -110,15 +111,15 @@ if (!empty($ms_detail_data['singer_id'])) {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['video_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array_videos[$row['video_id']] = $row;
     }
 }
@@ -187,6 +188,21 @@ foreach ($ms_detail_data['cat_ids'] as $cid) {
         $ms_detail_data['cats'][$cid] = $global_array_cat[$cid];
     }
 }
+
+// Xác định đường dẫn MV
+$sql = "SELECT * FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $ms_detail_data['video_id'] . " AND status=1";
+$filesdata = $db->query($sql)->fetchAll();
+$stt = sizeof($global_array_mvquality);
+foreach ($filesdata as $_fileinfo) {
+    $stt++;
+    $key = isset($global_array_mvquality[$_fileinfo['quality_id']]) ? $global_array_mvquality[$_fileinfo['quality_id']]['weight'] : $stt;
+    $ms_detail_data['filesdata'][$key] = array(
+        'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $global_array_config['uploads_folder'] . '/' . $_fileinfo['resource_path'],
+        'resource_duration' => $_fileinfo['resource_duration'],
+        'quality_name' => isset($global_array_mvquality[$_fileinfo['quality_id']]) ? $global_array_mvquality[$_fileinfo['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
+    );
+}
+ksort($ms_detail_data['filesdata']);
 
 // Các phần khác
 $ms_detail_data['video_link'] = nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers']);

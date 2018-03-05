@@ -10,9 +10,7 @@ var videoplayer = jwplayer('videoplayer').setup({
     aspectratio: '16:9',
     androidhls: true,
     sources: [
-        {"file": "/uploads/ca-nhac/Neu-Mai-Nay.mp4", "label": "720p (HD)"},
-        {"file": "/uploads/ca-nhac/Neu-Mai-Nay.mp4", "label": "480p"},
-        {"file": "/uploads/ca-nhac/Neu-Mai-Nay.mp4", "label": "360p"}
+        <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->,<!-- END: comma --><!-- END: filesdata -->
     ],
     autostart: true,
     primary: 'html5',

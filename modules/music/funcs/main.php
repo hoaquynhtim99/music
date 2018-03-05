@@ -53,6 +53,7 @@ if (!empty($global_array_config['home_albums_display'])) {
     $content_albums = $array;
 }
 
+// Các ca sĩ trên trang chủ
 if (!empty($global_array_config['home_singers_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where("show_inhome=1 AND status=1 AND (artist_type=0 OR artist_type=2)");
     $db->order("RAND()")->limit($global_array_config['home_singers_nums'])->offset(0);
@@ -77,6 +78,7 @@ if (!empty($global_array_config['home_singers_display'])) {
     $content_singers = $array;
 }
 
+// Các bài hát trang chủ
 if (!empty($global_array_config['home_songs_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("song_id DESC")->limit($global_array_config['home_songs_nums'])->offset(0);
@@ -109,6 +111,7 @@ if (!empty($global_array_config['home_songs_display'])) {
     $content_songs = $array;
 }
 
+// Các video trang chủ
 if (!empty($global_array_config['home_videos_display'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("video_id DESC")->limit($global_array_config['home_videos_nums'])->offset(0);

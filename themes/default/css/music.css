@@ -764,9 +764,11 @@ ul.ms-detailso-header-info h2 {
 .jw-skin-nvmsso.jw-breakpoint-3 .jw-settings-menu,
 .jw-skin-nvmsso.jw-breakpoint-4 .jw-settings-menu,
 .jw-skin-nvmsmv.jw-breakpoint-2 .jw-settings-menu,
-.jw-skin-nvmsmv.jw-breakpoint-3 .jw-settings-menu,
-.jw-skin-nvmsmv.jw-breakpoint-4 .jw-settings-menu {
+.jw-skin-nvmsmv.jw-breakpoint-3 .jw-settings-menu {
     height: 142px!important;
+}
+.jw-skin-nvmsmv.jw-breakpoint-4 .jw-settings-menu {
+    height: 165px!important;
 }
 .jw-skin-nvmsso .jw-settings-menu .jw-tooltip,
 .jw-skin-nvmsmv.jw-breakpoint-2 .jw-settings-menu .jw-tooltip {
