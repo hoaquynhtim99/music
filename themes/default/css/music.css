@@ -13,7 +13,8 @@
 }
 .ms-third-title,
 .ms-third-title a,
-.ms-main-list-song-title h4 .ms-sg {
+.ms-main-list-song-title h4 .ms-sg,
+.ms-detailab-solists .ctn > ul > li h4 .ms-sg {
     color: #888;
     font-weight: normal;
 }
@@ -31,7 +32,16 @@ ul.ms-singers-alphabet li a.active,
 .jw-skin-nvmsso .jw-button-color:hover,
 .jw-skin-nvmsmv .jw-button-color:hover,
 a.ms-detailso-lrt-control-f,
-a.ms-detailso-lrt-control-h {
+a.ms-detailso-lrt-control-h,
+.ms-detailab-solists .ctn > ul > li:hover h4,
+.ms-detailab-solists .ctn > ul > li:hover h4 .ms-so,
+.ms-detailab-solists .ctn > ul > li:hover h4 .ms-sg,
+.ms-detailab-solists .ctn > ul > li.playing h4,
+.ms-detailab-solists .ctn > ul > li.playing h4 .ms-so,
+.ms-detailab-solists .ctn > ul > li.playing h4 .ms-sg,
+.ms-detailab-solists .ctn > ul > li.pause h4,
+.ms-detailab-solists .ctn > ul > li.pause h4 .ms-so,
+.ms-detailab-solists .ctn > ul > li.pause h4 .ms-sg {
     color: #428bca;
 }
 .ms-title-section h2 a,
@@ -85,6 +95,11 @@ ul.ms-detailab-header-info h2 .tit {
 }
 a.btn-default {
     color: #333;
+}
+
+.ms-detailab-solists .ctn > ul > li.playing ._stt:before,
+.ms-detailab-solists .ctn > ul > li.pause ._stt:before {
+    background-image: url(../images/music/playing.png);
 }
 
 /* GLOBAL */
@@ -925,6 +940,50 @@ ul.ms-detailab-header-info h2 {
     width: 40px;
     text-align: center;
 }
+.ms-detailab-solists .ctn > ul > li.playing ._stt,
+.ms-detailab-solists .ctn > ul > li.pause ._stt {
+    position: relative;
+    text-indent: -99999px;
+}
+@-webkit-keyframes play {
+    100% {
+        background-position: -42px;
+    }
+}
+@keyframes play {
+    100% {
+        background-position: -42px;
+    }
+}
+@-webkit-keyframes pause {
+    100% {
+        background-position: -42px;
+    }
+}
+@keyframes pause {
+    100% {
+        background-position: -42px;
+    }
+}
+.ms-detailab-solists .ctn > ul > li.playing ._stt:before,
+.ms-detailab-solists .ctn > ul > li.pause ._stt:before {
+    content: "";
+    display: block;
+    width: 14px;
+    height: 10px;
+    background-position: left center;
+    position: absolute;
+    top: 20px;
+    left: 13px;
+}
+.ms-detailab-solists .ctn > ul > li.playing ._stt:before {
+    -webkit-animation: play .8s steps(3) infinite;
+    animation: play .8s steps(3) infinite;
+}
+.ms-detailab-solists .ctn > ul > li.pause ._stt:before {
+    -webkit-animation: pause .8s steps(3);
+    animation: pause .8s steps(3);
+}
 .ms-detailab-solists .ctn > ul > li ._actions {
     position: absolute;
     right: 10px;
@@ -944,6 +1003,12 @@ ul.ms-detailab-header-info h2 {
 }
 .ms-detailab-solists .ctn > ul > li ._actions ul li:first-child {
     margin-left: 0;
+}
+.ms-detailab-solists .ctn > ul > li h4 {
+    font-weight: normal;
+}
+.ms-detailab-solists .ctn > ul > li h4 .ms-so {
+    font-size: 14px;
 }
 .ms-playlist-player {
     height: 219px;

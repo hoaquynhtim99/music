@@ -66,51 +66,7 @@
     <div id="playlistplayer"></div>
 </div>
 
-<!-- BEGIN: playlist -->
-<div class="ms-detailab-playlist">
-    <div class="ms-detailab-solists" id="soplaylists">
-        <div class="ctn">
-            <ul>
-                <!-- BEGIN: loop -->
-                <li>
-                    <span class="_stt">{PLSO_STT}</span>
-                    <h4 class="ms-ellipsis">
-                        <a href="{PLSO_DATA.song_link}" class="ms-so" title="{PLSO_DATA.song_name}">{PLSO_DATA.song_name}</a> -
-                        <!-- BEGIN: show_singer -->
-                        <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
-                        <a href="{PLSO_SINGER.singer_link}" title="{PLSO_SINGER.artist_name}" class="ms-sg">{PLSO_SINGER.artist_name}</a><!-- END: loop -->
-                        <!-- END: show_singer -->
-
-                        <!-- BEGIN: va_singer -->
-                        <a href="#" data-toggle="show-va-singer" data-target="#{PLUNIQUEID}-mainlist-songs-singers-{PLSO_DATA.song_code}" class="ms-sg">{PLSO_VA_SINGERS}</a>
-                        <span class="hidden" id="{PLUNIQUEID}-mainlist-songs-singers-{PLSO_DATA.song_code}" title="{LANG.singer_list}">
-                            <span class="list-group ms-singer-listgr-modal">
-                                <!-- BEGIN: loop -->
-                                <a href="{PLSO_SINGER.singer_link}" class="list-group-item">{PLSO_SINGER.artist_name}</a>
-                                <!-- END: loop -->
-                            </span>
-                        </span>
-                        <!-- END: va_singer -->
-
-                        <!-- BEGIN: no_singer -->
-                        <span class="ms-sg">{PLSO_UNKNOW_SINGER}</span>
-                        <!-- END: no_singer -->
-                    </h4>
-                    <div class="_actions">
-                        <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.share_song_fb}"><i class="fa fa-share-alt" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
-                            <li><a href="{PLSO_DATA.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
-                        </ul>
-                    </div>
-                </li>
-                <!-- END: loop -->
-            </ul>
-        </div>
-    </div>
-</div>
-<!-- END: playlist -->
+{FILE "playlist-items.tpl"}
 
 <div class="well ms-detailso-lrt">
     <h3 class="ms-detailso-lrt-title">Lời bài hát: {SONG.song_name}</h3>
@@ -123,41 +79,7 @@
     </div>
 </div>
 
-<link type="text/css" href="{PLUGINS_DIR}jscrollpane/jquery.jscrollpane.css" rel="stylesheet" media="all"/>
-<script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
-<script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/mwheelIntent.js"></script>
-<script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/jquery.jscrollpane.min.js"></script>
-<script type="text/javascript">
-$(document).ready(function() {
-    $('#soplaylists').jScrollPane({
-        animateScroll: true
-    });
-    var playlistplayer = jwplayer('playlistplayer').setup({
-        width: '100%',
-        height: '219',
-        stretching: 'fill',
-        image: '{ALBUM.resource_avatar}',
-        <!-- BEGIN: playlist_js -->playlist: [<!-- BEGIN: loop -->{
-            sources: [
-                <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: filesdata -->
-            ],
-            image: "{PLSO_DATA.resource_cover}",
-            title: ""
-        }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],
-        <!-- END: playlist_js -->
-        autostart: true,
-        repeat: true,
-        skin: {name: "nvmsso"},
-        localization: {
-            fullscreen: '{LANG.player_lang_fullscreen}',
-            settings: '{LANG.player_lang_settings}',
-            hd: '{LANG.player_lang_hd}'
-        },
-        displaytitle: true
-    });
-});
-</script>
+{FILE "playlist-control.tpl"}
 
 <!-- BEGIN: singer_albums -->
 <div class="ms-title-section">

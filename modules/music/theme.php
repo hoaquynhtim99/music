@@ -965,10 +965,12 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
     // Xuất playlist bài hát
     $soi = 1;
     $soj = 0;
+    $plindex = 0;
     $numsong = sizeof($array['songs']);
     foreach ($array['songs'] as $song) {
         $soj++;
         $xtpl->assign('PLSO_STT', $soi++);
+        $xtpl->assign('PLSO_INDEX', $plindex);
 
         $song['resource_avatar_thumb'] = nv_get_resource_url($song['resource_avatar'], $song['resource_avatar_mode'], true);
         $song['resource_avatar'] = nv_get_resource_url($song['resource_avatar'], $song['resource_avatar_mode']);
@@ -1007,6 +1009,7 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
 
         $xtpl->parse('main.playlist.loop');
 
+        // Xuất playlist javascript
         $numfile = sizeof($song['filesdata']);
         $i = 0;
         foreach ($song['filesdata'] as $_fileinfo) {
@@ -1025,6 +1028,7 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
         }
 
         $xtpl->parse('main.playlist_js.loop');
+        $plindex++;
     }
     $xtpl->parse('main.playlist');
     $xtpl->parse('main.playlist_js');
