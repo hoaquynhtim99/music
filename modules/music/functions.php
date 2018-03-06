@@ -147,6 +147,7 @@ $global_array_config['unknow_cat'] = 'Đang cập nhật';
 $global_array_config['shareport'] = 'addthis';
 $global_array_config['addthis_pubid'] = 'addthis';
 $global_array_config['uploads_folder'] = 'dataup.default123';
+$global_array_config['msg_nolyric'] = 'Đang cập nhật';
 
 // Điều khiển các OP
 if ($op == 'main' and isset($array_op[0])) {

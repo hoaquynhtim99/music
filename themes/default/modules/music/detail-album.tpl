@@ -69,9 +69,9 @@
 {FILE "playlist-items.tpl"}
 
 <div class="well ms-detailso-lrt">
-    <h3 class="ms-detailso-lrt-title">Lời bài hát: {SONG.song_name}</h3>
+    <h3 class="ms-detailso-lrt-title">{LANG.lyric}: <span id="solrtName">...</span></h3>
     <div class="ms-detailso-lrt-body" id="detail-song-lrt">
-        {SONG.song_introtext}
+        ...
     </div>
     <div class="ms-detailso-lrt-control">
         <a href="#" class="ms-detailso-lrt-control-f" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="F" data-unique="detail-song-lrt">{LANG.view_full}</a>

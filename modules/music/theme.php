@@ -976,8 +976,10 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
         $song['resource_avatar'] = nv_get_resource_url($song['resource_avatar'], $song['resource_avatar_mode']);
         $song['resource_cover_thumb'] = nv_get_resource_url($song['resource_cover'], $song['resource_cover_mode'], true);
         $song['resource_cover'] = nv_get_resource_url($song['resource_cover'], $song['resource_cover_mode']);
+        $song['song_name_data'] = str_replace('"', '\"', $song['song_name']);
 
         $xtpl->assign('PLSO_DATA', $song);
+        $xtpl->assign('PLSO_LRTTOKEND', md5($song['song_code'] . NV_CHECK_SESSION));
 
         // Xuất ca sĩ
         $num_singers = sizeof($song['singers']);

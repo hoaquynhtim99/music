@@ -6,6 +6,18 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
+var loadingHtml = '<div class="text-center"><i class="fa fa-spin fa-spinner fa-2x"></i></div>';
+var msAjaxURL = nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ajax&nocache=' + new Date().getTime();
+
+function msLoadLyric(soCode, soTitle, tokend, resTitle, resDoby) {
+    $(resTitle).html(soTitle);
+    $(resDoby).removeClass('open');
+    $(resDoby).html(loadingHtml);
+    $.post(msAjaxURL, 'getSongLyric=1&song_code=' + soCode + '&tokend=' + tokend, function(res) {
+        $(resDoby).html(res);
+    });
+}
+
 $(document).ready(function() {
     $('[data-toggle="show-va-singer"]').click(function(e) {
         e.preventDefault();

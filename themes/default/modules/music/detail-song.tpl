@@ -107,7 +107,7 @@ var songplayer = jwplayer('songplayer').setup({
 });
 </script>
 <div class="well ms-detailso-lrt">
-    <h3 class="ms-detailso-lrt-title">Lời bài hát: {SONG.song_name}</h3>
+    <h3 class="ms-detailso-lrt-title">{LANG.lyric}: {SONG.song_name}</h3>
     <div class="ms-detailso-lrt-body" id="detail-song-lrt">
         {SONG.song_introtext}
     </div>

@@ -4,7 +4,7 @@
         <div class="ctn">
             <ul>
                 <!-- BEGIN: loop -->
-                <li class="plitem" data-plindex="{PLSO_INDEX}">
+                <li class="plitem" data-plindex="{PLSO_INDEX}" data-sotitle="{PLSO_DATA.song_name_data}" data-socode="{PLSO_DATA.song_code}" data-tokend="{PLSO_LRTTOKEND}">
                     <span class="_stt">{PLSO_STT}</span>
                     <h4 class="ms-ellipsis">
                         <a href="{PLSO_DATA.song_link}" data-control="playsong" data-index="{PLSO_INDEX}" class="ms-so" title="{PLSO_DATA.song_name}">{PLSO_DATA.song_name}</a> -
