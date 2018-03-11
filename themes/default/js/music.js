@@ -49,6 +49,15 @@ $(document).ready(function() {
             }
         });
     });
+    $('[data-toggle="scrolltodiv"]').click(function(e) {
+        e.preventDefault();
+        var target = $($(this).data('target'));
+        if (target.length) {
+            $('html,body').animate({
+                scrollTop: target.offset().top
+            }, 500);
+        }
+    });
     $(document).delegate('[data-toggle="select-all"]', 'click focus', function() {
         $(this).select();
     });

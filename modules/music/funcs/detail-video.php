@@ -227,7 +227,28 @@ if (!empty($ms_detail_data['singers'])) {
 $key_words = $ms_detail_data['video_keywords'];
 $description = strip_tags(preg_replace('/\<br[^\>]*\>/i', ' ', $ms_detail_data['video_introtext']));
 
-$contents = nv_theme_detail_video($ms_detail_data, $array_albums, $array_videos);
+// Bình luận
+if (isset($site_mods['comment']) and isset($module_config[$module_name]['activecomm'])) {
+    $id = $ms_detail_data['video_id']; // Chỉ ra ID của đối tượng được bình luận
+    $area = MS_COMMENT_AREA_VIDEO; // Chỉ ra phạm vi (loại, vị trí...) của đối tượng bình luận
+    define('NV_COMM_ID', true);
+
+    // Kiểm tra quyền bình luận
+    $allowed = $module_config[$module_name]['allowed_comm'];
+    if ($allowed == '-1') {
+        // Quyền bình luận theo đối tượng
+        // Music chưa lập trình và mặc định thành viên chính thức
+        $allowed = '4';
+    }
+    require_once NV_ROOTDIR . '/modules/comment/comment.php';
+    $checkss = md5($module_name . '-' . $area . '-' . $id . '-' . $allowed . '-' . NV_CACHE_PREFIX);
+
+    $content_comment = nv_comment_module($module_name, $checkss, $area, $id, $allowed, 1);
+} else {
+    $content_comment = '';
+}
+
+$contents = nv_theme_detail_video($ms_detail_data, $content_comment, $array_albums, $array_videos);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

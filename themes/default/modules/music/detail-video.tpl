@@ -86,7 +86,9 @@ var videoplayer = jwplayer('videoplayer').setup({
         <a href="{VIDEO.song.song_link}" class="btn btn-primary btn-xs"><i class="fa fa-music" aria-hidden="true"></i> {LANG.listen_song}</a>
         <!-- END: song -->
         <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
-        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}</a>
+        <!-- BEGIN: comment_btn -->
+        <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
+        <!-- END: comment_btn -->
         <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -120,5 +122,12 @@ var videoplayer = jwplayer('videoplayer').setup({
 </div>
 {ALBUM_HTML}
 <!-- END: albums -->
+
+<!-- BEGIN: comment -->
+<div class="ms-title-section" id="comment-area">
+    <h2><span>{LANG.comment}</span></h2>
+</div>
+{COMMENT_HTML}
+<!-- END: comment -->
 
 <!-- END: main -->

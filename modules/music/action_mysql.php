@@ -305,6 +305,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   uploader_name varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người đăng bài hát nếu là bài hát do khách upload',
   stat_views int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
   stat_likes int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt like',
+  stat_comments int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bình luận',
   stat_hit int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Dữ liệu về độ HOT của bài hát',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
@@ -373,6 +374,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   uploader_name varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người đăng bài hát nếu là bài hát do khách upload',
   stat_views int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
   stat_likes int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt like',
+  stat_comments int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bình luận',
   stat_hit int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Dữ liệu về độ HOT của bài hát',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
@@ -422,6 +424,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   uploader_name varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người đăng bài hát nếu là bài hát do khách upload',
   stat_views int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
   stat_likes int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt like',
+  stat_comments int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bình luận',
   stat_hit int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Dữ liệu về độ HOT của bài hát',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
@@ -530,6 +533,21 @@ $default_config['res_default_video_avatar'] = 'videos/video-art-cover.jpg';
 foreach ($default_config as $config_name => $config_value) {
     $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_config (config_name, config_value_default) VALUES('" . $config_name . "', '" . $config_value . "')";
 }
+
+// Bình luận
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'auto_postcomm', '0')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'allowed_comm', '4')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'view_comm', '6')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'setcomm', '4')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'activecomm', '1')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'emailcomm', '0')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'adminscomm', '')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'sortcomm', '0')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'captcha', '1')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'perpagecomm', '5')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'timeoutcomm', '360')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'allowattachcomm', '0')";
+$sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'alloweditorcomm', '0')";
 
 // Copy dữ liệu vào các bảng cần fill
 if (!empty($set_lang_data)) {

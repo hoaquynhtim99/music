@@ -80,7 +80,9 @@
 </div>
 <div class="ms-detailso-action">
     <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
-    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}</a>
+    <!-- BEGIN: comment_btn -->
+    <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
+    <!-- END: comment_btn -->
     <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
     <!-- BEGIN: video -->
     <a href="{SONG.video.video_link}" class="btn btn-primary btn-xs"><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.view_video}</a>
@@ -139,5 +141,12 @@ msJwplayerStyleCaption(songplayer);
 </div>
 {VIDEO_HTML}
 <!-- END: videos -->
+
+<!-- BEGIN: comment -->
+<div class="ms-title-section" id="comment-area">
+    <h2><span>{LANG.comment}</span></h2>
+</div>
+{COMMENT_HTML}
+<!-- END: comment -->
 
 <!-- END: main -->

@@ -13,9 +13,9 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
 
 define('NV_IS_MUSIC_ADMIN', true);
 
-$allow_func = array('main', 'config');
+require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
-define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
+$allow_func = array('main', 'config', 'view');
 
 /**
  * Class ajaxRespon

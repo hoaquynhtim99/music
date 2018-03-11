@@ -616,11 +616,12 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
  * nv_theme_detail_song()
  *
  * @param mixed $array
+ * @param mixed $content_comment
  * @param mixed $array_albums
  * @param mixed $array_videos
  * @return
  */
-function nv_theme_detail_song($array, $array_albums, $array_videos)
+function nv_theme_detail_song($array, $content_comment, $array_albums, $array_videos)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
 
@@ -768,6 +769,19 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
         $xtpl->parse('main.videos');
     }
 
+    // Bình luận
+    if (!empty($content_comment)) {
+        $xtpl->assign('COMMENT_HTML', $content_comment);
+        $xtpl->parse('main.comment');
+
+        if (!empty($array['stat_comments'])) {
+            $xtpl->assign('COMMENT_NUMS', msFormatNumberViews($array['stat_comments']));
+            $xtpl->parse('main.comment_btn.stat');
+        }
+
+        $xtpl->parse('main.comment_btn');
+    }
+
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
@@ -776,11 +790,12 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
  * nv_theme_detail_video()
  *
  * @param mixed $array
+ * @param mixed $content_comment
  * @param mixed $array_albums
  * @param mixed $array_videos
  * @return
  */
-function nv_theme_detail_video($array, $array_albums, $array_videos)
+function nv_theme_detail_video($array, $content_comment, $array_albums, $array_videos)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
 
@@ -904,6 +919,19 @@ function nv_theme_detail_video($array, $array_albums, $array_videos)
         $xtpl->parse('main.videos');
     }
 
+    // Bình luận
+    if (!empty($content_comment)) {
+        $xtpl->assign('COMMENT_HTML', $content_comment);
+        $xtpl->parse('main.comment');
+
+        if (!empty($array['stat_comments'])) {
+            $xtpl->assign('COMMENT_NUMS', msFormatNumberViews($array['stat_comments']));
+            $xtpl->parse('main.comment_btn.stat');
+        }
+
+        $xtpl->parse('main.comment_btn');
+    }
+
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
@@ -913,11 +941,12 @@ function nv_theme_detail_video($array, $array_albums, $array_videos)
  *
  * @param mixed $array
  * @param mixed $array_captions
+ * @param mixed $content_comment
  * @param mixed $array_singer_albums
  * @param mixed $array_cat_albums
  * @return
  */
-function nv_theme_detail_album($array, $array_captions, $array_singer_albums, $array_cat_albums)
+function nv_theme_detail_album($array, $array_captions, $content_comment, $array_singer_albums, $array_cat_albums)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
 
@@ -1089,6 +1118,19 @@ function nv_theme_detail_album($array, $array_captions, $array_singer_albums, $a
     if (!empty($array_cat_albums)) {
         $xtpl->assign('CAT_ALBUMS_HTML', nv_theme_gird_albums($array_cat_albums));
         $xtpl->parse('main.cat_albums');
+    }
+
+    // Bình luận
+    if (!empty($content_comment)) {
+        $xtpl->assign('COMMENT_HTML', $content_comment);
+        $xtpl->parse('main.comment');
+
+        if (!empty($array['stat_comments'])) {
+            $xtpl->assign('COMMENT_NUMS', msFormatNumberViews($array['stat_comments']));
+            $xtpl->parse('main.comment_btn.stat');
+        }
+
+        $xtpl->parse('main.comment_btn');
     }
 
     $xtpl->parse('main');
