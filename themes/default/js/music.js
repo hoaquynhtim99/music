@@ -18,6 +18,16 @@ function msLoadLyric(soCode, soTitle, tokend, resTitle, resDoby) {
     });
 }
 
+function msJwplayerStyleCaption(jw) {
+    jw.setCaptions({
+        color: '#fff',
+        fontSize: 32,
+        fontOpacity: 90,
+        edgeStyle: 'uniform',
+        backgroundOpacity: 0
+    });
+}
+
 $(document).ready(function() {
     $('[data-toggle="show-va-singer"]').click(function(e) {
         e.preventDefault();

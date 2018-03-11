@@ -32,7 +32,9 @@ $module_version = array(
         $module_name . '/songs',
         $module_name . '/songs_cover',
         $module_name . '/videos',
-        $module_name . '/videos_cover'
+        $module_name . '/videos_cover',
+        $module_name . '/lyric',
+        $module_name . '/dataup.default123'
     ),
     'files_dir' => array(
         $module_name,

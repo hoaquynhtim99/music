@@ -33,6 +33,7 @@ $ms_detail_data['song_link'] = '';
 $ms_detail_data['song_link_ember'] = '';
 $ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
 $ms_detail_data['filesdata'] = array();
+$ms_detail_data['captions'] = array();
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
@@ -203,6 +204,22 @@ foreach ($filesdata as $_fileinfo) {
     );
 }
 ksort($ms_detail_data['filesdata']);
+
+// Lời bài hát
+$db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id=" . $ms_detail_data['song_id'] . " AND status=1");
+$db->select("*")->order("weight ASC");
+$result = $db->query($db->sql());
+
+while ($row = $result->fetch()) {
+    if (file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'])) {
+        $ms_detail_data['captions'][] = array(
+            'caption_lang' => $row['caption_lang'],
+            'caption_name' => isset($global_array_languages[$row['caption_lang']]) ? $global_array_languages[$row['caption_lang']]['name'] : nv_ucfirst($row['caption_lang']),
+            'caption_file' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'],
+            'is_default' => $row['is_default']
+        );
+    }
+}
 
 // Các phần khác
 $ms_detail_data['song_link'] = nv_get_detail_song_link($ms_detail_data, $ms_detail_data['singers']);

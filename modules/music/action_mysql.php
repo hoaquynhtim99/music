@@ -142,6 +142,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_quality_song";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_quality_video";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_caption";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_data";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums_data";
@@ -309,6 +310,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   is_official tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1: Chính thức, 0: Thành viên đăng',
   show_inhome tinyint(1) NOT NULL DEFAULT '0',
+  caption_supported varchar(250) NOT NULL DEFAULT '' COMMENT 'Các ngôn ngữ hỗ trợ lời karaoke có dạng vi,en,fr,...',
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (song_id),
   UNIQUE KEY song_code (song_code),
@@ -320,6 +322,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
   KEY show_inhome (show_inhome),
+  KEY caption_supported (caption_supported),
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs
@@ -330,6 +333,20 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 	ADD " . $lang . "_song_keywords text NOT NULL,
     ADD INDEX " . $lang . "_song_searchkey (" . $lang . "_song_searchkey)
 ";
+
+// Bảng lưu lời bài hát dạng karaoke
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_caption (
+  song_id int(11) unsigned NOT NULL,
+  caption_lang varchar(10) NOT NULL,
+  caption_file varchar(255) NOT NULL DEFAULT '' COMMENT 'File lời bài hát',
+  caption_data text NOT NULL COMMENT 'Dữ liệu dạng text',
+  is_default tinyint(1) NOT NULL DEFAULT '0',
+  weight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Sắp thứ tự',
+  status smallint(4) NOT NULL DEFAULT '0',
+  UNIQUE KEY song_id (song_id, caption_lang),
+  KEY is_default (is_default),
+  KEY status (status)
+) ENGINE=MyISAM";
 
 // Bảng lưu đường dẫn file nhạc theo định dạng
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_data (

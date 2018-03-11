@@ -130,6 +130,17 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_nation, $global_array_nation_alias)), $cacheTTL);
 }
 
+// Parse ngôn ngữ đầy đủ
+$cacheFile = NV_LANG_DATA . '_langs_' . NV_CACHE_PREFIX . '.cache';
+$cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
+
+if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
+    $global_array_languages = unserialize($cache);
+} else {
+    $global_array_languages = nv_parse_ini_file(NV_ROOTDIR . '/includes/ini/langs.ini', true);
+    $nv_Cache->setItem($module_name, $cacheFile, serialize($global_array_languages), $cacheTTL);
+}
+
 // Chất lượng bài hát
 $sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_song ORDER BY weight ASC";
 $global_array_soquality = $nv_Cache->db($sql, 'quality_id', $module_name);

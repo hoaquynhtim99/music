@@ -93,9 +93,16 @@ var songplayer = jwplayer('songplayer').setup({
     height: '219',
     stretching: 'fill',
     image: '{SONG.resource_cover}',
-    sources: [
-        <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->,<!-- END: comma --><!-- END: filesdata -->
-    ],
+    sources: [<!-- BEGIN: filesdata --><!-- BEGIN: comma -->, <!-- END: comma -->{
+        "file": "{FILESDATA.resource_path}",
+        "label": "{FILESDATA.quality_name}"
+    }<!-- END: filesdata -->],
+    <!-- BEGIN: tracks -->tracks: [<!-- BEGIN: loop -->{
+        "file": "{TRACK.caption_file}",
+        "kind": "captions",
+        "label": "{TRACK.caption_name}",
+        "default": {TRACK.is_default}
+    }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],<!-- END: tracks -->
     autostart: true,
     repeat: true,
     skin: {name: "nvmsso"},
@@ -105,6 +112,7 @@ var songplayer = jwplayer('songplayer').setup({
         hd: '{LANG.player_lang_hd}'
     }
 });
+msJwplayerStyleCaption(songplayer);
 </script>
 <div class="well ms-detailso-lrt">
     <h3 class="ms-detailso-lrt-title">{LANG.lyric}: {SONG.song_name}</h3>
