@@ -639,12 +639,16 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
 
     $xtpl->assign('SONG', $array);
 
+    $song_full_name = $array['song_name'] . ' - ';
+    $song_full_singer = array();
+
     // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
     if ($num_singers > $global_array_config['limit_singers_displayed']) {
         $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
 
         foreach ($array['singers'] as $singer) {
+            $song_full_singer[] = $singer['artist_name'];
             $xtpl->assign('SINGER', $singer);
             $xtpl->parse('main.va_singer.loop');
         }
@@ -654,6 +658,7 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
         $i = 0;
         foreach ($array['singers'] as $singer) {
             $i++;
+            $song_full_singer[] = $singer['artist_name'];
             $xtpl->assign('SINGER', $singer);
 
             if ($i > 1) {
@@ -663,9 +668,12 @@ function nv_theme_detail_song($array, $array_albums, $array_videos)
         }
         $xtpl->parse('main.show_singer');
     } else {
+        $song_full_singer[] = $global_array_config['unknow_singer'];
         $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
         $xtpl->parse('main.no_singer');
     }
+
+    $xtpl->assign('SONG_FULL_NAME', str_replace('"', '\"', $song_full_name . '<span>' . implode(', ', $song_full_singer) . '</span>'));
 
     // Xuất nhạc sĩ
     $num_authors = sizeof($array['authors']);
@@ -904,11 +912,12 @@ function nv_theme_detail_video($array, $array_albums, $array_videos)
  * nv_theme_detail_album()
  *
  * @param mixed $array
+ * @param mixed $array_captions
  * @param mixed $array_singer_albums
  * @param mixed $array_cat_albums
  * @return
  */
-function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
+function nv_theme_detail_album($array, $array_captions, $array_singer_albums, $array_cat_albums)
 {
     global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
 
@@ -980,7 +989,6 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
     $soi = 1;
     $soj = 0;
     $plindex = 0;
-    $numsong = sizeof($array['songs']);
     foreach ($array['songs'] as $song) {
         $soj++;
         $xtpl->assign('PLSO_STT', $soi++);
@@ -995,12 +1003,16 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
         $xtpl->assign('PLSO_DATA', $song);
         $xtpl->assign('PLSO_LRTTOKEND', md5($song['song_code'] . NV_CHECK_SESSION));
 
+        $song_full_name = $song['song_name'] . ' - ';
+        $song_full_singer = array();
+
         // Xuất ca sĩ
         $num_singers = sizeof($song['singers']);
         if ($num_singers > $global_array_config['limit_singers_displayed']) {
             $xtpl->assign('PLSO_VA_SINGERS', $global_array_config['various_artists']);
 
             foreach ($song['singers'] as $singer) {
+                $song_full_singer[] = $singer['artist_name'];
                 $xtpl->assign('PLSO_SINGER', $singer);
                 $xtpl->parse('main.playlist.loop.va_singer.loop');
             }
@@ -1010,6 +1022,7 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
             $i = 0;
             foreach ($song['singers'] as $singer) {
                 $i++;
+                $song_full_singer[] = $singer['artist_name'];
                 $xtpl->assign('PLSO_SINGER', $singer);
 
                 if ($i > 1) {
@@ -1019,27 +1032,44 @@ function nv_theme_detail_album($array, $array_singer_albums, $array_cat_albums)
             }
             $xtpl->parse('main.playlist.loop.show_singer');
         } else {
+            $song_full_singer[] = $global_array_config['unknow_singer'];
             $xtpl->assign('PLSO_UNKNOW_SINGER', $global_array_config['unknow_singer']);
             $xtpl->parse('main.playlist.loop.no_singer');
         }
 
+        $xtpl->assign('PLSO_FULL_NAME', str_replace('"', '\"', $song_full_name . '<span>' . implode(', ', $song_full_singer) . '</span>'));
+
         $xtpl->parse('main.playlist.loop');
 
         // Xuất playlist javascript
-        $numfile = sizeof($song['filesdata']);
         $i = 0;
         foreach ($song['filesdata'] as $_fileinfo) {
             $i++;
             $_fileinfo['resource_path'] = str_replace('"', '\"', $_fileinfo['resource_path']);
             $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
             $xtpl->assign('FILESDATA', $_fileinfo);
-            if ($i < $numfile) {
+            if ($i > 1) {
                 $xtpl->parse('main.playlist_js.loop.filesdata.comma');
             }
             $xtpl->parse('main.playlist_js.loop.filesdata');
         }
 
-        if ($soj < $numsong) {
+        if (isset($array_captions[$song['song_id']])) {
+            $i = 0;
+            foreach ($array_captions[$song['song_id']] as $track) {
+                $i++;
+                $track['is_default'] = !empty($track['is_default']) ? 'true' : 'false';
+                $xtpl->assign('TRACK', $track);
+                if ($i > 1) {
+                    $xtpl->parse('main.playlist_js.loop.tracks.loop.comma');
+                }
+                $xtpl->parse('main.playlist_js.loop.tracks.loop');
+            }
+
+            $xtpl->parse('main.playlist_js.loop.tracks');
+        }
+
+        if ($soj > 1) {
             $xtpl->parse('main.playlist_js.loop.comma');
         }
 

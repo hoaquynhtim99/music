@@ -103,6 +103,7 @@ var songplayer = jwplayer('songplayer').setup({
         "label": "{TRACK.caption_name}",
         "default": {TRACK.is_default}
     }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],<!-- END: tracks -->
+    title: "{SONG_FULL_NAME}",
     autostart: true,
     repeat: true,
     skin: {name: "nvmsso"},

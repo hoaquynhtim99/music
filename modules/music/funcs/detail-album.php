@@ -102,6 +102,7 @@ if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_dat
 
 // Lấy các bài hát của album này
 $array_songids = $array_songs = $array_songs_resources = array();
+$array_song_captions = array();
 $db->sqlreset()->select('*')->from(NV_MOD_TABLE . "_albums_data")->where("album_id=" . $ms_detail_data['album_id'] . " AND status=1")->order("weight ASC");
 $result = $db->query($db->sql());
 while ($row = $result->fetch()) {
@@ -144,6 +145,25 @@ if (!empty($array_songids)) {
                 'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $global_array_config['uploads_folder'] . '/' . $row['resource_path'],
                 'resource_duration' => $row['resource_duration'],
                 'quality_name' => isset($global_array_soquality[$row['quality_id']]) ? $global_array_soquality[$row['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
+            );
+        }
+    }
+
+    // Lấy lời của các bài hát
+    $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1");
+    $db->select("*")->order("weight ASC");
+    $result = $db->query($db->sql());
+
+    while ($row = $result->fetch()) {
+        if (file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'])) {
+            if (!isset($array_song_captions[$row['song_id']])) {
+                $array_song_captions[$row['song_id']] = array();
+            }
+            $array_song_captions[$row['song_id']][] = array(
+                'caption_lang' => $row['caption_lang'],
+                'caption_name' => isset($global_array_languages[$row['caption_lang']]) ? $global_array_languages[$row['caption_lang']]['name'] : nv_ucfirst($row['caption_lang']),
+                'caption_file' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'],
+                'is_default' => $row['is_default']
             );
         }
     }
@@ -242,7 +262,7 @@ if (!empty($ms_detail_data['singers'])) {
 $key_words = $ms_detail_data['album_keywords'];
 $description = strip_tags(preg_replace('/\<br[^\>]*\>/i', ' ', $ms_detail_data['album_introtext']));
 
-$contents = nv_theme_detail_album($ms_detail_data, $array_singer_albums, $array_cat_albums);
+$contents = nv_theme_detail_album($ms_detail_data, $array_song_captions, $array_singer_albums, $array_cat_albums);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

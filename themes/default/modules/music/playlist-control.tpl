@@ -20,13 +20,20 @@ $(document).ready(function() {
         height: '219',
         stretching: 'fill',
         image: '{ALBUM.resource_avatar}',
-        <!-- BEGIN: playlist_js -->playlist: [<!-- BEGIN: loop -->{
-            sources: [
-                <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: filesdata -->
-            ],
+        <!-- BEGIN: playlist_js -->playlist: [<!-- BEGIN: loop --><!-- BEGIN: comma -->, <!-- END: comma -->{
+            sources: [<!-- BEGIN: filesdata --><!-- BEGIN: comma -->, <!-- END: comma -->{
+                "file": "{FILESDATA.resource_path}",
+                "label": "{FILESDATA.quality_name}"
+            }<!-- END: filesdata -->],
+            <!-- BEGIN: tracks -->tracks: [<!-- BEGIN: loop -->{
+                "file": "{TRACK.caption_file}",
+                "kind": "captions",
+                "label": "{TRACK.caption_name}",
+                "default": {TRACK.is_default}
+            }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],<!-- END: tracks -->
             image: "{PLSO_DATA.resource_cover}",
-            title: ""
-        }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],
+            title: "{PLSO_FULL_NAME}"
+        }<!-- END: loop -->],
         <!-- END: playlist_js -->
         autostart: true,
         repeat: true,
@@ -38,6 +45,7 @@ $(document).ready(function() {
         },
         displaytitle: true
     });
+    msJwplayerStyleCaption(playlistplayer);
     // Play một bài hát mới trong playlist
     playlistplayer.on('playlistItem', function(item) {
         var thisitem = $('#soplaylists').find('li.plitem[data-plindex="' + item.index + '"]');
