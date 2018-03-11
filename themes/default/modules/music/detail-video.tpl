@@ -9,15 +9,10 @@ var videoplayer = jwplayer('videoplayer').setup({
     width: '100%',
     aspectratio: '16:9',
     androidhls: true,
-    sources: [
-        <!-- BEGIN: filesdata -->{"file": "{FILESDATA.resource_path}", "label": "{FILESDATA.quality_name}"}<!-- BEGIN: comma -->,<!-- END: comma --><!-- END: filesdata -->
-    ],
-    tracks: [{
-        "file": "/uploads/ca-nhac/lyric/_sokMPBL.vtt",
-        "kind": "captions",
-        "label": "L\u1eddi Karaoke",
-        "default": false
-    }],
+    sources: [<!-- BEGIN: filesdata --><!-- BEGIN: comma -->, <!-- END: comma -->{
+        "file": "{FILESDATA.resource_path}",
+        "label": "{FILESDATA.quality_name}"
+    }<!-- END: filesdata -->],
     autostart: true,
     primary: 'html5',
     repeat: true,

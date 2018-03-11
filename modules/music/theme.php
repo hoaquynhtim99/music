@@ -867,14 +867,13 @@ function nv_theme_detail_video($array, $array_albums, $array_videos)
     }
 
     // Xuất đường dẫn cho player
-    $numfile = sizeof($array['filesdata']);
     $i = 0;
     foreach ($array['filesdata'] as $_fileinfo) {
         $i++;
         $_fileinfo['resource_path'] = str_replace('"', '\"', $_fileinfo['resource_path']);
         $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
         $xtpl->assign('FILESDATA', $_fileinfo);
-        if ($i < $numfile) {
+        if ($i > 1) {
             $xtpl->parse('main.filesdata.comma');
         }
         $xtpl->parse('main.filesdata');
