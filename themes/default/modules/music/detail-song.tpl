@@ -75,18 +75,9 @@
         </div>
     </div>
 </div>
+<!-- BEGIN: player -->
 <div class="ms-audio-player">
     <div id="songplayer"></div>
-</div>
-<div class="ms-detailso-action">
-    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
-    <!-- BEGIN: comment_btn -->
-    <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
-    <!-- END: comment_btn -->
-    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
-    <!-- BEGIN: video -->
-    <a href="{SONG.video.video_link}" class="btn btn-primary btn-xs"><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.view_video}</a>
-    <!-- END: video -->
 </div>
 <script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
 <script type="text/javascript">
@@ -117,6 +108,17 @@ var songplayer = jwplayer('songplayer').setup({
 });
 msJwplayerStyleCaption(songplayer);
 </script>
+<!-- END: player -->
+<div class="ms-detailso-action">
+    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
+    <!-- BEGIN: comment_btn -->
+    <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
+    <!-- END: comment_btn -->
+    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
+    <!-- BEGIN: video -->
+    <a href="{SONG.video.video_link}" class="btn btn-primary btn-xs"><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.view_video}</a>
+    <!-- END: video -->
+</div>
 <div class="well ms-detailso-lrt">
     <h3 class="ms-detailso-lrt-title">{LANG.lyric}: {SONG.song_name}</h3>
     <div class="ms-detailso-lrt-body" id="detail-song-lrt">

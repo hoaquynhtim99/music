@@ -1,13 +1,15 @@
 <!-- BEGIN: main -->
 
-<div class="ms-video-player">
+<!-- BEGIN: player -->
+<div class="ms-video-player<!-- BEGIN: embed --> embed<!-- END: embed -->">
     <div id="videoplayer"></div>
 </div>
 <script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
 <script type="text/javascript">
 var videoplayer = jwplayer('videoplayer').setup({
     width: '100%',
-    aspectratio: '16:9',
+    <!-- BEGIN: embedplayer -->height: '100%',<!-- END: embedplayer -->
+    <!-- BEGIN: fullplayer -->aspectratio: '16:9',<!-- END: fullplayer -->
     androidhls: true,
     sources: [<!-- BEGIN: filesdata --><!-- BEGIN: comma -->, <!-- END: comma -->{
         "file": "{FILESDATA.resource_path}",
@@ -24,6 +26,7 @@ var videoplayer = jwplayer('videoplayer').setup({
     }
 });
 </script>
+<!-- END: player -->
 
 <div class="ms-detailmv-header clearfix">
     <h1 class="ms-detailmv-header-name">
@@ -98,7 +101,7 @@ var videoplayer = jwplayer('videoplayer').setup({
                 <li>
                     <a href="#" data-toggle="show-va-singer" data-target="#ember-code-area"><i class="fa fa-code" aria-hidden="true"></i> {LANG.get_ember_code}</a>
                     <div class="hidden" id="ember-code-area" title="{LANG.ember_code}">
-                        <textarea class="form-control ms-detailmv-ember-code" rows="5" data-toggle="select-all">&lt;iframe src=&quot;{VIDEO.video_link_ember}&quot; width=&quot;100%&quot; height=&quot;219&quot; border=&quot;0&quot; style=&quot;border:0px&quot; &gt;&lt;/iframe&gt;</textarea>
+                        <textarea class="form-control ms-detailmv-ember-code" rows="5" data-toggle="select-all">&lt;iframe src=&quot;{VIDEO.video_link_ember}&quot; width=&quot;100%&quot; height=&quot;420&quot; border=&quot;0&quot; style=&quot;border:0px&quot; &gt;&lt;/iframe&gt;</textarea>
                     </div>
                 </li>
                 <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {LANG.report}</a></li>

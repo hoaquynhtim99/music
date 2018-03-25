@@ -816,6 +816,10 @@ ul.ms-detailso-header-info h2 {
     margin-bottom: 10px;
     min-height: 400px;
 }
+.ms-video-player.embed {
+    height: 100%;
+    margin-bottom: 0;
+}
 .ms-detailmv-header {
     margin-bottom: 10px;
     position: relative;
@@ -902,6 +906,9 @@ ul.ms-detailab-header-info h2 {
     max-height: 400px;
     overflow: auto;
 }
+.ms-detailab-solists.embed {
+    max-height: 281px;
+}
 
 .jspScrollable,
 .jspScrollable:focus,
@@ -934,6 +941,9 @@ ul.ms-detailab-header-info h2 {
     border-bottom: 1px solid #EEE;
     position: relative;
     overflow: hidden;
+}
+.ms-detailab-solists.embed .ctn > ul > li {
+    border-bottom-color: #fff;
 }
 .ms-detailab-solists .ctn > ul > li:last-child {
     border-bottom: 0;

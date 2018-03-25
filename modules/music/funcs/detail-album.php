@@ -27,6 +27,7 @@ $ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
 $ms_detail_data['cat_id'] = $ms_detail_data['cat_ids'] ? $ms_detail_data['cat_ids'][0] : 0;
 $ms_detail_data['singer_albums_link'] = '';
 $ms_detail_data['cat_albums_link'] = '';
+$ms_detail_data['album_link'] = '';
 $ms_detail_data['album_link_ember'] = '';
 $ms_detail_data['cat_name'] = $global_array_config['unknow_cat'];
 $ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
@@ -243,6 +244,10 @@ foreach ($array_songids as $song_id => $_tmpdata) {
     }
 }
 
+// Các phần khác
+$ms_detail_data['album_link'] = nv_get_detail_album_link($ms_detail_data, $ms_detail_data['singers']);
+$ms_detail_data['album_link_ember'] = NV_MY_DOMAIN . nv_url_rewrite(nv_get_detail_album_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
+
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);
 
@@ -286,5 +291,5 @@ if (isset($site_mods['comment']) and isset($module_config[$module_name]['activec
 $contents = nv_theme_detail_album($ms_detail_data, $array_song_captions, $content_comment, $array_singer_albums, $array_cat_albums);
 
 include NV_ROOTDIR . '/includes/header.php';
-echo nv_site_theme($contents);
+echo nv_site_theme($contents, !$is_embed_mode);
 include NV_ROOTDIR . '/includes/footer.php';

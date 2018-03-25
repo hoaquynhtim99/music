@@ -251,5 +251,5 @@ if (isset($site_mods['comment']) and isset($module_config[$module_name]['activec
 $contents = nv_theme_detail_video($ms_detail_data, $content_comment, $array_albums, $array_videos);
 
 include NV_ROOTDIR . '/includes/header.php';
-echo nv_site_theme($contents);
+echo nv_site_theme($contents, !$is_embed_mode);
 include NV_ROOTDIR . '/includes/footer.php';

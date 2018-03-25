@@ -623,7 +623,7 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
  */
 function nv_theme_detail_song($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config, $is_embed_mode;
 
     $xtpl = new XTemplate('detail-song.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -723,6 +723,11 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         $xtpl->parse('main.no_cat');
     }
 
+    // Video của bài hát
+    if (!empty($array['video'])) {
+        $xtpl->parse('main.video');
+    }
+
     // Xuất đường dẫn cho player
     $i = 0;
     foreach ($array['filesdata'] as $_fileinfo) {
@@ -731,9 +736,9 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
         $xtpl->assign('FILESDATA', $_fileinfo);
         if ($i > 1) {
-            $xtpl->parse('main.filesdata.comma');
+            $xtpl->parse('main.player.filesdata.comma');
         }
-        $xtpl->parse('main.filesdata');
+        $xtpl->parse('main.player.filesdata');
     }
 
     // Lời bài hát
@@ -744,17 +749,17 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
             $track['is_default'] = !empty($track['is_default']) ? 'true' : 'false';
             $xtpl->assign('TRACK', $track);
             if ($i > 1) {
-                $xtpl->parse('main.tracks.loop.comma');
+                $xtpl->parse('main.player.tracks.loop.comma');
             }
-            $xtpl->parse('main.tracks.loop');
+            $xtpl->parse('main.player.tracks.loop');
         }
 
-        $xtpl->parse('main.tracks');
+        $xtpl->parse('main.player.tracks');
     }
 
-    // Video của bài hát
-    if (!empty($array['video'])) {
-        $xtpl->parse('main.video');
+    $xtpl->parse('main.player');
+    if ($is_embed_mode) {
+        return $xtpl->text('main.player');
     }
 
     // Xuất các album liên quan
@@ -797,7 +802,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
  */
 function nv_theme_detail_video($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config, $is_embed_mode;
 
     $xtpl = new XTemplate('detail-video.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -889,6 +894,11 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         $xtpl->parse('main.no_cat');
     }
 
+    // Bài hát của video
+    if (!empty($array['song'])) {
+        $xtpl->parse('main.song');
+    }
+
     // Xuất đường dẫn cho player
     $i = 0;
     foreach ($array['filesdata'] as $_fileinfo) {
@@ -897,14 +907,20 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
         $xtpl->assign('FILESDATA', $_fileinfo);
         if ($i > 1) {
-            $xtpl->parse('main.filesdata.comma');
+            $xtpl->parse('main.player.filesdata.comma');
         }
-        $xtpl->parse('main.filesdata');
+        $xtpl->parse('main.player.filesdata');
     }
 
-    // Bài hát của video
-    if (!empty($array['song'])) {
-        $xtpl->parse('main.song');
+    if ($is_embed_mode) {
+        $xtpl->parse('main.player.embed');
+        $xtpl->parse('main.player.embedplayer');
+    } else {
+        $xtpl->parse('main.player.fullplayer');
+    }
+    $xtpl->parse('main.player');
+    if ($is_embed_mode) {
+        return $xtpl->text('main.player');
     }
 
     // Xuất các album liên quan
@@ -948,7 +964,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
  */
 function nv_theme_detail_album($array, $array_captions, $content_comment, $array_singer_albums, $array_cat_albums)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config, $is_embed_mode;
 
     $xtpl = new XTemplate('detail-album.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -1031,6 +1047,7 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
 
         $xtpl->assign('PLSO_DATA', $song);
         $xtpl->assign('PLSO_LRTTOKEND', md5($song['song_code'] . NV_CHECK_SESSION));
+        $xtpl->assign('PLSO_LINK_TARGET', $is_embed_mode ? ' target="_blank"' : '');
 
         $song_full_name = $song['song_name'] . ' - ';
         $song_full_singer = array();
@@ -1043,10 +1060,10 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
             foreach ($song['singers'] as $singer) {
                 $song_full_singer[] = $singer['artist_name'];
                 $xtpl->assign('PLSO_SINGER', $singer);
-                $xtpl->parse('main.playlist.loop.va_singer.loop');
+                $xtpl->parse('main.player.playlist.loop.va_singer.loop');
             }
 
-            $xtpl->parse('main.playlist.loop.va_singer');
+            $xtpl->parse('main.player.playlist.loop.va_singer');
         } elseif (!empty($song['singers'])) {
             $i = 0;
             foreach ($song['singers'] as $singer) {
@@ -1055,20 +1072,23 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
                 $xtpl->assign('PLSO_SINGER', $singer);
 
                 if ($i > 1) {
-                    $xtpl->parse('main.playlist.loop.show_singer.loop.separate');
+                    $xtpl->parse('main.player.playlist.loop.show_singer.loop.separate');
                 }
-                $xtpl->parse('main.playlist.loop.show_singer.loop');
+                $xtpl->parse('main.player.playlist.loop.show_singer.loop');
             }
-            $xtpl->parse('main.playlist.loop.show_singer');
+            $xtpl->parse('main.player.playlist.loop.show_singer');
         } else {
             $song_full_singer[] = $global_array_config['unknow_singer'];
             $xtpl->assign('PLSO_UNKNOW_SINGER', $global_array_config['unknow_singer']);
-            $xtpl->parse('main.playlist.loop.no_singer');
+            $xtpl->parse('main.player.playlist.loop.no_singer');
         }
 
         $xtpl->assign('PLSO_FULL_NAME', str_replace('"', '\"', $song_full_name . '<span>' . implode(', ', $song_full_singer) . '</span>'));
 
-        $xtpl->parse('main.playlist.loop');
+        if (!$is_embed_mode) {
+            $xtpl->parse('main.player.playlist.loop.actions');
+        }
+        $xtpl->parse('main.player.playlist.loop');
 
         // Xuất playlist javascript
         $i = 0;
@@ -1078,9 +1098,9 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
             $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
             $xtpl->assign('FILESDATA', $_fileinfo);
             if ($i > 1) {
-                $xtpl->parse('main.playlist_js.loop.filesdata.comma');
+                $xtpl->parse('main.player.playlist_js.loop.filesdata.comma');
             }
-            $xtpl->parse('main.playlist_js.loop.filesdata');
+            $xtpl->parse('main.player.playlist_js.loop.filesdata');
         }
 
         if (isset($array_captions[$song['song_id']])) {
@@ -1090,23 +1110,32 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
                 $track['is_default'] = !empty($track['is_default']) ? 'true' : 'false';
                 $xtpl->assign('TRACK', $track);
                 if ($i > 1) {
-                    $xtpl->parse('main.playlist_js.loop.tracks.loop.comma');
+                    $xtpl->parse('main.player.playlist_js.loop.tracks.loop.comma');
                 }
-                $xtpl->parse('main.playlist_js.loop.tracks.loop');
+                $xtpl->parse('main.player.playlist_js.loop.tracks.loop');
             }
 
-            $xtpl->parse('main.playlist_js.loop.tracks');
+            $xtpl->parse('main.player.playlist_js.loop.tracks');
         }
 
         if ($soj > 1) {
-            $xtpl->parse('main.playlist_js.loop.comma');
+            $xtpl->parse('main.player.playlist_js.loop.comma');
         }
 
-        $xtpl->parse('main.playlist_js.loop');
+        $xtpl->parse('main.player.playlist_js.loop');
         $plindex++;
     }
-    $xtpl->parse('main.playlist');
-    $xtpl->parse('main.playlist_js');
+    if ($is_embed_mode) {
+        $xtpl->parse('main.player.playlist.embed');
+    }
+    $xtpl->parse('main.player.playlist');
+    $xtpl->parse('main.player.playlist_js');
+
+    $xtpl->parse('main.player');
+    if ($is_embed_mode) {
+        $xtpl->parse('main.player.playlist.embed');
+        return $xtpl->text('main.player');
+    }
 
     // Xuất các album cùng ca sĩ
     if (!empty($array_singer_albums)) {

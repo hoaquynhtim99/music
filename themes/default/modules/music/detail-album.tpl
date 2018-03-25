@@ -55,7 +55,7 @@
                 <li>
                     <a href="#" data-toggle="show-va-singer" data-target="#ember-code-area"><i class="fa fa-code" aria-hidden="true"></i> {LANG.get_ember_code}</a>
                     <div class="hidden" id="ember-code-area" title="{LANG.ember_code}">
-                        <textarea class="form-control ms-detailso-ember-code" rows="5" data-toggle="select-all">&lt;iframe src=&quot;{ALBUM.album_link_ember}&quot; width=&quot;100%&quot; height=&quot;219&quot; border=&quot;0&quot; style=&quot;border:0px&quot; &gt;&lt;/iframe&gt;</textarea>
+                        <textarea class="form-control ms-detailso-ember-code" rows="5" data-toggle="select-all">&lt;iframe src=&quot;{ALBUM.album_link_ember}&quot; width=&quot;100%&quot; height=&quot;500&quot; border=&quot;0&quot; style=&quot;border:0px&quot; &gt;&lt;/iframe&gt;</textarea>
                     </div>
                 </li>
                 <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {LANG.report}</a></li>
@@ -64,11 +64,14 @@
     </div>
 </div>
 
+<!-- BEGIN: player -->
 <div class="ms-playlist-player">
     <div id="playlistplayer"></div>
 </div>
 
 {FILE "playlist-items.tpl"}
+{FILE "playlist-control.tpl"}
+<!-- END: player -->
 
 <div class="well ms-detailso-lrt">
     <h3 class="ms-detailso-lrt-title">{LANG.lyric}: <span id="solrtName">...</span></h3>
@@ -80,8 +83,6 @@
         <a href="#" class="ms-detailso-lrt-control-h" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="H" data-unique="detail-song-lrt">{LANG.view_haft}</a>
     </div>
 </div>
-
-{FILE "playlist-control.tpl"}
 
 <!-- BEGIN: singer_albums -->
 <div class="ms-title-section">

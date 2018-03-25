@@ -475,9 +475,10 @@ function nv_get_view_singer_link($singer, $amp = true, $tab = '')
  * @param mixed $album
  * @param array $singers
  * @param bool $amp
+ * @param string $query_string
  * @return
  */
-function nv_get_detail_album_link($album, $singers = array(), $amp = true)
+function nv_get_detail_album_link($album, $singers = array(), $amp = true, $query_string = '')
 {
     global $global_config, $module_info, $global_array_config;
     $num_singers = sizeof($singers);
@@ -492,7 +493,7 @@ function nv_get_detail_album_link($album, $singers = array(), $amp = true)
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'];
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**

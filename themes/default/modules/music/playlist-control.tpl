@@ -73,5 +73,8 @@ $(document).ready(function() {
         var thisitem = $('#soplaylists').find('li.plitem[data-plindex="' + index + '"]');
         thisitem.addClass('pause');
     });
+    $(window).on('resize', function() {
+        jScrollPaneAPI.reinitialise();
+    });
 });
 </script>
