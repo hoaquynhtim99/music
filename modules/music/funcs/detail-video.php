@@ -206,7 +206,17 @@ ksort($ms_detail_data['filesdata']);
 
 // Các phần khác
 $ms_detail_data['video_link'] = nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers']);
-$ms_detail_data['video_link_ember'] = NV_MY_DOMAIN . nv_url_rewrite(nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
+$ms_detail_data['video_link_ember'] = nv_url_rewrite(nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
+
+$true_rewrite_url = nv_url_rewrite(str_replace('&amp;', '&', $is_embed_mode ? $ms_detail_data['video_link_ember'] : $ms_detail_data['video_link']), true);
+
+// Kiểm tra để chuyển về URL có đuôi .html hoặc tương đương
+if ($_SERVER['REQUEST_URI'] != $true_rewrite_url) {
+    nv_redirect_location($true_rewrite_url);
+}
+$canonicalUrl = NV_MAIN_DOMAIN . nv_url_rewrite(str_replace('&amp;', '&', $ms_detail_data['video_link']), true);
+
+$ms_detail_data['video_link_ember'] = NV_MY_DOMAIN . $ms_detail_data['video_link_ember'];
 
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);
