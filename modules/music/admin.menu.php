@@ -12,4 +12,11 @@ if (!defined('NV_ADMIN')) {
     die('Stop!!!');
 }
 
+$allow_func = array(
+    'main',
+    'config',
+    'view',
+    'nation-manager'
+);
+
 $submenu['config'] = $lang_module['config'];

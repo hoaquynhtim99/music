@@ -15,8 +15,6 @@ define('NV_IS_MUSIC_ADMIN', true);
 
 require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
-$allow_func = array('main', 'config', 'view');
-
 /**
  * Class ajaxRespon
  *

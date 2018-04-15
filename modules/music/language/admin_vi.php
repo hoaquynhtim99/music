@@ -25,6 +25,24 @@ $lang_module['browse_server'] = 'Duyệt máy chủ';
 $lang_module['view_image'] = 'Xem ảnh';
 $lang_module['delete_value'] = 'Xóa dữ liệu';
 $lang_module['image'] = 'Hình ảnh';
+$lang_module['weight'] = 'Thứ tự';
+$lang_module['code'] = 'Mã';
+$lang_module['title'] = 'Tên';
+$lang_module['stat'] = 'Thống kê';
+$lang_module['create'] = 'Tạo';
+$lang_module['update'] = 'Cập nhật';
+$lang_module['action'] = 'Thao tác';
+$lang_module['select'] = 'Chọn';
+$lang_module['with_selected'] = 'Với các dòng chọn';
+
+$lang_module['acr_singer'] = 'S';
+$lang_module['acr_author'] = 'A';
+
+$lang_module['action_active'] = 'Kích hoạt';
+$lang_module['action_deactive'] = 'Đình chỉ';
+
+$lang_module['stat_singers'] = 'Số ca sĩ';
+$lang_module['stat_authors'] = 'Số nhạc sĩ';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';
@@ -45,6 +63,7 @@ $lang_module['config_view_singer'] = 'Cấu hình tại trang xem chi tiết ca 
 $lang_module['config_list_albums'] = 'Cấu hình tại trang xem danh sách album';
 $lang_module['config_list_videos'] = 'Cấu hình tại trang xem danh sách video';
 $lang_module['config_others'] = 'Các thiết lập khác';
+$lang_module['config_quick_select'] = 'Chuyển nhanh đến cấu hình';
 
 $lang_module['limit_singers_displayed'] = 'Số ca sĩ tối đa hiển thị';
 $lang_module['limit_singers_displayed_help'] = 'Nếu một bài hát, video, album có nhiều ca sĩ thể hiện hơn giá trị đã chọn, hệ thống sẽ hiển thị ca sĩ là giá trị ở ô bên dưới. Người dùng nhấp vào để hiển thị danh sách các ca sĩ thể hiện';
@@ -122,3 +141,5 @@ $lang_module['gird_videos_percat_nums'] = 'Số video mỗi danh mục';
 $lang_module['gird_videos_percat_nums_help'] = 'Số video hiển thị ở mỗi danh mục tại trang chính';
 $lang_module['gird_videos_incat_nums'] = 'Số video ở danh mục';
 $lang_module['gird_videos_incat_nums_help'] = 'Số video hiển thị mỗi trang khi xem từng danh mục';
+
+$lang_module['nation_manager'] = 'Quản lý quốc gia';

@@ -1,11 +1,28 @@
 <!-- BEGIN: main -->
 <div class="alert alert-info">{CONFIG_NOTE}.</div>
+<div class="form-group">
+    <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {LANG.config_quick_select} <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-fullwidth">
+            <li><a href="#config_display" data-toggle="msscrollto">{LANG.config_display}</a></li>
+            <li><a href="#config_view_singer" data-toggle="msscrollto">{LANG.config_view_singer}</a></li>
+            <li><a href="#config_urls_system" data-toggle="msscrollto">{LANG.config_urls_system}</a></li>
+            <li><a href="#config_others" data-toggle="msscrollto">{LANG.config_others}</a></li>
+            <li><a href="#config_mainpage" data-toggle="msscrollto">{LANG.config_mainpage}</a></li>
+            <li><a href="#config_list_albums" data-toggle="msscrollto">{LANG.config_list_albums}</a></li>
+            <li><a href="#config_list_videos" data-toggle="msscrollto">{LANG.config_list_videos}</a></li>
+            <li><a href="#config_structre_data_page_title" data-toggle="msscrollto">{LANG.config_structre_data_page_title}</a></li>
+        </ul>
+    </div>
+</div>
 <form action="{FORM_ACTION}" method="post" role="form" class="form-horizontal" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
         <div class="row">
             <div class="col-md-12 col-lg-12">
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_display">
                     <div class="panel-heading"><strong>{LANG.config_display}</strong></div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -35,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_view_singer">
                     <div class="panel-heading"><strong>{LANG.config_view_singer}</strong></div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -117,7 +134,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_urls_system">
                     <div class="panel-heading"><strong>{LANG.config_urls_system}</strong></div>
                     <div class="panel-body">
                         <div class="alert alert-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{LANG.config_alert_change}</div>
@@ -177,7 +194,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_others">
                     <div class="panel-heading"><strong>{LANG.config_others}</strong></div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -254,7 +271,7 @@
                 </div>
             </div>
             <div class="col-md-12 col-lg-12">
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_mainpage">
                     <div class="panel-heading"><strong>{LANG.config_mainpage}</strong></div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -363,7 +380,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_list_albums">
                     <div class="panel-heading"><strong>{LANG.config_list_albums}</strong></div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -382,7 +399,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_list_videos">
                     <div class="panel-heading"><strong>{LANG.config_list_videos}</strong></div>
                     <div class="panel-body">
                         <div class="form-group">
@@ -401,7 +418,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info">
+                <div class="panel panel-info" id="config_structre_data_page_title">
                     <div class="panel-heading"><strong>{LANG.config_structre_data_page_title}</strong></div>
                     <div class="panel-body">
                         <div class="alert alert-warning"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>

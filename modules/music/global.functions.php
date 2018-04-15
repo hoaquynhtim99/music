@@ -323,7 +323,7 @@ function nv_get_cat_select_fields($full_fields = false)
 function nv_get_nation_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('nation_id', 'nation_code', 'stat_singers', 'stat_authors', 'status');
+    $array_select_fields = array('nation_id', 'nation_code', 'stat_singers', 'stat_authors', 'time_add', 'time_update', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_nation_name nation_name';
     $array_select_fields[] = NV_LANG_DATA . '_nation_alias nation_alias';
     $array_select_fields[] = NV_LANG_DATA . '_nation_introtext nation_introtext';
@@ -558,8 +558,22 @@ function nv_get_detail_video_link($video, $singers = array(), $amp = true, $quer
  */
 function msFormatNumberViews($input)
 {
-    if (NV_LANG_DATA == 'vi') {
+    if (NV_LANG_INTERFACE == 'vi') {
         return number_format($input, 0, ',', '.');
     }
     return number_format($input, 0, '.', ',');
+}
+
+/**
+ * msFormatDateViews()
+ *
+ * @param mixed $input
+ * @return
+ */
+function msFormatDateViews($input)
+{
+    if (NV_LANG_INTERFACE == 'vi') {
+        return nv_date('d M, Y', $input);
+    }
+    return nv_date('M d, Y', $input);
 }
