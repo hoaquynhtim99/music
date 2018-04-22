@@ -484,22 +484,22 @@ $(document).ready(function() {
                 content: msGetPopoverContent(this),
                 trigger: "manual"
             });
-            $(this).popover('show');
             $(this).on('shown.bs.popover', function() {
-                console.log('SHOW');
-                /*
+                // Cuộn tới và đánh dấu current
                 var $this = $(this);
                 var ctn = $('#' + $this.attr('aria-describedby'));
-                var wrapArea = ctn.find('.dropdown-cattool-ctn');
-                var wrapContent = ctn.find('.dropdown-cattool');
-                wrapContent.find('[data-value="' + $this.data('current') + '"]').addClass('active');
+                var wrapArea = ctn.find('.ms-dropdown-tool-ctn');
+                var wrapContent = ctn.find('.ms-dropdown-tool');
+                wrapContent.find('[data-value="' + $this.data('value') + '"]').addClass('active');
                 if (wrapArea.height() < wrapContent.height()) {
                     var item = wrapContent.find('li:first');
-                    var scrollTop = ($this.data('current') - $this.data('min')) * item.height();
+                    var scrollTop = ($this.data('value') - 1) * item.height();
                     wrapArea.scrollTop(scrollTop);
                 }
-                */
+                // Ghi lại một số data
+                ctn.data('btn', $this);
             });
+            $(this).popover('show');
         } else {
             msDestroyAllPop();
         }
@@ -507,6 +507,33 @@ $(document).ready(function() {
     $(document).delegate('.ms-dropdown-tool a', 'click', function(e) {
         e.preventDefault();
         msDestroyAllPop();
+        var $this = $(this);
+        var ctn = $this.parent().parent();
+        var btn = ctn.parent().parent().parent().data('btn');
+        btn.find('span.text').html('<i class="fa fa-spinner fa-spin fa-fw"></i>' + $this.html());
+        btn.prop('disabled', true);
+        // Xử lý dữ liệu
+        $.ajax({
+            cache: false,
+            dataType: 'json',
+            type: 'POST',
+            url: script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=' + btn.data('op') + '&nocache=' + new Date().getTime(),
+            data: 'ajaction=' + btn.data('type') + '&id=' + btn.data('id') + '&value=' + $this.data('value')
+        }).done(function(res) {
+            if (res.status == 'ok') {
+                location.reload();
+            } else {
+                alert(res.message);
+                btn.find('span.text i').remove();
+                btn.prop('disabled', false);
+            }
+        }).fail(function() {
+            alert("Error request!!!");
+            btn.find('span.text i').remove();
+            btn.prop('disabled', false);
+        }).always(function() {
+            // Not things
+        });
     });
     $(document).delegate('div.popover', 'click', function(e) {
         e.stopPropagation();
@@ -527,6 +554,15 @@ $(window).on('load', function() {
 
 });
 
-function msGetPopoverContent() {
-    return '<div class="ms-dropdown-tool-ctn"><ul class="ms-dropdown-tool">' + 123 + '</ul></div>';
+function msGetPopoverContent(e) {
+    var popKeys = "ms_tmppop_" + $(e).data('type') + '_' + $(e).data('max');
+    var popContents = $('#' + popKeys);
+    if (!popContents.length) {
+        $('body').append('<ul id="' + popKeys + '" class="hidden"></ul>');
+        popContents = $('#' + popKeys);
+        for (var i = 1; i <= $(e).data('max'); i++) {
+            popContents.append('<li><a href="#" data-value="' + i + '">' + i + '</a></li>');
+        }
+    }
+    return '<div class="ms-dropdown-tool-ctn clearfix"><ul class="ms-dropdown-tool">' + popContents.html() + '</ul></div>';
 }

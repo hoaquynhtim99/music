@@ -22,8 +22,8 @@
                         <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
                     </td>
                     <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list">
-                            <span class="text">12</span>
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
+                            <span class="text">{ROW.weight}</span>
                             <span class="caret"></span>
                         </button>
                     </td>

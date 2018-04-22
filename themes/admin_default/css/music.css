@@ -79,6 +79,14 @@ hr.sm {
 .ms-table-list-with-action-bottom tfoot tr > td:first-child {
     padding-left: 0!important;
 }
+@media (max-width: 767px) {
+.ms-table-list-with-action-bottom tfoot tr > td:first-child {
+    padding-left: 10px!important;
+}
+.ms-table-list-with-action-bottom tfoot tr > td:first-child .form-group {
+    margin-bottom: 0;
+}
+}
 
 .ms-dropdown-tool-ctn {
     margin: 0 -14px;

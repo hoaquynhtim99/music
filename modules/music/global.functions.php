@@ -323,7 +323,7 @@ function nv_get_cat_select_fields($full_fields = false)
 function nv_get_nation_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('nation_id', 'nation_code', 'stat_singers', 'stat_authors', 'time_add', 'time_update', 'status');
+    $array_select_fields = array('nation_id', 'nation_code', 'stat_singers', 'stat_authors', 'time_add', 'time_update', 'status', 'weight');
     $array_select_fields[] = NV_LANG_DATA . '_nation_name nation_name';
     $array_select_fields[] = NV_LANG_DATA . '_nation_alias nation_alias';
     $array_select_fields[] = NV_LANG_DATA . '_nation_introtext nation_introtext';
