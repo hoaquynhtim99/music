@@ -104,6 +104,19 @@ class ajaxRespon
     }
 
     /**
+     * ajaxRespon::set()
+     *
+     * @param mixed $key
+     * @param mixed $value
+     * @return
+     */
+    public function set($key, $value)
+    {
+        $this->json[$key] = $value;
+        return $this;
+    }
+
+    /**
      * ajaxRespon::reset()
      *
      * @return

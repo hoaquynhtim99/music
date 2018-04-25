@@ -25,6 +25,9 @@ define('MS_COMMENT_AREA_VIDEO', 3);
 
 $array_alphabets = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
+$global_array_rule = array();
+$global_array_rule['nation_code'] = '/[a-zA-Z0-9]{4}/';
+
 // Cấu hình module
 $cacheFile = NV_LANG_DATA . '_config_' . NV_CACHE_PREFIX . '.cache';
 $cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
@@ -548,6 +551,46 @@ function nv_get_detail_video_link($video, $singers = array(), $amp = true, $quer
         $singer_alias = '';
     }
     return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+}
+
+/**
+ * msGetModuleSetupLangs()
+ * Danh sách các ngôn ngữ đã cài module
+ * @return
+ */
+function msGetModuleSetupLangs()
+{
+    global $db_config, $db, $module_data, $nv_Cache;
+
+    $module_name = 'settings';
+    $cacheFile = NV_LANG_DATA . '_cats_' . NV_CACHE_PREFIX . '.cache';
+    $cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
+
+    if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
+        $array_lang_module_setup = unserialize($cache);
+    } else {
+        $array_lang_module_setup = array();
+
+        // Xác định các ngôn ngữ đã cài đặt
+        $_sql = "SELECT * FROM " . $db_config['prefix'] . "_setup_language WHERE setup=1";
+        $_result = $db->query($_sql);
+        $array_lang_setup = array();
+        while ($_row = $_result->fetch()) {
+            $array_lang_setup[$_row['lang']] = $_row['lang'];
+        }
+
+        // Xác định các ngôn ngữ đã cài module
+        foreach ($array_lang_setup as $_lang) {
+            $is_setup = $db->query("SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $_lang . "_modules WHERE module_data=" . $db->quote($module_data))->fetchColumn();
+            if ($is_setup) {
+                $array_lang_module_setup[$_lang] = $_lang;
+            }
+        }
+
+        $nv_Cache->setItem($module_name, $cacheFile, serialize($array_lang_module_setup), $cacheTTL);
+    }
+
+    return $array_lang_module_setup;
 }
 
 /**

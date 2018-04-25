@@ -548,6 +548,95 @@ $(document).ready(function() {
         });
         msAllPop = new Array();
     }
+    /**
+     * Quản lý các tác vụ bằng popup
+     */
+    var popupModal = $('#formmodal');
+    var popupForm = $('#formmodalctn');
+    var popupFubmitNext = $('#formmodalsaveandcon');
+    var popupFubmitBack = $('#formmodalsaveandback');
+
+    // Load lại trang khi đóng cái form popup
+    popupModal.on('hide.bs.modal', function() {
+        if ($(this).data('changed') == true) {
+            location.reload();
+        }
+    });
+    $('input', popupModal).change(function() {
+        popupModal.data('changed', true);
+    });
+
+    // Nút thêm nội dung bằng popup
+    $('[data-toggle="trigerformmodal"]').click(function(e) {
+        e.preventDefault();
+        var e_title = popupModal.find('h4.modal-title .tit');
+        var e_msg = popupModal.find('.alert');
+
+        e_title.html(e_title.data('msgadd'));
+        e_msg.removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').html(e_msg.data('msgadd'));
+
+        popupForm.find('input[type="text"]').val('');
+        popupFubmitNext.show();
+        popupModal.modal('show');
+    });
+    // Submit form popup
+    popupForm.submit(function(e) {
+        e.preventDefault();
+        if ($(this).data('busy') == true) {
+            return;
+        }
+        popupFubmitNext.find('.fa').removeClass('fa-angle-double-right').addClass('fa-spinner').addClass('fa-spin');
+        popupFubmitBack.find('.fa').removeClass('fa-floppy-o').addClass('fa-spinner').addClass('fa-spin');
+        $(this).data('busy', true);
+
+        var data = $(this).serialize();
+        var url = script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=' + popupForm.data('op') + '&ajaxrequest=1&nocache=' + new Date().getTime();
+
+        $(this).find('input').prop('disabled', true);
+
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data,
+            dataType: 'json',
+            cache: false
+        }).done(function(data) {
+            popupPostResult(data);
+        }).fail(function(data) {
+            popupPostResult({
+                status: 'ERROR',
+                message: 'Lỗi hệ thống, vui lòng thử lại'
+            });
+        });
+    });
+    popupFubmitNext.click(function(e) {
+        e.preventDefault();
+        popupForm.find('[name="submittype"]').val('continue');
+        popupForm.submit();
+    });
+    popupFubmitBack.click(function(e) {
+        e.preventDefault();
+        popupForm.find('[name="submittype"]').val('back');
+        popupForm.submit();
+    });
+    function popupPostResult(data) {
+        popupForm.find('input').prop('disabled', false);
+        popupForm.data('busy', false);
+        popupFubmitNext.find('.fa').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-angle-double-right');
+        popupFubmitBack.find('.fa').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-floppy-o');
+        $(this).data('busy', true);
+        if (data.status == 'ok') {
+            if (data.mode == 'continue') {
+                popupForm.find('input[type="text"]').val('');
+                var e_msg = popupModal.find('.alert');
+                e_msg.removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').html(e_msg.data('msgadd'));
+            } else {
+                popupModal.modal('hide');
+            }
+        } else {
+            popupModal.find('.alert').removeClass('alert-info').removeClass('alert-success').addClass('alert-danger').html(data.message);
+        }
+    }
 });
 
 $(window).on('load', function() {

@@ -34,6 +34,15 @@ $lang_module['update'] = 'Cập nhật';
 $lang_module['action'] = 'Thao tác';
 $lang_module['select'] = 'Chọn';
 $lang_module['with_selected'] = 'Với các dòng chọn';
+$lang_module['add_new'] = 'Thêm mới';
+$lang_module['save_and_continue'] = 'Lưu và tiếp tục';
+$lang_module['close'] = 'Đóng';
+$lang_module['is_required'] = 'Là mục bắt buộc';
+$lang_module['introtext'] = 'Mô tả ngắn gọn';
+$lang_module['keywords'] = 'Từ khóa';
+$lang_module['alias'] = 'Liên kết tĩnh';
+
+$lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 
 $lang_module['acr_singer'] = 'S';
 $lang_module['acr_author'] = 'A';
@@ -143,3 +152,14 @@ $lang_module['gird_videos_incat_nums'] = 'Số video ở danh mục';
 $lang_module['gird_videos_incat_nums_help'] = 'Số video hiển thị mỗi trang khi xem từng danh mục';
 
 $lang_module['nation_manager'] = 'Quản lý quốc gia';
+$lang_module['nation_add'] = 'Thêm mới quốc gia';
+$lang_module['nation_add_mgs'] = 'Mời nhập các ô bên dưới để thêm mới quốc gia';
+$lang_module['nation_edit_mgs'] = 'Mời thay đổi các ô bên dưới để chỉnh sửa quốc gia';
+$lang_module['nation_code'] = 'Mã';
+$lang_module['nation_code_rule'] = 'Mã quốc gia có 4 ký tự bao gồm chữ cái từ a-z và số 0-9';
+$lang_module['nation_name'] = 'Tên quốc gia';
+$lang_module['nation_err_exists'] = 'Quốc gia không tồn tại';
+$lang_module['nation_err_name'] = 'Vui lòng nhập tên quốc gia';
+$lang_module['nation_err_code'] = 'Vui lòng nhập mã quốc gia';
+$lang_module['nation_err_exists_code'] = 'Mã quốc gia này đã được sử dụng vui lòng nhập mã khác';
+$lang_module['nation_err_rule_code'] = 'Mã quốc gia phải có 4 ký tự bao gồm chữ cái từ a-z và số 0-9';
