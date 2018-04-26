@@ -23,7 +23,7 @@
                     </td>
                     <td>
                         <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
-                            <span class="text">{ROW.weight}</span>
+                            <span class="text" data-text="{ROW.weight}">{ROW.weight}</span>
                             <span class="caret"></span>
                         </button>
                     </td>
@@ -38,8 +38,9 @@
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list">
-                            {LANG.select} <span class="caret"></span>
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.nation_id}" data-name="{ROW.nation_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
+                            <span class="text" data-text="{LANG.select}">{LANG.select}</span>
+                            <span class="caret"></span>
                         </button>
                     </td>
                 </tr>
@@ -52,7 +53,8 @@
                             <div class="col-sm-10 form-inline">
                                 <div class="form-group">
                                     <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm">
-                                        {LANG.with_selected} <span class="caret"></span>
+                                        <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
+                                        <span class="caret"></span>
                                     </button>
                                     <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
                                 </div>
@@ -72,7 +74,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}" data-msgedit="{LANG.nation_edit}"></span></h4>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>

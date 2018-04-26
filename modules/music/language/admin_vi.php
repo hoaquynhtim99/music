@@ -153,6 +153,7 @@ $lang_module['gird_videos_incat_nums_help'] = 'Số video hiển thị mỗi tra
 
 $lang_module['nation_manager'] = 'Quản lý quốc gia';
 $lang_module['nation_add'] = 'Thêm mới quốc gia';
+$lang_module['nation_edit'] = 'Sửa quốc gia';
 $lang_module['nation_add_mgs'] = 'Mời nhập các ô bên dưới để thêm mới quốc gia';
 $lang_module['nation_edit_mgs'] = 'Mời thay đổi các ô bên dưới để chỉnh sửa quốc gia';
 $lang_module['nation_code'] = 'Mã';

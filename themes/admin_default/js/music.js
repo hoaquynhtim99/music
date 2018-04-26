@@ -504,32 +504,78 @@ $(document).ready(function() {
             msDestroyAllPop();
         }
     });
+
+    /**
+     * Quản lý các tác vụ bằng popup
+     */
+    var popupModal = $('#formmodal');
+    var popupForm = $('#formmodalctn');
+    var popupFubmitNext = $('#formmodalsaveandcon');
+    var popupFubmitBack = $('#formmodalsaveandback');
+
     $(document).delegate('.ms-dropdown-tool a', 'click', function(e) {
         e.preventDefault();
         msDestroyAllPop();
         var $this = $(this);
         var ctn = $this.parent().parent();
         var btn = ctn.parent().parent().parent().data('btn');
-        btn.find('span.text').html('<i class="fa fa-spinner fa-spin fa-fw"></i>' + $this.html());
+        var btnText = btn.find('span.text');
+
+        var ajaction = '';
+        if (btn.data('type') == 'weight') {
+            ajaction = 'weight';
+        } else {
+            ajaction = $this.data('value');
+        }
+
+        if (ajaction == 'delete' && !confirm(nv_is_del_confirm[0])) {
+            return false;
+        }
+
         btn.prop('disabled', true);
+        btnText.html('<i class="fa fa-spinner fa-spin fa-fw"></i>' + $this.text());
+
         // Xử lý dữ liệu
         $.ajax({
             cache: false,
             dataType: 'json',
             type: 'POST',
             url: script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=' + btn.data('op') + '&nocache=' + new Date().getTime(),
-            data: 'ajaction=' + btn.data('type') + '&id=' + btn.data('id') + '&value=' + $this.data('value')
+            data: 'ajaction=' + ajaction + '&id=' + btn.data('id') + '&value=' + $this.data('value')
         }).done(function(res) {
             if (res.status == 'ok') {
+                if (ajaction == 'ajedit') {
+                    btnText.find('i').remove();
+                    btnText.html(btnText.data('text'));
+                    btn.prop('disabled', false);
+
+                    var e_title = popupModal.find('h4.modal-title .tit');
+                    var e_msg = popupModal.find('.alert');
+
+                    e_title.html(e_title.data('msgedit') + ' ' + btn.data('name'));
+                    e_msg.removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').html(e_msg.data('msgedit'));
+
+                    $.each(res.data, function(k, v) {
+                        $('[name="' + k + '"]', popupForm).val(v);
+                    });
+                    $('[name="id"]', popupForm).val(btn.data('id'));
+                    popupForm.find('[name="submittype"]').val('back');
+                    popupForm.find('[name="submittype"]').trigger('change');
+                    popupFubmitNext.hide();
+                    popupModal.modal('show');
+                    return true;
+                }
                 location.reload();
             } else {
                 alert(res.message);
-                btn.find('span.text i').remove();
+                btnText.find('i').remove();
+                btnText.html(btnText.data('text'));
                 btn.prop('disabled', false);
             }
         }).fail(function() {
             alert("Error request!!!");
-            btn.find('span.text i').remove();
+            btnText.find('i').remove();
+            btnText.html(btnText.data('text'));
             btn.prop('disabled', false);
         }).always(function() {
             // Not things
@@ -548,13 +594,6 @@ $(document).ready(function() {
         });
         msAllPop = new Array();
     }
-    /**
-     * Quản lý các tác vụ bằng popup
-     */
-    var popupModal = $('#formmodal');
-    var popupForm = $('#formmodalctn');
-    var popupFubmitNext = $('#formmodalsaveandcon');
-    var popupFubmitBack = $('#formmodalsaveandback');
 
     // Load lại trang khi đóng cái form popup
     popupModal.on('hide.bs.modal', function() {
@@ -604,8 +643,8 @@ $(document).ready(function() {
             popupPostResult(data);
         }).fail(function(data) {
             popupPostResult({
-                status: 'ERROR',
-                message: 'Lỗi hệ thống, vui lòng thử lại'
+                status: 'error',
+                message: 'System error! Please try again!'
             });
         });
     });
@@ -643,14 +682,35 @@ $(window).on('load', function() {
 
 });
 
+var msIconSheets = {};
+msIconSheets.edit = '<i class="fa fa-fw fa-edit"></i>';
+msIconSheets.ajedit = '<i class="fa fa-fw fa-edit"></i>';
+msIconSheets.delete = '<i class="fa fa-fw fa-trash"></i>';
+
 function msGetPopoverContent(e) {
-    var popKeys = "ms_tmppop_" + $(e).data('type') + '_' + $(e).data('max');
+    var popKeys;
+    var popType = $(e).data('type');
+    if (popType == 'weight') {
+        popKeys = "ms_tmppop_" + popType + '_' + $(e).data('max');
+    } else {
+        popKeys = "ms_tmppop_" + popType + '_' + $(e).data('options').replace(/\|/g, '_');
+    }
     var popContents = $('#' + popKeys);
     if (!popContents.length) {
         $('body').append('<ul id="' + popKeys + '" class="hidden"></ul>');
         popContents = $('#' + popKeys);
-        for (var i = 1; i <= $(e).data('max'); i++) {
-            popContents.append('<li><a href="#" data-value="' + i + '">' + i + '</a></li>');
+        if (popType == 'weight') {
+            // Xây dựng nội dung dạng weight
+            for (var i = 1; i <= $(e).data('max'); i++) {
+                popContents.append('<li><a href="#" data-value="' + i + '">' + i + '</a></li>');
+            }
+        } else {
+            // Xây dựng nội dung dạng các công cụ options
+            var options = $(e).data('options').split('|');
+            var langs = $(e).data('langs').split('|');
+            $.each(options, function(k, v) {
+                popContents.append('<li><a href="#" data-value="' + v + '">' + msIconSheets[v] + langs[k] + '</a></li>');
+            });
         }
     }
     return '<div class="ms-dropdown-tool-ctn clearfix"><ul class="ms-dropdown-tool">' + popContents.html() + '</ul></div>';

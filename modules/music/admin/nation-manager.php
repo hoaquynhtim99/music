@@ -15,6 +15,38 @@ $page_title = $lang_module['nation_manager'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
+// Xóa
+if ($ajaction == 'delete') {
+    $ajaxRespon->reset();
+    if (!defined('NV_IS_AJAX')) {
+        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+    }
+
+    $nation_id = $nv_Request->get_int('id', 'post', 0);
+    if (!isset($global_array_nation[$nation_id])) {
+        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+    }
+
+    // Xóa
+    $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
+    $db->query($sql);
+
+    // Cập nhật lại thứ tự
+    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
+    $result = $db->query($sql);
+    $weight = 0;
+    while ($row = $result->fetch()) {
+        ++$weight;
+        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
+        $db->query($sql);
+    }
+
+    $nv_Cache->delMod($module_name);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
+
+    $ajaxRespon->setSuccess()->respon();
+}
+
 // Thay đổi thứ tự
 if ($ajaction == 'weight') {
     $ajaxRespon->reset();
@@ -51,6 +83,34 @@ if ($ajaction == 'weight') {
     nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
 
     $ajaxRespon->setSuccess()->respon();
+}
+
+// Lấy thông tin
+if ($ajaction == 'ajedit') {
+    $ajaxRespon->reset();
+    if (!defined('NV_IS_AJAX')) {
+        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+    }
+
+    $nation_id = $nv_Request->get_int('id', 'post', 0);
+    if (!isset($global_array_nation[$nation_id])) {
+        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+    }
+
+    $array_select_fields = nv_get_nation_select_fields(true);
+    $array_nation = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id)->fetch();
+    if (empty($array_nation)) {
+        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+    }
+
+    $response = array();
+    $response['nation_code'] = nv_unhtmlspecialchars($array_nation['nation_code']);
+    $response['nation_name'] = nv_unhtmlspecialchars($array_nation['nation_name']);
+    $response['nation_alias'] = nv_unhtmlspecialchars($array_nation['nation_alias']);
+    $response['nation_introtext'] = nv_unhtmlspecialchars($array_nation['nation_introtext']);
+    $response['nation_keywords'] = nv_unhtmlspecialchars($array_nation['nation_keywords']);
+
+    $ajaxRespon->set('data', $response)->setSuccess()->respon();
 }
 
 // Thêm, sửa
@@ -112,17 +172,20 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     } else {
         if ($array['nation_id']) {
             $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET
-                title=:title, quickkey=:quickkey, diem=:diem, khoan=:khoan, dieu=:dieu,
-                muctienphat=:muctienphat, edittime=" . NV_CURRENTTIME . "
-            WHERE id=" . $array['nation_id'];
+                nation_code=:nation_code,
+                " . NV_LANG_DATA . "_nation_name=:nation_name,
+                " . NV_LANG_DATA . "_nation_alias=:nation_alias,
+                " . NV_LANG_DATA . "_nation_introtext=:nation_introtext,
+                " . NV_LANG_DATA . "_nation_keywords=:nation_keywords,
+                time_update=" . NV_CURRENTTIME . "
+            WHERE nation_id=" . $array['nation_id'];
             try {
                 $sth = $db->prepare($sql);
-                $sth->bindParam(':title', $array['title'], PDO::PARAM_STR);
-                $sth->bindParam(':quickkey', $array['quickkey'], PDO::PARAM_STR);
-                $sth->bindParam(':diem', $array['diem'], PDO::PARAM_STR);
-                $sth->bindParam(':khoan', $array['khoan'], PDO::PARAM_STR);
-                $sth->bindParam(':dieu', $array['dieu'], PDO::PARAM_STR);
-                $sth->bindParam(':muctienphat', $array['muctienphat'], PDO::PARAM_INT);
+                $sth->bindParam(':nation_code', $array['nation_code'], PDO::PARAM_STR);
+                $sth->bindParam(':nation_name', $array['nation_name'], PDO::PARAM_STR);
+                $sth->bindParam(':nation_alias', $array['nation_alias'], PDO::PARAM_STR);
+                $sth->bindParam(':nation_introtext', $array['nation_introtext'], PDO::PARAM_STR, strlen($array['nation_introtext']));
+                $sth->bindParam(':nation_keywords', $array['nation_keywords'], PDO::PARAM_STR, strlen($array['nation_keywords']));
                 $sth->execute();
 
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_NATION', $array_old['nation_name'], $admin_info['userid']);
