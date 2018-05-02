@@ -22,14 +22,25 @@ if ($ajaction == 'delete') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $nation_id = $nv_Request->get_int('id', 'post', 0);
-    if (!isset($global_array_nation[$nation_id])) {
+    $nation_ids = $nv_Request->get_title('id', 'post', '');
+    $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
+    if (empty($nation_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
+    foreach ($nation_ids as $nation_id) {
+        if (!isset($global_array_nation[$nation_id])) {
+            $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        }
+    }
 
-    // Xóa
-    $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
-    $db->query($sql);
+    foreach ($nation_ids as $nation_id) {
+        // Xóa
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
+        $db->query($sql);
+
+        // Ghi nhật ký hệ thống
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
+    }
 
     // Cập nhật lại thứ tự
     $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
@@ -42,7 +53,6 @@ if ($ajaction == 'delete') {
     }
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
 
     $ajaxRespon->setSuccess()->respon();
 }

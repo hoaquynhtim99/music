@@ -19,7 +19,7 @@
                 <!-- BEGIN: loop -->
                 <tr>
                     <td>
-                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
+                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
                     </td>
                     <td>
                         <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-sm-10 form-inline">
                                 <div class="form-group">
-                                    <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm">
+                                    <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                                         <span class="caret"></span>
                                     </button>

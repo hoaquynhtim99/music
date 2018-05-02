@@ -520,12 +520,30 @@ $(document).ready(function() {
         var ctn = $this.parent().parent();
         var btn = ctn.parent().parent().parent().data('btn');
         var btnText = btn.find('span.text');
+        var submitID;
 
         var ajaction = '';
         if (btn.data('type') == 'weight') {
             ajaction = 'weight';
         } else {
             ajaction = $this.data('value');
+        }
+
+        // Xử lý ID hoặc IDs
+        if (btn.data('type') == 'actions') {
+            submitID = new Array();
+            $($(btn.data('target'))).each(function(k, v) {
+                if ($(this).is(':checked')) {
+                    submitID.push($(this).val());
+                }
+            });
+            if (submitID.length < 1) {
+                alert(btn.data('msg'));
+                return false;
+            }
+            submitID = submitID.join(',');
+        } else {
+            submitID = btn.data('id');
         }
 
         if (ajaction == 'delete' && !confirm(nv_is_del_confirm[0])) {
@@ -541,7 +559,7 @@ $(document).ready(function() {
             dataType: 'json',
             type: 'POST',
             url: script_name + '?' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=' + btn.data('op') + '&nocache=' + new Date().getTime(),
-            data: 'ajaction=' + ajaction + '&id=' + btn.data('id') + '&value=' + $this.data('value')
+            data: 'ajaction=' + ajaction + '&id=' + submitID + '&value=' + $this.data('value')
         }).done(function(res) {
             if (res.status == 'ok') {
                 if (ajaction == 'ajedit') {

@@ -26,7 +26,7 @@ define('MS_COMMENT_AREA_VIDEO', 3);
 $array_alphabets = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
 $global_array_rule = array();
-$global_array_rule['nation_code'] = '/[a-zA-Z0-9]{4}/';
+$global_array_rule['nation_code'] = '/^[a-zA-Z0-9]{4}$/';
 
 // Cấu hình module
 $cacheFile = NV_LANG_DATA . '_config_' . NV_CACHE_PREFIX . '.cache';

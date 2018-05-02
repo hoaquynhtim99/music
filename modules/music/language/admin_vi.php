@@ -41,6 +41,7 @@ $lang_module['is_required'] = 'Là mục bắt buộc';
 $lang_module['introtext'] = 'Mô tả ngắn gọn';
 $lang_module['keywords'] = 'Từ khóa';
 $lang_module['alias'] = 'Liên kết tĩnh';
+$lang_module['error_check_row'] = 'Vui lòng chọn ít nhất một dòng để thực hiện các thao tác';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 
