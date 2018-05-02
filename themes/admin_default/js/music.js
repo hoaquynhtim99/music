@@ -406,6 +406,7 @@
 }(jQuery);
 
 var msAllPop = new Array();
+var msIsDebug = true;
 
 $(document).ready(function() {
     // Config
@@ -512,6 +513,7 @@ $(document).ready(function() {
     var popupForm = $('#formmodalctn');
     var popupFubmitNext = $('#formmodalsaveandcon');
     var popupFubmitBack = $('#formmodalsaveandback');
+    var msToggleActive = $('[data-toggle="msactive"]');
 
     $(document).delegate('.ms-dropdown-tool a', 'click', function(e) {
         e.preventDefault();
@@ -694,6 +696,43 @@ $(document).ready(function() {
             popupModal.find('.alert').removeClass('alert-info').removeClass('alert-success').addClass('alert-danger').html(data.message);
         }
     }
+    // Cho hoạt động, đình chỉ đối tượng
+    msToggleActive.click(function(e) {
+        //e.preventDefault();
+        var $this = $(this);
+        if ($this.is(':disabled')) {
+            (msIsDebug && console.log('busy'));
+            return false;
+        }
+        var active = $this.is(':checked');
+        (msIsDebug && console.log('Set to ' + active));
+        msToggleActive.prop('disabled', true);
+        var url = script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=' + $this.data('op') + '&ajaxrequest=1&nocache=' + new Date().getTime();
+        var data = {
+            'ajaction': (active ? 'active' : 'deactive'),
+            'id': $this.data('id')
+        };
+        $.ajax({
+            method: "POST",
+            url: url,
+            data: data,
+            dataType: 'json',
+            cache: false
+        }).done(function(data) {
+            msToggleActiveRes(data);
+        }).fail(function(data) {
+            msToggleActiveRes({
+                status: 'error',
+                message: 'System error! Please try again!'
+            });
+        });
+    });
+    function msToggleActiveRes(data) {
+        msToggleActive.prop('disabled', false);
+        if (data.status != 'ok') {
+            alert(data.message);
+        }
+    }
 });
 
 $(window).on('load', function() {
@@ -704,6 +743,10 @@ var msIconSheets = {};
 msIconSheets.edit = '<i class="fa fa-fw fa-edit"></i>';
 msIconSheets.ajedit = '<i class="fa fa-fw fa-edit"></i>';
 msIconSheets.delete = '<i class="fa fa-fw fa-trash"></i>';
+msIconSheets.active = '<i class="fa fa-fw fa-circle"></i>';
+msIconSheets.deactive = '<i class="fa fa-fw fa-circle-o"></i>';
+msIconSheets.setdefault = '<i class="fa fa-fw fa-circle"></i>';
+msIconSheets.setonlinesupported = '<i class="fa fa-fw fa-microphone"></i>';
 
 function msGetPopoverContent(e) {
     var popKeys;

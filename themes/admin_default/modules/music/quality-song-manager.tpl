@@ -8,10 +8,10 @@
                         <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                     </th>
                     <th style="width:10%">{LANG.weight}</th>
-                    <th style="width:25%">{LANG.title}</th>
-                    <th style="width:20%">{LANG.stat}</th>
+                    <th style="width:30%">{LANG.title}</th>
                     <th style="width:15%">{LANG.create}</th>
                     <th style="width:15%">{LANG.update}</th>
+                    <th style="width:15%" class="text-center">{LANG.status}</th>
                     <th style="width:10%" class="text-right">{LANG.action}</th>
                 </tr>
             </thead>
@@ -19,26 +19,30 @@
                 <!-- BEGIN: loop -->
                 <tr>
                     <td>
-                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
+                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.quality_id}" name="idcheck[]" />
                     </td>
                     <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.quality_id}">
                             <span class="text" data-text="{ROW.weight}">{ROW.weight}</span>
                             <span class="caret"></span>
                         </button>
                     </td>
                     <td>
-                        <h3>{ROW.nation_name}</h3>
-                        <small class="text-muted">{ROW.nation_code}</small>
-                    </td>
-                    <td>
-                        <span title="{LANG.stat_singers}"><span class="text-muted">{LANG.acr_singer}</span>&nbsp;{ROW.stat_singers}</span><br />
-                        <span title="{LANG.stat_authors}"><span class="text-muted">{LANG.acr_author}</span>&nbsp;{ROW.stat_authors}</span>
+                        <h3>{ROW.quality_name}</h3>
+                        <ul class="list-unstyled list-inline ms-list-inline">
+                            <!-- BEGIN: online_supported --><li><small class="text-muted"><i title="{LANG.qso_online_supported}" class="fa fa-microphone"></i></small></li><!-- END: online_supported -->
+                            <!-- BEGIN: online_notsupported --><li><small class="text-muted"><i title="{LANG.qso_online_notsupported}" class="fa fa-microphone-slash"></i></small></li><!-- END: online_notsupported -->
+                            <!-- BEGIN: is_default --><li><small class="text-muted"><i title="{LANG.qso_is_default}" class="fa fa-check-circle"></i></small></li><!-- END: is_default -->
+                            <!-- BEGIN: no_default --><li><small class="text-muted"><i title="{LANG.qso_no_default}" class="fa fa-circle"></i></small></li><!-- END: no_default -->
+                        </ul>
                     </td>
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
+                    <td class="text-center">
+                        <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.quality_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
+                    </td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.nation_id}" data-name="{ROW.nation_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.quality_id}" data-name="{ROW.quality_name}" data-options="{ACTION_KEY}" data-langs="{ACTION_LANG}">
                             <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                             <span class="caret"></span>
                         </button>
@@ -52,7 +56,7 @@
                         <div class="row">
                             <div class="col-sm-10 form-inline">
                                 <div class="form-group">
-                                    <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
+                                    <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                                         <span class="caret"></span>
                                     </button>
@@ -74,31 +78,31 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}" data-msgedit="{LANG.nation_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.quality_add}" data-msgedit="{LANG.quality_edit}"></span></h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-info" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
+                <div class="alert alert-info" data-msgadd="{LANG.quality_add_mgs}" data-msgedit="{LANG.quality_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <div class="form-group">
-                        <label for="nation_code" class="control-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                        <span class="help-block">{LANG.nation_code_rule}</span>
-                        <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
+                        <label for="quality_code" class="control-label">{LANG.quality_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <span class="help-block">{LANG.quality_code_rule}</span>
+                        <input type="text" name="quality_code" id="quality_code" value="" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="nation_name" class="control-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                        <input type="text" name="nation_name" id="nation_name" value="" class="form-control"/>
+                        <label for="quality_name" class="control-label">{LANG.quality_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="nation_alias" class="control-label">{LANG.alias}:</label>
-                        <input type="text" name="nation_alias" id="nation_alias" value="" class="form-control"/>
+                        <label for="quality_alias" class="control-label">{LANG.alias}:</label>
+                        <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="nation_introtext" class="control-label">{LANG.introtext}:</label>
-                        <input type="text" name="nation_introtext" id="nation_introtext" value="" class="form-control"/>
+                        <label for="quality_introtext" class="control-label">{LANG.introtext}:</label>
+                        <input type="text" name="quality_introtext" id="quality_introtext" value="" class="form-control"/>
                     </div>
                     <div class="form-group">
-                        <label for="nation_keywords" class="control-label">{LANG.keywords}:</label>
-                        <input type="text" name="nation_keywords" id="nation_keywords" value="" class="form-control"/>
+                        <label for="quality_keywords" class="control-label">{LANG.keywords}:</label>
+                        <input type="text" name="quality_keywords" id="quality_keywords" value="" class="form-control"/>
                     </div>
                     <input type="submit" class="hidden" name="submit" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

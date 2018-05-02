@@ -42,6 +42,7 @@ $lang_module['introtext'] = 'Mô tả ngắn gọn';
 $lang_module['keywords'] = 'Từ khóa';
 $lang_module['alias'] = 'Liên kết tĩnh';
 $lang_module['error_check_row'] = 'Vui lòng chọn ít nhất một dòng để thực hiện các thao tác';
+$lang_module['status'] = 'Hiển thị';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 
@@ -50,6 +51,8 @@ $lang_module['acr_author'] = 'A';
 
 $lang_module['action_active'] = 'Kích hoạt';
 $lang_module['action_deactive'] = 'Đình chỉ';
+$lang_module['action_set_default'] = 'Cho làm mặc định khi phát nhạc';
+$lang_module['action_set_online_supported'] = 'Đánh dấu hỗ trợ nghe trực tuyến';
 
 $lang_module['stat_singers'] = 'Số ca sĩ';
 $lang_module['stat_authors'] = 'Số nhạc sĩ';
@@ -165,3 +168,10 @@ $lang_module['nation_err_name'] = 'Vui lòng nhập tên quốc gia';
 $lang_module['nation_err_code'] = 'Vui lòng nhập mã quốc gia';
 $lang_module['nation_err_exists_code'] = 'Mã quốc gia này đã được sử dụng vui lòng nhập mã khác';
 $lang_module['nation_err_rule_code'] = 'Mã quốc gia phải có 4 ký tự bao gồm chữ cái từ a-z và số 0-9';
+
+$lang_module['qso_manager'] = 'Quản lý chất lượng bài hát';
+$lang_module['qso_is_default'] = 'Mặc định khi phát nhạc';
+$lang_module['qso_no_default'] = 'Không mặc định khi phát nhạc';
+$lang_module['qso_online_supported'] = 'Hỗ trợ nghe trực tuyến';
+$lang_module['qso_online_notsupported'] = 'Không hỗ trợ nghe trực tuyến';
+

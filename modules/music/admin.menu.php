@@ -16,7 +16,9 @@ $allow_func = array(
     'main',
     'config',
     'view',
-    'nation-manager'
+    'nation-manager',
+    'quality-song-manager',
+    'quality-video-manager'
 );
 
 $submenu['config'] = $lang_module['config'];
