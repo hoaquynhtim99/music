@@ -51,8 +51,9 @@ $lang_module['acr_author'] = 'A';
 
 $lang_module['action_active'] = 'Kích hoạt';
 $lang_module['action_deactive'] = 'Đình chỉ';
-$lang_module['action_set_default'] = 'Cho làm mặc định khi phát nhạc';
+$lang_module['action_set_default'] = 'Cho làm mặc định khi phát';
 $lang_module['action_set_online_supported'] = 'Đánh dấu hỗ trợ nghe trực tuyến';
+$lang_module['action_unset_online_supported'] = 'Bỏ hỗ trợ nghe trực tuyến';
 
 $lang_module['stat_singers'] = 'Số ca sĩ';
 $lang_module['stat_authors'] = 'Số nhạc sĩ';
@@ -174,4 +175,31 @@ $lang_module['qso_is_default'] = 'Mặc định khi phát nhạc';
 $lang_module['qso_no_default'] = 'Không mặc định khi phát nhạc';
 $lang_module['qso_online_supported'] = 'Hỗ trợ nghe trực tuyến';
 $lang_module['qso_online_notsupported'] = 'Không hỗ trợ nghe trực tuyến';
+$lang_module['qso_add'] = 'Thêm mới chất lượng bài hát';
+$lang_module['qso_edit'] = 'Sửa chất lượng bài hát';
+$lang_module['qso_add_mgs'] = 'Mời nhập các ô bên dưới để thêm mới chất lượng bài hát';
+$lang_module['qso_edit_mgs'] = 'Mời thay đổi các ô bên dưới để chỉnh sửa chất lượng bài hát';
+$lang_module['qso_err_exists'] = 'Chất lượng bài hát không tồn tại';
+$lang_module['qso_err_name'] = 'Vui lòng nhập tên chất lượng bài hát';
 
+$lang_module['qvd_manager'] = 'Quản lý chất lượng video';
+$lang_module['qvd_is_default'] = 'Mặc định khi phát video';
+$lang_module['qvd_no_default'] = 'Không mặc định khi phát video';
+$lang_module['qvd_online_supported'] = 'Hỗ trợ nghe trực tuyến';
+$lang_module['qvd_online_notsupported'] = 'Không hỗ trợ nghe trực tuyến';
+$lang_module['qvd_add'] = 'Thêm mới chất lượng video';
+$lang_module['qvd_edit'] = 'Sửa chất lượng video';
+$lang_module['qvd_add_mgs'] = 'Mời nhập các ô bên dưới để thêm mới chất lượng video';
+$lang_module['qvd_edit_mgs'] = 'Mời thay đổi các ô bên dưới để chỉnh sửa chất lượng video';
+$lang_module['qvd_err_exists'] = 'Chất lượng video không tồn tại';
+$lang_module['qvd_err_name'] = 'Vui lòng nhập tên chất lượng video';
+
+$lang_module['artist_manager'] = 'Quản lý nghệ sĩ';
+
+$lang_module['cat_manager'] = 'Quản lý danh mục';
+
+$lang_module['song_manager'] = 'Quản lý bài hát';
+
+$lang_module['album_manager'] = 'Quản lý album';
+
+$lang_module['video_manager'] = 'Quản lý video';

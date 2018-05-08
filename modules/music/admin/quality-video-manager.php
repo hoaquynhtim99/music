@@ -11,7 +11,7 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
-$page_title = $lang_module['qso_manager'];
+$page_title = $lang_module['qvd_manager'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -28,28 +28,42 @@ if ($ajaction == 'delete') {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
     foreach ($quality_ids as $quality_id) {
-        if (!isset($global_array_soquality[$quality_id])) {
+        if (!isset($global_array_mvquality[$quality_id])) {
             $ajaxRespon->setMessage('Wrong ID!!!')->respon();
         }
     }
 
     foreach ($quality_ids as $quality_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $quality_id;
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_quality_video WHERE quality_id=" . $quality_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_QUALITY_VIDEO', $quality_id . ':' . $global_array_mvquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
     }
 
     // Cập nhật lại thứ tự
-    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_song ORDER BY weight ASC";
+    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_video ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
         ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
+        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
         $db->query($sql);
+    }
+
+    /**
+     * Nếu chất lượng này mặc định phát thì cập nhật
+     * chất lượng khác làm mặc định
+     */
+    if ($global_array_mvquality[$quality_id]['is_default']) {
+        foreach ($global_array_mvquality as $_quality_id => $_quality_data) {
+            if ($_quality_id != $quality_id and !empty($_quality_data['online_supported'])) {
+                $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET is_default=1 WHERE quality_id=" . $_quality_id;
+                $db->query($sql);
+                break;
+            }
+        }
     }
 
     $nv_Cache->delMod($module_name);
@@ -70,7 +84,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
     foreach ($quality_ids as $quality_id) {
-        if (!isset($global_array_soquality[$quality_id])) {
+        if (!isset($global_array_mvquality[$quality_id])) {
             $ajaxRespon->setMessage('Wrong ID!!!')->respon();
         }
     }
@@ -79,11 +93,11 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     foreach ($quality_ids as $quality_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET status=" . $status . " WHERE quality_id=" . $quality_id;
+        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET status=" . $status . " WHERE quality_id=" . $quality_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_VIDEO', $quality_id . ':' . $global_array_mvquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
     }
 
     $nv_Cache->delMod($module_name);
@@ -100,14 +114,14 @@ if ($ajaction == 'weight') {
     $quality_id = $nv_Request->get_int('id', 'post', 0);
     $new_weight = $nv_Request->get_int('value', 'post', 0);
 
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_mvquality[$quality_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
-    if ($new_weight < 1 or $new_weight > sizeof($global_array_soquality)) {
+    if ($new_weight < 1 or $new_weight > sizeof($global_array_mvquality)) {
         $ajaxRespon->setMessage('Wrong Weight!!!')->respon();
     }
 
-    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id!=" . $quality_id . " ORDER BY weight ASC";
+    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_video WHERE quality_id!=" . $quality_id . " ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
@@ -115,15 +129,15 @@ if ($ajaction == 'weight') {
         if ($weight == $new_weight) {
             ++$weight;
         }
-        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
+        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
         $db->query($sql);
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET weight=" . $new_weight . " WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET weight=" . $new_weight . " WHERE quality_id=" . $quality_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_QUALITY_VIDEO', $quality_id . ':' . $global_array_mvquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
 
     $ajaxRespon->setSuccess()->respon();
 }
@@ -137,16 +151,16 @@ if ($ajaction == 'setonlinesupported' or $ajaction == 'unsetonlinesupported') {
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
 
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_mvquality[$quality_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
     $online_supported = $ajaction == 'setonlinesupported' ? 1 : 0;
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET online_supported=" . $online_supported . " WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET online_supported=" . $online_supported . " WHERE quality_id=" . $quality_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_VIDEO', $quality_id . ':' . $global_array_mvquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
     $ajaxRespon->setSuccess()->respon();
 }
 
@@ -159,17 +173,17 @@ if ($ajaction == 'setdefault') {
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
 
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_mvquality[$quality_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET is_default=0";
+    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET is_default=0";
     $db->query($sql);
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET is_default=1 WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET is_default=1 WHERE quality_id=" . $quality_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_VIDEO', $quality_id . ':' . $global_array_mvquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
     $ajaxRespon->setSuccess()->respon();
 }
 
@@ -181,11 +195,11 @@ if ($ajaction == 'ajedit') {
     }
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_mvquality[$quality_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
-    $array_quality = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $quality_id)->fetch();
+    $array_quality = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_video WHERE quality_id=" . $quality_id)->fetch();
     if (empty($array_quality)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
@@ -225,7 +239,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     // Kiểm tra tồn tại alias
     $is_exists = 0;
     try {
-        $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_quality_song WHERE " . NV_LANG_DATA . "_quality_alias=:quality_alias" . ($array['quality_id'] ? " AND quality_id!=" . $array['quality_id'] : "");
+        $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_quality_video WHERE " . NV_LANG_DATA . "_quality_alias=:quality_alias" . ($array['quality_id'] ? " AND quality_id!=" . $array['quality_id'] : "");
         $sth = $db->prepare($sql);
         $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
         $sth->execute();
@@ -238,19 +252,19 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $array_old = array();
     $error_exists = false;
     if (!empty($array['quality_id'])) {
-        $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $array['quality_id'])->fetch();
+        $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_video WHERE quality_id=" . $array['quality_id'])->fetch();
         if (empty($array_old)) {
             $error_exists = true;
         }
     }
 
     if ($error_exists) {
-        $ajaxRespon->setMessage($lang_module['qso_err_exists']);
+        $ajaxRespon->setMessage($lang_module['qvd_err_exists']);
     } elseif (empty($array['quality_name'])) {
-        $ajaxRespon->setMessage($lang_module['qso_err_name']);
+        $ajaxRespon->setMessage($lang_module['qvd_err_name']);
     } else {
         if ($array['quality_id']) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET
+            $sql = "UPDATE " . NV_MOD_TABLE . "_quality_video SET
                 online_supported=" . $array['online_supported'] . ",
                 is_default=" . $array['is_default'] . ",
                 " . NV_LANG_DATA . "_quality_name=:quality_name,
@@ -263,7 +277,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
                 $sth->execute();
 
-                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_QUALITY_SONG', $array_old[NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_QUALITY_VIDEO', $array_old[NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
                 $ajaxRespon->setSuccess();
@@ -271,10 +285,10 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 $ajaxRespon->setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         } else {
-            $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_quality_song")->fetchColumn();
+            $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_quality_video")->fetchColumn();
             $weight++;
 
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_quality_song (
+            $sql = "INSERT INTO " . NV_MOD_TABLE . "_quality_video (
                 online_supported, is_default, time_add, weight, status,
                 " . NV_LANG_DATA . "_quality_name, " . NV_LANG_DATA . "_quality_alias
             ) VALUES (
@@ -287,7 +301,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
                 $sth->execute();
 
-                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_QUALITY_SONG', $array['quality_name'], $admin_info['userid']);
+                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_QUALITY_VIDEO', $array['quality_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
                 $ajaxRespon->setSuccess();
@@ -304,9 +318,9 @@ $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['mo
 $xtpl->assign('OP', $op);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
-$xtpl->assign('MAX_WEIGHT', sizeof($global_array_soquality));
+$xtpl->assign('MAX_WEIGHT', sizeof($global_array_mvquality));
 
-foreach ($global_array_soquality as $row) {
+foreach ($global_array_mvquality as $row) {
     if (empty($row[NV_LANG_DATA . '_quality_name']) and !empty($row[$global_array_config['default_language'] . '_quality_name'])) {
         $row['quality_name'] = $row[$global_array_config['default_language'] . '_quality_name'];
     } else {

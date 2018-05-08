@@ -18,7 +18,17 @@ $allow_func = array(
     'view',
     'nation-manager',
     'quality-song-manager',
-    'quality-video-manager'
+    'quality-video-manager',
+    'artist-list',
+    'cat-list',
+    'song-list',
+    'album-list',
+    'video-list',
 );
 
+$submenu['song-list'] = $lang_module['song_manager'];
+$submenu['album-list'] = $lang_module['album_manager'];
+$submenu['video-list'] = $lang_module['video_manager'];
+$submenu['artist-list'] = $lang_module['artist_manager'];
+$submenu['cat-list'] = $lang_module['cat_manager'];
 $submenu['config'] = $lang_module['config'];

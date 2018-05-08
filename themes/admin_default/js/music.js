@@ -578,6 +578,11 @@ $(document).ready(function() {
                     $.each(res.data, function(k, v) {
                         $('[name="' + k + '"]', popupForm).val(v);
                     });
+                    if (res.datacheckbox) {
+                        $.each(res.datacheckbox, function(k, v) {
+                            $('[name="' + k + '"]', popupForm).prop('checked', v);
+                        });
+                    }
                     $('[name="id"]', popupForm).val(btn.data('id'));
                     popupForm.find('[name="submittype"]').val('back');
                     popupForm.find('[name="submittype"]').trigger('change');
@@ -628,14 +633,7 @@ $(document).ready(function() {
     // Nút thêm nội dung bằng popup
     $('[data-toggle="trigerformmodal"]').click(function(e) {
         e.preventDefault();
-        var e_title = popupModal.find('h4.modal-title .tit');
-        var e_msg = popupModal.find('.alert');
-
-        e_title.html(e_title.data('msgadd'));
-        e_msg.removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').html(e_msg.data('msgadd'));
-
-        popupForm.find('input[type="text"]').val('');
-        popupFubmitNext.show();
+        popupResetForm();
         popupModal.modal('show');
     });
     // Submit form popup
@@ -678,6 +676,22 @@ $(document).ready(function() {
         popupForm.find('[name="submittype"]').val('back');
         popupForm.submit();
     });
+    function popupResetForm() {
+        var e_title = popupModal.find('h4.modal-title .tit');
+        var e_msg = popupModal.find('.alert');
+
+        e_title.html(e_title.data('msgadd'));
+        e_msg.removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').html(e_msg.data('msgadd'));
+
+        popupForm.find('input[type="text"]').val('');
+
+        var eleCheck = popupForm.find('input[type="checkbox"]');
+        eleCheck.each(function() {
+            $(this).prop('checked', $(this).data('checked') == 1 ? true : false);
+        });
+        $('[name="id"]', popupForm).val('0');
+        popupFubmitNext.show();
+    }
     function popupPostResult(data) {
         popupForm.find('input').prop('disabled', false);
         popupForm.data('busy', false);
@@ -686,9 +700,7 @@ $(document).ready(function() {
         $(this).data('busy', true);
         if (data.status == 'ok') {
             if (data.mode == 'continue') {
-                popupForm.find('input[type="text"]').val('');
-                var e_msg = popupModal.find('.alert');
-                e_msg.removeClass('alert-danger').removeClass('alert-success').addClass('alert-info').html(e_msg.data('msgadd'));
+                popupResetForm();
             } else {
                 popupModal.modal('hide');
             }
@@ -745,8 +757,9 @@ msIconSheets.ajedit = '<i class="fa fa-fw fa-edit"></i>';
 msIconSheets.delete = '<i class="fa fa-fw fa-trash"></i>';
 msIconSheets.active = '<i class="fa fa-fw fa-circle"></i>';
 msIconSheets.deactive = '<i class="fa fa-fw fa-circle-o"></i>';
-msIconSheets.setdefault = '<i class="fa fa-fw fa-circle"></i>';
+msIconSheets.setdefault = '<i class="fa fa-fw fa-check-circle"></i>';
 msIconSheets.setonlinesupported = '<i class="fa fa-fw fa-microphone"></i>';
+msIconSheets.unsetonlinesupported = '<i class="fa fa-fw fa-microphone-slash"></i>';
 
 function msGetPopoverContent(e) {
     var popKeys;

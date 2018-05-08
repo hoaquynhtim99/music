@@ -30,10 +30,10 @@
                     <td>
                         <h3>{ROW.quality_name}</h3>
                         <ul class="list-unstyled list-inline ms-list-inline">
-                            <!-- BEGIN: online_supported --><li><small class="text-muted"><i title="{LANG.qso_online_supported}" class="fa fa-microphone"></i></small></li><!-- END: online_supported -->
-                            <!-- BEGIN: online_notsupported --><li><small class="text-muted"><i title="{LANG.qso_online_notsupported}" class="fa fa-microphone-slash"></i></small></li><!-- END: online_notsupported -->
-                            <!-- BEGIN: is_default --><li><small class="text-muted"><i title="{LANG.qso_is_default}" class="fa fa-check-circle"></i></small></li><!-- END: is_default -->
-                            <!-- BEGIN: no_default --><li><small class="text-muted"><i title="{LANG.qso_no_default}" class="fa fa-circle"></i></small></li><!-- END: no_default -->
+                            <!-- BEGIN: online_supported --><li><small class="text-muted"><i title="{LANG.qvd_online_supported}" class="fa fa-microphone"></i></small></li><!-- END: online_supported -->
+                            <!-- BEGIN: online_notsupported --><li><small class="text-muted"><i title="{LANG.qvd_online_notsupported}" class="fa fa-microphone-slash"></i></small></li><!-- END: online_notsupported -->
+                            <!-- BEGIN: is_default --><li><small class="text-muted"><i title="{LANG.qvd_is_default}" class="fa fa-check-circle"></i></small></li><!-- END: is_default -->
+                            <!-- BEGIN: no_default --><li><small class="text-muted"><i title="{LANG.qvd_no_default}" class="fa fa-circle"></i></small></li><!-- END: no_default -->
                         </ul>
                     </td>
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
@@ -78,10 +78,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.qso_add}" data-msgedit="{LANG.qso_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.qvd_add}" data-msgedit="{LANG.qvd_edit}"></span></h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-info" data-msgadd="{LANG.qso_add_mgs}" data-msgedit="{LANG.qso_edit_mgs}">&nbsp;</div>
+                <div class="alert alert-info" data-msgadd="{LANG.qvd_add_mgs}" data-msgedit="{LANG.qvd_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <div class="form-group">
                         <label for="quality_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
@@ -94,13 +94,13 @@
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="online_supported" value="1" data-checked="1"/>
-                            {LANG.qso_online_supported}
+                            {LANG.qvd_online_supported}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" name="is_default" value="1" data-checked="0"/>
-                            {LANG.qso_is_default}
+                            {LANG.qvd_is_default}
                         </label>
                     </div>
                     <input type="submit" class="hidden" name="submit" value="submit"/>
