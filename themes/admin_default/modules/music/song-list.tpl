@@ -138,7 +138,7 @@ $(function() {
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                     <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="{ACTION_STATUS}" data-langs="{LANG_STATUS}">
                             <span class="text" data-text="{ROW.state}">{ROW.state}</span>
                             <span class="caret"></span>
                         </button>

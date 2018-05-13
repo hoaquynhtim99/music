@@ -57,6 +57,53 @@ if ($ajaction == 'delete') {
     $ajaxRespon->setSuccess()->respon();
 }
 
+// Cho hoạt động/đình chỉ
+if ($ajaction == 'active' or $ajaction == 'deactive') {
+    $ajaxRespon->reset();
+    if (!defined('NV_IS_AJAX')) {
+        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+    }
+
+    $song_ids = $nv_Request->get_title('id', 'post', '');
+    $song_ids = array_filter(array_unique(array_map('intval', explode(',', $song_ids))));
+    if (empty($song_ids)) {
+        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+    }
+
+    // Xác định các bài hát
+    $array_select_fields = nv_get_song_select_fields();
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id IN(" . implode(',', $song_ids) . ")";
+    $result = $db->query($sql);
+
+    $array = array();
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+        $array[$row['song_id']] = $row;
+    }
+    if (sizeof($array) != sizeof($song_ids)) {
+        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+    }
+
+    $status = $ajaction == 'active' ? 1 : 0;
+
+    foreach ($song_ids as $song_id) {
+        // Cập nhật trạng thái
+        $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET status=" . $status . " WHERE song_id=" . $song_id;
+        $db->query($sql);
+
+        // Ghi nhật ký hệ thống
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_SONG', $song_id . ':' . $array[$song_id]['song_name'], $admin_info['userid']);
+    }
+
+    $nv_Cache->delMod($module_name);
+    $ajaxRespon->setSuccess()->respon();
+}
+
 $base_url = NV_ADMIN_MOD_FULLLINK_AMP . $op;
 $per_page = 20;
 $page = msGetValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
@@ -281,6 +328,14 @@ foreach ($array as $row) {
     } else {
         $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
         $xtpl->parse('main.loop.no_cat');
+    }
+
+    if (empty($row['status'])) {
+        $xtpl->assign('ACTION_STATUS', 'active');
+        $xtpl->assign('LANG_STATUS', $lang_module['action_active']);
+    } else {
+        $xtpl->assign('ACTION_STATUS', 'deactive');
+        $xtpl->assign('LANG_STATUS', $lang_module['action_deactive']);
     }
 
     $xtpl->parse('main.loop');

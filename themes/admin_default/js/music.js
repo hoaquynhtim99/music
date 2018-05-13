@@ -811,6 +811,7 @@ $(window).on('resize', function() {
 });
 
 var msIconSheets = {};
+msIconSheets.none = '<i class="fa fa-fw fa-angle-right"></i>';
 msIconSheets.edit = '<i class="fa fa-fw fa-edit"></i>';
 msIconSheets.ajedit = '<i class="fa fa-fw fa-edit"></i>';
 msIconSheets.delete = '<i class="fa fa-fw fa-trash"></i>';
