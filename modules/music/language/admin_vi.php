@@ -43,6 +43,14 @@ $lang_module['keywords'] = 'Từ khóa';
 $lang_module['alias'] = 'Liên kết tĩnh';
 $lang_module['error_check_row'] = 'Vui lòng chọn ít nhất một dòng để thực hiện các thao tác';
 $lang_module['status'] = 'Hiển thị';
+$lang_module['state'] = 'Trạng thái';
+$lang_module['listen_hits'] = 'Lượt nghe';
+$lang_module['author_list'] = 'Danh sách các nhạc sĩ';
+$lang_module['cat'] = 'Thể loại';
+$lang_module['time'] = 'Thời gian';
+$lang_module['from'] = 'Từ';
+$lang_module['to'] = 'Đến';
+$lang_module['adv'] = 'Nâng cao';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 
@@ -57,6 +65,8 @@ $lang_module['action_unset_online_supported'] = 'Bỏ hỗ trợ nghe trực tuy
 
 $lang_module['stat_singers'] = 'Số ca sĩ';
 $lang_module['stat_authors'] = 'Số nhạc sĩ';
+
+$lang_module['singer_list'] = 'Danh sách ca sĩ';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';
@@ -199,6 +209,10 @@ $lang_module['artist_manager'] = 'Quản lý nghệ sĩ';
 $lang_module['cat_manager'] = 'Quản lý danh mục';
 
 $lang_module['song_manager'] = 'Quản lý bài hát';
+$lang_module['song_list'] = 'Danh sách bài hát';
+$lang_module['song_list_stcat'] = 'Sáng tác/Thể loại';
+$lang_module['song_status_0'] = 'Đình chỉ';
+$lang_module['song_status_1'] = 'Hoạt động';
 
 $lang_module['album_manager'] = 'Quản lý album';
 

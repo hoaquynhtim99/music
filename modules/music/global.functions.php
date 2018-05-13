@@ -17,7 +17,7 @@ define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
 define('NV_MOD_LINK', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
 define('NV_MOD_LINK_AMP', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name);
 define('NV_MOD_FULLLINK', NV_MOD_LINK . '&' . NV_OP_VARIABLE . '=');
-define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&' . NV_OP_VARIABLE . '=');
+define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&amp;' . NV_OP_VARIABLE . '=');
 
 define('MS_COMMENT_AREA_SONG', 1);
 define('MS_COMMENT_AREA_ALBUM', 2);
@@ -214,7 +214,7 @@ function nv_get_album_select_fields($full_fields = false)
 function nv_get_song_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('song_id', 'song_code', 'cat_ids', 'singer_ids', 'author_ids', 'album_ids', 'video_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit');
+    $array_select_fields = array('song_id', 'song_code', 'cat_ids', 'singer_ids', 'author_ids', 'album_ids', 'video_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_song_name song_name';
     $array_select_fields[] = NV_LANG_DATA . '_song_alias song_alias';
     if (NV_LANG_DATA != $global_array_config['default_language']) {
@@ -619,4 +619,48 @@ function msFormatDateViews($input)
         return nv_date('d M, Y', $input);
     }
     return nv_date('M d, Y', $input);
+}
+
+/**
+ * msGetMaxPage()
+ *
+ * @param mixed $per_page
+ * @return
+ */
+function msGetMaxPage($per_page)
+{
+    if ($per_page < 1) {
+        return 1;
+    }
+    return round(2147483647 / $per_page);
+}
+
+/**
+ * msGetValidPage()
+ *
+ * @param mixed $page
+ * @param mixed $per_page
+ * @return
+ */
+function msGetValidPage($page, $per_page)
+{
+    if ($page < 1 or $page > msGetMaxPage($per_page)) {
+        return 1;
+    }
+    return $page;
+}
+
+/**
+ * msCheckPage()
+ *
+ * @param mixed $page
+ * @param mixed $per_page
+ * @return
+ */
+function msCheckPage($page, $per_page)
+{
+    if ($page < 1 or $page > msGetMaxPage($per_page)) {
+        return false;
+    }
+    return true;
 }

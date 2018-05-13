@@ -405,8 +405,53 @@
     })
 }(jQuery);
 
+function msEllipsisSet() {
+    if ($(window).width() < 992) {
+        return;
+    }
+    $('[data-toggle="ellipsis"]').each(function() {
+        var $this = $(this);
+        (msIsDebug && console.log($this.width()));
+        if ($this.width() > widthEllipsis) {
+            widthEllipsis = $this.width();
+        }
+    });
+    if (widthEllipsis) {
+        (msIsDebug && console.log('Setto: ' + widthEllipsis));
+        $('[data-toggle="ellipsis"]').css({
+            width: widthEllipsis
+        });
+        $('[data-toggle="ellipsis"]').find('[data-toggle="items"]').addClass('ms-ellipsis');
+    }
+}
+
+function msEllipsisCheck(reset = false) {
+    (msIsDebug && console.log('msEllipsisCheck'));
+    if (reset) {
+        widthEllipsis = 0;
+        (msIsDebug && console.log('Reset'));
+        $('[data-toggle="ellipsis"]').find('[data-toggle="items"]').removeClass('ms-ellipsis');
+        $('[data-toggle="ellipsis"]').css({
+            width: '100%'
+        });
+        if (timerEllipsis) {
+            clearTimeout(timerEllipsis);
+        }
+        timerEllipsis = setTimeout(msEllipsisSet(), 100);
+    } else {
+        msEllipsisSet();
+    }
+}
+
+var msResizeHandder = function() {
+    msEllipsisCheck(true);
+}
+
+var widthEllipsis = 0;
+var timerEllipsis = null;
 var msAllPop = new Array();
 var msIsDebug = true;
+var msTimerResize = null;
 
 $(document).ready(function() {
     // Config
@@ -745,10 +790,24 @@ $(document).ready(function() {
             alert(data.message);
         }
     }
+    $('[data-toggle="show-va-singer"]').click(function(e) {
+        e.preventDefault();
+        modalShow($($(this).data('target')).attr('title'), $($(this).data('target')).html());
+    });
+    msEllipsisCheck();
 });
 
 $(window).on('load', function() {
+});
 
+$(window).on('resize', function() {
+    if (msTimerResize) {
+        clearTimeout(msTimerResize);
+    }
+    if (timerEllipsis) {
+        clearTimeout(timerEllipsis);
+    }
+    msTimerResize = setTimeout(msResizeHandder, 50);
 });
 
 var msIconSheets = {};

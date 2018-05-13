@@ -139,3 +139,9 @@ class ajaxRespon
 }
 
 $ajaxRespon = new ajaxRespon();
+
+define('NV_ADMIN_MOD_LINK', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
+define('NV_ADMIN_MOD_LINK_AMP', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name);
+define('NV_ADMIN_MOD_FULLLINK', NV_ADMIN_MOD_LINK . '&' . NV_OP_VARIABLE . '=');
+define('NV_ADMIN_MOD_FULLLINK_AMP', NV_ADMIN_MOD_LINK_AMP . '&amp;' . NV_OP_VARIABLE . '=');
+
