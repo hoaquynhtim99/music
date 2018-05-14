@@ -68,7 +68,7 @@ $(function() {
                         <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                     </th>
                     <th style="width:25%">{LANG.title}</th>
-                    <th style="width:20%">{LANG.song_list_stcat}</th>
+                    <th style="width:20%">{LANG.album_list_ycat}</th>
                     <th style="width:10%">{LANG.listen_hits}</th>
                     <th style="width:10%">{LANG.create}</th>
                     <th style="width:10%">{LANG.update}</th>
@@ -80,10 +80,12 @@ $(function() {
                 <!-- BEGIN: loop -->
                 <tr>
                     <td>
-                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.song_id}" name="idcheck[]" />
+                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.album_id}" name="idcheck[]" />
                     </td>
                     <td>
-                        <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h3></div>
+                        <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" width="32" class="pull-left ms-img"/>
+
+                        <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.album_link}" class="ms-title" target="_blank">{ROW.album_name}</a></h3></div>
                         <small class="text-muted">
                             <!-- BEGIN: show_singer -->
                             <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
@@ -91,8 +93,8 @@ $(function() {
                             <!-- END: show_singer -->
 
                             <!-- BEGIN: va_singer -->
-                            <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-singers-{ROW.song_code}">{VA_SINGERS}</a>
-                            <span class="hidden" id="{UNIQUEID}-singers-{ROW.song_code}" title="{LANG.singer_list}">
+                            <a href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-singers-{ROW.album_code}">{VA_SINGERS}</a>
+                            <span class="hidden" id="{UNIQUEID}-singers-{ROW.album_code}" title="{LANG.singer_list}">
                                 <span class="list-group ms-singer-listgr-modal">
                                     <!-- BEGIN: loop -->
                                     <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.artist_name}</a>
@@ -105,24 +107,7 @@ $(function() {
                         </small>
                     </td>
                     <td>
-                        <h3>
-                            <!-- BEGIN: show_author -->
-                            <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{AUTHOR.artist_name}<!-- END: loop -->
-                            <!-- END: show_author -->
-
-                            <!-- BEGIN: va_author -->
-                            <a class="ms-title" href="#" data-toggle="show-va-singer" data-target="#{UNIQUEID}-authors-{ROW.song_code}">{VA_AUTHORS}</a>
-                            <span class="hidden" id="{UNIQUEID}-authors-{ROW.song_code}" title="{LANG.author_list}">
-                                <span class="list-group ms-author-listgr-modal">
-                                    <!-- BEGIN: loop -->
-                                    <a href="{AUTHOR.author_link}" class="list-group-item">{AUTHOR.artist_name}</a>
-                                    <!-- END: loop -->
-                                </span>
-                            </span>
-                            <!-- END: va_author -->
-
-                            <!-- BEGIN: no_author -->{UNKNOW_AUTHOR}<!-- END: no_author -->
-                        </h3>
+                        <h3>{ROW.release_year}</h3>
                         <span class="text-muted">
                             <!-- BEGIN: show_cat -->
                             <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{CAT.cat_name}<!-- END: loop -->
@@ -138,13 +123,13 @@ $(function() {
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                     <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="{ACTION_STATUS}" data-langs="{LANG_STATUS}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.album_id}" data-name="{ROW.album_name}" data-options="{ACTION_STATUS}" data-langs="{LANG_STATUS}">
                             <span class="text" data-text="{ROW.state}">{ROW.state}</span>
                             <span class="caret"></span>
                         </button>
                     </td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="edit|delete" data-langs="{GLANG.edit}|{GLANG.delete}" data-urledit="{ROW.url_edit}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.album_id}" data-name="{ROW.album_name}" data-options="edit|delete" data-langs="{GLANG.edit}|{GLANG.delete}" data-urledit="{ROW.url_edit}">
                             <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                             <span class="caret"></span>
                         </button>

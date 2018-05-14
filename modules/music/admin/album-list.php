@@ -11,7 +11,7 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
-$page_title = $lang_module['song_list'];
+$page_title = $lang_module['album_list'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -64,15 +64,15 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $song_ids = $nv_Request->get_title('id', 'post', '');
-    $song_ids = array_filter(array_unique(array_map('intval', explode(',', $song_ids))));
-    if (empty($song_ids)) {
+    $album_ids = $nv_Request->get_title('id', 'post', '');
+    $album_ids = array_filter(array_unique(array_map('intval', explode(',', $album_ids))));
+    if (empty($album_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
     // Xác định các bài hát
-    $array_select_fields = nv_get_song_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id IN(" . implode(',', $song_ids) . ")";
+    $array_select_fields = nv_get_album_select_fields();
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE album_id IN(" . implode(',', $album_ids) . ")";
     $result = $db->query($sql);
 
     $array = array();
@@ -83,21 +83,21 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
             }
             unset($row['default_' . $f]);
         }
-        $array[$row['song_id']] = $row;
+        $array[$row['album_id']] = $row;
     }
-    if (sizeof($array) != sizeof($song_ids)) {
+    if (sizeof($array) != sizeof($album_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
     $status = $ajaction == 'active' ? 1 : 0;
 
-    foreach ($song_ids as $song_id) {
+    foreach ($album_ids as $album_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET status=" . $status . " WHERE song_id=" . $song_id;
+        $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET status=" . $status . " WHERE album_id=" . $album_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_SONG', $song_id . ':' . $array[$song_id]['song_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_ALBUM', $album_id . ':' . $array[$album_id]['album_name'], $admin_info['userid']);
     }
 
     $nv_Cache->delMod($module_name);
@@ -115,17 +115,18 @@ $array_search['c'] = $nv_Request->get_int('c', 'get', 0); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
 $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
-$db->sqlreset()->from(NV_MOD_TABLE . "_songs");
+$db->sqlreset()->from(NV_MOD_TABLE . "_albums");
 
 $where = array();
 if (!empty($array_search['q'])) {
     $dblike = $db->dblikeescape($array_search['q']);
     $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
     $where[] = "(
-        " . NV_LANG_DATA . "_song_name LIKE '%" . $dblike . "%' OR
-        " . NV_LANG_DATA . "_song_searchkey LIKE '%" . $dblikekey . "%' OR
-        " . NV_LANG_DATA . "_song_introtext LIKE '%" . $dblike . "%' OR
-        " . NV_LANG_DATA . "_song_keywords LIKE '%" . $dblike . "%'
+        " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_album_searchkey LIKE '%" . $dblikekey . "%' OR
+        " . NV_LANG_DATA . "_album_introtext LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_album_description LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_album_keywords LIKE '%" . $dblike . "%'
     )";
     $base_url .= '&amp;q=' . urlencode($array_search['q']);
 }
@@ -160,9 +161,9 @@ if (!empty($where)) {
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("song_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+$db->order("album_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 
-$array_select_fields = nv_get_song_select_fields(true);
+$array_select_fields = nv_get_album_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));
 
 $result = $db->query($db->sql());
@@ -175,23 +176,17 @@ while ($row = $result->fetch()) {
         unset($row['default_' . $f]);
     }
 
-    $row['authors'] = array();
-    $row['author_ids'] = explode(',', $row['author_ids']);
     $row['singers'] = array();
     $row['singer_ids'] = explode(',', $row['singer_ids']);
     $row['cats'] = array();
     $row['cat_ids'] = explode(',', $row['cat_ids']);
-    $row['song_link'] = '';
-    $row['resource_mode'] = 'song';
+    $row['album_link'] = '';
 
-    if (!empty($row['author_ids'])) {
-        $array_singer_ids = array_merge_recursive($array_singer_ids, $row['author_ids']);
-    }
     if (!empty($row['singer_ids'])) {
         $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
     }
 
-    $array[$row['song_id']] = $row;
+    $array[$row['album_id']] = $row;
 }
 
 // Xác định ca sĩ, chủ đề, đường dẫn bài hát
@@ -202,17 +197,6 @@ foreach ($array as $id => $row) {
         foreach ($row['singer_ids'] as $singer_id) {
             if (isset($array_singers[$singer_id])) {
                 $row['singers'][$singer_id] = $array_singers[$singer_id];
-                if (empty($row['resource_avatar']) and !empty($array_singers[$singer_id]['resource_avatar'])) {
-                    $row['resource_avatar'] = $array_singers[$singer_id]['resource_avatar'];
-                    $row['resource_mode'] = 'singer';
-                }
-            }
-        }
-    }
-    if (!empty($row['author_ids'])) {
-        foreach ($row['author_ids'] as $author_id) {
-            if (isset($array_singers[$author_id])) {
-                $row['authors'][$author_id] = $array_singers[$author_id];
             }
         }
     }
@@ -221,7 +205,7 @@ foreach ($array as $id => $row) {
             $row['cats'][$cid] = $global_array_cat[$cid];
         }
     }
-    $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
+    $row['album_link'] = nv_get_detail_album_link($row, $row['singers']);
     $array[$id] = $row;
 }
 
@@ -250,7 +234,10 @@ foreach ($array as $row) {
     $row['stat_views'] = msFormatNumberViews($row['stat_views']);
     $row['stat_comments'] = msFormatNumberViews($row['stat_comments']);
     $row['state'] = $lang_module['status_' . $row['status']];
-    $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'song-content&amp;song_id=' . $row['song_id'];
+    $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'album-content&amp;album_id=' . $row['album_id'];
+    $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'album', true);
+    $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'album');
+    $row['release_year'] = empty($row['release_year']) ? '&nbsp;' : ($lang_module['year'] . ': ' . $row['release_year']);
 
     $xtpl->assign('ROW', $row);
 
@@ -280,34 +267,6 @@ foreach ($array as $row) {
     } else {
         $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
         $xtpl->parse('main.loop.no_singer');
-    }
-
-    // Xuất nhạc sĩ
-    $num_authors = sizeof($row['authors']);
-    if ($num_authors > $global_array_config['limit_authors_displayed']) {
-        $xtpl->assign('VA_AUTHORS', $global_array_config['various_artists_authors']);
-
-        foreach ($row['authors'] as $author) {
-            $xtpl->assign('AUTHOR', $author);
-            $xtpl->parse('main.loop.va_author.loop');
-        }
-
-        $xtpl->parse('main.loop.va_author');
-    } elseif (!empty($row['authors'])) {
-        $i = 0;
-        foreach ($row['authors'] as $author) {
-            $i++;
-            $xtpl->assign('AUTHOR', $author);
-
-            if ($i > 1) {
-                $xtpl->parse('main.loop.show_author.loop.separate');
-            }
-            $xtpl->parse('main.loop.show_author.loop');
-        }
-        $xtpl->parse('main.loop.show_author');
-    } else {
-        $xtpl->assign('UNKNOW_AUTHOR', $global_array_config['unknow_author']);
-        $xtpl->parse('main.loop.no_author');
     }
 
     // Xuất thể loại

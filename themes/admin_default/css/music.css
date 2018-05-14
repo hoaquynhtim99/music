@@ -111,6 +111,10 @@ hr.sm {
 .ms-table thead td {
     white-space: nowrap;
 }
+.ms-table .ms-img {
+    margin-right: 10px;
+    margin-top: 5px;
+}
 .ms-list-inline {
     margin-bottom: 0!important;
 }

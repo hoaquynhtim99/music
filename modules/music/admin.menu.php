@@ -22,10 +22,12 @@ $allow_func = array(
     'artist-list',
     'cat-list',
     'song-list',
+    'song-content',
     'album-list',
     'video-list',
 );
 
+$submenu['song-content'] = $lang_module['song_add'];
 $submenu['song-list'] = $lang_module['song_manager'];
 $submenu['album-list'] = $lang_module['album_manager'];
 $submenu['video-list'] = $lang_module['video_manager'];

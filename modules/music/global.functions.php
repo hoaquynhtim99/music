@@ -176,7 +176,7 @@ $global_array_config['msg_nolyric'] = 'Đang cập nhật';
 function nv_get_album_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('album_id', 'album_code', 'cat_ids', 'singer_ids', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'time_update');
+    $array_select_fields = array('album_id', 'album_code', 'cat_ids', 'singer_ids', 'release_year', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'time_update', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_album_name album_name';
     $array_select_fields[] = NV_LANG_DATA . '_album_alias album_alias';
     $array_select_fields[] = NV_LANG_DATA . '_album_description album_description';
@@ -551,6 +551,67 @@ function nv_get_detail_video_link($video, $singers = array(), $amp = true, $quer
         $singer_alias = '';
     }
     return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+}
+
+/**
+ * nv_get_resource_url()
+ *
+ * @param mixed $orgSrc
+ * @param string $area
+ * @param bool $thumb
+ * @return
+ */
+function nv_get_resource_url($orgSrc, $area = 'album', $thumb = false)
+{
+    global $module_upload, $global_array_config, $module_info, $global_config;
+
+    /**
+     * $orgSrc có dạng folder/.../filename sao cho fullpath là NV_UPLOADS_REALDIR/module_name/$orgSrc
+     * Trả về đường dẫn có thể hiển thị trực tiếp
+     */
+
+    // Kiểm tra file tồn tại
+    if ($thumb and is_file(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $module_upload . '/' . $orgSrc)) {
+        return NV_BASE_SITEURL . NV_FILES_DIR . '/' . $module_upload . '/' . $orgSrc;
+    } elseif (is_file(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $orgSrc)) {
+        return NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $orgSrc;
+    }
+
+    // Lấy từ cấu hình
+    $map_cfg_data = array(
+        'album' => $global_array_config['res_default_album_avatar'],
+        'singer' => $global_array_config['res_default_singer_avatar'],
+        'author' => $global_array_config['res_default_author_avatar'],
+        'video' => $global_array_config['res_default_video_avatar']
+    );
+
+    if (isset($map_cfg_data[$area]) and !empty($map_cfg_data[$area])) {
+        if ($thumb and is_file(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area])) {
+            return NV_BASE_SITEURL . NV_FILES_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area];
+        } elseif (is_file(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area])) {
+            return NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area];
+        }
+    }
+
+    // Mặc định theo lập trình
+    $map_cfg_data = array(
+        'album' => 'album-art-cover.jpg',
+        'singer' => 'singer-art.jpg',
+        'author' => 'singer-art.jpg',
+        'video' => 'video-art-cover.jpg'
+    );
+
+    if (isset($map_cfg_data[$area])) {
+        if (is_file(NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
+            return NV_BASE_SITEURL . 'themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+        } elseif (is_file(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
+            return NV_BASE_SITEURL . 'themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+        } elseif (is_file(NV_ROOTDIR . '/themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
+            return NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+        }
+    }
+
+    return NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/pix.gif';
 }
 
 /**

@@ -595,6 +595,10 @@ $(document).ready(function() {
 
         if (ajaction == 'delete' && !confirm(nv_is_del_confirm[0])) {
             return false;
+        } else if (ajaction == 'edit') {
+            (msIsDebug && console.log('Link to edit'));
+            window.location = btn.data('url' + ajaction);
+            return false;
         }
 
         btn.prop('disabled', true);
