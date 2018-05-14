@@ -253,7 +253,7 @@ function nv_get_song_select_fields($full_fields = false)
 function nv_get_video_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('video_id', 'video_code', 'cat_ids', 'singer_ids', 'author_ids', 'song_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit');
+    $array_select_fields = array('video_id', 'video_code', 'cat_ids', 'singer_ids', 'author_ids', 'song_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_video_name video_name';
     $array_select_fields[] = NV_LANG_DATA . '_video_alias video_alias';
     if (NV_LANG_DATA != $global_array_config['default_language']) {

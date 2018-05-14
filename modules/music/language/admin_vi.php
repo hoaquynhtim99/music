@@ -221,3 +221,5 @@ $lang_module['album_list'] = 'Danh sách album';
 $lang_module['album_list_ycat'] = 'Năm/Thể loại';
 
 $lang_module['video_manager'] = 'Quản lý video';
+$lang_module['video_list'] = 'Danh sách video';
+$lang_module['video_list_stcat'] = 'Sáng tác/Thể loại';
