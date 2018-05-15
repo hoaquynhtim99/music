@@ -69,6 +69,9 @@ $lang_module['action_unset_online_supported'] = 'Bỏ hỗ trợ nghe trực tuy
 
 $lang_module['stat_singers'] = 'Số ca sĩ';
 $lang_module['stat_authors'] = 'Số nhạc sĩ';
+$lang_module['stat_songs'] = 'Số bài hát';
+$lang_module['stat_albums'] = 'Số album';
+$lang_module['stat_videos'] = 'Số video';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';
@@ -213,6 +216,8 @@ $lang_module['artist_type_author'] = 'Nhạc sĩ';
 $lang_module['artist_type_all'] = 'Ca nhạc sĩ';
 
 $lang_module['cat_manager'] = 'Quản lý danh mục';
+$lang_module['cat_s_show_inalbum'] = 'Trang album';
+$lang_module['cat_s_show_invideo'] = 'Trang video';
 
 $lang_module['song_manager'] = 'Quản lý bài hát';
 $lang_module['song_list'] = 'Danh sách bài hát';

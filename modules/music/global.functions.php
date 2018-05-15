@@ -298,7 +298,7 @@ function nv_get_video_select_fields($full_fields = false)
 function nv_get_cat_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'show_inalbum', 'show_invideo', 'status');
+    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'time_add', 'time_update', 'show_inalbum', 'show_invideo', 'weight', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
     $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
     $array_select_fields[] = NV_LANG_DATA . '_cat_absitetitle cat_absitetitle';
