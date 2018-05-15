@@ -156,6 +156,12 @@ $global_array_soquality = $nv_Cache->db($sql, 'quality_id', $module_name);
 $sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_video ORDER BY weight ASC";
 $global_array_mvquality = $nv_Cache->db($sql, 'quality_id', $module_name);
 
+// Loại nghệ sĩ
+$global_array_artist_type = array();
+$global_array_artist_type[0] = $lang_module['artist_type_singer'];
+$global_array_artist_type[1] = $lang_module['artist_type_author'];
+$global_array_artist_type[2] = $lang_module['artist_type_all'];
+
 $global_array_config['detail_song_albums_nums'] = 12;
 $global_array_config['detail_song_videos_nums'] = 12;
 $global_array_config['limit_authors_displayed'] = 3;
@@ -352,7 +358,7 @@ function nv_get_nation_select_fields($full_fields = false)
 function nv_get_artist_select_fields($full_fields = false)
 {
     global $global_array_config;
-    $array_select_fields = array('artist_id', 'artist_code', 'artist_type', 'artist_birthday', 'artist_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_singer_albums', 'stat_singer_songs', 'stat_singer_videos', 'stat_author_songs', 'stat_author_videos');
+    $array_select_fields = array('artist_id', 'artist_code', 'artist_type', 'artist_birthday', 'artist_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_singer_albums', 'stat_singer_songs', 'stat_singer_videos', 'stat_author_songs', 'stat_author_videos', 'time_add', 'time_update', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_artist_name artist_name';
     $array_select_fields[] = NV_LANG_DATA . '_artist_alias artist_alias';
     $array_select_fields[] = NV_LANG_DATA . '_artist_realname artist_realname';

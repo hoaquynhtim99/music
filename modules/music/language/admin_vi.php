@@ -49,6 +49,7 @@ $lang_module['state'] = 'Trạng thái';
 $lang_module['listen_hits'] = 'Lượt nghe';
 $lang_module['author_list'] = 'Danh sách các nhạc sĩ';
 $lang_module['cat'] = 'Thể loại';
+$lang_module['type'] = 'Loại';
 $lang_module['time'] = 'Thời gian';
 $lang_module['from'] = 'Từ';
 $lang_module['to'] = 'Đến';
@@ -68,8 +69,6 @@ $lang_module['action_unset_online_supported'] = 'Bỏ hỗ trợ nghe trực tuy
 
 $lang_module['stat_singers'] = 'Số ca sĩ';
 $lang_module['stat_authors'] = 'Số nhạc sĩ';
-
-$lang_module['singer_list'] = 'Danh sách ca sĩ';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';
@@ -208,6 +207,10 @@ $lang_module['qvd_err_exists'] = 'Chất lượng video không tồn tại';
 $lang_module['qvd_err_name'] = 'Vui lòng nhập tên chất lượng video';
 
 $lang_module['artist_manager'] = 'Quản lý nghệ sĩ';
+$lang_module['artist_list'] = 'Danh sách nghệ sĩ';
+$lang_module['artist_type_singer'] = 'Ca sĩ';
+$lang_module['artist_type_author'] = 'Nhạc sĩ';
+$lang_module['artist_type_all'] = 'Ca nhạc sĩ';
 
 $lang_module['cat_manager'] = 'Quản lý danh mục';
 
@@ -223,3 +226,5 @@ $lang_module['album_list_ycat'] = 'Năm/Thể loại';
 $lang_module['video_manager'] = 'Quản lý video';
 $lang_module['video_list'] = 'Danh sách video';
 $lang_module['video_list_stcat'] = 'Sáng tác/Thể loại';
+
+$lang_module['singer_list'] = 'Danh sách ca sĩ';

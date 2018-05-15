@@ -81,3 +81,7 @@ $lang_module['site_title_singer_profile'] = 'Tiểu sử %s con đường âm nh
 $lang_module['player_lang_fullscreen'] = 'Toàn màn hình';
 $lang_module['player_lang_settings'] = 'Chất lượng';
 $lang_module['player_lang_hd'] = 'Chất lượng';
+
+$lang_module['artist_type_singer'] = 'Ca sĩ';
+$lang_module['artist_type_author'] = 'Nhạc sĩ';
+$lang_module['artist_type_all'] = 'Ca nhạc sĩ';
