@@ -40,16 +40,16 @@
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                     <td class="text-center">
-                        <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.show_inalbum}/>
+                        <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" data-action="unactiveinalbum|activeinalbum" class="ms-check-in-list" type="checkbox" value="1"{ROW.show_inalbum}/>
                     </td>
                     <td class="text-center">
-                        <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.show_invideo}/>
+                        <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" data-action="unactiveinvideo|activeinvideo" class="ms-check-in-list" type="checkbox" value="1"{ROW.show_invideo}/>
                     </td>
                     <td class="text-center">
                         <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
                     </td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.cat_id}" data-name="{ROW.cat_name}" data-options="{ACTION_KEY}" data-langs="{ACTION_LANG}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.cat_id}" data-name="{ROW.cat_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
                             <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                             <span class="caret"></span>
                         </button>
@@ -85,10 +85,10 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.qso_add}" data-msgedit="{LANG.qso_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.cat_add}" data-msgedit="{LANG.cat_edit}"></span></h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-info" data-msgadd="{LANG.qso_add_mgs}" data-msgedit="{LANG.qso_edit_mgs}">&nbsp;</div>
+                <div class="alert alert-info" data-msgadd="{LANG.cat_add_mgs}" data-msgedit="{LANG.cat_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <div class="form-group">
                         <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
@@ -100,15 +100,41 @@
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="online_supported" value="1" data-checked="1"/>
-                            {LANG.qso_online_supported}
+                            <input type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
+                            {LANG.cat_show_inalbum}
                         </label>
                     </div>
                     <div class="checkbox">
                         <label>
-                            <input type="checkbox" name="is_default" value="1" data-checked="0"/>
-                            {LANG.qso_is_default}
+                            <input type="checkbox" name="show_invideo" value="1" data-checked="0"/>
+                            {LANG.cat_show_invideo}
                         </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_absitetitle" class="control-label">{LANG.cat_absitetitle}:</label>
+                        <span class="help-block">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_abintrotext" class="control-label">{LANG.cat_abintrotext}:</label>
+                        <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_abkeywords" class="control-label">{LANG.cat_abkeywords}:</label>
+                        <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_mvsitetitle" class="control-label">{LANG.cat_mvsitetitle}:</label>
+                        <span class="help-block">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_mvintrotext" class="control-label">{LANG.cat_mvintrotext}:</label>
+                        <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cat_mvkeywords" class="control-label">{LANG.cat_mvkeywords}:</label>
+                        <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
                     </div>
                     <input type="submit" class="hidden" name="submit" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

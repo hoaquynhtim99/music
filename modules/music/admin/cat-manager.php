@@ -22,33 +22,33 @@ if ($ajaction == 'delete') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $quality_ids = $nv_Request->get_title('id', 'post', '');
-    $quality_ids = array_filter(array_unique(array_map('intval', explode(',', $quality_ids))));
-    if (empty($quality_ids)) {
+    $cat_ids = $nv_Request->get_title('id', 'post', '');
+    $cat_ids = array_filter(array_unique(array_map('intval', explode(',', $cat_ids))));
+    if (empty($cat_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($quality_ids as $quality_id) {
-        if (!isset($global_array_soquality[$quality_id])) {
+    foreach ($cat_ids as $cat_id) {
+        if (!isset($global_array_cat[$cat_id])) {
             $ajaxRespon->setMessage('Wrong ID!!!')->respon();
         }
     }
 
-    foreach ($quality_ids as $quality_id) {
+    foreach ($cat_ids as $cat_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_categories WHERE quality_id=" . $quality_id;
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $cat_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_categories', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_CAT', $cat_id . ':' . $global_array_cat[$cat_id]['cat_name'], $admin_info['userid']);
     }
 
     // Cập nhật lại thứ tự
-    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
+    $sql = "SELECT cat_id FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
         ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
+        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $weight . " WHERE cat_id=" . $row['cat_id'];
         $db->query($sql);
     }
 
@@ -64,26 +64,26 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $quality_ids = $nv_Request->get_title('id', 'post', '');
-    $quality_ids = array_filter(array_unique(array_map('intval', explode(',', $quality_ids))));
-    if (empty($quality_ids)) {
+    $cat_ids = $nv_Request->get_title('id', 'post', '');
+    $cat_ids = array_filter(array_unique(array_map('intval', explode(',', $cat_ids))));
+    if (empty($cat_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($quality_ids as $quality_id) {
-        if (!isset($global_array_soquality[$quality_id])) {
+    foreach ($cat_ids as $cat_id) {
+        if (!isset($global_array_cat[$cat_id])) {
             $ajaxRespon->setMessage('Wrong ID!!!')->respon();
         }
     }
 
     $status = $ajaction == 'active' ? 1 : 0;
 
-    foreach ($quality_ids as $quality_id) {
+    foreach ($cat_ids as $cat_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET status=" . $status . " WHERE quality_id=" . $quality_id;
+        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET status=" . $status . " WHERE cat_id=" . $cat_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_categories', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_CAT', $cat_id . ':' . $global_array_cat[$cat_id]['cat_name'], $admin_info['userid']);
     }
 
     $nv_Cache->delMod($module_name);
@@ -97,17 +97,17 @@ if ($ajaction == 'weight') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $quality_id = $nv_Request->get_int('id', 'post', 0);
+    $cat_id = $nv_Request->get_int('id', 'post', 0);
     $new_weight = $nv_Request->get_int('value', 'post', 0);
 
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_cat[$cat_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
-    if ($new_weight < 1 or $new_weight > sizeof($global_array_soquality)) {
+    if ($new_weight < 1 or $new_weight > sizeof($global_array_cat)) {
         $ajaxRespon->setMessage('Wrong Weight!!!')->respon();
     }
 
-    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_categories WHERE quality_id!=" . $quality_id . " ORDER BY weight ASC";
+    $sql = "SELECT cat_id FROM " . NV_MOD_TABLE . "_categories WHERE cat_id!=" . $cat_id . " ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
@@ -115,61 +115,60 @@ if ($ajaction == 'weight') {
         if ($weight == $new_weight) {
             ++$weight;
         }
-        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
+        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $weight . " WHERE cat_id=" . $row['cat_id'];
         $db->query($sql);
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $new_weight . " WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $new_weight . " WHERE cat_id=" . $cat_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_categories', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_CAT', $cat_id . ':' . $global_array_cat[$cat_id]['cat_name'], $admin_info['userid']);
 
     $ajaxRespon->setSuccess()->respon();
 }
 
-// Đánh dấu/Bỏ đánh dấu hỗ trợ nghe trực tuyến
-if ($ajaction == 'setonlinesupported' or $ajaction == 'unsetonlinesupported') {
+// Đánh dấu/Bỏ đánh dấu hiển thị ở trang album
+if ($ajaction == 'activeinalbum' or $ajaction == 'unactiveinalbum') {
     $ajaxRespon->reset();
     if (!defined('NV_IS_AJAX')) {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $quality_id = $nv_Request->get_int('id', 'post', 0);
+    $cat_id = $nv_Request->get_int('id', 'post', 0);
 
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_cat[$cat_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
-    $online_supported = $ajaction == 'setonlinesupported' ? 1 : 0;
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET online_supported=" . $online_supported . " WHERE quality_id=" . $quality_id;
+    $show_inalbum = $ajaction == 'activeinalbum' ? 1 : 0;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET show_inalbum=" . $show_inalbum . " WHERE cat_id=" . $cat_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_categories', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_CAT', $cat_id . ':' . $global_array_cat[$cat_id]['cat_name'], $admin_info['userid']);
     $ajaxRespon->setSuccess()->respon();
 }
 
-// Đánh dấu mặc định khi nghe
-if ($ajaction == 'setdefault') {
+// Đánh dấu/Bỏ đánh dấu hiển thị ở trang video
+if ($ajaction == 'activeinvideo' or $ajaction == 'unactiveinvideo') {
     $ajaxRespon->reset();
     if (!defined('NV_IS_AJAX')) {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $quality_id = $nv_Request->get_int('id', 'post', 0);
+    $cat_id = $nv_Request->get_int('id', 'post', 0);
 
-    if (!isset($global_array_soquality[$quality_id])) {
+    if (!isset($global_array_cat[$cat_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET is_default=0";
-    $db->query($sql);
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET is_default=1 WHERE quality_id=" . $quality_id;
+    $show_invideo = $ajaction == 'activeinvideo' ? 1 : 0;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET show_invideo=" . $show_invideo . " WHERE cat_id=" . $cat_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_categories', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_CAT', $cat_id . ':' . $global_array_cat[$cat_id]['cat_name'], $admin_info['userid']);
     $ajaxRespon->setSuccess()->respon();
 }
 
@@ -180,23 +179,32 @@ if ($ajaction == 'ajedit') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $quality_id = $nv_Request->get_int('id', 'post', 0);
-    if (!isset($global_array_soquality[$quality_id])) {
+    $cat_id = $nv_Request->get_int('id', 'post', 0);
+    if (!isset($global_array_cat[$cat_id])) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
-    $array_quality = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE quality_id=" . $quality_id)->fetch();
-    if (empty($array_quality)) {
+    $array_cat = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $cat_id)->fetch();
+    if (empty($array_cat)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
     $response = array();
-    $response['quality_name'] = nv_unhtmlspecialchars($array_quality[NV_LANG_DATA . '_quality_name']);
-    $response['quality_alias'] = nv_unhtmlspecialchars($array_quality[NV_LANG_DATA . '_quality_alias']);
+    $response['resource_avatar'] = nv_unhtmlspecialchars($array_cat['resource_avatar']);
+    $response['resource_cover'] = nv_unhtmlspecialchars($array_cat['resource_cover']);
+    $response['resource_video'] = nv_unhtmlspecialchars($array_cat['resource_video']);
+    $response['cat_name'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_name']);
+    $response['cat_alias'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_alias']);
+    $response['cat_absitetitle'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_absitetitle']);
+    $response['cat_abintrotext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_abintrotext']);
+    $response['cat_abkeywords'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_abkeywords']);
+    $response['cat_mvsitetitle'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvsitetitle']);
+    $response['cat_mvintrotext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvintrotext']);
+    $response['cat_mvkeywords'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvkeywords']);
 
     $response_checkbox = array();
-    $response_checkbox['online_supported'] = $array_quality['online_supported'];
-    $response_checkbox['is_default'] = $array_quality['is_default'];
+    $response_checkbox['show_inalbum'] = $array_cat['show_inalbum'];
+    $response_checkbox['show_invideo'] = $array_cat['show_invideo'];
 
     $ajaxRespon->set('data', $response);
     $ajaxRespon->set('datacheckbox', $response_checkbox)->setSuccess()->respon();
@@ -210,24 +218,33 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     $array = array();
-    $array['quality_name'] = nv_substr($nv_Request->get_title('quality_name', 'post', ''), 0, 250);
-    $array['quality_alias'] = nv_substr($nv_Request->get_title('quality_alias', 'post', ''), 0, 250);
-    $array['online_supported'] = intval($nv_Request->get_bool('online_supported', 'post', false));
-    $array['is_default'] = intval($nv_Request->get_bool('is_default', 'post', false));
+    $array['cat_name'] = nv_substr($nv_Request->get_title('cat_name', 'post', ''), 0, 250);
+    $array['cat_alias'] = nv_substr($nv_Request->get_title('cat_alias', 'post', ''), 0, 250);
+    $array['resource_avatar'] = nv_substr($nv_Request->get_title('resource_avatar', 'post', ''), 0, 255);
+    $array['resource_cover'] = nv_substr($nv_Request->get_title('resource_cover', 'post', ''), 0, 255);
+    $array['resource_video'] = nv_substr($nv_Request->get_title('resource_video', 'post', ''), 0, 255);
+    $array['show_inalbum'] = intval($nv_Request->get_bool('show_inalbum', 'post', false));
+    $array['show_invideo'] = intval($nv_Request->get_bool('show_invideo', 'post', false));
+    $array['cat_absitetitle'] = nv_substr($nv_Request->get_title('cat_absitetitle', 'post', ''), 0, 250);
+    $array['cat_abintrotext'] = trim(preg_replace('/\s[\s]+/iu', ' ', nv_nl2br($nv_Request->get_textarea('cat_abintrotext', '', NV_ALLOWED_HTML_TAGS), ' ')));
+    $array['cat_abkeywords'] = trim(preg_replace('/\s[\s]+/iu', ' ', nv_nl2br($nv_Request->get_textarea('cat_abkeywords', '', NV_ALLOWED_HTML_TAGS), ' ')));
+    $array['cat_mvsitetitle'] = nv_substr($nv_Request->get_title('cat_mvsitetitle', 'post', ''), 0, 250);
+    $array['cat_mvintrotext'] = trim(preg_replace('/\s[\s]+/iu', ' ', nv_nl2br($nv_Request->get_textarea('cat_mvintrotext', '', NV_ALLOWED_HTML_TAGS), ' ')));
+    $array['cat_mvkeywords'] = trim(preg_replace('/\s[\s]+/iu', ' ', nv_nl2br($nv_Request->get_textarea('cat_mvkeywords', '', NV_ALLOWED_HTML_TAGS), ' ')));
 
-    $array['quality_id'] = $nv_Request->get_int('id', 'post', 0);
+    $array['cat_id'] = $nv_Request->get_int('id', 'post', 0);
     $array['submittype'] = nv_substr($nv_Request->get_title('submittype', 'post', ''), 0, 250);
 
     $ajaxRespon->set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
 
-    $array['quality_alias'] = empty($array['quality_alias']) ? change_alias($array['quality_name']) : change_alias($array['quality_alias']);
+    $array['cat_alias'] = empty($array['cat_alias']) ? change_alias($array['cat_name']) : change_alias($array['cat_alias']);
 
     // Kiểm tra tồn tại alias
     $is_exists = 0;
     try {
-        $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_categories WHERE " . NV_LANG_DATA . "_quality_alias=:quality_alias" . ($array['quality_id'] ? " AND quality_id!=" . $array['quality_id'] : "");
+        $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_categories WHERE " . NV_LANG_DATA . "_cat_alias=:cat_alias" . ($array['cat_id'] ? " AND cat_id!=" . $array['cat_id'] : "");
         $sth = $db->prepare($sql);
-        $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
+        $sth->bindParam(':cat_alias', $array['cat_alias'], PDO::PARAM_STR);
         $sth->execute();
         $is_exists = $sth->fetchColumn();
     } catch (PDOException $e) {
@@ -237,33 +254,51 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     // Kiểm tra tồn tại sửa
     $array_old = array();
     $error_exists = false;
-    if (!empty($array['quality_id'])) {
-        $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE quality_id=" . $array['quality_id'])->fetch();
+    if (!empty($array['cat_id'])) {
+        $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $array['cat_id'])->fetch();
         if (empty($array_old)) {
             $error_exists = true;
         }
     }
 
     if ($error_exists) {
-        $ajaxRespon->setMessage($lang_module['qso_err_exists']);
-    } elseif (empty($array['quality_name'])) {
-        $ajaxRespon->setMessage($lang_module['qso_err_name']);
+        $ajaxRespon->setMessage($lang_module['cat_err_exists']);
+    } elseif (empty($array['cat_name'])) {
+        $ajaxRespon->setMessage($lang_module['cat_err_name']);
     } else {
-        if ($array['quality_id']) {
+        if ($array['cat_id']) {
             $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET
-                online_supported=" . $array['online_supported'] . ",
-                is_default=" . $array['is_default'] . ",
-                " . NV_LANG_DATA . "_quality_name=:quality_name,
-                " . NV_LANG_DATA . "_quality_alias=:quality_alias,
+                resource_avatar=:resource_avatar,
+                resource_cover=:resource_cover,
+                resource_video=:resource_video,
+                show_inalbum=" . $array['show_inalbum'] . ",
+                show_invideo=" . $array['show_invideo'] . ",
+                " . NV_LANG_DATA . "_cat_name=:cat_name,
+                " . NV_LANG_DATA . "_cat_alias=:cat_alias,
+                " . NV_LANG_DATA . "_cat_absitetitle=:cat_absitetitle,
+                " . NV_LANG_DATA . "_cat_abintrotext=:cat_abintrotext,
+                " . NV_LANG_DATA . "_cat_abkeywords=:cat_abkeywords,
+                " . NV_LANG_DATA . "_cat_mvsitetitle=:cat_mvsitetitle,
+                " . NV_LANG_DATA . "_cat_mvintrotext=:cat_mvintrotext,
+                " . NV_LANG_DATA . "_cat_mvkeywords=:cat_mvkeywords,
                 time_update=" . NV_CURRENTTIME . "
-            WHERE quality_id=" . $array['quality_id'];
+            WHERE cat_id=" . $array['cat_id'];
             try {
                 $sth = $db->prepare($sql);
-                $sth->bindParam(':quality_name', $array['quality_name'], PDO::PARAM_STR);
-                $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
+                $sth->bindParam(':resource_avatar', $array['resource_avatar'], PDO::PARAM_STR);
+                $sth->bindParam(':resource_cover', $array['resource_cover'], PDO::PARAM_STR);
+                $sth->bindParam(':resource_video', $array['resource_video'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_name', $array['cat_name'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_alias', $array['cat_alias'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_absitetitle', $array['cat_absitetitle'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_abintrotext', $array['cat_abintrotext'], PDO::PARAM_STR, strlen($array['cat_abintrotext']));
+                $sth->bindParam(':cat_abkeywords', $array['cat_abkeywords'], PDO::PARAM_STR, strlen($array['cat_abkeywords']));
+                $sth->bindParam(':cat_mvsitetitle', $array['cat_mvsitetitle'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_mvintrotext', $array['cat_mvintrotext'], PDO::PARAM_STR, strlen($array['cat_mvintrotext']));
+                $sth->bindParam(':cat_mvkeywords', $array['cat_mvkeywords'], PDO::PARAM_STR, strlen($array['cat_mvkeywords']));
                 $sth->execute();
 
-                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_categories', $array_old[NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
+                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_CAT', $array_old[NV_LANG_DATA . '_cat_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
                 $ajaxRespon->setSuccess();
@@ -274,20 +309,54 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
             $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_categories")->fetchColumn();
             $weight++;
 
+            // Xác định các field theo ngôn ngữ không có dữ liệu
+            $langs = msGetModuleSetupLangs();
+            $array_fname = $array_fvalue = array();
+            foreach ($langs as $lang) {
+                if ($lang != NV_LANG_DATA) {
+                    $array_fname[] = $lang . '_cat_abintrotext';
+                    $array_fname[] = $lang . '_cat_abkeywords';
+                    $array_fname[] = $lang . '_cat_mvintrotext';
+                    $array_fname[] = $lang . '_cat_mvkeywords';
+                    $array_fvalue[] = '';
+                    $array_fvalue[] = '';
+                    $array_fvalue[] = '';
+                    $array_fvalue[] = '';
+                }
+            }
+            $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
+            $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
+
+            $cat_code = msGetUniqueCode('cat');
+
             $sql = "INSERT INTO " . NV_MOD_TABLE . "_categories (
-                online_supported, is_default, time_add, weight, status,
-                " . NV_LANG_DATA . "_quality_name, " . NV_LANG_DATA . "_quality_alias
+                cat_code, resource_avatar, resource_cover, resource_video, time_add, show_inalbum, show_invideo, weight, status,
+                " . NV_LANG_DATA . "_cat_name, " . NV_LANG_DATA . "_cat_alias,
+                " . NV_LANG_DATA . "_cat_absitetitle, " . NV_LANG_DATA . "_cat_abintrotext, " . NV_LANG_DATA . "_cat_abkeywords,
+                " . NV_LANG_DATA . "_cat_mvsitetitle, " . NV_LANG_DATA . "_cat_mvintrotext, " . NV_LANG_DATA . "_cat_mvkeywords" . $array_fname . "
             ) VALUES (
-                " . $array['online_supported'] . ", " . $array['is_default'] . ", " . NV_CURRENTTIME . ",
-                " . $weight . ", 1, :quality_name, :quality_alias
+                :cat_code, :resource_avatar, :resource_cover, :resource_video, " . NV_CURRENTTIME . ", " . $array['show_inalbum'] . ", " . $array['show_invideo'] . ",
+                " . $weight . ", 1, :cat_name, :cat_alias,
+                :cat_absitetitle, :cat_abintrotext, :cat_abkeywords,
+                :cat_mvsitetitle, :cat_mvintrotext, :cat_mvkeywords" . $array_fvalue . "
             )";
             try {
                 $sth = $db->prepare($sql);
-                $sth->bindParam(':quality_name', $array['quality_name'], PDO::PARAM_STR);
-                $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_code', $cat_code, PDO::PARAM_STR);
+                $sth->bindParam(':resource_avatar', $array['resource_avatar'], PDO::PARAM_STR);
+                $sth->bindParam(':resource_cover', $array['resource_cover'], PDO::PARAM_STR);
+                $sth->bindParam(':resource_video', $array['resource_video'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_name', $array['cat_name'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_alias', $array['cat_alias'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_absitetitle', $array['cat_absitetitle'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_abintrotext', $array['cat_abintrotext'], PDO::PARAM_STR, strlen($array['cat_abintrotext']));
+                $sth->bindParam(':cat_abkeywords', $array['cat_abkeywords'], PDO::PARAM_STR, strlen($array['cat_abkeywords']));
+                $sth->bindParam(':cat_mvsitetitle', $array['cat_mvsitetitle'], PDO::PARAM_STR);
+                $sth->bindParam(':cat_mvintrotext', $array['cat_mvintrotext'], PDO::PARAM_STR, strlen($array['cat_mvintrotext']));
+                $sth->bindParam(':cat_mvkeywords', $array['cat_mvkeywords'], PDO::PARAM_STR, strlen($array['cat_mvkeywords']));
                 $sth->execute();
 
-                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_categories', $array['quality_name'], $admin_info['userid']);
+                nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_CAT', $array['cat_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
                 $ajaxRespon->setSuccess();
@@ -319,18 +388,6 @@ foreach ($global_array_cat as $row) {
     $row['stat_videos'] = msFormatNumberViews($row['stat_videos']);
 
     $xtpl->assign('ROW', $row);
-
-    $array_action_key = array();
-    $array_action_lang = array();
-    $array_action_key[] = 'ajedit';
-    $array_action_lang[] = $lang_global['edit'];
-
-    $array_action_key[] = 'delete';
-    $array_action_lang[] = $lang_global['delete'];
-
-    $xtpl->assign('ACTION_KEY', implode('|', $array_action_key));
-    $xtpl->assign('ACTION_LANG', implode('|', $array_action_lang));
-
     $xtpl->parse('main.loop');
 }
 

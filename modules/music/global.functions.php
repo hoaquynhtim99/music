@@ -731,3 +731,25 @@ function msCheckPage($page, $per_page)
     }
     return true;
 }
+
+/**
+ * msGetUniqueCode()
+ *
+ * @param string $area
+ * @return
+ */
+function msGetUniqueCode($area = '')
+{
+    global $db;
+
+    $code = '';
+
+    if ($area == 'cat') {
+        // Mã thể loại
+        while (empty($code) or $db->query("SELECT cat_id FROM " . NV_MOD_TABLE . "_categories WHERE cat_code=" . $db->quote($code))->fetchColumn()) {
+            $code = strtolower(nv_genpass(4));
+        }
+    }
+
+    return $code;
+}

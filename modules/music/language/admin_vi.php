@@ -215,9 +215,24 @@ $lang_module['artist_type_singer'] = 'Ca sĩ';
 $lang_module['artist_type_author'] = 'Nhạc sĩ';
 $lang_module['artist_type_all'] = 'Ca nhạc sĩ';
 
-$lang_module['cat_manager'] = 'Quản lý danh mục';
+$lang_module['cat_manager'] = 'Quản lý thể loại';
 $lang_module['cat_s_show_inalbum'] = 'Trang album';
 $lang_module['cat_s_show_invideo'] = 'Trang video';
+$lang_module['cat_show_inalbum'] = 'Hiển thị ở trang album';
+$lang_module['cat_show_invideo'] = 'Hiển thị ở trang video';
+$lang_module['cat_add'] = 'Thêm mới thể loại';
+$lang_module['cat_edit'] = 'Sửa thể loại';
+$lang_module['cat_add_mgs'] = 'Mời nhập các ô bên dưới để thêm mới thể loại';
+$lang_module['cat_edit_mgs'] = 'Mời thay đổi các ô bên dưới để chỉnh sửa thể loại';
+$lang_module['cat_absitetitle'] = 'Tiêu đề website ở trang album';
+$lang_module['cat_abintrotext'] = 'Mô tả tại trang album';
+$lang_module['cat_abkeywords'] = 'Từ khóa tại trang album';
+$lang_module['cat_mvsitetitle'] = 'Tiêu đề website ở trang video';
+$lang_module['cat_mvintrotext'] = 'Mô tả tại trang video';
+$lang_module['cat_mvkeywords'] = 'Từ khóa tại trang video';
+$lang_module['cat_get_default'] = 'Nếu không nhập hệ thống tự lấy từ tiêu đề';
+$lang_module['cat_err_exists'] = 'Thể loại không tồn tại';
+$lang_module['cat_err_name'] = 'Vui lòng nhập tên thể loại';
 
 $lang_module['song_manager'] = 'Quản lý bài hát';
 $lang_module['song_list'] = 'Danh sách bài hát';

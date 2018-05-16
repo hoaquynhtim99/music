@@ -52,6 +52,9 @@ div.tooltip.bottom{
 div.tooltip.bottom div.tooltip-arrow{
     left: 15px!important;
 }
+.ms-form-group-last {
+    margin-bottom: 0;
+}
 
 /*--- CAPTION ---*/
 .page-title{

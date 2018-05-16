@@ -757,7 +757,10 @@ $(document).ready(function() {
             popupModal.find('.alert').removeClass('alert-info').removeClass('alert-success').addClass('alert-danger').html(data.message);
         }
     }
-    // Cho hoạt động, đình chỉ đối tượng
+    /**
+     * Toggle trạng thái đối tượng 0:1 ví dụ đình chỉ/kích hoạt.
+     * Mặc định là active:deactive hoặc cái gì đó tùy thiết lập
+     */
     msToggleActive.click(function(e) {
         //e.preventDefault();
         var $this = $(this);
@@ -769,8 +772,15 @@ $(document).ready(function() {
         (msIsDebug && console.log('Set to ' + active));
         msToggleActive.prop('disabled', true);
         var url = script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=' + $this.data('op') + '&ajaxrequest=1&nocache=' + new Date().getTime();
+        var ajaction = ['deactive', 'active'];
+        if ($this.data('action')) {
+            var _action = $this.data('action').split('|');
+            if (_action[1]) {
+                ajaction = [_action[0], _action[1]];
+            }
+        }
         var data = {
-            'ajaction': (active ? 'active' : 'deactive'),
+            'ajaction': (active ? ajaction[1] : ajaction[0]),
             'id': $this.data('id')
         };
         $.ajax({
