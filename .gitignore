@@ -4,6 +4,7 @@
 /.htaccess
 /config.php
 /favicon.ico
+/error.php
 /index.php
 /LICENSE.txt
 /CHANGELOG.txt
@@ -56,4 +57,3 @@
 !/themes/admin_default/js/music.js
 !/themes/admin_default/images/music
 !/themes/admin_default/modules/music
-/error.php
