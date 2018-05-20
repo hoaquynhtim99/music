@@ -57,6 +57,12 @@ class ajaxRespon
         return $this;
     }
 
+    /**
+     * ajaxRespon::setPrintMessage()
+     *
+     * @param mixed $vars
+     * @return
+     */
     public function setPrintMessage($vars)
     {
         $this->json['message'] = '<pre><code>' . print_r($vars, true) . '</code></pre>';
