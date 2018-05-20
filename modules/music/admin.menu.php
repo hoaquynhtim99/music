@@ -20,6 +20,7 @@ $allow_func = array(
     'quality-song-manager',
     'quality-video-manager',
     'artist-list',
+    'artist-content',
     'cat-manager',
     'song-list',
     'song-content',
@@ -31,6 +32,11 @@ $submenu['song-content'] = $lang_module['song_add'];
 $submenu['song-list'] = $lang_module['song_manager'];
 $submenu['album-list'] = $lang_module['album_manager'];
 $submenu['video-list'] = $lang_module['video_manager'];
-$submenu['artist-list'] = $lang_module['artist_manager'];
+$submenu['artist-list'] = array(
+    'title' => $lang_module['artist_manager'],
+    'submenu' => array(
+        'artist-content' => $lang_module['artist_add']
+    )
+);
 $submenu['cat-manager'] = $lang_module['cat_manager'];
 $submenu['config'] = $lang_module['config'];

@@ -11,16 +11,16 @@
 
     var Validate = function(element, options) {
         var self    = this,
-            editor  = false
+            editor  = false;
 
-        this.$element = $(element)
-        this.options = options
+        this.$element = $(element);
+        this.options = options;
 
-        this.$element.attr('novalidate', true) // disable automatic native validation
+        this.$element.attr('novalidate', true); // disable automatic native validation
 
-        this.rebuildForm()
+        this.rebuildForm();
 
-        this.$element.on('submit.bs.validate', $.proxy(this.onSubmit, this))
+        this.$element.on('submit.bs.validate', $.proxy(this.onSubmit, this));
 
         this.$element.find("div.required,div.checkbox,div.radio,div.ckeditor,input:not(:button,:submit,:reset),select,textarea").each(function() {
             var element   = this,
@@ -52,10 +52,10 @@
                     }
                 })
             }
-        })
+        });
     }
 
-    Validate.VERSION  = '4.0.23'
+    Validate.VERSION  = '4.3.00';
 
     Validate.DEFAULTS = {
         type   : 'normal'      // normal|ajax|file
@@ -371,38 +371,38 @@
         return whitespace.indexOf(str.charAt(0)) === -1 ? str : '';
     }
 
-    function Plugin( option ){
+    function Plugin(option) {
         return this.each(function(){
-            var $this   = $(this)
-            var options = $.extend({}, Validate.DEFAULTS, $this.data(), typeof option == 'object' && option)
-            var data    = $this.data('bs.validate')
+            var $this   = $(this);
+            var options = $.extend({}, Validate.DEFAULTS, $this.data(), typeof option == 'object' && option);
+            var data    = $this.data('bs.validate');
 
-            if (!data && option == 'destroy') return
-            if (!data) $this.data('bs.validate', (data = new Validate(this, options)))
-            if (typeof option == 'string') data[option]()
-        })
+            if (!data && option == 'destroy') return true;
+            if (!data) $this.data('bs.validate', (data = new Validate(this, options)));
+            if (typeof option == 'string') data[option]();
+        });
     }
 
-    var old = $.fn.validate
+    var old = $.fn.validate;
 
-    $.fn.validate = Plugin
-    $.fn.validate.Constructor = Validate
+    $.fn.validate = Plugin;
+    $.fn.validate.Constructor = Validate;
 
     // VALIDATE NO CONFLICT
     // =================
     $.fn.validate.noConflict = function() {
-        $.fn.validate = old
-        return this
+        $.fn.validate = old;
+        return this;
     }
 
     // VALIDATE DATA-API
     // ==============
     $(window).on('load', function() {
         $('form[data-toggle="validate"]').each(function() {
-            var $form = $(this)
-            Plugin.call($form, $form.data())
-        })
-    })
+            var $form = $(this);
+            Plugin.call($form, $form.data());
+        });
+    });
 }(jQuery);
 
 function msEllipsisSet() {
@@ -804,11 +804,21 @@ $(document).ready(function() {
             alert(data.message);
         }
     }
+    // Hiển thị list ca sĩ
     $('[data-toggle="show-va-singer"]').click(function(e) {
         e.preventDefault();
         modalShow($($(this).data('target')).attr('title'), $($(this).data('target')).html());
     });
     msEllipsisCheck();
+    // Duyệt ảnh, file trên server
+    $('[data-toggle="browse"]').click(function() {
+        var area = $(this).data('area');
+        var path = $(this).data('path');
+        var currentpath = $(this).data('currentpath');
+        var type = $(this).data('type');
+        var currentfile = $('#' + area).val();
+        nv_open_browse(script_name + "?" + nv_lang_variable + "=" + nv_lang_data + "&" + nv_name_variable + "=upload&popup=1&area=" + area + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath + "&currentfile=" + currentfile, "NVImg", "850", "420", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
+    });
 });
 
 $(window).on('load', function() {

@@ -173,6 +173,11 @@ $global_array_config['addthis_pubid'] = 'addthis';
 $global_array_config['uploads_folder'] = 'dataup.default123';
 $global_array_config['msg_nolyric'] = 'Đang cập nhật';
 
+$global_array_config['auto_optimize_artist_name'] = 1;
+$global_array_config['auto_optimize_video_name'] = 1;
+$global_array_config['auto_optimize_song_name'] = 1;
+$global_array_config['auto_optimize_album_name'] = 1;
+
 /**
  * nv_get_album_select_fields()
  *
@@ -375,6 +380,7 @@ function nv_get_artist_select_fields($full_fields = false)
     $array_lang_fields = array('artist_name', 'artist_alias', 'artist_realname', 'singer_nickname', 'author_nickname');
 
     if ($full_fields) {
+        $array_select_fields[] = 'show_inhome';
         $array_select_fields[] = NV_LANG_DATA . '_artist_hometown artist_hometown';
         $array_select_fields[] = NV_LANG_DATA . '_singer_prize singer_prize';
         $array_select_fields[] = NV_LANG_DATA . '_singer_info singer_info';
@@ -748,6 +754,11 @@ function msGetUniqueCode($area = '')
         // Mã thể loại
         while (empty($code) or $db->query("SELECT cat_id FROM " . NV_MOD_TABLE . "_categories WHERE cat_code=" . $db->quote($code))->fetchColumn()) {
             $code = strtolower(nv_genpass(4));
+        }
+    } elseif ($area == 'artist') {
+        // Mã nghệ sĩ
+        while (empty($code) or $db->query("SELECT artist_id FROM " . NV_MOD_TABLE . "_artists WHERE artist_code=" . $db->quote($code))->fetchColumn()) {
+            $code = strtolower(nv_genpass(5));
         }
     }
 

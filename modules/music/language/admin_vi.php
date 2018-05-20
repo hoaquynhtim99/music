@@ -55,8 +55,19 @@ $lang_module['from'] = 'Từ';
 $lang_module['to'] = 'Đến';
 $lang_module['adv'] = 'Nâng cao';
 $lang_module['year'] = 'Năm';
+$lang_module['nation'] = 'Quốc gia';
+$lang_module['resource_avatar'] = 'Ảnh đại diện';
+$lang_module['resource_cover'] = 'Ảnh bìa';
+$lang_module['show_inhome'] = 'Hiển thị ở trang chủ';
+$lang_module['prize'] = 'Giải thưởng';
+$lang_module['bodytext'] = 'Thông tin chi tiết';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
+$lang_module['error_require_field'] = 'Trường này là bắt buộc';
+$lang_module['success_save'] = 'Dữ liệu đã được lưu lại';
+
+$lang_module['info_all'] = 'Thông tin chung';
+$lang_module['info_by_lang'] = 'Thông tin riêng cho';
 
 $lang_module['acr_singer'] = 'S';
 $lang_module['acr_author'] = 'A';
@@ -214,6 +225,20 @@ $lang_module['artist_list'] = 'Danh sách nghệ sĩ';
 $lang_module['artist_type_singer'] = 'Ca sĩ';
 $lang_module['artist_type_author'] = 'Nhạc sĩ';
 $lang_module['artist_type_all'] = 'Ca nhạc sĩ';
+$lang_module['artist_add'] = 'Thêm nghệ sĩ';
+$lang_module['artist_edit'] = 'Sửa nghệ sĩ';
+$lang_module['artist_name'] = 'Tên nghệ sĩ';
+$lang_module['artist_birthday'] = 'Ngày sinh';
+$lang_module['artist_birthday_lev'] = 'Hiển thị ngày sinh';
+$lang_module['artist_birthday_lev0'] = 'Không hiển thị';
+$lang_module['artist_birthday_lev1'] = 'Năm';
+$lang_module['artist_birthday_lev2'] = 'Tháng/Năm';
+$lang_module['artist_birthday_lev3'] = 'Ngày/Tháng/Năm';
+$lang_module['artist_nickname'] = 'Tên thường gọi';
+$lang_module['artist_realname'] = 'Tên thật';
+$lang_module['artist_hometown'] = 'Quê quán';
+$lang_module['artist_info_as_author'] = 'Thông tin dưới vai trò nhạc sĩ (nếu có)';
+$lang_module['artist_info_as_singer'] = 'Thông tin dưới vai trò ca sĩ (nếu có)';
 
 $lang_module['cat_manager'] = 'Quản lý thể loại';
 $lang_module['cat_s_show_inalbum'] = 'Trang album';

@@ -149,6 +149,9 @@ hr.sm {
     text-decoration: none;
     background-color: #f5f5f5;
 }
+.datepicker-dropdown {
+    z-index: 99999!important;
+}
 
 /* SINGERS, AUTHORS IN MODAL */
 .ms-singer-listgr-modal,

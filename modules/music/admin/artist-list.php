@@ -22,33 +22,33 @@ if ($ajaction == 'delete') {
         $ajaxRespon->setMessage('Wrong URL!!!')->respon();
     }
 
-    $nation_ids = $nv_Request->get_title('id', 'post', '');
-    $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
-    if (empty($nation_ids)) {
+    $artist_ids = $nv_Request->get_title('id', 'post', '');
+    $artist_ids = array_filter(array_unique(array_map('intval', explode(',', $artist_ids))));
+    if (empty($artist_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($nation_ids as $nation_id) {
-        if (!isset($global_array_nation[$nation_id])) {
+    foreach ($artist_ids as $artist_id) {
+        if (!isset($global_array_artist[$artist_id])) {
             $ajaxRespon->setMessage('Wrong ID!!!')->respon();
         }
     }
 
-    foreach ($nation_ids as $nation_id) {
+    foreach ($artist_ids as $artist_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_artists WHERE artist_id=" . $artist_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_artist', $artist_id . ':' . $global_array_artist[$artist_id]['artist_name'], $admin_info['userid']);
     }
 
     // Cập nhật lại thứ tự
-    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
+    $sql = "SELECT artist_id FROM " . NV_MOD_TABLE . "_artists ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
         ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
+        $sql = "UPDATE " . NV_MOD_TABLE . "_artists SET weight=" . $weight . " WHERE artist_id=" . $row['artist_id'];
         $db->query($sql);
     }
 
@@ -196,6 +196,7 @@ $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('OP', $op);
 $xtpl->assign('SEARCH', $array_search);
+$xtpl->assign('LINK_ADD', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-content');
 
 // Xuất ra trình duyệt
 foreach ($array as $row) {
