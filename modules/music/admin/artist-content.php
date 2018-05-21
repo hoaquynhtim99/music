@@ -286,7 +286,15 @@ if ($nv_Request->isset_request('submit', 'post')) {
     // Xóa cache
     $nv_Cache->delMod($module_name);
 
-    $redirect = NV_ADMIN_MOD_FULLLINK . 'artist-list';
+    // Chuyển về trang thêm mới
+    $continue_add = ($nv_Request->get_int('submitcontinue', 'post', 0) and !$artist_id);
+    if ($continue_add) {
+        $redirect = NV_ADMIN_MOD_FULLLINK . 'artist-content';
+        $ajaxRespon->set('redirectnow', true);
+    } else {
+        $redirect = NV_ADMIN_MOD_FULLLINK . 'artist-list';
+    }
+
     $ajaxRespon->setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
 }
 
@@ -371,6 +379,11 @@ foreach ($global_array_nation as $nation) {
     $nation['selected'] = $nation['nation_id'] == $array['nation_id'] ? ' selected="selected"' : '';
     $xtpl->assign('NATION', $nation);
     $xtpl->parse('main.nation');
+}
+
+// Nút lưu và tiếp tục chỉ có khi thêm mới
+if (!$artist_id) {
+    $xtpl->parse('main.save_continue');
 }
 
 $xtpl->parse('main');

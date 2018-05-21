@@ -28,8 +28,12 @@ $allow_func = array(
     'video-list',
 );
 
-$submenu['song-content'] = $lang_module['song_add'];
-$submenu['song-list'] = $lang_module['song_manager'];
+$submenu['song-list'] = array(
+    'title' => $lang_module['song_manager'],
+    'submenu' => array(
+        'song-content' => $lang_module['song_add']
+    )
+);
 $submenu['album-list'] = $lang_module['album_manager'];
 $submenu['video-list'] = $lang_module['video_manager'];
 $submenu['artist-list'] = array(

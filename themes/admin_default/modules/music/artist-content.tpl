@@ -2,7 +2,7 @@
 <link href="{NV_BASE_SITEURL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
 <script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/locales/bootstrap-datepicker.{NV_LANG_INTERFACE}.min.js"></script>
-<form method="post" action="{FORM_ACTION}" class="form-horizontal" autocomplete="off" data-toggle="validate" data-type="ajax">
+<form id="msAjForm" method="post" action="{FORM_ACTION}" class="form-horizontal" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
@@ -192,7 +192,9 @@
             <div class="col-sm-offset-8 col-sm-16">
                 <input type="hidden" name="submit" value="1"/>
                 <input name="redirect" type="hidden" value="0" />
-                <input type="submit" value="{GLANG.save}" class="btn btn-primary"/>
+                <input name="submitcontinue" type="hidden" value="0" />
+                <input id="msBtnSubmit" type="submit" value="{GLANG.save}" class="btn btn-primary"/>
+                <!-- BEGIN: save_continue --><input id="msBtnSubmitCon" type="button" class="btn btn-success" value="{LANG.save_and_continue}"/><!-- END: save_continue -->
             </div>
         </div>
     </div>
@@ -204,6 +206,13 @@ $(function() {
         language: "{NV_LANG_INTERFACE}",
         autoclose: true,
         todayHighlight: true
+    });
+    $('#msBtnSubmit').click(function() {
+        $('[name="submitcontinue"]').val(0);
+    });
+    $('#msBtnSubmitCon').click(function() {
+        $('[name="submitcontinue"]').val(1);
+        $('#msAjForm').submit();
     });
 });
 </script>

@@ -16,7 +16,8 @@
         this.$element = $(element);
         this.options = options;
 
-        this.$element.attr('novalidate', true); // disable automatic native validation
+        // Không sử dụng validate của trình duyệt
+        this.$element.attr('novalidate', true);
 
         this.rebuildForm();
 
@@ -25,9 +26,9 @@
         this.$element.find("div.required,div.checkbox,div.radio,div.ckeditor,input:not(:button,:submit,:reset),select,textarea").each(function() {
             var element   = this,
                 tagName   = $(this).prop('tagName'),
-                name
+                name;
 
-            if( tagName == 'DIV' ){
+            if (tagName == 'DIV') {
                 if( $(element).is('.ckeditor') ){
                     if( typeof CKEDITOR == 'object' && ( name = $(element).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
                         CKEDITOR.instances[name].on('change', function(){
@@ -39,13 +40,13 @@
                         self.hideError(element)
                     })
                 }
-            }else if( tagName == 'SELECT' ){
+            } else if (tagName == 'SELECT') {
                 $(element).on('click.bs.validate change.bs.validate', function(e) {
                     if( e.which != 13 ){
                         self.hideError(element)
                     }
                 })
-            }else{
+            } else {
                 $(element).on('keydown.bs.validate', function(e) {
                     if( e.which != 13 ){
                         self.hideError(element)
@@ -63,27 +64,36 @@
 
     Validate.MAIL_FILTER = /^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,6}$/
 
+    /**
+     * Submit form
+     */
     Validate.prototype.onSubmit = function(e) {
-        if( ! this.validate() ){
-            e.preventDefault()
-            return
+        if (!this.validate()) {
+            e.preventDefault();
+            return false;
         }
 
-        this.updateElement()
+        this.updateElement();
 
-        if( this.options.type == 'ajax' ){
-            e.preventDefault()
-             this.submitAjax()
-        }else if( this.options.type == 'file' ){
-            this.submitFile()
+        if (this.options.type == 'ajax') {
+            // Submit form bằng Ajax
+            e.preventDefault();
+            this.submitAjax();
+        } else if (this.options.type == 'file') {
+            // Submit form có chứa file upload
+            this.submitFile();
         }
 
-        return true
+        return true;
     }
 
-    Validate.prototype.rebuildForm = function(){
+    /**
+     * Build lại form nếu không đúng chuẩn
+     * Trong trường hợp này xem như form phải đúng chuẩn rồi
+     */
+    Validate.prototype.rebuildForm = function() {
         var html = '';
-        if( ! $('.form-element', this.$element).length || ! $('.form-result', this.$element).length ){
+        if( ! $('.form-element', this.$element).length || ! $('.form-result', this.$element).length ) {
             this.$element.find('.form-group').each(function(){
                 html += $(this).context.outerHTML;
             })
@@ -91,17 +101,21 @@
         }
     }
 
+    /**
+     * Kiểm tra các ô nhập liệu
+     */
     Validate.prototype.validate = function(){
-        var self = this
-        var error = 0
+        var self = this;
+        var error = 0;
 
-        this.$element.find(".required").each(function(){
-            if( "password" == $(this).prop("type") ){
+        // Duyệt các thành phần bắt buộc để kiểm tra
+        this.$element.find(".required").each(function() {
+            if ("password" == $(this).prop("type")) {
                 $(this).val(self.trim(self.stripTags($(this).val())));
             }
 
-            if (!self.check(this)){
-                error ++
+            if (!self.check(this)) {
+                error ++;
                 if( typeof $(this).data('mess') != 'undefined' && $(this).data('mess') != '' ){
                     $(this).attr("data-current-mess", $(this).data('mess')).data('current-mess', $(this).data('mess'))
                 }
@@ -121,71 +135,78 @@
         $(".required", this.$element).tooltip("destroy")
     }
 
-    Validate.prototype.hideError = function( element ){
-        $(element).tooltip("destroy")
+    /**
+     * Ẩn thông báo lỗi ở một đối tượng
+     */
+    Validate.prototype.hideError = function(element) {
+        $(element).tooltip("destroy");
 
-        if( $(element).parent().is('.input-group') ){
-            $(element).parent().parent().parent().removeClass("has-error")
-        }else{
+        if ($(element).parent().is('.input-group')) {
+            $(element).parent().parent().parent().removeClass("has-error");
+        } else {
             $(element).parent().parent().removeClass("has-error");
         }
     }
 
-    Validate.prototype.showError = function( element, order ){
-        var name
+    /**
+     * Hiển thị thông báo lỗi ở một đối tượng
+     */
+    Validate.prototype.showError = function(element, order) {
+        var name;
 
-        if( $(element).parent().is('.input-group') ){
-            $(element).parent().parent().parent().addClass("has-error")
-        }else{
+        if ($(element).parent().is('.input-group')) {
+            $(element).parent().parent().parent().addClass("has-error");
+        } else {
             $(element).parent().parent().addClass("has-error");
         }
 
         $(element).tooltip({
             placement: "bottom",
             title: function() {
-                return ( typeof $(this).data('current-mess') != 'undefined' && $(element).data('current-mess') != '' ) ? $(element).data('current-mess') : ( 'undefined' == typeof nv_required ? 'This field is required!' : nv_required )
+                return (typeof $(this).data('current-mess') != 'undefined' && $(element).data('current-mess') != '') ? $(element).data('current-mess') : ('undefined' == typeof nv_required ? 'This field is required!' : nv_required);
             },
             trigger: 'manual'
         });
 
-        $(element).tooltip("show")
-        if( order == 1 ){
-            if( $(element).prop("tagName") == 'DIV' ){
-                if( $(element).is('.ckeditor') ){
-                    if( typeof CKEDITOR == 'object' && ( name = $(element).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
-                        CKEDITOR.instances[name].focus()
+        $(element).tooltip("show");
+
+        if (order == 1) {
+            if ($(element).prop("tagName") == 'DIV') {
+                if ($(element).is('.ckeditor')) {
+                    if (typeof CKEDITOR == 'object' && (name = $(element).find('textarea:first').prop('id')) && CKEDITOR.instances[name]) {
+                        CKEDITOR.instances[name].focus();
                     }
-                }else{
-                    $("input", element)[0].focus()
+                } else {
+                    $("input", element)[0].focus();
                 }
-            }else{
-                $(element).focus()
+            } else {
+                $(element).focus();
             }
         }
     }
 
-    Validate.prototype.check = function( element ){
+    Validate.prototype.check = function(element) {
         var pattern = $(element).data('pattern'),
             value   = $(element).val(),
-             tagName = $(element).prop('tagName'),
-             type    = $(element).prop('type'),
-             name, text
+            tagName = $(element).prop('tagName'),
+            type    = $(element).prop('type'),
+            name, text;
 
         if ("INPUT" == tagName && "email" == type) {
-            if (!Validate.MAIL_FILTER.test(value)) return false
+            if (!Validate.MAIL_FILTER.test(value)) return false;
         } else if ("SELECT" == tagName) {
-            if (!$("option:selected", element).length) return false
+            if (!$("option:selected", element).length) return false;
         } else if ("DIV" == tagName && $(element).is(".radio")) {
-            if (!$("[type=radio]:checked", element).length) return false
+            if (!$("[type=radio]:checked", element).length) return false;
         } else if ("DIV" == tagName && $(element).is(".checkbox")) {
-            if (!$("[type=checkbox]:checked", element).length) return false
+            if (!$("[type=checkbox]:checked", element).length) return false;
         } else if ("DIV" == tagName && $(element).is(".ckeditor")) {
             if( typeof CKEDITOR == 'object' && ( name = $(element).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
-                text = CKEDITOR.instances[name].getData()
-                text = this.trim( text )
+                text = CKEDITOR.instances[name].getData();
+                text = this.trim( text );
 
                 if( text != '' ){
-                    return true
+                    return true;
                 }
             }
             return false
@@ -193,28 +214,28 @@
             if ("undefined" == typeof pattern || "" == pattern) {
                 if ("" == value) return false
             } else if (!(new RegExp(pattern)).test(value)) return false
-        return true
+        return true;
     }
 
     Validate.prototype.submitAjax = function(){
         var action  = this.$element.prop('action'),
             method  = this.$element.prop('method'),
             data    = this.$element.serialize(),
-            self    = this
+            self    = this;
 
-        if( typeof action == 'undefined' ){
+        if (typeof action == 'undefined') {
             throw new Error('Missing action attitude for submit form')
         }
-        if( typeof method == 'undefined' ){
+        if (typeof method == 'undefined') {
             throw new Error('Missing method attitude for submit form')
         }
 
-        if( action == '' ){
-            action = window.location.href
+        if (action == '') {
+            action = window.location.href.replace(/#(.*)/, "");
         }
 
-        this.hideAllError()
-        this.$element.find("input,button,select,textarea").prop("disabled", true)
+        this.hideAllError();
+        this.$element.find("input,button,select,textarea").prop("disabled", true);
 
         $.ajax({
             type: method,
@@ -225,45 +246,60 @@
             success: function(res) {
                 var $this, type;
 
-                self.$element.find("input,button,select,textarea").prop("disabled", false)
-                if( ( res.status != 'error' && res.status != 'ok' ) || typeof res.message != 'string' || typeof res.input != 'string' ){
-                    throw new Error('Response data is invalid!!')
-                }
-                if( res.status == 'error' ){
-                    if( res.input != '' && $('[name="' + res.input + '"]', self.$element).length ){
-                        $this = $('[name="' + res.input + '"]:first', self.$element)
-                        type = $this.prop('type')
+                self.$element.find("input,button,select,textarea").prop("disabled", false);
 
-                        if( type == 'checkbox' || type == 'radio' || $this.parent().parent().is('.ckeditor') ){
+                // Dữ liệu trả về lỗi
+                if ((res.status != 'error' && res.status != 'ok') || typeof res.message != 'string' || typeof res.input != 'string') {
+                    throw new Error('Response data is invalid!!');
+                }
+
+                // Lỗi trả về
+                if (res.status == 'error') {
+                    if (res.input != '' && $('[name="' + res.input + '"]', self.$element).length) {
+                        $this = $('[name="' + res.input + '"]:first', self.$element);
+                        type = $this.prop('type');
+
+                        if (type == 'checkbox' || type == 'radio' || $this.parent().parent().is('.ckeditor')) {
                             $this = $this.parent().parent();
                         }
 
-                        $this.attr("data-current-mess", res.message).data('current-mess', res.message)
-                        self.showError($this, 1)
-                    }else{
-                        $('.form-result', self.$element).html('<div class="alert alert-danger">' + res.message + '</div>').show()
-                        $("html, body").animate({ scrollTop: $('.form-result', self.$element).offset().top }, 500)
+                        $this.attr("data-current-mess", res.message).data('current-mess', res.message);
+                        self.showError($this, 1);
+                    } else {
+                        $('.form-result', self.$element).html('<div class="alert alert-danger">' + res.message + '</div>').show();
+                        $("html, body").animate({ scrollTop: $('.form-result', self.$element).offset().top }, 200);
                     }
 
-                    return
+                    return false;
                 }
 
-                $('.form-result', self.$element).html('<div class="alert alert-success">' + res.message + '</div>').show()
-                $("html, body").animate({ scrollTop: $('.form-result', self.$element).offset().top }, 500, function(){
+                /**
+                 * Thành công
+                 * Chuyển hướng ngay
+                 */
+                if (typeof res.redirect == 'string' && res.redirect != '' && res.redirectnow === true) {
+                    window.location.href = res.redirect;
+                    return true;
+                }
+
+                // Thông báo và chuyển hướng
+                $('.form-result', self.$element).html('<div class="alert alert-success">' + res.message + '</div>').show();
+
+                $("html, body").animate({scrollTop: $('.form-result', self.$element).offset().top}, 200, function() {
                     setTimeout(function() {
-                        $('.form-element', self.$element).slideUp(500);
-                    }, 200)
+                        $('.form-element', self.$element).slideUp(200);
+                    }, 200);
 
                     setTimeout(function() {
                         window.location.href = ( typeof res.redirect == 'string' && res.redirect != '' ) ? res.redirect : window.location.href
-                    }, 4000)
-                })
+                    }, 4000);
+                });
             }
-        })
+        });
     }
 
     Validate.prototype.updateElement = function(){
-        var name
+        var name;
 
         if( typeof CKEDITOR == 'object' ){
             $('.ckeditor' , this.$element).each(function(){
