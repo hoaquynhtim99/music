@@ -27,10 +27,10 @@ if ($ajaction == 'delete') {
     if (empty($artist_ids)) {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($artist_ids as $artist_id) {
-        if (!isset($global_array_artist[$artist_id])) {
-            $ajaxRespon->setMessage('Wrong ID!!!')->respon();
-        }
+
+    $array_artists = nv_get_artists($artist_ids);
+    if (sizeof($array_artists) != sizeof($artist_ids)) {
+        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
     foreach ($artist_ids as $artist_id) {
@@ -38,18 +38,11 @@ if ($ajaction == 'delete') {
         $sql = "DELETE FROM " . NV_MOD_TABLE . "_artists WHERE artist_id=" . $artist_id;
         $db->query($sql);
 
-        // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_artist', $artist_id . ':' . $global_array_artist[$artist_id]['artist_name'], $admin_info['userid']);
-    }
+        // Cập nhật lại quốc gia
+        msUpdateNationStat($array_artists[$artist_id]['nation_id']);
 
-    // Cập nhật lại thứ tự
-    $sql = "SELECT artist_id FROM " . NV_MOD_TABLE . "_artists ORDER BY weight ASC";
-    $result = $db->query($sql);
-    $weight = 0;
-    while ($row = $result->fetch()) {
-        ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_artists SET weight=" . $weight . " WHERE artist_id=" . $row['artist_id'];
-        $db->query($sql);
+        // Ghi nhật ký hệ thống
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_ARTIST', $artist_id . ':' . $array_artists[$artist_id]['artist_name'], $admin_info['userid']);
     }
 
     $nv_Cache->delMod($module_name);
