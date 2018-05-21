@@ -83,25 +83,35 @@
             <div class="modal-body">
                 <div class="alert alert-info" data-msgadd="{LANG.qvd_add_mgs}" data-msgedit="{LANG.qvd_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <div class="form-group">
-                        <label for="quality_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                        <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
+                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="online_supported" value="1" data-checked="1"/>
+                                    {LANG.qvd_online_supported}
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="is_default" value="1" data-checked="0"/>
+                                    {LANG.qvd_is_default}
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="quality_alias" class="control-label">{LANG.alias}:</label>
-                        <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="online_supported" value="1" data-checked="1"/>
-                            {LANG.qvd_online_supported}
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="is_default" value="1" data-checked="0"/>
-                            {LANG.qvd_is_default}
-                        </label>
+                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
+                    <div class="panel panel-default ms-form-group-last">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="quality_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                                <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
+                            </div>
+                            <div class="form-group ms-form-group-last">
+                                <label for="quality_alias" class="control-label">{LANG.alias}:</label>
+                                <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
+                            </div>
+                        </div>
                     </div>
                     <input type="submit" class="hidden" name="submit" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

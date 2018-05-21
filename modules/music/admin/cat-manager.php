@@ -189,6 +189,16 @@ if ($ajaction == 'ajedit') {
         $ajaxRespon->setMessage('Wrong ID!!!')->respon();
     }
 
+    if (!empty($array_cat['resource_avatar']) and !nv_is_url($array_cat['resource_avatar']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_avatar'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+        $array_cat['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_avatar'];
+    }
+    if (!empty($array_cat['resource_cover']) and !nv_is_url($array_cat['resource_cover']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_cover'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+        $array_cat['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_cover'];
+    }
+    if (!empty($array_cat['resource_video']) and !nv_is_url($array_cat['resource_video']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_video'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+        $array_cat['resource_video'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_video'];
+    }
+
     $response = array();
     $response['resource_avatar'] = nv_unhtmlspecialchars($array_cat['resource_avatar']);
     $response['resource_cover'] = nv_unhtmlspecialchars($array_cat['resource_cover']);
@@ -220,9 +230,9 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $array = array();
     $array['cat_name'] = nv_substr($nv_Request->get_title('cat_name', 'post', ''), 0, 250);
     $array['cat_alias'] = nv_substr($nv_Request->get_title('cat_alias', 'post', ''), 0, 250);
-    $array['resource_avatar'] = nv_substr($nv_Request->get_title('resource_avatar', 'post', ''), 0, 255);
-    $array['resource_cover'] = nv_substr($nv_Request->get_title('resource_cover', 'post', ''), 0, 255);
-    $array['resource_video'] = nv_substr($nv_Request->get_title('resource_video', 'post', ''), 0, 255);
+    $array['resource_avatar'] = $nv_Request->get_title('resource_avatar', 'post', '');
+    $array['resource_cover'] = $nv_Request->get_title('resource_cover', 'post', '');
+    $array['resource_video'] = $nv_Request->get_title('resource_video', 'post', '');
     $array['show_inalbum'] = intval($nv_Request->get_bool('show_inalbum', 'post', false));
     $array['show_invideo'] = intval($nv_Request->get_bool('show_invideo', 'post', false));
     $array['cat_absitetitle'] = nv_substr($nv_Request->get_title('cat_absitetitle', 'post', ''), 0, 250);
@@ -238,6 +248,22 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $ajaxRespon->set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
 
     $array['cat_alias'] = empty($array['cat_alias']) ? change_alias($array['cat_name']) : change_alias($array['cat_alias']);
+
+    if (!nv_is_url($array['resource_avatar']) and nv_is_file($array['resource_avatar'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['resource_avatar'] = substr($array['resource_avatar'], strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
+    } elseif (!nv_is_url($array['resource_avatar'])) {
+        $array['resource_avatar'] = '';
+    }
+    if (!nv_is_url($array['resource_cover']) and nv_is_file($array['resource_cover'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['resource_cover'] = substr($array['resource_cover'], strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
+    } elseif (!nv_is_url($array['resource_cover'])) {
+        $array['resource_cover'] = '';
+    }
+    if (!nv_is_url($array['resource_video']) and nv_is_file($array['resource_video'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['resource_video'] = substr($array['resource_video'], strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
+    } elseif (!nv_is_url($array['resource_video'])) {
+        $array['resource_video'] = '';
+    }
 
     // Kiểm tra tồn tại alias
     $is_exists = 0;
@@ -374,6 +400,18 @@ $xtpl->assign('OP', $op);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_cat));
+$xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
+
+$resource_avatar_path = msGetCurrentUploadFolder('song');
+$resource_cover_path = msGetCurrentUploadFolder('album');
+$resource_video_path = msGetCurrentUploadFolder('video');
+
+$xtpl->assign('RESOURCE_AVATAR_PATH', $resource_avatar_path[0]);
+$xtpl->assign('RESOURCE_AVATAR_CURRPATH', $resource_avatar_path[1]);
+$xtpl->assign('RESOURCE_COVER_PATH', $resource_cover_path[0]);
+$xtpl->assign('RESOURCE_COVER_CURRPATH', $resource_cover_path[1]);
+$xtpl->assign('RESOURCE_VIDEO_PATH', $resource_video_path[0]);
+$xtpl->assign('RESOURCE_VIDEO_CURRPATH', $resource_video_path[1]);
 
 foreach ($global_array_cat as $row) {
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);

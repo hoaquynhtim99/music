@@ -90,51 +90,88 @@
             <div class="modal-body">
                 <div class="alert alert-info" data-msgadd="{LANG.cat_add_mgs}" data-msgedit="{LANG.cat_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <div class="form-group">
-                        <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                        <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
+                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="resource_avatar" class="control-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="resource_cover" class="control-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="resource_video" class="control-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                                <div class="input-group">
+                                    <input class="form-control" type="text" name="resource_video" id="resource_video" value="{DATA.resource_video}" maxlength="255" />
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_video" data-type="image" data-path="{RESOURCE_VIDEO_PATH}" data-currentpath="{RESOURCE_VIDEO_CURRPATH}">{GLANG.browse_image}</button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
+                                    {LANG.cat_show_inalbum}
+                                </label>
+                            </div>
+                            <div class="checkbox ms-form-group-last">
+                                <label>
+                                    <input type="checkbox" name="show_invideo" value="1" data-checked="0"/>
+                                    {LANG.cat_show_invideo}
+                                </label>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="cat_alias" class="control-label">{LANG.alias}:</label>
-                        <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
-                            {LANG.cat_show_inalbum}
-                        </label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" name="show_invideo" value="1" data-checked="0"/>
-                            {LANG.cat_show_invideo}
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat_absitetitle" class="control-label">{LANG.cat_absitetitle}:</label>
-                        <span class="help-block">{LANG.cat_get_default}</span>
-                        <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat_abintrotext" class="control-label">{LANG.cat_abintrotext}:</label>
-                        <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat_abkeywords" class="control-label">{LANG.cat_abkeywords}:</label>
-                        <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat_mvsitetitle" class="control-label">{LANG.cat_mvsitetitle}:</label>
-                        <span class="help-block">{LANG.cat_get_default}</span>
-                        <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat_mvintrotext" class="control-label">{LANG.cat_mvintrotext}:</label>
-                        <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="cat_mvkeywords" class="control-label">{LANG.cat_mvkeywords}:</label>
-                        <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
+                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
+                    <div class="panel panel-default ms-form-group-last">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                                <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cat_alias" class="control-label">{LANG.alias}:</label>
+                                <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cat_absitetitle" class="control-label">{LANG.cat_absitetitle}:</label>
+                                <span class="help-block">{LANG.cat_get_default}</span>
+                                <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cat_abintrotext" class="control-label">{LANG.cat_abintrotext}:</label>
+                                <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="cat_abkeywords" class="control-label">{LANG.cat_abkeywords}:</label>
+                                <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="cat_mvsitetitle" class="control-label">{LANG.cat_mvsitetitle}:</label>
+                                <span class="help-block">{LANG.cat_get_default}</span>
+                                <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="cat_mvintrotext" class="control-label">{LANG.cat_mvintrotext}:</label>
+                                <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
+                            </div>
+                            <div class="form-group ms-form-group-last">
+                                <label for="cat_mvkeywords" class="control-label">{LANG.cat_mvkeywords}:</label>
+                                <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
+                            </div>
+                        </div>
                     </div>
                     <input type="submit" class="hidden" name="submit" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

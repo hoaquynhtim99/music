@@ -257,6 +257,7 @@ $xtpl->assign('OP', $op);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_nation));
+$xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 
 foreach ($global_array_nation as $row) {
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);

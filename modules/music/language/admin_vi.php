@@ -84,8 +84,13 @@ $lang_module['stat_videos'] = 'Số video';
 
 $lang_module['resource_avatar'] = 'Ảnh đại diện';
 $lang_module['resource_cover'] = 'Ảnh bìa';
+$lang_module['resource_video'] = 'Ảnh bìa video';
 $lang_module['resource_avatar_artist_note'] = 'Nên ảnh có tỉ lệ 1:1 để hiển thị đẹp nhất. Kích thước đề nghị 800x800px';
 $lang_module['resource_cover_artist_note'] = 'Nên ảnh có tỉ lệ 17:5 để hiển thị đẹp nhất. Kích thước đề nghị 1190x350px';
+$lang_module['resource_video_note'] = 'Nên ảnh có tỉ lệ 16:9 để hiển thị đẹp nhất. Kích thước đề nghị 640x360px';
+$lang_module['resource_avatar_cat'] = 'Ảnh đại điện mặc định cho bài hát';
+$lang_module['resource_cover_cat'] = 'Ảnh bìa mặc định cho bài hát/album';
+$lang_module['resource_video_cat'] = 'Ảnh bìa mặc định cho video';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';

@@ -305,6 +305,7 @@ $xtpl->assign('OP', $op);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_soquality));
+$xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 
 foreach ($global_array_soquality as $row) {
     if (empty($row[NV_LANG_DATA . '_quality_name']) and !empty($row[$global_array_config['default_language'] . '_quality_name'])) {
