@@ -360,7 +360,7 @@ for ($i = 0; $i <= 3; ++$i) {
     $artist_birthday_lev = array(
         'key' => $i,
         'title' => $lang_module['artist_birthday_lev' . $i],
-        'selected' => $_key == $array['artist_birthday_lev'] ? ' selected="selected"' : ''
+        'selected' => $i == $array['artist_birthday_lev'] ? ' selected="selected"' : ''
     );
     $xtpl->assign('ARTIST_BIRTHDAY_LEV', $artist_birthday_lev);
     $xtpl->parse('main.artist_birthday_lev');

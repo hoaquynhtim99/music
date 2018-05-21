@@ -56,8 +56,6 @@ $lang_module['to'] = 'Đến';
 $lang_module['adv'] = 'Nâng cao';
 $lang_module['year'] = 'Năm';
 $lang_module['nation'] = 'Quốc gia';
-$lang_module['resource_avatar'] = 'Ảnh đại diện';
-$lang_module['resource_cover'] = 'Ảnh bìa';
 $lang_module['show_inhome'] = 'Hiển thị ở trang chủ';
 $lang_module['prize'] = 'Giải thưởng';
 $lang_module['bodytext'] = 'Thông tin chi tiết';
@@ -83,6 +81,11 @@ $lang_module['stat_authors'] = 'Số nhạc sĩ';
 $lang_module['stat_songs'] = 'Số bài hát';
 $lang_module['stat_albums'] = 'Số album';
 $lang_module['stat_videos'] = 'Số video';
+
+$lang_module['resource_avatar'] = 'Ảnh đại diện';
+$lang_module['resource_cover'] = 'Ảnh bìa';
+$lang_module['resource_avatar_artist_note'] = 'Nên ảnh có tỉ lệ 1:1 để hiển thị đẹp nhất. Kích thước đề nghị 800x800px';
+$lang_module['resource_cover_artist_note'] = 'Nên ảnh có tỉ lệ 17:5 để hiển thị đẹp nhất. Kích thước đề nghị 1190x350px';
 
 $lang_module['validate_number'] = 'Vui lòng chỉ nhập số';
 $lang_module['validate_number_min0'] = 'Vui lòng chỉ nhập số tự nhiên, tối thiểu là 0';

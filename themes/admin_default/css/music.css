@@ -24,7 +24,7 @@ td.ms-ellipsis {
 #formmodalctn .control-label {
     font-weight: 700;
 }
-.form-horizontal .control-label .fa{
+.form-horizontal .control-label .fa-asterisk {
     color: #B0171F;
     font-weight: normal;
     font-size: 10px;
@@ -33,7 +33,7 @@ td.ms-ellipsis {
     padding-top: 0;
     margin-bottom: 7px;
 }
-.form-horizontal .ckeditor .control-label .fa{
+.form-horizontal .ckeditor .control-label .fa-asterisk {
     position: relative;
     top: -1px;
 }

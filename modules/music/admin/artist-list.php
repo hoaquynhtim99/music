@@ -39,7 +39,9 @@ if ($ajaction == 'delete') {
         $db->query($sql);
 
         // Cập nhật lại quốc gia
-        msUpdateNationStat($array_artists[$artist_id]['nation_id']);
+        if (!empty($array_artists[$artist_id]['nation_id'])) {
+            msUpdateNationStat($array_artists[$artist_id]['nation_id']);
+        }
 
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_ARTIST', $artist_id . ':' . $array_artists[$artist_id]['artist_name'], $admin_info['userid']);

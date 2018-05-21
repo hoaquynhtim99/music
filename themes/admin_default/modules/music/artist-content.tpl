@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="resource_avatar" class="control-label col-sm-8">{LANG.resource_avatar}:</label>
+                    <label for="resource_avatar" class="control-label col-sm-8">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="resource_cover" class="control-label col-sm-8">{LANG.resource_cover}:</label>
+                    <label for="resource_cover" class="control-label col-sm-8">{LANG.resource_cover} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
