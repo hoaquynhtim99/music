@@ -12,6 +12,10 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
+require NV_ROOTDIR . '/modules/' . $module_file . '/vendor/autoload.php';
+
+use NukeViet\Music\Resources;
+
 define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
 
 define('NV_MOD_LINK', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
@@ -22,6 +26,11 @@ define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&amp;' . NV_OP_VARIABLE . '=');
 define('MS_COMMENT_AREA_SONG', 1);
 define('MS_COMMENT_AREA_ALBUM', 2);
 define('MS_COMMENT_AREA_VIDEO', 3);
+
+Resources::setLangData(NV_LANG_DATA);
+Resources::setLangInterface(NV_LANG_INTERFACE);
+Resources::setDb($db);
+Resources::setTablePrefix(NV_MOD_TABLE);
 
 $array_alphabets = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
@@ -664,78 +673,6 @@ function msGetModuleSetupLangs()
     }
 
     return $array_lang_module_setup;
-}
-
-/**
- * msFormatNumberViews()
- *
- * @param mixed $input
- * @return
- */
-function msFormatNumberViews($input)
-{
-    if (NV_LANG_INTERFACE == 'vi') {
-        return number_format($input, 0, ',', '.');
-    }
-    return number_format($input, 0, '.', ',');
-}
-
-/**
- * msFormatDateViews()
- *
- * @param mixed $input
- * @return
- */
-function msFormatDateViews($input)
-{
-    if (NV_LANG_INTERFACE == 'vi') {
-        return nv_date('d M, Y', $input);
-    }
-    return nv_date('M d, Y', $input);
-}
-
-/**
- * msGetMaxPage()
- *
- * @param mixed $per_page
- * @return
- */
-function msGetMaxPage($per_page)
-{
-    if ($per_page < 1) {
-        return 1;
-    }
-    return round(2147483647 / $per_page);
-}
-
-/**
- * msGetValidPage()
- *
- * @param mixed $page
- * @param mixed $per_page
- * @return
- */
-function msGetValidPage($page, $per_page)
-{
-    if ($page < 1 or $page > msGetMaxPage($per_page)) {
-        return 1;
-    }
-    return $page;
-}
-
-/**
- * msCheckPage()
- *
- * @param mixed $page
- * @param mixed $per_page
- * @return
- */
-function msCheckPage($page, $per_page)
-{
-    if ($page < 1 or $page > msGetMaxPage($per_page)) {
-        return false;
-    }
-    return true;
 }
 
 /**

@@ -8,6 +8,8 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
+use NukeViet\Music\Utils;
+
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
@@ -330,8 +332,8 @@ foreach ($global_array_mvquality as $row) {
 
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);
     $row['time_update_time'] = $row['time_update'] ? nv_date('H:i', $row['time_update']) : '';
-    $row['time_add'] = msFormatDateViews($row['time_add']);
-    $row['time_update'] = $row['time_update'] ? msFormatDateViews($row['time_update']) : '';
+    $row['time_add'] = Utils::getFormatDateView($row['time_add']);
+    $row['time_update'] = $row['time_update'] ? Utils::getFormatDateView($row['time_update']) : '';
     $row['status'] = $row['status'] ? ' checked="checked"' : '';
 
     $xtpl->assign('ROW', $row);

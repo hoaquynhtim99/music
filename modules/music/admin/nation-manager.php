@@ -11,6 +11,8 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+use NukeViet\Music\Utils;
+
 $page_title = $lang_module['nation_manager'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
@@ -262,10 +264,10 @@ $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 foreach ($global_array_nation as $row) {
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);
     $row['time_update_time'] = $row['time_update'] ? nv_date('H:i', $row['time_update']) : '';
-    $row['time_add'] = msFormatDateViews($row['time_add']);
-    $row['time_update'] = $row['time_update'] ? msFormatDateViews($row['time_update']) : '';
-    $row['stat_singers'] = msFormatNumberViews($row['stat_singers']);
-    $row['stat_authors'] = msFormatNumberViews($row['stat_authors']);
+    $row['time_add'] = Utils::getFormatDateView($row['time_add']);
+    $row['time_update'] = $row['time_update'] ? Utils::getFormatDateView($row['time_update']) : '';
+    $row['stat_singers'] = Utils::getFormatNumberView($row['stat_singers']);
+    $row['stat_authors'] = Utils::getFormatNumberView($row['stat_authors']);
 
     $xtpl->assign('ROW', $row);
     $xtpl->parse('main.loop');

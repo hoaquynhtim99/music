@@ -11,6 +11,8 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+use NukeViet\Music\Utils;
+
 $page_title = $lang_module['artist_list'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
@@ -101,7 +103,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
 $base_url = NV_ADMIN_MOD_FULLLINK_AMP . $op;
 $per_page = 20;
-$page = msGetValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
+$page = Utils::getValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
 
 // Dữ liệu tìm kiếm
 $array_search = array();
@@ -197,9 +199,9 @@ $xtpl->assign('LINK_ADD', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-content');
 foreach ($array as $row) {
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);
     $row['time_update_time'] = $row['time_update'] ? nv_date('H:i', $row['time_update']) : '';
-    $row['time_add'] = msFormatDateViews($row['time_add']);
-    $row['time_update'] = $row['time_update'] ? msFormatDateViews($row['time_update']) : '';
-    //$row['stat_views'] = msFormatNumberViews($row['stat_views']);
+    $row['time_add'] = Utils::getFormatDateView($row['time_add']);
+    $row['time_update'] = $row['time_update'] ? Utils::getFormatDateView($row['time_update']) : '';
+    //$row['stat_views'] = Utils::getFormatNumberView($row['stat_views']);
     $row['state'] = $lang_module['status_' . $row['status']];
     $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'artist-content&amp;artist_id=' . $row['artist_id'];
 

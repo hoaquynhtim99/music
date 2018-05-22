@@ -11,6 +11,9 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+use NukeViet\Music\Utils;
+use NukeViet\Music\Shared\Categories;
+
 $page_title = $lang_module['cat_manager'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
@@ -353,7 +356,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
             $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
             $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
 
-            $cat_code = msGetUniqueCode('cat');
+            $cat_code = Categories::creatUniqueCode();
 
             $sql = "INSERT INTO " . NV_MOD_TABLE . "_categories (
                 cat_code, resource_avatar, resource_cover, resource_video, time_add, show_inalbum, show_invideo, weight, status,
@@ -416,14 +419,14 @@ $xtpl->assign('RESOURCE_VIDEO_CURRPATH', $resource_video_path[1]);
 foreach ($global_array_cat as $row) {
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);
     $row['time_update_time'] = $row['time_update'] ? nv_date('H:i', $row['time_update']) : '';
-    $row['time_add'] = msFormatDateViews($row['time_add']);
-    $row['time_update'] = $row['time_update'] ? msFormatDateViews($row['time_update']) : '';
+    $row['time_add'] = Utils::getFormatDateView($row['time_add']);
+    $row['time_update'] = $row['time_update'] ? Utils::getFormatDateView($row['time_update']) : '';
     $row['show_inalbum'] = $row['show_inalbum'] ? ' checked="checked"' : '';
     $row['show_invideo'] = $row['show_invideo'] ? ' checked="checked"' : '';
     $row['status'] = $row['status'] ? ' checked="checked"' : '';
-    $row['stat_albums'] = msFormatNumberViews($row['stat_albums']);
-    $row['stat_songs'] = msFormatNumberViews($row['stat_songs']);
-    $row['stat_videos'] = msFormatNumberViews($row['stat_videos']);
+    $row['stat_albums'] = Utils::getFormatNumberView($row['stat_albums']);
+    $row['stat_songs'] = Utils::getFormatNumberView($row['stat_songs']);
+    $row['stat_videos'] = Utils::getFormatNumberView($row['stat_videos']);
 
     $xtpl->assign('ROW', $row);
     $xtpl->parse('main.loop');

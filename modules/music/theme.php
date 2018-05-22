@@ -12,6 +12,8 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Utils;
+
 /**
  * nv_theme_gird_albums()
  *
@@ -780,7 +782,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         $xtpl->parse('main.comment');
 
         if (!empty($array['stat_comments'])) {
-            $xtpl->assign('COMMENT_NUMS', msFormatNumberViews($array['stat_comments']));
+            $xtpl->assign('COMMENT_NUMS', Utils::getFormatNumberView($array['stat_comments']));
             $xtpl->parse('main.comment_btn.stat');
         }
 
@@ -941,7 +943,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         $xtpl->parse('main.comment');
 
         if (!empty($array['stat_comments'])) {
-            $xtpl->assign('COMMENT_NUMS', msFormatNumberViews($array['stat_comments']));
+            $xtpl->assign('COMMENT_NUMS', Utils::getFormatNumberView($array['stat_comments']));
             $xtpl->parse('main.comment_btn.stat');
         }
 
@@ -1155,7 +1157,7 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
         $xtpl->parse('main.comment');
 
         if (!empty($array['stat_comments'])) {
-            $xtpl->assign('COMMENT_NUMS', msFormatNumberViews($array['stat_comments']));
+            $xtpl->assign('COMMENT_NUMS', Utils::getFormatNumberView($array['stat_comments']));
             $xtpl->parse('main.comment_btn.stat');
         }
 
