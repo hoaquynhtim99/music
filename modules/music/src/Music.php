@@ -21,9 +21,4 @@ class Music
     {
         //
     }
-
-    public function remove()
-    {
-        die('Hihihihihihihi');
-    }
 }
