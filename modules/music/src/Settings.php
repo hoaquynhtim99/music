@@ -35,9 +35,16 @@ class Settings
     const CATEGORY_CODE_LENGTH = 4;
 
     /**
+     * Các thiết lập về nghệ sĩ
+     *
+     */
+    const ARTIST_CODE_LENGTH = 5;
+
+    /**
      * Các bảng dữ liệu
      *
      */
     const TABLE_SEPARATOR_CHARACTER = '_';
+    const TABLE_ARTIST = 'artists';
     const TABLE_CATEGORY = 'categories';
 }

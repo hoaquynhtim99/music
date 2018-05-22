@@ -674,30 +674,3 @@ function msGetModuleSetupLangs()
 
     return $array_lang_module_setup;
 }
-
-/**
- * msGetUniqueCode()
- *
- * @param string $area
- * @return
- */
-function msGetUniqueCode($area = '')
-{
-    global $db;
-
-    $code = '';
-
-    if ($area == 'cat') {
-        // Mã thể loại
-        while (empty($code) or $db->query("SELECT cat_id FROM " . NV_MOD_TABLE . "_categories WHERE cat_code=" . $db->quote($code))->fetchColumn()) {
-            $code = strtolower(nv_genpass(4));
-        }
-    } elseif ($area == 'artist') {
-        // Mã nghệ sĩ
-        while (empty($code) or $db->query("SELECT artist_id FROM " . NV_MOD_TABLE . "_artists WHERE artist_code=" . $db->quote($code))->fetchColumn()) {
-            $code = strtolower(nv_genpass(5));
-        }
-    }
-
-    return $code;
-}

@@ -12,6 +12,8 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Shared\Artists;
+
 $set_active_op = 'artist-list';
 
 $artist_id = $nv_Request->get_int('artist_id', 'get', 0);
@@ -215,7 +217,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
         $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
 
-        $artist_code = msGetUniqueCode('artist');
+        $artist_code = Artists::creatUniqueCode();
 
         $sql = "INSERT INTO " . NV_MOD_TABLE . "_artists (
             artist_code, artist_type, artist_birthday, artist_birthday_lev, nation_id, resource_avatar, resource_cover, time_add, show_inhome, status,
