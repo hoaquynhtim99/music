@@ -40,8 +40,6 @@ class Categories implements ITypeShare
             }
         }
 
-        $sql->destroy();
-
         return $code;
     }
 

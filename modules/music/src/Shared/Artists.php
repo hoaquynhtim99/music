@@ -40,8 +40,6 @@ class Artists implements ITypeShare
             }
         }
 
-        $sql->destroy();
-
         return $code;
     }
 

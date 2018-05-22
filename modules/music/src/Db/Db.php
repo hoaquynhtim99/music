@@ -19,10 +19,8 @@ use NukeViet\Music\Resources;
  */
 class Db
 {
-    private static $currentId = -1;
-    private static $connections = [];
+    private $connection = null;
 
-    private $cid = null;
     private $table = '';
     private $fields = [];
     private $conditions = null;
@@ -34,9 +32,7 @@ class Db
      */
     public function __construct()
     {
-        self::$currentId++;
-        $this->cid = self::$currentId;
-        self::$connections[$this->cid] = Resources::getDb();
+        $this->connection = Resources::getDb();
     }
 
     /**
@@ -82,7 +78,7 @@ class Db
      */
     public function query()
     {
-        return self::$connections[$this->cid]->query($this->_getSql());
+        return $this->connection->query($this->_getSql());
     }
 
     /**
@@ -92,7 +88,7 @@ class Db
      */
     public function select()
     {
-        return self::$connections[$this->cid]->query('SELECT ' . $this->_getSql());
+        return $this->connection->query('SELECT ' . $this->_getSql());
     }
 
     /**
@@ -115,35 +111,5 @@ class Db
         }
 
         return $sql;
-    }
-
-    /**
-     * Db::destroy()
-     *
-     * @return void
-     */
-    public function destroy()
-    {
-        unset(self::$connections[$this->cid]);
-    }
-
-    /**
-     * Db::destroyAll()
-     *
-     * @return void
-     */
-    public static function destroyAll()
-    {
-        self::$connections = [];
-    }
-
-    /**
-     * Db::getMaxConnections()
-     *
-     * @return
-     */
-    public static function getMaxConnections()
-    {
-        return sizeof(self::$connections);
     }
 }
