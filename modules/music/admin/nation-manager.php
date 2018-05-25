@@ -11,7 +11,9 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
+use NukeViet\Music\Nation\Nation;
 
 $page_title = $lang_module['nation_manager'];
 
@@ -19,19 +21,22 @@ $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
 // Xóa
 if ($ajaction == 'delete') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!');
+        AjaxRespon::respon();
     }
 
     $nation_ids = $nv_Request->get_title('id', 'post', '');
     $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
     if (empty($nation_ids)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!');
+        AjaxRespon::respon();
     }
     foreach ($nation_ids as $nation_id) {
         if (!isset($global_array_nation[$nation_id])) {
-            $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+            AjaxRespon::setMessage('Wrong ID!!!');
+            AjaxRespon::respon();
         }
     }
 
@@ -56,24 +61,28 @@ if ($ajaction == 'delete') {
 
     $nv_Cache->delMod($module_name);
 
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess();
+    AjaxRespon::respon();
 }
 
 // Thay đổi thứ tự
 if ($ajaction == 'weight') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!');
+        AjaxRespon::respon();
     }
 
     $nation_id = $nv_Request->get_int('id', 'post', 0);
     $new_weight = $nv_Request->get_int('value', 'post', 0);
 
     if (!isset($global_array_nation[$nation_id])) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!');
+        AjaxRespon::respon();
     }
     if ($new_weight < 1 or $new_weight > sizeof($global_array_nation)) {
-        $ajaxRespon->setMessage('Wrong Weight!!!')->respon();
+        AjaxRespon::setMessage('Wrong Weight!!!');
+        AjaxRespon::respon();
     }
 
     $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations WHERE nation_id!=" . $nation_id . " ORDER BY weight ASC";
@@ -94,25 +103,29 @@ if ($ajaction == 'weight') {
     $nv_Cache->delMod($module_name);
     nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
 
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess();
+    AjaxRespon::respon();
 }
 
 // Lấy thông tin
 if ($ajaction == 'ajedit') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!');
+        AjaxRespon::respon();
     }
 
     $nation_id = $nv_Request->get_int('id', 'post', 0);
     if (!isset($global_array_nation[$nation_id])) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!');
+        AjaxRespon::respon();
     }
 
     $array_select_fields = nv_get_nation_select_fields(true);
     $array_nation = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id)->fetch();
     if (empty($array_nation)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!');
+        AjaxRespon::respon();
     }
 
     $response = array();
@@ -122,14 +135,29 @@ if ($ajaction == 'ajedit') {
     $response['nation_introtext'] = nv_unhtmlspecialchars($array_nation['nation_introtext']);
     $response['nation_keywords'] = nv_unhtmlspecialchars($array_nation['nation_keywords']);
 
-    $ajaxRespon->set('data', $response)->setSuccess()->respon();
+    AjaxRespon::set('data', $response);
+    AjaxRespon::setSuccess();
+    AjaxRespon::respon();
 }
 
 // Thêm, sửa
 if ($nv_Request->isset_request('ajaxrequest', 'get')) {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!');
+        AjaxRespon::respon();
+    }
+
+    $nation_id = $nv_Request->get_int('id', 'post', 0);
+    if ($nation_id) {
+        // Kiểm tra tồn tại sửa
+        if (!isset($global_array_nation[$nation_id])) {
+            AjaxRespon::setMessage('Wrong Data!!!');
+            AjaxRespon::respon();
+        }
+        $nation = $global_array_nation[$nation_id];
+    } else {
+        $nation = new Nation();
     }
 
     $array = array();
@@ -139,10 +167,10 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $array['nation_introtext'] = nv_substr($nv_Request->get_title('nation_introtext', 'post', ''), 0, 250);
     $array['nation_keywords'] = nv_substr($nv_Request->get_title('nation_keywords', 'post', ''), 0, 250);
 
-    $array['nation_id'] = $nv_Request->get_int('id', 'post', 0);
+
     $array['submittype'] = nv_substr($nv_Request->get_title('submittype', 'post', ''), 0, 250);
 
-    $ajaxRespon->set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
+    AjaxRespon::set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
 
     $array['nation_alias'] = empty($array['nation_alias']) ? change_alias($array['nation_name']) : change_alias($array['nation_alias']);
 
@@ -172,15 +200,15 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     if ($error_exists) {
-        $ajaxRespon->setMessage($lang_module['nation_err_exists']);
+        AjaxRespon::setMessage($lang_module['nation_err_exists']);
     } elseif (empty($array['nation_code'])) {
-        $ajaxRespon->setMessage($lang_module['nation_err_code']);
+        AjaxRespon::setMessage($lang_module['nation_err_code']);
     } elseif ($is_exists_code) {
-        $ajaxRespon->setMessage($lang_module['nation_err_exists_code']);
+        AjaxRespon::setMessage($lang_module['nation_err_exists_code']);
     } elseif (!preg_match($global_array_rule['nation_code'], $array['nation_code'])) {
-        $ajaxRespon->setMessage($lang_module['nation_err_rule_code']);
+        AjaxRespon::setMessage($lang_module['nation_err_rule_code']);
     } elseif (empty($array['nation_name'])) {
-        $ajaxRespon->setMessage($lang_module['nation_err_name']);
+        AjaxRespon::setMessage($lang_module['nation_err_name']);
     } else {
         if ($array['nation_id']) {
             $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET
@@ -203,9 +231,9 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_NATION', $array_old['nation_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
-                $ajaxRespon->setSuccess();
+                AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                $ajaxRespon->setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         } else {
             $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_nations")->fetchColumn();
@@ -244,14 +272,14 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_NATION', $array['nation_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
-                $ajaxRespon->setSuccess();
+                AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                $ajaxRespon->setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         }
     }
 
-    $ajaxRespon->respon();
+    AjaxRespon::respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
@@ -261,7 +289,7 @@ $xtpl->assign('GLANG', $lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_nation));
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 
-foreach ($global_array_nation as $row) {
+foreach ($global_array_nation as $nation) {
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);
     $row['time_update_time'] = $row['time_update'] ? nv_date('H:i', $row['time_update']) : '';
     $row['time_add'] = Utils::getFormatDateView($row['time_add']);

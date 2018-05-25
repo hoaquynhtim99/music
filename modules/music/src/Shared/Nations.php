@@ -12,14 +12,17 @@ namespace NukeViet\Music\Shared;
 
 use NukeViet\Music\Utils;
 use NukeViet\Music\Resources;
-use NukeViet\Music\Category\DataFields;
+use NukeViet\Music\Nation\DBStruct;
+use NukeViet\Music\Nation\Nation;
 use NukeViet\Music\Db\Db;
 use NukeViet\Music\Db\Condition;
 
-class Categories implements ITypeShare
+class Nations implements ITypeShare
 {
+    use DBStruct;
+
     /**
-     * Categories::creatUniqueCode()
+     * Nations::creatUniqueCode()
      *
      * @return
      */
@@ -27,12 +30,12 @@ class Categories implements ITypeShare
     {
         $sql = new Db();
         $sql->setTable(self::_getTable());
-        $sql->setField(DataFields::FIELD_ID);
+        $sql->setField(self::$FIELD_ID);
 
         while (true) {
-            $code = strtolower(Utils::genCode(Resources::CATEGORY_CODE_LENGTH));
+            $code = strtolower(Utils::genCode(Resources::NATION_CODE_LENGTH));
             $condition = new Condition();
-            $condition->add()->setField(DataFields::FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
+            $condition->add()->setField(self::$FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
             $sql->setCondition($condition);
             if (!$sql->select()->fetchColumn()) {
                 break;
@@ -42,13 +45,8 @@ class Categories implements ITypeShare
         return $code;
     }
 
-    /**
-     * Categories::_getTable()
-     *
-     * @return
-     */
-    private static function _getTable()
+    public static function updateStat(Nation $nation)
     {
-        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_CATEGORY;
+        return $nation->getId();
     }
 }

@@ -15,7 +15,6 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Artist\DataFields;
 use NukeViet\Music\Db\Db;
 use NukeViet\Music\Db\Condition;
-use NukeViet\Music\Shared\ITypeShare;
 
 class Artists implements ITypeShare
 {

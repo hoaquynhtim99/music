@@ -10,8 +10,10 @@
 
 namespace NukeViet\Music;
 
-class Settings
+interface Settings
 {
+    const ALPHABETS_DATA = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
     /**
      * Loại
      *
@@ -41,10 +43,8 @@ class Settings
     const ARTIST_CODE_LENGTH = 5;
 
     /**
-     * Các bảng dữ liệu
+     * Các thiết lập về quốc gia
      *
      */
-    const TABLE_SEPARATOR_CHARACTER = '_';
-    const TABLE_ARTIST = 'artists';
-    const TABLE_CATEGORY = 'categories';
+    const NATION_CODE_LENGTH = 4;
 }

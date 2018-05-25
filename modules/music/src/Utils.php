@@ -12,11 +12,54 @@ namespace NukeViet\Music;
 
 /**
  * Các thư viện xử lý khác
+ * Các thư viện này sử dụng các hàm có sẵn của NukeViet
  *
  * @since 4.3.00
  */
 class Utils
 {
+    /**
+     * @param array $json
+     * @throws Exception
+     */
+    public static function jsonOutput($json)
+    {
+        if (!function_exists('nv_jsonOutput')) {
+            throw new Exception('Function not exists: nv_jsonOutput!!!');
+        }
+        nv_jsonOutput($json);
+    }
+
+    /**
+     * @param string $title
+     * @throws Exception
+     * @return string
+     */
+    public static function getSearchKey($title)
+    {
+        if (!function_exists('change_alias')) {
+            throw new Exception('Function not exists: change_alias!!!');
+        }
+        return ' ' . trim(str_replace('-', ' ', strtolower(change_alias($title)))) . ' ';
+    }
+
+    /**
+     * @param string $title
+     * @throws Exception
+     * @return string
+     */
+    public static function getAlphabet($title)
+    {
+        if (!function_exists('nv_strtoupper') or !function_exists('change_alias')) {
+            throw new Exception('Function not exists: nv_strtoupper, change_alias!!!');
+        }
+        $alphabet = substr(nv_strtoupper(change_alias($title)), 0, 1);
+        if (!in_array($alphabet, Resources::ALPHABETS_DATA)) {
+            return '';
+        }
+        return $alphabet;
+    }
+
     /**
      * Utils::getFormatNumberView()
      *

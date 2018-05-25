@@ -1,4 +1,6 @@
 # Ignore some static files and directories.
+/.buildpath
+/.settings
 /.project
 /.gitattributes
 /.htaccess

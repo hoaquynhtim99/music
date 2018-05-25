@@ -24,6 +24,7 @@ class Db
     private $table = '';
     private $fields = [];
     private $conditions = null;
+    private $orders = null;
 
     /**
      * Db::__construct()
@@ -49,6 +50,14 @@ class Db
                 $this->fields[] = $fields;
             }
         }
+    }
+
+    /**
+     * @param Order $order
+     */
+    public function setOrder(Order $order)
+    {
+        $this->orders = $order;
     }
 
     /**
@@ -91,6 +100,11 @@ class Db
         return $this->connection->query('SELECT ' . $this->_getSql());
     }
 
+    public function showColumns()
+    {
+        return $this->connection->query('SHOW COLUMNS ' . $this->_getSql());
+    }
+
     /**
      * Db::_getSql()
      *
@@ -108,6 +122,9 @@ class Db
         }
         if (!is_null($this->conditions)) {
             $sql .= ' WHERE ' . $this->conditions->toText();
+        }
+        if (!is_null($this->orders)) {
+            $sql .= ' ORDER BY ' . $this->orders->toText();
         }
 
         return $sql;

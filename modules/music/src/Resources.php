@@ -11,11 +11,12 @@
 namespace NukeViet\Music;
 
 /**
- * Các tài nguyên của hệ thống NukeViet
+ * Các tài nguyên của hệ thống NukeViet cần có để module hoạt động
+ * Load các tài nguyên này trước khi module có thể hoạt động
  *
  * @since 4.3.00
  */
-class Resources extends Settings
+class Resources implements Settings
 {
     /**
      * Ngôn ngữ giao diện đang xử lý.
@@ -41,9 +42,16 @@ class Resources extends Settings
     /**
      * Đầu tố bảng dữ liệu của module.
      *
-     * @var object
+     * @var string
      */
     private static $tablePrefix = '';
+
+    /**
+     * Đầu tố bảng dữ liệu của csdl site.
+     *
+     * @var string
+     */
+    private static $dbPrefix = '';
 
     /**
      * Resources::setLangInterface()
@@ -98,6 +106,17 @@ class Resources extends Settings
     }
 
     /**
+     * @param string $prefix
+     * @return boolean
+     */
+    public static function setDbPrefix($prefix)
+    {
+        self::$dbPrefix = $prefix;
+
+        return true;
+    }
+
+    /**
      * Resources::getLangInterface()
      *
      * @return
@@ -135,5 +154,13 @@ class Resources extends Settings
     public static function getTablePrefix()
     {
         return self::$tablePrefix;
+    }
+
+    /**
+     * @return string
+     */
+    public static function getDbPrefix()
+    {
+        return self::$dbPrefix;
     }
 }

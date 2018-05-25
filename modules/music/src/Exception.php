@@ -8,16 +8,8 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-namespace NukeViet\Music\Shared;
+namespace NukeViet\Music;
 
-use NukeViet\Music\Resources;
-
-class Songs implements ITypeShare
+class Exception extends \Exception
 {
-    public static function creatUniqueCode()
-    {
-        $db = Resources::getDb();
-
-        $code = 'ssdsdfsdf';
-    }
 }

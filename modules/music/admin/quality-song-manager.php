@@ -11,6 +11,7 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
 
 $page_title = $lang_module['qso_manager'];
@@ -19,19 +20,19 @@ $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
 // Xóa
 if ($ajaction == 'delete') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $quality_ids = $nv_Request->get_title('id', 'post', '');
     $quality_ids = array_filter(array_unique(array_map('intval', explode(',', $quality_ids))));
     if (empty($quality_ids)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
     foreach ($quality_ids as $quality_id) {
         if (!isset($global_array_soquality[$quality_id])) {
-            $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+            AjaxRespon::setMessage('Wrong ID!!!')->respon();
         }
     }
 
@@ -56,24 +57,24 @@ if ($ajaction == 'delete') {
 
     $nv_Cache->delMod($module_name);
 
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 // Cho hoạt động/đình chỉ
 if ($ajaction == 'active' or $ajaction == 'deactive') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $quality_ids = $nv_Request->get_title('id', 'post', '');
     $quality_ids = array_filter(array_unique(array_map('intval', explode(',', $quality_ids))));
     if (empty($quality_ids)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
     foreach ($quality_ids as $quality_id) {
         if (!isset($global_array_soquality[$quality_id])) {
-            $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+            AjaxRespon::setMessage('Wrong ID!!!')->respon();
         }
     }
 
@@ -89,24 +90,24 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
     }
 
     $nv_Cache->delMod($module_name);
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 // Thay đổi thứ tự
 if ($ajaction == 'weight') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
     $new_weight = $nv_Request->get_int('value', 'post', 0);
 
     if (!isset($global_array_soquality[$quality_id])) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
     if ($new_weight < 1 or $new_weight > sizeof($global_array_soquality)) {
-        $ajaxRespon->setMessage('Wrong Weight!!!')->respon();
+        AjaxRespon::setMessage('Wrong Weight!!!')->respon();
     }
 
     $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id!=" . $quality_id . " ORDER BY weight ASC";
@@ -127,20 +128,20 @@ if ($ajaction == 'weight') {
     $nv_Cache->delMod($module_name);
     nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
 
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 // Đánh dấu/Bỏ đánh dấu hỗ trợ nghe trực tuyến
 if ($ajaction == 'setonlinesupported' or $ajaction == 'unsetonlinesupported') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
 
     if (!isset($global_array_soquality[$quality_id])) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
     $online_supported = $ajaction == 'setonlinesupported' ? 1 : 0;
@@ -149,20 +150,20 @@ if ($ajaction == 'setonlinesupported' or $ajaction == 'unsetonlinesupported') {
 
     $nv_Cache->delMod($module_name);
     nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 // Đánh dấu mặc định khi nghe
 if ($ajaction == 'setdefault') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
 
     if (!isset($global_array_soquality[$quality_id])) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
     $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET is_default=0";
@@ -172,24 +173,24 @@ if ($ajaction == 'setdefault') {
 
     $nv_Cache->delMod($module_name);
     nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_QUALITY_SONG', $quality_id . ':' . $global_array_soquality[$quality_id][NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 // Lấy thông tin
 if ($ajaction == 'ajedit') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $quality_id = $nv_Request->get_int('id', 'post', 0);
     if (!isset($global_array_soquality[$quality_id])) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
     $array_quality = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $quality_id)->fetch();
     if (empty($array_quality)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
     $response = array();
@@ -200,15 +201,15 @@ if ($ajaction == 'ajedit') {
     $response_checkbox['online_supported'] = $array_quality['online_supported'];
     $response_checkbox['is_default'] = $array_quality['is_default'];
 
-    $ajaxRespon->set('data', $response);
-    $ajaxRespon->set('datacheckbox', $response_checkbox)->setSuccess()->respon();
+    AjaxRespon::set('data', $response);
+    AjaxRespon::set('datacheckbox', $response_checkbox)->setSuccess()->respon();
 }
 
 // Thêm, sửa
 if ($nv_Request->isset_request('ajaxrequest', 'get')) {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $array = array();
@@ -220,7 +221,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $array['quality_id'] = $nv_Request->get_int('id', 'post', 0);
     $array['submittype'] = nv_substr($nv_Request->get_title('submittype', 'post', ''), 0, 250);
 
-    $ajaxRespon->set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
+    AjaxRespon::set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
 
     $array['quality_alias'] = empty($array['quality_alias']) ? change_alias($array['quality_name']) : change_alias($array['quality_alias']);
 
@@ -247,9 +248,9 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     if ($error_exists) {
-        $ajaxRespon->setMessage($lang_module['qso_err_exists']);
+        AjaxRespon::setMessage($lang_module['qso_err_exists']);
     } elseif (empty($array['quality_name'])) {
-        $ajaxRespon->setMessage($lang_module['qso_err_name']);
+        AjaxRespon::setMessage($lang_module['qso_err_name']);
     } else {
         if ($array['quality_id']) {
             $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET
@@ -268,9 +269,9 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_QUALITY_SONG', $array_old[NV_LANG_DATA . '_quality_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
-                $ajaxRespon->setSuccess();
+                AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                $ajaxRespon->setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         } else {
             $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_quality_song")->fetchColumn();
@@ -292,14 +293,14 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_QUALITY_SONG', $array['quality_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
-                $ajaxRespon->setSuccess();
+                AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                $ajaxRespon->setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         }
     }
 
-    $ajaxRespon->respon();
+    AjaxRespon::respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);

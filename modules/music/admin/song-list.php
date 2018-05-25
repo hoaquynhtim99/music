@@ -11,6 +11,7 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
 
 $page_title = $lang_module['song_list'];
@@ -19,19 +20,19 @@ $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
 // Xóa
 if ($ajaction == 'delete') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $nation_ids = $nv_Request->get_title('id', 'post', '');
     $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
     if (empty($nation_ids)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
     foreach ($nation_ids as $nation_id) {
         if (!isset($global_array_nation[$nation_id])) {
-            $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+            AjaxRespon::setMessage('Wrong ID!!!')->respon();
         }
     }
 
@@ -56,20 +57,20 @@ if ($ajaction == 'delete') {
 
     $nv_Cache->delMod($module_name);
 
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 // Cho hoạt động/đình chỉ
 if ($ajaction == 'active' or $ajaction == 'deactive') {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
     if (!defined('NV_IS_AJAX')) {
-        $ajaxRespon->setMessage('Wrong URL!!!')->respon();
+        AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
     $song_ids = $nv_Request->get_title('id', 'post', '');
     $song_ids = array_filter(array_unique(array_map('intval', explode(',', $song_ids))));
     if (empty($song_ids)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
     // Xác định các bài hát
@@ -88,7 +89,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         $array[$row['song_id']] = $row;
     }
     if (sizeof($array) != sizeof($song_ids)) {
-        $ajaxRespon->setMessage('Wrong ID!!!')->respon();
+        AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
     $status = $ajaction == 'active' ? 1 : 0;
@@ -103,7 +104,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
     }
 
     $nv_Cache->delMod($module_name);
-    $ajaxRespon->setSuccess()->respon();
+    AjaxRespon::setSuccess()->respon();
 }
 
 $base_url = NV_ADMIN_MOD_FULLLINK_AMP . $op;

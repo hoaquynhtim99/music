@@ -13,6 +13,8 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\Shared\Artists;
+use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Utils;
 
 $set_active_op = 'artist-list';
 
@@ -62,7 +64,7 @@ if ($artist_id) {
 }
 
 if ($nv_Request->isset_request('submit', 'post')) {
-    $ajaxRespon->reset();
+    AjaxRespon::reset();
 
     $array['artist_type'] = $nv_Request->get_int('artist_type', 'post', 0);
     $array['artist_birthday'] = $nv_Request->get_title('artist_birthday', 'post', '');
@@ -117,12 +119,12 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
     // Kiểm tra thông tin
     if (empty($array['artist_name'])) {
-        $ajaxRespon->setInput('artist_name')->setMessage($lang_module['error_require_field'])->respon();
+        AjaxRespon::setInput('artist_name')->setMessage($lang_module['error_require_field'])->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
-    $array['artist_alphabet'] = msGetAlphabet($array['artist_name']);
-    $array['artist_searchkey'] = msGetSearchKey($array['artist_name']);
+    $array['artist_alphabet'] = Utils::getAlphabet($array['artist_name']);
+    $array['artist_searchkey'] = Utils::getSearchKey($array['artist_name']);
     $array['author_prize'] = nv_nl2br($array['author_prize']);
     $array['author_introtext'] = nv_nl2br($array['author_introtext']);
     $array['author_info'] = nv_editor_nl2br($array['author_info']);
@@ -265,7 +267,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
     if ($check_db !== '') {
         // Thất bại
-        $ajaxRespon->setMessage($check_db)->respon();
+        AjaxRespon::setMessage($check_db)->respon();
     }
 
     // Cập nhật lại thống kê quốc gia
@@ -292,12 +294,12 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $continue_add = ($nv_Request->get_int('submitcontinue', 'post', 0) and !$artist_id);
     if ($continue_add) {
         $redirect = NV_ADMIN_MOD_FULLLINK . 'artist-content';
-        $ajaxRespon->set('redirectnow', true);
+        AjaxRespon::set('redirectnow', true);
     } else {
         $redirect = NV_ADMIN_MOD_FULLLINK . 'artist-list';
     }
 
-    $ajaxRespon->setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
+    AjaxRespon::setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);

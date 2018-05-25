@@ -11,6 +11,27 @@
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
+/*
+use NukeViet\Music\Song\Song;
+use NukeViet\Music\Singer\DbLoader as SingerLoader;
+
+$song = new Song();
+
+$song->setName("Điều Em Lo Sợ");
+$song->setKeywords("k1", "k2", "k3");
+
+$singer1 = SingerLoader::loadFromId($singer_id1);
+$singer2 = SingerLoader::loadFromId($singer_id2);
+
+$song->setSinger($singer1, $singer2);
+
+$check = $song->saveToDB();
+
+if (!$check) {
+    throw new Exception('Error!!!');
+}
+*/
+
 $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
