@@ -30,6 +30,8 @@ class AjaxRespon
     public static function setMessage($message)
     {
         self::$json['message'] = $message;
+
+        return new static();
     }
 
     /**
@@ -41,6 +43,8 @@ class AjaxRespon
     public static function setPrintMessage($vars)
     {
         self::$json['message'] = '<pre><code>' . print_r($vars, true) . '</code></pre>';
+
+        return new static();
     }
 
     /**
@@ -52,6 +56,8 @@ class AjaxRespon
     public static function setInput($input)
     {
         self::$json['input'] = $input;
+
+        return new static();
     }
 
     /**
@@ -63,6 +69,8 @@ class AjaxRespon
     public static function setRedirect($redirect)
     {
         self::$json['redirect'] = $redirect;
+
+        return new static();
     }
 
     /**
@@ -73,6 +81,8 @@ class AjaxRespon
     public static function setSuccess()
     {
         self::$json['status'] = 'ok';
+
+        return new static();
     }
 
     /**
@@ -83,6 +93,8 @@ class AjaxRespon
     public static function setError()
     {
         self::$json['status'] = 'error';
+
+        return new static();
     }
 
     /**
@@ -95,6 +107,8 @@ class AjaxRespon
     public static function set($key, $value)
     {
         self::$json[$key] = $value;
+
+        return new static();
     }
 
     /**
@@ -105,6 +119,8 @@ class AjaxRespon
     public static function reset()
     {
         self::$json = self::$jsonDefault;
+
+        return new static();
     }
 
     /**

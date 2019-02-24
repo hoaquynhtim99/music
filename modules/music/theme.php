@@ -12,6 +12,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Config;
 use NukeViet\Music\Utils;
 
 /**
@@ -22,7 +23,7 @@ use NukeViet\Music\Utils;
  */
 function nv_theme_gird_albums($array)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config, $module_upload, $op;
+    global $lang_module, $lang_global, $module_info, $module_upload, $op;
 
     $xtpl = new XTemplate('gird-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -36,8 +37,8 @@ function nv_theme_gird_albums($array)
         $xtpl->assign('ROW', $row);
 
         $num_singers = sizeof($row['singers']);
-        if ($num_singers > $global_array_config['limit_singers_displayed']) {
-            $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
             foreach ($row['singers'] as $singer) {
                 $xtpl->assign('SINGER', $singer);
@@ -58,7 +59,7 @@ function nv_theme_gird_albums($array)
             }
             $xtpl->parse('main.loop.show_singer');
         } else {
-            $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+            $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
             $xtpl->parse('main.loop.no_singer');
         }
 
@@ -77,7 +78,7 @@ function nv_theme_gird_albums($array)
  */
 function nv_theme_gird_videos($array)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config, $module_upload, $op;
+    global $lang_module, $lang_global, $module_info, $module_upload, $op;
 
     $xtpl = new XTemplate('gird-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -98,8 +99,8 @@ function nv_theme_gird_videos($array)
         $xtpl->assign('ROW', $row);
 
         $num_singers = sizeof($row['singers']);
-        if ($num_singers > $global_array_config['limit_singers_displayed']) {
-            $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
             foreach ($row['singers'] as $singer) {
                 $xtpl->assign('SINGER', $singer);
@@ -120,7 +121,7 @@ function nv_theme_gird_videos($array)
             }
             $xtpl->parse('main.loop.show_singer');
         } else {
-            $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+            $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
             $xtpl->parse('main.loop.no_singer');
         }
 
@@ -142,7 +143,7 @@ function nv_theme_gird_videos($array)
  */
 function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config, $module_upload, $op, $global_array_nation, $array_alphabets;
+    global $lang_module, $lang_global, $module_info, $module_upload, $op, $global_array_nation, $array_alphabets;
 
     $xtpl = new XTemplate('gird-singers.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -213,7 +214,7 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
  */
 function nv_theme_list_songs($array)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config, $module_upload;
+    global $lang_module, $lang_global, $module_info, $module_upload;
 
     $xtpl = new XTemplate('list-songs.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -224,8 +225,8 @@ function nv_theme_list_songs($array)
         $xtpl->assign('ROW', $row);
 
         $num_singers = sizeof($row['singers']);
-        if ($num_singers > $global_array_config['limit_singers_displayed']) {
-            $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
             foreach ($row['singers'] as $singer) {
                 $xtpl->assign('SINGER', $singer);
@@ -246,7 +247,7 @@ function nv_theme_list_songs($array)
             }
             $xtpl->parse('main.loop.show_singer');
         } else {
-            $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+            $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
             $xtpl->parse('main.loop.no_singer');
         }
 
@@ -268,7 +269,7 @@ function nv_theme_list_songs($array)
  */
 function nv_theme_main($content_albums, $content_videos, $content_singers, $content_songs)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config, $module_upload;
+    global $lang_module, $lang_global, $module_info, $module_upload;
 
     $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -280,7 +281,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
         $xtpl->assign('ALBUMS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums']);
         $xtpl->assign('ALBUMS_HTML', nv_theme_gird_albums($content_albums));
         $xtpl->parse('albums');
-        $contents[$global_array_config['home_albums_weight']] = $xtpl->text('albums');
+        $contents[Config::getHomeAlbumsWeight()] = $xtpl->text('albums');
     }
 
     if (!empty($content_singers)) {
@@ -307,7 +308,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
         }
 
         $xtpl->parse('singers');
-        $contents[$global_array_config['home_singers_weight']] = $xtpl->text('singers');
+        $contents[Config::getHomeSingersWeight()] = $xtpl->text('singers');
     }
 
     if (!empty($content_songs)) {
@@ -318,8 +319,8 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
             $xtpl->assign('ROW', $row);
 
             $num_singers = sizeof($row['singers']);
-            if ($num_singers > $global_array_config['limit_singers_displayed']) {
-                $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+            if ($num_singers > Config::getLimitSingersDisplayed()) {
+                $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
                 foreach ($row['singers'] as $singer) {
                     $xtpl->assign('SINGER', $singer);
@@ -340,7 +341,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
                 }
                 $xtpl->parse('songs.loop.show_singer');
             } else {
-                $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+                $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
                 $xtpl->parse('songs.loop.no_singer');
             }
 
@@ -348,14 +349,14 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
         }
 
         $xtpl->parse('songs');
-        $contents[$global_array_config['home_songs_weight']] = $xtpl->text('songs');
+        $contents[Config::getHomeSongsWeight()] = $xtpl->text('songs');
     }
 
     if (!empty($content_videos)) {
         $xtpl->assign('VIDEOS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos']);
         $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($content_videos));
         $xtpl->parse('videos');
-        $contents[$global_array_config['home_videos_weight']] = $xtpl->text('videos');
+        $contents[Config::getHomeVideosWeight()] = $xtpl->text('videos');
     }
 
     // Sắp xếp lại theo thứ tự cấu hình
@@ -373,18 +374,20 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
  */
 function nv_theme_list_albums($array, $is_detail_cat = false, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config;
+    global $lang_module, $lang_global, $module_info;
 
     $xtpl = new XTemplate('list-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
+
+    $codePrefix = Config::getCodePrefix();
 
     foreach ($array as $cat) {
         $xtpl->assign('CAT', $cat['cat']);
         $xtpl->assign('ALBUMS_HTML', nv_theme_gird_albums($cat['albums']));
 
         if (empty($is_detail_cat)) {
-            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $cat['cat']['cat_alias'] . '-' . $global_array_config['code_prefix']['cat'] . $cat['cat']['cat_code']);
+            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $cat['cat']['cat_alias'] . '-' . $codePrefix->getCat() . $cat['cat']['cat_code']);
             $xtpl->parse('main.loopcat.cat_link');
         } else {
             $xtpl->parse('main.loopcat.cat_text');
@@ -412,18 +415,20 @@ function nv_theme_list_albums($array, $is_detail_cat = false, $generate_page)
  */
 function nv_theme_list_videos($array, $is_detail_cat = false, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config;
+    global $lang_module, $lang_global, $module_info;
 
     $xtpl = new XTemplate('list-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
+
+    $codePrefix = Config::getCodePrefix();
 
     foreach ($array as $cat) {
         $xtpl->assign('CAT', $cat['cat']);
         $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($cat['videos']));
 
         if (empty($is_detail_cat)) {
-            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $cat['cat']['cat_alias'] . '-' . $global_array_config['code_prefix']['cat'] . $cat['cat']['cat_code']);
+            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $cat['cat']['cat_alias'] . '-' . $codePrefix->getCat() . $cat['cat']['cat_code']);
             $xtpl->parse('main.loopcat.cat_link');
         } else {
             $xtpl->parse('main.loopcat.cat_text');
@@ -454,7 +459,7 @@ function nv_theme_list_videos($array, $is_detail_cat = false, $generate_page)
  */
 function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_videos, $array_albums, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_config, $global_array_nation;
+    global $lang_module, $lang_global, $module_info, $global_array_nation;
 
     $xtpl = new XTemplate('view-singer.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -463,7 +468,7 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
     $xtpl->assign('SINGER', $data_singer);
 
     // Hiển thị phần thông tin đầu
-    if (!empty($global_array_config['view_singer_show_header'])) {
+    if (!empty(Config::getViewSingerShowHeader())) {
         $xtpl->assign('HEADER_HTML', nv_theme_view_singer_header($data_singer, $request_tab));
         $xtpl->parse('main.header');
     }
@@ -576,7 +581,7 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
  */
 function nv_theme_view_singer_header($data_singer, $request_tab)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $global_array_config;
+    global $lang_module, $lang_global, $module_info, $module_upload;
 
     $xtpl = new XTemplate('view-singer-header.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -589,7 +594,8 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
     }
 
     // Các TAB
-    foreach ($global_array_config['view_singer_tabs_alias'] as $tab_key => $tab_alias) {
+    $allTabs = Config::getSingerTabsAlias()->getAllTabs();
+    foreach ($allTabs as $tab_key => $tab_alias) {
         $xtpl->assign('TAB_TITLE', $lang_module['view_singer_tab_' . $tab_key]);
         $xtpl->assign('TAB_LINK', nv_get_view_singer_link($data_singer, true, $tab_key));
 
@@ -606,7 +612,7 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
     $xtpl->assign('SINGER', $data_singer);
 
     if (!empty($data_singer['singer_info'])) {
-        $xtpl->assign('HEADTEXT', nv_clean60(strip_tags($data_singer['singer_info']), $global_array_config['view_singer_headtext_length']));
+        $xtpl->assign('HEADTEXT', nv_clean60(strip_tags($data_singer['singer_info']), Config::getViewSingerHeadtextLength()));
         $xtpl->parse('main.headtext');
     }
 
@@ -625,7 +631,7 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
  */
 function nv_theme_detail_song($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config, $is_embed_mode;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
 
     $xtpl = new XTemplate('detail-song.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -647,8 +653,8 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
 
     // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
         foreach ($array['singers'] as $singer) {
             $song_full_singer[] = $singer['artist_name'];
@@ -671,8 +677,8 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         }
         $xtpl->parse('main.show_singer');
     } else {
-        $song_full_singer[] = $global_array_config['unknow_singer'];
-        $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+        $song_full_singer[] = Config::getUnknowSinger();
+        $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
         $xtpl->parse('main.no_singer');
     }
 
@@ -680,8 +686,8 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
 
     // Xuất nhạc sĩ
     $num_authors = sizeof($array['authors']);
-    if ($num_authors > $global_array_config['limit_authors_displayed']) {
-        $xtpl->assign('VA_AUTHORS', $global_array_config['various_artists_authors']);
+    if ($num_authors > Config::getLimitAuthorsDisplayed()) {
+        $xtpl->assign('VA_AUTHORS', Config::getVariousArtistsAuthors());
 
         foreach ($array['authors'] as $author) {
             $xtpl->assign('AUTHOR', $author);
@@ -702,7 +708,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         }
         $xtpl->parse('main.show_author');
     } else {
-        $xtpl->assign('UNKNOW_AUTHOR', $global_array_config['unknow_author']);
+        $xtpl->assign('UNKNOW_AUTHOR', Config::getUnknowAuthor());
         $xtpl->parse('main.no_author');
     }
 
@@ -721,7 +727,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         }
         $xtpl->parse('main.show_cat');
     } else {
-        $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
+        $xtpl->assign('UNKNOW_CAT', Config::getUnknowCat());
         $xtpl->parse('main.no_cat');
     }
 
@@ -804,7 +810,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
  */
 function nv_theme_detail_video($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config, $is_embed_mode;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
 
     $xtpl = new XTemplate('detail-video.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -823,8 +829,8 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
 
     // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
         foreach ($array['singers'] as $singer) {
             $xtpl->assign('SINGER', $singer);
@@ -845,14 +851,14 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         }
         $xtpl->parse('main.show_singer');
     } else {
-        $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+        $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
         $xtpl->parse('main.no_singer');
     }
 
     // Xuất nhạc sĩ
     $num_authors = sizeof($array['authors']);
-    if ($num_authors > $global_array_config['limit_authors_displayed']) {
-        $xtpl->assign('VA_AUTHORS', $global_array_config['various_artists_authors']);
+    if ($num_authors > Config::getLimitAuthorsDisplayed()) {
+        $xtpl->assign('VA_AUTHORS', Config::getVariousArtistsAuthors());
 
         foreach ($array['authors'] as $author) {
             $xtpl->assign('AUTHOR', $author);
@@ -873,7 +879,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         }
         $xtpl->parse('main.show_author');
     } else {
-        $xtpl->assign('UNKNOW_AUTHOR', $global_array_config['unknow_author']);
+        $xtpl->assign('UNKNOW_AUTHOR', Config::getUnknowAuthor());
         $xtpl->parse('main.no_author');
     }
 
@@ -892,7 +898,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         }
         $xtpl->parse('main.show_cat');
     } else {
-        $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
+        $xtpl->assign('UNKNOW_CAT', Config::getUnknowCat());
         $xtpl->parse('main.no_cat');
     }
 
@@ -966,7 +972,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
  */
 function nv_theme_detail_album($array, $array_captions, $content_comment, $array_singer_albums, $array_cat_albums)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $global_array_config, $is_embed_mode;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
 
     $xtpl = new XTemplate('detail-album.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -987,8 +993,8 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
 
     // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
         foreach ($array['singers'] as $singer) {
             $xtpl->assign('SINGER', $singer);
@@ -1009,7 +1015,7 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
         }
         $xtpl->parse('main.show_singer');
     } else {
-        $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+        $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
         $xtpl->parse('main.no_singer');
     }
 
@@ -1028,7 +1034,7 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
         }
         $xtpl->parse('main.show_cat');
     } else {
-        $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
+        $xtpl->assign('UNKNOW_CAT', Config::getUnknowCat());
         $xtpl->parse('main.no_cat');
     }
 
@@ -1056,8 +1062,8 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
 
         // Xuất ca sĩ
         $num_singers = sizeof($song['singers']);
-        if ($num_singers > $global_array_config['limit_singers_displayed']) {
-            $xtpl->assign('PLSO_VA_SINGERS', $global_array_config['various_artists']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $xtpl->assign('PLSO_VA_SINGERS', Config::getVariousArtists());
 
             foreach ($song['singers'] as $singer) {
                 $song_full_singer[] = $singer['artist_name'];
@@ -1080,8 +1086,8 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
             }
             $xtpl->parse('main.player.playlist.loop.show_singer');
         } else {
-            $song_full_singer[] = $global_array_config['unknow_singer'];
-            $xtpl->assign('PLSO_UNKNOW_SINGER', $global_array_config['unknow_singer']);
+            $song_full_singer[] = Config::getUnknowSinger();
+            $xtpl->assign('PLSO_UNKNOW_SINGER', Config::getUnknowSinger());
             $xtpl->parse('main.player.playlist.loop.no_singer');
         }
 

@@ -15,13 +15,16 @@ define('NV_IS_MOD_MUSIC', true);
 
 require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
+use NukeViet\Music\Config;
+
 $array_mod_title = array();
 $is_embed_mode = ($nv_Request->get_int('embed', 'get', 0) == 1 ? true : false);
 
 // Điều khiển các OP
 if ($op == 'main' and isset($array_op[0])) {
     unset($m);
-    if (isset($array_op[1]) or !preg_match('/^([a-zA-Z0-9\-]+)\-(' . $global_array_config['code_prefix']['album'] . '|' . $global_array_config['code_prefix']['video'] . '|' . $global_array_config['code_prefix']['song'] . ')([a-zA-Z0-9\-]+)$/', $array_op[0], $m)) {
+    $codePrefix = Config::getCodePrefix();
+    if (isset($array_op[1]) or !preg_match('/^([a-zA-Z0-9\-]+)\-(' . $codePrefix->getAlbum() . '|' . $codePrefix->getVideo() . '|' . $codePrefix->getSong() . ')([a-zA-Z0-9\-]+)$/', $array_op[0], $m)) {
         nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
     }
 
@@ -30,7 +33,7 @@ if ($op == 'main' and isset($array_op[0])) {
     $ms_detail_code = $m[3];
     $ms_detail_data = array();
 
-    if ($ms_detail_prefix == $global_array_config['code_prefix']['song']) {
+    if ($ms_detail_prefix == $codePrefix->getSong()) {
         $array_select_fields = nv_get_song_select_fields(true);
 
         $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=:song_code";
@@ -45,7 +48,7 @@ if ($op == 'main' and isset($array_op[0])) {
         $ms_detail_data = $sth->fetch();
         $op = 'detail-song';
         define('NV_IS_DETAIL_SONG', true);
-    } elseif ($ms_detail_prefix == $global_array_config['code_prefix']['video']) {
+    } elseif ($ms_detail_prefix == $codePrefix->getVideo()) {
         $array_select_fields = nv_get_video_select_fields(true);
 
         $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE status=1 AND video_code=:video_code";
@@ -60,7 +63,7 @@ if ($op == 'main' and isset($array_op[0])) {
         $ms_detail_data = $sth->fetch();
         $op = 'detail-video';
         define('NV_IS_DETAIL_VIDEO', true);
-    } elseif ($ms_detail_prefix == $global_array_config['code_prefix']['album']) {
+    } elseif ($ms_detail_prefix == $codePrefix->getAlbum()) {
         $array_select_fields = nv_get_album_select_fields(true);
 
         $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE status=1 AND album_code=:album_code";
@@ -78,6 +81,8 @@ if ($op == 'main' and isset($array_op[0])) {
     } else {
         nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
     }
+
+    unset($codePrefix);
 }
 
 /**
@@ -88,7 +93,7 @@ if ($op == 'main' and isset($array_op[0])) {
  */
 function nv_get_fb_share_image($data = array())
 {
-    global $meta_property, $global_array_config, $module_upload;
+    global $meta_property, $module_upload;
 
     if (!empty($data['resource_avatar']) and is_file(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $data['resource_avatar'])) {
         $image_info = @getimagesize(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $data['resource_avatar']);
@@ -102,11 +107,13 @@ function nv_get_fb_share_image($data = array())
         }
     }
 
-    if (!empty($global_array_config['fb_share_image']) and is_file(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $global_array_config['fb_share_image'])) {
-        $meta_property['og:image'] = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $global_array_config['fb_share_image'];
-        $meta_property['og:image:url'] = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $global_array_config['fb_share_image'];
-        $meta_property['og:image:width'] = $global_array_config['fb_share_image_witdh'];
-        $meta_property['og:image:height'] = $global_array_config['fb_share_image_height'];
-        $meta_property['og:image:type'] = $global_array_config['fb_share_image_mime'];
+    $fb_share_image = Config::getFbShareImage();
+
+    if (!empty($fb_share_image) and is_file(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/' . $fb_share_image)) {
+        $meta_property['og:image'] = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $fb_share_image;
+        $meta_property['og:image:url'] = NV_MY_DOMAIN . NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $fb_share_image;
+        $meta_property['og:image:width'] = Config::getFbShareImageWidth();
+        $meta_property['og:image:height'] = Config::getFbShareImageHeight();
+        $meta_property['og:image:type'] = Config::getFbShareImageMime();
     }
 }

@@ -160,19 +160,17 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
         $nation = new Nation();
     }
 
+    $submittype = nv_substr($nv_Request->get_title('submittype', 'post', ''), 0, 250);
+    AjaxRespon::set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($submittype))));
+
     $array = array();
-    $array['nation_code'] = nv_substr($nv_Request->get_title('nation_code', 'post', ''), 0, 250);
     $array['nation_name'] = nv_substr($nv_Request->get_title('nation_name', 'post', ''), 0, 250);
     $array['nation_alias'] = nv_substr($nv_Request->get_title('nation_alias', 'post', ''), 0, 250);
     $array['nation_introtext'] = nv_substr($nv_Request->get_title('nation_introtext', 'post', ''), 0, 250);
     $array['nation_keywords'] = nv_substr($nv_Request->get_title('nation_keywords', 'post', ''), 0, 250);
-
-
-    $array['submittype'] = nv_substr($nv_Request->get_title('submittype', 'post', ''), 0, 250);
-
-    AjaxRespon::set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($array['submittype']))));
-
     $array['nation_alias'] = empty($array['nation_alias']) ? change_alias($array['nation_name']) : change_alias($array['nation_alias']);
+
+    $nation->setName($array['nation_name']);
 
     // Kiểm tra tồn tại mã
     $is_exists_code = 0;

@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN'))
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
+use NukeViet\Music\Config;
 
 $page_title = $lang_module['qso_manager'];
 
@@ -310,9 +311,11 @@ $xtpl->assign('GLANG', $lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_soquality));
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 
+$default_language = Config::getDefaultLang();
+
 foreach ($global_array_soquality as $row) {
-    if (empty($row[NV_LANG_DATA . '_quality_name']) and !empty($row[$global_array_config['default_language'] . '_quality_name'])) {
-        $row['quality_name'] = $row[$global_array_config['default_language'] . '_quality_name'];
+    if (empty($row[NV_LANG_DATA . '_quality_name']) and !empty($row[$default_language . '_quality_name'])) {
+        $row['quality_name'] = $row[$default_language . '_quality_name'];
     } else {
         $row['quality_name'] = $row[NV_LANG_DATA . '_quality_name'];
     }

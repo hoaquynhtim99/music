@@ -12,6 +12,7 @@ if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Config;
 use NukeViet\Music\Utils;
 
 $page_title = $lang_module['album_list'];
@@ -246,8 +247,8 @@ foreach ($array as $row) {
 
     // Ca sĩ
     $num_singers = sizeof($row['singers']);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
         foreach ($row['singers'] as $singer) {
             $xtpl->assign('SINGER', $singer);
@@ -268,7 +269,7 @@ foreach ($array as $row) {
         }
         $xtpl->parse('main.loop.show_singer');
     } else {
-        $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+        $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
         $xtpl->parse('main.loop.no_singer');
     }
 
@@ -287,7 +288,7 @@ foreach ($array as $row) {
         }
         $xtpl->parse('main.loop.show_cat');
     } else {
-        $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
+        $xtpl->assign('UNKNOW_CAT', Config::getUnknowCat());
         $xtpl->parse('main.loop.no_cat');
     }
 

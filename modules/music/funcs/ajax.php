@@ -8,8 +8,11 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MOD_MUSIC'))
+if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
+}
+
+use NukeViet\Music\Config;
 
 $tokend = $nv_Request->get_title('tokend', 'post', '');
 
@@ -29,7 +32,7 @@ if ($nv_Request->isset_request('getSongLyric', 'post')) {
     if ($sth->rowCount()) {
         $lyric = $sth->fetchColumn();
         if (empty($lyric)) {
-            nv_htmlOutput($global_array_config['msg_nolyric']);
+            nv_htmlOutput(Config::getMsgNolyric());
         }
         nv_htmlOutput($lyric);
     }

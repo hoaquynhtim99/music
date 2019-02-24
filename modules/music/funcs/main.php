@@ -11,6 +11,8 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
+use NukeViet\Music\Config;
+
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
 $description = $module_info['description'];
@@ -22,9 +24,9 @@ $content_albums = $content_videos = $content_singers = $content_songs = array();
 $array_singer_ids = $array_singers = array();
 
 // Các albums
-if (!empty($global_array_config['home_albums_display'])) {
+if (!empty(Config::getHomeAlbumsDisplay())) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND show_inhome=1 AND status=1");
-    $db->order("album_id DESC")->limit($global_array_config['home_albums_nums'])->offset(0);
+    $db->order("album_id DESC")->limit(Config::getHomeAlbumsNums())->offset(0);
 
     $array_select_fields = nv_get_album_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -54,9 +56,9 @@ if (!empty($global_array_config['home_albums_display'])) {
 }
 
 // Các ca sĩ trên trang chủ
-if (!empty($global_array_config['home_singers_display'])) {
+if (!empty(Config::getHomeSingersDisplay())) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where("show_inhome=1 AND status=1 AND (artist_type=0 OR artist_type=2)");
-    $db->order("RAND()")->limit($global_array_config['home_singers_nums'])->offset(0);
+    $db->order("RAND()")->limit(Config::getHomeSingersNums())->offset(0);
 
     $array_select_fields = nv_get_artist_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -79,9 +81,9 @@ if (!empty($global_array_config['home_singers_display'])) {
 }
 
 // Các bài hát trang chủ
-if (!empty($global_array_config['home_songs_display'])) {
+if (!empty(Config::getHomeSongsDisplay())) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
-    $db->order("song_id DESC")->limit($global_array_config['home_songs_nums'])->offset(0);
+    $db->order("song_id DESC")->limit(Config::getHomeSongsNums())->offset(0);
 
     $array_select_fields = nv_get_song_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -112,9 +114,9 @@ if (!empty($global_array_config['home_songs_display'])) {
 }
 
 // Các video trang chủ
-if (!empty($global_array_config['home_videos_display'])) {
+if (!empty(Config::getHomeVideosDisplay())) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("show_inhome=1 AND status=1 AND is_official=1");
-    $db->order("video_id DESC")->limit($global_array_config['home_videos_nums'])->offset(0);
+    $db->order("video_id DESC")->limit(Config::getHomeVideosNums())->offset(0);
 
     $array_select_fields = nv_get_video_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));

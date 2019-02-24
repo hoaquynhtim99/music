@@ -10,6 +10,7 @@
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
+use NukeViet\Music\Config;
 
 if (!defined('NV_IS_MUSIC_ADMIN'))
     die('Stop!!!');
@@ -256,8 +257,8 @@ foreach ($array as $row) {
 
     // Ca sĩ
     $num_singers = sizeof($row['singers']);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $xtpl->assign('VA_SINGERS', $global_array_config['various_artists']);
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
         foreach ($row['singers'] as $singer) {
             $xtpl->assign('SINGER', $singer);
@@ -278,14 +279,14 @@ foreach ($array as $row) {
         }
         $xtpl->parse('main.loop.show_singer');
     } else {
-        $xtpl->assign('UNKNOW_SINGER', $global_array_config['unknow_singer']);
+        $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
         $xtpl->parse('main.loop.no_singer');
     }
 
     // Xuất nhạc sĩ
     $num_authors = sizeof($row['authors']);
-    if ($num_authors > $global_array_config['limit_authors_displayed']) {
-        $xtpl->assign('VA_AUTHORS', $global_array_config['various_artists_authors']);
+    if ($num_authors > Config::getLimitAuthorsDisplayed()) {
+        $xtpl->assign('VA_AUTHORS', Config::getVariousArtistsAuthors());
 
         foreach ($row['authors'] as $author) {
             $xtpl->assign('AUTHOR', $author);
@@ -306,7 +307,7 @@ foreach ($array as $row) {
         }
         $xtpl->parse('main.loop.show_author');
     } else {
-        $xtpl->assign('UNKNOW_AUTHOR', $global_array_config['unknow_author']);
+        $xtpl->assign('UNKNOW_AUTHOR', Config::getUnknowAuthor());
         $xtpl->parse('main.loop.no_author');
     }
 
@@ -325,7 +326,7 @@ foreach ($array as $row) {
         }
         $xtpl->parse('main.loop.show_cat');
     } else {
-        $xtpl->assign('UNKNOW_CAT', $global_array_config['unknow_cat']);
+        $xtpl->assign('UNKNOW_CAT', Config::getUnknowCat());
         $xtpl->parse('main.loop.no_cat');
     }
 

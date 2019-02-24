@@ -12,6 +12,19 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
+/*
+register_shutdown_function("fatal_handler");
+
+function fatal_handler() {
+    $error = error_get_last();
+    if ($error !== NULL) {
+        echo("<pre><code>");
+        print_r($error);
+        die("</code></pre>");
+    }
+}
+*/
+
 require NV_ROOTDIR . '/modules/' . $module_file . '/vendor/autoload.php';
 
 use NukeViet\Music\Nation\DbLoader as NationDbLoader;
@@ -130,21 +143,22 @@ $global_array_artist_type[0] = $lang_module['artist_type_singer'];
 $global_array_artist_type[1] = $lang_module['artist_type_author'];
 $global_array_artist_type[2] = $lang_module['artist_type_all'];
 
-$global_array_config['detail_song_albums_nums'] = 12;
-$global_array_config['detail_song_videos_nums'] = 12;
-$global_array_config['limit_authors_displayed'] = 3;
-$global_array_config['various_artists_authors'] = 'Nhóm tác giả';
-$global_array_config['unknow_author'] = 'Đang cập nhật';
-$global_array_config['unknow_cat'] = 'Đang cập nhật';
-$global_array_config['shareport'] = 'addthis';
-$global_array_config['addthis_pubid'] = 'addthis';
-$global_array_config['uploads_folder'] = 'dataup.default123';
-$global_array_config['msg_nolyric'] = 'Đang cập nhật';
+// Các cấu hình fix cứng, sau sẽ thêm vào cấu hình có thể tùy chỉnh được sau
+Config::setDetailSongAlbumsNums(12);
+Config::setDetailSongVideosNums(12);
+Config::setLimitAuthorsDisplayed(3);
+Config::setVariousArtistsAuthors('Nhóm tác giả');
+Config::setUnknowAuthor('Đang cập nhật');
+Config::setUnknowCat('Đang cập nhật');
+Config::setShareport('addthis');
+Config::setAddthisPubid('addthis');
+Config::setUploadsFolder('dataup.default123');
+Config::setMsgNolyric('Đang cập nhật');
 
-$global_array_config['auto_optimize_artist_name'] = 1;
-$global_array_config['auto_optimize_video_name'] = 1;
-$global_array_config['auto_optimize_song_name'] = 1;
-$global_array_config['auto_optimize_album_name'] = 1;
+Config::setAutoOptimizeAlbumName(true);
+Config::setAutoOptimizeArtistName(true);
+Config::setAutoOptimizeSongName(true);
+Config::setAutoOptimizeVideoName(true);
 
 /**
  * nv_get_album_select_fields()
@@ -154,15 +168,15 @@ $global_array_config['auto_optimize_album_name'] = 1;
  */
 function nv_get_album_select_fields($full_fields = false)
 {
-    global $global_array_config;
     $array_select_fields = array('album_id', 'album_code', 'cat_ids', 'singer_ids', 'release_year', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'time_update', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_album_name album_name';
     $array_select_fields[] = NV_LANG_DATA . '_album_alias album_alias';
     $array_select_fields[] = NV_LANG_DATA . '_album_description album_description';
-    if (NV_LANG_DATA != $global_array_config['default_language']) {
-        $array_select_fields[] = $global_array_config['default_language'] . '_album_name default_album_name';
-        $array_select_fields[] = $global_array_config['default_language'] . '_album_alias default_album_alias';
-        $array_select_fields[] = $global_array_config['default_language'] . '_album_description default_album_description';
+    $default_language = Config::getDefaultLang();
+    if (NV_LANG_DATA != $default_language) {
+        $array_select_fields[] = $default_language . '_album_name default_album_name';
+        $array_select_fields[] = $default_language . '_album_alias default_album_alias';
+        $array_select_fields[] = $default_language . '_album_description default_album_description';
     }
 
     $array_lang_fields = array('album_name', 'album_alias', 'album_description');
@@ -172,9 +186,9 @@ function nv_get_album_select_fields($full_fields = false)
         $array_select_fields[] = 'uploader_name';
         $array_select_fields[] = NV_LANG_DATA . '_album_introtext album_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_album_keywords album_keywords';
-        if (NV_LANG_DATA != $global_array_config['default_language']) {
-            $array_select_fields[] = $global_array_config['default_language'] . '_album_introtext default_album_introtext';
-            $array_select_fields[] = $global_array_config['default_language'] . '_album_keywords default_album_keywords';
+        if (NV_LANG_DATA != $default_language) {
+            $array_select_fields[] = $default_language . '_album_introtext default_album_introtext';
+            $array_select_fields[] = $default_language . '_album_keywords default_album_keywords';
         }
 
         $array_lang_fields[] = 'album_introtext';
@@ -192,13 +206,13 @@ function nv_get_album_select_fields($full_fields = false)
  */
 function nv_get_song_select_fields($full_fields = false)
 {
-    global $global_array_config;
     $array_select_fields = array('song_id', 'song_code', 'cat_ids', 'singer_ids', 'author_ids', 'album_ids', 'video_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_song_name song_name';
     $array_select_fields[] = NV_LANG_DATA . '_song_alias song_alias';
-    if (NV_LANG_DATA != $global_array_config['default_language']) {
-        $array_select_fields[] = $global_array_config['default_language'] . '_song_name default_song_name';
-        $array_select_fields[] = $global_array_config['default_language'] . '_song_alias default_song_alias';
+    $default_language = Config::getDefaultLang();
+    if (NV_LANG_DATA != $default_language) {
+        $array_select_fields[] = $default_language . '_song_name default_song_name';
+        $array_select_fields[] = $default_language . '_song_alias default_song_alias';
     }
 
     $array_lang_fields = array('song_name', 'song_alias');
@@ -211,9 +225,9 @@ function nv_get_song_select_fields($full_fields = false)
         $array_select_fields[] = 'is_official';
         $array_select_fields[] = NV_LANG_DATA . '_song_introtext song_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_song_keywords song_keywords';
-        if (NV_LANG_DATA != $global_array_config['default_language']) {
-            $array_select_fields[] = $global_array_config['default_language'] . '_song_introtext default_song_introtext';
-            $array_select_fields[] = $global_array_config['default_language'] . '_song_keywords default_song_keywords';
+        if (NV_LANG_DATA != $default_language) {
+            $array_select_fields[] = $default_language . '_song_introtext default_song_introtext';
+            $array_select_fields[] = $default_language . '_song_keywords default_song_keywords';
         }
 
         $array_lang_fields[] = 'song_introtext';
@@ -231,13 +245,13 @@ function nv_get_song_select_fields($full_fields = false)
  */
 function nv_get_video_select_fields($full_fields = false)
 {
-    global $global_array_config;
     $array_select_fields = array('video_id', 'video_code', 'cat_ids', 'singer_ids', 'author_ids', 'song_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_video_name video_name';
     $array_select_fields[] = NV_LANG_DATA . '_video_alias video_alias';
-    if (NV_LANG_DATA != $global_array_config['default_language']) {
-        $array_select_fields[] = $global_array_config['default_language'] . '_video_name default_video_name';
-        $array_select_fields[] = $global_array_config['default_language'] . '_video_alias default_video_alias';
+    $default_language = Config::getDefaultLang();
+    if (NV_LANG_DATA != $default_language) {
+        $array_select_fields[] = $default_language . '_video_name default_video_name';
+        $array_select_fields[] = $default_language . '_video_alias default_video_alias';
     }
 
     $array_lang_fields = array('video_name', 'video_alias');
@@ -250,9 +264,9 @@ function nv_get_video_select_fields($full_fields = false)
         $array_select_fields[] = 'is_official';
         $array_select_fields[] = NV_LANG_DATA . '_video_introtext video_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_video_keywords video_keywords';
-        if (NV_LANG_DATA != $global_array_config['default_language']) {
-            $array_select_fields[] = $global_array_config['default_language'] . '_video_introtext default_video_introtext';
-            $array_select_fields[] = $global_array_config['default_language'] . '_video_keywords default_video_keywords';
+        if (NV_LANG_DATA != $default_language) {
+            $array_select_fields[] = $default_language . '_video_introtext default_video_introtext';
+            $array_select_fields[] = $default_language . '_video_keywords default_video_keywords';
         }
 
         $array_lang_fields[] = 'video_introtext';
@@ -271,7 +285,6 @@ function nv_get_video_select_fields($full_fields = false)
 function nv_get_cat_select_fields($full_fields = false)
 {
     $default_language = Config::getDefaultLang();
-    global $global_array_config;
     $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'time_add', 'time_update', 'show_inalbum', 'show_invideo', 'weight', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
     $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
@@ -331,19 +344,19 @@ function nv_get_nation_select_fields($full_fields = false)
  */
 function nv_get_artist_select_fields($full_fields = false)
 {
-    global $global_array_config;
     $array_select_fields = array('artist_id', 'artist_code', 'artist_type', 'artist_birthday', 'artist_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_singer_albums', 'stat_singer_songs', 'stat_singer_videos', 'stat_author_songs', 'stat_author_videos', 'time_add', 'time_update', 'status');
     $array_select_fields[] = NV_LANG_DATA . '_artist_name artist_name';
     $array_select_fields[] = NV_LANG_DATA . '_artist_alias artist_alias';
     $array_select_fields[] = NV_LANG_DATA . '_artist_realname artist_realname';
     $array_select_fields[] = NV_LANG_DATA . '_singer_nickname singer_nickname';
     $array_select_fields[] = NV_LANG_DATA . '_author_nickname author_nickname';
-    if (NV_LANG_DATA != $global_array_config['default_language']) {
-        $array_select_fields[] = $global_array_config['default_language'] . '_artist_name default_artist_name';
-        $array_select_fields[] = $global_array_config['default_language'] . '_artist_alias default_artist_alias';
-        $array_select_fields[] = $global_array_config['default_language'] . '_artist_realname default_artist_realname';
-        $array_select_fields[] = $global_array_config['default_language'] . '_singer_nickname default_singer_nickname';
-        $array_select_fields[] = $global_array_config['default_language'] . '_author_nickname default_author_nickname';
+    $default_language = Config::getDefaultLang();
+    if (NV_LANG_DATA != $default_language) {
+        $array_select_fields[] = $default_language . '_artist_name default_artist_name';
+        $array_select_fields[] = $default_language . '_artist_alias default_artist_alias';
+        $array_select_fields[] = $default_language . '_artist_realname default_artist_realname';
+        $array_select_fields[] = $default_language . '_singer_nickname default_singer_nickname';
+        $array_select_fields[] = $default_language . '_author_nickname default_author_nickname';
     }
 
     $array_lang_fields = array('artist_name', 'artist_alias', 'artist_realname', 'singer_nickname', 'author_nickname');
@@ -359,16 +372,16 @@ function nv_get_artist_select_fields($full_fields = false)
         $array_select_fields[] = NV_LANG_DATA . '_author_info author_info';
         $array_select_fields[] = NV_LANG_DATA . '_author_introtext author_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_author_keywords author_keywords';
-        if (NV_LANG_DATA != $global_array_config['default_language']) {
-            $array_select_fields[] = $global_array_config['default_language'] . '_artist_hometown default_artist_hometown';
-            $array_select_fields[] = $global_array_config['default_language'] . '_singer_prize default_singer_prize';
-            $array_select_fields[] = $global_array_config['default_language'] . '_singer_info default_singer_info';
-            $array_select_fields[] = $global_array_config['default_language'] . '_singer_introtext default_singer_introtext';
-            $array_select_fields[] = $global_array_config['default_language'] . '_singer_keywords default_singer_keywords';
-            $array_select_fields[] = $global_array_config['default_language'] . '_author_prize default_author_prize';
-            $array_select_fields[] = $global_array_config['default_language'] . '_author_info default_author_info';
-            $array_select_fields[] = $global_array_config['default_language'] . '_author_introtext default_author_introtext';
-            $array_select_fields[] = $global_array_config['default_language'] . '_author_keywords default_author_keywords';
+        if (NV_LANG_DATA != $default_language) {
+            $array_select_fields[] = $default_language . '_artist_hometown default_artist_hometown';
+            $array_select_fields[] = $default_language . '_singer_prize default_singer_prize';
+            $array_select_fields[] = $default_language . '_singer_info default_singer_info';
+            $array_select_fields[] = $default_language . '_singer_introtext default_singer_introtext';
+            $array_select_fields[] = $default_language . '_singer_keywords default_singer_keywords';
+            $array_select_fields[] = $default_language . '_author_prize default_author_prize';
+            $array_select_fields[] = $default_language . '_author_info default_author_info';
+            $array_select_fields[] = $default_language . '_author_introtext default_author_introtext';
+            $array_select_fields[] = $default_language . '_author_keywords default_author_keywords';
         }
 
         $array_lang_fields[] = 'artist_hometown';
@@ -395,7 +408,7 @@ function nv_get_artist_select_fields($full_fields = false)
  */
 function nv_get_artists($array_ids, $full_info = false, $get_by_code = false)
 {
-    global $global_array_config, $db;
+    global $db;
 
     $array_artists = array();
 
@@ -449,8 +462,8 @@ function nv_get_artists($array_ids, $full_info = false, $get_by_code = false)
  */
 function nv_get_view_singer_link($singer, $amp = true, $tab = '')
 {
-    global $global_config, $module_info, $global_array_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $module_info['alias']['view-singer'] . '/' . $singer['artist_alias'] . '-' . $global_array_config['code_prefix']['singer'] . $singer['artist_code'] . (($tab and isset($global_array_config['view_singer_tabs_alias'][$tab])) ? '/' . $global_array_config['view_singer_tabs_alias'][$tab] : $global_config['rewrite_exturl']);
+    global $global_config, $module_info;
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $module_info['alias']['view-singer'] . '/' . $singer['artist_alias'] . '-' . Config::getCodePrefix()->getSinger() . $singer['artist_code'] . ($tab ? '/' . Config::getSingerTabsAlias()->getTabByKey($tab) : $global_config['rewrite_exturl']);
 }
 
 /**
@@ -464,10 +477,10 @@ function nv_get_view_singer_link($singer, $amp = true, $tab = '')
  */
 function nv_get_detail_album_link($album, $singers = array(), $amp = true, $query_string = '')
 {
-    global $global_config, $module_info, $global_array_config;
+    global $global_config, $module_info;
     $num_singers = sizeof($singers);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $singer_alias = '-' . strtolower(change_alias($global_array_config['various_artists']));
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
     } elseif ($num_singers > 0) {
         $singer_alias = array();
         foreach ($singers as $singer) {
@@ -477,7 +490,7 @@ function nv_get_detail_album_link($album, $singers = array(), $amp = true, $quer
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['album'] . $album['album_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['album'] . $album['album_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getAlbum() . $album['album_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getAlbum() . $album['album_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -491,10 +504,10 @@ function nv_get_detail_album_link($album, $singers = array(), $amp = true, $quer
  */
 function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_string = '')
 {
-    global $global_config, $module_info, $global_array_config;
+    global $global_config, $module_info;
     $num_singers = sizeof($singers);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $singer_alias = '-' . strtolower(change_alias($global_array_config['various_artists']));
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
     } elseif ($num_singers > 0) {
         $singer_alias = array();
         foreach ($singers as $singer) {
@@ -504,7 +517,7 @@ function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['song'] . $song['song_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['song'] . $song['song_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getSong() . $song['song_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getSong() . $song['song_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -518,10 +531,10 @@ function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_
  */
 function nv_get_detail_video_link($video, $singers = array(), $amp = true, $query_string = '')
 {
-    global $global_config, $module_info, $global_array_config;
+    global $global_config, $module_info;
     $num_singers = sizeof($singers);
-    if ($num_singers > $global_array_config['limit_singers_displayed']) {
-        $singer_alias = '-' . strtolower(change_alias($global_array_config['various_artists']));
+    if ($num_singers > Config::getLimitSingersDisplayed()) {
+        $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
     } elseif ($num_singers > 0) {
         $singer_alias = array();
         foreach ($singers as $singer) {
@@ -531,7 +544,7 @@ function nv_get_detail_video_link($video, $singers = array(), $amp = true, $quer
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $global_array_config['op_alias_prefix']['video'] . $video['video_alias'] . $singer_alias . '-' . $global_array_config['code_prefix']['video'] . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getVideo() . $video['video_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getVideo() . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -544,7 +557,7 @@ function nv_get_detail_video_link($video, $singers = array(), $amp = true, $quer
  */
 function nv_get_resource_url($orgSrc, $area = 'album', $thumb = false)
 {
-    global $module_upload, $global_array_config, $module_info, $global_config;
+    global $module_upload, $module_info;
 
     /**
      * $orgSrc có dạng folder/.../filename sao cho fullpath là NV_UPLOADS_REALDIR/module_name/$orgSrc
@@ -559,12 +572,12 @@ function nv_get_resource_url($orgSrc, $area = 'album', $thumb = false)
     }
 
     // Lấy từ cấu hình
-    $map_cfg_data = array(
-        'album' => $global_array_config['res_default_album_avatar'],
-        'singer' => $global_array_config['res_default_singer_avatar'],
-        'author' => $global_array_config['res_default_author_avatar'],
-        'video' => $global_array_config['res_default_video_avatar']
-    );
+    $map_cfg_data = [
+        'album' => Config::getDefaultAlbumAvatar(),
+        'singer' => Config::getDefaultSingerAvatar(),
+        'author' => Config::getDefaultAuthorAvatar(),
+        'video' => Config::getDefaultVideoAvatar()
+    ];
 
     if (isset($map_cfg_data[$area]) and !empty($map_cfg_data[$area])) {
         if ($thumb and is_file(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area])) {

@@ -11,27 +11,29 @@
 if (!defined('NV_IS_MOD_MUSIC'))
     die('Stop!!!');
 
+use NukeViet\Music\Config;
+
 if (!defined('NV_IS_DETAIL_ALBUM')) {
     nv_redirect_location(NV_MOD_LINK);
 }
 
-$array_singer_ids = $array_singers = array();
-$array_cat_albums = $array_singer_albums = array();
+$array_singer_ids = $array_singers = [];
+$array_cat_albums = $array_singer_albums = [];
 
 // Thiết lập lại một số thông tin cho album
-$ms_detail_data['singers'] = array();
+$ms_detail_data['singers'] = [];
 $ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
-$ms_detail_data['cats'] = array();
+$ms_detail_data['cats'] = [];
 $ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
 $ms_detail_data['cat_id'] = $ms_detail_data['cat_ids'] ? $ms_detail_data['cat_ids'][0] : 0;
 $ms_detail_data['singer_albums_link'] = '';
 $ms_detail_data['cat_albums_link'] = '';
 $ms_detail_data['album_link'] = '';
 $ms_detail_data['album_link_ember'] = '';
-$ms_detail_data['cat_name'] = $global_array_config['unknow_cat'];
-$ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
-$ms_detail_data['songs'] = array();
+$ms_detail_data['cat_name'] = Config::getUnknowCat();
+$ms_detail_data['singer_name'] = Config::getUnknowSinger();
+$ms_detail_data['songs'] = [];
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
@@ -45,7 +47,7 @@ if (!empty($ms_detail_data['singer_id'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_album_select_fields();
-    $db->order("album_id DESC")->limit($global_array_config['detail_song_albums_nums']);
+    $db->order("album_id DESC")->limit(Config::getDetailSongAlbumsNums());
     $db->select(implode(', ', $array_select_fields[0]));
 
     $result = $db->query($db->sql());
@@ -57,7 +59,7 @@ if (!empty($ms_detail_data['singer_id'])) {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
 
@@ -71,13 +73,13 @@ if (!empty($ms_detail_data['singer_id'])) {
 
 if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_data['cat_id']])) {
     $ms_detail_data['cat_name'] = $global_array_cat[$ms_detail_data['cat_id']]['cat_name'];
-    $ms_detail_data['cat_albums_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . $global_array_config['code_prefix']['cat'] . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
+    $ms_detail_data['cat_albums_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
 
     // Album cùng chủ đề
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['cat_id'] . ", cat_ids)");
 
     $array_select_fields = nv_get_album_select_fields();
-    $db->order("album_id DESC")->limit($global_array_config['detail_song_albums_nums']);
+    $db->order("album_id DESC")->limit(Config::getDetailSongAlbumsNums());
     $db->select(implode(', ', $array_select_fields[0]));
 
     $result = $db->query($db->sql());
@@ -89,7 +91,7 @@ if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_dat
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
 
@@ -102,8 +104,8 @@ if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_dat
 }
 
 // Lấy các bài hát của album này
-$array_songids = $array_songs = $array_songs_resources = array();
-$array_song_captions = array();
+$array_songids = $array_songs = $array_songs_resources = [];
+$array_song_captions = [];
 $db->sqlreset()->select('*')->from(NV_MOD_TABLE . "_albums_data")->where("album_id=" . $ms_detail_data['album_id'] . " AND status=1")->order("weight ASC");
 $result = $db->query($db->sql());
 while ($row = $result->fetch()) {
@@ -119,9 +121,9 @@ if (!empty($array_songids)) {
             $row['singer_ids'] = explode(',', $row['singer_ids']);
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         } else {
-            $row['singer_ids'] = array();
+            $row['singer_ids'] = [];
         }
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['song_link'] = '';
         $row['resource_avatar_mode'] = 'song';
         $row['resource_cover_mode'] = 'song';
@@ -132,7 +134,7 @@ if (!empty($array_songids)) {
     if (!empty($array_songs)) {
         $sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id IN(" . implode(',', array_keys($array_songs)) . ") AND status=1";
         $result = $db->query($sql);
-        $stt = array();
+        $stt = [];
         while ($row = $result->fetch()) {
             if (!isset($stt[$row['song_id']])) {
                 $stt[$row['song_id']] = sizeof($global_array_soquality);
@@ -140,10 +142,10 @@ if (!empty($array_songids)) {
             $stt[$row['song_id']]++;
             $key = isset($global_array_soquality[$row['quality_id']]) ? $global_array_soquality[$row['quality_id']]['weight'] : $stt[$row['song_id']];
             if (!isset($array_songs_resources[$row['song_id']])) {
-                $array_songs_resources[$row['song_id']] = array();
+                $array_songs_resources[$row['song_id']] = [];
             }
             $array_songs_resources[$row['song_id']][$key] = array(
-                'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $global_array_config['uploads_folder'] . '/' . $row['resource_path'],
+                'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $row['resource_path'],
                 'resource_duration' => $row['resource_duration'],
                 'quality_name' => isset($global_array_soquality[$row['quality_id']]) ? $global_array_soquality[$row['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
             );
@@ -158,7 +160,7 @@ if (!empty($array_songids)) {
     while ($row = $result->fetch()) {
         if (file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'])) {
             if (!isset($array_song_captions[$row['song_id']])) {
-                $array_song_captions[$row['song_id']] = array();
+                $array_song_captions[$row['song_id']] = [];
             }
             $array_song_captions[$row['song_id']][] = array(
                 'caption_lang' => $row['caption_lang'],
@@ -209,7 +211,7 @@ if (isset($array_singers[$ms_detail_data['singer_id']])) {
 foreach ($ms_detail_data['cat_ids'] as $cid) {
     if (isset($global_array_cat[$cid])) {
         $ms_detail_data['cats'][$cid] = $global_array_cat[$cid];
-        $ms_detail_data['cats'][$cid]['cat_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$cid]['cat_alias'] . '-' . $global_array_config['code_prefix']['cat'] . $global_array_cat[$cid]['cat_code'];
+        $ms_detail_data['cats'][$cid]['cat_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$cid]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$cid]['cat_code'];
     }
 }
 
@@ -235,7 +237,7 @@ foreach ($array_songids as $song_id => $_tmpdata) {
         }
         $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
 
-        $row['filesdata'] = array();
+        $row['filesdata'] = [];
         if (isset($array_songs_resources[$song_id])) {
             $row['filesdata'] = $array_songs_resources[$song_id];
             ksort($row['filesdata']);
@@ -264,10 +266,10 @@ nv_get_fb_share_image($ms_detail_data);
 $page_title = $ms_detail_data['album_name'] . ' ' . $lang_module['album'];
 if (!empty($ms_detail_data['singers'])) {
     $page_title .= NV_TITLEBAR_DEFIS;
-    if (sizeof($ms_detail_data['singers']) > $global_array_config['limit_singers_displayed']) {
-        $page_title .= $global_array_config['various_artists'];
+    if (sizeof($ms_detail_data['singers']) > Config::getLimitSingersDisplayed()) {
+        $page_title .= Config::getVariousArtists();
     } else {
-        $singers = array();
+        $singers = [];
         foreach ($ms_detail_data['singers'] as $singer) {
             $singers[] = $singer['artist_name'];
         }
