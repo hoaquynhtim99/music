@@ -15,6 +15,8 @@ if (!defined('NV_IS_DETAIL_VIDEO')) {
     nv_redirect_location(NV_MOD_LINK);
 }
 
+use NukeViet\Music\Config;
+
 $array_singer_ids = $array_singers = array();
 $array_videos = $array_albums = array();
 
@@ -31,7 +33,7 @@ $ms_detail_data['song'] = array();
 $ms_detail_data['song_link'] = '';
 $ms_detail_data['video_link'] = '';
 $ms_detail_data['video_link_ember'] = '';
-$ms_detail_data['singer_name'] = $global_array_config['unknow_singer'];
+$ms_detail_data['singer_name'] = Config::getUnknowSinger();
 $ms_detail_data['filesdata'] = array();
 
 if (!empty($ms_detail_data['singer_ids'])) {
@@ -73,7 +75,7 @@ if (!empty($ms_detail_data['singer_id'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_album_select_fields();
-    $db->order("album_id DESC")->limit($global_array_config['detail_song_albums_nums']);
+    $db->order("album_id DESC")->limit(Config::getDetailSongAlbumsNums());
     $db->select(implode(', ', $array_select_fields[0]));
 
     $result = $db->query($db->sql());
@@ -100,7 +102,7 @@ if (!empty($ms_detail_data['singer_id'])) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_video_select_fields();
-    $db->order("video_id DESC")->limit($global_array_config['detail_song_videos_nums']);
+    $db->order("video_id DESC")->limit(Config::getDetailSongVideosNums());
     $db->select(implode(', ', $array_select_fields[0]));
 
     $result = $db->query($db->sql());
@@ -197,7 +199,7 @@ foreach ($filesdata as $_fileinfo) {
     $stt++;
     $key = isset($global_array_mvquality[$_fileinfo['quality_id']]) ? $global_array_mvquality[$_fileinfo['quality_id']]['weight'] : $stt;
     $ms_detail_data['filesdata'][$key] = array(
-        'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $global_array_config['uploads_folder'] . '/' . $_fileinfo['resource_path'],
+        'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $_fileinfo['resource_path'],
         'resource_duration' => $_fileinfo['resource_duration'],
         'quality_name' => isset($global_array_mvquality[$_fileinfo['quality_id']]) ? $global_array_mvquality[$_fileinfo['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
     );
@@ -224,8 +226,8 @@ nv_get_fb_share_image($ms_detail_data);
 $page_title = $ms_detail_data['video_name'] . ' ' . $lang_module['video_alias'];
 if (!empty($ms_detail_data['singers'])) {
     $page_title .= NV_TITLEBAR_DEFIS;
-    if (sizeof($ms_detail_data['singers']) > $global_array_config['limit_singers_displayed']) {
-        $page_title .= $global_array_config['various_artists'];
+    if (sizeof($ms_detail_data['singers']) > Config::getLimitSingersDisplayed()) {
+        $page_title .= Config::getVariousArtists();
     } else {
         $singers = array();
         foreach ($ms_detail_data['singers'] as $singer) {

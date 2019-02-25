@@ -38,6 +38,17 @@ class Config
     private const MSG_NOLYRIC = 'msg_nolyric';
     private const VIEW_SINGER_SHOW_HEADER = 'view_singer_show_header';
     private const VIEW_SINGER_HEADTEXT_LENGTH = 'view_singer_headtext_length';
+    private const GIRD_ALBUMS_PERCAT_NUMS = 'gird_albums_percat_nums';
+    private const GIRD_ALBUMS_INCAT_NUMS = 'gird_albums_incat_nums';
+    private const GIRD_SINGERS_NUMS = 'gird_singers_nums';
+    private const GIRD_VIDEOS_PERCAT_NUMS = 'gird_videos_percat_nums';
+    private const GIRD_VIDEOS_INCAT_NUMS = 'gird_videos_incat_nums';
+    private const VIEW_SINGER_MAIN_NUM_ALBUMS = 'view_singer_main_num_albums';
+    private const VIEW_SINGER_DETAIL_NUM_ALBUMS = 'view_singer_detail_num_albums';
+    private const VIEW_SINGER_MAIN_NUM_SONGS = 'view_singer_main_num_songs';
+    private const VIEW_SINGER_DETAIL_NUM_SONGS = 'view_singer_detail_num_songs';
+    private const VIEW_SINGER_MAIN_NUM_VIDEOS = 'view_singer_main_num_videos';
+    private const VIEW_SINGER_DETAIL_NUM_VIDEOS = 'view_singer_detail_num_videos';
 
     private const AUTO_OPTIMIZE_ARTIST_NAME = 'auto_optimize_artist_name';
     private const AUTO_OPTIMIZE_VIDEO_NAME = 'auto_optimize_video_name';
@@ -389,6 +400,94 @@ class Config
     /**
      * @return \NukeViet\Music\string~array
      */
+    public static function getGirdAlbumsPercatNums()
+    {
+        return self::get(self::GIRD_ALBUMS_PERCAT_NUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getGirdAlbumsIncatNums()
+    {
+        return self::get(self::GIRD_ALBUMS_INCAT_NUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getGirdSingersNums()
+    {
+        return self::get(self::GIRD_SINGERS_NUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getGirdVideosPercatNums()
+    {
+        return self::get(self::GIRD_VIDEOS_PERCAT_NUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getGirdVideosIncatNums()
+    {
+        return self::get(self::GIRD_VIDEOS_INCAT_NUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getViewSingerMainNumAlbums()
+    {
+        return self::get(self::VIEW_SINGER_MAIN_NUM_ALBUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getViewSingerDetailNumAlbums()
+    {
+        return self::get(self::VIEW_SINGER_DETAIL_NUM_ALBUMS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getViewSingerMainNumSongs()
+    {
+        return self::get(self::VIEW_SINGER_MAIN_NUM_SONGS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getViewSingerDetailNumSongs()
+    {
+        return self::get(self::VIEW_SINGER_DETAIL_NUM_SONGS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getViewSingerMainNumVideos()
+    {
+        return self::get(self::VIEW_SINGER_MAIN_NUM_VIDEOS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getViewSingerDetailNumVideos()
+    {
+        return self::get(self::VIEW_SINGER_DETAIL_NUM_VIDEOS);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
     public static function getDetailSongAlbumsNums()
     {
         return self::get(self::DETAIL_SONG_ALBUMS_NUMS);
@@ -576,5 +675,13 @@ class Config
     public static function setAutoOptimizeAlbumName($var)
     {
         self::$configData[self::AUTO_OPTIMIZE_ALBUM_NAME] = boolval($var);
+    }
+
+    /**
+     * @param mixed $var
+     */
+    public static function setGirdSingersNums($var)
+    {
+        self::$configData[self::GIRD_SINGERS_NUMS] = intval($var);
     }
 }

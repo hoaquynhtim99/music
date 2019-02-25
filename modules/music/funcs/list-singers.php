@@ -8,12 +8,15 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MOD_MUSIC'))
+if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
+}
 
-$page_title = $global_array_config['funcs_sitetitle']['singer'];
-$key_words = $global_array_config['funcs_keywords']['singer'];
-$description = $global_array_config['funcs_description']['singer'];
+use NukeViet\Music\Config;
+
+$page_title = Config::getFuncsSitetitle()->getSinger();
+$key_words = Config::getFuncsKeywords()->getSinger();
+$description = Config::getFuncsDescription()->getSinger();
 
 // Các thẻ meta Open Graph
 nv_get_fb_share_image();
@@ -49,7 +52,7 @@ if (isset($array_op[1])) {
             if (!isset($global_array_nation_alias[$nation_code])) {
                 nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
             }
-            
+
             $nation_id = $global_array_nation_alias[$nation_code];
             $nation_alias = $global_array_nation[$nation_id]['nation_alias'];
             $request_nation_alias = $m[1];
@@ -89,10 +92,8 @@ if (isset($array_op[4]) or $nation_alias != $request_nation_alias) {
     nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
 }
 
-$global_array_config['gird_singers_nums'] = 36;
-
 $base_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : '');
-$per_page = $global_array_config['gird_singers_nums'];
+$per_page = Config::getGirdSingersNums();
 $array_where = array();
 $array_where[] = 'status=1';
 if ($nation_id) {
@@ -107,7 +108,7 @@ $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where(implode(' AND ', $array_
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("artist_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);        
+$db->order("artist_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 $db->select(implode(', ', $array_select_fields[0]));
 
 $array_singers = array();
@@ -119,9 +120,9 @@ while ($row = $result->fetch()) {
         }
         unset($row['default_' . $f]);
     }
-    
+
     $row['singer_link'] = nv_get_view_singer_link($row);
-    
+
     $array_singers[$row['artist_id']] = $row;
 }
 
@@ -149,7 +150,7 @@ if (!empty($nation_id)) {
         $description .= '. ';
     }
     $description .= $page_title;
-    
+
     $array_mod_title[] = array(
         'catid' => 0,
         'title' => $global_array_nation[$nation_id]['nation_name'],

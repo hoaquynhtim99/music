@@ -154,6 +154,7 @@ Config::setShareport('addthis');
 Config::setAddthisPubid('addthis');
 Config::setUploadsFolder('dataup.default123');
 Config::setMsgNolyric('Đang cập nhật');
+Config::setGirdSingersNums(36);
 
 Config::setAutoOptimizeAlbumName(true);
 Config::setAutoOptimizeArtistName(true);

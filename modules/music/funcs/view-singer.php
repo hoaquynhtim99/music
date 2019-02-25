@@ -8,8 +8,11 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MOD_MUSIC'))
+if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
+}
+
+use NukeViet\Music\Config;
 
 $data_singer = array();
 $request_artist_alias = '';
@@ -17,7 +20,7 @@ $request_tab = '';
 $page = 1;
 
 if (isset($array_op[1])) {
-    if (preg_match("/^([a-zA-Z0-9\-]+)\-" . nv_preg_quote($global_array_config['code_prefix']['singer']) . "([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
+    if (preg_match("/^([a-zA-Z0-9\-]+)\-" . nv_preg_quote(Config::getCodePrefix()->getSinger()) . "([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
         $data_singer = nv_get_artists($m[2], true, true);
         $request_artist_alias = $m[1];
     }
@@ -29,7 +32,8 @@ if (empty($data_singer)) {
 
 // Các tab
 if (isset($array_op[2])) {
-    foreach ($global_array_config['view_singer_tabs_alias'] as $tab_key => $tab_alias) {
+    $allTabs = Config::getSingerTabsAlias()->getAllTabs();
+    foreach ($allTabs as $tab_key => $tab_alias) {
         if ($tab_alias == $array_op[2]) {
             $request_tab = $tab_key;
             break;
@@ -64,18 +68,18 @@ $array_singers = $array_singer_ids = array();
 
 // Lấy các album
 if (empty($request_tab) or $request_tab == 'album') {
-    $per_page = empty($request_tab) ? $global_array_config['view_singer_main_num_albums'] : $global_array_config['view_singer_detail_num_albums'];
+    $per_page = empty($request_tab) ? Config::getViewSingerMainNumAlbums() : Config::getViewSingerDetailNumAlbums();
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
-    
+
     if (!empty($request_tab)) {
         $db->select("COUNT(*)");
         $all_pages = $db->query($db->sql())->fetchColumn();
     }
 
     $array_select_fields = nv_get_album_select_fields();
-    $db->order("album_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);    
+    $db->order("album_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
     $db->select(implode(', ', $array_select_fields[0]));
-    
+
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -84,33 +88,33 @@ if (empty($request_tab) or $request_tab == 'album') {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array_albums[$row['album_id']] = $row;
     }
 }
 
 // Lấy các bài hát
 if (empty($request_tab) or $request_tab == 'song') {
-    $per_page = empty($request_tab) ? $global_array_config['view_singer_main_num_songs'] : $global_array_config['view_singer_detail_num_songs'];
+    $per_page = empty($request_tab) ? Config::getViewSingerMainNumSongs() : Config::getViewSingerDetailNumSongs();
     $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
-    
+
     if (!empty($request_tab)) {
         $db->select("COUNT(*)");
         $all_pages = $db->query($db->sql())->fetchColumn();
     }
 
     $array_select_fields = nv_get_song_select_fields();
-    $db->order("song_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);    
+    $db->order("song_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
     $db->select(implode(', ', $array_select_fields[0]));
-    
+
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -119,33 +123,33 @@ if (empty($request_tab) or $request_tab == 'song') {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['song_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array_songs[$row['song_id']] = $row;
     }
 }
 
 // Lấy các video
 if (empty($request_tab) or $request_tab == 'video') {
-    $per_page = empty($request_tab) ? $global_array_config['view_singer_main_num_videos'] : $global_array_config['view_singer_detail_num_videos'];
+    $per_page = empty($request_tab) ? Config::getViewSingerMainNumVideos() : Config::getViewSingerDetailNumVideos();
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
-    
+
     if (!empty($request_tab)) {
         $db->select("COUNT(*)");
         $all_pages = $db->query($db->sql())->fetchColumn();
     }
 
     $array_select_fields = nv_get_video_select_fields();
-    $db->order("video_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);    
+    $db->order("video_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
     $db->select(implode(', ', $array_select_fields[0]));
-    
+
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -154,15 +158,15 @@ if (empty($request_tab) or $request_tab == 'video') {
             }
             unset($row['default_' . $f]);
         }
-        
+
         $row['singers'] = array();
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['video_link'] = '';
-        
+
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
         }
-        
+
         $array_videos[$row['video_id']] = $row;
     }
 }
