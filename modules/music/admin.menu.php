@@ -44,4 +44,6 @@ $submenu['artist-list'] = [
 ];
 $submenu['cat-manager'] = $lang_module['cat_manager'];
 $submenu['nation-manager'] = $lang_module['nation_manager'];
+$submenu['quality-song-manager'] = $lang_module['qso_manager'];
+$submenu['quality-video-manager'] = $lang_module['qvd_manager'];
 $submenu['config'] = $lang_module['config'];
