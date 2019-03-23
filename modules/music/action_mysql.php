@@ -11,18 +11,18 @@
 if (!defined('NV_IS_FILE_MODULES'))
     die('Stop!!!');
 
-$sql_drop_module = array();
+$sql_drop_module = [];
 
 global $op, $db, $global_config, $db_config;
 
-$array_lang_module_setup = array(); // Những ngôn ngữ mà module này đã cài đặt vào (Bao gồm cả ngôn ngữ đang thao tác)
+$array_lang_module_setup = []; // Những ngôn ngữ mà module này đã cài đặt vào (Bao gồm cả ngôn ngữ đang thao tác)
 $num_module_exists = 0; // Số ngôn ngữ đã cài (Bao gồm cả ngôn ngữ đang thao tác)
 $set_lang_data = ''; // Ngôn ngữ mặc định sẽ copy các cột vào
 
 // Xác định các ngôn ngữ đã cài đặt
 $_sql = "SELECT * FROM " . $db_config['prefix'] . "_setup_language WHERE setup=1";
 $_result = $db->query($_sql);
-$array_lang_setup = array();
+$array_lang_setup = [];
 while ($_row = $_result->fetch()) {
     $array_lang_setup[$_row['lang']] = $_row['lang'];
 }
@@ -174,14 +174,14 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_categories
-	ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_cat_absitetitle varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_cat_abintrotext text NOT NULL,
-	ADD " . $lang . "_cat_abkeywords text NOT NULL,
-	ADD " . $lang . "_cat_mvsitetitle varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_cat_mvintrotext text NOT NULL,
-	ADD " . $lang . "_cat_mvkeywords text NOT NULL
+    ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_absitetitle varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_abintrotext text NOT NULL,
+    ADD " . $lang . "_cat_abkeywords text NOT NULL,
+    ADD " . $lang . "_cat_mvsitetitle varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_mvintrotext text NOT NULL,
+    ADD " . $lang . "_cat_mvkeywords text NOT NULL
 ";
 
 // Quốc gia: Áp dụng cho ca sĩ nhạc sĩ
@@ -199,10 +199,10 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_nations
-	ADD " . $lang . "_nation_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_nation_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_nation_introtext text NOT NULL,
-	ADD " . $lang . "_nation_keywords text NOT NULL
+    ADD " . $lang . "_nation_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_nation_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_nation_introtext text NOT NULL,
+    ADD " . $lang . "_nation_keywords text NOT NULL
 ";
 
 // Bảng ca+nhạc sĩ
@@ -232,22 +232,22 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists
-	ADD " . $lang . "_artist_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_artist_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_artist_alphabet varchar(1) NOT NULL DEFAULT '',
-	ADD " . $lang . "_artist_searchkey varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_artist_realname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_artist_hometown varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_singer_nickname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_singer_prize text NOT NULL,
-	ADD " . $lang . "_singer_info mediumtext NOT NULL,
-	ADD " . $lang . "_singer_introtext text NOT NULL,
-	ADD " . $lang . "_singer_keywords text NOT NULL,
-	ADD " . $lang . "_author_nickname varchar(255) NOT NULL DEFAULT '',
-	ADD " . $lang . "_author_prize text NOT NULL,
-	ADD " . $lang . "_author_info mediumtext NOT NULL,
-	ADD " . $lang . "_author_introtext text NOT NULL,
-	ADD " . $lang . "_author_keywords text NOT NULL,
+    ADD " . $lang . "_artist_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_artist_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_artist_alphabet varchar(1) NOT NULL DEFAULT '',
+    ADD " . $lang . "_artist_searchkey varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_artist_realname varchar(255) NOT NULL DEFAULT '',
+    ADD " . $lang . "_artist_hometown varchar(255) NOT NULL DEFAULT '',
+    ADD " . $lang . "_singer_nickname varchar(255) NOT NULL DEFAULT '',
+    ADD " . $lang . "_singer_prize text NOT NULL,
+    ADD " . $lang . "_singer_info mediumtext NOT NULL,
+    ADD " . $lang . "_singer_introtext text NOT NULL,
+    ADD " . $lang . "_singer_keywords text NOT NULL,
+    ADD " . $lang . "_author_nickname varchar(255) NOT NULL DEFAULT '',
+    ADD " . $lang . "_author_prize text NOT NULL,
+    ADD " . $lang . "_author_info mediumtext NOT NULL,
+    ADD " . $lang . "_author_introtext text NOT NULL,
+    ADD " . $lang . "_author_keywords text NOT NULL,
     ADD INDEX " . $lang . "_artist_alphabet (" . $lang . "_artist_alphabet),
     ADD INDEX " . $lang . "_artist_searchkey (" . $lang . "_artist_searchkey)
 ";
@@ -267,8 +267,8 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song
-	ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
+    ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
 ";
 
 // Bảng chất lượng video
@@ -286,8 +286,8 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video
-	ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
+    ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
 ";
 
 // Bảng bài hát
@@ -327,11 +327,11 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs
-	ADD " . $lang . "_song_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_song_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_song_searchkey varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_song_introtext text NOT NULL,
-	ADD " . $lang . "_song_keywords text NOT NULL,
+    ADD " . $lang . "_song_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_song_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_song_searchkey varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_song_introtext text NOT NULL,
+    ADD " . $lang . "_song_keywords text NOT NULL,
     ADD INDEX " . $lang . "_song_searchkey (" . $lang . "_song_searchkey)
 ";
 
@@ -391,12 +391,12 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_albums
-	ADD " . $lang . "_album_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_album_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_album_searchkey varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_album_introtext text NOT NULL,
-	ADD " . $lang . "_album_description mediumtext NOT NULL,
-	ADD " . $lang . "_album_keywords text NOT NULL,
+    ADD " . $lang . "_album_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_album_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_album_searchkey varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_album_introtext text NOT NULL,
+    ADD " . $lang . "_album_description mediumtext NOT NULL,
+    ADD " . $lang . "_album_keywords text NOT NULL,
     ADD INDEX " . $lang . "_album_searchkey (" . $lang . "_album_searchkey)
 ";
 
@@ -443,11 +443,11 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY status (status)
 ) ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_videos
-	ADD " . $lang . "_video_name varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_video_alias varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_video_searchkey varchar(250) NOT NULL DEFAULT '',
-	ADD " . $lang . "_video_introtext text NOT NULL,
-	ADD " . $lang . "_video_keywords text NOT NULL,
+    ADD " . $lang . "_video_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_video_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_video_searchkey varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_video_introtext text NOT NULL,
+    ADD " . $lang . "_video_keywords text NOT NULL,
     ADD INDEX " . $lang . "_video_searchkey (" . $lang . "_video_searchkey)
 ";
 
@@ -471,7 +471,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
 )ENGINE=MyISAM";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config ADD config_value_" . $lang . " varchar(255) NULL DEFAULT NULL";
 
-$default_config = array();
+$default_config = [];
 $default_config['home_albums_display'] = '1';
 $default_config['home_singers_display'] = '1';
 $default_config['home_songs_display'] = '1';
@@ -552,24 +552,24 @@ $sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module,
 // Copy dữ liệu vào các bảng cần fill
 if (!empty($set_lang_data)) {
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_artists SET
-		" . $lang . "_artist_alphabet = " . $set_lang_data . "_artist_alphabet,
-		" . $lang . "_artist_searchkey = " . $set_lang_data . "_artist_searchkey
-	";
+        " . $lang . "_artist_alphabet = " . $set_lang_data . "_artist_alphabet,
+        " . $lang . "_artist_searchkey = " . $set_lang_data . "_artist_searchkey
+    ";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_songs SET
-		" . $lang . "_song_searchkey = " . $set_lang_data . "_song_searchkey
-	";
+        " . $lang . "_song_searchkey = " . $set_lang_data . "_song_searchkey
+    ";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_albums SET
-		" . $lang . "_album_searchkey = " . $set_lang_data . "_album_searchkey
-	";
+        " . $lang . "_album_searchkey = " . $set_lang_data . "_album_searchkey
+    ";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_videos SET
-		" . $lang . "_video_searchkey = " . $set_lang_data . "_video_searchkey
-	";
+        " . $lang . "_video_searchkey = " . $set_lang_data . "_video_searchkey
+    ";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_quality_song SET
-		" . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias
-	";
+        " . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias
+    ";
     $sql_create_module[] = "UPDATE " . $db_config['prefix'] . "_" . $module_data . "_quality_video SET
-		" . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias
-	";
+        " . $lang . "_quality_alias = " . $set_lang_data . "_quality_alias
+    ";
 }
 
 // Thêm khóa UNIQUE vào các bảng, các khóa này chạy sau khi copy dữ liệu

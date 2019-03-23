@@ -54,7 +54,7 @@ if (isset($array_op[1])) {
             }
 
             $nation_id = $global_array_nation_alias[$nation_code];
-            $nation_alias = $global_array_nation[$nation_id]['nation_alias'];
+            $nation_alias = $global_array_nation[$nation_id]->getAlias();
             $request_nation_alias = $m[1];
         } else {
             nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
@@ -140,12 +140,12 @@ $array_mod_title[] = array(
 
 // Phân trang, tiêu đề trang
 if (!empty($nation_id)) {
-    $page_title = $lang_module['singers'] . ' ' . $global_array_nation[$nation_id]['nation_name'];
-    if (!empty($key_words) and !empty($global_array_nation[$nation_id]['nation_keywords'])) {
+    $page_title = $lang_module['singers'] . ' ' . $global_array_nation[$nation_id]->getName();
+    if (!empty($key_words) and !empty($global_array_nation[$nation_id]->getKeywords())) {
         $key_words .= ', ';
     }
-    $key_words .= $global_array_nation[$nation_id]['nation_keywords'];
-    $description = $global_array_nation[$nation_id]['nation_introtext'];
+    $key_words .= $global_array_nation[$nation_id]->getKeywords();
+    $description = $global_array_nation[$nation_id]->getIntrotext();
     if (!empty($description)) {
         $description .= '. ';
     }
@@ -153,7 +153,7 @@ if (!empty($nation_id)) {
 
     $array_mod_title[] = array(
         'catid' => 0,
-        'title' => $global_array_nation[$nation_id]['nation_name'],
+        'title' => $global_array_nation[$nation_id]->getName(),
         'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . $nation_alias . '-' . $nation_code
     );
 }

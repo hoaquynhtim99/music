@@ -155,10 +155,11 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
     }
 
     foreach ($global_array_nation as $nation) {
-        $nation['nation_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . $nation['nation_alias'] . '-' . $nation['nation_code'];
-        $xtpl->assign('NATION', $nation);
+        $array = $nation->toArray();
+        $array['nation_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . $nation->getAlias() . '-' . $nation->getCode();
+        $xtpl->assign('NATION', $array);
 
-        if ($nation['nation_id'] == $nation_id) {
+        if ($nation->getId() == $nation_id) {
             $xtpl->parse('main.nav.loop.active');
         }
 
@@ -168,7 +169,7 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
 
     $base_alphabet_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'];
     if (!empty($nation_id)) {
-        $base_alphabet_url .= '/' . $global_array_nation[$nation_id]['nation_alias'] . '-' . $global_array_nation[$nation_id]['nation_code'];
+        $base_alphabet_url .= '/' . $global_array_nation[$nation_id]->getAlias() . '-' . $global_array_nation[$nation_id]->getCode();
     }
 
     $xtpl->assign('ALPHABET_ALL_TITLE', '#');
@@ -499,7 +500,7 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
 
         if (isset($global_array_nation[$data_singer['nation_id']])) {
             $num_info_had++;
-            $xtpl->assign('NATION_NAME', $global_array_nation[$data_singer['nation_id']]['nation_name']);
+            $xtpl->assign('NATION_NAME', $global_array_nation[$data_singer['nation_id']]->getName());
             $xtpl->parse('main.profile.nation');
         }
 

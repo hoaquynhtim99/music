@@ -115,7 +115,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
         $global_array_nation_alias[$row->getCode()] = $row->getId();
     }
 
-    $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_nation, $global_array_nation_alias)), $cacheTTL);
+    $nv_Cache->setItem($module_name, $cacheFile, serialize([$global_array_nation, $global_array_nation_alias]), $cacheTTL);
 }
 
 // Parse ngôn ngữ đầy đủ

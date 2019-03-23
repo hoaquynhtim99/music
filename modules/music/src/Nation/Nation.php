@@ -85,11 +85,27 @@ class Nation
     }
 
     /**
+     * @return string
+     */
+    public function getIntrotext()
+    {
+        return $this->data[self::$LANG_FIELD_INTROTEXT];
+    }
+
+    /**
+     * @return string
+     */
+    public function getKeywords()
+    {
+        return $this->data[self::$LANG_FIELD_KEYWORD];
+    }
+
+    /**
      * @return array
      */
     public function toArray()
     {
-        return [];
+        return $this->data;
     }
 
     public function setName()
