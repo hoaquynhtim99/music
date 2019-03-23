@@ -10,14 +10,15 @@
 
 use NukeViet\Music\AjaxRespon;
 
-if (!defined('NV_IS_MUSIC_ADMIN'))
+if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
+}
 
 $page_title = $lang_module['config'];
 $uploadPrefixDir = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/';
 $subStrResource = strlen($uploadPrefixDir);
 
-$array = array();
+$array = [];
 if ($nv_Request->isset_request('submit', 'post')) {
     $array['home_albums_display'] = ($nv_Request->get_int('home_albums_display', 'post', 0) == 1 ? 1 : 0);
     $array['home_singers_display'] = ($nv_Request->get_int('home_singers_display', 'post', 0) == 1 ? 1 : 0);

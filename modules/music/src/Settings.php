@@ -24,6 +24,13 @@ interface Settings
     const TYPE_ARTIST = 'artist';
     const TYPE_CATEGORY = 'cat';
 
+    const TABLE_SEPARATOR_CHARACTER = '_';
+
+    /**
+     * Bảng thể loại
+     */
+    const TABLE_CATEGORY = 'categories';
+
     /**
      * Các thiết lập về bài hát
      *

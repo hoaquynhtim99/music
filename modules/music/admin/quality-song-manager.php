@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MUSIC_ADMIN'))
+if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
+}
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;

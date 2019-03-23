@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MUSIC_ADMIN'))
+if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
+}
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
@@ -203,7 +204,7 @@ if ($ajaction == 'ajedit') {
         $array_cat['resource_video'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_video'];
     }
 
-    $response = array();
+    $response = [];
     $response['resource_avatar'] = nv_unhtmlspecialchars($array_cat['resource_avatar']);
     $response['resource_cover'] = nv_unhtmlspecialchars($array_cat['resource_cover']);
     $response['resource_video'] = nv_unhtmlspecialchars($array_cat['resource_video']);
@@ -216,7 +217,7 @@ if ($ajaction == 'ajedit') {
     $response['cat_mvintrotext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvintrotext']);
     $response['cat_mvkeywords'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvkeywords']);
 
-    $response_checkbox = array();
+    $response_checkbox = [];
     $response_checkbox['show_inalbum'] = $array_cat['show_inalbum'];
     $response_checkbox['show_invideo'] = $array_cat['show_invideo'];
 
@@ -231,7 +232,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
         AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
-    $array = array();
+    $array = [];
     $array['cat_name'] = nv_substr($nv_Request->get_title('cat_name', 'post', ''), 0, 250);
     $array['cat_alias'] = nv_substr($nv_Request->get_title('cat_alias', 'post', ''), 0, 250);
     $array['resource_avatar'] = $nv_Request->get_title('resource_avatar', 'post', '');
@@ -282,7 +283,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     // Kiểm tra tồn tại sửa
-    $array_old = array();
+    $array_old = [];
     $error_exists = false;
     if (!empty($array['cat_id'])) {
         $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $array['cat_id'])->fetch();
@@ -341,7 +342,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
             // Xác định các field theo ngôn ngữ không có dữ liệu
             $langs = msGetModuleSetupLangs();
-            $array_fname = $array_fvalue = array();
+            $array_fname = $array_fvalue = [];
             foreach ($langs as $lang) {
                 if ($lang != NV_LANG_DATA) {
                     $array_fname[] = $lang . '_cat_abintrotext';
