@@ -12,7 +12,7 @@ if (!defined('NV_ADMIN')) {
     die('Stop!!!');
 }
 
-$allow_func = array(
+$allow_func = [
     'main',
     'config',
     'view',
@@ -26,21 +26,22 @@ $allow_func = array(
     'song-content',
     'album-list',
     'video-list',
-);
+];
 
-$submenu['song-list'] = array(
+$submenu['song-list'] = [
     'title' => $lang_module['song_manager'],
-    'submenu' => array(
+    'submenu' => [
         'song-content' => $lang_module['song_add']
-    )
-);
+    ]
+];
 $submenu['album-list'] = $lang_module['album_manager'];
 $submenu['video-list'] = $lang_module['video_manager'];
-$submenu['artist-list'] = array(
+$submenu['artist-list'] = [
     'title' => $lang_module['artist_manager'],
-    'submenu' => array(
+    'submenu' => [
         'artist-content' => $lang_module['artist_add']
-    )
-);
+    ]
+];
 $submenu['cat-manager'] = $lang_module['cat_manager'];
+$submenu['nation-manager'] = $lang_module['nation_manager'];
 $submenu['config'] = $lang_module['config'];

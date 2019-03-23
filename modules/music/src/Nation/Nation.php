@@ -101,6 +101,38 @@ class Nation
     }
 
     /**
+     * @return integer
+     */
+    public function getTimeAdd()
+    {
+        return $this->data[self::$FIELD_ADDTIME];
+    }
+
+    /**
+     * @return integer
+     */
+    public function getTimeUpdate()
+    {
+        return $this->data[self::$FIELD_UPDATETIME];
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStatSingers()
+    {
+        return $this->data[self::$FIELD_SINGER_STAT];
+    }
+
+    /**
+     * @return integer
+     */
+    public function getStatAuthors()
+    {
+        return $this->data[self::$FIELD_AUTHOR_STAT];
+    }
+
+    /**
      * @return array
      */
     public function toArray()

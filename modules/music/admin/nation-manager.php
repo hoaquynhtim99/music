@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MUSIC_ADMIN'))
+if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
+}
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
@@ -46,7 +47,7 @@ if ($ajaction == 'delete') {
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]->getName(), $admin_info['userid']);
     }
 
     // Cập nhật lại thứ tự
@@ -101,7 +102,7 @@ if ($ajaction == 'weight') {
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
-    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
+    nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_WEIGHT_NATION', $nation_id . ':' . $global_array_nation[$nation_id]->getName(), $admin_info['userid']);
 
     AjaxRespon::setSuccess();
     AjaxRespon::respon();
@@ -128,7 +129,7 @@ if ($ajaction == 'ajedit') {
         AjaxRespon::respon();
     }
 
-    $response = array();
+    $response = [];
     $response['nation_code'] = nv_unhtmlspecialchars($array_nation['nation_code']);
     $response['nation_name'] = nv_unhtmlspecialchars($array_nation['nation_name']);
     $response['nation_alias'] = nv_unhtmlspecialchars($array_nation['nation_alias']);
@@ -163,7 +164,8 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $submittype = nv_substr($nv_Request->get_title('submittype', 'post', ''), 0, 250);
     AjaxRespon::set('mode', nv_htmlspecialchars(change_alias(nv_strtolower($submittype))));
 
-    $array = array();
+    $array = [];
+    $array['nation_code'] = nv_substr($nv_Request->get_title('nation_code', 'post', ''), 0, 250);
     $array['nation_name'] = nv_substr($nv_Request->get_title('nation_name', 'post', ''), 0, 250);
     $array['nation_alias'] = nv_substr($nv_Request->get_title('nation_alias', 'post', ''), 0, 250);
     $array['nation_introtext'] = nv_substr($nv_Request->get_title('nation_introtext', 'post', ''), 0, 250);
@@ -176,7 +178,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $is_exists_code = 0;
     if (!empty($array['nation_code'])) {
         try {
-            $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_nations WHERE nation_code=:nation_code" . ($array['nation_id'] ? " AND nation_id!=" . $array['nation_id'] : "");
+            $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_nations WHERE nation_code=:nation_code" . ($nation_id ? " AND nation_id!=" . $nation_id : "");
             $sth = $db->prepare($sql);
             $sth->bindParam(':nation_code', $array['nation_code'], PDO::PARAM_STR);
             $sth->execute();
@@ -187,11 +189,11 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     // Kiểm tra tồn tại sửa
-    $array_old = array();
+    $array_old = [];
     $error_exists = false;
-    if (!empty($array['nation_id'])) {
+    if (!empty($nation_id)) {
         $array_select_fields = nv_get_nation_select_fields(true);
-        $array_old = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $array['nation_id'])->fetch();
+        $array_old = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id)->fetch();
         if (empty($array_old)) {
             $error_exists = true;
         }
@@ -208,7 +210,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     } elseif (empty($array['nation_name'])) {
         AjaxRespon::setMessage($lang_module['nation_err_name']);
     } else {
-        if ($array['nation_id']) {
+        if ($nation_id) {
             $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET
                 nation_code=:nation_code,
                 " . NV_LANG_DATA . "_nation_name=:nation_name,
@@ -216,7 +218,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 " . NV_LANG_DATA . "_nation_introtext=:nation_introtext,
                 " . NV_LANG_DATA . "_nation_keywords=:nation_keywords,
                 time_update=" . NV_CURRENTTIME . "
-            WHERE nation_id=" . $array['nation_id'];
+            WHERE nation_id=" . $nation_id;
             try {
                 $sth = $db->prepare($sql);
                 $sth->bindParam(':nation_code', $array['nation_code'], PDO::PARAM_STR);
@@ -239,7 +241,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
             // Xác định các field theo ngôn ngữ không có dữ liệu
             $langs = msGetModuleSetupLangs();
-            $array_fname = $array_fvalue = array();
+            $array_fname = $array_fvalue = [];
             foreach ($langs as $lang) {
                 if ($lang != NV_LANG_DATA) {
                     $array_fname[] = $lang . '_nation_introtext';
@@ -288,6 +290,7 @@ $xtpl->assign('MAX_WEIGHT', sizeof($global_array_nation));
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 
 foreach ($global_array_nation as $nation) {
+    $row = $nation->toArray();
     $row['time_add_time'] = nv_date('H:i', $row['time_add']);
     $row['time_update_time'] = $row['time_update'] ? nv_date('H:i', $row['time_update']) : '';
     $row['time_add'] = Utils::getFormatDateView($row['time_add']);
