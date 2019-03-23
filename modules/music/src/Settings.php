@@ -32,6 +32,11 @@ interface Settings
     const TABLE_CATEGORY = 'categories';
 
     /**
+     * Bảng nghệ sĩ
+     */
+    const TABLE_ARTIST = 'artists';
+
+    /**
      * Các thiết lập về bài hát
      *
      */

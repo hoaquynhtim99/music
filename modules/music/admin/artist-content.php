@@ -380,6 +380,7 @@ for ($i = 0; $i <= 3; ++$i) {
 
 // Quốc gia
 foreach ($global_array_nation as $nation) {
+    $nation = $nation->toArray();
     $nation['selected'] = $nation['nation_id'] == $array['nation_id'] ? ' selected="selected"' : '';
     $xtpl->assign('NATION', $nation);
     $xtpl->parse('main.nation');
