@@ -24,10 +24,10 @@
                 <label for="search_time">{LANG.time}:</label>
                 <div class="row">
                     <div class="col-xs-12">
-                        <input type="text" class="form-control" name="f" id="search_from" value="{SEARCH.f}" placeholder="{LANG.from}"/>
+                        <input type="text" class="form-control" name="f" id="search_from" value="{SEARCH.f}" placeholder="{LANG.from}" autocomplete="off"/>
                     </div>
                     <div class="col-xs-12">
-                        <input type="text" class="form-control" name="t" id="search_to" value="{SEARCH.t}" placeholder="{LANG.to}"/>
+                        <input type="text" class="form-control" name="t" id="search_to" value="{SEARCH.t}" placeholder="{LANG.to}" autocomplete="off"/>
                     </div>
                 </div>
             </div>

@@ -12,11 +12,33 @@
     text-overflow: ellipsis;
     overflow: hidden;
 }
+
 td.ms-ellipsis {
     max-width: 0;
 }
+
 .ms-search-hr {
     margin-top: 0;
+}
+
+.mb-1 {
+    margin-bottom: 5px!important;
+}
+
+.mt-1 {
+    margin-top: 5px!important;
+}
+
+.ms-content-artist-lists {
+    display: inline;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.ms-content-artist-lists li {
+    display: inline-block;
+    margin-left: 10px;
 }
 
 /*--- Fix Form ---*/
@@ -176,4 +198,32 @@ hr.sm {
     border-bottom: 0;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
+}
+
+/* Các item đã chọn trong phần pick modal */
+#modalPickArtists .item-selected {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+#modalPickArtists .item-selected li .sval {
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#modalPickArtists .item-selected li .ctn {
+    border: 1px #ddd solid;
+    border-radius: 2px;
+    background-color: #f2f2f2;
+    padding: 7px;
+    cursor: move;
+}
+
+#modalPickArtists .item-selected li {
+    margin-bottom: 10px;
+}
+
+#modalPickArtists .item-selected li:last-child {
+    margin-bottom: 0;
 }

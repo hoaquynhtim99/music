@@ -60,6 +60,12 @@ $lang_module['nation'] = 'Quốc gia';
 $lang_module['show_inhome'] = 'Hiển thị ở trang chủ';
 $lang_module['prize'] = 'Giải thưởng';
 $lang_module['bodytext'] = 'Thông tin chi tiết';
+$lang_module['select_singer'] = 'Chọn ca sĩ';
+$lang_module['select_author'] = 'Chọn nhạc sĩ';
+$lang_module['enter_keyword'] = 'Nhập từ khóa';
+$lang_module['picked_list'] = 'Danh sách đã chọn';
+$lang_module['drag_and_drop_to_sort'] = 'Kéo thả để sắp xếp thứ tự';
+$lang_module['selected'] = 'Đã chọn';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 $lang_module['error_require_field'] = 'Trường này là bắt buộc';
@@ -86,9 +92,9 @@ $lang_module['stat_videos'] = 'Số video';
 $lang_module['resource_avatar'] = 'Ảnh đại diện';
 $lang_module['resource_cover'] = 'Ảnh bìa';
 $lang_module['resource_video'] = 'Ảnh bìa video';
-$lang_module['resource_avatar_artist_note'] = 'Nên ảnh có tỉ lệ 1:1 để hiển thị đẹp nhất. Kích thước đề nghị 800x800px';
-$lang_module['resource_cover_artist_note'] = 'Nên ảnh có tỉ lệ 17:5 để hiển thị đẹp nhất. Kích thước đề nghị 1190x350px';
-$lang_module['resource_video_note'] = 'Nên ảnh có tỉ lệ 16:9 để hiển thị đẹp nhất. Kích thước đề nghị 640x360px';
+$lang_module['resource_avatar_artist_note'] = 'Nên chọn ảnh có tỉ lệ 1:1 để hiển thị đẹp nhất. Kích thước đề nghị 800x800px';
+$lang_module['resource_cover_artist_note'] = 'Nên chọn ảnh có tỉ lệ 17:5 để hiển thị đẹp nhất. Kích thước đề nghị 1190x350px';
+$lang_module['resource_video_note'] = 'Nên chọn ảnh có tỉ lệ 16:9 để hiển thị đẹp nhất. Kích thước đề nghị 640x360px';
 $lang_module['resource_avatar_cat'] = 'Ảnh đại điện mặc định cho bài hát';
 $lang_module['resource_cover_cat'] = 'Ảnh bìa mặc định cho bài hát/album';
 $lang_module['resource_video_cat'] = 'Ảnh bìa mặc định cho video';
@@ -205,7 +211,7 @@ $lang_module['nation_err_code'] = 'Vui lòng nhập mã quốc gia';
 $lang_module['nation_err_exists_code'] = 'Mã quốc gia này đã được sử dụng vui lòng nhập mã khác';
 $lang_module['nation_err_rule_code'] = 'Mã quốc gia phải có 4 ký tự bao gồm chữ cái từ a-z và số 0-9';
 
-$lang_module['qso_manager'] = 'Quản lý chất lượng bài hát';
+$lang_module['qso_manager'] = 'Quản lý chất lượng nhạc';
 $lang_module['qso_is_default'] = 'Mặc định khi phát nhạc';
 $lang_module['qso_no_default'] = 'Không mặc định khi phát nhạc';
 $lang_module['qso_online_supported'] = 'Hỗ trợ nghe trực tuyến';
@@ -276,9 +282,16 @@ $lang_module['song_add'] = 'Thêm bài hát';
 $lang_module['album_manager'] = 'Quản lý album';
 $lang_module['album_list'] = 'Danh sách album';
 $lang_module['album_list_ycat'] = 'Năm/Thể loại';
+$lang_module['album_add'] = 'Thêm album';
 
 $lang_module['video_manager'] = 'Quản lý video';
 $lang_module['video_list'] = 'Danh sách video';
 $lang_module['video_list_stcat'] = 'Sáng tác/Thể loại';
+$lang_module['video_add'] = 'Thêm video';
+$lang_module['video_song_id'] = 'Bài hát liên quan';
+$lang_module['video_name'] = 'Tên video';
+$lang_module['video_files'] = 'Các file video';
 
 $lang_module['singer_list'] = 'Danh sách ca sĩ';
+
+$lang_module['search_all_nation'] = 'Tất cả quốc gia';

@@ -193,13 +193,21 @@
             name, text;
 
         if ("INPUT" == tagName && "email" == type) {
-            if (!Validate.MAIL_FILTER.test(value)) return false;
+            if (!Validate.MAIL_FILTER.test(value)) {
+                return false;
+            }
         } else if ("SELECT" == tagName) {
-            if (!$("option:selected", element).length) return false;
+            if (!$("option:selected", element).length) {
+                return false;
+            }
         } else if ("DIV" == tagName && $(element).is(".radio")) {
-            if (!$("[type=radio]:checked", element).length) return false;
+            if (!$("[type=radio]:checked", element).length) {
+                return false;
+            }
         } else if ("DIV" == tagName && $(element).is(".checkbox")) {
-            if (!$("[type=checkbox]:checked", element).length) return false;
+            if (!$("[type=checkbox]:checked", element).length) {
+                return false;
+            }
         } else if ("DIV" == tagName && $(element).is(".ckeditor")) {
             if( typeof CKEDITOR == 'object' && ( name = $(element).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
                 text = CKEDITOR.instances[name].getData();
@@ -210,10 +218,15 @@
                 }
             }
             return false
-        } else if ("INPUT" == tagName || "TEXTAREA" == tagName)
+        } else if ("INPUT" == tagName || "TEXTAREA" == tagName) {
             if ("undefined" == typeof pattern || "" == pattern) {
-                if ("" == value) return false
-            } else if (!(new RegExp(pattern)).test(value)) return false
+                if ("" == value) {
+                    return false
+                }
+            } else if (!(new RegExp(pattern)).test(value)) {
+                return false
+            }
+        }
         return true;
     }
 
@@ -413,9 +426,11 @@
             var options = $.extend({}, Validate.DEFAULTS, $this.data(), typeof option == 'object' && option);
             var data    = $this.data('bs.validate');
 
-            if (!data && option == 'destroy') return true;
-            if (!data) $this.data('bs.validate', (data = new Validate(this, options)));
-            if (typeof option == 'string') data[option]();
+            if (!data && option == 'destroy') {
+                return true;
+            }
+            if (!data){$this.data('bs.validate', (data = new Validate(this, options)));}
+            if (typeof option == 'string'){data[option]();}
         });
     }
 
@@ -525,8 +540,8 @@ $(document).ready(function() {
     // Duyệt file trên hệ thống
     $('[data-toggle="msbrserver"]').click(function(e) {
         e.preventDefault();
-		var area = alt = path = currentpath = "";
-		var type = "image";
+        var area = alt = path = currentpath = "";
+        var type = "image";
         if (typeof $(this).data('area') != "undefined") {
             area = $(this).data('area');
         }
@@ -542,7 +557,7 @@ $(document).ready(function() {
         if (typeof $(this).data('type') != "undefined") {
             type = $(this).data('type');
         }
-		nv_open_browse(script_name + "?" + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + "=upload&popup=1&area=" + area + "&alt=" + alt + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath, "NVImg", 850, 420, "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
+        nv_open_browse(script_name + "?" + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + "=upload&popup=1&area=" + area + "&alt=" + alt + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath, "NVImg", 850, 420, "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
     });
     // Scroll to div
     $('[data-toggle="msscrollto"]').click(function(e) {
@@ -846,6 +861,7 @@ $(document).ready(function() {
         modalShow($($(this).data('target')).attr('title'), $($(this).data('target')).html());
     });
     msEllipsisCheck();
+
     // Duyệt ảnh, file trên server
     $('[data-toggle="browse"]').click(function() {
         var area = $(this).data('area');
@@ -854,6 +870,203 @@ $(document).ready(function() {
         var type = $(this).data('type');
         var currentfile = $('#' + area).val();
         nv_open_browse(script_name + "?" + nv_lang_variable + "=" + nv_lang_data + "&" + nv_name_variable + "=upload&popup=1&area=" + area + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath + "&currentfile=" + currentfile, "NVImg", "850", "420", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
+    });
+
+    /*
+     * Modal chọn ca sĩ, nhạc sĩ cho bài hát, video, album
+     */
+
+    // Hàm build list sắp xếp các nghệ sĩ đã chọn khi mới mở popup và khi ấn nút chọn từ danh sách tìm kiếm
+    function buildSortableArtistLists(id, title) {
+        var html = '';
+        html += '<li>';
+        html += '<input type="hidden" name="ids[]" data-title="' + title + '" value="' + id + '">';
+        html += '<div class="ctn">';
+        html += '<div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
+        html += '<div class="sdel pull-right"><a href="#" data-toggle="delPickArtist"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sval"><strong>' + title + '</strong></div>';
+        html += '</div>';
+        html += '</li>';
+        return html;
+    }
+
+    var btnTriggerPickArtists = $('[data-toggle="modalPickArtists"]');
+    var modalPickArtists = $("#modalPickArtists");
+
+    btnTriggerPickArtists.on("click", function(e) {
+        e.preventDefault();
+        modalPickArtists.data("list", $(this).data("list"));
+        modalPickArtists.data("inputname", $(this).data("inputname"));
+        modalPickArtists.find("h4.modal-title").html($(this).data("title"));
+        modalPickArtists.find('[name="q"]').val("");
+        modalPickArtists.find('[name="mode"]').val($(this).data("mode"));
+        modalPickArtists.find('[name="nation_id"] option').prop("selected", false);
+        modalPickArtists.modal("show");
+    });
+
+    // Ấn nút tìm kiếm ca sĩ, nhạc sĩ
+    $('[name="submit"]', modalPickArtists).on("click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var loader = $this.find(".load");
+        var itemsCtn = $('.item-lists', modalPickArtists);
+        if (loader.is(":visible")) {
+            return;
+        }
+        loader.removeClass("hidden");
+        itemsCtn.html('<div class="text-center"><i class="fa fa-spin fa-spinner"></i></div>');
+        var page = ($this.data("allowedpage") ? $('[name="page"]', modalPickArtists).val() : 1);
+        $this.data("allowedpage", false);
+        $.ajax({
+            method: "POST",
+            url: script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ajax-search-artists&nocache=' + new Date().getTime(),
+            data: {
+                mode: $('[name="mode"]', modalPickArtists).val(),
+                q: $('[name="q"]', modalPickArtists).val(),
+                nation_id: $('[name="nation_id"]', modalPickArtists).val(),
+                artist_id_selected: $('[name="artist_id_selected"]', modalPickArtists).val(),
+                submit: 1,
+                page: page
+            }
+        }).done(function(data) {
+            itemsCtn.html(data);
+            loader.addClass("hidden");
+        }).fail(function(data) {
+            itemsCtn.html("Error!");
+            loader.addClass("hidden");
+        });
+    });
+
+    // Ấn tìm kiếm khi ấn enter ở ô tìm
+    $('[name="q"]', modalPickArtists).on("keyup", function(e) {
+        if (e.which == 13) {
+            $('[name="submit"]', modalPickArtists).trigger("click");
+        }
+    });
+
+    // Xử lý dữ liệu khi bắt đầu mở modal lên
+    modalPickArtists.on('show.bs.modal', function() {
+        $('[name="artist_id_selected"]', modalPickArtists).val("");
+        $('[name="page"]', modalPickArtists).val("1");
+
+        // Build lại danh sách nghệ sĩ đã chọn
+        var list = $(modalPickArtists.data("list"));
+        var ids = new Array();
+
+        $("li", list).each(function() {
+            var id = $(this).find("input").val();
+            var title = $(this).find(".val").html();
+            var html = buildSortableArtistLists(id, title);
+            ids.push(id);
+            $(".item-selected", modalPickArtists).append(html);
+        });
+
+        $('[name="artist_id_selected"]', modalPickArtists).val(ids.join(","));
+    });
+
+    // Trigger trình sort khi mở modal lên hoàn thành
+    modalPickArtists.on('shown.bs.modal', function() {
+        // Build lại trình sort
+        $(".item-selected", modalPickArtists).sortable();
+        $(".item-selected", modalPickArtists).disableSelection();
+    });
+
+    // Xử lý dữ liệu khi đóng modal lại
+    modalPickArtists.on('hide.bs.modal', function() {
+        $(".item-selected", modalPickArtists).sortable("destroy");
+        $(".item-selected", modalPickArtists).html("");
+        $(".item-lists", modalPickArtists).html("");
+    });
+
+    // Chọn một nghệ sĩ
+    modalPickArtists.delegate('[data-toggle="selPickArtist"]', "click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.data("selected")) {
+            return;
+        }
+        $this.html($this.data("selected-mess"));
+        $this.data("selected", true);
+
+        $(".item-selected", modalPickArtists).sortable("destroy");
+
+        var html = buildSortableArtistLists($this.data("id"), $this.data("title"));
+
+        $(".item-selected", modalPickArtists).append(html);
+        $(".item-selected", modalPickArtists).sortable();
+        $(".item-selected", modalPickArtists).disableSelection();
+    });
+
+    // Xóa nghệ sĩ đã chọn (trong modal)
+    modalPickArtists.delegate('[data-toggle="delPickArtist"]', "click", function(e) {
+        e.preventDefault();
+
+        $(".item-selected", modalPickArtists).sortable("destroy");
+        $(this).parent().parent().parent().remove();
+        $(".item-selected", modalPickArtists).sortable();
+        $(".item-selected", modalPickArtists).disableSelection();
+
+        // Lấy lại các list id đã chọn
+        var ids = new Array();
+        $('[name="ids[]"]', modalPickArtists).each(function() {
+            ids.push($(this).val());
+        });
+        $('[name="artist_id_selected"]', modalPickArtists).val(ids.join(","));
+
+        // Cho phép submit trang ở nút submit + submit
+        $('[name="submit"]', modalPickArtists).data("allowedpage", true);
+        $('[name="submit"]', modalPickArtists).trigger("click");
+    });
+
+    // Xóa nghệ sĩ đã chọn (ngoài list)
+    $(document).delegate('[data-toggle="delPickedArtist"]', "click", function(e) {
+        e.preventDefault();
+        $(this).parent().remove();
+    });
+
+    // CLick phân trang trong list nghệ sĩ được tìm thấy
+    modalPickArtists.delegate('.item-lists .pagination a', "click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.attr("href") == "" || $this.attr("href") == "#") {
+            return;
+        }
+        // Lấy lại các list id đã chọn
+        var ids = new Array();
+        $('[name="ids[]"]', modalPickArtists).each(function() {
+            ids.push($(this).val());
+        });
+        $('[name="artist_id_selected"]', modalPickArtists).val(ids.join(","));
+        // Xác định trang của nút chọn
+        var page = 1;
+        var matches_array = $this.attr("href").match(/page\=(\d+)/i);
+        if (matches_array && matches_array.length > 1) {
+            page = matches_array[1];
+        }
+        $('[name="page"]', modalPickArtists).val(page);
+        // Cho phép submit trang ở nút submit + submit
+        $('[name="submit"]', modalPickArtists).data("allowedpage", true);
+        $('[name="submit"]', modalPickArtists).trigger("click");
+    });
+
+    // Xác nhận các nghệ sĩ đã chọn
+    $('[data-toggle="completePickArtist"]').on("click", function(e) {
+        e.preventDefault();
+
+        // Lấy lại các list id đã chọn
+        var html = '';
+        $('[name="ids[]"]', modalPickArtists).each(function() {
+            html += '<li class="mt-1">';
+            html += '<input type="hidden" name="' + modalPickArtists.data("inputname") +'" value="' + $(this).val() + '">';
+            html += '<a href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a> <strong class="val">' + $(this).data("title") + '</strong>';
+            html += '</li>';
+        });
+
+        var list = $(modalPickArtists.data("list"));
+        list.html(html);
+
+        // Ẩn modal đi
+        modalPickArtists.modal("hide");
     });
 });
 

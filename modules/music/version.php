@@ -8,10 +8,11 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_ADMIN') or !defined('NV_MAINFILE'))
+if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
     die('Stop!!!');
+}
 
-$module_version = array(
+$module_version = [
     'name' => 'NukeViet Music',
     'modfuncs' => 'main,detail-song,detail-album,detail-video,list-albums,list-singers,list-videos,search,view-singer',
     'change_alias' => 'detail-song,detail-album,detail-video,list-albums,list-singers,list-videos,view-singer',
@@ -22,7 +23,7 @@ $module_version = array(
     'date' => 'Sun, 26 Feb 2017 14:04:32 GMT',
     'author' => 'PHAN TAN DUNG (phantandung92@gmail.com)',
     'note' => '',
-    'uploads_dir' => array(
+    'uploads_dir' => [
         $module_name,
         $module_name . '/others',
         $module_name . '/albums',
@@ -34,9 +35,9 @@ $module_version = array(
         $module_name . '/videos',
         $module_name . '/videos_cover',
         $module_name . '/lyric',
-        $module_name . '/dataup.default123'
-    ),
-    'files_dir' => array(
+        $module_name . '/dataup_default123'
+    ],
+    'files_dir' => [
         $module_name,
         $module_name . '/others',
         $module_name . '/albums',
@@ -47,5 +48,5 @@ $module_version = array(
         $module_name . '/songs_cover',
         $module_name . '/videos',
         $module_name . '/videos_cover'
-    )
-);
+    ]
+];

@@ -74,7 +74,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $artist_ids) . ")";
     $result = $db->query($sql);
 
-    $array = array();
+    $array = [];
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
             if (empty($row[$f]) and !empty($row['default_' . $f])) {
@@ -108,7 +108,7 @@ $per_page = 20;
 $page = Utils::getValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
 
 // Dữ liệu tìm kiếm
-$array_search = array();
+$array_search = [];
 $array_search['q'] = $nv_Request->get_title('q', 'get', ''); // Từ khóa
 $array_search['tp'] = $nv_Request->get_int('tp', 'get', -1); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
@@ -116,7 +116,7 @@ $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
 $db->sqlreset()->from(NV_MOD_TABLE . "_artists");
 
-$where = array();
+$where = [];
 if (!empty($array_search['q'])) {
     $dblike = $db->dblikeescape($array_search['q']);
     $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
@@ -163,7 +163,7 @@ $array_select_fields = nv_get_artist_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));
 
 $result = $db->query($db->sql());
-$array = $array_singer_ids = array();
+$array = $array_singer_ids = [];
 while ($row = $result->fetch()) {
     foreach ($array_select_fields[1] as $f) {
         if (empty($row[$f]) and !empty($row['default_' . $f])) {

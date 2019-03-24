@@ -50,7 +50,7 @@ Resources::setTablePrefix(NV_MOD_TABLE);
 
 $array_alphabets = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
 
-$global_array_rule = array();
+$global_array_rule = [];
 $global_array_rule['nation_code'] = '/^[a-zA-Z0-9]{4}$/';
 
 // Cấu hình module
@@ -76,8 +76,8 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
     $result = $db->query($sql);
 
-    $global_array_cat = array();
-    $global_array_cat_alias = array();
+    $global_array_cat = [];
+    $global_array_cat_alias = [];
 
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -138,7 +138,7 @@ $sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_video ORDER BY weight ASC";
 $global_array_mvquality = $nv_Cache->db($sql, 'quality_id', $module_name);
 
 // Loại nghệ sĩ
-$global_array_artist_type = array();
+$global_array_artist_type = [];
 $global_array_artist_type[0] = $lang_module['artist_type_singer'];
 $global_array_artist_type[1] = $lang_module['artist_type_author'];
 $global_array_artist_type[2] = $lang_module['artist_type_all'];
@@ -152,7 +152,7 @@ Config::setUnknowAuthor('Đang cập nhật');
 Config::setUnknowCat('Đang cập nhật');
 Config::setShareport('addthis');
 Config::setAddthisPubid('addthis');
-Config::setUploadsFolder('dataup.default123');
+Config::setUploadsFolder('dataup_default123');
 Config::setMsgNolyric('Đang cập nhật');
 Config::setGirdSingersNums(36);
 
@@ -411,7 +411,7 @@ function nv_get_artists($array_ids, $full_info = false, $get_by_code = false)
 {
     global $db;
 
-    $array_artists = array();
+    $array_artists = [];
 
     if (!is_array($array_ids)) {
         $array_ids = array($array_ids);
@@ -476,14 +476,14 @@ function nv_get_view_singer_link($singer, $amp = true, $tab = '')
  * @param string $query_string
  * @return
  */
-function nv_get_detail_album_link($album, $singers = array(), $amp = true, $query_string = '')
+function nv_get_detail_album_link($album, $singers = [], $amp = true, $query_string = '')
 {
     global $global_config, $module_info;
     $num_singers = sizeof($singers);
     if ($num_singers > Config::getLimitSingersDisplayed()) {
         $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
     } elseif ($num_singers > 0) {
-        $singer_alias = array();
+        $singer_alias = [];
         foreach ($singers as $singer) {
             $singer_alias[] = $singer['artist_alias'];
         }
@@ -503,14 +503,14 @@ function nv_get_detail_album_link($album, $singers = array(), $amp = true, $quer
  * @param string $query_string
  * @return
  */
-function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_string = '')
+function nv_get_detail_song_link($song, $singers = [], $amp = true, $query_string = '')
 {
     global $global_config, $module_info;
     $num_singers = sizeof($singers);
     if ($num_singers > Config::getLimitSingersDisplayed()) {
         $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
     } elseif ($num_singers > 0) {
-        $singer_alias = array();
+        $singer_alias = [];
         foreach ($singers as $singer) {
             $singer_alias[] = $singer['artist_alias'];
         }
@@ -530,14 +530,14 @@ function nv_get_detail_song_link($song, $singers = array(), $amp = true, $query_
  * @param string $query_string
  * @return
  */
-function nv_get_detail_video_link($video, $singers = array(), $amp = true, $query_string = '')
+function nv_get_detail_video_link($video, $singers = [], $amp = true, $query_string = '')
 {
     global $global_config, $module_info;
     $num_singers = sizeof($singers);
     if ($num_singers > Config::getLimitSingersDisplayed()) {
         $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
     } elseif ($num_singers > 0) {
-        $singer_alias = array();
+        $singer_alias = [];
         foreach ($singers as $singer) {
             $singer_alias[] = $singer['artist_alias'];
         }
@@ -625,12 +625,12 @@ function msGetModuleSetupLangs()
     if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
         $array_lang_module_setup = unserialize($cache);
     } else {
-        $array_lang_module_setup = array();
+        $array_lang_module_setup = [];
 
         // Xác định các ngôn ngữ đã cài đặt
         $_sql = "SELECT * FROM " . $db_config['prefix'] . "_setup_language WHERE setup=1";
         $_result = $db->query($_sql);
-        $array_lang_setup = array();
+        $array_lang_setup = [];
         while ($_row = $_result->fetch()) {
             $array_lang_setup[$_row['lang']] = $_row['lang'];
         }

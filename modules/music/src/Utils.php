@@ -119,6 +119,16 @@ class Utils
     }
 
     /**
+     * @param string $string
+     * @param string $sp
+     * @return array
+     */
+    public static function arrayIntFromStrList($string, $sp = ',')
+    {
+        return array_filter(array_unique(array_map("trim", explode($sp, $string))));
+    }
+
+    /**
      * Utils::_maxPage()
      *
      * @param mixed $per_page

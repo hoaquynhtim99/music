@@ -26,6 +26,9 @@ $allow_func = [
     'song-content',
     'album-list',
     'video-list',
+    'video-content',
+
+    'ajax-search-artists'
 ];
 
 $submenu['song-list'] = [
@@ -34,8 +37,18 @@ $submenu['song-list'] = [
         'song-content' => $lang_module['song_add']
     ]
 ];
-$submenu['album-list'] = $lang_module['album_manager'];
-$submenu['video-list'] = $lang_module['video_manager'];
+$submenu['album-list'] = [
+    'title' => $lang_module['album_manager'],
+    'submenu' => [
+        'album-content' => $lang_module['album_add']
+    ]
+];
+$submenu['video-list'] = [
+    'title' => $lang_module['video_manager'],
+    'submenu' => [
+        'video-content' => $lang_module['video_add']
+    ]
+];
 $submenu['artist-list'] = [
     'title' => $lang_module['artist_manager'],
     'submenu' => [

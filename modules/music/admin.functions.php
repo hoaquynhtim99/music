@@ -12,6 +12,8 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
     die('Stop!!!');
 }
 
+use NukeViet\Music\Config;
+
 define('NV_IS_MUSIC_ADMIN', true);
 
 require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
@@ -58,10 +60,12 @@ function msGetCurrentUploadFolder($area, $child = '')
         } else {
             $folder_lev1 = 'videos';
         }
+    } elseif ($area == 'data') {
+        $folder_lev1 = Config::getUploadsFolder();
     }
     $upload_path = $upload_path_current = NV_UPLOADS_DIR . '/' . $module_upload;
     if (!empty($folder_lev1)) {
-        $folder_path = array($folder_lev1, $folder_lev2);
+        $folder_path = [$folder_lev1, $folder_lev2];
         $i = 0;
         foreach ($folder_path as $path) {
             $i++;
