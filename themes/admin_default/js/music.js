@@ -23,35 +23,40 @@
 
         this.$element.on('submit.bs.validate', $.proxy(this.onSubmit, this));
 
+        // Điều khiển ẩn các thông báo lỗi
         this.$element.find("div.required,div.checkbox,div.radio,div.ckeditor,input:not(:button,:submit,:reset),select,textarea").each(function() {
             var element   = this,
                 tagName   = $(this).prop('tagName'),
                 name;
 
             if (tagName == 'DIV') {
-                if( $(element).is('.ckeditor') ){
-                    if( typeof CKEDITOR == 'object' && ( name = $(element).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
-                        CKEDITOR.instances[name].on('change', function(){
-                            self.hideError(element)
-                        })
+                if ($(element).is('.ckeditor')) {
+                    // Ẩn khi trình soạn thảo có thay đổi
+                    if (typeof CKEDITOR == 'object' && (name = $(element).find('textarea:first').prop('id')) && CKEDITOR.instances[name]) {
+                        CKEDITOR.instances[name].on('change', function() {
+                            self.hideError(element);
+                        });
                     }
-                }else{
+                } else {
+                    // Ấn khi nhấp vào DIV
                     $(element).on('click.bs.validate', function(e) {
-                        self.hideError(element)
-                    })
+                        self.hideError(element);
+                    });
                 }
             } else if (tagName == 'SELECT') {
+                // Ẩn khi select thay đổi
                 $(element).on('click.bs.validate change.bs.validate', function(e) {
-                    if( e.which != 13 ){
-                        self.hideError(element)
+                    if (e.which != 13) {
+                        self.hideError(element);
                     }
-                })
+                });
             } else {
+                // Ẩn khi ấn phím xuống ở input, textarea
                 $(element).on('keydown.bs.validate', function(e) {
-                    if( e.which != 13 ){
-                        self.hideError(element)
+                    if (e.which != 13) {
+                        self.hideError(element);
                     }
-                })
+                });
             }
         });
     }
@@ -60,9 +65,9 @@
 
     Validate.DEFAULTS = {
         type   : 'normal'      // normal|ajax|file
-    }
+    };
 
-    Validate.MAIL_FILTER = /^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,6}$/
+    Validate.MAIL_FILTER = /^[_\.0-9a-z-]+@([0-9a-z][0-9a-z-]+\.)+[a-z]{2,6}$/;
 
     /**
      * Submit form
@@ -93,10 +98,10 @@
      */
     Validate.prototype.rebuildForm = function() {
         var html = '';
-        if( ! $('.form-element', this.$element).length || ! $('.form-result', this.$element).length ) {
-            this.$element.find('.form-group').each(function(){
+        if (!$('.form-element', this.$element).length || !$('.form-result', this.$element).length) {
+            this.$element.find('.form-group').each(function() {
                 html += $(this).context.outerHTML;
-            })
+            });
             this.$element.html('<div class="form-result"></div><div class="form-element">' + html + '</div>');
         }
     }
@@ -104,7 +109,7 @@
     /**
      * Kiểm tra các ô nhập liệu
      */
-    Validate.prototype.validate = function(){
+    Validate.prototype.validate = function() {
         var self = this;
         var error = 0;
 
@@ -116,23 +121,23 @@
 
             if (!self.check(this)) {
                 error ++;
-                if( typeof $(this).data('mess') != 'undefined' && $(this).data('mess') != '' ){
-                    $(this).attr("data-current-mess", $(this).data('mess')).data('current-mess', $(this).data('mess'))
+                if (typeof $(this).data('mess') != 'undefined' && $(this).data('mess') != '') {
+                    $(this).attr("data-current-mess", $(this).data('mess')).data('current-mess', $(this).data('mess'));
                 }
-                self.showError(this, error)
+                self.showError(this, error);
 
-                return
-            }else{
-                self.hideError(this)
+                return;
+            } else {
+                self.hideError(this);
             }
         })
 
-        return error ? false : true
+        return error ? false : true;
     }
 
-    Validate.prototype.hideAllError = function(){
-        $(".has-error", this.$element).removeClass("has-error")
-        $(".required", this.$element).tooltip("destroy")
+    Validate.prototype.hideAllError = function() {
+        $(".has-error", this.$element).removeClass("has-error");
+        $(".required", this.$element).tooltip("destroy");
     }
 
     /**
@@ -176,7 +181,9 @@
                     if (typeof CKEDITOR == 'object' && (name = $(element).find('textarea:first').prop('id')) && CKEDITOR.instances[name]) {
                         CKEDITOR.instances[name].focus();
                     }
-                } else {
+                } else if (!$(element).is('.select2')) {
+                    // Focus vào input đầu tiên nếu không select2
+                    // Vì select2 tự mở gây rắc rối
                     $("input", element)[0].focus();
                 }
             } else {
@@ -185,6 +192,7 @@
         }
     }
 
+    // Kiểm tra các phần tử bắt buộc có ok không
     Validate.prototype.check = function(element) {
         var pattern = $(element).data('pattern'),
             value   = $(element).val(),
@@ -193,44 +201,55 @@
             name, text;
 
         if ("INPUT" == tagName && "email" == type) {
+            // Kiểm tra email
             if (!Validate.MAIL_FILTER.test(value)) {
                 return false;
             }
         } else if ("SELECT" == tagName) {
+            // Kiểm tra select đơn có chọn hay không
             if (!$("option:selected", element).length) {
                 return false;
             }
         } else if ("DIV" == tagName && $(element).is(".radio")) {
+            // Kiểm tra radio có chọn không
             if (!$("[type=radio]:checked", element).length) {
                 return false;
             }
         } else if ("DIV" == tagName && $(element).is(".checkbox")) {
+            // Kiểm tra checkbox có chọn không
             if (!$("[type=checkbox]:checked", element).length) {
                 return false;
             }
         } else if ("DIV" == tagName && $(element).is(".ckeditor")) {
-            if( typeof CKEDITOR == 'object' && ( name = $(element).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
+            // Kiểm tra trình soạn thảo CKeditor có nội dung không
+            if (typeof CKEDITOR == 'object' && (name = $(element).find('textarea:first').prop('id')) && CKEDITOR.instances[name]) {
                 text = CKEDITOR.instances[name].getData();
-                text = this.trim( text );
-
-                if( text != '' ){
+                text = this.trim(text);
+                if (text != '') {
                     return true;
                 }
             }
-            return false
+            return false;
         } else if ("INPUT" == tagName || "TEXTAREA" == tagName) {
+            // Kiểm tra input, textexare thường
             if ("undefined" == typeof pattern || "" == pattern) {
                 if ("" == value) {
-                    return false
+                    return false;
                 }
             } else if (!(new RegExp(pattern)).test(value)) {
-                return false
+                return false;
             }
+        } else if ("DIV" == tagName && $(element).is(".select2")) {
+            // Kiểm tra select
+            if (!$("option:selected", element).length) {
+                return false;
+            }
+            return true;
         }
         return true;
     }
 
-    Validate.prototype.submitAjax = function(){
+    Validate.prototype.submitAjax = function() {
         var action  = this.$element.prop('action'),
             method  = this.$element.prop('method'),
             data    = this.$element.serialize(),
@@ -311,13 +330,13 @@
         });
     }
 
-    Validate.prototype.updateElement = function(){
+    Validate.prototype.updateElement = function() {
         var name;
 
-        if( typeof CKEDITOR == 'object' ){
-            $('.ckeditor' , this.$element).each(function(){
-                if( ( name = $(this).find('textarea:first').prop('id') ) && CKEDITOR.instances[name] ){
-                    CKEDITOR.instances[name].updateElement()
+        if (typeof CKEDITOR == 'object') {
+            $('.ckeditor' , this.$element).each(function() {
+                if ((name = $(this).find('textarea:first').prop('id')) && CKEDITOR.instances[name]) {
+                    CKEDITOR.instances[name].updateElement();
                 }
             })
         }
@@ -421,7 +440,7 @@
     }
 
     function Plugin(option) {
-        return this.each(function(){
+        return this.each(function() {
             var $this   = $(this);
             var options = $.extend({}, Validate.DEFAULTS, $this.data(), typeof option == 'object' && option);
             var data    = $this.data('bs.validate');
@@ -429,8 +448,12 @@
             if (!data && option == 'destroy') {
                 return true;
             }
-            if (!data){$this.data('bs.validate', (data = new Validate(this, options)));}
-            if (typeof option == 'string'){data[option]();}
+            if (!data) {
+                $this.data('bs.validate', (data = new Validate(this, options)));
+            }
+            if (typeof option == 'string') {
+                data[option]();
+            }
         });
     }
 

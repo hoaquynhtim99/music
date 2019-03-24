@@ -78,6 +78,11 @@ div.tooltip.bottom div.tooltip-arrow{
     margin-bottom: 0;
 }
 
+.has-error .select2-container--default.select2-container--focus .select2-selection--multiple,
+.has-error .select2-container--default .select2-selection--multiple {
+    border-color: #a94442;
+}
+
 /*--- CAPTION ---*/
 .page-title{
     padding: 0 0 15px 0;
