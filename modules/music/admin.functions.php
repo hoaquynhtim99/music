@@ -104,6 +104,24 @@ function msUpdateNationStat($nation_id)
 {
     global $db;
 
+    // Số ca sĩ
     $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_singers=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=0 OR artist_type=2) AND nation_id=" . $nation_id . ") WHERE nation_id=" . $nation_id);
+
+    // Số nhạc sĩ
     $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_authors=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=1 OR artist_type=2) AND nation_id=" . $nation_id . ") WHERE nation_id=" . $nation_id);
+}
+
+/**
+ * @param integer $cat_id
+ */
+function msUpdateCatStat($cat_id)
+{
+    // Số albums
+    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_albums=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_albums WHERE FIND_IN_SET(" . $cat_id . ", cat_ids)) WHERE cat_id=" . $cat_id);
+
+    // Số bài hát
+    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_songs=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $cat_id . ", cat_ids)) WHERE cat_id=" . $cat_id);
+
+    // Số video
+    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_videos=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $cat_id . ", cat_ids)) WHERE cat_id=" . $cat_id);
 }

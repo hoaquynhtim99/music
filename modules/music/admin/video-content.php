@@ -12,9 +12,10 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-//use NukeViet\Music\Shared\videos;
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
+use NukeViet\Music\Config;
+use NukeViet\Music\Shared\Videos;
 
 $set_active_op = 'video-list';
 
@@ -61,48 +62,31 @@ if ($video_id) {
     $array['video_alias'] = '';
     $array['video_introtext'] = '';
     $array['video_keywords'] = '';
+
+    $array_old['cat_ids'] = [];
+    $array_old['singer_ids'] = [];
+    $array_old['author_ids'] = [];
+    $array_old['song_id'] = 0;
 }
 
 if ($nv_Request->isset_request('submit', 'post')) {
     AjaxRespon::reset();
 
-    $array['video_type'] = $nv_Request->get_int('video_type', 'post', 0);
-    $array['video_birthday'] = $nv_Request->get_title('video_birthday', 'post', '');
-    $array['video_birthday_lev'] = $nv_Request->get_int('video_birthday_lev', 'post', 0);
-    $array['nation_id'] = $nv_Request->get_int('nation_id', 'post', 0);
+    $array['cat_ids'] = $nv_Request->get_typed_array('cat_ids', 'post', 'int', []);
+    $array['singer_ids'] = $nv_Request->get_typed_array('singer_ids', 'post', 'int', []);
+    $array['author_ids'] = $nv_Request->get_typed_array('author_ids', 'post', 'int', []);
+    $array['song_id'] = $nv_Request->get_int('song_id', 'post', 0);
     $array['resource_avatar'] = $nv_Request->get_title('resource_avatar', 'post', '');
     $array['resource_cover'] = $nv_Request->get_title('resource_cover', 'post', '');
     $array['show_inhome'] = (int)$nv_Request->get_bool('show_inhome', 'post', false);
     $array['video_name'] = nv_substr($nv_Request->get_title('video_name', 'post', ''), 0, 250);
     $array['video_alias'] = nv_substr($nv_Request->get_title('video_alias', 'post', ''), 0, 250);
-    $array['video_realname'] = nv_substr($nv_Request->get_title('video_realname', 'post', ''), 0, 255);
-    $array['video_hometown'] = nv_substr($nv_Request->get_title('video_hometown', 'post', ''), 0, 255);
-    $array['singer_nickname'] = nv_substr($nv_Request->get_title('singer_nickname', 'post', ''), 0, 255);
-    $array['singer_prize'] = $nv_Request->get_textarea('singer_prize', '', NV_ALLOWED_HTML_TAGS);
-    $array['singer_introtext'] = $nv_Request->get_textarea('singer_introtext', '', NV_ALLOWED_HTML_TAGS);
-    $array['singer_keywords'] = $nv_Request->get_textarea('singer_keywords', '', NV_ALLOWED_HTML_TAGS);
-    $array['singer_info'] = $nv_Request->get_editor('singer_info', '', NV_ALLOWED_HTML_TAGS);
-    $array['author_nickname'] = nv_substr($nv_Request->get_title('author_nickname', 'post', ''), 0, 255);
-    $array['author_prize'] = $nv_Request->get_textarea('author_prize', '', NV_ALLOWED_HTML_TAGS);
-    $array['author_introtext'] = $nv_Request->get_textarea('author_introtext', '', NV_ALLOWED_HTML_TAGS);
-    $array['author_keywords'] = $nv_Request->get_textarea('author_keywords', '', NV_ALLOWED_HTML_TAGS);
-    $array['author_info'] = $nv_Request->get_editor('author_info', '', NV_ALLOWED_HTML_TAGS);
+    $array['video_introtext'] = $nv_Request->get_textarea('video_introtext', '', NV_ALLOWED_HTML_TAGS);
+    $array['video_keywords'] = $nv_Request->get_textarea('video_keywords', '', NV_ALLOWED_HTML_TAGS);
+    $array['resource_path'] = $nv_Request->get_typed_array('resource_path', 'post', 'title', []);
 
     // Xử lý qua các thông tin
-    if (!isset($global_array_video_type[$array['video_type']])) {
-        $array['video_type'] = current(array_keys($global_array_video_type));
-    }
-    if (preg_match('/^([0-9]{2})\-([0-9]{2})\-([0-9]{4})$/', $array['video_birthday'], $m)) {
-        $array['video_birthday'] = mktime(0, 0, 0, $m[2], $m[1], $m[3]);
-    } else {
-        $array['video_birthday'] = 0;
-    }
-    if ($array['video_birthday_lev'] < 0 or $array['video_birthday_lev'] > 3) {
-        $array['video_birthday_lev'] = 0;
-    }
-    if (!empty($array['nation_id']) and !isset($global_array_nation[$array['nation_id']])) {
-        $array['nation_id'] = current(array_keys($global_array_nation));
-    }
+    $array['cat_ids'] = array_intersect($array['cat_ids'], array_keys($global_array_cat));
     if (!nv_is_url($array['resource_avatar']) and nv_is_file($array['resource_avatar'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
         $array['resource_avatar'] = substr($array['resource_avatar'], strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
     } elseif (!nv_is_url($array['resource_avatar'])) {
@@ -114,23 +98,63 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $array['resource_cover'] = '';
     }
     $array['video_alias'] = empty($array['video_alias']) ? change_alias($array['video_name']) : change_alias($array['video_alias']);
-    $array['singer_keywords'] = trim(preg_replace('/\s[\s]+/u', ' ', strip_tags(nv_nl2br($array['singer_keywords'], ''))));
-    $array['author_keywords'] = trim(preg_replace('/\s[\s]+/u', ' ', strip_tags(nv_nl2br($array['author_keywords'], ''))));
+    $array['video_keywords'] = trim(preg_replace('/\s[\s]+/u', ' ', strip_tags(nv_nl2br($array['video_keywords'], ''))));
+
+    // Nghệ sĩ hợp lệ
+    $array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $array['author_ids'])));
+    $array_artists = [];
+    if (!empty($array_artist_ids)) {
+        $sql = "SELECT artist_id FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $array_artist_ids) . ")";
+        $result = $db->query($sql);
+        while ($row = $result->fetch()) {
+            $array_artists[$row['artist_id']] = $row['artist_id'];
+        }
+    }
+
+    $singer_ids = $array['singer_ids'];
+    $author_ids = $array['author_ids'];
+    $array['singer_ids'] = $array['author_ids'] = [];
+    foreach ($singer_ids as $_id) {
+        if (isset($array_artists[$_id])) {
+            $array['singer_ids'][] = $_id;
+        }
+    }
+    foreach ($author_ids as $_id) {
+        if (isset($array_artists[$_id])) {
+            $array['author_ids'][] = $_id;
+        }
+    }
+
+    // Bài hát liên quan hợp lệ
+    if ($array['song_id'] and !$db->query("SELECT song_id FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $array['song_id'])->fetchColumn()) {
+        $array['song_id'] = 0;
+    }
+
+    // Các file video tồn tại
+    $resource_path = $array['resource_path'];
+    $array['resource_path'] = [];
+    foreach ($resource_path as $quality_id => $path) {
+        if (isset($global_array_mvquality[$quality_id]) and nv_is_file($path, NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+            $array['resource_path'][$quality_id] = substr($path, strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/'));
+        }
+    }
+
+    AjaxRespon::setInput('')->setMessage($lang_module['error_require_field'])->respon();
 
     // Kiểm tra thông tin
+    if (empty($array['cat_ids'])) {
+        AjaxRespon::setInput('')->setMessage($lang_module['video_err_cats'])->respon();
+    }
+    if (empty($array['singer_ids'])) {
+        AjaxRespon::setInput('')->setMessage($lang_module['video_err_singers'])->respon();
+    }
     if (empty($array['video_name'])) {
         AjaxRespon::setInput('video_name')->setMessage($lang_module['error_require_field'])->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
-    $array['video_alphabet'] = Utils::getAlphabet($array['video_name']);
     $array['video_searchkey'] = Utils::getSearchKey($array['video_name']);
-    $array['author_prize'] = nv_nl2br($array['author_prize']);
-    $array['author_introtext'] = nv_nl2br($array['author_introtext']);
-    $array['author_info'] = nv_editor_nl2br($array['author_info']);
-    $array['singer_prize'] = nv_nl2br($array['singer_prize']);
-    $array['singer_introtext'] = nv_nl2br($array['singer_introtext']);
-    $array['singer_info'] = nv_editor_nl2br($array['singer_info']);
+    $array['video_introtext'] = nv_nl2br($array['video_introtext']);
 
     $check_db = '';
 
@@ -198,20 +222,8 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $array_fname = $array_fvalue = [];
         foreach ($langs as $lang) {
             if ($lang != NV_LANG_DATA) {
-                $array_fname[] = $lang . '_author_prize';
-                $array_fname[] = $lang . '_author_info';
-                $array_fname[] = $lang . '_author_introtext';
-                $array_fname[] = $lang . '_author_keywords';
-                $array_fname[] = $lang . '_singer_prize';
-                $array_fname[] = $lang . '_singer_info';
-                $array_fname[] = $lang . '_singer_introtext';
-                $array_fname[] = $lang . '_singer_keywords';
-                $array_fvalue[] = '';
-                $array_fvalue[] = '';
-                $array_fvalue[] = '';
-                $array_fvalue[] = '';
-                $array_fvalue[] = '';
-                $array_fvalue[] = '';
+                $array_fname[] = $lang . '_video_introtext';
+                $array_fname[] = $lang . '_video_keywords';
                 $array_fvalue[] = '';
                 $array_fvalue[] = '';
             }
@@ -219,43 +231,29 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
         $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
 
-        $video_code = videos::creatUniqueCode();
+        $video_code = Videos::creatUniqueCode();
 
         $sql = "INSERT INTO " . NV_MOD_TABLE . "_videos (
-            video_code, video_type, video_birthday, video_birthday_lev, nation_id, resource_avatar, resource_cover, time_add, show_inhome, status,
-            " . NV_LANG_DATA . "_video_name, " . NV_LANG_DATA . "_video_alias, " . NV_LANG_DATA . "_video_alphabet, " . NV_LANG_DATA . "_video_searchkey,
-            " . NV_LANG_DATA . "_singer_nickname, " . NV_LANG_DATA . "_author_nickname, " . NV_LANG_DATA . "_author_prize, " . NV_LANG_DATA . "_author_info,
-            " . NV_LANG_DATA . "_author_introtext, " . NV_LANG_DATA . "_author_keywords, " . NV_LANG_DATA . "_video_realname, " . NV_LANG_DATA . "_video_hometown,
-            " . NV_LANG_DATA . "_singer_prize, " . NV_LANG_DATA . "_singer_info, " . NV_LANG_DATA . "_singer_introtext, " . NV_LANG_DATA . "_singer_keywords" . $array_fname . "
+            video_code, cat_ids, singer_ids, author_ids, song_id, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, status,
+            " . NV_LANG_DATA . "_video_name, " . NV_LANG_DATA . "_video_alias, " . NV_LANG_DATA . "_video_searchkey, " . NV_LANG_DATA . "_video_introtext,
+            " . NV_LANG_DATA . "_video_keywords" . $array_fname . "
         ) VALUES (
-            :video_code, " . $array['video_type'] . ", " . $array['video_birthday'] . ", " . $array['video_birthday_lev'] . ",
-            " . $array['nation_id'] . ", :resource_avatar, :resource_cover, " . NV_CURRENTTIME . ", " . $array['show_inhome'] . ", 1,
-            :video_name, :video_alias, :video_alphabet, :video_searchkey, :singer_nickname, :author_nickname,
-            :author_prize, :author_info, :author_introtext, :author_keywords, :video_realname, :video_hometown,
-            :singer_prize, :singer_info, :singer_introtext, :singer_keywords" . $array_fvalue . "
+            :video_code, " . $db->quote(implode(',', $array['cat_ids'])) . ", " . $db->quote(implode(',', $array['singer_ids'])) . ",
+            " . $db->quote(implode(',', $array['author_ids'])) . ", " . $array['song_id'] . ", :resource_avatar, :resource_cover,
+            " . $admin_info['admin_id'] . ", " . $db->quote($admin_info['full_name']) . ", " . NV_CURRENTTIME . ", 1, " . $array['show_inhome'] . ", 1,
+            :video_name, :video_alias, :video_searchkey, :video_introtext, :video_keywords" . $array_fvalue . "
         )";
 
         try {
             $sth = $db->prepare($sql);
+            $sth->bindParam(':video_code', $video_code, PDO::PARAM_STR);
             $sth->bindParam(':resource_avatar', $array['resource_avatar'], PDO::PARAM_STR);
             $sth->bindParam(':resource_cover', $array['resource_cover'], PDO::PARAM_STR);
-            $sth->bindParam(':video_code', $video_code, PDO::PARAM_STR);
             $sth->bindParam(':video_name', $array['video_name'], PDO::PARAM_STR);
             $sth->bindParam(':video_alias', $array['video_alias'], PDO::PARAM_STR);
-            $sth->bindParam(':video_alphabet', $array['video_alphabet'], PDO::PARAM_STR);
             $sth->bindParam(':video_searchkey', $array['video_searchkey'], PDO::PARAM_STR);
-            $sth->bindParam(':singer_nickname', $array['singer_nickname'], PDO::PARAM_STR);
-            $sth->bindParam(':author_nickname', $array['author_nickname'], PDO::PARAM_STR);
-            $sth->bindParam(':author_prize', $array['author_prize'], PDO::PARAM_STR, strlen($array['author_prize']));
-            $sth->bindParam(':author_info', $array['author_info'], PDO::PARAM_STR, strlen($array['author_info']));
-            $sth->bindParam(':author_introtext', $array['author_introtext'], PDO::PARAM_STR, strlen($array['author_introtext']));
-            $sth->bindParam(':author_keywords', $array['author_keywords'], PDO::PARAM_STR, strlen($array['author_keywords']));
-            $sth->bindParam(':video_realname', $array['video_realname'], PDO::PARAM_STR);
-            $sth->bindParam(':video_hometown', $array['video_hometown'], PDO::PARAM_STR);
-            $sth->bindParam(':singer_prize', $array['singer_prize'], PDO::PARAM_STR, strlen($array['singer_prize']));
-            $sth->bindParam(':singer_info', $array['singer_info'], PDO::PARAM_STR, strlen($array['singer_info']));
-            $sth->bindParam(':singer_introtext', $array['singer_introtext'], PDO::PARAM_STR, strlen($array['singer_introtext']));
-            $sth->bindParam(':singer_keywords', $array['singer_keywords'], PDO::PARAM_STR, strlen($array['singer_keywords']));
+            $sth->bindParam(':video_introtext', $array['video_introtext'], PDO::PARAM_STR, strlen($array['video_introtext']));
+            $sth->bindParam(':video_keywords', $array['video_keywords'], PDO::PARAM_STR, strlen($array['video_keywords']));
 
             if (!$sth->execute()) {
                 $check_db = $lang_module['error_save'];
@@ -270,8 +268,33 @@ if ($nv_Request->isset_request('submit', 'post')) {
         AjaxRespon::setMessage($check_db)->respon();
     }
 
-    // Cập nhật lại thống kê quốc gia
+    // Cập nhật lại thống kê ca sĩ, nhạc sĩ
+    $diff1 = array_diff($array_old['singer_ids'], $array['singer_ids']);
+    foreach ($diff1 as $_id) {
+        msUpdateCatStat($_id);
+    }
+    $diff2 = array_diff($array['singer_ids'], $array_old['singer_ids']);
+    foreach ($diff2 as $_id) {
+        msUpdateCatStat($_id);
+    }
+    $diff3 = array_diff($array_old['author_ids'], $array['author_ids']);
+    foreach ($diff3 as $_id) {
+        msUpdateCatStat($_id);
+    }
+    $diff4 = array_diff($array['author_ids'], $array_old['author_ids']);
+    foreach ($diff4 as $_id) {
+        msUpdateCatStat($_id);
+    }
+
+    $array_old['cat_ids'] = [];
+    $array_old['singer_ids'] = [];
+    $array_old['author_ids'] = [];
+    $array_old['song_id'] = 0;
+
     if ($array['nation_id'] != $array_old['nation_id']) {
+
+        msUpdateCatStat($cat_id);
+
         if ($array['nation_id']) {
             msUpdateNationStat($array['nation_id']);
         }
@@ -279,6 +302,10 @@ if ($nv_Request->isset_request('submit', 'post')) {
             msUpdateNationStat($array_old['nation_id']);
         }
     }
+
+    // Cập nhật lại thống kê thể loại
+
+    // Set video liên quan của bài hát nếu chọn bài hát liên quan
 
     // Ghi nhật ký
     if ($video_id) {

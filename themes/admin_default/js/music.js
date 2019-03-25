@@ -135,6 +135,9 @@
         return error ? false : true;
     }
 
+    /**
+     * Ẩn toàn bộ các thông báo lỗi
+     */
     Validate.prototype.hideAllError = function() {
         $(".has-error", this.$element).removeClass("has-error");
         $(".required", this.$element).tooltip("destroy");
@@ -155,6 +158,7 @@
 
     /**
      * Hiển thị thông báo lỗi ở một đối tượng
+     * order: Lỗi xuất hiện thứ tự 1, 2, 3, 4...
      */
     Validate.prototype.showError = function(element, order) {
         var name;
@@ -175,16 +179,22 @@
 
         $(element).tooltip("show");
 
+        // Focus, chuyển màn hình vào cái lỗi đầu tiên trong danh sách
         if (order == 1) {
             if ($(element).prop("tagName") == 'DIV') {
                 if ($(element).is('.ckeditor')) {
                     if (typeof CKEDITOR == 'object' && (name = $(element).find('textarea:first').prop('id')) && CKEDITOR.instances[name]) {
                         CKEDITOR.instances[name].focus();
                     }
-                } else if (!$(element).is('.select2')) {
+                } else if ($(element).is('.select2') || $(element).is('.hiddeninputlist')) {
+                    // Select 2 thì chuyển màn hình về tại vị trí của nó
+                    $(window).scrollTop($(element).offset().top);
+                } else {
                     // Focus vào input đầu tiên nếu không select2
                     // Vì select2 tự mở gây rắc rối
-                    $("input", element)[0].focus();
+                    if ($("input", element).length) {
+                        $("input", element)[0].focus();
+                    }
                 }
             } else {
                 $(element).focus();
@@ -192,7 +202,9 @@
         }
     }
 
-    // Kiểm tra các phần tử bắt buộc có ok không
+    /**
+     * Kiểm tra các phần tử bắt buộc có ok không
+     */
     Validate.prototype.check = function(element) {
         var pattern = $(element).data('pattern'),
             value   = $(element).val(),
@@ -245,10 +257,19 @@
                 return false;
             }
             return true;
+        } else if ("DIV" == tagName && $(element).is(".hiddeninputlist")) {
+            // Kiểm tra các hidden input trong một khu vực chỉ định
+            if (!$('input[type="hidden"]', element).length) {
+                return false;
+            }
+            return true;
         }
         return true;
     }
 
+    /**
+     * Submit form dạng ajax
+     */
     Validate.prototype.submitAjax = function() {
         var action  = this.$element.prop('action'),
             method  = this.$element.prop('method'),
@@ -288,6 +309,7 @@
                 // Lỗi trả về
                 if (res.status == 'error') {
                     if (res.input != '' && $('[name="' + res.input + '"]', self.$element).length) {
+                        // Hiển thị thông báo lỗi ở các input
                         $this = $('[name="' + res.input + '"]:first', self.$element);
                         type = $this.prop('type');
 
@@ -298,6 +320,7 @@
                         $this.attr("data-current-mess", res.message).data('current-mess', res.message);
                         self.showError($this, 1);
                     } else {
+                        // Hiển thị thông báo lỗi lên đầu
                         $('.form-result', self.$element).html('<div class="alert alert-danger">' + res.message + '</div>').show();
                         $("html, body").animate({ scrollTop: $('.form-result', self.$element).offset().top }, 200);
                     }

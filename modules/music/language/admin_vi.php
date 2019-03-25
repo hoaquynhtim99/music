@@ -291,6 +291,8 @@ $lang_module['video_add'] = 'Thêm video';
 $lang_module['video_song_id'] = 'Bài hát liên quan';
 $lang_module['video_name'] = 'Tên video';
 $lang_module['video_files'] = 'Các file video';
+$lang_module['video_err_cats'] = 'Vui lòng chọn ít nhất một thể loại';
+$lang_module['video_err_singers'] = 'Vui lòng chọn ít nhất một ca sĩ';
 
 $lang_module['singer_list'] = 'Danh sách ca sĩ';
 

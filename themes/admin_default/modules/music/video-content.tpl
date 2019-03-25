@@ -26,15 +26,16 @@
                 <div class="form-group">
                     <label for="artist_birthday" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-success" tabindex="-1" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
-                            </ul>
+                        <div class="hiddeninputlist required">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-success" tabindex="-1" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
+                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
+                                </ul>
+                            </div>
+                            <ul class="ms-content-artist-lists" id="PickedArtistsList"></ul>
                         </div>
-                        <ul class="ms-content-artist-lists" id="PickedArtistsList">
-                        </ul>
                     </div>
                 </div>
                 <div class="form-group">
@@ -47,8 +48,7 @@
                                 <li><a href="{LINK_ADD_ARTIST_AUTHOR}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                             </ul>
                         </div>
-                        <ul class="ms-content-artist-lists" id="PickedArtistsListAuthor">
-                        </ul>
+                        <ul class="ms-content-artist-lists" id="PickedArtistsListAuthor"></ul>
                     </div>
                 </div>
                 <div class="form-group">
