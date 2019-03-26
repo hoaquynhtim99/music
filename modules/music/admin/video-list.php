@@ -27,34 +27,57 @@ if ($ajaction == 'delete') {
         AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
-    $nation_ids = $nv_Request->get_title('id', 'post', '');
-    $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
-    if (empty($nation_ids)) {
+    $video_ids = $nv_Request->get_title('id', 'post', '');
+    $video_ids = array_filter(array_unique(array_map('intval', explode(',', $video_ids))));
+    if (empty($video_ids)) {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($nation_ids as $nation_id) {
-        if (!isset($global_array_nation[$nation_id])) {
-            AjaxRespon::setMessage('Wrong ID!!!')->respon();
+
+    $array_select_fields = nv_get_video_select_fields();
+
+    foreach ($video_ids as $video_id) {
+        $video = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $video_id)->fetch();
+        if (!empty($video)) {
+            foreach ($array_select_fields[1] as $f) {
+                if (empty($video[$f]) and !empty($video['default_' . $f])) {
+                    $video[$f] = $video['default_' . $f];
+                }
+                unset($video['default_' . $f]);
+            }
+
+            // Xóa video
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $video_id;
+            $db->query($sql);
+
+            // Xóa file video
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $video_id;
+            $db->query($sql);
+
+            // Cập nhật lại thống kê thể loại
+            $video['cat_ids'] = Utils::arrayIntFromStrList($video['cat_ids']);
+            foreach ($video['cat_ids'] as $cat_id) {
+                msUpdateCatStat($cat_id);
+            }
+
+            // Cập nhật ca sĩ, nhạc sĩ
+            $video['singer_ids'] = Utils::arrayIntFromStrList($video['singer_ids']);
+            foreach ($video['singer_ids'] as $singer_id) {
+                msUpdateArtistStat($singer_id, true);
+            }
+            $video['author_ids'] = Utils::arrayIntFromStrList($video['author_ids']);
+            foreach ($video['author_ids'] as $author_id) {
+                msUpdateArtistStat($author_id, false);
+            }
+
+            // Cập nhật bài hát liên quan
+            if ($video['song_id']) {
+                $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET video_id=0 WHERE song_id=" . $video['song_id'];
+                $db->query($sql);
+            }
+
+            // Ghi nhật ký hệ thống
+            nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_VIDEO', $video_id . ':' . $video['video_name'], $admin_info['userid']);
         }
-    }
-
-    foreach ($nation_ids as $nation_id) {
-        // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
-        $db->query($sql);
-
-        // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
-    }
-
-    // Cập nhật lại thứ tự
-    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
-    $result = $db->query($sql);
-    $weight = 0;
-    while ($row = $result->fetch()) {
-        ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
-        $db->query($sql);
     }
 
     $nv_Cache->delMod($module_name);
@@ -80,7 +103,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE video_id IN(" . implode(',', $video_ids) . ")";
     $result = $db->query($sql);
 
-    $array = array();
+    $array = [];
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
             if (empty($row[$f]) and !empty($row['default_' . $f])) {
@@ -114,7 +137,7 @@ $per_page = 20;
 $page = Utils::getValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
 
 // Dữ liệu tìm kiếm
-$array_search = array();
+$array_search = [];
 $array_search['q'] = $nv_Request->get_title('q', 'get', ''); // Từ khóa
 $array_search['c'] = $nv_Request->get_int('c', 'get', 0); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
@@ -122,7 +145,7 @@ $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
 $db->sqlreset()->from(NV_MOD_TABLE . "_videos");
 
-$where = array();
+$where = [];
 if (!empty($array_search['q'])) {
     $dblike = $db->dblikeescape($array_search['q']);
     $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
@@ -171,7 +194,7 @@ $array_select_fields = nv_get_video_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));
 
 $result = $db->query($db->sql());
-$array = $array_singer_ids = array();
+$array = $array_singer_ids = [];
 while ($row = $result->fetch()) {
     foreach ($array_select_fields[1] as $f) {
         if (empty($row[$f]) and !empty($row['default_' . $f])) {
@@ -180,11 +203,11 @@ while ($row = $result->fetch()) {
         unset($row['default_' . $f]);
     }
 
-    $row['authors'] = array();
+    $row['authors'] = [];
     $row['author_ids'] = explode(',', $row['author_ids']);
-    $row['singers'] = array();
+    $row['singers'] = [];
     $row['singer_ids'] = explode(',', $row['singer_ids']);
-    $row['cats'] = array();
+    $row['cats'] = [];
     $row['cat_ids'] = explode(',', $row['cat_ids']);
     $row['video_link'] = '';
 
