@@ -263,6 +263,7 @@ function nv_get_video_select_fields($full_fields = false)
         $array_select_fields[] = 'time_add';
         $array_select_fields[] = 'time_update';
         $array_select_fields[] = 'is_official';
+        $array_select_fields[] = 'show_inhome';
         $array_select_fields[] = NV_LANG_DATA . '_video_introtext video_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_video_keywords video_keywords';
         if (NV_LANG_DATA != $default_language) {

@@ -82,7 +82,6 @@ if ($array_search['submit']) {
     $db->select(implode(', ', $array_select_fields[0]));
 
     $result = $db->query($db->sql());
-    $array = $array_singer_ids = [];
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
             if (empty($row[$f]) and !empty($row['default_' . $f])) {

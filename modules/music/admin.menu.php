@@ -28,7 +28,8 @@ $allow_func = [
     'video-list',
     'video-content',
 
-    'ajax-search-artists'
+    'ajax-search-artists',
+    'ajax-search-songs'
 ];
 
 $submenu['song-list'] = [

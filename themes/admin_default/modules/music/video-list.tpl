@@ -164,7 +164,7 @@ $(function() {
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                                         <span class="caret"></span>
                                     </button>
-                                    <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                                    <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
                                 </div>
                             </div>
                             <div class="col-sm-14">

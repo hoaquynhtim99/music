@@ -95,7 +95,7 @@ function msGetCurrentUploadFolder($area, $child = '')
 }
 
 /**
- * msUpdateNationStat()
+ * Cập nhật các thống kê của quốc gia
  *
  * @param mixed $nation_id
  * @return void
@@ -105,23 +105,55 @@ function msUpdateNationStat($nation_id)
     global $db;
 
     // Số ca sĩ
-    $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_singers=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=0 OR artist_type=2) AND nation_id=" . $nation_id . ") WHERE nation_id=" . $nation_id);
+    $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_singers=(SELECT COUNT(artist_id) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=0 OR artist_type=2) AND nation_id=" . $nation_id . " AND status=1) WHERE nation_id=" . $nation_id);
 
     // Số nhạc sĩ
-    $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_authors=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=1 OR artist_type=2) AND nation_id=" . $nation_id . ") WHERE nation_id=" . $nation_id);
+    $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_authors=(SELECT COUNT(artist_id) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=1 OR artist_type=2) AND nation_id=" . $nation_id . " AND status=1) WHERE nation_id=" . $nation_id);
 }
 
 /**
+ * Cập nhật các thống kê của thể loại
+ *
  * @param integer $cat_id
  */
 function msUpdateCatStat($cat_id)
 {
+    global $db;
+
     // Số albums
-    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_albums=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_albums WHERE FIND_IN_SET(" . $cat_id . ", cat_ids)) WHERE cat_id=" . $cat_id);
+    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_albums=(SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
 
     // Số bài hát
-    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_songs=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $cat_id . ", cat_ids)) WHERE cat_id=" . $cat_id);
+    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_songs=(SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
 
     // Số video
-    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_videos=(SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $cat_id . ", cat_ids)) WHERE cat_id=" . $cat_id);
+    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_videos=(SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
+}
+
+/**
+ * Cập nhật các thống kê của nghệ sĩ (ca sĩ, nhạc sĩ)
+ *
+ * @param integer $artist_id
+ * @param boolean $is_singer
+ */
+function msUpdateArtistStat($artist_id, $is_singer = true)
+{
+    global $db;
+
+    if ($is_singer) {
+        // Số albums
+        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_singer_albums=(SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
+
+        // Số bài hát
+        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_singer_songs=(SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
+
+        // Số video
+        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_singer_videos=(SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
+    } else {
+        // Số bài hát
+        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_author_songs=(SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $artist_id . ", author_ids) AND status=1) WHERE artist_id=" . $artist_id);
+
+        // Số video
+        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_author_videos=(SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $artist_id . ", author_ids) AND status=1) WHERE artist_id=" . $artist_id);
+    }
 }

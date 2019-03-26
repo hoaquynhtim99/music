@@ -1102,9 +1102,9 @@ $(document).ready(function() {
         // Lấy lại các list id đã chọn
         var html = '';
         $('[name="ids[]"]', modalPickArtists).each(function() {
-            html += '<li class="mt-1">';
+            html += '<li>';
             html += '<input type="hidden" name="' + modalPickArtists.data("inputname") +'" value="' + $(this).val() + '">';
-            html += '<a href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a> <strong class="val">' + $(this).data("title") + '</strong>';
+            html += '<a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong>';
             html += '</li>';
         });
 
@@ -1113,6 +1113,213 @@ $(document).ready(function() {
 
         // Ẩn modal đi
         modalPickArtists.modal("hide");
+    });
+
+    /*
+     * Modal chọn một, nhiều bài hát
+     */
+
+    // Hàm build list sắp xếp các nghệ sĩ đã chọn khi mới mở popup và khi ấn nút chọn từ danh sách tìm kiếm
+    function buildSortableSongLists(id, title, des) {
+        var html = '';
+        html += '<li>';
+        html += '<input type="hidden" name="ids[]" data-title="' + title + '" data-des="' + des + '" value="' + id + '">';
+        html += '<div class="ctn">';
+        html += '<div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
+        html += '<div class="sdel pull-right"><a href="#" data-toggle="delPickSong"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sval"><strong class="ms-ellipsis">' + title + '</strong></div>';
+        html += '<div class="sdes"><small class="ms-ellipsis">' + des + '</small></div>';
+        html += '</div>';
+        html += '</li>';
+        return html;
+    }
+
+    var btnTriggerPickSongs = $('[data-toggle="modalPickSongs"]');
+    var modalPickSongs = $("#modalPickSongs");
+
+    btnTriggerPickSongs.on("click", function(e) {
+        e.preventDefault();
+        modalPickSongs.data("list", $(this).data("list"));
+        modalPickSongs.data("inputname", $(this).data("inputname"));
+        modalPickSongs.data("multiple", $(this).data("multiple"));
+        modalPickSongs.find("h4.modal-title").html($(this).data("title"));
+        modalPickSongs.find('[name="q"]').val("");
+        modalPickSongs.find('[name="cat_id"] option').prop("selected", false);
+        modalPickSongs.modal("show");
+    });
+
+    // Ấn nút tìm kiếm bài hát
+    $('[name="submit"]', modalPickSongs).on("click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var loader = $this.find(".load");
+        var itemsCtn = $('.item-lists', modalPickSongs);
+        if (loader.is(":visible")) {
+            return;
+        }
+        loader.removeClass("hidden");
+        itemsCtn.html('<div class="text-center"><i class="fa fa-spin fa-spinner"></i></div>');
+        var page = ($this.data("allowedpage") ? $('[name="page"]', modalPickSongs).val() : 1);
+        $this.data("allowedpage", false);
+        $.ajax({
+            method: "POST",
+            url: script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ajax-search-songs&nocache=' + new Date().getTime(),
+            data: {
+                q: $('[name="q"]', modalPickSongs).val(),
+                cat_id: $('[name="cat_id"]', modalPickSongs).val(),
+                song_id_selected: $('[name="song_id_selected"]', modalPickSongs).val(),
+                submit: 1,
+                page: page
+            }
+        }).done(function(data) {
+            itemsCtn.html(data);
+            loader.addClass("hidden");
+        }).fail(function(data) {
+            itemsCtn.html("Error!");
+            loader.addClass("hidden");
+        });
+    });
+
+    // Ấn tìm kiếm khi ấn enter ở ô tìm
+    $('[name="q"]', modalPickSongs).on("keyup", function(e) {
+        if (e.which == 13) {
+            $('[name="submit"]', modalPickSongs).trigger("click");
+        }
+    });
+
+    // Xử lý dữ liệu khi bắt đầu mở modal lên
+    modalPickSongs.on('show.bs.modal', function() {
+        $('[name="song_id_selected"]', modalPickSongs).val("");
+        $('[name="page"]', modalPickSongs).val("1");
+
+        // Build lại danh sách bài hát đã chọn
+        var list = $(modalPickSongs.data("list"));
+        var ids = new Array();
+
+        $("li", list).each(function() {
+            var id = $(this).find("input").val();
+            var title = $(this).find(".val").html();
+            var des = $(this).find(".sval").html();
+            var html = buildSortableSongLists(id, title, des);
+            ids.push(id);
+            $(".item-selected", modalPickSongs).append(html);
+        });
+
+        $('[name="song_id_selected"]', modalPickSongs).val(ids.join(","));
+    });
+
+    // Trigger trình sort khi mở modal lên hoàn thành
+    modalPickSongs.on('shown.bs.modal', function() {
+        // Build lại trình sort
+        $(".item-selected", modalPickSongs).sortable();
+        $(".item-selected", modalPickSongs).disableSelection();
+    });
+
+    // Xử lý dữ liệu khi đóng modal lại
+    modalPickSongs.on('hide.bs.modal', function() {
+        $(".item-selected", modalPickSongs).sortable("destroy");
+        $(".item-selected", modalPickSongs).html("");
+        $(".item-lists", modalPickSongs).html("");
+    });
+
+    // Chọn một bài hát
+    modalPickSongs.delegate('[data-toggle="selPickSong"]', "click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.data("selected")) {
+            return;
+        }
+        $this.html($this.data("selected-mess"));
+        $this.data("selected", true);
+
+        $(".item-selected", modalPickSongs).sortable("destroy");
+
+        var html = buildSortableSongLists($this.data("id"), $this.data("title"), $this.data("des"));
+
+        if (modalPickSongs.data("multiple")) {
+            $(".item-selected", modalPickSongs).append(html);
+        } else {
+            $(".item-selected", modalPickSongs).html(html);
+        }
+
+        $(".item-selected", modalPickSongs).sortable();
+        $(".item-selected", modalPickSongs).disableSelection();
+
+        if (!modalPickSongs.data("multiple")) {
+            $('[data-toggle="completePickSong"]', modalPickSongs).trigger("click");
+        }
+    });
+
+    // Xóa bài hát đã chọn (trong modal)
+    modalPickSongs.delegate('[data-toggle="delPickSong"]', "click", function(e) {
+        e.preventDefault();
+
+        $(".item-selected", modalPickSongs).sortable("destroy");
+        $(this).parent().parent().parent().remove();
+        $(".item-selected", modalPickSongs).sortable();
+        $(".item-selected", modalPickSongs).disableSelection();
+
+        // Lấy lại các list id đã chọn
+        var ids = new Array();
+        $('[name="ids[]"]', modalPickSongs).each(function() {
+            ids.push($(this).val());
+        });
+        $('[name="song_id_selected"]', modalPickSongs).val(ids.join(","));
+
+        // Cho phép submit trang ở nút submit + submit
+        $('[name="submit"]', modalPickSongs).data("allowedpage", true);
+        $('[name="submit"]', modalPickSongs).trigger("click");
+    });
+
+    // Xóa bài hát đã chọn (ngoài list)
+    $(document).delegate('[data-toggle="delPickedSong"]', "click", function(e) {
+        e.preventDefault();
+        $(this).parent().remove();
+    });
+
+    // CLick phân trang trong list bài hát được tìm thấy
+    modalPickSongs.delegate('.item-lists .pagination a', "click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.attr("href") == "" || $this.attr("href") == "#") {
+            return;
+        }
+        // Lấy lại các list id đã chọn
+        var ids = new Array();
+        $('[name="ids[]"]', modalPickSongs).each(function() {
+            ids.push($(this).val());
+        });
+        $('[name="song_id_selected"]', modalPickSongs).val(ids.join(","));
+        // Xác định trang của nút chọn
+        var page = 1;
+        var matches_array = $this.attr("href").match(/page\=(\d+)/i);
+        if (matches_array && matches_array.length > 1) {
+            page = matches_array[1];
+        }
+        $('[name="page"]', modalPickSongs).val(page);
+        // Cho phép submit trang ở nút submit + submit
+        $('[name="submit"]', modalPickSongs).data("allowedpage", true);
+        $('[name="submit"]', modalPickSongs).trigger("click");
+    });
+
+    // Xác nhận các bài hát đã chọn
+    $('[data-toggle="completePickSong"]').on("click", function(e) {
+        e.preventDefault();
+
+        // Lấy lại các list id đã chọn
+        var html = '';
+        $('[name="ids[]"]', modalPickSongs).each(function() {
+            html += '<li>';
+            html += '<input type="hidden" name="' + modalPickSongs.data("inputname") +'" value="' + $(this).val() + '">';
+            html += '<a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong><small class="sval ms-ellipsis">' + $(this).data("des") + '</small>';
+            html += '</li>';
+        });
+
+        var list = $(modalPickSongs.data("list"));
+        list.html(html);
+
+        // Ẩn modal đi
+        modalPickSongs.modal("hide");
     });
 });
 

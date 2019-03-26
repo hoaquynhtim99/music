@@ -27,34 +27,60 @@
                     <label for="artist_birthday" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="hiddeninputlist required">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-success" tabindex="-1" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                            <div class="btn-group pull-left">
+                                <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
+                                <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                                 </ul>
                             </div>
-                            <ul class="ms-content-artist-lists" id="PickedArtistsList"></ul>
+                            <ul class="ms-content-picked-lists" id="PickedArtistsList">
+                                <!-- BEGIN: singer -->
+                                <li>
+                                    <input type="hidden" name="singer_ids[]" value="{SINGER.artist_id}">
+                                    <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                    <strong class="val ms-ellipsis">{SINGER.artist_name}</strong>
+                                </li>
+                                <!-- END: singer -->
+                            </ul>
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="artist_birthday_lev" class="control-label col-sm-8">{LANG.artist_type_author}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-success" tabindex="-1" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
-                            <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                        <div class="btn-group pull-left">
+                            <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
+                            <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="{LINK_ADD_ARTIST_AUTHOR}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                             </ul>
                         </div>
-                        <ul class="ms-content-artist-lists" id="PickedArtistsListAuthor"></ul>
+                        <ul class="ms-content-picked-lists" id="PickedArtistsListAuthor">
+                            <!-- BEGIN: author -->
+                            <li>
+                                <input type="hidden" name="author_ids[]" value="{AUTHOR.artist_id}">
+                                <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                <strong class="val ms-ellipsis">{AUTHOR.artist_name}</strong>
+                            </li>
+                            <!-- END: author -->
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="artist_birthday_lev" class="control-label col-sm-8">{LANG.video_song_id}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <button type="button" class="btn btn-success">{LANG.select}</button>
+                        <button tabindex="-1" type="button" class="btn btn-success pull-left" data-toggle="modalPickSongs" data-multiple="false" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_id">{LANG.select}</button>
+                        <ul class="ms-content-picked-lists" id="PickedSong">
+                            <!-- BEGIN: song -->
+                            <li>
+                                <input type="hidden" name="song_id" value="{SONG.song_id}">
+                                <a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                <strong class="val ms-ellipsis">{SONG.song_name}</strong>
+                                <small class="sval ms-ellipsis">{SONG_SINGER}</small>
+                            </li>
+                            <!-- END: song -->
+                        </ul>
                     </div>
                 </div>
                 <div class="form-group">
@@ -149,11 +175,12 @@
         </div>
     </div>
 </form>
-<div class="modal fade" tabindex="-1" role="dialog" id="modalPickArtists" data-backdrop="static" data-changed="false" data-list="" data-inputname="">
+
+<div class="modal modalPickItems" tabindex="-1" role="dialog" id="modalPickArtists" data-backdrop="static" data-changed="false" data-list="" data-inputname="">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"></h4>
             </div>
             <div class="modal-body">
@@ -176,19 +203,10 @@
                         <button type="button" name="submit" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
                     </div>
                 </div>
-                <div class="item-lists">
-                </div>
+                <div class="item-lists"></div>
                 <h2>{LANG.picked_list}</h2>
                 <p class="text-info"><i>{LANG.drag_and_drop_to_sort}</i></p>
-                <ul class="item-selected">
-                    <!--li>
-                        <div class="ctn">
-                            <div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>
-                            <div class="sdel pull-right"><a href="#" data-toggle="delPickArtist"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>
-                            <div class="sval"><strong>Hà Anh Tuấn</strong></div>
-                        </div>
-                    </li-->
-                </ul>
+                <ul class="item-selected"></ul>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-toggle="completePickArtist">{LANG.save}</button>
@@ -197,6 +215,46 @@
         </div>
     </div>
 </div>
+
+<div class="modal modalPickItems" tabindex="-1" role="dialog" id="modalPickSongs" data-backdrop="static" data-changed="false" data-list="" data-inputname="" data-multiple="false">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" name="q" value="" class="form-control" placeholder="{LANG.enter_keyword}">
+                        </div>
+                        <div class="form-group">
+                            <select class="form-control" name="cat_id" class="form-control">
+                                <option value="0">{LANG.search_all_cat}</option>
+                                <!-- BEGIN: cat1 -->
+                                <option value="{CAT.cat_id}">{CAT.cat_name}</option>
+                                <!-- END: cat1 -->
+                            </select>
+                        </div>
+                        <input type="hidden" name="song_id_selected" value="">
+                        <input type="hidden" name="page" value="1">
+                        <button type="button" name="submit" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
+                    </div>
+                </div>
+                <div class="item-lists"></div>
+                <h2>{LANG.picked_list}</h2>
+                <p class="text-info"><i>{LANG.drag_and_drop_to_sort}</i></p>
+                <ul class="item-selected"></ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-toggle="completePickSong">{LANG.save}</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">{LANG.close}</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 $(function() {
     $("#cat_ids").select2();

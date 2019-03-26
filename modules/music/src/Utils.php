@@ -125,6 +125,9 @@ class Utils
      */
     public static function arrayIntFromStrList($string, $sp = ',')
     {
+        if (empty($string)) {
+            return [];
+        }
         return array_filter(array_unique(array_map("trim", explode($sp, $string))));
     }
 

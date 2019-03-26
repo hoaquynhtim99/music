@@ -240,6 +240,7 @@ $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('OP', $op);
 $xtpl->assign('SEARCH', $array_search);
+$xtpl->assign('LINK_ADD', NV_ADMIN_MOD_FULLLINK_AMP . 'video-content');
 
 // Xuất ra trình duyệt
 foreach ($array as $row) {

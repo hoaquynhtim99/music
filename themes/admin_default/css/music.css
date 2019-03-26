@@ -29,16 +29,37 @@ td.ms-ellipsis {
     margin-top: 5px!important;
 }
 
-.ms-content-artist-lists {
-    display: inline;
+.ms-content-picked-lists {
     padding: 0;
     margin: 0;
     list-style: none;
+    padding-left: 90px;
+    width: 100%;
 }
 
-.ms-content-artist-lists li {
-    display: inline-block;
-    margin-left: 10px;
+.ms-content-picked-lists li {
+    display: block;
+    margin-bottom: 5px;
+    border: 1px #ddd solid;
+    border-radius: 3px;
+    padding: 6px 7px;;
+    position: relative;
+    padding-left: 25px;
+}
+
+.ms-content-picked-lists li:last-child {
+    margin-bottom: 0;
+}
+
+.ms-content-picked-lists li .delitem {
+    position: absolute;
+    top: 7px;
+    left: 7px;
+}
+
+.ms-content-picked-lists li .val,
+.ms-content-picked-lists li .sval {
+    display: block;
 }
 
 .modal {
@@ -210,18 +231,31 @@ hr.sm {
 }
 
 /* Các item đã chọn trong phần pick modal */
-#modalPickArtists .item-selected {
+.modalPickItems .item-selected {
     padding: 0;
     margin: 0;
     list-style: none;
 }
 
-#modalPickArtists .item-selected li .sval {
+.modalPickItems .item-selected li .sval,
+.modalPickItems .item-selected li .sdes {
     padding-left: 30px;
     padding-right: 30px;
 }
 
-#modalPickArtists .item-selected li .ctn {
+.modalPickItems .item-selected li .sval strong {
+    display: block;
+}
+
+.modalPickItems .item-selected li .sdes {
+    margin-top: 5px;
+}
+
+.modalPickItems .item-selected li .sdes small {
+    display: block;
+}
+
+.modalPickItems .item-selected li .ctn {
     border: 1px #ddd solid;
     border-radius: 2px;
     background-color: #f2f2f2;
@@ -229,10 +263,10 @@ hr.sm {
     cursor: move;
 }
 
-#modalPickArtists .item-selected li {
+.modalPickItems .item-selected li {
     margin-bottom: 10px;
 }
 
-#modalPickArtists .item-selected li:last-child {
+.modalPickItems .item-selected li:last-child {
     margin-bottom: 0;
 }
