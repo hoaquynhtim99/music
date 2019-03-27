@@ -134,8 +134,18 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $resource_path = $array['resource_path'];
     $array['resource_path'] = [];
     foreach ($resource_path as $quality_id => $path) {
-        if (isset($global_array_mvquality[$quality_id]) and nv_is_file($path, NV_UPLOADS_DIR . '/' . $module_upload) === true) {
-            $array['resource_path'][$quality_id] = substr($path, strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/'));
+        if (isset($global_array_mvquality[$quality_id])) {
+            if (nv_is_file($path, NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+                $array['resource_path'][$quality_id] = [
+                    'resource_path' => substr($path, strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/')),
+                    'resource_server_id' => 0
+                ];
+            } elseif (nv_is_url($path)) {
+                $array['resource_path'][$quality_id] = [
+                    'resource_path' => $path,
+                    'resource_server_id' => -1
+                ];
+            }
         }
     }
 
@@ -242,6 +252,16 @@ if ($nv_Request->isset_request('submit', 'post')) {
     if ($check_db !== '') {
         // Thất bại
         AjaxRespon::setMessage($check_db)->respon();
+    }
+
+    // Xóa các file video và thêm lại
+    $db->query("DELETE FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $video_id);
+    foreach ($array['resource_path'] as $quality_id => $resource_path) {
+        $db->query("INSERT INTO " . NV_MOD_TABLE . "_videos_data (
+            video_id, quality_id, resource_server_id, resource_path, resource_duration, status
+        ) VALUES (
+            " . $video_id . ", " . $quality_id . ", " . $resource_path['resource_server_id'] . ", " . $db->quote($resource_path['resource_path']) . ", 0, 1
+        )");
     }
 
     // Cập nhật lại thống kê ca sĩ, nhạc sĩ
@@ -415,10 +435,27 @@ foreach ($global_array_cat as $cat) {
     $xtpl->parse('main.cat1');
 }
 
-// Chất lượng video
+// Chất lượng video, các file video ứng theo chất lượng
+$resource_paths = [];
+if ($video_id) {
+    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $video_id;
+    $result = $db->query($sql);
+    while ($row = $result->fetch()) {
+        if ($row['resource_server_id'] == 0) {
+            $row['resource_path'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $row['resource_path'];
+        }
+
+        $resource_paths[$row['quality_id']] = [
+            'resource_server_id' => $row['resource_server_id'],
+            'resource_path' => $row['resource_path'],
+            'resource_duration' => $row['resource_duration']
+        ];
+    }
+}
 foreach ($global_array_mvquality as $mvquality) {
     $mvquality['quality_name'] = $mvquality[NV_LANG_DATA . '_quality_name'];
     $xtpl->assign('MVQUALITY', $mvquality);
+    $xtpl->assign('RESOURCE_PATH', isset($resource_paths[$mvquality['quality_id']]) ? $resource_paths[$mvquality['quality_id']]['resource_path'] : '');
     $xtpl->parse('main.mvquality');
 }
 

@@ -124,6 +124,24 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET status=" . $status . " WHERE video_id=" . $video_id;
         $db->query($sql);
 
+        $video = $array[$video_id];
+
+        // Cập nhật lại thống kê thể loại
+        $video['cat_ids'] = Utils::arrayIntFromStrList($video['cat_ids']);
+        foreach ($video['cat_ids'] as $cat_id) {
+            msUpdateCatStat($cat_id);
+        }
+
+        // Cập nhật ca sĩ, nhạc sĩ
+        $video['singer_ids'] = Utils::arrayIntFromStrList($video['singer_ids']);
+        foreach ($video['singer_ids'] as $singer_id) {
+            msUpdateArtistStat($singer_id, true);
+        }
+        $video['author_ids'] = Utils::arrayIntFromStrList($video['author_ids']);
+        foreach ($video['author_ids'] as $author_id) {
+            msUpdateArtistStat($author_id, false);
+        }
+
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_VIDEO', $video_id . ':' . $array[$video_id]['video_name'], $admin_info['userid']);
     }

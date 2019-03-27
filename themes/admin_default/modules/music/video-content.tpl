@@ -154,7 +154,7 @@
                     <label for="resource_avatar" class="control-label col-sm-8">{MVQUALITY.quality_name}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="input-group">
-                            <input class="form-control" type="text" name="resource_path[{MVQUALITY.quality_id}]" id="resource_path_{MVQUALITY.quality_id}" value="" maxlength="255">
+                            <input class="form-control" type="text" name="resource_path[{MVQUALITY.quality_id}]" id="resource_path_{MVQUALITY.quality_id}" value="{RESOURCE_PATH}" maxlength="255">
                             <span class="input-group-btn">
                                 <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_path_{MVQUALITY.quality_id}" data-type="file" data-path="{RESOURCE_DATA_PATH}" data-currentpath="{RESOURCE_DATA_CURRPATH}">{GLANG.browse_file}</button>
                             </span>

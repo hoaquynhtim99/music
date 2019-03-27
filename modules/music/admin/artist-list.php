@@ -69,7 +69,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
-    // Xác định các bài hát
+    // Xác định các nghệ sĩ
     $array_select_fields = nv_get_artist_select_fields();
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $artist_ids) . ")";
     $result = $db->query($sql);
@@ -94,6 +94,11 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         // Cập nhật trạng thái
         $sql = "UPDATE " . NV_MOD_TABLE . "_artists SET status=" . $status . " WHERE artist_id=" . $artist_id;
         $db->query($sql);
+
+        // Cập nhật lại quốc gia
+        if (!empty($array[$artist_id]['nation_id'])) {
+            msUpdateNationStat($array[$artist_id]['nation_id']);
+        }
 
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_ARTIST', $artist_id . ':' . $array[$artist_id]['artist_name'], $admin_info['userid']);
