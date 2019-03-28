@@ -27,34 +27,57 @@ if ($ajaction == 'delete') {
         AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
-    $nation_ids = $nv_Request->get_title('id', 'post', '');
-    $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
-    if (empty($nation_ids)) {
+    $song_ids = $nv_Request->get_title('id', 'post', '');
+    $song_ids = array_filter(array_unique(array_map('intval', explode(',', $song_ids))));
+    if (empty($song_ids)) {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($nation_ids as $nation_id) {
-        if (!isset($global_array_nation[$nation_id])) {
-            AjaxRespon::setMessage('Wrong ID!!!')->respon();
+
+    $array_select_fields = nv_get_song_select_fields();
+
+    foreach ($song_ids as $song_id) {
+        $song = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id)->fetch();
+        if (!empty($song)) {
+            foreach ($array_select_fields[1] as $f) {
+                if (empty($song[$f]) and !empty($song['default_' . $f])) {
+                    $song[$f] = $song['default_' . $f];
+                }
+                unset($song['default_' . $f]);
+            }
+
+            // Xóa bài hát
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id;
+            $db->query($sql);
+
+            // Xóa file nhạc
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id=" . $song_id;
+            $db->query($sql);
+
+            // Cập nhật lại thống kê thể loại
+            $song['cat_ids'] = Utils::arrayIntFromStrList($song['cat_ids']);
+            foreach ($song['cat_ids'] as $cat_id) {
+                msUpdateCatStat($cat_id);
+            }
+
+            // Cập nhật ca sĩ, nhạc sĩ
+            $song['singer_ids'] = Utils::arrayIntFromStrList($song['singer_ids']);
+            foreach ($song['singer_ids'] as $singer_id) {
+                msUpdateArtistStat($singer_id, true);
+            }
+            $song['author_ids'] = Utils::arrayIntFromStrList($song['author_ids']);
+            foreach ($song['author_ids'] as $author_id) {
+                msUpdateArtistStat($author_id, false);
+            }
+
+            // Cập nhật video liên quan
+            if ($song['video_id']) {
+                $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET song_id=0 WHERE video_id=" . $song['video_id'];
+                $db->query($sql);
+            }
+
+            // Ghi nhật ký hệ thống
+            nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_SONG', $song_id . ':' . $song['song_name'], $admin_info['userid']);
         }
-    }
-
-    foreach ($nation_ids as $nation_id) {
-        // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
-        $db->query($sql);
-
-        // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
-    }
-
-    // Cập nhật lại thứ tự
-    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
-    $result = $db->query($sql);
-    $weight = 0;
-    while ($row = $result->fetch()) {
-        ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
-        $db->query($sql);
     }
 
     $nv_Cache->delMod($module_name);
@@ -100,6 +123,24 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         // Cập nhật trạng thái
         $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET status=" . $status . " WHERE song_id=" . $song_id;
         $db->query($sql);
+
+        $song = $array[$song_id];
+
+        // Cập nhật lại thống kê thể loại
+        $song['cat_ids'] = Utils::arrayIntFromStrList($song['cat_ids']);
+        foreach ($song['cat_ids'] as $cat_id) {
+            msUpdateCatStat($cat_id);
+        }
+
+        // Cập nhật ca sĩ, nhạc sĩ
+        $song['singer_ids'] = Utils::arrayIntFromStrList($song['singer_ids']);
+        foreach ($song['singer_ids'] as $singer_id) {
+            msUpdateArtistStat($singer_id, true);
+        }
+        $song['author_ids'] = Utils::arrayIntFromStrList($song['author_ids']);
+        foreach ($song['author_ids'] as $author_id) {
+            msUpdateArtistStat($author_id, false);
+        }
 
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_SONG', $song_id . ':' . $array[$song_id]['song_name'], $admin_info['userid']);
@@ -245,6 +286,7 @@ $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('OP', $op);
 $xtpl->assign('SEARCH', $array_search);
+$xtpl->assign('LINK_ADD', NV_ADMIN_MOD_FULLLINK_AMP . 'song-content');
 
 // Xuất ra trình duyệt
 foreach ($array as $row) {

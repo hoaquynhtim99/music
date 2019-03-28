@@ -1119,7 +1119,7 @@ $(document).ready(function() {
      * Modal chọn một, nhiều bài hát
      */
 
-    // Hàm build list sắp xếp các nghệ sĩ đã chọn khi mới mở popup và khi ấn nút chọn từ danh sách tìm kiếm
+    // Hàm build list sắp xếp các bài hát đã chọn khi mới mở popup và khi ấn nút chọn từ danh sách tìm kiếm
     function buildSortableSongLists(id, title, des) {
         var html = '';
         html += '<li>';
@@ -1320,6 +1320,213 @@ $(document).ready(function() {
 
         // Ẩn modal đi
         modalPickSongs.modal("hide");
+    });
+
+    /*
+     * Modal chọn một, nhiều video
+     */
+
+    // Hàm build list sắp xếp các video đã chọn khi mới mở popup và khi ấn nút chọn từ danh sách tìm kiếm
+    function buildSortableVideoLists(id, title, des) {
+        var html = '';
+        html += '<li>';
+        html += '<input type="hidden" name="ids[]" data-title="' + title + '" data-des="' + des + '" value="' + id + '">';
+        html += '<div class="ctn">';
+        html += '<div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
+        html += '<div class="sdel pull-right"><a href="#" data-toggle="delPickVideo"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sval"><strong class="ms-ellipsis">' + title + '</strong></div>';
+        html += '<div class="sdes"><small class="ms-ellipsis">' + des + '</small></div>';
+        html += '</div>';
+        html += '</li>';
+        return html;
+    }
+
+    var btnTriggerPickVideos = $('[data-toggle="modalPickVideos"]');
+    var modalPickVideos = $("#modalPickVideos");
+
+    btnTriggerPickVideos.on("click", function(e) {
+        e.preventDefault();
+        modalPickVideos.data("list", $(this).data("list"));
+        modalPickVideos.data("inputname", $(this).data("inputname"));
+        modalPickVideos.data("multiple", $(this).data("multiple"));
+        modalPickVideos.find("h4.modal-title").html($(this).data("title"));
+        modalPickVideos.find('[name="q"]').val("");
+        modalPickVideos.find('[name="cat_id"] option').prop("selected", false);
+        modalPickVideos.modal("show");
+    });
+
+    // Ấn nút tìm kiếm video
+    $('[name="submit"]', modalPickVideos).on("click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var loader = $this.find(".load");
+        var itemsCtn = $('.item-lists', modalPickVideos);
+        if (loader.is(":visible")) {
+            return;
+        }
+        loader.removeClass("hidden");
+        itemsCtn.html('<div class="text-center"><i class="fa fa-spin fa-spinner"></i></div>');
+        var page = ($this.data("allowedpage") ? $('[name="page"]', modalPickVideos).val() : 1);
+        $this.data("allowedpage", false);
+        $.ajax({
+            method: "POST",
+            url: script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ajax-search-videos&nocache=' + new Date().getTime(),
+            data: {
+                q: $('[name="q"]', modalPickVideos).val(),
+                cat_id: $('[name="cat_id"]', modalPickVideos).val(),
+                video_id_selected: $('[name="video_id_selected"]', modalPickVideos).val(),
+                submit: 1,
+                page: page
+            }
+        }).done(function(data) {
+            itemsCtn.html(data);
+            loader.addClass("hidden");
+        }).fail(function(data) {
+            itemsCtn.html("Error!");
+            loader.addClass("hidden");
+        });
+    });
+
+    // Ấn tìm kiếm khi ấn enter ở ô tìm
+    $('[name="q"]', modalPickVideos).on("keyup", function(e) {
+        if (e.which == 13) {
+            $('[name="submit"]', modalPickVideos).trigger("click");
+        }
+    });
+
+    // Xử lý dữ liệu khi bắt đầu mở modal lên
+    modalPickVideos.on('show.bs.modal', function() {
+        $('[name="video_id_selected"]', modalPickVideos).val("");
+        $('[name="page"]', modalPickVideos).val("1");
+
+        // Build lại danh sách bài hát đã chọn
+        var list = $(modalPickVideos.data("list"));
+        var ids = new Array();
+
+        $("li", list).each(function() {
+            var id = $(this).find("input").val();
+            var title = $(this).find(".val").html();
+            var des = $(this).find(".sval").html();
+            var html = buildSortableVideoLists(id, title, des);
+            ids.push(id);
+            $(".item-selected", modalPickVideos).append(html);
+        });
+
+        $('[name="video_id_selected"]', modalPickVideos).val(ids.join(","));
+    });
+
+    // Trigger trình sort khi mở modal lên hoàn thành
+    modalPickVideos.on('shown.bs.modal', function() {
+        // Build lại trình sort
+        $(".item-selected", modalPickVideos).sortable();
+        $(".item-selected", modalPickVideos).disableSelection();
+    });
+
+    // Xử lý dữ liệu khi đóng modal lại
+    modalPickVideos.on('hide.bs.modal', function() {
+        $(".item-selected", modalPickVideos).sortable("destroy");
+        $(".item-selected", modalPickVideos).html("");
+        $(".item-lists", modalPickVideos).html("");
+    });
+
+    // Chọn một video
+    modalPickVideos.delegate('[data-toggle="selPickVideo"]', "click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.data("selected")) {
+            return;
+        }
+        $this.html($this.data("selected-mess"));
+        $this.data("selected", true);
+
+        $(".item-selected", modalPickVideos).sortable("destroy");
+
+        var html = buildSortableVideoLists($this.data("id"), $this.data("title"), $this.data("des"));
+
+        if (modalPickVideos.data("multiple")) {
+            $(".item-selected", modalPickVideos).append(html);
+        } else {
+            $(".item-selected", modalPickVideos).html(html);
+        }
+
+        $(".item-selected", modalPickVideos).sortable();
+        $(".item-selected", modalPickVideos).disableSelection();
+
+        if (!modalPickVideos.data("multiple")) {
+            $('[data-toggle="completePickVideo"]', modalPickVideos).trigger("click");
+        }
+    });
+
+    // Xóa video đã chọn (trong modal)
+    modalPickVideos.delegate('[data-toggle="delPickVideo"]', "click", function(e) {
+        e.preventDefault();
+
+        $(".item-selected", modalPickVideos).sortable("destroy");
+        $(this).parent().parent().parent().remove();
+        $(".item-selected", modalPickVideos).sortable();
+        $(".item-selected", modalPickVideos).disableSelection();
+
+        // Lấy lại các list id đã chọn
+        var ids = new Array();
+        $('[name="ids[]"]', modalPickVideos).each(function() {
+            ids.push($(this).val());
+        });
+        $('[name="video_id_selected"]', modalPickVideos).val(ids.join(","));
+
+        // Cho phép submit trang ở nút submit + submit
+        $('[name="submit"]', modalPickVideos).data("allowedpage", true);
+        $('[name="submit"]', modalPickVideos).trigger("click");
+    });
+
+    // Xóa video đã chọn (ngoài list)
+    $(document).delegate('[data-toggle="delPickedVideo"]', "click", function(e) {
+        e.preventDefault();
+        $(this).parent().remove();
+    });
+
+    // CLick phân trang trong list bài hát được tìm thấy
+    modalPickVideos.delegate('.item-lists .pagination a', "click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.attr("href") == "" || $this.attr("href") == "#") {
+            return;
+        }
+        // Lấy lại các list id đã chọn
+        var ids = new Array();
+        $('[name="ids[]"]', modalPickVideos).each(function() {
+            ids.push($(this).val());
+        });
+        $('[name="video_id_selected"]', modalPickVideos).val(ids.join(","));
+        // Xác định trang của nút chọn
+        var page = 1;
+        var matches_array = $this.attr("href").match(/page\=(\d+)/i);
+        if (matches_array && matches_array.length > 1) {
+            page = matches_array[1];
+        }
+        $('[name="page"]', modalPickVideos).val(page);
+        // Cho phép submit trang ở nút submit + submit
+        $('[name="submit"]', modalPickVideos).data("allowedpage", true);
+        $('[name="submit"]', modalPickVideos).trigger("click");
+    });
+
+    // Xác nhận các bài hát đã chọn
+    $('[data-toggle="completePickVideo"]').on("click", function(e) {
+        e.preventDefault();
+
+        // Lấy lại các list id đã chọn
+        var html = '';
+        $('[name="ids[]"]', modalPickVideos).each(function() {
+            html += '<li>';
+            html += '<input type="hidden" name="' + modalPickVideos.data("inputname") +'" value="' + $(this).val() + '">';
+            html += '<a class="delitem" href="#" data-toggle="delPickedVideo"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong><small class="sval ms-ellipsis">' + $(this).data("des") + '</small>';
+            html += '</li>';
+        });
+
+        var list = $(modalPickVideos.data("list"));
+        list.html(html);
+
+        // Ẩn modal đi
+        modalPickVideos.modal("hide");
     });
 });
 

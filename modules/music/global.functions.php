@@ -224,6 +224,7 @@ function nv_get_song_select_fields($full_fields = false)
         $array_select_fields[] = 'time_add';
         $array_select_fields[] = 'time_update';
         $array_select_fields[] = 'is_official';
+        $array_select_fields[] = 'show_inhome';
         $array_select_fields[] = NV_LANG_DATA . '_song_introtext song_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_song_keywords song_keywords';
         if (NV_LANG_DATA != $default_language) {

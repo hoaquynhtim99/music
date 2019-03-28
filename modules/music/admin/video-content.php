@@ -165,6 +165,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['video_introtext'] = nv_nl2br($array['video_introtext']);
 
     $check_db = '';
+    $new_video_id = 0;
 
     // Lưu dữ liệu
     if ($video_id) {
@@ -306,7 +307,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
 
     // Ghi nhật ký
-    if ($video_id) {
+    if ($video_id and empty($new_video_id)) {
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_VIDEO', $video_id . ':' . $array_old['video_name'], $admin_info['userid']);
     } else {
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_VIDEO', $array['video_name'], $admin_info['userid']);

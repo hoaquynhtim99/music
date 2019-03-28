@@ -12,8 +12,6 @@ namespace NukeViet\Music\Song;
 
 class DataFields
 {
-    public function __construct()
-    {
-        //
-    }
+    const FIELD_ID = 'song_id';
+    const FIELD_CODE = 'song_code';
 }

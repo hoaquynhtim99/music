@@ -10,14 +10,45 @@
 
 namespace NukeViet\Music\Shared;
 
+use NukeViet\Music\Utils;
 use NukeViet\Music\Resources;
+use NukeViet\Music\Db\Db;
+use NukeViet\Music\Db\Condition;
+use NukeViet\Music\Song\DataFields;
 
 class Songs implements ITypeShare
 {
+    /**
+     * Videos::creatUniqueCode()
+     *
+     * @return
+     */
     public static function creatUniqueCode()
     {
-        $db = Resources::getDb();
+        $sql = new Db();
+        $sql->setTable(self::_getTable());
+        $sql->setField(DataFields::FIELD_ID);
 
-        $code = 'ssdsdfsdf';
+        while (true) {
+            $code = strtolower(Utils::genCode(Resources::SONG_CODE_LENGTH));
+            $condition = new Condition();
+            $condition->add()->setField(DataFields::FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
+            $sql->setCondition($condition);
+            if (!$sql->select()->fetchColumn()) {
+                break;
+            }
+        }
+
+        return $code;
+    }
+
+    /**
+     * Videos::_getTable()
+     *
+     * @return
+     */
+    private static function _getTable()
+    {
+        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_SONG;
     }
 }

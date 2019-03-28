@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="artist_birthday" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
+                    <label class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="hiddeninputlist required">
                             <div class="btn-group pull-left">
@@ -47,7 +47,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="artist_birthday_lev" class="control-label col-sm-8">{LANG.artist_type_author}:</label>
+                    <label class="control-label col-sm-8">{LANG.artist_type_author}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="btn-group pull-left">
                             <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="artist_birthday_lev" class="control-label col-sm-8">{LANG.video_song_id}:</label>
+                    <label class="control-label col-sm-8">{LANG.video_song_id}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <button tabindex="-1" type="button" class="btn btn-success pull-left" data-toggle="modalPickSongs" data-multiple="false" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_id">{LANG.select}</button>
                         <ul class="ms-content-picked-lists" id="PickedSong">
