@@ -185,6 +185,8 @@ function nv_get_album_select_fields($full_fields = false)
     if ($full_fields) {
         $array_select_fields[] = 'uploader_id';
         $array_select_fields[] = 'uploader_name';
+        $array_select_fields[] = 'is_official';
+        $array_select_fields[] = 'show_inhome';
         $array_select_fields[] = NV_LANG_DATA . '_album_introtext album_introtext';
         $array_select_fields[] = NV_LANG_DATA . '_album_keywords album_keywords';
         if (NV_LANG_DATA != $default_language) {

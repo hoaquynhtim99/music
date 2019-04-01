@@ -47,44 +47,13 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-8">{LANG.artist_type_author}:</label>
+                    <label for="release_year" class="control-label col-sm-8">{LANG.album_release_year}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <div class="btn-group pull-left">
-                            <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
-                            <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                                <li><a href="{LINK_ADD_ARTIST_AUTHOR}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
-                            </ul>
-                        </div>
-                        <ul class="ms-content-picked-lists" id="PickedArtistsListAuthor">
-                            <!-- BEGIN: author -->
-                            <li>
-                                <input type="hidden" name="author_ids[]" value="{AUTHOR.artist_id}">
-                                <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                <strong class="val ms-ellipsis">{AUTHOR.artist_name}</strong>
-                            </li>
-                            <!-- END: author -->
-                        </ul>
+                        <input class="form-control" type="number" name="release_year" id="release_year" value="{DATA.release_year}" maxlength="4">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-8">{LANG.video_song_id}:</label>
-                    <div class="col-sm-16 col-md-10 col-lg-8">
-                        <button tabindex="-1" type="button" class="btn btn-success pull-left" data-toggle="modalPickSongs" data-multiple="false" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_id">{LANG.select}</button>
-                        <ul class="ms-content-picked-lists" id="PickedSong">
-                            <!-- BEGIN: song -->
-                            <li>
-                                <input type="hidden" name="song_id" value="{SONG.song_id}">
-                                <a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
-                                <strong class="val ms-ellipsis">{SONG.song_name}</strong>
-                                <small class="sval ms-ellipsis">{SONG_SINGER}</small>
-                            </li>
-                            <!-- END: song -->
-                        </ul>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="resource_avatar" class="control-label col-sm-8">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                    <label for="resource_avatar" class="control-label col-sm-8">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_album_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
@@ -121,47 +90,59 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="video_name" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.video_name}:</label>
+                    <label for="album_name" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.album_name}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <input class="form-control required" type="text" name="video_name" id="video_name" value="{DATA.video_name}" maxlength="250" />
+                        <input class="form-control required" type="text" name="album_name" id="album_name" value="{DATA.album_name}" maxlength="250" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="video_alias" class="control-label col-sm-8">{LANG.alias}:</label>
+                    <label for="album_alias" class="control-label col-sm-8">{LANG.alias}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <input class="form-control" type="text" name="video_alias" id="video_alias" value="{DATA.video_alias}" maxlength="250" />
+                        <input class="form-control" type="text" name="album_alias" id="album_alias" value="{DATA.album_alias}" maxlength="250" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="video_introtext" class="control-label col-sm-8">{LANG.introtext}:</label>
+                    <label for="album_introtext" class="control-label col-sm-8">{LANG.introtext}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <textarea class="form-control" name="video_introtext" id="video_introtext" rows="3">{DATA.video_introtext}</textarea>
+                        <textarea class="form-control" name="album_introtext" id="album_introtext" rows="3">{DATA.album_introtext}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="video_keywords" class="control-label col-sm-8">{LANG.keywords}:</label>
+                    <label for="album_keywords" class="control-label col-sm-8">{LANG.keywords}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <input class="form-control" type="text" name="video_keywords" id="video_keywords" value="{DATA.video_keywords}"/>
+                        <input class="form-control" type="text" name="album_keywords" id="album_keywords" value="{DATA.album_keywords}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-24">
+                        <div class="ckeditor">
+                            <label class="control-label">{LANG.album_description}:</label>
+                            <div class="clearfix">
+                                {DATA.album_description}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <h2><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.video_files}:</h2>
+        <h2><i class="fa fa-fw fa-music" aria-hidden="true"></i>{LANG.album_songs}:</h2>
         <div class="panel panel-default">
             <div class="panel-body">
-                <!-- BEGIN: mvquality -->
-                <div class="form-group">
-                    <label for="resource_avatar" class="control-label col-sm-8">{MVQUALITY.quality_name}:</label>
-                    <div class="col-sm-16 col-md-10 col-lg-8">
-                        <div class="input-group">
-                            <input class="form-control" type="text" name="resource_path[{MVQUALITY.quality_id}]" id="resource_path_{MVQUALITY.quality_id}" value="{RESOURCE_PATH}" maxlength="255">
-                            <span class="input-group-btn">
-                                <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_path_{MVQUALITY.quality_id}" data-type="file" data-path="{RESOURCE_DATA_PATH}" data-currentpath="{RESOURCE_DATA_CURRPATH}">{GLANG.browse_file}</button>
-                            </span>
-                        </div>
-                    </div>
+                <label class="control-label col-sm-8 pt-0">
+                    <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickSongs" data-multiple="true" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_ids[]">{LANG.select}</button>
+                </label>
+                <div class="col-sm-16 col-md-10 col-lg-8">
+                    <ul class="ms-content-picked-lists pl-0" id="PickedSong">
+                        <!-- BEGIN: song -->
+                        <li>
+                            <input type="hidden" name="song_ids[]" value="{SONG.song_id}">
+                            <a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                            <strong class="val ms-ellipsis">{SONG.song_name}</strong>
+                            <small class="sval ms-ellipsis">{SONG_SINGER}</small>
+                        </li>
+                        <!-- END: song -->
+                    </ul>
                 </div>
-                <!-- END: mvquality -->
             </div>
         </div>
         <div class="form-group">

@@ -37,6 +37,11 @@ interface Settings
     const TABLE_ARTIST = 'artists';
 
     /**
+     * Bảng album
+     */
+    const TABLE_ALBUM = 'albums';
+
+    /**
      * Bảng bài hát
      */
     const TABLE_SONG = 'songs';
@@ -69,6 +74,12 @@ interface Settings
      *
      */
     const VIDEO_CODE_LENGTH = 8;
+
+    /**
+     * Các thiết lập về albums
+     *
+     */
+    const ALBUM_CODE_LENGTH = 8;
 
     /**
      * Các thiết lập về quốc gia

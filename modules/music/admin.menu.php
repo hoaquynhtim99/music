@@ -27,6 +27,7 @@ $allow_func = [
     'album-list',
     'video-list',
     'video-content',
+    'album-content',
 
     'ajax-search-artists',
     'ajax-search-songs',

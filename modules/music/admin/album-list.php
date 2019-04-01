@@ -27,34 +27,47 @@ if ($ajaction == 'delete') {
         AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
-    $nation_ids = $nv_Request->get_title('id', 'post', '');
-    $nation_ids = array_filter(array_unique(array_map('intval', explode(',', $nation_ids))));
-    if (empty($nation_ids)) {
+    $album_ids = $nv_Request->get_title('id', 'post', '');
+    $album_ids = array_filter(array_unique(array_map('intval', explode(',', $album_ids))));
+    if (empty($album_ids)) {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
-    foreach ($nation_ids as $nation_id) {
-        if (!isset($global_array_nation[$nation_id])) {
-            AjaxRespon::setMessage('Wrong ID!!!')->respon();
+
+    $array_select_fields = nv_get_album_select_fields();
+
+    foreach ($album_ids as $album_id) {
+        $album = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE album_id=" . $album_id)->fetch();
+        if (!empty($album)) {
+            foreach ($array_select_fields[1] as $f) {
+                if (empty($album[$f]) and !empty($album['default_' . $f])) {
+                    $album[$f] = $album['default_' . $f];
+                }
+                unset($album['default_' . $f]);
+            }
+
+            // Xóa album
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums WHERE album_id=" . $album_id;
+            $db->query($sql);
+
+            // Xóa bài hát trong album
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums_data WHERE album_id=" . $album_id;
+            $db->query($sql);
+
+            // Cập nhật lại thống kê thể loại
+            $album['cat_ids'] = Utils::arrayIntFromStrList($album['cat_ids']);
+            foreach ($album['cat_ids'] as $cat_id) {
+                msUpdateCatStat($cat_id);
+            }
+
+            // Cập nhật ca sĩ
+            $album['singer_ids'] = Utils::arrayIntFromStrList($album['singer_ids']);
+            foreach ($album['singer_ids'] as $singer_id) {
+                msUpdateArtistStat($singer_id, true);
+            }
+
+            // Ghi nhật ký hệ thống
+            nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_ALBUM', $nation_id . ':' . $album['nation_name'], $admin_info['userid']);
         }
-    }
-
-    foreach ($nation_ids as $nation_id) {
-        // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
-        $db->query($sql);
-
-        // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_NATION', $nation_id . ':' . $global_array_nation[$nation_id]['nation_name'], $admin_info['userid']);
-    }
-
-    // Cập nhật lại thứ tự
-    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
-    $result = $db->query($sql);
-    $weight = 0;
-    while ($row = $result->fetch()) {
-        ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
-        $db->query($sql);
     }
 
     $nv_Cache->delMod($module_name);
@@ -75,12 +88,12 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
-    // Xác định các bài hát
+    // Xác định các album
     $array_select_fields = nv_get_album_select_fields();
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE album_id IN(" . implode(',', $album_ids) . ")";
     $result = $db->query($sql);
 
-    $array = array();
+    $array = [];
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
             if (empty($row[$f]) and !empty($row['default_' . $f])) {
@@ -101,6 +114,20 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET status=" . $status . " WHERE album_id=" . $album_id;
         $db->query($sql);
 
+        $album = $array[$album_id];
+
+        // Cập nhật lại thống kê thể loại
+        $album['cat_ids'] = Utils::arrayIntFromStrList($album['cat_ids']);
+        foreach ($album['cat_ids'] as $cat_id) {
+            msUpdateCatStat($cat_id);
+        }
+
+        // Cập nhật ca sĩ
+        $album['singer_ids'] = Utils::arrayIntFromStrList($album['singer_ids']);
+        foreach ($album['singer_ids'] as $singer_id) {
+            msUpdateArtistStat($singer_id, true);
+        }
+
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_ALBUM', $album_id . ':' . $array[$album_id]['album_name'], $admin_info['userid']);
     }
@@ -114,7 +141,7 @@ $per_page = 20;
 $page = Utils::getValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
 
 // Dữ liệu tìm kiếm
-$array_search = array();
+$array_search = [];
 $array_search['q'] = $nv_Request->get_title('q', 'get', ''); // Từ khóa
 $array_search['c'] = $nv_Request->get_int('c', 'get', 0); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
@@ -122,7 +149,7 @@ $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
 $db->sqlreset()->from(NV_MOD_TABLE . "_albums");
 
-$where = array();
+$where = [];
 if (!empty($array_search['q'])) {
     $dblike = $db->dblikeescape($array_search['q']);
     $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
@@ -172,7 +199,7 @@ $array_select_fields = nv_get_album_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));
 
 $result = $db->query($db->sql());
-$array = $array_singer_ids = array();
+$array = $array_singer_ids = [];
 while ($row = $result->fetch()) {
     foreach ($array_select_fields[1] as $f) {
         if (empty($row[$f]) and !empty($row['default_' . $f])) {
@@ -181,9 +208,9 @@ while ($row = $result->fetch()) {
         unset($row['default_' . $f]);
     }
 
-    $row['singers'] = array();
+    $row['singers'] = [];
     $row['singer_ids'] = explode(',', $row['singer_ids']);
-    $row['cats'] = array();
+    $row['cats'] = [];
     $row['cat_ids'] = explode(',', $row['cat_ids']);
     $row['album_link'] = '';
 

@@ -14,12 +14,12 @@ use NukeViet\Music\Utils;
 use NukeViet\Music\Resources;
 use NukeViet\Music\Db\Db;
 use NukeViet\Music\Db\Condition;
-use NukeViet\Music\Song\DataFields;
+use NukeViet\Music\Album\DataFields;
 
-class Songs implements ITypeShare
+class Albums implements ITypeShare
 {
     /**
-     * Songs::creatUniqueCode()
+     * Albums::creatUniqueCode()
      *
      * @return
      */
@@ -30,7 +30,7 @@ class Songs implements ITypeShare
         $sql->setField(DataFields::FIELD_ID);
 
         while (true) {
-            $code = strtolower(Utils::genCode(Resources::SONG_CODE_LENGTH));
+            $code = strtolower(Utils::genCode(Resources::ALBUM_CODE_LENGTH));
             $condition = new Condition();
             $condition->add()->setField(DataFields::FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
             $sql->setCondition($condition);
@@ -43,12 +43,12 @@ class Songs implements ITypeShare
     }
 
     /**
-     * Songs::_getTable()
+     * Albums::_getTable()
      *
      * @return
      */
     private static function _getTable()
     {
-        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_SONG;
+        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_ALBUM;
     }
 }
