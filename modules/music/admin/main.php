@@ -12,30 +12,35 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-/*
-use NukeViet\Music\Song\Song;
-use NukeViet\Music\Singer\DbLoader as SingerLoader;
+use NukeViet\Music\Utils;
 
-$song = new Song();
-
-$song->setName("Điều Em Lo Sợ");
-$song->setKeywords("k1", "k2", "k3");
-
-$singer1 = SingerLoader::loadFromId($singer_id1);
-$singer2 = SingerLoader::loadFromId($singer_id2);
-
-$song->setSinger($singer1, $singer2);
-
-$check = $song->saveToDB();
-
-if (!$check) {
-    throw new Exception('Error!!!');
-}
-*/
+$page_title = $lang_module['mainpage_title'];
 
 $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', $lang_module);
 $xtpl->assign('GLANG', $lang_global);
+
+// Lấy thông tin thống kê, cache lại để truy vấn nhanh
+$cacheFile = NV_LANG_DATA . '_admin_stat_basic_' . NV_CACHE_PREFIX . '.cache';
+$cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
+
+if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
+    $array_stat_basic = unserialize($cache);
+} else {
+    $array_stat_basic = [];
+    $array_stat_basic['num_songs'] = Utils::getFormatNumberView($db->query("SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs")->fetchColumn());
+    $array_stat_basic['num_videos'] = Utils::getFormatNumberView($db->query("SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos")->fetchColumn());
+    $array_stat_basic['num_albums'] = Utils::getFormatNumberView($db->query("SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums")->fetchColumn());
+    $array_stat_basic['num_artists'] = Utils::getFormatNumberView($db->query("SELECT COUNT(artist_id) FROM " . NV_MOD_TABLE . "_artists")->fetchColumn());
+
+    $nv_Cache->setItem($module_name, $cacheFile, serialize($array_stat_basic), $cacheTTL);
+}
+
+$xtpl->assign('STAT_BASIC', $array_stat_basic);
+$xtpl->assign('LINK_SONGS', NV_ADMIN_MOD_FULLLINK_AMP . 'song-list');
+$xtpl->assign('LINK_VIDEOS', NV_ADMIN_MOD_FULLLINK_AMP . 'video-list');
+$xtpl->assign('LINK_ALBUMS', NV_ADMIN_MOD_FULLLINK_AMP . 'album-list');
+$xtpl->assign('LINK_ARTISTS', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-list');
 
 $xtpl->parse('main');
 $contents = $xtpl->text('main');

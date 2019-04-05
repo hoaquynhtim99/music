@@ -20,8 +20,8 @@ $description = $module_info['description'];
 // Các thẻ meta Open Graph
 nv_get_fb_share_image();
 
-$content_albums = $content_videos = $content_singers = $content_songs = array();
-$array_singer_ids = $array_singers = array();
+$content_albums = $content_videos = $content_singers = $content_songs = [];
+$array_singer_ids = $array_singers = [];
 
 // Các albums
 if (!empty(Config::getHomeAlbumsDisplay())) {
@@ -31,7 +31,7 @@ if (!empty(Config::getHomeAlbumsDisplay())) {
     $array_select_fields = nv_get_album_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
-    $array = array();
+    $array = [];
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -41,7 +41,7 @@ if (!empty(Config::getHomeAlbumsDisplay())) {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
 
@@ -63,7 +63,7 @@ if (!empty(Config::getHomeSingersDisplay())) {
     $array_select_fields = nv_get_artist_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
-    $array = array();
+    $array = [];
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -88,7 +88,7 @@ if (!empty(Config::getHomeSongsDisplay())) {
     $array_select_fields = nv_get_song_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
-    $array = array();
+    $array = [];
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -98,7 +98,7 @@ if (!empty(Config::getHomeSongsDisplay())) {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['song_link'] = '';
         $row['resource_mode'] = 'song';
@@ -121,7 +121,7 @@ if (!empty(Config::getHomeVideosDisplay())) {
     $array_select_fields = nv_get_video_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
 
-    $array = array();
+    $array = [];
     $result = $db->query($db->sql());
     while ($row = $result->fetch()) {
         foreach ($array_select_fields[1] as $f) {
@@ -131,7 +131,7 @@ if (!empty(Config::getHomeVideosDisplay())) {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['video_link'] = '';
 

@@ -12,5 +12,5 @@ if (!defined('NV_IS_MOD_RSS')) {
     die('Stop!!!');
 }
 
-$rssarray = array();
+$rssarray = [];
 //$rssarray[] = array( 'catid' => 0, 'parentid' => 0, 'title' => '', 'link' => '');

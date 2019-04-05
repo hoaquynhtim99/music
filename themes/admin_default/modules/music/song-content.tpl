@@ -151,7 +151,7 @@
             <div class="panel-body">
                 <!-- BEGIN: soquality -->
                 <div class="form-group">
-                    <label for="resource_avatar" class="control-label col-sm-8">{SOQUALITY.quality_name}:</label>
+                    <label for="resource_path_{SOQUALITY.quality_id}" class="control-label col-sm-8">{SOQUALITY.quality_name}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_path[{SOQUALITY.quality_id}]" id="resource_path_{SOQUALITY.quality_id}" value="{RESOURCE_PATH}" maxlength="255">

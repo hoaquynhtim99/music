@@ -14,7 +14,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 
 use NukeViet\Music\Config;
 
-$data_singer = array();
+$data_singer = [];
 $request_artist_alias = '';
 $request_tab = '';
 $page = 1;
@@ -63,8 +63,8 @@ $base_url = nv_get_view_singer_link($data_singer, true, $request_tab);
 $all_pages = 0;
 $per_page = 1;
 
-$array_songs = $array_videos = $array_albums = array();
-$array_singers = $array_singer_ids = array();
+$array_songs = $array_videos = $array_albums = [];
+$array_singers = $array_singer_ids = [];
 
 // Lấy các album
 if (empty($request_tab) or $request_tab == 'album') {
@@ -89,7 +89,7 @@ if (empty($request_tab) or $request_tab == 'album') {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
 
@@ -124,7 +124,7 @@ if (empty($request_tab) or $request_tab == 'song') {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['song_link'] = '';
 
@@ -159,7 +159,7 @@ if (empty($request_tab) or $request_tab == 'video') {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['video_link'] = '';
 

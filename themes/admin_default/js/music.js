@@ -692,8 +692,8 @@ $(document).ready(function() {
 
         if (ajaction == 'delete' && !confirm(nv_is_del_confirm[0])) {
             return false;
-        } else if (ajaction == 'edit') {
-            (msIsDebug && console.log('Link to edit'));
+        } else if (ajaction == 'edit' || ajaction == 'linkcc') {
+            (msIsDebug && console.log('Link to ' + ajaction));
             window.location = btn.data('url' + ajaction);
             return false;
         }
@@ -1545,7 +1545,7 @@ $(window).on('resize', function() {
 
 var msIconSheets = {};
 msIconSheets.none = '<i class="fa fa-fw fa-angle-right"></i>';
-msIconSheets.edit = '<i class="fa fa-fw fa-edit"></i>';
+msIconSheets.edit = '<i class="fa fa-fw fa-pencil"></i>';
 msIconSheets.ajedit = '<i class="fa fa-fw fa-edit"></i>';
 msIconSheets.delete = '<i class="fa fa-fw fa-trash"></i>';
 msIconSheets.active = '<i class="fa fa-fw fa-circle"></i>';
@@ -1553,6 +1553,7 @@ msIconSheets.deactive = '<i class="fa fa-fw fa-circle-o"></i>';
 msIconSheets.setdefault = '<i class="fa fa-fw fa-check-circle"></i>';
 msIconSheets.setonlinesupported = '<i class="fa fa-fw fa-microphone"></i>';
 msIconSheets.unsetonlinesupported = '<i class="fa fa-fw fa-microphone-slash"></i>';
+msIconSheets.linkcc = '<i class="fa fa-fw fa-file-audio-o" aria-hidden="true"></i>';
 
 function msGetPopoverContent(e) {
     var popKeys;

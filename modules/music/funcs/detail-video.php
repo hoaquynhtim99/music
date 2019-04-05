@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MOD_MUSIC'))
+if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
+}
 
 if (!defined('NV_IS_DETAIL_VIDEO')) {
     nv_redirect_location(NV_MOD_LINK);
@@ -17,24 +18,24 @@ if (!defined('NV_IS_DETAIL_VIDEO')) {
 
 use NukeViet\Music\Config;
 
-$array_singer_ids = $array_singers = array();
-$array_videos = $array_albums = array();
+$array_singer_ids = $array_singers = [];
+$array_videos = $array_albums = [];
 
 // Thiết lập lại một số thông tin cho video
-$ms_detail_data['singers'] = array();
+$ms_detail_data['singers'] = [];
 $ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
-$ms_detail_data['cats'] = array();
+$ms_detail_data['cats'] = [];
 $ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
-$ms_detail_data['authors'] = array();
+$ms_detail_data['authors'] = [];
 $ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
 $ms_detail_data['album_link'] = '';
-$ms_detail_data['song'] = array();
+$ms_detail_data['song'] = [];
 $ms_detail_data['song_link'] = '';
 $ms_detail_data['video_link'] = '';
 $ms_detail_data['video_link_ember'] = '';
 $ms_detail_data['singer_name'] = Config::getUnknowSinger();
-$ms_detail_data['filesdata'] = array();
+$ms_detail_data['filesdata'] = [];
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
@@ -59,7 +60,7 @@ if (!empty($ms_detail_data['song_id'])) {
             unset($song['default_' . $f]);
         }
 
-        $song['singers'] = array();
+        $song['singers'] = [];
         $song['singer_ids'] = explode(',', $song['singer_ids']);
         $song['song_link'] = '';
 
@@ -87,7 +88,7 @@ if (!empty($ms_detail_data['singer_id'])) {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['album_link'] = '';
 
@@ -114,7 +115,7 @@ if (!empty($ms_detail_data['singer_id'])) {
             unset($row['default_' . $f]);
         }
 
-        $row['singers'] = array();
+        $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['video_link'] = '';
 
@@ -198,11 +199,14 @@ $stt = sizeof($global_array_mvquality);
 foreach ($filesdata as $_fileinfo) {
     $stt++;
     $key = isset($global_array_mvquality[$_fileinfo['quality_id']]) ? $global_array_mvquality[$_fileinfo['quality_id']]['weight'] : $stt;
-    $ms_detail_data['filesdata'][$key] = array(
-        'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $_fileinfo['resource_path'],
+    if ($_fileinfo['resource_server_id'] == 0) {
+        $_fileinfo['resource_path'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $_fileinfo['resource_path'];
+    }
+    $ms_detail_data['filesdata'][$key] = [
+        'resource_path' => $_fileinfo['resource_path'],
         'resource_duration' => $_fileinfo['resource_duration'],
         'quality_name' => isset($global_array_mvquality[$_fileinfo['quality_id']]) ? $global_array_mvquality[$_fileinfo['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
-    );
+    ];
 }
 ksort($ms_detail_data['filesdata']);
 
@@ -229,7 +233,7 @@ if (!empty($ms_detail_data['singers'])) {
     if (sizeof($ms_detail_data['singers']) > Config::getLimitSingersDisplayed()) {
         $page_title .= Config::getVariousArtists();
     } else {
-        $singers = array();
+        $singers = [];
         foreach ($ms_detail_data['singers'] as $singer) {
             $singers[] = $singer['artist_name'];
         }

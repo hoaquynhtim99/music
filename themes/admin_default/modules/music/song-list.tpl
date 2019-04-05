@@ -144,7 +144,7 @@ $(function() {
                         </button>
                     </td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="edit|delete" data-langs="{GLANG.edit}|{GLANG.delete}" data-urledit="{ROW.url_edit}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="edit|linkcc|delete" data-langs="{GLANG.edit}|{LANG.mana_cc}|{GLANG.delete}" data-urledit="{ROW.url_edit}" data-urllinkcc="{ROW.url_cc}">
                             <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                             <span class="caret"></span>
                         </button>

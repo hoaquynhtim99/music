@@ -21,7 +21,7 @@ $description = Config::getFuncsDescription()->getSinger();
 // Các thẻ meta Open Graph
 nv_get_fb_share_image();
 
-$array = array();
+$array = [];
 $array_select_fields = nv_get_artist_select_fields();
 $nation_id = 0;
 $nation_code = '';
@@ -94,7 +94,7 @@ if (isset($array_op[4]) or $nation_alias != $request_nation_alias) {
 
 $base_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : '');
 $per_page = Config::getGirdSingersNums();
-$array_where = array();
+$array_where = [];
 $array_where[] = 'status=1';
 if ($nation_id) {
     $array_where[] = 'nation_id=' . $nation_id;
@@ -111,7 +111,7 @@ $all_pages = $db->query($db->sql())->fetchColumn();
 $db->order("artist_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 $db->select(implode(', ', $array_select_fields[0]));
 
-$array_singers = array();
+$array_singers = [];
 $result = $db->query($db->sql());
 while ($row = $result->fetch()) {
     foreach ($array_select_fields[1] as $f) {

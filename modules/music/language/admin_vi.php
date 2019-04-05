@@ -68,6 +68,10 @@ $lang_module['enter_keyword'] = 'Nhập từ khóa';
 $lang_module['picked_list'] = 'Danh sách đã chọn';
 $lang_module['drag_and_drop_to_sort'] = 'Kéo thả để sắp xếp thứ tự';
 $lang_module['selected'] = 'Đã chọn';
+$lang_module['song'] = 'Bài hát';
+$lang_module['album'] = 'Album';
+$lang_module['video'] = 'Video';
+$lang_module['artist'] = 'Nghệ sĩ';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 $lang_module['error_require_field'] = 'Trường này là bắt buộc';
@@ -314,3 +318,7 @@ $lang_module['singer_list'] = 'Danh sách ca sĩ';
 
 $lang_module['search_all_nation'] = 'Tất cả quốc gia';
 $lang_module['search_all_cat'] = 'Tất cả thể loại';
+
+$lang_module['mana_cc'] = 'Quản lý lời bài hát';
+
+$lang_module['mainpage_title'] = 'Trang thông tin tổng quan';

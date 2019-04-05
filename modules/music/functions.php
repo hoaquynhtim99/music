@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_SYSTEM'))
+if (!defined('NV_SYSTEM')) {
     die('Stop!!!');
+}
 
 define('NV_IS_MOD_MUSIC', true);
 
@@ -17,7 +18,7 @@ require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
 use NukeViet\Music\Config;
 
-$array_mod_title = array();
+$array_mod_title = [];
 $is_embed_mode = ($nv_Request->get_int('embed', 'get', 0) == 1 ? true : false);
 
 // Điều khiển các OP
@@ -31,7 +32,7 @@ if ($op == 'main' and isset($array_op[0])) {
     $ms_detail_op_alias = $m[1];
     $ms_detail_prefix = $m[2];
     $ms_detail_code = $m[3];
-    $ms_detail_data = array();
+    $ms_detail_data = [];
 
     if ($ms_detail_prefix == $codePrefix->getSong()) {
         $array_select_fields = nv_get_song_select_fields(true);
@@ -91,7 +92,7 @@ if ($op == 'main' and isset($array_op[0])) {
  * @param mixed $data
  * @return
  */
-function nv_get_fb_share_image($data = array())
+function nv_get_fb_share_image($data = [])
 {
     global $meta_property, $module_upload;
 

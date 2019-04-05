@@ -298,6 +298,7 @@ foreach ($array as $row) {
     $row['stat_comments'] = Utils::getFormatNumberView($row['stat_comments']);
     $row['state'] = $lang_module['status_' . $row['status']];
     $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'song-content&amp;song_id=' . $row['song_id'];
+    $row['url_cc'] = NV_ADMIN_MOD_FULLLINK_AMP . 'song-caption&amp;song_id=' . $row['song_id'];
 
     $xtpl->assign('ROW', $row);
 

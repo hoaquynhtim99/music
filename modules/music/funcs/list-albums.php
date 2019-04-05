@@ -21,9 +21,9 @@ $description = Config::getFuncsDescription()->getAlbum();
 // Các thẻ meta Open Graph
 nv_get_fb_share_image();
 
-$array = array();
+$array = [];
 $array_select_fields = nv_get_album_select_fields();
-$array_singer_ids = $array_singers = array();
+$array_singer_ids = $array_singers = [];
 $catid = 0;
 $catcode = '';
 $catalias = '';
@@ -81,7 +81,7 @@ foreach ($global_array_cat as $cat) {
         $db->order("album_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
         $db->select(implode(', ', $array_select_fields[0]));
 
-        $array_albums = array();
+        $array_albums = [];
         $result = $db->query($db->sql());
         while ($row = $result->fetch()) {
             foreach ($array_select_fields[1] as $f) {
@@ -91,7 +91,7 @@ foreach ($global_array_cat as $cat) {
                 unset($row['default_' . $f]);
             }
 
-            $row['singers'] = array();
+            $row['singers'] = [];
             $row['singer_ids'] = explode(',', $row['singer_ids']);
             $row['album_link'] = '';
 

@@ -48,7 +48,7 @@ Resources::setDb($db);
 Resources::setDbPrefix($db_config['prefix']);
 Resources::setTablePrefix(NV_MOD_TABLE);
 
-$array_alphabets = array('A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z');
+$array_alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
 $global_array_rule = [];
 $global_array_rule['nation_code'] = '/^[a-zA-Z0-9]{4}$/';

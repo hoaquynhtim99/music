@@ -24,6 +24,7 @@ $allow_func = [
     'cat-manager',
     'song-list',
     'song-content',
+    'song-caption',
     'album-list',
     'video-list',
     'video-content',
