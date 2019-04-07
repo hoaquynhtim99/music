@@ -17,12 +17,23 @@ var videoplayer = jwplayer('videoplayer').setup({
     }<!-- END: filesdata -->],
     autostart: true,
     primary: 'html5',
-    repeat: true,
+    repeat: false,
     skin: {name: "nvmsmv"},
     localization: {
         fullscreen: '{LANG.player_lang_fullscreen}',
         settings: '{LANG.player_lang_settings}',
         hd: '{LANG.player_lang_hd}'
+    }
+});
+videoplayer.on("complete", function(event) {
+    var btnAutoPlay = $("#{MODULE_DATA}_autoplay_suggesvideo");
+    var isAutoPlay = (btnAutoPlay.length && btnAutoPlay.is(":checked"));
+    if (isAutoPlay) {
+        // Phát MV tiếp theo
+        window.location = $("#{MODULE_DATA}_suggesvideos").find('[data-toggle="linkitem"]:first').attr("href");
+    } else {
+        // Lặp lại MV này
+        videoplayer.play();
     }
 });
 </script>
