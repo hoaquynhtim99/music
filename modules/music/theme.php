@@ -632,7 +632,7 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
  */
 function nv_theme_detail_song($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode, $module_data;
 
     $xtpl = new XTemplate('detail-song.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -640,6 +640,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
     $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
     $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
+    $xtpl->assign('MODULE_DATA', $module_data);
 
     $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
 

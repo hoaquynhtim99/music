@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_FILE_MODULES'))
+if (!defined('NV_IS_FILE_MODULES')) {
     die('Stop!!!');
+}
 
 $sql_drop_module = [];
 
@@ -144,6 +145,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_caption";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_data";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_random";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums_data";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos";
@@ -359,6 +361,21 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   UNIQUE KEY id (song_id, quality_id),
   KEY status (status)
+) ENGINE=MyISAM";
+
+/*
+ * Bảng lưu ID bài hát để lấy random các bài hát khi nghe một bài hát
+ * Nguyên tắc: Mỗi thể loại lưu 1000 bài hát mới nhất
+ * Mục đích: Tăng tốc truy vấn.
+ * Bài hát trong này là public, nghĩa là chỉ cần lấy ra, không quan tâm đến bài hát chính thức hay do thành viên upload,
+ * việc control này do chức năng trong quản trị xử lý khi thêm, sửa bài hát
+ *
+ * Thử nghiệm dữ liệu: 65.000 rows nếu random ở bảng songs tốn ~600ms thì random bảng này tốn ~5ms (tức tốc độ nhanh hơn khoảng 100 lần!!!)
+ */
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_random (
+  song_id int(11) unsigned NOT NULL,
+  cat_id int(11) unsigned NOT NULL,
+  PRIMARY KEY id (song_id, cat_id)
 ) ENGINE=MyISAM";
 
 // Bảng albums

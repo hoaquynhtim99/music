@@ -6,6 +6,11 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
+/* Like Bootstrap 4 */
+.ml-1 {
+    margin-left: 5px!important;
+}
+
 /* COLORS */
 .ms-second-title,
 .ms-second-title a {
@@ -52,7 +57,8 @@ ul.ms-singers-nation-nav li a:hover {
     border-color: #428bca;
 }
 .jw-skin-nvmsso .jw-progress,
-.jw-skin-nvmsmv .jw-progress {
+.jw-skin-nvmsmv .jw-progress,
+.switch-button input[type=checkbox]:checked + span {
     background-color: #428bca;
 }
 .jw-skin-nvmsso .jw-buffer,
@@ -676,6 +682,9 @@ ul.ms-list-song > li:last-child {
     display: block;
     padding-right: 110px;
 }
+.ms-main-list-song-no-tools .ms-main-list-song-title {
+    padding-right: 0;
+}
 .ms-main-list-song-title h3 {
     margin-top: 5px;
     font-weight: normal;
@@ -1038,4 +1047,106 @@ ul.ms-detailab-header-info h2 {
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center top;
+}
+
+/* Block Nghe tiếp các bài hát */
+.block-auto-play {
+    margin-bottom: 15px;
+}
+
+.block-auto-play-title {
+    float: left;
+    font-size: 20px;
+    line-height: 24px;
+}
+
+.block-auto-play-btn {
+    float: right;
+}
+
+.switch-button {
+    display: inline-block;
+    border-radius: 50px;
+    background-color: #b3b2b2;
+    width: 60px;
+    height: 27px;
+    padding: 4px;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.switch-button.switch-button-sm {
+    height: 24px;
+    width: 57px;
+    line-height: 20px;
+}
+
+.switch-button input[type=checkbox] {
+    display: none;
+}
+
+.switch-button input[type=checkbox]:checked + span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 4px;
+}
+
+.switch-button label {
+    border-radius: 50%;
+    box-shadow: 0 0 1px 1px #FFF inset;
+    background-color: #FFF;
+    margin: 0;
+    height: 19px;
+    width: 19px;
+    z-index: 1;
+    display: inline-block;
+    cursor: pointer;
+    background-clip: padding-box;
+}
+
+.switch-button.switch-button-sm label {
+    height: 16px;
+    width: 16px;
+}
+
+.switch-button input[type=checkbox]:checked + span label {
+    float: right;
+}
+
+.switch-button label:before {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 0;
+    content: "OFF";
+    right: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    line-height: 27px;
+    top: 0;
+    text-align: right;
+    padding-right: 10px;
+    color: #FFF;
+}
+
+.switch-button.switch-button-sm label:before {
+    line-height: 25px;
+}
+
+.switch-button input[type=checkbox]:checked + span label:before {
+    position: absolute;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 0;
+    content: "ON";
+    color: #FFF;
+    left: 0;
+    text-align: left;
+    padding-left: 10px;
 }

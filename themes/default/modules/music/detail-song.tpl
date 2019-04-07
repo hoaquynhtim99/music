@@ -98,7 +98,7 @@ var songplayer = jwplayer('songplayer').setup({
     }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],<!-- END: tracks -->
     title: "{SONG_FULL_NAME}",
     autostart: true,
-    repeat: true,
+    repeat: false,
     skin: {name: "nvmsso"},
     localization: {
         fullscreen: '{LANG.player_lang_fullscreen}',
@@ -107,6 +107,17 @@ var songplayer = jwplayer('songplayer').setup({
     }
 });
 msJwplayerStyleCaption(songplayer);
+songplayer.on("complete", function(event) {
+    var btnAutoPlay = $("#{MODULE_DATA}_autoplay_suggessong");
+    var isAutoPlay = (btnAutoPlay.length && btnAutoPlay.is(":checked"));
+    if (isAutoPlay) {
+        // Phát bài hát tiếp theo
+        window.location = $("#{MODULE_DATA}_suggessongs").find('[data-toggle="linkitem"]:first').attr("href");
+    } else {
+        // Lặp lại bài hát này
+        songplayer.play();
+    }
+});
 </script>
 <!-- END: player -->
 <div class="ms-detailso-action">

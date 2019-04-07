@@ -60,6 +60,9 @@ $lang_module['view_biography'] = 'Xem tiểu sử';
 $lang_module['view_full'] = 'Đầy đủ';
 $lang_module['view_haft'] = 'Rút gọn';
 $lang_module['view_video'] = 'Xem MV';
+$lang_module['autoplay'] = 'Tự động phát';
+$lang_module['play_sugges_song'] = 'Nghe tiếp';
+$lang_module['play_sugges_video'] = 'Xem tiếp';
 
 $lang_module['des_singer_add_song'] = '. Các bài hát thể hiện';
 $lang_module['des_singer_add_album'] = '. Các album online';
