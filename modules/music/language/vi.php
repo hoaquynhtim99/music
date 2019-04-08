@@ -63,6 +63,7 @@ $lang_module['view_video'] = 'Xem MV';
 $lang_module['autoplay'] = 'Tự động phát';
 $lang_module['play_sugges_song'] = 'Nghe tiếp';
 $lang_module['play_sugges_video'] = 'Xem tiếp';
+$lang_module['play_sugges_album'] = 'Có thể bạn quan tâm';
 
 $lang_module['des_singer_add_song'] = '. Các bài hát thể hiện';
 $lang_module['des_singer_add_album'] = '. Các album online';

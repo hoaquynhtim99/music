@@ -148,6 +148,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_random";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums_data";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums_random";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos_data";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos_random";
@@ -426,6 +427,16 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   UNIQUE KEY id (album_id, song_id),
   KEY status (status)
+) ENGINE=MyISAM";
+
+/*
+ * Bảng lưu ID album để lấy random các album khi nghe một album
+ * Nguyên tắc tương tự cách random bài hát
+ */
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums_random (
+  album_id int(11) unsigned NOT NULL,
+  cat_id int(11) unsigned NOT NULL,
+  PRIMARY KEY id (album_id, cat_id)
 ) ENGINE=MyISAM";
 
 // Bảng video
