@@ -16,10 +16,10 @@ class SingerTabsAlias
 {
     private $data = [];
 
-    private const PROFILE = 'profile';
-    private const ALBUM = 'album';
-    private const VIDEO = 'video';
-    private const SONG = 'song';
+    const PROFILE = 'profile';
+    const ALBUM = 'album';
+    const VIDEO = 'video';
+    const SONG = 'song';
 
     private $allKeys = [
         self::PROFILE,

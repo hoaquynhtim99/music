@@ -17,8 +17,8 @@ namespace NukeViet\Music\Db;
  */
 class Order
 {
-    private const MODE_DESC = 'DESC';
-    private const MODE_ASC = 'ASC';
+    const MODE_DESC = 'DESC';
+    const MODE_ASC = 'ASC';
 
     private $offset = -1;
     private $orders = [];

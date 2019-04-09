@@ -16,12 +16,12 @@ class CodePrefix
 {
     private $data = [];
 
-    private const SINGER = 'singer';
-    private const PLAYLIST = 'playlist';
-    private const ALBUM = 'album';
-    private const VIDEO = 'video';
-    private const SONG = 'song';
-    private const CAT = 'cat';
+    const SINGER = 'singer';
+    const PLAYLIST = 'playlist';
+    const ALBUM = 'album';
+    const VIDEO = 'video';
+    const SONG = 'song';
+    const CAT = 'cat';
 
     /**
      * @param array|string $data

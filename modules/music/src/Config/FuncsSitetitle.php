@@ -16,9 +16,9 @@ class FuncsSitetitle
 {
     private $data = [];
 
-    private const SINGER = 'singer';
-    private const ALBUM = 'album';
-    private const VIDEO = 'video';
+    const SINGER = 'singer';
+    const ALBUM = 'album';
+    const VIDEO = 'video';
 
     /**
      * @param array|string $data

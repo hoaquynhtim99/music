@@ -16,9 +16,9 @@ class OpAliasPrefix
 {
     private $data = [];
 
-    private const ALBUM = 'album';
-    private const VIDEO = 'video';
-    private const SONG = 'song';
+    const ALBUM = 'album';
+    const VIDEO = 'video';
+    const SONG = 'song';
 
     /**
      * @param array|string $data
