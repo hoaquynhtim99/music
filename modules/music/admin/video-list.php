@@ -69,6 +69,9 @@ if ($ajaction == 'delete') {
                 msUpdateArtistStat($author_id, false);
             }
 
+            // Cập nhật random các video
+            msUpdateRandomVideos($video['cat_ids']);
+
             // Cập nhật bài hát liên quan
             if ($video['song_id']) {
                 $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET video_id=0 WHERE song_id=" . $video['song_id'];
@@ -142,6 +145,9 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
             msUpdateArtistStat($author_id, false);
         }
 
+        // Cập nhật random các video
+        msUpdateRandomVideos($video['cat_ids']);
+
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_VIDEO', $video_id . ':' . $array[$video_id]['video_name'], $admin_info['userid']);
     }
@@ -206,7 +212,7 @@ if (!empty($where)) {
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("video_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+$db->order("time_add DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 
 $array_select_fields = nv_get_video_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));

@@ -162,7 +162,7 @@ if (!empty($where)) {
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("artist_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+$db->order("time_add DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 
 $array_select_fields = nv_get_artist_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));

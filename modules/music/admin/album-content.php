@@ -273,6 +273,10 @@ if ($nv_Request->isset_request('submit', 'post')) {
         msUpdateCatStat($_id);
     }
 
+    // Cập nhật random các album
+    msUpdateRandomAlbums($diff1);
+    msUpdateRandomAlbums($diff2);
+
     // Các bài hát trong album: Xóa hết thêm lại
     $db->query("DELETE FROM " . NV_MOD_TABLE . "_albums_data WHERE album_id=" . $album_id);
     $weight = 0;

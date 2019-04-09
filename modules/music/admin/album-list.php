@@ -65,6 +65,9 @@ if ($ajaction == 'delete') {
                 msUpdateArtistStat($singer_id, true);
             }
 
+            // Cập nhật random các album
+            msUpdateRandomAlbums($album['cat_ids']);
+
             // Ghi nhật ký hệ thống
             nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_ALBUM', $nation_id . ':' . $album['nation_name'], $admin_info['userid']);
         }
@@ -127,6 +130,9 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         foreach ($album['singer_ids'] as $singer_id) {
             msUpdateArtistStat($singer_id, true);
         }
+
+        // Cập nhật random các album
+        msUpdateRandomAlbums($album['cat_ids']);
 
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_ALBUM', $album_id . ':' . $array[$album_id]['album_name'], $admin_info['userid']);
@@ -193,7 +199,7 @@ if (!empty($where)) {
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("album_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+$db->order("time_add DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 
 $array_select_fields = nv_get_album_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));

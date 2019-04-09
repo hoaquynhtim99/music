@@ -75,6 +75,9 @@ if ($ajaction == 'delete') {
                 $db->query($sql);
             }
 
+            // Cập nhật random các bài hát
+            msUpdateRandomSongs($song['cat_ids']);
+
             // Ghi nhật ký hệ thống
             nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_SONG', $song_id . ':' . $song['song_name'], $admin_info['userid']);
         }
@@ -142,6 +145,9 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
             msUpdateArtistStat($author_id, false);
         }
 
+        // Cập nhật random các bài hát
+        msUpdateRandomSongs($song['cat_ids']);
+
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_SONG', $song_id . ':' . $array[$song_id]['song_name'], $admin_info['userid']);
     }
@@ -206,7 +212,7 @@ if (!empty($where)) {
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("song_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+$db->order("time_add DESC")->offset(($page - 1) * $per_page)->limit($per_page);
 
 $array_select_fields = nv_get_song_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));

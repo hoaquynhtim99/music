@@ -293,6 +293,10 @@ if ($nv_Request->isset_request('submit', 'post')) {
         msUpdateCatStat($_id);
     }
 
+    // Cập nhật random các bài hát
+    msUpdateRandomSongs($diff1);
+    msUpdateRandomSongs($diff2);
+
     // Set video liên quan của bài hát nếu chọn video liên quan
     if ($array_old['video_id'] != $array['video_id']) {
         // Set video liên quan có bài hát liên quan là bài hát này
