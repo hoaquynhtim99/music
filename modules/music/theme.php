@@ -831,12 +831,16 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
 
     $xtpl->assign('VIDEO', $array);
 
+    $video_full_name = $array['video_name'];
+    $video_full_singer = [];
+
     // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
     if ($num_singers > Config::getLimitSingersDisplayed()) {
         $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
 
         foreach ($array['singers'] as $singer) {
+            $video_full_singer[] = $singer['artist_name'];
             $xtpl->assign('SINGER', $singer);
             $xtpl->parse('main.va_singer.loop');
         }
@@ -846,6 +850,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         $i = 0;
         foreach ($array['singers'] as $singer) {
             $i++;
+            $video_full_singer[] = $singer['artist_name'];
             $xtpl->assign('SINGER', $singer);
 
             if ($i > 1) {
@@ -855,9 +860,13 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         }
         $xtpl->parse('main.show_singer');
     } else {
+        $video_full_singer[] = Config::getUnknowSinger();
         $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
         $xtpl->parse('main.no_singer');
     }
+
+    $xtpl->assign('VIDEO_FULL_NAME', str_replace('"', '\"', $video_full_name));
+    $xtpl->assign('VIDEO_FULL_SINGER', str_replace('"', '\"', implode(', ', $video_full_singer)));
 
     // Xuất nhạc sĩ
     $num_authors = sizeof($array['authors']);

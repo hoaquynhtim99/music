@@ -18,6 +18,8 @@ var videoplayer = jwplayer('videoplayer').setup({
     autostart: true,
     primary: 'html5',
     repeat: false,
+    title: "{VIDEO_FULL_NAME}",
+    description: "{VIDEO_FULL_SINGER}",
     skin: {name: "nvmsmv"}
 });
 videoplayer.on("complete", function(event) {
