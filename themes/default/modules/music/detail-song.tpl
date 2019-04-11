@@ -97,14 +97,10 @@ var songplayer = jwplayer('songplayer').setup({
         "default": {TRACK.is_default}
     }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],<!-- END: tracks -->
     title: "{SONG_FULL_NAME}",
+    description: "{SONG_FULL_SINGER}",
     autostart: true,
     repeat: false,
-    skin: {name: "nvmsso"},
-    localization: {
-        fullscreen: '{LANG.player_lang_fullscreen}',
-        settings: '{LANG.player_lang_settings}',
-        hd: '{LANG.player_lang_hd}'
-    }
+    skin: {name: "nvmsso"}
 });
 msJwplayerStyleCaption(songplayer);
 songplayer.on("complete", function(event) {

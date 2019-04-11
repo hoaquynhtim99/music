@@ -84,8 +84,7 @@ ul.ms-detailab-header-info h2 .tit {
 }
 .ms-list-song-action ul li a,
 .ms-main-list-song-action ul li a,
-.ms-detailab-solists .ctn > ul > li ._actions ul li a ,
-.jw-skin-nvmsso .jw-title .jw-title-primary > span{
+.ms-detailab-solists .ctn > ul > li ._actions ul li a {
     color: #c0c0c0;
 }
 .ms-gird-albums-thumb,
@@ -799,8 +798,7 @@ ul.ms-detailso-header-info h2 {
     padding-top: 10px!important;
 }
 .jw-skin-nvmsso .jw-title .jw-title-primary {
-    padding-left: 10px!important;
-    font-size: 14px!important;
+    padding-top: 10px!important;
 }
 .jw-skin-nvmsso .jw-preview,
 .jw-skin-nvmsmv .jw-preview {

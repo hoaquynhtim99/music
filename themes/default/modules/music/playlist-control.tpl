@@ -32,17 +32,13 @@ $(document).ready(function() {
                 "default": {TRACK.is_default}
             }<!-- BEGIN: comma -->, <!-- END: comma --><!-- END: loop -->],<!-- END: tracks -->
             image: "{PLSO_DATA.resource_cover}",
-            title: "{PLSO_FULL_NAME}"
+            title: "{PLSO_FULL_NAME}",
+            description: "{PLSO_FULL_SINGER}"
         }<!-- END: loop -->],
         <!-- END: playlist_js -->
         autostart: true,
         repeat: true,
         skin: {name: "nvmsso"},
-        localization: {
-            fullscreen: '{LANG.player_lang_fullscreen}',
-            settings: '{LANG.player_lang_settings}',
-            hd: '{LANG.player_lang_hd}'
-        },
         displaytitle: true
     });
     msJwplayerStyleCaption(playlistplayer);

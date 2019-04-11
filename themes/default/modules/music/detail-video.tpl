@@ -18,12 +18,7 @@ var videoplayer = jwplayer('videoplayer').setup({
     autostart: true,
     primary: 'html5',
     repeat: false,
-    skin: {name: "nvmsmv"},
-    localization: {
-        fullscreen: '{LANG.player_lang_fullscreen}',
-        settings: '{LANG.player_lang_settings}',
-        hd: '{LANG.player_lang_hd}'
-    }
+    skin: {name: "nvmsmv"}
 });
 videoplayer.on("complete", function(event) {
     var btnAutoPlay = $("#{MODULE_DATA}_autoplay_suggesvideo");

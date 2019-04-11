@@ -276,7 +276,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
 
-    $contents = array();
+    $contents = [];
 
     if (!empty($content_albums)) {
         $xtpl->assign('ALBUMS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums']);
@@ -650,8 +650,8 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
 
     $xtpl->assign('SONG', $array);
 
-    $song_full_name = $array['song_name'] . ' - ';
-    $song_full_singer = array();
+    $song_full_name = $array['song_name'];
+    $song_full_singer = [];
 
     // Xuất ca sĩ
     $num_singers = sizeof($array['singers']);
@@ -684,7 +684,8 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         $xtpl->parse('main.no_singer');
     }
 
-    $xtpl->assign('SONG_FULL_NAME', str_replace('"', '\"', $song_full_name . '<span>' . implode(', ', $song_full_singer) . '</span>'));
+    $xtpl->assign('SONG_FULL_NAME', str_replace('"', '\"', $song_full_name));
+    $xtpl->assign('SONG_FULL_SINGER', str_replace('"', '\"', implode(', ', $song_full_singer)));
 
     // Xuất nhạc sĩ
     $num_authors = sizeof($array['authors']);
@@ -1060,8 +1061,8 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
         $xtpl->assign('PLSO_LRTTOKEND', md5($song['song_code'] . NV_CHECK_SESSION));
         $xtpl->assign('PLSO_LINK_TARGET', $is_embed_mode ? ' target="_blank"' : '');
 
-        $song_full_name = $song['song_name'] . ' - ';
-        $song_full_singer = array();
+        $song_full_name = $song['song_name'];
+        $song_full_singer = [];
 
         // Xuất ca sĩ
         $num_singers = sizeof($song['singers']);
@@ -1094,7 +1095,8 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
             $xtpl->parse('main.player.playlist.loop.no_singer');
         }
 
-        $xtpl->assign('PLSO_FULL_NAME', str_replace('"', '\"', $song_full_name . '<span>' . implode(', ', $song_full_singer) . '</span>'));
+        $xtpl->assign('PLSO_FULL_NAME', str_replace('"', '\"', $song_full_name));
+        $xtpl->assign('PLSO_FULL_SINGER', str_replace('"', '\"', implode(', ', $song_full_singer)));
 
         if (!$is_embed_mode) {
             $xtpl->parse('main.player.playlist.loop.actions');
