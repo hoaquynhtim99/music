@@ -153,6 +153,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos_data";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos_random";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_config";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_statistics";
 }
 
 $sql_create_module = $sql_drop_module;
@@ -572,6 +573,30 @@ $default_config['res_default_video_avatar'] = 'videos/video-art-cover.jpg';
 foreach ($default_config as $config_name => $config_value) {
     $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_config (config_name, config_value_default) VALUES('" . $config_name . "', '" . $config_value . "')";
 }
+
+/*
+ * Bảng thống kê lượt nghe: Đối tượng bài hát, album, video. Đối với mỗi đối tượng thống kê theo
+ * - Toàn bộ => stat_type = all
+ * - Theo năm stat_type = year, stat_val = 2019, 2018...
+ * - Theo tháng stat_type = month, stat_val = 201901, 201902 => 201912
+ * - Theo ngày stat_type = day, stat_val = 20190101, 20190101 => 20190131
+ *
+ * Nguyên tắc:
+ * Kiểu thống kê toàn bộ được thêm vào ngay khi cài đặt sau đó dùng lệnh UPDATE để set tăng lên dần
+ * Vào ngày đầu mỗi tháng (hoặc bất cứ lúc nào mà chưa có dữ liệu), insert toàn bộ các ngày trong tháng, tháng (INSERT IGNORE), năm (INSERT IGNORE) đó vào CSDL rồi cũng UPDATE lên để giảm số câu lệnh chạy mỗi lần
+ */
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_statistics (
+  stat_obj varchar(20) NOT NULL COMMENT 'song|album|video',
+  stat_type varchar(20) NOT NULL COMMENT 'year|month|day...',
+  stat_val varchar(20) NOT NULL COMMENT '2019|04|...',
+  time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
+  stat_count int(11) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY id (stat_obj, stat_type, stat_val)
+) ENGINE=MyISAM";
+
+$sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('song', 'all', '', " . NV_CURRENTTIME . ", 0)";
+$sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('album', 'all', '', " . NV_CURRENTTIME . ", 0)";
+$sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('video', 'all', '', " . NV_CURRENTTIME . ", 0)";
 
 // Bình luận
 $sql_create_module[] = "INSERT INTO " . NV_CONFIG_GLOBALTABLE . " (lang, module, config_name, config_value) VALUES ('" . $lang . "', '" . $module_name . "', 'auto_postcomm', '0')";

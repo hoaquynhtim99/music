@@ -118,3 +118,60 @@ function nv_get_fb_share_image($data = [])
         $meta_property['og:image:type'] = Config::getFbShareImageMime();
     }
 }
+
+/**
+ * Cập nhật thống kê lượt nghe
+ * @param string $stat_obj
+ */
+function msUpdateStatistics($stat_obj)
+{
+    global $global_config, $db;
+
+    // Thống kê tổng quan
+    if (NV_SITE_TIMEZONE_NAME == $global_config['statistics_timezone']) {
+        $current_year = date('Y', NV_CURRENTTIME);
+        $current_month = date('m', NV_CURRENTTIME);
+        $current_day = date('d', NV_CURRENTTIME);
+        $current_numdays = date('t', NV_CURRENTTIME);
+    } else {
+        date_default_timezone_set($global_config['statistics_timezone']);
+        $current_year = date('Y', NV_CURRENTTIME);
+        $current_month = date('m', NV_CURRENTTIME);
+        $current_day = date('d', NV_CURRENTTIME);
+        $current_numdays = date('t', NV_CURRENTTIME);
+        date_default_timezone_set(NV_SITE_TIMEZONE_NAME);
+    }
+
+    $current_day_key = $current_year . $current_month . $current_day;
+    $sql = "UPDATE " . NV_MOD_TABLE . "_statistics SET time_update=" . NV_CURRENTTIME . ", stat_count=stat_count+1 WHERE
+    stat_obj='" . $stat_obj . "' AND stat_type='day' AND stat_val='" . $current_day_key . "'";
+    if (!$db->exec($sql)) {
+        // Insert toàn bộ dữ liệu ngày của tháng
+        for ($i = 1; $i <= $current_numdays; $i++) {
+            $day_key_i = $current_year . $current_month . str_pad($i, 2, '0', STR_PAD_LEFT);
+            $sql = "INSERT IGNORE INTO " . NV_MOD_TABLE . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES (
+                '" . $stat_obj . "', 'day', '" . $day_key_i . "', " . NV_CURRENTTIME . ", " . ($day_key_i == $current_day_key ? 1: 0) . "
+            )";
+            $db->query($sql);
+        }
+
+        // Insert tháng
+        $sql = "INSERT IGNORE INTO " . NV_MOD_TABLE . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES (
+            '" . $stat_obj . "', 'month', '" . $current_year . $current_month . "', " . NV_CURRENTTIME . ", 0
+        )";
+        $db->query($sql);
+
+        // Insert năm
+        $sql = "INSERT IGNORE INTO " . NV_MOD_TABLE . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES (
+            '" . $stat_obj . "', 'year', '" . $current_year . "', " . NV_CURRENTTIME . ", 0
+        )";
+        $db->query($sql);
+    }
+
+    // Cập nhật các thống kê khác: Tất cả, năm, tháng. Không có ngày vì ngày cập nhật ở trên kia
+    $sql = "UPDATE " . NV_MOD_TABLE . "_statistics SET time_update=" . NV_CURRENTTIME . ", stat_count=stat_count+1 WHERE
+    stat_obj='" . $stat_obj . "' AND (
+        stat_type='all' OR (stat_type='year' AND stat_val='" . $current_year . "') OR (stat_type='month' AND stat_val='" . $current_year . $current_month . "')
+    )";
+    $db->query($sql);
+}

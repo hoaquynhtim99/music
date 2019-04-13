@@ -264,6 +264,36 @@ if (isset($site_mods['comment']) and isset($module_config[$module_name]['activec
     $content_comment = '';
 }
 
+// Thống kê lượt nghe (xem)
+$cookie_stat = $nv_Request->get_string($module_data . '_stat_video', 'cookie', '');
+$cookie_stat = empty($cookie_stat) ? [] : json_decode($cookie_stat, true);
+if (!is_array($cookie_stat)) {
+    $cookie_stat = [];
+}
+$timeout = NV_CURRENTTIME - (5 * 60); // Đếm tăng mỗi 5 phút
+
+if (!isset($cookie_stat[$ms_detail_data['video_code']]) or $cookie_stat[$ms_detail_data['video_code']] < $timeout) {
+    // Cập nhật thống kê
+    $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_views=stat_views+1 WHERE video_id=" . $ms_detail_data['video_id'];
+    $db->query($sql);
+
+    // Cập nhật thống kê tổng quan
+    msUpdateStatistics('video');
+
+    // Thêm vào cookie
+    $cookie_stat[$ms_detail_data['video_code']] = NV_CURRENTTIME;
+
+    // Chỉnh lại Cookie (Xóa bớt các phần tử hết hạn)
+    foreach ($cookie_stat as $_key => $_val) {
+        if ($_val < $timeout) {
+            unset($cookie_stat[$_key]);
+        }
+    }
+
+    // Ghi lại cookie
+    $nv_Request->set_Cookie($module_data . '_stat_video', json_encode($cookie_stat));
+}
+
 $contents = nv_theme_detail_video($ms_detail_data, $content_comment, $array_albums, $array_videos);
 
 include NV_ROOTDIR . '/includes/header.php';

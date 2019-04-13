@@ -300,6 +300,36 @@ if (isset($site_mods['comment']) and isset($module_config[$module_name]['activec
     $content_comment = '';
 }
 
+// Thống kê lượt nghe (xem)
+$cookie_stat = $nv_Request->get_string($module_data . '_stat_album', 'cookie', '');
+$cookie_stat = empty($cookie_stat) ? [] : json_decode($cookie_stat, true);
+if (!is_array($cookie_stat)) {
+    $cookie_stat = [];
+}
+$timeout = NV_CURRENTTIME - (5 * 60); // Đếm tăng mỗi 5 phút
+
+if (!isset($cookie_stat[$ms_detail_data['album_code']]) or $cookie_stat[$ms_detail_data['album_code']] < $timeout) {
+    // Cập nhật thống kê
+    $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET stat_views=stat_views+1 WHERE album_id=" . $ms_detail_data['album_id'];
+    $db->query($sql);
+
+    // Cập nhật thống kê tổng quan
+    msUpdateStatistics('album');
+
+    // Thêm vào cookie
+    $cookie_stat[$ms_detail_data['album_code']] = NV_CURRENTTIME;
+
+    // Chỉnh lại Cookie (Xóa bớt các phần tử hết hạn)
+    foreach ($cookie_stat as $_key => $_val) {
+        if ($_val < $timeout) {
+            unset($cookie_stat[$_key]);
+        }
+    }
+
+    // Ghi lại cookie
+    $nv_Request->set_Cookie($module_data . '_stat_album', json_encode($cookie_stat));
+}
+
 $contents = nv_theme_detail_album($ms_detail_data, $array_song_captions, $content_comment, $array_singer_albums, $array_cat_albums);
 
 include NV_ROOTDIR . '/includes/header.php';
