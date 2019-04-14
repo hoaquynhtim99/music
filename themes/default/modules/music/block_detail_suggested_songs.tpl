@@ -61,10 +61,11 @@ $(function() {
         $('#{MODULE_DATA}_autoplay_suggessong').removeAttr("checked");
     }
     $('#{MODULE_DATA}_autoplay_suggessong').on("change", function() {
+
         if ($(this).is(":checked")) {
-            $.cookie('{MODULE_DATA}_autoplay_suggessong', 1);
+            $.cookie('{MODULE_DATA}_autoplay_suggessong', 1, {expires: 30});
         } else {
-            $.cookie('{MODULE_DATA}_autoplay_suggessong', 0);
+            $.cookie('{MODULE_DATA}_autoplay_suggessong', 0, {expires: 30});
         }
     });
 });

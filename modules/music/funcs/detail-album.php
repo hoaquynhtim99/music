@@ -327,7 +327,7 @@ if (!isset($cookie_stat[$ms_detail_data['album_code']]) or $cookie_stat[$ms_deta
     }
 
     // Ghi lại cookie
-    $nv_Request->set_Cookie($module_data . '_stat_album', json_encode($cookie_stat));
+    $nv_Request->set_Cookie($module_data . '_stat_album', json_encode($cookie_stat), NV_LIVE_COOKIE_TIME);
 }
 
 $contents = nv_theme_detail_album($ms_detail_data, $array_song_captions, $content_comment, $array_singer_albums, $array_cat_albums);

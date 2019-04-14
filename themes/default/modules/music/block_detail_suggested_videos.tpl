@@ -62,9 +62,9 @@ $(function() {
     }
     $('#{MODULE_DATA}_autoplay_suggesvideo').on("change", function() {
         if ($(this).is(":checked")) {
-            $.cookie('{MODULE_DATA}_autoplay_suggesvideo', 1);
+            $.cookie('{MODULE_DATA}_autoplay_suggesvideo', 1, {expires: 30});
         } else {
-            $.cookie('{MODULE_DATA}_autoplay_suggesvideo', 0);
+            $.cookie('{MODULE_DATA}_autoplay_suggesvideo', 0, {expires: 30});
         }
     });
 });

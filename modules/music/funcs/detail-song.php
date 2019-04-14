@@ -308,7 +308,7 @@ if (!isset($cookie_stat[$ms_detail_data['song_code']]) or $cookie_stat[$ms_detai
     }
 
     // Ghi lại cookie
-    $nv_Request->set_Cookie($module_data . '_stat_song', json_encode($cookie_stat));
+    $nv_Request->set_Cookie($module_data . '_stat_song', json_encode($cookie_stat), NV_LIVE_COOKIE_TIME);
 }
 
 $contents = nv_theme_detail_song($ms_detail_data, $content_comment, $array_albums, $array_videos);

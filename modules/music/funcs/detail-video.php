@@ -291,7 +291,7 @@ if (!isset($cookie_stat[$ms_detail_data['video_code']]) or $cookie_stat[$ms_deta
     }
 
     // Ghi lại cookie
-    $nv_Request->set_Cookie($module_data . '_stat_video', json_encode($cookie_stat));
+    $nv_Request->set_Cookie($module_data . '_stat_video', json_encode($cookie_stat), NV_LIVE_COOKIE_TIME);
 }
 
 $contents = nv_theme_detail_video($ms_detail_data, $content_comment, $array_albums, $array_videos);

@@ -127,6 +127,8 @@ if (empty($request_tab) or $request_tab == 'song') {
         $row['singers'] = [];
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['song_link'] = '';
+        $row['song_link_full'] = '';
+        $row['tokend'] = md5($row['song_code'] . NV_CHECK_SESSION);
 
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
@@ -195,6 +197,7 @@ foreach ($array_songs as $id => $row) {
         }
     }
     $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
+    $row['song_link_full'] = NV_MY_DOMAIN . nv_url_rewrite($row['song_link'], true);
     $array_songs[$id] = $row;
 }
 
