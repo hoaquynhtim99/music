@@ -502,6 +502,35 @@
     });
 }(jQuery);
 
+function number_format(number, decimals, dec_point, thousands_point) {
+    if (number == null || !isFinite(number)) {
+        throw new TypeError("number is not valid");
+    }
+
+    if (!decimals) {
+        var len = number.toString().split('.').length;
+        decimals = len > 1 ? len : 0;
+    }
+
+    if (!dec_point) {
+        dec_point = '.';
+    }
+
+    if (!thousands_point) {
+        thousands_point = ',';
+    }
+
+    number = parseFloat(number).toFixed(decimals);
+
+    number = number.replace(".", dec_point);
+
+    var splitNum = number.split(dec_point);
+    splitNum[0] = splitNum[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousands_point);
+    number = splitNum.join(dec_point);
+
+    return number;
+}
+
 function msEllipsisSet() {
     if ($(window).width() < 992) {
         return;
@@ -549,6 +578,16 @@ var timerEllipsis = null;
 var msAllPop = new Array();
 var msIsDebug = true;
 var msTimerResize = null;
+
+window.chartColors = {
+    red: 'rgb(255, 99, 132)',
+    orange: 'rgb(255, 159, 64)',
+    yellow: 'rgb(255, 205, 86)',
+    green: 'rgb(75, 192, 192)',
+    blue: 'rgb(35, 138, 230)',
+    purple: 'rgb(153, 102, 255)',
+    grey: 'rgb(201, 203, 207)'
+};
 
 $(document).ready(function() {
     // Config

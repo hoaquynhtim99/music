@@ -42,6 +42,115 @@ $xtpl->assign('LINK_VIDEOS', NV_ADMIN_MOD_FULLLINK_AMP . 'video-list');
 $xtpl->assign('LINK_ALBUMS', NV_ADMIN_MOD_FULLLINK_AMP . 'album-list');
 $xtpl->assign('LINK_ARTISTS', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-list');
 
+// Thống kê lượt nghe/xem tổng quan
+$array_overview = [];
+$sql = "SELECT stat_obj, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='all'";
+$result = $db->query($sql);
+while ($row = $result->fetch()) {
+    $array_overview[$row['stat_obj']] = $row['stat_count'];
+}
+
+$array_overview['total'] = $array_overview['song'] + $array_overview['video'] + $array_overview['album'];
+$array_overview['song_display'] = Utils::getFormatNumberView($array_overview['song']);
+$array_overview['video_display'] = Utils::getFormatNumberView($array_overview['video']);
+$array_overview['album_display'] = Utils::getFormatNumberView($array_overview['album']);
+$array_overview['total_display'] = Utils::getFormatNumberView($array_overview['total']);
+
+$xtpl->assign('OVERVIEW', $array_overview);
+
+// Theo năm
+$current_year = date('Y', NV_CURRENTTIME);
+$from_year = $current_year - 4;
+$array_byyear = [];
+$sql = "SELECT stat_obj, stat_val, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='year' AND stat_val>=" . $from_year . " AND stat_val<=" . $current_year;
+$result = $db->query($sql);
+while ($row = $result->fetch()) {
+    if (!isset($array_byyear[$row['stat_obj']])) {
+        $array_byyear[$row['stat_obj']] = [];
+    }
+    $array_byyear[$row['stat_obj']][$row['stat_val']] = [
+        'value' => $row['stat_count'],
+        'text' => Utils::getFormatNumberView($row['stat_count'])
+    ];
+}
+
+$data_year_value = $data_year_song = $data_year_album = $data_year_video = [];
+for ($i = $from_year; $i <= $current_year; $i++) {
+    $data_year_value[] = $i;
+    $data_year_song[] = isset($array_byyear['song'][$i]) ? $array_byyear['song'][$i]['value'] : 0;
+    $data_year_video[] = isset($array_byyear['video'][$i]) ? $array_byyear['video'][$i]['value'] : 0;
+    $data_year_album[] = isset($array_byyear['album'][$i]) ? $array_byyear['album'][$i]['value'] : 0;
+}
+
+$xtpl->assign('YEAR_VALUE', "'" . implode("', '", $data_year_value) . "'");
+$xtpl->assign('YEAR_SONG', "'" . implode("', '", $data_year_song) . "'");
+$xtpl->assign('YEAR_VIDEO', "'" . implode("', '", $data_year_video) . "'");
+$xtpl->assign('YEAR_ALBUM', "'" . implode("', '", $data_year_album) . "'");
+
+// Theo ngày
+$current_month = intval(date('Ym', NV_CURRENTTIME));
+$current_month_day = date('t', NV_CURRENTTIME);
+$from_day = intval($current_month . '01');
+$to_day = intval($current_month . $current_month_day);
+$array_byday = [];
+$sql = "SELECT stat_obj, stat_val, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='day' AND stat_val>=" . $from_day . " AND stat_val<=" . $to_day;
+$result = $db->query($sql);
+while ($row = $result->fetch()) {
+    if (!isset($array_byday[$row['stat_obj']])) {
+        $array_byday[$row['stat_obj']] = [];
+    }
+    $row['stat_val'] = intval(substr($row['stat_val'], -2));
+    $array_byday[$row['stat_obj']][$row['stat_val']] = [
+        'value' => $row['stat_count'],
+        'text' => Utils::getFormatNumberView($row['stat_count'])
+    ];
+}
+
+$data_day_value = $data_day_song = $data_day_album = $data_day_video = [];
+for ($i = 1; $i <= $current_month_day; $i++) {
+    $data_day_value[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+    $data_day_song[] = isset($array_byday['song'][$i]) ? $array_byday['song'][$i]['value'] : 0;
+    $data_day_video[] = isset($array_byday['video'][$i]) ? $array_byday['video'][$i]['value'] : 0;
+    $data_day_album[] = isset($array_byday['album'][$i]) ? $array_byday['album'][$i]['value'] : 0;
+}
+
+$xtpl->assign('DAY_VALUE', "'" . implode("', '", $data_day_value) . "'");
+$xtpl->assign('DAY_SONG', "'" . implode("', '", $data_day_song) . "'");
+$xtpl->assign('DAY_VIDEO', "'" . implode("', '", $data_day_video) . "'");
+$xtpl->assign('DAY_ALBUM', "'" . implode("', '", $data_day_album) . "'");
+$xtpl->assign('DAY_STAT_MONTH', nv_date('m/Y', NV_CURRENTTIME));
+
+// Theo tháng
+$from_month = intval($current_year . '01');
+$to_month = intval($current_year . '12');
+$array_bymonth = [];
+$sql = "SELECT stat_obj, stat_val, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='month' AND stat_val>=" . $from_month . " AND stat_val<=" . $to_month;
+$result = $db->query($sql);
+while ($row = $result->fetch()) {
+    if (!isset($array_bymonth[$row['stat_obj']])) {
+        $array_bymonth[$row['stat_obj']] = [];
+    }
+    $row['stat_val'] = intval(substr($row['stat_val'], -2));
+    $array_bymonth[$row['stat_obj']][$row['stat_val']] = [
+        'value' => $row['stat_count'],
+        'text' => Utils::getFormatNumberView($row['stat_count'])
+    ];
+}
+
+$data_month_value = $data_month_song = $data_month_album = $data_month_video = [];
+for ($i = 1; $i <= 12; $i++) {
+    $data_month_value[] = str_pad($i, 2, '0', STR_PAD_LEFT);
+    $data_month_song[] = isset($array_bymonth['song'][$i]) ? $array_bymonth['song'][$i]['value'] : 0;
+    $data_month_video[] = isset($array_bymonth['video'][$i]) ? $array_bymonth['video'][$i]['value'] : 0;
+    $data_month_album[] = isset($array_bymonth['album'][$i]) ? $array_bymonth['album'][$i]['value'] : 0;
+}
+
+$xtpl->assign('MONTH_VALUE', "'" . implode("', '", $data_month_value) . "'");
+$xtpl->assign('MONTH_SONG', "'" . implode("', '", $data_month_song) . "'");
+$xtpl->assign('MONTH_VIDEO', "'" . implode("', '", $data_month_video) . "'");
+$xtpl->assign('MONTH_ALBUM', "'" . implode("', '", $data_month_album) . "'");
+$xtpl->assign('MONTH_STAT_YEAR', $current_year);
+
 $xtpl->parse('main');
 $contents = $xtpl->text('main');
 
