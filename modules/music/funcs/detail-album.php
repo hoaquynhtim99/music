@@ -8,8 +8,9 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-if (!defined('NV_IS_MOD_MUSIC'))
+if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
+}
 
 use NukeViet\Music\Config;
 
@@ -125,8 +126,10 @@ if (!empty($array_songids)) {
         }
         $row['singers'] = [];
         $row['song_link'] = '';
+        $row['song_link_full'] = '';
         $row['resource_avatar_mode'] = 'song';
         $row['resource_cover_mode'] = 'song';
+        $row['tokend'] = md5($row['song_code'] . NV_CHECK_SESSION);
         $array_songs[$row['song_id']] = $row;
     }
 
@@ -144,11 +147,11 @@ if (!empty($array_songids)) {
             if (!isset($array_songs_resources[$row['song_id']])) {
                 $array_songs_resources[$row['song_id']] = [];
             }
-            $array_songs_resources[$row['song_id']][$key] = array(
+            $array_songs_resources[$row['song_id']][$key] = [
                 'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $row['resource_path'],
                 'resource_duration' => $row['resource_duration'],
                 'quality_name' => isset($global_array_soquality[$row['quality_id']]) ? $global_array_soquality[$row['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
-            );
+            ];
         }
     }
 
@@ -162,12 +165,12 @@ if (!empty($array_songids)) {
             if (!isset($array_song_captions[$row['song_id']])) {
                 $array_song_captions[$row['song_id']] = [];
             }
-            $array_song_captions[$row['song_id']][] = array(
+            $array_song_captions[$row['song_id']][] = [
                 'caption_lang' => $row['caption_lang'],
                 'caption_name' => isset($global_array_languages[$row['caption_lang']]) ? $global_array_languages[$row['caption_lang']]['name'] : nv_ucfirst($row['caption_lang']),
                 'caption_file' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'],
                 'is_default' => $row['is_default']
-            );
+            ];
         }
     }
 }
@@ -236,6 +239,7 @@ foreach ($array_songids as $song_id => $_tmpdata) {
             }
         }
         $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
+        $row['song_link_full'] = NV_MY_DOMAIN . nv_url_rewrite($row['song_link'], true);
 
         $row['filesdata'] = [];
         if (isset($array_songs_resources[$song_id])) {
