@@ -100,7 +100,7 @@ videoplayer.on("complete", function(event) {
         <!-- BEGIN: comment_btn -->
         <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
         <!-- END: comment_btn -->
-        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
+        <a href="#" class="btn btn-default btn-xs" title="{LANG.download_this_video}" data-toggle="mscallpop" data-mode="downloadvideo" data-code="{VIDEO.video_code}" data-tokend="{VIDEO.tokend}"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-cog" aria-hidden="true"></i> <span class="caret"></span>

@@ -36,6 +36,7 @@ $ms_detail_data['video_link'] = '';
 $ms_detail_data['video_link_ember'] = '';
 $ms_detail_data['singer_name'] = Config::getUnknowSinger();
 $ms_detail_data['filesdata'] = [];
+$ms_detail_data['tokend'] = md5($ms_detail_data['video_code'] . NV_CHECK_SESSION);
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);

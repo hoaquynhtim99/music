@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <!-- BEGIN: nothing -->
 <div class="px-2">
-    <strong class="text-danger">{LANG.download_song_error_empty}.</strong>
+    <strong class="text-danger">{LANG.download_video_error_empty}.</strong>
 </div>
 <!-- END: nothing -->
 <!-- BEGIN: data -->

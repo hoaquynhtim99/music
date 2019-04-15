@@ -1188,6 +1188,11 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
     return $xtpl->text('main');
 }
 
+/**
+ * @param array $row
+ * @param array $array_resource
+ * @return string
+ */
 function nv_theme_popover_download_song($row, $array_resource)
 {
     global $lang_module, $lang_global, $module_info, $global_array_soquality;
@@ -1204,6 +1209,48 @@ function nv_theme_popover_download_song($row, $array_resource)
                 $resource = $array_resource[$soquality['quality_id']];
                 $soquality['quality_name'] = $soquality[NV_LANG_DATA . '_quality_name'];
                 $xtpl->assign('QUALITY', $soquality);
+                $xtpl->assign('RESOURCE', $resource);
+
+                if ($resource['resource_server_id'] < 0) {
+                    $xtpl->parse('main.data.loop.icon_link');
+                    $xtpl->parse('main.data.loop.target_blank');
+                } else {
+                    $xtpl->parse('main.data.loop.icon_down');
+                    $xtpl->parse('main.data.loop.direct');
+                }
+
+                $xtpl->parse('main.data.loop');
+            }
+        }
+
+        $xtpl->parse('main.data');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
+ * @param array $row
+ * @param array $array_resource
+ * @return string
+ */
+function nv_theme_popover_download_video($row, $array_resource)
+{
+    global $lang_module, $lang_global, $module_info, $global_array_mvquality;
+
+    $xtpl = new XTemplate('download-video.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    if (empty($array_resource)) {
+        $xtpl->parse('main.nothing');
+    } else {
+        foreach ($global_array_mvquality as $mvquality) {
+            if (isset($array_resource[$mvquality['quality_id']])) {
+                $resource = $array_resource[$mvquality['quality_id']];
+                $mvquality['quality_name'] = $mvquality[NV_LANG_DATA . '_quality_name'];
+                $xtpl->assign('QUALITY', $mvquality);
                 $xtpl->assign('RESOURCE', $resource);
 
                 if ($resource['resource_server_id'] < 0) {

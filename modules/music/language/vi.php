@@ -36,6 +36,7 @@ $lang_module['categories'] = 'Thể loại';
 $lang_module['comment'] = 'Bình luận';
 $lang_module['download'] = 'Tải về';
 $lang_module['download_this_song'] = 'Tải bài hát này';
+$lang_module['download_this_video'] = 'Tải MV này';
 $lang_module['ember_code'] = 'Mã nhúng';
 $lang_module['get_ember_code'] = 'Lấy mã nhúng';
 $lang_module['hometown'] = 'Quê quán';
@@ -88,6 +89,7 @@ $lang_module['artist_type_author'] = 'Nhạc sĩ';
 $lang_module['artist_type_all'] = 'Ca nhạc sĩ';
 
 $lang_module['download_song_error_empty'] = 'Rất tiếc hệ thống không tìm thấy dữ liệu tải về của bài hát này';
+$lang_module['download_video_error_empty'] = 'Rất tiếc hệ thống không tìm thấy dữ liệu tải về của MV này';
 $lang_module['download_select_quality'] = 'Lựa chọn chất lượng tải về';
 $lang_module['download_tip_direct'] = 'Nhấp để tải trực tiếp về máy';
 $lang_module['download_tip_link'] = 'Nhấp chuột phải và chọn Save link as (hoặc Save target as) để tải về máy';

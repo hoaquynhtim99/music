@@ -155,10 +155,17 @@ $(document).ready(function() {
                 var btn = $(e.currentTarget);
                 var pop = $("#" + popID);
 
-                // Load HTML download bài hát
-                $.post(msAjaxURL, 'getDownloadSongHtml=1&song_code=' + btn.data("code") + '&tokend=' + btn.data("tokend"), function(res) {
-                    $(".popover-content", pop).html(res);
-                });
+                if (btn.data("mode") == "downloadsong") {
+                    // Load HTML download bài hát
+                    $.post(msAjaxURL, 'getDownloadSongHtml=1&song_code=' + btn.data("code") + '&tokend=' + btn.data("tokend"), function(res) {
+                        $(".popover-content", pop).html(res);
+                    });
+                } else if (btn.data("mode") == "downloadvideo") {
+                    // Load HTML download video
+                    $.post(msAjaxURL, 'getDownloadVideoHtml=1&video_code=' + btn.data("code") + '&tokend=' + btn.data("tokend"), function(res) {
+                        $(".popover-content", pop).html(res);
+                    });
+                }
             });
 
             $(this).on('hide.bs.popover', function(e) {

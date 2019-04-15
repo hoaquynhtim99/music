@@ -121,7 +121,7 @@ songplayer.on("complete", function(event) {
     <!-- BEGIN: comment_btn -->
     <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
     <!-- END: comment_btn -->
-    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
+    <a href="#" class="btn btn-default btn-xs" title="{LANG.download_this_song}" data-toggle="mscallpop" data-mode="downloadsong" data-code="{SONG.song_code}" data-tokend="{SONG.tokend}"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
     <!-- BEGIN: video -->
     <a href="{SONG.video.video_link}" class="btn btn-primary btn-xs"><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.view_video}</a>
     <!-- END: video -->
