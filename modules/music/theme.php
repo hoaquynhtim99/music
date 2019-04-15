@@ -1187,3 +1187,40 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
+
+function nv_theme_popover_download_song($row, $array_resource)
+{
+    global $lang_module, $lang_global, $module_info, $global_array_soquality;
+
+    $xtpl = new XTemplate('download-song.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    if (empty($array_resource)) {
+        $xtpl->parse('main.nothing');
+    } else {
+        foreach ($global_array_soquality as $soquality) {
+            if (isset($array_resource[$soquality['quality_id']])) {
+                $resource = $array_resource[$soquality['quality_id']];
+                $soquality['quality_name'] = $soquality[NV_LANG_DATA . '_quality_name'];
+                $xtpl->assign('QUALITY', $soquality);
+                $xtpl->assign('RESOURCE', $resource);
+
+                if ($resource['resource_server_id'] < 0) {
+                    $xtpl->parse('main.data.loop.icon_link');
+                    $xtpl->parse('main.data.loop.target_blank');
+                } else {
+                    $xtpl->parse('main.data.loop.icon_down');
+                    $xtpl->parse('main.data.loop.direct');
+                }
+
+                $xtpl->parse('main.data.loop');
+            }
+        }
+
+        $xtpl->parse('main.data');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}

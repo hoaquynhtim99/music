@@ -604,11 +604,13 @@ $(document).ready(function() {
         });
         $this.data('value', setVar);
     });
+
     // Xóa dữ liệu input
     $('[data-toggle="msclearval"]').click(function(e) {
         e.preventDefault();
         $($(this).data('target')).val('');
     });
+
     // Xem ảnh
     $('[data-toggle="msviewimg"]').click(function(e) {
         e.preventDefault();
@@ -622,6 +624,7 @@ $(document).ready(function() {
         }
         modalShow($(this).data('title'), '<img src="' + src + '" class="img-responsive"/>');
     });
+
     // Duyệt file trên hệ thống
     $('[data-toggle="msbrserver"]').click(function(e) {
         e.preventDefault();
@@ -644,6 +647,7 @@ $(document).ready(function() {
         }
         nv_open_browse(script_name + "?" + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + "=upload&popup=1&area=" + area + "&alt=" + alt + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath, "NVImg", 850, 420, "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
     });
+
     // Scroll to div
     $('[data-toggle="msscrollto"]').click(function(e) {
         e.preventDefault();
@@ -651,6 +655,7 @@ $(document).ready(function() {
             scrollTop: $($(this).attr('href')).offset().top
         }, 250);
     });
+
     // Điều khiển các popover
     $(document).delegate('[data-toggle="mscallpop"]', 'click', function(e) {
         e.preventDefault();
@@ -685,6 +690,22 @@ $(document).ready(function() {
         } else {
             msDestroyAllPop();
         }
+    });
+
+    function msDestroyAllPop() {
+        $.each(msAllPop, function(k, v) {
+            $(v).popover('destroy');
+            $(v).data('havepop', false);
+        });
+        msAllPop = new Array();
+    }
+
+    $(document).delegate('div.popover', 'click', function(e) {
+        e.stopPropagation();
+    });
+
+    $(window).on('click', function() {
+        msDestroyAllPop();
     });
 
     /**
@@ -791,19 +812,6 @@ $(document).ready(function() {
             // Not things
         });
     });
-    $(document).delegate('div.popover', 'click', function(e) {
-        e.stopPropagation();
-    });
-    $(window).on('click', function() {
-        msDestroyAllPop();
-    });
-    function msDestroyAllPop() {
-        $.each(msAllPop, function(k, v) {
-            $(v).popover('destroy');
-            $(v).data('havepop', false);
-        });
-        msAllPop = new Array();
-    }
 
     // Load lại trang khi đóng cái form popup
     popupModal.on('hide.bs.modal', function() {

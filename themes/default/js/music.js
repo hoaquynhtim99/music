@@ -8,6 +8,7 @@
 
 var loadingHtml = '<div class="text-center"><i class="fa fa-spin fa-spinner fa-2x"></i></div>';
 var msAjaxURL = nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ajax&nocache=' + new Date().getTime();
+var msAllPop = new Array();
 
 // Tải và hiển thị lời bài hát
 function msLoadLyric(soCode, soTitle, tokend, resTitle, resDoby) {
@@ -110,6 +111,75 @@ $(document).ready(function() {
             }
         });
     });
+
+    // Xử lý các Popover
+    $(document).delegate('div.popover', 'click', function(e) {
+        e.stopPropagation();
+    });
+
+    $(window).on('click', function() {
+        msDestroyAllPop();
+    });
+
+    function msDestroyAllPop() {
+        $.each(msAllPop, function(k, v) {
+            $(v).popover('destroy');
+            $(v).data('havepop', false);
+        });
+        msAllPop = new Array();
+    }
+
+    // Nút thêm vào yêu thích, danh sách phát
+    $(document).delegate('[data-toggle="mscallpop"]', 'click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (!$(this).data('havepop')) {
+            msAllPop.push(this);
+            $(this).data('havepop', true);
+            $(this).popover({
+                animation: "",
+                container: "body",
+                html: true,
+                placement: "auto right",
+                content: '<div class="text-center"><i class="fa fa-spinner fa-spin fa-2x" aria-hidden="true"></i></div>',
+                trigger: "manual",
+                viewport: {
+                    selector: 'body',
+                    padding: 10
+                },
+                template: '<div class="popover ms-popover" role="tooltip"><div class="arrow hidden"></div><h3 class="popover-title px-2"></h3><div class="popover-content"></div></div>'
+            });
+
+            $(this).on('shown.bs.popover', function(e) {
+                var popID = $(this).attr("aria-describedby");
+                var btn = $(e.currentTarget);
+                var pop = $("#" + popID);
+
+                // Load HTML download bài hát
+                $.post(msAjaxURL, 'getDownloadSongHtml=1&song_code=' + btn.data("code") + '&tokend=' + btn.data("tokend"), function(res) {
+                    $(".popover-content", pop).html(res);
+                });
+            });
+
+            $(this).on('hide.bs.popover', function(e) {
+                // Hủy khống chế hiện các nút tool tại danh sách bài hát nếu kiểu hiển thị mặc định ẩn
+                if ($(e.currentTarget).is(".song-hidden-inline")) {
+                    $(e.currentTarget).parents(".ms-main-list-song-action").removeClass("ms-show");
+                }
+            });
+
+            $(this).popover('show');
+
+            // Khống chế hiện các nút công cụ tại danh sách bài hát khi Popover show
+            if ($(this).is(".song-hidden-inline")) {
+                $(this).parents(".ms-main-list-song-action").addClass("ms-show");
+            }
+        } else {
+            msDestroyAllPop();
+        }
+    });
+
+    // Nút tải về
 });
 
 $(window).on('load', function() {
