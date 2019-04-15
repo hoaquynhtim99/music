@@ -31,9 +31,9 @@
                     <!-- BEGIN: actions -->
                     <div class="_actions">
                         <ul>
-                            <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
+                            <li><a href="#" title="{LANG.add_song_tolikelist}" data-toggle="mscallpop" data-mode="addsongtolist" data-code="{PLSO_DATA.song_code}" data-tokend="{PLSO_DATA.tokend}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
                             <li><a href="{PLSO_DATA.song_link_full}" title="{LANG.share_song_fb}" data-toggle="share-song-fb" data-code="{PLSO_DATA.song_code}" data-tokend="{PLSO_DATA.tokend}"><i class="fa fa-spin fa-spinner" aria-hidden="true"></i></a></li>
-                            <li><a href="#" title="{LANG.download_this_song}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
+                            <li><a href="#" title="{LANG.download_this_song}" data-toggle="mscallpop" data-mode="downloadsong" data-code="{PLSO_DATA.song_code}" data-tokend="{PLSO_DATA.tokend}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
                             <li><a href="{PLSO_DATA.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
                         </ul>
                     </div>

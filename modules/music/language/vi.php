@@ -23,8 +23,9 @@ $lang_module['list-albums'] = 'Album';
 $lang_module['list-singers'] = 'Nghệ sĩ';
 $lang_module['list-videos'] = 'Video';
 
+$lang_module['favorite'] = 'Yêu thích';
 $lang_module['add_to'] = 'Thêm vào';
-$lang_module['add_song_tolikelist'] = 'Thêm bài hát vào danh sách yêu thích';
+$lang_module['add_song_tolikelist'] = 'Thêm bài hát vào playlist';
 $lang_module['all'] = 'Tất cả';
 $lang_module['album'] = 'Album';
 $lang_module['artist_name'] = 'Nghệ danh';

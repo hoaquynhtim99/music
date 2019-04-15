@@ -117,7 +117,7 @@ songplayer.on("complete", function(event) {
 </script>
 <!-- END: player -->
 <div class="ms-detailso-action">
-    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
+    <a href="#" class="btn btn-default btn-xs" title="{LANG.add_song_tolikelist}" data-toggle="mscallpop" data-mode="addsongtolist" data-code="{SONG.song_code}" data-tokend="{SONG.tokend}"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
     <!-- BEGIN: comment_btn -->
     <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
     <!-- END: comment_btn -->

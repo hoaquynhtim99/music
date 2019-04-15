@@ -96,7 +96,7 @@ videoplayer.on("complete", function(event) {
         <!-- BEGIN: song -->
         <a href="{VIDEO.song.song_link}" class="btn btn-primary btn-xs"><i class="fa fa-music" aria-hidden="true"></i> {LANG.listen_song}</a>
         <!-- END: song -->
-        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
+        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-heart" aria-hidden="true"></i> {LANG.favorite}</a>
         <!-- BEGIN: comment_btn -->
         <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
         <!-- END: comment_btn -->

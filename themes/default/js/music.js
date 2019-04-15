@@ -165,6 +165,9 @@ $(document).ready(function() {
                     $.post(msAjaxURL, 'getDownloadVideoHtml=1&video_code=' + btn.data("code") + '&tokend=' + btn.data("tokend"), function(res) {
                         $(".popover-content", pop).html(res);
                     });
+                } else if (btn.data("mode") == "addsongtolist") {
+                    // Thêm bài hát vào playlist
+                    $(".popover-content", pop).html('<div class="px-2"><strong class="text-danger">Chức năng đang phát triển</strong></div>');
                 }
             });
 

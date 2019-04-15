@@ -52,7 +52,7 @@
             </div>
             <div class="ms-main-list-song-action">
                 <ul>
-                    <li><a href="#" title="{LANG.add_song_tolikelist}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
+                    <li><a href="#" title="{LANG.add_song_tolikelist}" class="song-hidden-inline" data-toggle="mscallpop" data-mode="addsongtolist" data-code="{ROW.song_code}" data-tokend="{ROW.tokend}"><i class="fa fa-plus" aria-hidden="true"></i></a></li>
                     <li><a href="{ROW.song_link_full}" title="{LANG.share_song_fb}" data-toggle="share-song-fb" data-code="{ROW.song_code}" data-tokend="{ROW.tokend}"><i class="fa fa-spin fa-spinner" aria-hidden="true"></i></a></li>
                     <li><a href="#" title="{LANG.download_this_song}" class="song-hidden-inline" data-toggle="mscallpop" data-mode="downloadsong" data-code="{ROW.song_code}" data-tokend="{ROW.tokend}"><i class="fa fa-download" aria-hidden="true"></i></a></li>
                     <li><a href="{ROW.song_link}" title="{LANG.listen_this_song}"><i class="fa fa-play" aria-hidden="true"></i></a></li>
