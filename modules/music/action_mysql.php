@@ -403,6 +403,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   is_official tinyint(1) unsigned NOT NULL DEFAULT '1' COMMENT '1: Chính thức, 0: Thành viên đăng',
   show_inhome tinyint(1) NOT NULL DEFAULT '0',
+  num_songs smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát trong album',
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (album_id),
   UNIQUE KEY album_code (album_code),

@@ -34,6 +34,7 @@ if ($ajaction == 'delete') {
     }
 
     $array_select_fields = nv_get_song_select_fields();
+    $array_song_ids = [];
 
     foreach ($song_ids as $song_id) {
         $song = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id)->fetch();
@@ -44,6 +45,8 @@ if ($ajaction == 'delete') {
                 }
                 unset($song['default_' . $f]);
             }
+
+            $array_song_ids[] = $song_id;
 
             // Xóa bài hát
             $sql = "DELETE FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id;
@@ -82,6 +85,9 @@ if ($ajaction == 'delete') {
             nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_SONG', $song_id . ':' . $song['song_name'], $admin_info['userid']);
         }
     }
+
+    // Cập nhật thống kê số bài hát của album có chứa các bài hát này
+    msUpdateNumSongOfAlbumFromSongs($array_song_ids);
 
     $nv_Cache->delMod($module_name);
 
@@ -151,6 +157,9 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
         // Ghi nhật ký hệ thống
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_' . strtoupper($ajaction) . '_SONG', $song_id . ':' . $array[$song_id]['song_name'], $admin_info['userid']);
     }
+
+    // Cập nhật thống kê số bài hát của album có chứa các bài hát này
+    msUpdateNumSongOfAlbumFromSongs($song_ids);
 
     $nv_Cache->delMod($module_name);
     AjaxRespon::setSuccess()->respon();

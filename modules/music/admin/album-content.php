@@ -136,9 +136,16 @@ if ($nv_Request->isset_request('submit', 'post')) {
     // Các bài hát trong album
     $song_ids = $array['song_ids'];
     $array['song_ids'] = [];
+    $array['num_songs'] = 0;
     foreach ($song_ids as $song_id) {
-        if ($db->query("SELECT song_id FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id)->fetchColumn()) {
+        $song = $db->query("SELECT song_id, status FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id)->fetch();
+        if (!empty($song)) {
             $array['song_ids'][] = $song_id;
+
+            // Chỉ đếm bài hát đang hiệu lực để hiển thị số bài hát của album
+            if ($song['status']) {
+                $array['num_songs']++;
+            }
         }
     }
 
@@ -171,6 +178,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
             resource_avatar=:resource_avatar,
             resource_cover=:resource_cover,
             show_inhome=" . $array['show_inhome'] . ",
+            num_songs=" . $array['num_songs'] . ",
             " . NV_LANG_DATA . "_album_name=:album_name,
             " . NV_LANG_DATA . "_album_alias=:album_alias,
             " . NV_LANG_DATA . "_album_searchkey=:album_searchkey,
@@ -218,13 +226,13 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $album_code = Albums::creatUniqueCode();
 
         $sql = "INSERT INTO " . NV_MOD_TABLE . "_albums (
-            album_code, cat_ids, singer_ids, release_year, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, status,
+            album_code, cat_ids, singer_ids, release_year, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, num_songs, status,
             " . NV_LANG_DATA . "_album_name, " . NV_LANG_DATA . "_album_alias, " . NV_LANG_DATA . "_album_searchkey, " . NV_LANG_DATA . "_album_introtext,
             " . NV_LANG_DATA . "_album_description, " . NV_LANG_DATA . "_album_keywords" . $array_fname . "
         ) VALUES (
             :album_code, " . $db->quote(implode(',', $array['cat_ids'])) . ", " . $db->quote(implode(',', $array['singer_ids'])) . ",
             " . $array['release_year'] . ", :resource_avatar, :resource_cover,
-            " . $admin_info['admin_id'] . ", " . $db->quote($admin_info['full_name']) . ", " . NV_CURRENTTIME . ", 1, " . $array['show_inhome'] . ", 1,
+            " . $admin_info['admin_id'] . ", " . $db->quote($admin_info['full_name']) . ", " . NV_CURRENTTIME . ", 1, " . $array['show_inhome'] . ", " . $array['num_songs'] . ", 1,
             :album_name, :album_alias, :album_searchkey, :album_introtext, :album_description, :album_keywords" . $array_fvalue . "
         )";
 
