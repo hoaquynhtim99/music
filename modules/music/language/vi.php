@@ -66,6 +66,7 @@ $lang_module['autoplay'] = 'Tự động phát';
 $lang_module['play_sugges_song'] = 'Nghe tiếp';
 $lang_module['play_sugges_video'] = 'Xem tiếp';
 $lang_module['play_sugges_album'] = 'Có thể bạn quan tâm';
+$lang_module['unknow_error'] = 'Lỗi không xác định, bạn vui lòng thử lại';
 
 $lang_module['des_singer_add_song'] = '. Các bài hát thể hiện';
 $lang_module['des_singer_add_album'] = '. Các album online';
@@ -94,3 +95,14 @@ $lang_module['download_video_error_empty'] = 'Rất tiếc hệ thống không t
 $lang_module['download_select_quality'] = 'Lựa chọn chất lượng tải về';
 $lang_module['download_tip_direct'] = 'Nhấp để tải trực tiếp về máy';
 $lang_module['download_tip_link'] = 'Nhấp chuột phải và chọn Save link as (hoặc Save target as) để tải về máy';
+
+$lang_module['favorite_add_album_login'] = '<a href="%s">Bạn cần đăng nhập để thêm album vào danh sách yêu thích. Nhấp vào đây để đăng nhập. <i>Lưu ý: Nhấp vào đây sẽ làm gián đoạn bài hát đang nghe của bạn</i></a>';
+$lang_module['favorite_add_video_login'] = '<a href="%s">Bạn cần đăng nhập để thêm MV vào danh sách yêu thích. Nhấp vào đây để đăng nhập. <i>Lưu ý: Nhấp vào đây sẽ làm gián đoạn MV đang nghe của bạn</i></a>';
+$lang_module['favorite_added_album'] = 'Đã thêm album vào danh sách yêu thích';
+$lang_module['favorite_removed_album'] = 'Đã loại bỏ album khỏi danh sách yêu thích';
+$lang_module['favorite_added_video'] = 'Đã thêm MV vào danh sách yêu thích';
+$lang_module['favorite_removed_video'] = 'Đã loại bỏ MV khỏi danh sách yêu thích';
+
+$lang_module['error_album_notexists'] = 'Lỗi album không tồn tại';
+$lang_module['error_not_login'] = 'Lỗi chưa đăng nhập thành viên';
+$lang_module['error_video_notexists'] = 'Lỗi video không tồn tại';

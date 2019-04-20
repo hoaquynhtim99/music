@@ -96,7 +96,7 @@ videoplayer.on("complete", function(event) {
         <!-- BEGIN: song -->
         <a href="{VIDEO.song.song_link}" class="btn btn-primary btn-xs"><i class="fa fa-music" aria-hidden="true"></i> {LANG.listen_song}</a>
         <!-- END: song -->
-        <a href="#" class="btn btn-default btn-xs"><i class="fa fa-heart" aria-hidden="true"></i> {LANG.favorite}</a>
+        <a href="#" class="btn btn-xs<!-- BEGIN: favorited --> btn-success<!-- END: favorited --><!-- BEGIN: nofavorite --> btn-default<!-- END: nofavorite -->" data-toggle="favoriteVideo" data-reqlogin="{VIDEO.require_login}"<!-- BEGIN: require_login --> data-urllogin="{VIDEO.url_login}"<!-- END: require_login --> data-code="{VIDEO.video_code}" data-tokend="{VIDEO.tokend}"><i class="fa fa-heart" aria-hidden="true"></i> {LANG.favorite}</a>
         <!-- BEGIN: comment_btn -->
         <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
         <!-- END: comment_btn -->

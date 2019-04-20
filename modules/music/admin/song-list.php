@@ -56,6 +56,14 @@ if ($ajaction == 'delete') {
             $sql = "DELETE FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id=" . $song_id;
             $db->query($sql);
 
+            // Xóa khỏi các bài hát của album
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums_data WHERE song_id=" . $song_id;
+            $db->query($sql);
+
+            // Xóa khỏi các bài hát trong danh sách phát của thành viên
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id=" . $song_id;
+            $db->query($sql);
+
             // Cập nhật lại thống kê thể loại
             $song['cat_ids'] = Utils::arrayIntFromStrList($song['cat_ids']);
             foreach ($song['cat_ids'] as $cat_id) {
@@ -88,6 +96,9 @@ if ($ajaction == 'delete') {
 
     // Cập nhật thống kê số bài hát của album có chứa các bài hát này
     msUpdateNumSongOfAlbumFromSongs($array_song_ids);
+
+    // Cập nhật thống kê số bài hát của playlist có chứa các bài hát này
+    msUpdateNumSongOfPlaylistFromSongs($array_song_ids);
 
     $nv_Cache->delMod($module_name);
 
@@ -160,6 +171,9 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     // Cập nhật thống kê số bài hát của album có chứa các bài hát này
     msUpdateNumSongOfAlbumFromSongs($song_ids);
+
+    // Cập nhật thống kê số bài hát của playlist có chứa các bài hát này
+    msUpdateNumSongOfPlaylistFromSongs($song_ids);
 
     $nv_Cache->delMod($module_name);
     AjaxRespon::setSuccess()->respon();

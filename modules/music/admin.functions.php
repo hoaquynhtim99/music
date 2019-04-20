@@ -339,3 +339,32 @@ function msUpdateNumSongOfAlbumFromSongs($song_ids)
         $db->query("UPDATE " . NV_MOD_TABLE . "_albums SET num_songs=" . $num_songs . " WHERE album_id=" . $album_id);
     }
 }
+
+/**
+ * Cập nhật số bài hát của playlist từ ID các bài hát.
+ * Xảy ra khi thay đổi trạng thái bài hát, xóa bài hát
+ *
+ * @param array|int $song_ids
+ */
+function msUpdateNumSongOfPlaylistFromSongs($song_ids)
+{
+    if (!is_array($song_ids)) {
+        $song_ids = [$song_ids];
+    }
+
+    global $db;
+
+    // Xác định danh sách các album từ các bài hát này
+    $sql = "SELECT DISTINCT playlist_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id IN(" . implode(',', $song_ids) . ")";
+    $playlist_ids = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
+
+    // Lấy và cập nhật số bài hát cho từng albums
+    foreach ($playlist_ids as $playlist_id) {
+        $sql = "SELECT COUNT(tb1.song_id) FROM " . NV_MOD_TABLE . "_user_playlists_data tb1
+        INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";
+        $num_songs = $db->query($sql)->fetchColumn();
+        $num_songs = intval($num_songs);
+
+        $db->query("UPDATE " . NV_MOD_TABLE . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
+    }
+}

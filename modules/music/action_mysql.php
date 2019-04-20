@@ -135,6 +135,11 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config
       DROP config_value_" . $lang . "
     ";
+
+    $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_user_playlists
+      DROP " . $lang . "_playlist_name,
+      DROP " . $lang . "_playlist_introtext
+    ";
 } elseif ($op != "setup") {
     // Xóa hết bảng dữ liệu
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_categories";
@@ -154,6 +159,10 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos_random";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_config";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_statistics";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_playlists";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_playlists";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_albums";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_videos";
 }
 
 $sql_create_module = $sql_drop_module;
@@ -589,7 +598,8 @@ foreach ($default_config as $config_name => $config_value) {
  *
  * Nguyên tắc:
  * Kiểu thống kê toàn bộ được thêm vào ngay khi cài đặt sau đó dùng lệnh UPDATE để set tăng lên dần
- * Vào ngày đầu mỗi tháng (hoặc bất cứ lúc nào mà chưa có dữ liệu), insert toàn bộ các ngày trong tháng, tháng (INSERT IGNORE), năm (INSERT IGNORE) đó vào CSDL rồi cũng UPDATE lên để giảm số câu lệnh chạy mỗi lần
+ * Vào ngày đầu mỗi tháng (hoặc bất cứ lúc nào mà chưa có dữ liệu), insert toàn bộ các ngày trong
+ * tháng, tháng (INSERT IGNORE), năm (INSERT IGNORE) đó vào CSDL rồi cũng UPDATE lên để giảm số câu lệnh chạy mỗi lần
  */
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_statistics (
   stat_obj varchar(20) NOT NULL COMMENT 'song|album|video',
@@ -598,6 +608,57 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   stat_count int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY id (stat_obj, stat_type, stat_val)
+) ENGINE=MyISAM";
+
+// Playlist của thành viên
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_playlists (
+  playlist_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  playlist_code varchar(8) NOT NULL DEFAULT '' COMMENT 'Mã playlist, dùng công khai',
+  resource_avatar varchar(255) NOT NULL COMMENT 'Avatar',
+  resource_cover varchar(255) NOT NULL COMMENT 'Cover',
+  userid int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID người tạo',
+  stat_views int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
+  stat_likes int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt like',
+  stat_comments int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bình luận',
+  stat_shares int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt chia sẻ',
+  time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
+  privacy smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Cá nhân, 1: Public',
+  num_songs smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Số bài hát trong playlist',
+  PRIMARY KEY (playlist_id),
+  UNIQUE KEY playlist_code (playlist_code),
+  KEY userid (userid),
+  KEY privacy (privacy)
+) ENGINE=MyISAM";
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_user_playlists
+    ADD " . $lang . "_playlist_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_playlist_introtext text NOT NULL
+";
+
+// Bảng lưu bài hát trong playlist của thành viên
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_playlists_data (
+  playlist_id int(11) unsigned NOT NULL,
+  song_id int(11) unsigned NOT NULL,
+  weight smallint(4) NOT NULL DEFAULT '0' COMMENT 'Thứ tự',
+  status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
+  UNIQUE KEY id (playlist_id, song_id),
+  KEY status (status)
+) ENGINE=MyISAM";
+
+// Bảng các album yêu thích của thành viên
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_albums (
+  userid int(11) unsigned NOT NULL COMMENT 'ID thành viên',
+  album_id int(11) unsigned NOT NULL COMMENT 'ID album',
+  time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  PRIMARY KEY id (userid, album_id)
+) ENGINE=MyISAM";
+
+// Bảng các video yêu thích của thành viên
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_videos (
+  userid int(11) unsigned NOT NULL COMMENT 'ID thành viên',
+  video_id int(11) unsigned NOT NULL COMMENT 'ID video',
+  time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  PRIMARY KEY id (userid, video_id)
 ) ENGINE=MyISAM";
 
 $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('song', 'all', 0, " . NV_CURRENTTIME . ", 0)";

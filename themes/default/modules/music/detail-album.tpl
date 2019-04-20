@@ -42,7 +42,7 @@
     </div>
 </div>
 <div class="ms-detailso-action">
-    <a href="#" class="btn btn-default btn-xs"><i class="fa fa-heart" aria-hidden="true"></i> {LANG.favorite}</a>
+    <a href="#" class="btn btn-xs<!-- BEGIN: favorited --> btn-success<!-- END: favorited --><!-- BEGIN: nofavorite --> btn-default<!-- END: nofavorite -->" data-toggle="favoriteAlbum" data-reqlogin="{ALBUM.require_login}"<!-- BEGIN: require_login --> data-urllogin="{ALBUM.url_login}"<!-- END: require_login --> data-code="{ALBUM.album_code}" data-tokend="{ALBUM.tokend}"><i class="fa fa-heart" aria-hidden="true"></i> {LANG.favorite}</a>
     <!-- BEGIN: comment_btn -->
     <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
     <!-- END: comment_btn -->

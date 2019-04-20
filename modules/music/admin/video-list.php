@@ -53,6 +53,10 @@ if ($ajaction == 'delete') {
             $sql = "DELETE FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $video_id;
             $db->query($sql);
 
+            // Xóa khỏi danh sách yêu thích của thành viên
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE video_id=" . $video_id;
+            $db->query($sql);
+
             // Cập nhật lại thống kê thể loại
             $video['cat_ids'] = Utils::arrayIntFromStrList($video['cat_ids']);
             foreach ($video['cat_ids'] as $cat_id) {

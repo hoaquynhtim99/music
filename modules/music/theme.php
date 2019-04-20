@@ -920,6 +920,16 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         $xtpl->parse('main.song');
     }
 
+    // Xử lý yêu thích
+    if ($array['require_login']) {
+        $xtpl->parse('main.require_login');
+    }
+    if ($array['favorited']) {
+        $xtpl->parse('main.favorited');
+    } else {
+        $xtpl->parse('main.nofavorite');
+    }
+
     // Xuất đường dẫn cho player
     $i = 0;
     foreach ($array['filesdata'] as $_fileinfo) {
@@ -1049,6 +1059,16 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
     } else {
         $xtpl->assign('UNKNOW_CAT', Config::getUnknowCat());
         $xtpl->parse('main.no_cat');
+    }
+
+    // Xử lý yêu thích
+    if ($array['require_login']) {
+        $xtpl->parse('main.require_login');
+    }
+    if ($array['favorited']) {
+        $xtpl->parse('main.favorited');
+    } else {
+        $xtpl->parse('main.nofavorite');
     }
 
     // Xuất playlist bài hát

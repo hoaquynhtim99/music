@@ -53,6 +53,10 @@ if ($ajaction == 'delete') {
             $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums_data WHERE album_id=" . $album_id;
             $db->query($sql);
 
+            // Xóa khỏi danh sách yêu thích của thành viên
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE album_id=" . $album_id;
+            $db->query($sql);
+
             // Cập nhật lại thống kê thể loại
             $album['cat_ids'] = Utils::arrayIntFromStrList($album['cat_ids']);
             foreach ($album['cat_ids'] as $cat_id) {

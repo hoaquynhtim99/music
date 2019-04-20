@@ -35,6 +35,7 @@ $ms_detail_data['album_link_ember'] = '';
 $ms_detail_data['cat_name'] = Config::getUnknowCat();
 $ms_detail_data['singer_name'] = Config::getUnknowSinger();
 $ms_detail_data['songs'] = [];
+$ms_detail_data['tokend'] = md5($ms_detail_data['album_code'] . NV_CHECK_SESSION);
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
@@ -332,6 +333,17 @@ if (!isset($cookie_stat[$ms_detail_data['album_code']]) or $cookie_stat[$ms_deta
 
     // Ghi lại cookie
     $nv_Request->set_Cookie($module_data . '_stat_album', json_encode($cookie_stat), NV_LIVE_COOKIE_TIME);
+}
+
+// Xác định xem đã yêu thích hay chưa nếu là thành viên
+$ms_detail_data['favorited'] = false;
+$ms_detail_data['require_login'] = true;
+$ms_detail_data['url_login'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=users&amp;' . NV_OP_VARIABLE . '=login&nv_redirect=' . nv_redirect_encrypt($client_info['selfurl']);
+if (defined('NV_IS_USER')) {
+    $ms_detail_data['require_login'] = false;
+    if ($db->query("SELECT time_add FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $ms_detail_data['album_id'])->fetchColumn()) {
+        $ms_detail_data['favorited'] = true;
+    }
 }
 
 $contents = nv_theme_detail_album($ms_detail_data, $array_song_captions, $content_comment, $array_singer_albums, $array_cat_albums);

@@ -344,4 +344,102 @@ if ($nv_Request->isset_request('getDownloadVideoHtml', 'post,get') or $nv_Reques
     include NV_ROOTDIR . '/includes/footer.php';
 }
 
+/*
+ * Thêm, bỏ album khỏi danh sách yêu thích
+ * Không có cache trong này
+ */
+if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
+    $album_code = $nv_Request->get_title('album_code', 'post', '');
+
+    if ($tokend !== md5($album_code . NV_CHECK_SESSION)) {
+        nv_htmlOutput('Access Denied!!!');
+    }
+
+    $respon = [
+        'status' => 'ERROR',
+        'message' => ''
+    ];
+
+    if (!defined('NV_IS_USER')) {
+        $respon['message'] = $lang_module['error_not_login'];
+        nv_jsonOutput($respon);
+    }
+
+    // Xác định album
+    $array_select_fields = nv_get_album_select_fields(true);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE status=1 AND album_code=" . $db->quote($album_code);
+    $result = $db->query($sql);
+    $row = $result->fetch();
+    if (empty($row)) {
+        $respon['message'] = $lang_module['error_album_notexists'];
+        nv_jsonOutput($respon);
+    }
+    foreach ($array_select_fields[1] as $f) {
+        if (empty($row[$f]) and !empty($row['default_' . $f])) {
+            $row[$f] = $row['default_' . $f];
+        }
+        unset($row['default_' . $f]);
+    }
+
+    $respon['status'] = 'SUCCESS';
+
+    if (!$db->exec("DELETE FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'])) {
+        $db->query("INSERT INTO " . NV_MOD_TABLE . "_user_favorite_albums (userid, album_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['album_id'] . "," . NV_CURRENTTIME . ")");
+        $respon['favorited'] = true;
+    } else {
+        $respon['favorited'] = false;
+    }
+
+    nv_jsonOutput($respon);
+}
+
+/*
+ * Thêm, bỏ video khỏi danh sách yêu thích
+ * Không có cache trong này
+ */
+if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
+    $video_code = $nv_Request->get_title('video_code', 'post', '');
+
+    if ($tokend !== md5($video_code . NV_CHECK_SESSION)) {
+        nv_htmlOutput('Access Denied!!!');
+    }
+
+    $respon = [
+        'status' => 'ERROR',
+        'message' => ''
+    ];
+
+    if (!defined('NV_IS_USER')) {
+        $respon['message'] = $lang_module['error_not_login'];
+        nv_jsonOutput($respon);
+    }
+
+    // Xác định video
+    $array_select_fields = nv_get_video_select_fields(true);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE status=1 AND video_code=" . $db->quote($video_code);
+    $result = $db->query($sql);
+    $row = $result->fetch();
+    if (empty($row)) {
+        $respon['message'] = $lang_module['error_video_notexists'];
+        nv_jsonOutput($respon);
+    }
+    foreach ($array_select_fields[1] as $f) {
+        if (empty($row[$f]) and !empty($row['default_' . $f])) {
+            $row[$f] = $row['default_' . $f];
+        }
+        unset($row['default_' . $f]);
+    }
+
+    $respon['status'] = 'SUCCESS';
+
+    if (!$db->exec("DELETE FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'])) {
+        $db->query("INSERT INTO " . NV_MOD_TABLE . "_user_favorite_videos (userid, video_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['video_id'] . "," . NV_CURRENTTIME . ")");
+        $respon['favorited'] = true;
+    } else {
+        $respon['favorited'] = false;
+    }
+
+    nv_jsonOutput($respon);
+}
+
 nv_redirect_location(NV_MOD_LINK);

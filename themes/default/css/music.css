@@ -1296,3 +1296,261 @@ ul.ms-detailab-header-info h2 {
 .ms-list-download-song li:last-child {
     margin-bottom: 0px;
 }
+
+/* Gritter */
+#gritter-notice-wrapper {
+    position:fixed;
+    top:20px;
+    right:20px;
+    width:301px;
+    z-index:9999;
+}
+#gritter-notice-wrapper.top-left {
+    left: 20px;
+    right: auto;
+}
+#gritter-notice-wrapper.bottom-right {
+    top: auto;
+    left: auto;
+    bottom: 20px;
+    right: 20px;
+}
+#gritter-notice-wrapper.bottom-left {
+    top: auto;
+    right: auto;
+    bottom: 20px;
+    left: 20px;
+}
+.gritter-item-wrapper {
+    position:relative;
+    margin:0 0 10px 0;
+    background:url('../images/music/gritter/images/ie-spacer.gif'); /* ie7/8 fix */
+}
+.gritter-top {
+    background:url(../images/music/gritter/images/gritter.png) no-repeat left -30px;
+    height:10px;
+}
+.hover .gritter-top {
+    background-position:right -30px;
+}
+.gritter-bottom {
+    background:url(../images/music/gritter/images/gritter.png) no-repeat left bottom;
+    height:8px;
+    margin:0;
+}
+.hover .gritter-bottom {
+    background-position: bottom right;
+}
+.gritter-item {
+    display:block;
+    background:url(../images/music/gritter/images/gritter.png) no-repeat left -40px;
+    color:#eee;
+    padding:2px 11px 8px 11px;
+    font-size: 11px;
+    font-family:verdana;
+}
+.hover .gritter-item {
+    background-position:right -40px;
+}
+.gritter-item p {
+    padding:0;
+    margin:0;
+    word-wrap:break-word;
+}
+.gritter-close {
+    display:none;
+    position:absolute;
+    top:5px;
+    left:3px;
+    background:url(../images/music/gritter/images/gritter.png) no-repeat left top;
+    cursor:pointer;
+    width:30px;
+    height:30px;
+    text-indent:-9999em;
+}
+.gritter-title {
+    font-size:14px;
+    font-weight:bold;
+    padding:0 0 7px 0;
+    display:block;
+    text-shadow:1px 1px 0 #000; /* Not supported by IE :( */
+}
+.gritter-image {
+    width:48px;
+    height:48px;
+    float:left;
+}
+.gritter-with-image,
+.gritter-without-image {
+    padding:0;
+}
+.gritter-with-image {
+    width:220px;
+    float:right;
+}
+/* for the light (white) version of the gritter notice */
+.gritter-light .gritter-item,
+.gritter-light .gritter-bottom,
+.gritter-light .gritter-top,
+.gritter-light .gritter-close {
+    background-image: url(../images/music/gritter/images/gritter-light.png);
+    color: #222;
+}
+.gritter-light .gritter-title {
+    text-shadow: none;
+}
+
+#gritter-notice-wrapper {
+    width: 360px;
+    top: 82px;
+}
+
+.gritter-item-wrapper {
+    background: url(../images/music/gritter/images/gritter-bg.png);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+}
+
+.gritter-item-wrapper .gritter-item {
+    font-family: "Roboto", sans-serif;
+    background: 0 0;
+    padding: 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-img-container {
+    display: table-cell;
+    width: 26%;
+    vertical-align: middle;
+    text-align: center;
+    background-color: #302f2f;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-img-container .gritter-image {
+    float: none;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content {
+    width: auto;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image {
+    padding: 15px 35px 17px 15px;
+    color: #d9d9d9;
+    width: 267px;
+    display: table-cell;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image .gritter-close,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image .gritter-close {
+    display: block;
+    top: 0;
+    right: 0;
+    left: auto;
+    height: 30px;
+    width: 30px;
+    font-size: 0;
+    background: 0 0;
+    text-indent: inherit;
+    opacity: 0.4;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image .gritter-close:hover,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image .gritter-close:hover {
+    opacity: 0.8;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image .gritter-close:focus,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image .gritter-close:focus {
+    outline: 0;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image .gritter-close:after,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image .gritter-close:after {
+    content: "\f00d";
+    font-family: "FontAwesome";
+    color: #FFF;
+    font-size: 16px;
+    text-shadow: none;
+    line-height: 35px;
+    margin-left: 7px;
+    font-weight: 900;
+}
+
+.gritter-item-wrapper.clean .gritter-item,
+.gritter-item-wrapper.clean .gritter-item .gritter-content,
+.gritter-item-wrapper.clean .gritter-item .gritter-content .gritter-close:after {
+    color: #404040;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image .gritter-title,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image .gritter-title {
+    text-shadow: none;
+    font-weight: 300;
+    font-size: 16px;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-with-image p,
+.gritter-item-wrapper .gritter-item .gritter-content.gritter-without-image p {
+    font-size: 13px;
+    line-height: 19px;
+}
+
+.gritter-item-wrapper .gritter-item .gritter-content .gritter-without-image {
+    border-left: 0;
+}
+
+.gritter-item-wrapper.img-rounded {
+    border-radius: 0;
+}
+
+.gritter-item-wrapper.img-rounded .gritter-img-container .gritter-image {
+    border-radius: 50%;
+}
+
+.gritter-item-wrapper.clean {
+    background: #FFF;
+}
+
+.gritter-item-wrapper.clean .gritter-item .gritter-img-container {
+    background-color: #fafafa;
+}
+
+.gritter-item-wrapper.clean .gritter-item .gritter-content .gritter-close {
+    opacity: 0.5;
+}
+
+.gritter-item-wrapper.color .gritter-item .gritter-content,
+.gritter-item-wrapper.color .gritter-item .gritter-content a {
+    color: #FFF;
+}
+
+.gritter-item-wrapper.color .gritter-item .gritter-content .gritter-close {
+    opacity: 0.7;
+}
+
+.gritter-item-wrapper.color .gritter-item .gritter-content .gritter-close:hover {
+    opacity: 1;
+}
+
+.gritter-item-wrapper.primary {
+    background: #4285f4;
+}
+
+.gritter-item-wrapper.success {
+    background: #34a853;
+}
+
+.gritter-item-wrapper.warning {
+    background: #fbbc05;
+}
+
+.gritter-item-wrapper.danger {
+    background: #ea4335;
+}
+
+.gritter-item-wrapper.dark {
+    background: #3d3c3c;
+}
