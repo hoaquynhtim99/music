@@ -1291,3 +1291,53 @@ function nv_theme_popover_download_video($row, $array_resource)
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
+
+function nv_theme_popover_add_song_to_playlist($row, $array_playlist, $array_playlist_added, $redirect)
+{
+    global $lang_module, $lang_global, $module_info;
+
+    $xtpl = new XTemplate('add-song-to-playlist.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    $xtpl->assign('SONG', $row);
+
+    if (!defined('NV_IS_USER')) {
+        $xtpl->assign('LINK_LOGIN', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=users&amp;' . NV_OP_VARIABLE . '=login&nv_redirect=' . $redirect);
+        $xtpl->parse('main.notlogin');
+    } else {
+        // Ẩn, hiện form tạo mới khi đã có dữ liệu hoặc chưa có playlist nào
+        if (empty($array_playlist)) {
+            $xtpl->parse('main.data.hide_add_btn');
+        } else {
+            $xtpl->parse('main.data.hide_add_form');
+
+            // Xuất các playlist
+            foreach ($array_playlist as $playlist) {
+                $xtpl->assign('PLAYLIST', $playlist);
+
+                // Icon công khai hay cá nhân
+                if ($playlist['privacy']) {
+                    $xtpl->parse('main.data.playlist.loop.public');
+                } else {
+                    $xtpl->parse('main.data.playlist.loop.private');
+                }
+
+                // Checked đã thêm hay chưa thêm
+                if (in_array($playlist['playlist_id'], $array_playlist_added)) {
+                    $xtpl->parse('main.data.playlist.loop.added');
+                }
+
+                $xtpl->parse('main.data.playlist.loop');
+            }
+
+            $xtpl->parse('main.data.playlist');
+        }
+
+
+        $xtpl->parse('main.data');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}

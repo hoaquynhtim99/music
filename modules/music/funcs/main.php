@@ -82,6 +82,7 @@ if (!empty(Config::getHomeSingersDisplay())) {
 }
 
 // Các bài hát trang chủ
+$redirect = nv_redirect_encrypt($client_info['selfurl']);
 if (!empty(Config::getHomeSongsDisplay())) {
     $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("song_id DESC")->limit(Config::getHomeSongsNums())->offset(0);
@@ -105,6 +106,7 @@ if (!empty(Config::getHomeSongsDisplay())) {
         $row['song_link_full'] = '';
         $row['resource_mode'] = 'song';
         $row['tokend'] = md5($row['song_code'] . NV_CHECK_SESSION);
+        $row['redirect'] = $redirect;
 
         if (!empty($row['singer_ids'])) {
             $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);

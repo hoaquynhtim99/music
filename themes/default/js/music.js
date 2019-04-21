@@ -177,7 +177,109 @@ $(document).ready(function() {
                     });
                 } else if (btn.data("mode") == "addsongtolist") {
                     // Thêm bài hát vào playlist
-                    $(".popover-content", pop).html('<div class="px-2"><strong class="text-danger">Chức năng đang phát triển</strong></div>');
+                    $.post(msAjaxURL, 'getAddSongToPLHtml=1&song_code=' + btn.data("code") + '&tokend=' + btn.data("tokend") + '&nv_redirect=' + btn.data("redirect"), function(res) {
+                        $(".popover-content", pop).html(res);
+
+                        // Tạo thanh cuộn khi nội dung quá dài
+                        if ($('.ms-playlist-popover-ctn').length) {
+                            $('.ms-playlist-popover-ctn', pop).jScrollPane({
+                                animateScroll: true
+                            });
+                        }
+
+                        // Ấn chữ tạo mới playlist => Mở form tạo
+                        $('[data-toggle="creatNew"]', pop).on('click', function(e) {
+                            e.preventDefault();
+                            $(this).addClass('hidden');
+                            $('form', pop).removeClass('hidden');
+                        });
+
+                        // Ấn nút tạo playlist => Submit form tạo
+                        $('[data-toggle="creatNewSubmit"]', pop).on('click', function(e) {
+                            e.preventDefault();
+                            $('form', pop).submit();
+                        });
+
+                        // Xử lý khi submit form tạo
+                        $('form', pop).on('submit', function(e) {
+                            e.preventDefault();
+                            var btn = $(this).find('[data-toggle="creatNewSubmit"] .load');
+                            var $form = $(this);
+                            if (btn.is(':visible')) {
+                                return;
+                            }
+                            btn.removeClass('hidden');
+                            $.ajax({
+                                type: 'POST',
+                                url: msAjaxURL,
+                                dataType: 'json',
+                                data: $form.serialize()
+                            }).done(function(res) {
+                                btn.addClass('hidden');
+                                if (res.status != 'SUCCESS') {
+                                    $.gritter.add({
+                                        title: "",
+                                        text: res.message,
+                                        class_name: "color danger"
+                                    });
+                                    return;
+                                }
+                                $.gritter.add({
+                                    title: "",
+                                    text: res.message,
+                                    class_name: "color success"
+                                });
+                                // Đóng popover
+                                msDestroyAllPop();
+                            }).fail(function(jqXHR, textStatus, errorThrown) {
+                                btn.addClass('hidden');
+                                $.gritter.add({
+                                    title: "",
+                                    text: MSLANG['unknow_error'],
+                                    class_name: "color danger"
+                                });
+                            });
+                        });
+
+                        // Thêm hoặc hủy thêm ở những playlist đã có
+                        $('[data-toggle="addOrRemove"]', pop).on('change', function() {
+                            $('[data-toggle="addOrRemove"]', pop).prop('disabled', true);
+                            $.ajax({
+                                type: 'POST',
+                                url: msAjaxURL,
+                                dataType: 'json',
+                                data: {
+                                    'togglePlaylistSong': 1,
+                                    'song_code':  $(this).data('code'),
+                                    'tokend':  $(this).data('tokend'),
+                                    'playlist_code':  $(this).data('playlist'),
+                                    'is_add':  ($(this).is(':checked') ? 1 : 0)
+                                }
+                            }).done(function(res) {
+                                $('[data-toggle="addOrRemove"]', pop).prop('disabled', false);
+                                if (res.status != 'SUCCESS') {
+                                    $.gritter.add({
+                                        title: "",
+                                        text: res.message,
+                                        class_name: "color danger"
+                                    });
+                                    return;
+                                }
+                                $.gritter.add({
+                                    title: "",
+                                    text: res.message,
+                                    class_name: "color success"
+                                });
+                            }).fail(function(jqXHR, textStatus, errorThrown) {
+                                $('[data-toggle="addOrRemove"]', pop).prop('disabled', false);
+                                $.gritter.add({
+                                    title: "",
+                                    text: MSLANG['unknow_error'],
+                                    class_name: "color danger"
+                                });
+                            });
+                        });
+                    });
                 }
             });
 
@@ -236,7 +338,7 @@ $(document).ready(function() {
         } else {
             numberCssLoad++;
         }
-        if (numberScriptLoaded >= 2 && numberCssLoad >= 0) {
+        if (numberScriptLoaded >= 5 && numberCssLoad >= 0) {
             $(document).trigger("nv.music.ready");
         }
     });
@@ -244,6 +346,27 @@ $(document).ready(function() {
     // Load jquery gritter
     if (typeof $.gritter == "undefined") {
         loadJS(nv_base_siteurl + "themes/" + moduleTheme + "/images/music/gritter/js/jquery.gritter.min.js");
+    } else {
+        $(document).trigger("nv.music.resourceloaded", 1);
+    }
+
+    // Load jquery jScrollPane
+    if (typeof $.fn.jScrollPane == "undefined") {
+        loadJS(nv_base_siteurl + "themes/" + moduleTheme + "/images/music/jscrollpane/jquery.jscrollpane.min.js");
+    } else {
+        $(document).trigger("nv.music.resourceloaded", 1);
+    }
+
+    // Load jquery mousewheel
+    if (typeof $.fn.mousewheel == "undefined") {
+        loadJS(nv_base_siteurl + "themes/" + moduleTheme + "/images/music/jscrollpane/jquery.mousewheel.js");
+    } else {
+        $(document).trigger("nv.music.resourceloaded", 1);
+    }
+
+    // Load jquery mwheelIntent
+    if (typeof $.fn.mwheelIntent == "undefined") {
+        loadJS(nv_base_siteurl + "themes/" + moduleTheme + "/images/music/jscrollpane/mwheelIntent.js");
     } else {
         $(document).trigger("nv.music.resourceloaded", 1);
     }

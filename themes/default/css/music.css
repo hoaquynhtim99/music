@@ -7,6 +7,11 @@
  */
 
 /* Like Bootstrap 4 */
+.my-2 {
+    margin-top: 10px!important;
+    margin-bottom: 10px!important;
+}
+
 .mb-2 {
     margin-bottom: 10px!important;
 }
@@ -965,24 +970,6 @@ ul.ms-detailab-header-info h2 {
     max-height: 281px;
 }
 
-.jspScrollable,
-.jspScrollable:focus,
-.jspContainer,
-.jspContainer:focus,
-.jspPane,
-.jspPane:focus {
-    outline: 0!important;
-}
-.jspVerticalBar {
-    width: 8px!important;
-}
-.jspTrack {
-    background: #E0E0E0!important;
-}
-.jspDrag {
-    background: #C0C0C0!important;
-}
-
 .ms-detailab-solists .ctn > ul {
     list-style: none;
     margin: 0;
@@ -1553,4 +1540,144 @@ ul.ms-detailab-header-info h2 {
 
 .gritter-item-wrapper.dark {
     background: #3d3c3c;
+}
+
+/* jScrollPane */
+.jspContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.jspPane {
+    position: absolute;
+}
+
+.jspVerticalBar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 16px;
+    height: 100%;
+    background: red;
+}
+
+.jspHorizontalBar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background: red;
+}
+
+.jspCap {
+    display: none;
+}
+
+.jspHorizontalBar .jspCap {
+    float: left;
+}
+
+.jspTrack {
+    background: #dde;
+    position: relative;
+}
+
+.jspDrag {
+    background: #bbd;
+    position: relative;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+}
+
+.jspHorizontalBar .jspTrack,
+.jspHorizontalBar .jspDrag {
+    float: left;
+    height: 100%;
+}
+
+.jspArrow {
+    background: #50506d;
+    text-indent: -20000px;
+    display: block;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+}
+
+.jspArrow.jspDisabled {
+    cursor: default;
+    background: #80808d;
+}
+
+.jspVerticalBar .jspArrow {
+    height: 16px;
+}
+
+.jspHorizontalBar .jspArrow {
+    width: 16px;
+    float: left;
+    height: 100%;
+}
+
+.jspVerticalBar .jspArrow:focus {
+    outline: none;
+}
+
+.jspCorner {
+    background: #eeeef4;
+    float: left;
+    height: 100%;
+}
+
+.jspScrollable,
+.jspScrollable:focus,
+.jspContainer,
+.jspContainer:focus,
+.jspPane,
+.jspPane:focus {
+    outline: 0!important;
+}
+.jspVerticalBar {
+    width: 8px!important;
+}
+.jspTrack {
+    background: #E0E0E0!important;
+}
+.jspDrag {
+    background: #C0C0C0!important;
+}
+
+/* Popover thêm bài hát vào playlist */
+.ms-playlist-popover-ctn {
+    max-height: 300px;
+    overflow: hidden;
+}
+
+.ms-playlist-popover {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.ms-playlist-popover li {
+    margin-bottom: 5px;
+}
+
+.ms-playlist-popover li:last-child {
+    margin-bottom: 0;
+}
+
+.ms-playlist-popover .playlist-name {
+    margin-right: 30px;
+}
+
+.ms-playlist-popover .playlist-name label {
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+.ms-playlist-popover .playlist-name input {
+     margin-top: -2px;
 }

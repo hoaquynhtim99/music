@@ -404,6 +404,37 @@ function nv_get_artist_select_fields($full_fields = false)
 }
 
 /**
+ * @param boolean $full_fields
+ * @return string[][]
+ */
+function nv_get_user_playlist_select_fields($full_fields = false)
+{
+    $array_select_fields = [
+        'playlist_id', 'playlist_code', 'resource_avatar', 'resource_cover', 'userid',
+        'stat_views', 'stat_likes', 'stat_comments', 'stat_shares',
+        'time_add', 'time_update', 'privacy', 'num_songs'
+    ];
+    $array_select_fields[] = NV_LANG_DATA . '_playlist_name playlist_name';
+    $default_language = Config::getDefaultLang();
+    if (NV_LANG_DATA != $default_language) {
+        $array_select_fields[] = $default_language . '_playlist_name default_playlist_name';
+    }
+
+    $array_lang_fields = ['playlist_name'];
+
+    if ($full_fields) {
+        $array_select_fields[] = NV_LANG_DATA . '_playlist_introtext playlist_introtext';
+        if (NV_LANG_DATA != $default_language) {
+            $array_select_fields[] = $default_language . '_playlist_introtext default_playlist_introtext';
+        }
+
+        $array_lang_fields[] = 'playlist_introtext';
+    }
+
+    return array($array_select_fields, $array_lang_fields);
+}
+
+/**
  * nv_get_artists()
  *
  * @param mixed $array_ids
@@ -651,4 +682,31 @@ function msGetModuleSetupLangs()
     }
 
     return $array_lang_module_setup;
+}
+
+/**
+ * @param integer $playlist_id
+ */
+function msUpdatePlaylistSongCountWeight($playlist_id)
+{
+    global $db;
+
+    $sql = "SELECT song_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE playlist_id=" . $playlist_id . " ORDER BY weight ASC";
+    $song_ids = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
+
+    // Cập nhật lại thứ tự
+    $weight = 0;
+    foreach ($song_ids as $song_id) {
+        $weight++;
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_playlists_data SET weight=" . $weight . " WHERE playlist_id=" . $playlist_id . " AND song_id=" . $song_id;
+        $db->query($sql);
+    }
+
+    // Cập nhật thống kê số bài hát
+    $sql = "SELECT COUNT(tb1.song_id) FROM " . NV_MOD_TABLE . "_user_playlists_data tb1
+    INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";
+    $num_songs = $db->query($sql)->fetchColumn();
+    $num_songs = intval($num_songs);
+
+    $db->query("UPDATE " . NV_MOD_TABLE . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
 }

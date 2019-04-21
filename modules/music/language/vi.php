@@ -67,6 +67,7 @@ $lang_module['play_sugges_song'] = 'Nghe tiếp';
 $lang_module['play_sugges_video'] = 'Xem tiếp';
 $lang_module['play_sugges_album'] = 'Có thể bạn quan tâm';
 $lang_module['unknow_error'] = 'Lỗi không xác định, bạn vui lòng thử lại';
+$lang_module['create'] = 'Tạo';
 
 $lang_module['des_singer_add_song'] = '. Các bài hát thể hiện';
 $lang_module['des_singer_add_album'] = '. Các album online';
@@ -106,3 +107,16 @@ $lang_module['favorite_removed_video'] = 'Đã loại bỏ MV khỏi danh sách 
 $lang_module['error_album_notexists'] = 'Lỗi album không tồn tại';
 $lang_module['error_not_login'] = 'Lỗi chưa đăng nhập thành viên';
 $lang_module['error_video_notexists'] = 'Lỗi video không tồn tại';
+$lang_module['error_song_notexists'] = 'Lỗi bài hát không tồn tại';
+$lang_module['error_playlist_notexists'] = 'Lỗi playlist không tồn tại';
+
+$lang_module['addtolist_require_login'] = 'Bạn cần đăng nhập để thêm bài hát này vào danh sách phát. Nhấp vào đây để đăng nhập. Lưu ý: Nhấp vào đây sẽ làm gián đoạn trình phát hiện tại đang chạy (nếu có)';
+$lang_module['addtolist_new'] = 'Tạo playlist mới';
+$lang_module['addtolist_new_success_add'] = 'Đã thêm bài hát <i>%s</i> vào playlist <i>%s</i>';
+$lang_module['addtolist_remove_success'] = 'Đã loại bỏ bài hát <i>%s</i> khỏi playlist <i>%s</i>';
+$lang_module['pl_privacy'] = 'Quyền riêng tư';
+$lang_module['pl_privacy_private'] = 'Chỉ mình tôi';
+$lang_module['pl_privacy_public'] = 'Công khai';
+$lang_module['pl_name'] = 'Tên';
+$lang_module['pl_error_name_new'] = 'Chưa nhập tên cho playlist mới';
+$lang_module['pl_creat_success'] = 'Đã tạo thành công playlist <i>%s</i>';

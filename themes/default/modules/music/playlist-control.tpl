@@ -1,10 +1,6 @@
-<link type="text/css" href="{PLUGINS_DIR}jscrollpane/jquery.jscrollpane.css" rel="stylesheet" media="all"/>
 <script type="text/javascript" src="{PLAYER_DIR}jwplayer.js"></script>
-<script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/jquery.mousewheel.js"></script>
-<script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/mwheelIntent.js"></script>
-<script type="text/javascript" src="{PLUGINS_DIR}jscrollpane/jquery.jscrollpane.min.js"></script>
 <script type="text/javascript">
-$(document).ready(function() {
+$(document).on('nv.music.ready', function() {
     var jScrollPane = $('#soplaylists').jScrollPane({
         animateScroll: true
     });

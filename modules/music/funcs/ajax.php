@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Shared\UserPlaylists;
 
 $tokend = $nv_Request->get_title('tokend', 'post,get', '');
 
@@ -439,6 +440,249 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
         $respon['favorited'] = false;
     }
 
+    nv_jsonOutput($respon);
+}
+
+// Load HTML nội dung thêm bài hát vào playlist
+if ($nv_Request->isset_request('getAddSongToPLHtml', 'post')) {
+    $song_code = $nv_Request->get_title('song_code', 'post', '');
+
+    if ($tokend !== md5($song_code . NV_CHECK_SESSION)) {
+        nv_htmlOutput('Access Denied!!!');
+    }
+
+    // Xác định bài hát
+    $array_select_fields = nv_get_song_select_fields(true);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
+    $result = $db->query($sql);
+    $row = $result->fetch();
+    if (empty($row)) {
+        nv_htmlOutput('Song not exists!!!');
+    }
+    foreach ($array_select_fields[1] as $f) {
+        if (empty($row[$f]) and !empty($row['default_' . $f])) {
+            $row[$f] = $row['default_' . $f];
+        }
+        unset($row['default_' . $f]);
+    }
+    $row['tokend'] = md5($row['song_code'] . NV_CHECK_SESSION);
+
+    $redirect = nv_get_redirect('post');
+    if (empty($redirect)) {
+        $redirect = nv_redirect_encrypt(nv_url_rewrite(NV_MOD_LINK, true));
+    }
+
+    // Lấy danh sách các playlist của thành viên nếu đã đăng nhập
+    $array_playlist = [];
+    $array_playlist_added = [];
+
+    if (defined('NV_IS_USER')) {
+        $db->sqlreset()->from(NV_MOD_TABLE . "_user_playlists")->where("userid=" . $user_info['userid']);
+        $db->order("time_add DESC");
+
+        $array_select_fields = nv_get_user_playlist_select_fields();
+        $db->select(implode(', ', $array_select_fields[0]));
+
+        $result = $db->query($db->sql());
+        while ($_row = $result->fetch()) {
+            foreach ($array_select_fields[1] as $f) {
+                if (empty($_row[$f]) and !empty($_row['default_' . $f])) {
+                    $_row[$f] = $_row['default_' . $f];
+                }
+                unset($_row['default_' . $f]);
+            }
+
+            $array_playlist[$_row['playlist_id']] = $_row;
+        }
+
+        // Xác định xem bài hát này đã thêm vào các playlist trên hay chưa
+        if (!empty($array_playlist)) {
+            $sql = "SELECT playlist_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id=" . $row['song_id'] . " AND playlist_id IN(" . implode(',', array_keys($array_playlist)) . ")";
+            $array_playlist_added = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
+        }
+    }
+
+    $contents = nv_theme_popover_add_song_to_playlist($row, $array_playlist, $array_playlist_added, $redirect);
+
+    include NV_ROOTDIR . '/includes/header.php';
+    echo $contents;
+    include NV_ROOTDIR . '/includes/footer.php';
+}
+
+// Tạo mới playlist, thêm bài hát đã chọn tự động vào playlist đã chọn
+if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
+    $respon = [
+        'status' => 'ERROR',
+        'message' => ''
+    ];
+
+    // Kiểm tra đăng nhập
+    if (!defined('NV_IS_USER')) {
+        $respon['message'] = $lang_module['error_not_login'];
+        nv_jsonOutput($respon);
+    }
+
+    // Lấy request
+    $request = [];
+    $request['playlist_name'] = nv_substr($nv_Request->get_title('playlist_name', 'post', ''), 0, 200);
+    $request['privacy'] = $nv_Request->get_int('privacy', 'post', 0);
+    if ($request['privacy'] < 0 or $request['privacy'] > 1) {
+        $request['privacy'] = 0;
+    }
+    $request['auto_add_song'] = intval($nv_Request->get_bool('auto_add_song', 'post', false));
+    $request['song_code'] = nv_substr($nv_Request->get_title('song_code', 'post', ''), 0, 200);
+
+    if (empty($request['playlist_name'])) {
+        $respon['message'] = $lang_module['pl_error_name_new'];
+        nv_jsonOutput($respon);
+    }
+    if ($request['auto_add_song']) {
+        if ($tokend !== md5($request['song_code'] . NV_CHECK_SESSION)) {
+            $respon['message'] = 'Access Denied!!!';
+            nv_jsonOutput($respon);
+        }
+
+        // Xác định thông tin bài hát
+        $array_select_fields = nv_get_song_select_fields(true);
+        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($request['song_code']);
+        $result = $db->query($sql);
+        $row = $result->fetch();
+        if (empty($row)) {
+            $respon['message'] = $lang_module['error_song_notexists'];
+            nv_jsonOutput($respon);
+        }
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+    }
+
+    // Thêm playlist mới
+    // Xác định các field theo ngôn ngữ không có dữ liệu
+    $langs = msGetModuleSetupLangs();
+    $array_fname = $array_fvalue = [];
+    foreach ($langs as $lang) {
+        if ($lang != NV_LANG_DATA) {
+            $array_fname[] = $lang . '_playlist_introtext';
+            $array_fvalue[] = '';
+        }
+    }
+    $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
+    $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
+
+    $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_playlists (
+        playlist_code, resource_avatar, resource_cover, userid, time_add, privacy, num_songs, " . NV_LANG_DATA . "_playlist_name,
+        " . NV_LANG_DATA . "_playlist_introtext" . $array_fname . "
+    ) VALUES (
+        :playlist_code, '', '', " . $user_info['userid'] . ", " . NV_CURRENTTIME . ", " . $request['privacy'] . ", " . ($request['auto_add_song'] ? 1 : 0) . ",
+        :playlist_name, ''" . $array_fvalue . "
+    )";
+
+    $array_insert = [];
+    $array_insert['playlist_code'] = UserPlaylists::creatUniqueCode();
+    $array_insert['playlist_name'] = $request['playlist_name'];
+
+    $new_playlist_id = $db->insert_id($sql, 'playlist_id', $array_insert);
+    if (!$new_playlist_id) {
+        $respon['message'] = $lang_module['unknow_error'];
+        nv_jsonOutput($respon);
+    }
+
+    // Thêm bài hát này vào playlist
+    if ($request['auto_add_song']) {
+        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_playlists_data (playlist_id, song_id, weight, status) VALUES (
+            " . $new_playlist_id . ", " . $row['song_id'] . ", 1, 1
+        )";
+        $db->query($sql);
+
+        // Thông báo đã thêm bài hát vào và kết thúc
+        $respon['status'] = 'SUCCESS';
+        $respon['message'] = sprintf($lang_module['addtolist_new_success_add'], $row['song_name'], $request['playlist_name']);
+        nv_jsonOutput($respon);
+    }
+
+    // Thông báo đã tạo playlist và kết thúc
+    $respon['status'] = 'SUCCESS';
+    $respon['message'] = sprintf($lang_module['pl_creat_success'], $request['playlist_name']);
+    nv_jsonOutput($respon);
+}
+
+// Thêm, bỏ bài hát ở playlist đã có
+if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
+    $respon = [
+        'status' => 'ERROR',
+        'message' => ''
+    ];
+
+    // Kiểm tra đăng nhập
+    if (!defined('NV_IS_USER')) {
+        $respon['message'] = $lang_module['error_not_login'];
+        nv_jsonOutput($respon);
+    }
+
+    // Lấy request
+    $request = [];
+    $request['is_add'] = intval($nv_Request->get_bool('is_add', 'post', false));
+    $request['song_code'] = nv_substr($nv_Request->get_title('song_code', 'post', ''), 0, 200);
+    $request['playlist_code'] = nv_substr($nv_Request->get_title('playlist_code', 'post', ''), 0, 200);
+
+    if ($tokend !== md5($request['song_code'] . NV_CHECK_SESSION) or empty($request['playlist_code'])) {
+        $respon['message'] = 'Access Denied!!!';
+        nv_jsonOutput($respon);
+    }
+
+    // Xác định thông tin bài hát
+    $array_select_fields = nv_get_song_select_fields(true);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($request['song_code']);
+    $result = $db->query($sql);
+    $song = $result->fetch();
+    if (empty($song)) {
+        $respon['message'] = $lang_module['error_song_notexists'];
+        nv_jsonOutput($respon);
+    }
+    foreach ($array_select_fields[1] as $f) {
+        if (empty($song[$f]) and !empty($song['default_' . $f])) {
+            $song[$f] = $song['default_' . $f];
+        }
+        unset($song['default_' . $f]);
+    }
+
+    // Xác định thông tin playlist
+    $array_select_fields = nv_get_user_playlist_select_fields(true);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_user_playlists WHERE userid=" . $user_info['userid'] . " AND playlist_code=" . $db->quote($request['playlist_code']);
+    $result = $db->query($sql);
+    $playlist = $result->fetch();
+    if (empty($playlist)) {
+        $respon['message'] = $lang_module['error_song_notexists'];
+        nv_jsonOutput($respon);
+    }
+    foreach ($array_select_fields[1] as $f) {
+        if (empty($playlist[$f]) and !empty($playlist['default_' . $f])) {
+            $playlist[$f] = $playlist['default_' . $f];
+        }
+        unset($playlist['default_' . $f]);
+    }
+
+    if ($request['is_add']) {
+        // Thêm bài hát vào playlist
+        $sql = "INSERT IGNORE INTO " . NV_MOD_TABLE . "_user_playlists_data (
+            playlist_id, song_id, weight, status
+        ) VALUES (
+            " . $playlist['playlist_id'] . ", " . $song['song_id'] . ", 0, 1
+        )";
+        $respon['message'] = sprintf($lang_module['addtolist_new_success_add'], $song['song_name'], $playlist['playlist_name']);
+    } else {
+        // Bỏ bài hát ra playlist
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE playlist_id=" . $playlist['playlist_id'] . " AND song_id=" . $song['song_id'];
+        $respon['message'] = sprintf($lang_module['addtolist_remove_success'], $song['song_name'], $playlist['playlist_name']);
+    }
+
+    $db->query($sql);
+    msUpdatePlaylistSongCountWeight($playlist['playlist_id']);
+
+    $respon['status'] = 'SUCCESS';
     nv_jsonOutput($respon);
 }
 

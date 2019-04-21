@@ -358,7 +358,7 @@ function msUpdateNumSongOfPlaylistFromSongs($song_ids)
     $sql = "SELECT DISTINCT playlist_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id IN(" . implode(',', $song_ids) . ")";
     $playlist_ids = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
 
-    // Lấy và cập nhật số bài hát cho từng albums
+    // Lấy và cập nhật số bài hát cho từng playlist
     foreach ($playlist_ids as $playlist_id) {
         $sql = "SELECT COUNT(tb1.song_id) FROM " . NV_MOD_TABLE . "_user_playlists_data tb1
         INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";

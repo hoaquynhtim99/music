@@ -52,38 +52,42 @@ interface Settings
     const TABLE_VIDEO = 'videos';
 
     /**
+     * Bảng playlist của thành viên
+     */
+    const TABLE_USERPLAYLIST = 'user_playlists';
+
+    /**
      * Các thiết lập về bài hát
-     *
      */
     const SONG_CODE_LENGTH = 8;
 
     /**
      * Các thiết lập về bài hát
-     *
      */
     const CATEGORY_CODE_LENGTH = 4;
 
     /**
      * Các thiết lập về nghệ sĩ
-     *
      */
     const ARTIST_CODE_LENGTH = 5;
 
     /**
      * Các thiết lập về video
-     *
      */
     const VIDEO_CODE_LENGTH = 8;
 
     /**
      * Các thiết lập về albums
-     *
      */
     const ALBUM_CODE_LENGTH = 8;
 
     /**
      * Các thiết lập về quốc gia
-     *
      */
     const NATION_CODE_LENGTH = 4;
+
+    /**
+     * Các thiết lập về playlist thành viên
+     */
+    const USERPLAYLIST_CODE_LENGTH = 8;
 }
