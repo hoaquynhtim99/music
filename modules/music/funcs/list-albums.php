@@ -74,7 +74,7 @@ foreach ($global_array_cat as $cat) {
         $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $cat['cat_id'] . ", cat_ids)");
 
         if (!empty($catid)) {
-            $db->select("COUNT(*)");
+            $db->select("COUNT(album_id)");
             $all_pages = $db->query($db->sql())->fetchColumn();
         }
 

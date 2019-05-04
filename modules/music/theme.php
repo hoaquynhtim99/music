@@ -734,6 +734,16 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         $xtpl->parse('main.no_cat');
     }
 
+    // Xử lý yêu thích
+    if ($array['require_login']) {
+        $xtpl->parse('main.require_login');
+    }
+    if ($array['favorited']) {
+        $xtpl->parse('main.favorited');
+    } else {
+        $xtpl->parse('main.nofavorite');
+    }
+
     // Video của bài hát
     if (!empty($array['video'])) {
         $xtpl->parse('main.video');
@@ -1292,6 +1302,13 @@ function nv_theme_popover_download_video($row, $array_resource)
     return $xtpl->text('main');
 }
 
+/**
+ * @param array $row
+ * @param array $array_playlist
+ * @param array $array_playlist_added
+ * @param string $redirect
+ * @return string
+ */
 function nv_theme_popover_add_song_to_playlist($row, $array_playlist, $array_playlist_added, $redirect)
 {
     global $lang_module, $lang_global, $module_info;
@@ -1341,3 +1358,68 @@ function nv_theme_popover_add_song_to_playlist($row, $array_playlist, $array_pla
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
+
+/**
+ * @param string $request_tab
+ * @param array $array_songs
+ * @param array $array_videos
+ * @param array $array_albums
+ * @param array $array_playlists
+ * @param string $generate_page
+ * @return string
+ */
+function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albums, $array_playlists, $generate_page)
+{
+    global $lang_module, $lang_global, $module_info, $op, $user_info;
+
+    $xtpl = new XTemplate('mymusic.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+    $xtpl->assign('TAB_LINK', NV_MOD_FULLLINK_AMP . $op);
+
+    $xtpl->assign('USER_FULL_NAME', $user_info['full_name']);
+    $xtpl->assign('USER_USERNAME', $user_info['username']);
+    if (empty($user_info['photo'])) {
+        $xtpl->assign('USER_PHOTO', NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/noavatar.png');
+    } else {
+        $xtpl->assign('USER_PHOTO', NV_BASE_SITEURL . $user_info['photo']);
+    }
+
+    // Xuất bài hát yêu thích
+    if (!empty($array_songs)) {
+        $xtpl->assign('SONG_HTML', nv_theme_list_songs($array_songs));
+
+        if (empty($request_tab)) {
+            $xtpl->parse('main.tab_overview.song_data');
+        } else {
+            $xtpl->parse('main.tab_song.data');
+        }
+    } elseif (empty($request_tab)) {
+        $xtpl->parse('main.tab_overview.song_empty');
+    } else {
+        $xtpl->parse('main.tab_song.empty');
+    }
+
+    // Điều khiển các tab và nội dung của tab
+    if ($request_tab == 'song') {
+        $xtpl->parse('main.active_song');
+        $xtpl->parse('main.tab_song');
+    } elseif ($request_tab == 'album') {
+        $xtpl->parse('main.active_album');
+        $xtpl->parse('main.tab_album');
+    } elseif ($request_tab == 'mv') {
+        $xtpl->parse('main.active_video');
+        $xtpl->parse('main.tab_video');
+    } elseif ($request_tab == 'playlist') {
+        $xtpl->parse('main.active_playlist');
+        $xtpl->parse('main.tab_playlist');
+    } else {
+        $xtpl->parse('main.active_overview');
+        $xtpl->parse('main.tab_overview');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+

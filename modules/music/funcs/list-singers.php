@@ -105,7 +105,7 @@ if ($alphabet) {
 
 $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where(implode(' AND ', $array_where));
 
-$db->select("COUNT(*)");
+$db->select("COUNT(artist_id)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
 $db->order("artist_id DESC")->offset(($page - 1) * $per_page)->limit($per_page);

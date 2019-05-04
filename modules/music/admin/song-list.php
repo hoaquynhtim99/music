@@ -64,6 +64,10 @@ if ($ajaction == 'delete') {
             $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id=" . $song_id;
             $db->query($sql);
 
+            // Xóa khỏi danh sách yêu thích của thành viên
+            $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_favorite_songs WHERE song_id=" . $song_id;
+            $db->query($sql);
+
             // Cập nhật lại thống kê thể loại
             $song['cat_ids'] = Utils::arrayIntFromStrList($song['cat_ids']);
             foreach ($song['cat_ids'] as $cat_id) {

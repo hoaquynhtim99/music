@@ -501,6 +501,66 @@ $(document).on('nv.music.ready', function() {
             });
         });
     });
+
+    // Thêm bài hát vào danh sách yêu thích
+    $('[data-toggle="favoriteSong"]').on("click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.data('busy')) {
+            return;
+        }
+        if ($this.data('reqlogin')) {
+            $.gritter.add({
+                title: "",
+                text: sprintf(MSLANG['favorite_add_song_login'], $this.data('urllogin')),
+                class_name: "color primary"
+            });
+            return;
+        }
+        $this.data('busy', true);
+        $.ajax({
+            type: 'POST',
+            url: msAjaxURL,
+            dataType: 'json',
+            data: {
+                'updateUserFavoriteSong': 1,
+                'song_code': $this.data("code"),
+                'tokend': $this.data("tokend")
+            }
+        }).done(function(res) {
+            $this.data('busy', false);
+            if (res.status != 'SUCCESS') {
+                $.gritter.add({
+                    title: "",
+                    text: res.message,
+                    class_name: "color danger"
+                });
+                return;
+            }
+            if (res.favorited) {
+                $this.removeClass('btn-default').addClass('btn-success');
+                $.gritter.add({
+                    title: "",
+                    text: MSLANG['favorite_added_song'],
+                    class_name: "color success"
+                });
+            } else {
+                $this.removeClass('btn-success').addClass('btn-default');
+                $.gritter.add({
+                    title: "",
+                    text: MSLANG['favorite_removed_song'],
+                    class_name: "color success"
+                });
+            }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            $this.data('busy', false);
+            $.gritter.add({
+                title: "",
+                text: MSLANG['unknow_error'],
+                class_name: "color danger"
+            });
+        });
+    });
 });
 
 $(window).on('load', function() {

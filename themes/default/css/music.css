@@ -16,12 +16,20 @@
     margin-bottom: 10px!important;
 }
 
+.mb-4 {
+    margin-bottom: 20px!important;
+}
+
 .mb-0 {
     margin-bottom: 0px!important;
 }
 
 .ml-1 {
     margin-left: 5px!important;
+}
+
+.mr-2 {
+    margin-right: 10px!important;
 }
 
 .mt-1 {
@@ -39,6 +47,22 @@
 .px-2 {
     padding-left: 10px!important;
     padding-right: 10px!important;
+}
+
+/* Flex Box */
+.ms-d-flex {
+    display: -ms-flexbox!important;
+    display: flex!important;
+}
+
+.ms-align-items-center {
+    -ms-flex-align: center!important;
+    align-items: center!important;
+}
+
+.ms-justify-content-center {
+    -ms-flex-pack: center!important;
+    justify-content: center!important;
 }
 
 /* COLORS */
@@ -1680,4 +1704,13 @@ ul.ms-detailab-header-info h2 {
 
 .ms-playlist-popover .playlist-name input {
      margin-top: -2px;
+}
+
+/* MyMusic */
+.ms-mymusic-tab {
+    border-bottom: 1px #ddd solid;
+}
+
+.ms-mymusic-tab .nav-tabs {
+    border-bottom: 0;
 }

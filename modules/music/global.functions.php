@@ -169,7 +169,7 @@ Config::setAutoOptimizeVideoName(true);
  */
 function nv_get_album_select_fields($full_fields = false)
 {
-    $array_select_fields = array('album_id', 'album_code', 'cat_ids', 'singer_ids', 'release_year', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'time_update', 'status');
+    $array_select_fields = ['album_id', 'album_code', 'cat_ids', 'singer_ids', 'release_year', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'time_update', 'status'];
     $array_select_fields[] = NV_LANG_DATA . '_album_name album_name';
     $array_select_fields[] = NV_LANG_DATA . '_album_alias album_alias';
     $array_select_fields[] = NV_LANG_DATA . '_album_description album_description';
@@ -180,7 +180,7 @@ function nv_get_album_select_fields($full_fields = false)
         $array_select_fields[] = $default_language . '_album_description default_album_description';
     }
 
-    $array_lang_fields = array('album_name', 'album_alias', 'album_description');
+    $array_lang_fields = ['album_name', 'album_alias', 'album_description'];
 
     if ($full_fields) {
         $array_select_fields[] = 'uploader_id';

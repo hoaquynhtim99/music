@@ -162,6 +162,7 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_playlists";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_albums";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_videos";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_songs";
 }
 
 $sql_create_module = $sql_drop_module;
@@ -658,6 +659,14 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   video_id int(11) unsigned NOT NULL COMMENT 'ID video',
   time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
   PRIMARY KEY id (userid, video_id)
+) ENGINE=MyISAM";
+
+// Bảng các bài hát yêu thích của thành viên
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_songs (
+  userid int(11) unsigned NOT NULL COMMENT 'ID thành viên',
+  song_id int(11) unsigned NOT NULL COMMENT 'ID bài hát',
+  time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian tạo',
+  PRIMARY KEY id (userid, song_id)
 ) ENGINE=MyISAM";
 
 $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('song', 'all', 0, " . NV_CURRENTTIME . ", 0)";

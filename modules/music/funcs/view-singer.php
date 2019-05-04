@@ -72,7 +72,7 @@ if (empty($request_tab) or $request_tab == 'album') {
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
 
     if (!empty($request_tab)) {
-        $db->select("COUNT(*)");
+        $db->select("COUNT(album_id)");
         $all_pages = $db->query($db->sql())->fetchColumn();
     }
 
@@ -107,7 +107,7 @@ if (empty($request_tab) or $request_tab == 'song') {
     $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
 
     if (!empty($request_tab)) {
-        $db->select("COUNT(*)");
+        $db->select("COUNT(song_id)");
         $all_pages = $db->query($db->sql())->fetchColumn();
     }
 
@@ -144,7 +144,7 @@ if (empty($request_tab) or $request_tab == 'video') {
     $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
 
     if (!empty($request_tab)) {
-        $db->select("COUNT(*)");
+        $db->select("COUNT(video_id)");
         $all_pages = $db->query($db->sql())->fetchColumn();
     }
 

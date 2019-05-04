@@ -443,6 +443,55 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
     nv_jsonOutput($respon);
 }
 
+/*
+ * Thêm, bỏ bài hát khỏi danh sách yêu thích
+ * Không có cache trong này
+ */
+if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
+    $song_code = $nv_Request->get_title('song_code', 'post', '');
+
+    if ($tokend !== md5($song_code . NV_CHECK_SESSION)) {
+        nv_htmlOutput('Access Denied!!!');
+    }
+
+    $respon = [
+        'status' => 'ERROR',
+        'message' => ''
+    ];
+
+    if (!defined('NV_IS_USER')) {
+        $respon['message'] = $lang_module['error_not_login'];
+        nv_jsonOutput($respon);
+    }
+
+    // Xác định bài hát
+    $array_select_fields = nv_get_song_select_fields(true);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
+    $result = $db->query($sql);
+    $row = $result->fetch();
+    if (empty($row)) {
+        $respon['message'] = $lang_module['error_song_notexists'];
+        nv_jsonOutput($respon);
+    }
+    foreach ($array_select_fields[1] as $f) {
+        if (empty($row[$f]) and !empty($row['default_' . $f])) {
+            $row[$f] = $row['default_' . $f];
+        }
+        unset($row['default_' . $f]);
+    }
+
+    $respon['status'] = 'SUCCESS';
+
+    if (!$db->exec("DELETE FROM " . NV_MOD_TABLE . "_user_favorite_songs WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'])) {
+        $db->query("INSERT INTO " . NV_MOD_TABLE . "_user_favorite_songs (userid, song_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['song_id'] . "," . NV_CURRENTTIME . ")");
+        $respon['favorited'] = true;
+    } else {
+        $respon['favorited'] = false;
+    }
+
+    nv_jsonOutput($respon);
+}
+
 // Load HTML nội dung thêm bài hát vào playlist
 if ($nv_Request->isset_request('getAddSongToPLHtml', 'post')) {
     $song_code = $nv_Request->get_title('song_code', 'post', '');

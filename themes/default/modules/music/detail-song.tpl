@@ -117,6 +117,7 @@ songplayer.on("complete", function(event) {
 </script>
 <!-- END: player -->
 <div class="ms-detailso-action">
+    <a href="#" class="btn btn-xs<!-- BEGIN: favorited --> btn-success<!-- END: favorited --><!-- BEGIN: nofavorite --> btn-default<!-- END: nofavorite -->" data-toggle="favoriteSong" data-reqlogin="{SONG.require_login}"<!-- BEGIN: require_login --> data-urllogin="{SONG.url_login}"<!-- END: require_login --> data-code="{SONG.song_code}" data-tokend="{SONG.tokend}"><i class="fa fa-heart" aria-hidden="true"></i> {LANG.favorite}</a>
     <a href="#" class="btn btn-default btn-xs" title="{LANG.add_song_tolikelist}" data-toggle="mscallpop" data-mode="addsongtolist" data-code="{SONG.song_code}" data-tokend="{SONG.tokend}"><i class="fa fa-bookmark" aria-hidden="true"></i> {LANG.add_to}</a>
     <!-- BEGIN: comment_btn -->
     <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>

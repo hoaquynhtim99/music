@@ -99,10 +99,13 @@ $lang_module['download_tip_link'] = 'Nhấp chuột phải và chọn Save link 
 
 $lang_module['favorite_add_album_login'] = '<a href="%s">Bạn cần đăng nhập để thêm album vào danh sách yêu thích. Nhấp vào đây để đăng nhập. <i>Lưu ý: Nhấp vào đây sẽ làm gián đoạn bài hát đang nghe của bạn</i></a>';
 $lang_module['favorite_add_video_login'] = '<a href="%s">Bạn cần đăng nhập để thêm MV vào danh sách yêu thích. Nhấp vào đây để đăng nhập. <i>Lưu ý: Nhấp vào đây sẽ làm gián đoạn MV đang nghe của bạn</i></a>';
+$lang_module['favorite_add_song_login'] = '<a href="%s">Bạn cần đăng nhập để thêm bài hát vào danh sách yêu thích. Nhấp vào đây để đăng nhập. <i>Lưu ý: Nhấp vào đây sẽ làm gián đoạn bài hát đang nghe của bạn</i></a>';
 $lang_module['favorite_added_album'] = 'Đã thêm album vào danh sách yêu thích';
 $lang_module['favorite_removed_album'] = 'Đã loại bỏ album khỏi danh sách yêu thích';
 $lang_module['favorite_added_video'] = 'Đã thêm MV vào danh sách yêu thích';
 $lang_module['favorite_removed_video'] = 'Đã loại bỏ MV khỏi danh sách yêu thích';
+$lang_module['favorite_added_song'] = 'Đã thêm bài hát vào danh sách yêu thích';
+$lang_module['favorite_removed_song'] = 'Đã loại bỏ bài hát khỏi danh sách yêu thích';
 
 $lang_module['error_album_notexists'] = 'Lỗi album không tồn tại';
 $lang_module['error_not_login'] = 'Lỗi chưa đăng nhập thành viên';
@@ -120,3 +123,9 @@ $lang_module['pl_privacy_public'] = 'Công khai';
 $lang_module['pl_name'] = 'Tên';
 $lang_module['pl_error_name_new'] = 'Chưa nhập tên cho playlist mới';
 $lang_module['pl_creat_success'] = 'Đã tạo thành công playlist <i>%s</i>';
+
+$lang_module['mymusic'] = 'Âm nhạc của tôi';
+$lang_module['mymusic_song'] = 'Bài hát yêu thích';
+$lang_module['mymusic_album'] = 'Album yêu thích';
+$lang_module['mymusic_video'] = 'MV yêu thích';
+$lang_module['mymusic_playlist'] = 'Playlist của tôi';

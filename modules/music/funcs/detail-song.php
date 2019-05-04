@@ -312,6 +312,17 @@ if (!isset($cookie_stat[$ms_detail_data['song_code']]) or $cookie_stat[$ms_detai
     $nv_Request->set_Cookie($module_data . '_stat_song', json_encode($cookie_stat), NV_LIVE_COOKIE_TIME);
 }
 
+// Xác định xem đã yêu thích hay chưa nếu là thành viên
+$ms_detail_data['favorited'] = false;
+$ms_detail_data['require_login'] = true;
+$ms_detail_data['url_login'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=users&amp;' . NV_OP_VARIABLE . '=login&nv_redirect=' . nv_redirect_encrypt($client_info['selfurl']);
+if (defined('NV_IS_USER')) {
+    $ms_detail_data['require_login'] = false;
+    if ($db->query("SELECT time_add FROM " . NV_MOD_TABLE . "_user_favorite_songs WHERE userid=" . $user_info['userid'] . " AND song_id=" . $ms_detail_data['song_id'])->fetchColumn()) {
+        $ms_detail_data['favorited'] = true;
+    }
+}
+
 $contents = nv_theme_detail_song($ms_detail_data, $content_comment, $array_albums, $array_videos);
 
 include NV_ROOTDIR . '/includes/header.php';
