@@ -173,6 +173,7 @@ $lang_module['arr_code_prefix_error'] = 'Giá trị này và giá trị ở cả
 $lang_module['arr_op_alias_prefix_song'] = 'Tiếp đầu tố alias bài hát';
 $lang_module['arr_op_alias_prefix_album'] = 'Tiếp đầu tố alias album';
 $lang_module['arr_op_alias_prefix_video'] = 'Tiếp đầu tố alias video';
+$lang_module['arr_op_alias_prefix_playlist'] = 'Tiếp đầu tố alias playlist';
 $lang_module['arr_view_singer_tabs_alias_song'] = 'Tiếp đầu tố alias bài hát';
 $lang_module['arr_view_singer_tabs_alias_video'] = 'Tiếp đầu tố alias video';
 $lang_module['arr_view_singer_tabs_alias_album'] = 'Tiếp đầu tố alias album';

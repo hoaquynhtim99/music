@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <div class="ms-gird-videos row">
     <!-- BEGIN: loop -->
-    <div class="col-xs-12 col-sm-8 col-md-6 ms-gird-videos-item">
+    <div class="{CLASS_ITEM} ms-gird-videos-item">
         <article>
             <div class="ms-gird-videos-thumb" style="background-image:url({ROW.resource_avatar_thumb});">
                 <a class="ms-gird-videos-fw" href="{ROW.video_link}" title="{ROW.video_name}">

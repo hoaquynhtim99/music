@@ -163,7 +163,7 @@ if ($page > 1) {
     }
 }
 
-$contents = nv_theme_list_albums($array, !empty($catid), $generate_page);
+$contents = nv_theme_page_list_albums($array, !empty($catid), $generate_page);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

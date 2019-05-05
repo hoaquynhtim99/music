@@ -71,28 +71,33 @@ if ($request_tab == 'song') {
         'title' => $lang_module['mymusic_song'],
         'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_song'] . ' ' . NV_TITLEBAR_DEFIS . ' ' . $page_title;
+    $page_title = $lang_module['mymusic_song'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'album') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_album'],
         'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_album'] . ' ' . NV_TITLEBAR_DEFIS . ' ' . $page_title;
+    $page_title = $lang_module['mymusic_album'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'mv') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_video'],
         'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_video'] . ' ' . NV_TITLEBAR_DEFIS . ' ' . $page_title;
+    $page_title = $lang_module['mymusic_video'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'playlist') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_playlist'],
         'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_playlist'] . ' ' . NV_TITLEBAR_DEFIS . ' ' . $page_title;
+    $page_title = $lang_module['mymusic_playlist'] . NV_TITLEBAR_DEFIS . $page_title;
+}
+
+if ($page > 1) {
+    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_title = $page_text . NV_TITLEBAR_DEFIS . $page_title;
 }
 
 $base_url = NV_MOD_FULLLINK . $op . ($request_tab ? ('/' . $request_tab) : '');
@@ -141,7 +146,7 @@ if (empty($request_tab) or $request_tab == 'album') {
 
 // Lấy các bài hát yêu thích
 if (empty($request_tab) or $request_tab == 'song') {
-    $per_page = empty($request_tab) ? 20 : Config::getViewSingerDetailNumSongs();
+    $per_page = empty($request_tab) ? 10 : Config::getViewSingerDetailNumSongs();
     $db->sqlreset()->from(NV_MOD_TABLE . "_user_favorite_songs tb1");
     $db->join("INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id");
     $db->where("tb2.status=1 AND tb1.userid=" . $user_info['userid']);
@@ -179,8 +184,8 @@ if (empty($request_tab) or $request_tab == 'song') {
 }
 
 // Lấy các video yêu thích
-if (empty($request_tab) or $request_tab == 'video') {
-    $per_page = empty($request_tab) ? 5 : Config::getViewSingerDetailNumVideos();
+if (empty($request_tab) or $request_tab == 'mv') {
+    $per_page = empty($request_tab) ? 8 : Config::getViewSingerDetailNumVideos();
     $db->sqlreset()->from(NV_MOD_TABLE . "_user_favorite_videos tb1");
     $db->join("INNER JOIN " . NV_MOD_TABLE . "_videos tb2 ON tb1.video_id=tb2.video_id");
     $db->where("tb2.status=1 AND tb1.userid=" . $user_info['userid']);
@@ -212,6 +217,36 @@ if (empty($request_tab) or $request_tab == 'video') {
         }
 
         $array_videos[$row['video_id']] = $row;
+    }
+}
+
+// Lấy các playlist đã tạo
+if (empty($request_tab) or $request_tab == 'playlist') {
+    $per_page = empty($request_tab) ? 5 : Config::getViewSingerDetailNumAlbums();
+    $db->sqlreset()->from(NV_MOD_TABLE . "_user_playlists");
+    $db->where("userid=" . $user_info['userid']);
+
+    if (!empty($request_tab)) {
+        $db->select("COUNT(playlist_id)");
+        $all_pages = $db->query($db->sql())->fetchColumn();
+    }
+
+    $array_select_fields = nv_get_user_playlist_select_fields();
+    $db->order("time_add DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+
+        $row['playlist_link'] = nv_get_detail_playlist_link($row);
+
+        $array_playlists[$row['playlist_id']] = $row;
     }
 }
 

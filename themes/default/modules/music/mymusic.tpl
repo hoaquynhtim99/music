@@ -38,7 +38,7 @@
             <!-- END: song_data -->
             <!-- BEGIN: song_empty -->
             <div class="alert alert-info">
-                Chưa có bài hát yêu thích
+                {LANG.mymusic_song_empty}
             </div>
             <!-- END: song_empty -->
         </div>
@@ -48,7 +48,14 @@
             </h2>
         </div>
         <div class="mb-2">
-            Đang cập nhật
+            <!-- BEGIN: video_data -->
+            {VIDEOS_HTML}
+            <!-- END: video_data -->
+            <!-- BEGIN: video_empty -->
+            <div class="alert alert-info">
+                {LANG.mymusic_video_empty}
+            </div>
+            <!-- END: video_empty -->
         </div>
     </div>
     <div class="col-xs-24 col-sm-24 col-md-8">
@@ -58,7 +65,14 @@
             </h2>
         </div>
         <div class="mb-2">
-            Đang cập nhật
+            <!-- BEGIN: album_data -->
+            {ALBUM_HTML}
+            <!-- END: album_data -->
+            <!-- BEGIN: album_empty -->
+            <div class="alert alert-info">
+                {LANG.mymusic_album_empty}
+            </div>
+            <!-- END: album_empty -->
         </div>
         <div class="ms-title-section">
             <h2>
@@ -66,22 +80,67 @@
             </h2>
         </div>
         <div class="mb-2">
-            Đang cập nhật
+            <!-- BEGIN: playlist_data -->
+            {PLAYLIST_HTML}
+            <!-- END: playlist_data -->
+            <!-- BEGIN: playlist_empty -->
+            <div class="alert alert-info">
+                {LANG.mymusic_playlist_empty}
+            </div>
+            <!-- END: playlist_empty -->
         </div>
     </div>
 </div>
 <!-- END: tab_overview -->
 
 <!-- BEGIN: tab_song -->
+<!-- BEGIN: data -->
+{SONG_HTML}
+<!-- END: data -->
+<!-- BEGIN: empty -->
+<div class="alert alert-info">
+    {LANG.mymusic_song_empty}
+</div>
+<!-- END: empty -->
 <!-- END: tab_song -->
 
 <!-- BEGIN: tab_album -->
+<!-- BEGIN: data -->
+{ALBUM_HTML}
+<!-- END: data -->
+<!-- BEGIN: empty -->
+<div class="alert alert-info">
+    {LANG.mymusic_album_empty}
+</div>
+<!-- END: empty -->
 <!-- END: tab_album -->
 
 <!-- BEGIN: tab_video -->
+<!-- BEGIN: data -->
+{VIDEOS_HTML}
+<!-- END: data -->
+<!-- BEGIN: empty -->
+<div class="alert alert-info">
+    {LANG.mymusic_video_empty}
+</div>
+<!-- END: empty -->
 <!-- END: tab_video -->
 
 <!-- BEGIN: tab_playlist -->
+<!-- BEGIN: data -->
+{PLAYLIST_HTML}
+<!-- END: data -->
+<!-- BEGIN: empty -->
+<div class="alert alert-info">
+    {LANG.mymusic_playlist_empty}
+</div>
+<!-- END: empty -->
 <!-- END: tab_playlist -->
+
+<!-- BEGIN: generate_page -->
+<div class="text-center">
+    {GENERATE_PAGE}
+</div>
+<!-- END: generate_page -->
 
 <!-- END: main -->

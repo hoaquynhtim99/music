@@ -1,3 +1,3 @@
 <!-- BEGIN: main -->
-{FILE "list-albums-item.tpl"}
+{FILE "list-playlists-item.tpl"}
 <!-- END: main -->

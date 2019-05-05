@@ -19,6 +19,7 @@ class OpAliasPrefix
     const ALBUM = 'album';
     const VIDEO = 'video';
     const SONG = 'song';
+    const PLAYLIST = 'playlist';
 
     /**
      * @param array|string $data
@@ -67,5 +68,13 @@ class OpAliasPrefix
     public function getSong()
     {
         return $this->get(self::SONG);
+    }
+
+    /**
+     * @return \NukeViet\Music\Config\string~array
+     */
+    public function getPlaylist()
+    {
+        return $this->get(self::PLAYLIST);
     }
 }

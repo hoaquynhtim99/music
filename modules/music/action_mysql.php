@@ -551,6 +551,7 @@ $default_config['arr_code_prefix_song'] = 'so';
 $default_config['arr_op_alias_prefix_song'] = '';
 $default_config['arr_op_alias_prefix_album'] = 'album-';
 $default_config['arr_op_alias_prefix_video'] = '';
+$default_config['arr_op_alias_prefix_playlist'] = 'playlist-';
 $default_config['gird_albums_percat_nums'] = '12';
 $default_config['gird_albums_incat_nums'] = '24';
 $default_config['gird_videos_percat_nums'] = '12';

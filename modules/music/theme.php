@@ -19,13 +19,68 @@ use NukeViet\Music\Utils;
  * nv_theme_gird_albums()
  *
  * @param mixed $array
+ * @param bool $full_layout
  * @return
  */
-function nv_theme_gird_albums($array)
+function nv_theme_gird_albums($array, $full_layout = false)
 {
     global $lang_module, $lang_global, $module_info, $module_upload, $op;
 
     $xtpl = new XTemplate('gird-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+    $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
+
+    foreach ($array as $row) {
+        $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'album', true);
+        $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'album');
+
+        $xtpl->assign('ROW', $row);
+
+        $num_singers = sizeof($row['singers']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
+
+            foreach ($row['singers'] as $singer) {
+                $xtpl->assign('SINGER', $singer);
+                $xtpl->parse('main.loop.va_singer.loop');
+            }
+
+            $xtpl->parse('main.loop.va_singer');
+        } elseif (!empty($row['singers'])) {
+            $i = 0;
+            foreach ($row['singers'] as $singer) {
+                $i++;
+                $xtpl->assign('SINGER', $singer);
+
+                if ($i > 1) {
+                    $xtpl->parse('main.loop.show_singer.loop.separate');
+                }
+                $xtpl->parse('main.loop.show_singer.loop');
+            }
+            $xtpl->parse('main.loop.show_singer');
+        } else {
+            $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
+            $xtpl->parse('main.loop.no_singer');
+        }
+
+        $xtpl->parse('main.loop');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
+ * @param array $array
+ * @return string
+ */
+function nv_theme_list_albums($array)
+{
+    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+
+    $xtpl = new XTemplate('list-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
@@ -74,9 +129,10 @@ function nv_theme_gird_albums($array)
  * nv_theme_gird_videos()
  *
  * @param mixed $array
+ * @param bool $full_layout
  * @return
  */
-function nv_theme_gird_videos($array)
+function nv_theme_gird_videos($array, $full_layout = false)
 {
     global $lang_module, $lang_global, $module_info, $module_upload, $op;
 
@@ -84,6 +140,7 @@ function nv_theme_gird_videos($array)
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
+    $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
 
     if (is_file(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif')) {
         $pix_image = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
@@ -260,6 +317,60 @@ function nv_theme_list_songs($array)
 }
 
 /**
+ * @param array $array
+ * @return string
+ */
+function nv_theme_list_playlists($array)
+{
+    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+
+    $xtpl = new XTemplate('list-playlists.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+
+    foreach ($array as $row) {
+        $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'album', true);
+        $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'album');
+        $row['num_songs'] = Utils::getFormatNumberView($row['num_songs']);
+
+        $xtpl->assign('ROW', $row);
+        $xtpl->parse('main.loop');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
+ * @param array $array
+ * @param boolean $full_layout
+ * @return string
+ */
+function nv_theme_gird_playlists($array, $full_layout = false)
+{
+    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+
+    $xtpl = new XTemplate('gird-playlists.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+    $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
+
+    foreach ($array as $row) {
+        $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'album', true);
+        $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'album');
+        $row['num_songs'] = Utils::getFormatNumberView($row['num_songs']);
+
+        $xtpl->assign('ROW', $row);
+        $xtpl->parse('main.loop');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
+/**
  * nv_theme_main()
  *
  * @param mixed $content_albums
@@ -366,18 +477,18 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
 }
 
 /**
- * nv_theme_list_albums()
+ * nv_theme_page_list_albums()
  *
  * @param mixed $array
  * @param bool $is_detail_cat
  * @param mixed $generate_page
  * @return
  */
-function nv_theme_list_albums($array, $is_detail_cat = false, $generate_page)
+function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_page)
 {
     global $lang_module, $lang_global, $module_info;
 
-    $xtpl = new XTemplate('list-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl = new XTemplate('page-list-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
 
@@ -407,18 +518,18 @@ function nv_theme_list_albums($array, $is_detail_cat = false, $generate_page)
 }
 
 /**
- * nv_theme_list_videos()
+ * nv_theme_page_list_videos()
  *
  * @param mixed $array
  * @param bool $is_detail_cat
  * @param mixed $generate_page
  * @return
  */
-function nv_theme_list_videos($array, $is_detail_cat = false, $generate_page)
+function nv_theme_page_list_videos($array, $is_detail_cat = false, $generate_page)
 {
     global $lang_module, $lang_global, $module_info;
 
-    $xtpl = new XTemplate('list-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl = new XTemplate('page-list-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
 
@@ -460,7 +571,7 @@ function nv_theme_list_videos($array, $is_detail_cat = false, $generate_page)
  */
 function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_videos, $array_albums, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_nation;
+    global $lang_module, $lang_global, $module_info, $global_array_nation, $op;
 
     $xtpl = new XTemplate('view-singer.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
@@ -1386,6 +1497,8 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
         $xtpl->assign('USER_PHOTO', NV_BASE_SITEURL . $user_info['photo']);
     }
 
+    $isFullPlayout = ((isset($module_info['layout_funcs'][$op]) and $module_info['layout_funcs'][$op] == 'main') and !empty($request_tab)) ? true : false;
+
     // Xuất bài hát yêu thích
     if (!empty($array_songs)) {
         $xtpl->assign('SONG_HTML', nv_theme_list_songs($array_songs));
@@ -1399,6 +1512,51 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
         $xtpl->parse('main.tab_overview.song_empty');
     } else {
         $xtpl->parse('main.tab_song.empty');
+    }
+
+    // Xuất MV yêu thích
+    if (!empty($array_videos)) {
+        $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($array_videos, $isFullPlayout));
+
+        if (empty($request_tab)) {
+            $xtpl->parse('main.tab_overview.video_data');
+        } else {
+            $xtpl->parse('main.tab_video.data');
+        }
+    } elseif (empty($request_tab)) {
+        $xtpl->parse('main.tab_overview.video_empty');
+    } else {
+        $xtpl->parse('main.tab_video.empty');
+    }
+
+    // Xuất album yêu thích
+    if (!empty($array_albums)) {
+        if (empty($request_tab)) {
+            $xtpl->assign('ALBUM_HTML', nv_theme_list_albums($array_albums));
+            $xtpl->parse('main.tab_overview.album_data');
+        } else {
+            $xtpl->assign('ALBUM_HTML', nv_theme_gird_albums($array_albums, $isFullPlayout));
+            $xtpl->parse('main.tab_album.data');
+        }
+    } elseif (empty($request_tab)) {
+        $xtpl->parse('main.tab_overview.album_empty');
+    } else {
+        $xtpl->parse('main.tab_album.empty');
+    }
+
+    // Xuất các playlist
+    if (!empty($array_playlists)) {
+        if (empty($request_tab)) {
+            $xtpl->assign('PLAYLIST_HTML', nv_theme_list_playlists($array_playlists));
+            $xtpl->parse('main.tab_overview.playlist_data');
+        } else {
+            $xtpl->assign('PLAYLIST_HTML', nv_theme_gird_playlists($array_playlists, $isFullPlayout));
+            $xtpl->parse('main.tab_playlist.data');
+        }
+    } elseif (empty($request_tab)) {
+        $xtpl->parse('main.tab_overview.playlist_empty');
+    } else {
+        $xtpl->parse('main.tab_playlist.empty');
     }
 
     // Điều khiển các tab và nội dung của tab
@@ -1417,6 +1575,11 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
     } else {
         $xtpl->parse('main.active_overview');
         $xtpl->parse('main.tab_overview');
+    }
+
+    if (!empty($generate_page)) {
+        $xtpl->assign('GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.generate_page');
     }
 
     $xtpl->parse('main');

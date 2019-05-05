@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <div class="ms-gird-albums row">
     <!-- BEGIN: loop -->
-    <div class="col-xs-12 col-sm-8 col-md-6 ms-gird-albums-item">
+    <div class="{CLASS_ITEM} ms-gird-albums-item">
         <article>
             <div class="ms-gird-albums-thumb" style="background-image:url({ROW.resource_avatar_thumb});">
                 <a class="ms-gird-albums-fw" href="{ROW.album_link}" title="{ROW.album_name}">

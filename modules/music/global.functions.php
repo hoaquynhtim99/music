@@ -530,6 +530,18 @@ function nv_get_detail_album_link($album, $singers = [], $amp = true, $query_str
 }
 
 /**
+ * @param array $playlist
+ * @param boolean $amp
+ * @param string $query_string
+ * @return string
+ */
+function nv_get_detail_playlist_link($playlist, $amp = true, $query_string = '')
+{
+    global $global_config;
+    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getPlaylist() . (isset($playlist['playlist_alias']) ? $playlist['playlist_alias'] : change_alias($playlist['playlist_name'])) . '-' . Config::getCodePrefix()->getPlaylist() . $playlist['playlist_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+}
+
+/**
  * nv_get_detail_song_link()
  *
  * @param mixed $song

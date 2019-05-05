@@ -177,19 +177,25 @@
                         <div class="form-group">
                             <label for="arr_op_alias_prefix_song" class="control-label col-sm-8">{LANG.arr_op_alias_prefix_song}:</label>
                             <div class="col-sm-16">
-                                <input class="form-control required" type="text" name="arr_op_alias_prefix_song" id="arr_op_alias_prefix_song" value="{DATA.arr_op_alias_prefix_song}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
+                                <input class="form-control" type="text" name="arr_op_alias_prefix_song" id="arr_op_alias_prefix_song" value="{DATA.arr_op_alias_prefix_song}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="arr_op_alias_prefix_album" class="control-label col-sm-8">{LANG.arr_op_alias_prefix_album}:</label>
                             <div class="col-sm-16">
-                                <input class="form-control required" type="text" name="arr_op_alias_prefix_album" id="arr_op_alias_prefix_album" value="{DATA.arr_op_alias_prefix_album}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
+                                <input class="form-control" type="text" name="arr_op_alias_prefix_album" id="arr_op_alias_prefix_album" value="{DATA.arr_op_alias_prefix_album}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
                             </div>
                         </div>
                         <div class="form-group">
                             <label for="arr_op_alias_prefix_video" class="control-label col-sm-8">{LANG.arr_op_alias_prefix_video}:</label>
                             <div class="col-sm-16">
-                                <input class="form-control required" type="text" name="arr_op_alias_prefix_video" id="arr_op_alias_prefix_video" value="{DATA.arr_op_alias_prefix_video}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
+                                <input class="form-control" type="text" name="arr_op_alias_prefix_video" id="arr_op_alias_prefix_video" value="{DATA.arr_op_alias_prefix_video}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="arr_op_alias_prefix_playlist" class="control-label col-sm-8">{LANG.arr_op_alias_prefix_playlist}:</label>
+                            <div class="col-sm-16">
+                                <input class="form-control" type="text" name="arr_op_alias_prefix_playlist" id="arr_op_alias_prefix_playlist" value="{DATA.arr_op_alias_prefix_playlist}" data-pattern="(^(?!\-)[a-z\-]+$|^$)" data-mess="{LANG.validate_alias_lowercase_max50}"/>
                             </div>
                         </div>
                     </div>
