@@ -36,6 +36,13 @@ if ($area == MS_COMMENT_AREA_SONG) {
     $sth->bindParam(':album_id', $id, PDO::PARAM_STR);
     $sth->execute();
     $ms_detail_data = $sth->fetch();
+} elseif ($area == MS_COMMENT_AREA_PLAYLIST) {
+    $array_select_fields = nv_get_user_playlist_select_fields();
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_user_playlists WHERE playlist_id=:playlist_id";
+    $sth = $db->prepare($sql);
+    $sth->bindParam(':playlist_id', $id, PDO::PARAM_STR);
+    $sth->execute();
+    $ms_detail_data = $sth->fetch();
 }
 
 if (empty($ms_detail_data)) {
@@ -44,7 +51,7 @@ if (empty($ms_detail_data)) {
 
 $array_singer_ids = $array_singers = array();
 $ms_detail_data['singers'] = array();
-$ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
+$ms_detail_data['singer_ids'] = isset($ms_detail_data['singer_ids']) ? explode(',', $ms_detail_data['singer_ids']) : [];
 
 if (!empty($ms_detail_data['singer_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['singer_ids']);
@@ -67,6 +74,8 @@ if ($area == MS_COMMENT_AREA_SONG) {
     $url = nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers']);
 } elseif ($area == MS_COMMENT_AREA_ALBUM) {
     $url = nv_get_detail_album_link($ms_detail_data, $ms_detail_data['singers']);
+} elseif ($area == MS_COMMENT_AREA_PLAYLIST) {
+    $url = nv_get_detail_playlist_link($ms_detail_data);
 }
 
 nv_redirect_location($url);

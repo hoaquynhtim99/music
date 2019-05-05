@@ -14,8 +14,8 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
 
 $module_version = [
     'name' => 'NukeViet Music',
-    'modfuncs' => 'main,detail-song,detail-album,detail-video,list-albums,list-singers,list-videos,search,view-singer,mymusic',
-    'change_alias' => 'detail-song,detail-album,detail-video,list-albums,list-singers,list-videos,view-singer,mymusic',
+    'modfuncs' => 'main,detail-song,detail-album,detail-playlist,detail-video,list-albums,list-singers,list-videos,search,view-singer,mymusic',
+    'change_alias' => 'detail-song,detail-album,detail-playlist,detail-video,list-albums,list-singers,list-videos,view-singer,mymusic',
     'submenu' => 'list-albums,list-singers,list-videos,mymusic',
     'is_sysmod' => 0,
     'virtual' => 1,

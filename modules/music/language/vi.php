@@ -28,6 +28,8 @@ $lang_module['add_to'] = 'Thêm vào';
 $lang_module['add_song_tolikelist'] = 'Thêm bài hát vào playlist';
 $lang_module['all'] = 'Tất cả';
 $lang_module['album'] = 'Album';
+$lang_module['playlist'] = 'Playlist';
+$lang_module['playlist1'] = 'playlist';
 $lang_module['artist_name'] = 'Nghệ danh';
 $lang_module['author'] = 'Nhạc sĩ';
 $lang_module['author_list'] = 'Danh sách các nhạc sĩ';
@@ -69,6 +71,7 @@ $lang_module['play_sugges_video'] = 'Xem tiếp';
 $lang_module['play_sugges_album'] = 'Có thể bạn quan tâm';
 $lang_module['unknow_error'] = 'Lỗi không xác định, bạn vui lòng thử lại';
 $lang_module['create'] = 'Tạo';
+$lang_module['create_by'] = 'Tạo bởi';
 
 $lang_module['des_singer_add_song'] = '. Các bài hát thể hiện';
 $lang_module['des_singer_add_album'] = '. Các album online';

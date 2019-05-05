@@ -1329,6 +1329,152 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
     return $xtpl->text('main');
 }
 
+function nv_theme_detail_playlist($array, $array_captions, $content_comment)
+{
+    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
+
+    $xtpl = new XTemplate('detail-playlist.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
+    $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+    $xtpl->assign('PLUNIQUEID', nv_genpass(6));
+
+    $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
+    $xtpl->assign('PLUGINS_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/');
+
+    $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'album', true);
+    $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'album');
+    $array['resource_cover'] = nv_get_resource_url($array['resource_cover'], '----');
+
+    $xtpl->assign('PLAYLIST', $array);
+
+    // Xuất playlist bài hát
+    $soi = 1;
+    $soj = 0;
+    $plindex = 0;
+    foreach ($array['songs'] as $song) {
+        $soj++;
+        $xtpl->assign('PLSO_STT', $soi++);
+        $xtpl->assign('PLSO_INDEX', $plindex);
+
+        $song['resource_avatar_thumb'] = nv_get_resource_url($song['resource_avatar'], $song['resource_avatar_mode'], true);
+        $song['resource_avatar'] = nv_get_resource_url($song['resource_avatar'], $song['resource_avatar_mode']);
+        $song['resource_cover_thumb'] = nv_get_resource_url($song['resource_cover'], $song['resource_cover_mode'], true);
+        $song['resource_cover'] = nv_get_resource_url($song['resource_cover'], $song['resource_cover_mode']);
+        $song['song_name_data'] = str_replace('"', '\"', $song['song_name']);
+
+        $xtpl->assign('PLSO_DATA', $song);
+        $xtpl->assign('PLSO_LRTTOKEND', md5($song['song_code'] . NV_CHECK_SESSION));
+        $xtpl->assign('PLSO_LINK_TARGET', $is_embed_mode ? ' target="_blank"' : '');
+
+        $song_full_name = $song['song_name'];
+        $song_full_singer = [];
+
+        // Xuất ca sĩ
+        $num_singers = sizeof($song['singers']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $xtpl->assign('PLSO_VA_SINGERS', Config::getVariousArtists());
+
+            foreach ($song['singers'] as $singer) {
+                $song_full_singer[] = $singer['artist_name'];
+                $xtpl->assign('PLSO_SINGER', $singer);
+                $xtpl->parse('main.player.playlist.loop.va_singer.loop');
+            }
+
+            $xtpl->parse('main.player.playlist.loop.va_singer');
+        } elseif (!empty($song['singers'])) {
+            $i = 0;
+            foreach ($song['singers'] as $singer) {
+                $i++;
+                $song_full_singer[] = $singer['artist_name'];
+                $xtpl->assign('PLSO_SINGER', $singer);
+
+                if ($i > 1) {
+                    $xtpl->parse('main.player.playlist.loop.show_singer.loop.separate');
+                }
+                $xtpl->parse('main.player.playlist.loop.show_singer.loop');
+            }
+            $xtpl->parse('main.player.playlist.loop.show_singer');
+        } else {
+            $song_full_singer[] = Config::getUnknowSinger();
+            $xtpl->assign('PLSO_UNKNOW_SINGER', Config::getUnknowSinger());
+            $xtpl->parse('main.player.playlist.loop.no_singer');
+        }
+
+        $xtpl->assign('PLSO_FULL_NAME', str_replace('"', '\"', $song_full_name));
+        $xtpl->assign('PLSO_FULL_SINGER', str_replace('"', '\"', implode(', ', $song_full_singer)));
+
+        if (!$is_embed_mode) {
+            $xtpl->parse('main.player.playlist.loop.actions');
+        }
+        $xtpl->parse('main.player.playlist.loop');
+
+        // Xuất playlist javascript
+        $i = 0;
+        foreach ($song['filesdata'] as $_fileinfo) {
+            $i++;
+            $_fileinfo['resource_path'] = str_replace('"', '\"', $_fileinfo['resource_path']);
+            $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
+            $xtpl->assign('FILESDATA', $_fileinfo);
+            if ($i > 1) {
+                $xtpl->parse('main.player.playlist_js.loop.filesdata.comma');
+            }
+            $xtpl->parse('main.player.playlist_js.loop.filesdata');
+        }
+
+        if (isset($array_captions[$song['song_id']])) {
+            $i = 0;
+            foreach ($array_captions[$song['song_id']] as $track) {
+                $i++;
+                $track['is_default'] = !empty($track['is_default']) ? 'true' : 'false';
+                $xtpl->assign('TRACK', $track);
+                if ($i > 1) {
+                    $xtpl->parse('main.player.playlist_js.loop.tracks.loop.comma');
+                }
+                $xtpl->parse('main.player.playlist_js.loop.tracks.loop');
+            }
+
+            $xtpl->parse('main.player.playlist_js.loop.tracks');
+        }
+
+        if ($soj > 1) {
+            $xtpl->parse('main.player.playlist_js.loop.comma');
+        }
+
+        $xtpl->parse('main.player.playlist_js.loop');
+        $plindex++;
+    }
+    if ($is_embed_mode) {
+        $xtpl->parse('main.player.playlist.embed');
+    }
+    $xtpl->parse('main.player.playlist');
+    $xtpl->parse('main.player.playlist_js');
+
+    $xtpl->parse('main.player');
+    if ($is_embed_mode) {
+        $xtpl->parse('main.player.playlist.embed');
+        return $xtpl->text('main.player');
+    }
+
+    // Bình luận
+    if (!empty($content_comment)) {
+        $xtpl->assign('COMMENT_HTML', $content_comment);
+        $xtpl->parse('main.comment');
+
+        if (!empty($array['stat_comments'])) {
+            $xtpl->assign('COMMENT_NUMS', Utils::getFormatNumberView($array['stat_comments']));
+            $xtpl->parse('main.comment_btn.stat');
+        }
+
+        $xtpl->parse('main.comment_btn');
+    }
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}
+
 /**
  * @param array $row
  * @param array $array_resource

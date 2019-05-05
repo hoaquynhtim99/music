@@ -41,6 +41,7 @@ define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&amp;' . NV_OP_VARIABLE . '=');
 define('MS_COMMENT_AREA_SONG', 1);
 define('MS_COMMENT_AREA_ALBUM', 2);
 define('MS_COMMENT_AREA_VIDEO', 3);
+define('MS_COMMENT_AREA_PLAYLIST', 4);
 
 Resources::setLangData(NV_LANG_DATA);
 Resources::setLangInterface(NV_LANG_INTERFACE);

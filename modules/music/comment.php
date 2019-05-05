@@ -16,6 +16,7 @@ if (!defined('MS_COMMENT_AREA_SONG')) {
     define('MS_COMMENT_AREA_SONG', 1);
     define('MS_COMMENT_AREA_ALBUM', 2);
     define('MS_COMMENT_AREA_VIDEO', 3);
+    define('MS_COMMENT_AREA_PLAYLIST', 4);
 }
 
 if (!function_exists('msGetNumComments')) {
@@ -67,6 +68,13 @@ if ($area == MS_COMMENT_AREA_SONG) {
 } elseif ($area == MS_COMMENT_AREA_VIDEO) {
     try {
         $sql = 'UPDATE ' . $db_config['prefix'] . '_' . $mod_info['module_data'] . '_videos SET stat_comments=' . $numComments . ' WHERE video_id=' . $id;
+        $db->query($sql);
+    } catch (Exception $exp) {
+        trigger_error($exp->getMessage());
+    }
+} elseif ($area == MS_COMMENT_AREA_PLAYLIST) {
+    try {
+        $sql = 'UPDATE ' . $db_config['prefix'] . '_' . $mod_info['module_data'] . '_user_playlists SET stat_comments=' . $numComments . ' WHERE playlist_id=' . $id;
         $db->query($sql);
     } catch (Exception $exp) {
         trigger_error($exp->getMessage());
