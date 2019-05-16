@@ -148,8 +148,11 @@ if (!empty($array_songids)) {
             if (!isset($array_songs_resources[$row['song_id']])) {
                 $array_songs_resources[$row['song_id']] = [];
             }
+            if ($row['resource_server_id'] == 0) {
+                $row['resource_path'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $row['resource_path'];
+            }
             $array_songs_resources[$row['song_id']][$key] = [
-                'resource_path' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/' . $row['resource_path'],
+                'resource_path' => $row['resource_path'],
                 'resource_duration' => $row['resource_duration'],
                 'quality_name' => isset($global_array_soquality[$row['quality_id']]) ? $global_array_soquality[$row['quality_id']][NV_LANG_DATA . '_quality_name'] : 'N/A'
             ];
