@@ -1,7 +1,7 @@
 /*!
-JW Player version 8.8.2
+JW Player version 8.8.5
 Copyright (c) 2019, JW Player, All Rights Reserved 
-https://github.com/jwplayer/jwplayer/blob/v8.8.2/README.md
+https://github.com/jwplayer/jwplayer/blob/v8.8.5/README.md
 
 This source code and its use and distribution is subject to the terms and conditions of the applicable license agreement. 
 https://www.jwplayer.com/tos/
