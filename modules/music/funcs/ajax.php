@@ -25,13 +25,21 @@ if ($nv_Request->isset_request('getSongLyric', 'post')) {
         nv_htmlOutput('Access Denied!!!');
     }
 
-    $sql = "SELECT " . NV_LANG_DATA . "_song_introtext lyric FROM " . NV_MOD_TABLE . "_songs WHERE song_code=:song_code AND status=1";
+    $sql = "SELECT song_id FROM " . NV_MOD_TABLE . "_songs WHERE song_code=:song_code AND status=1";
     $sth = $db->prepare($sql);
     $sth->bindParam(':song_code', $song_code, PDO::PARAM_STR);
     $sth->execute();
 
     if ($sth->rowCount()) {
-        $lyric = $sth->fetchColumn();
+        $song_id = $sth->fetchColumn();
+        if (empty($song_id)) {
+            nv_htmlOutput('');
+        }
+
+        $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id=" . $song_id . " AND status=1 AND caption_data!=''");
+        $db->select("caption_data")->order("weight ASC")->limit(1);
+        $lyric = $db->query($db->sql())->fetchColumn();
+
         if (empty($lyric)) {
             nv_htmlOutput(Config::getMsgNolyric());
         }

@@ -12,12 +12,10 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\AjaxRespon;
-use NukeViet\Music\Config;
-use NukeViet\Music\Utils;
 use NukeViet\Music\Shared\Songs;
 
 $set_active_op = 'song-list';
+$resource_path = msGetCurrentUploadFolder('lyric');
 
 $song_id = $nv_Request->get_int('song_id', 'get', 0);
 if (empty($song_id)) {
@@ -39,266 +37,121 @@ foreach ($array_select_fields[1] as $f) {
     unset($row['default_' . $f]);
 }
 
+// Lấy lời bài hát
+$exists_db = false;
+$sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_caption WHERE song_id=" . $song_id . " AND caption_lang=" . $db->quote(NV_LANG_DATA);
+$result = $db->query($sql);
+if ($result->rowCount()) {
+    $array = $result->fetch();
+    $array['caption_data'] = nv_editor_br2nl($array['caption_data']);
+    $exists_db = true;
+} else {
+    $array = [
+        'caption_file' => '',
+        'caption_pdf' => '',
+        'caption_data' => ''
+    ];
+}
+
 $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;song_id=' . $song_id;
 $page_title = $lang_module['mana_cc'] . ': ' . $row['song_name'];
+$error = '';
 
 if ($nv_Request->isset_request('submit', 'post')) {
-    AjaxRespon::reset();
-
-    $array['cat_ids'] = $nv_Request->get_typed_array('cat_ids', 'post', 'int', []);
-    $array['singer_ids'] = $nv_Request->get_typed_array('singer_ids', 'post', 'int', []);
-    $array['author_ids'] = $nv_Request->get_typed_array('author_ids', 'post', 'int', []);
-    $array['video_id'] = $nv_Request->get_int('video_id', 'post', 0);
-    $array['resource_avatar'] = $nv_Request->get_title('resource_avatar', 'post', '');
-    $array['resource_cover'] = $nv_Request->get_title('resource_cover', 'post', '');
-    $array['show_inhome'] = (int)$nv_Request->get_bool('show_inhome', 'post', false);
-    $array['song_name'] = nv_substr($nv_Request->get_title('song_name', 'post', ''), 0, 250);
-    $array['song_alias'] = nv_substr($nv_Request->get_title('song_alias', 'post', ''), 0, 250);
-    $array['song_introtext'] = $nv_Request->get_textarea('song_introtext', '', NV_ALLOWED_HTML_TAGS);
-    $array['song_keywords'] = $nv_Request->get_textarea('song_keywords', '', NV_ALLOWED_HTML_TAGS);
-    $array['resource_path'] = $nv_Request->get_typed_array('resource_path', 'post', 'title', []);
+    $array['caption_file'] = $nv_Request->get_title('caption_file', 'post', '');
+    $array['caption_pdf'] = $nv_Request->get_title('caption_pdf', 'post', '');
+    $array['caption_data'] = $nv_Request->get_editor('caption_data', '', NV_ALLOWED_HTML_TAGS);
 
     // Xử lý qua các thông tin
-    $array['cat_ids'] = array_intersect($array['cat_ids'], array_keys($global_array_cat));
-    if (!nv_is_url($array['resource_avatar']) and nv_is_file($array['resource_avatar'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
-        $array['resource_avatar'] = substr($array['resource_avatar'], strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
-    } elseif (!nv_is_url($array['resource_avatar'])) {
-        $array['resource_avatar'] = '';
+    if (!nv_is_url($array['caption_file']) and nv_is_file($array['caption_file'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['caption_file'] = substr($array['caption_file'], strlen(NV_BASE_SITEURL . $resource_path[0] . '/'));
+    } elseif (!nv_is_url($array['caption_file'])) {
+        $array['caption_file'] = '';
     }
-    if (!nv_is_url($array['resource_cover']) and nv_is_file($array['resource_cover'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
-        $array['resource_cover'] = substr($array['resource_cover'], strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'));
-    } elseif (!nv_is_url($array['resource_cover'])) {
-        $array['resource_cover'] = '';
+    if (!nv_is_url($array['caption_pdf']) and nv_is_file($array['caption_pdf'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['caption_pdf'] = substr($array['caption_pdf'], strlen(NV_BASE_SITEURL . $resource_path[0] . '/'));
+    } elseif (!nv_is_url($array['caption_pdf'])) {
+        $array['caption_pdf'] = '';
     }
-    $array['song_alias'] = empty($array['song_alias']) ? change_alias($array['song_name']) : change_alias($array['song_alias']);
-    $array['song_keywords'] = trim(preg_replace('/\s[\s]+/u', ' ', strip_tags(nv_nl2br($array['song_keywords'], ''))));
-
-    // Nghệ sĩ hợp lệ
-    $array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $array['author_ids'])));
-    $array_artists = [];
-    if (!empty($array_artist_ids)) {
-        $sql = "SELECT artist_id FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $array_artist_ids) . ")";
-        $result = $db->query($sql);
-        while ($row = $result->fetch()) {
-            $array_artists[$row['artist_id']] = $row['artist_id'];
-        }
-    }
-
-    $singer_ids = $array['singer_ids'];
-    $author_ids = $array['author_ids'];
-    $array['singer_ids'] = $array['author_ids'] = [];
-    foreach ($singer_ids as $_id) {
-        if (isset($array_artists[$_id])) {
-            $array['singer_ids'][] = $_id;
-        }
-    }
-    foreach ($author_ids as $_id) {
-        if (isset($array_artists[$_id])) {
-            $array['author_ids'][] = $_id;
-        }
-    }
-
-    // Video liên quan hợp lệ
-    if ($array['video_id'] and !$db->query("SELECT video_id FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $array['video_id'])->fetchColumn()) {
-        $array['video_id'] = 0;
-    }
-
-    // Các file bài hát tồn tại
-    $resource_path = $array['resource_path'];
-    $array['resource_path'] = [];
-    foreach ($resource_path as $quality_id => $path) {
-        if (isset($global_array_soquality[$quality_id])) {
-            if (nv_is_file($path, NV_UPLOADS_DIR . '/' . $module_upload) === true) {
-                $array['resource_path'][$quality_id] = [
-                    'resource_path' => substr($path, strlen(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . Config::getUploadsFolder() . '/')),
-                    'resource_server_id' => 0
-                ];
-            } elseif (nv_is_url($path)) {
-                $array['resource_path'][$quality_id] = [
-                    'resource_path' => $path,
-                    'resource_server_id' => -1
-                ];
-            }
-        }
-    }
-
-    // Kiểm tra thông tin
-    if (empty($array['cat_ids'])) {
-        AjaxRespon::setInput('')->setMessage($lang_module['song_err_cats'])->respon();
-    }
-    if (empty($array['singer_ids'])) {
-        AjaxRespon::setInput('')->setMessage($lang_module['song_err_singers'])->respon();
-    }
-    if (empty($array['song_name'])) {
-        AjaxRespon::setInput('song_name')->setMessage($lang_module['error_require_field'])->respon();
-    }
-
-    // Chuyển một số thông tin để lưu vào CSDL
-    $array['song_searchkey'] = Utils::getSearchKey($array['song_name']);
-    $array['song_introtext'] = nv_nl2br($array['song_introtext']);
-
-    $check_db = '';
-    $new_song_id = 0;
+    $array['caption_data'] = nv_editor_nl2br($array['caption_data']);
 
     // Lưu dữ liệu
-    if ($song_id) {
-        // Sửa
-        $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET
-            cat_ids=" . $db->quote(implode(',', $array['cat_ids'])) . ",
-            singer_ids=" . $db->quote(implode(',', $array['singer_ids'])) . ",
-            author_ids=" . $db->quote(implode(',', $array['author_ids'])) . ",
-            video_id=" . $array['video_id'] . ",
-            resource_avatar=:resource_avatar,
-            resource_cover=:resource_cover,
-            show_inhome=" . $array['show_inhome'] . ",
-            " . NV_LANG_DATA . "_song_name=:song_name,
-            " . NV_LANG_DATA . "_song_alias=:song_alias,
-            " . NV_LANG_DATA . "_song_searchkey=:song_searchkey,
-            " . NV_LANG_DATA . "_song_introtext=:song_introtext,
-            " . NV_LANG_DATA . "_song_keywords=:song_keywords,
-            time_update=" . NV_CURRENTTIME . "
-        WHERE song_id=" . $song_id;
+    if ($exists_db) {
+        // Cập nhật lại
+        $sql = "UPDATE " . NV_MOD_TABLE . "_songs_caption SET
+            caption_file=:caption_file,
+            caption_pdf=:caption_pdf,
+            caption_data=:caption_data
+        WHERE song_id=" . $song_id . " AND caption_lang=" . $db->quote(NV_LANG_DATA);
 
         try {
             $sth = $db->prepare($sql);
-            $sth->bindParam(':resource_avatar', $array['resource_avatar'], PDO::PARAM_STR);
-            $sth->bindParam(':resource_cover', $array['resource_cover'], PDO::PARAM_STR);
-            $sth->bindParam(':song_name', $array['song_name'], PDO::PARAM_STR);
-            $sth->bindParam(':song_alias', $array['song_alias'], PDO::PARAM_STR);
-            $sth->bindParam(':song_searchkey', $array['song_searchkey'], PDO::PARAM_STR);
-            $sth->bindParam(':song_introtext', $array['song_introtext'], PDO::PARAM_STR, strlen($array['song_introtext']));
-            $sth->bindParam(':song_keywords', $array['song_keywords'], PDO::PARAM_STR, strlen($array['song_keywords']));
+            $sth->bindParam(':caption_file', $array['caption_file'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_pdf', $array['caption_pdf'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_data', $array['caption_data'], PDO::PARAM_STR, strlen($array['caption_data']));
 
             if (!$sth->execute()) {
-                $check_db = $lang_module['error_save'];
+                $error = $lang_module['error_save'];
             }
         } catch (PDOException $e) {
-            $check_db = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $error = $lang_module['error_save'] . ' ' . $e->getMessage();
         }
     } else {
-        // Thêm
-        // Xác định các field theo ngôn ngữ không có dữ liệu
-        $langs = msGetModuleSetupLangs();
-        $array_fname = $array_fvalue = [];
-        foreach ($langs as $lang) {
-            if ($lang != NV_LANG_DATA) {
-                $array_fname[] = $lang . '_song_introtext';
-                $array_fname[] = $lang . '_song_keywords';
-                $array_fvalue[] = '';
-                $array_fvalue[] = '';
-            }
-        }
-        $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
-        $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
-
-        $song_code = Songs::creatUniqueCode();
-
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_songs (
-            song_code, cat_ids, singer_ids, author_ids, video_id, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, status,
-            " . NV_LANG_DATA . "_song_name, " . NV_LANG_DATA . "_song_alias, " . NV_LANG_DATA . "_song_searchkey, " . NV_LANG_DATA . "_song_introtext,
-            " . NV_LANG_DATA . "_song_keywords" . $array_fname . "
+        // Thêm mới
+        $sql = "INSERT INTO " . NV_MOD_TABLE . "_songs_caption (
+            song_id, caption_lang, caption_file, caption_pdf, caption_data, is_default, weight, status
         ) VALUES (
-            :song_code, " . $db->quote(implode(',', $array['cat_ids'])) . ", " . $db->quote(implode(',', $array['singer_ids'])) . ",
-            " . $db->quote(implode(',', $array['author_ids'])) . ", " . $array['video_id'] . ", :resource_avatar, :resource_cover,
-            " . $admin_info['admin_id'] . ", " . $db->quote($admin_info['full_name']) . ", " . NV_CURRENTTIME . ", 1, " . $array['show_inhome'] . ", 1,
-            :song_name, :song_alias, :song_searchkey, :song_introtext, :song_keywords" . $array_fvalue . "
+            " . $song_id . ", " . $db->quote(NV_LANG_DATA) . ", :caption_file, :caption_pdf, :caption_data, 1, 1, 1
         )";
 
-        $data_insert = [];
-        $data_insert['song_code'] = $song_code;
-        $data_insert['resource_avatar'] = $array['resource_avatar'];
-        $data_insert['resource_cover'] = $array['resource_cover'];
-        $data_insert['song_name'] = $array['song_name'];
-        $data_insert['song_alias'] = $array['song_alias'];
-        $data_insert['song_searchkey'] = $array['song_searchkey'];
-        $data_insert['song_introtext'] = $array['song_introtext'];
-        $data_insert['song_keywords'] = $array['song_keywords'];
+        try {
+            $sth = $db->prepare($sql);
+            $sth->bindParam(':caption_file', $array['caption_file'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_pdf', $array['caption_pdf'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_data', $array['caption_data'], PDO::PARAM_STR, strlen($array['caption_data']));
 
-        $new_song_id = $db->insert_id($sql, 'song_id', $data_insert);
+            if (!$sth->execute()) {
+                $error = $lang_module['error_save'];
+            }
+        } catch (PDOException $e) {
+            $error = $lang_module['error_save'] . ' ' . $e->getMessage();
+        }
+    }
 
-        if (empty($new_song_id)) {
-            $check_db = $lang_module['error_save'];
+    if (empty($error)) {
+        // Ghi nhật ký
+        if ($exists_db) {
+            nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_SONG_CAPTION', $song_id . ':' . $row['song_name'], $admin_info['userid']);
         } else {
-            $song_id = $new_song_id;
-        }
-    }
-
-    if ($check_db !== '') {
-        // Thất bại
-        AjaxRespon::setMessage($check_db)->respon();
-    }
-
-    // Xóa các file bài hát và thêm lại
-    $db->query("DELETE FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id=" . $song_id);
-    foreach ($array['resource_path'] as $quality_id => $resource_path) {
-        $db->query("INSERT INTO " . NV_MOD_TABLE . "_songs_data (
-            song_id, quality_id, resource_server_id, resource_path, resource_duration, status
-        ) VALUES (
-            " . $song_id . ", " . $quality_id . ", " . $resource_path['resource_server_id'] . ", " . $db->quote($resource_path['resource_path']) . ", 0, 1
-        )");
-    }
-
-    // Cập nhật lại thống kê ca sĩ, nhạc sĩ
-    $diff1 = array_diff($array_old['singer_ids'], $array['singer_ids']);
-    foreach ($diff1 as $_id) {
-        msUpdateArtistStat($_id);
-    }
-    $diff2 = array_diff($array['singer_ids'], $array_old['singer_ids']);
-    foreach ($diff2 as $_id) {
-        msUpdateArtistStat($_id);
-    }
-    $diff3 = array_diff($array_old['author_ids'], $array['author_ids']);
-    foreach ($diff3 as $_id) {
-        msUpdateArtistStat($_id, false);
-    }
-    $diff4 = array_diff($array['author_ids'], $array_old['author_ids']);
-    foreach ($diff4 as $_id) {
-        msUpdateArtistStat($_id, false);
-    }
-
-    // Cập nhật lại thống kê thể loại
-    $diff1 = array_diff($array_old['cat_ids'], $array['cat_ids']);
-    foreach ($diff1 as $_id) {
-        msUpdateCatStat($_id);
-    }
-    $diff2 = array_diff($array['cat_ids'], $array_old['cat_ids']);
-    foreach ($diff2 as $_id) {
-        msUpdateCatStat($_id);
-    }
-
-    // Set video liên quan của bài hát nếu chọn video liên quan
-    if ($array_old['video_id'] != $array['video_id']) {
-        // Set video liên quan có bài hát liên quan là bài hát này
-        if ($array['video_id']) {
-            $db->query("UPDATE " . NV_MOD_TABLE . "_videos SET song_id=" . $song_id . " WHERE video_id=" . $array['video_id']);
+            nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_SONG_CAPTION', $song_id . ':' . $row['song_name'], $admin_info['userid']);
         }
 
-        // Dỡ bỏ bài hát liên quan của video trước đó
-        if ($array_old['video_id']) {
-            $db->query("UPDATE " . NV_MOD_TABLE . "_videos SET song_id=0 WHERE video_id=" . $array_old['video_id']);
-        }
-    }
+        // Xóa cache
+        $nv_Cache->delMod($module_name);
 
-    // Ghi nhật ký
-    if ($song_id and empty($new_song_id)) {
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_SONG', $song_id . ':' . $array_old['song_name'], $admin_info['userid']);
+        nv_redirect_location(NV_ADMIN_MOD_FULLLINK . $op . '&song_id=' . $song_id);
     } else {
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_SONG', $array['song_name'], $admin_info['userid']);
+        $array['caption_data'] = nv_editor_nl2br($array['caption_data']);
     }
+}
 
-    // Xóa cache
-    $nv_Cache->delMod($module_name);
+if (defined('NV_EDITOR')) {
+    require_once NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php';
+}
 
-    // Chuyển về trang thêm mới
-    $continue_add = ($nv_Request->get_int('submitcontinue', 'post', 0) and !$song_id);
-    if ($continue_add) {
-        $redirect = NV_ADMIN_MOD_FULLLINK . 'song-content';
-        AjaxRespon::set('redirectnow', true);
-    } else {
-        $redirect = NV_ADMIN_MOD_FULLLINK . 'song-list';
-    }
+$array['caption_data'] = htmlspecialchars($array['caption_data']);
 
-    AjaxRespon::setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
+if (defined('NV_EDITOR') and nv_function_exists('nv_aleditor')) {
+    $array['caption_data'] = nv_aleditor('caption_data', '100%', '300px', $array['caption_data']);
+} else {
+    $array['caption_data'] = '<textarea class="form-control" style="width:100%;height:300px" name="caption_data">' . $array['caption_data'] . '</textarea>';
+}
+
+if (!empty($array['caption_file']) and !nv_is_url($array['caption_file']) and nv_is_file(NV_BASE_SITEURL . $resource_path[0] . '/' . $array['caption_file'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+    $array['caption_file'] = NV_BASE_SITEURL . $resource_path[0] . '/' . $array['caption_file'];
+}
+if (!empty($array['caption_pdf']) and !nv_is_url($array['caption_pdf']) and nv_is_file(NV_BASE_SITEURL . $resource_path[0] . '/' . $array['caption_pdf'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+    $array['caption_pdf'] = NV_BASE_SITEURL . $resource_path[0] . '/' . $array['caption_pdf'];
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
@@ -315,6 +168,15 @@ $xtpl->assign('MODULE_NAME', $module_name);
 $xtpl->assign('NV_OP_VARIABLE', NV_OP_VARIABLE);
 $xtpl->assign('OP', $op);
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
+$xtpl->assign('DATA', $array);
+
+$xtpl->assign('RESOURCE_PATH', $resource_path[0]);
+$xtpl->assign('RESOURCE_CURRPATH', $resource_path[1]);
+
+if (!empty($error)) {
+    $xtpl->assign('ERROR', $error);
+    $xtpl->parse('main.error');
+}
 
 $xtpl->parse('main');
 $contents = $xtpl->text('main');

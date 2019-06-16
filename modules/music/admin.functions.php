@@ -60,6 +60,8 @@ function msGetCurrentUploadFolder($area, $child = '')
         } else {
             $folder_lev1 = 'videos';
         }
+    } elseif ($area == 'lyric') {
+        $folder_lev1 = 'lyric';
     } elseif ($area == 'data') {
         $folder_lev1 = Config::getUploadsFolder();
     }

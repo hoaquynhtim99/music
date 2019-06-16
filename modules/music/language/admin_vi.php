@@ -77,6 +77,7 @@ $lang_module['artist'] = 'Nghệ sĩ';
 $lang_module['Year'] = 'Năm';
 $lang_module['Day'] = 'Ngày';
 $lang_module['Month'] = 'Tháng';
+$lang_module['apply_for'] = 'áp dụng cho';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 $lang_module['error_require_field'] = 'Trường này là bắt buộc';
@@ -326,6 +327,10 @@ $lang_module['search_all_nation'] = 'Tất cả quốc gia';
 $lang_module['search_all_cat'] = 'Tất cả thể loại';
 
 $lang_module['mana_cc'] = 'Quản lý lời bài hát';
+$lang_module['mana_cc_webvtt'] = 'Tập tin WebVTT';
+$lang_module['mana_cc_pdf'] = 'Tập tin PDF, DOC';
+$lang_module['mana_cc_files'] = 'Các tập tin lời bài hát';
+$lang_module['mana_cc_text'] = 'Lời bài hát dạng text';
 
 $lang_module['mainpage_title'] = 'Trang thông tin tổng quan';
 $lang_module['mainpage_stat_overview'] = 'Tổng lượt nghe/xem';

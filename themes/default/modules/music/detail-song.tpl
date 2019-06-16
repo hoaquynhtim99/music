@@ -130,7 +130,7 @@ songplayer.on("complete", function(event) {
 <div class="well ms-detailso-lrt">
     <h3 class="ms-detailso-lrt-title">{LANG.lyric}: {SONG.song_name}</h3>
     <div class="ms-detailso-lrt-body" id="detail-song-lrt">
-        {SONG.song_introtext}
+        {SONG.caption_text}
     </div>
     <div class="ms-detailso-lrt-control">
         <a href="#" class="ms-detailso-lrt-control-f" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="F" data-unique="detail-song-lrt">{LANG.view_full}</a>

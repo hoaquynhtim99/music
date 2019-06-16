@@ -101,10 +101,10 @@ td.ms-ellipsis {
 .form-horizontal .loading{
     display: none;
 }
-div.tooltip.bottom{
+.form-element div.tooltip.bottom {
     left: 5px!important;
 }
-div.tooltip.bottom div.tooltip-arrow{
+.form-element div.tooltip.bottom div.tooltip-arrow {
     left: 15px!important;
 }
 .ms-form-group-last {

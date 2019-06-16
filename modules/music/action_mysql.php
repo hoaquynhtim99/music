@@ -355,7 +355,8 @@ $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_dat
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_caption (
   song_id int(11) unsigned NOT NULL,
   caption_lang varchar(10) NOT NULL,
-  caption_file varchar(255) NOT NULL DEFAULT '' COMMENT 'File lời bài hát',
+  caption_file varchar(255) NOT NULL DEFAULT '' COMMENT 'File lời bài hát dạng hỗ trợ chạy lyric',
+  caption_pdf varchar(255) NOT NULL DEFAULT '' COMMENT 'File lời bài hát dạng xem trực tuyến',
   caption_data text NOT NULL COMMENT 'Dữ liệu dạng text',
   is_default tinyint(1) NOT NULL DEFAULT '0',
   weight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Sắp thứ tự',

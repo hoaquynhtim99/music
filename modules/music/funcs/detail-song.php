@@ -37,6 +37,7 @@ $ms_detail_data['song_link_ember'] = '';
 $ms_detail_data['singer_name'] = Config::getUnknowSinger();
 $ms_detail_data['filesdata'] = [];
 $ms_detail_data['captions'] = [];
+$ms_detail_data['caption_text'] = '';
 $ms_detail_data['tokend'] = md5($ms_detail_data['song_code'] . NV_CHECK_SESSION);
 
 if (!empty($ms_detail_data['singer_ids'])) {
@@ -225,6 +226,9 @@ while ($row = $result->fetch()) {
             'caption_file' => NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_file'],
             'is_default' => $row['is_default']
         ];
+    }
+    if (!empty($row['caption_data'])) {
+        $ms_detail_data['caption_text'] = $row['caption_data'];
     }
 }
 
