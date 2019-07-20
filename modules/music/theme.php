@@ -919,6 +919,49 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         $xtpl->parse('main.comment_btn');
     }
 
+    // Tab lời bài hát và sheet nhạc
+    $array_tabs = [];
+    if (!empty($array['caption_text'])) {
+        $array_tabs[] = [
+            'type' => 'text',
+            'title' => $lang_module['lyric'],
+            'data' => $array['caption_text']
+        ];
+    }
+    if (!empty($array['caption_file'])) {
+        if ($array['caption_file_ext'] == 'pdf') {
+            $array_tabs[] = [
+                'type' => 'pdf',
+                'title' => $lang_module['sheet'],
+                'data' => $array['caption_file']
+            ];
+        } else {
+            $array_tabs[] = [
+                'type' => 'iframe',
+                'title' => $lang_module['sheet'],
+                'data' => $array['caption_file']
+            ];
+        }
+    }
+    $num_tabs = sizeof($array_tabs);
+    if (!empty($array_tabs)) {
+        $stt = 0;
+        foreach ($array_tabs as $tabdata) {
+            $stt++;
+            $xtpl->assign('TABDATA_ACTIVE1', $stt == 1 ? ' class="active"' : '');
+            $xtpl->assign('TABDATA_ACTIVE2', $stt == 1 ? ' active' : '');
+            $xtpl->assign('TABDATA', $tabdata);
+
+            $xtpl->parse('main.lrtsheet_tabs.loopcontent.' . $tabdata['type']);
+            $xtpl->parse('main.lrtsheet_tabs.loopcontent');
+
+            if ($num_tabs > 1) {
+                $xtpl->parse('main.lrtsheet_tabs.looptitle');
+            }
+        }
+        $xtpl->parse('main.lrtsheet_tabs');
+    }
+
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
@@ -1732,3 +1775,20 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
     return $xtpl->text('main');
 }
 
+/**
+ * @param string $file_url
+ * @return string
+ */
+function nv_theme_viewpdf($file_url)
+{
+    global $lang_module, $lang_global;
+
+    $xtpl = new XTemplate('viewer.tpl', NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/js/pdf.js');
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('PDF_JS_DIR', NV_BASE_SITEURL . NV_ASSETS_DIR . '/js/pdf.js/');
+    $xtpl->assign('PDF_URL', $file_url);
+    $xtpl->parse('main');
+
+    return $xtpl->text('main');
+}

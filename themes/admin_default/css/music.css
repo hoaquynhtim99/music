@@ -110,6 +110,10 @@ td.ms-ellipsis {
 .ms-form-group-last {
     margin-bottom: 0;
 }
+.form-text {
+    display: block;
+    margin-top: 5px;
+}
 
 .has-error .select2-container--default.select2-container--focus .select2-selection--multiple,
 .has-error .select2-container--default .select2-selection--multiple {

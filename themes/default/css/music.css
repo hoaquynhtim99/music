@@ -833,6 +833,21 @@ ul.ms-detailso-header-info h2 {
     background-position: center top;
     margin-bottom: 10px;
 }
+.ms-detailso-lrt-sheet-tags {
+    margin-bottom: 15px;
+}
+.ms-detailso-lrt-sheet-tags .nav-tabs > li.active > a,
+.ms-detailso-lrt-sheet-tags .nav-tabs > li.active > a:hover,
+.ms-detailso-lrt-sheet-tags .nav-tabs > li.active > a:focus {
+    background-color: #f5f5f5;
+}
+.ms-detailso-lrt {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-bottom: 1px #ddd solid;
+    border-left: 1px #ddd solid;
+    border-right: 1px #ddd solid;
+}
 .ms-detailso-lrt-title {
     margin-bottom: 10px;
 }
@@ -847,6 +862,28 @@ ul.ms-detailso-header-info h2 {
 }
 .ms-detailso-lrt-control-h {
     display: none;
+}
+.ms-detailso-responsive-iframe {
+    position: relative;
+}
+.ms-detailso-responsive-iframe.ipdf {
+    margin-top: 10px;
+}
+.ms-detailso-responsive-iframe .inner-fixed-height {
+    height: 0;
+    padding-bottom: 100%;
+    width: 100%;
+}
+.ms-detailso-responsive-iframe .inner-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+.ms-detailso-iframe-lrt {
+    width: 100%;
+    height: 100%;
 }
 .ms-detailso-action {
     margin-bottom: 10px;

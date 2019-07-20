@@ -34,10 +34,13 @@ $ms_detail_data['video'] = [];
 $ms_detail_data['video_link'] = '';
 $ms_detail_data['song_link'] = '';
 $ms_detail_data['song_link_ember'] = '';
+$ms_detail_data['song_link_pdf'] = '';
 $ms_detail_data['singer_name'] = Config::getUnknowSinger();
 $ms_detail_data['filesdata'] = [];
 $ms_detail_data['captions'] = [];
 $ms_detail_data['caption_text'] = '';
+$ms_detail_data['caption_file'] = '';
+$ms_detail_data['caption_file_ext'] = '';
 $ms_detail_data['tokend'] = md5($ms_detail_data['song_code'] . NV_CHECK_SESSION);
 
 if (!empty($ms_detail_data['singer_ids'])) {
@@ -230,11 +233,34 @@ while ($row = $result->fetch()) {
     if (!empty($row['caption_data'])) {
         $ms_detail_data['caption_text'] = $row['caption_data'];
     }
+    if (!empty($row['caption_pdf']) and file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf'])) {
+        $ms_detail_data['caption_file'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf'];
+        $ms_detail_data['caption_file_ext'] = nv_getextension(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf']);
+    } elseif (!empty($row['caption_pdf']) and nv_is_url($row['caption_pdf'])) {
+        $ms_detail_data['caption_file'] = $row['caption_pdf'];
+        $ms_detail_data['caption_file_ext'] = '';
+    }
 }
 
 // Các phần khác
 $ms_detail_data['song_link'] = nv_get_detail_song_link($ms_detail_data, $ms_detail_data['singers']);
 $ms_detail_data['song_link_ember'] = nv_url_rewrite(nv_get_detail_song_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
+$ms_detail_data['song_link_pdf'] = nv_url_rewrite(nv_get_detail_song_link($ms_detail_data, $ms_detail_data['singers'], true, 'sheet=1'), true);
+
+// Xuất PDF
+$is_pdf_mode = ($nv_Request->get_int('sheet', 'get', 0) == 1 ? true : false);
+if ($is_pdf_mode) {
+    if (empty($ms_detail_data['caption_file']) or $ms_detail_data['caption_file_ext'] != 'pdf') {
+        nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+    }
+
+    @header("X-Robots-Tag: noindex, nofollow", true);
+
+    $contents = nv_theme_viewpdf($ms_detail_data['caption_file']);
+    include NV_ROOTDIR . '/includes/header.php';
+    echo $contents;
+    include NV_ROOTDIR . '/includes/footer.php';
+}
 
 $true_rewrite_url = nv_url_rewrite(str_replace('&amp;', '&', $is_embed_mode ? $ms_detail_data['song_link_ember'] : $ms_detail_data['song_link']), true);
 

@@ -328,7 +328,9 @@ $lang_module['search_all_cat'] = 'Tất cả thể loại';
 
 $lang_module['mana_cc'] = 'Quản lý lời bài hát';
 $lang_module['mana_cc_webvtt'] = 'Tập tin WebVTT';
-$lang_module['mana_cc_pdf'] = 'Tập tin PDF, DOC';
+$lang_module['mana_cc_webvtt_help'] = 'Chuẩn định dạng WebVTT có thể hiển thị lời trên trình phát nhạc';
+$lang_module['mana_cc_pdf'] = 'Tập tin PDF, Iframe URL';
+$lang_module['mana_cc_pdf_help'] = 'Chọn tập tin PDF hoặc dán URL đầy đủ của đoạn mã nhúng vào để hiển thị sheet nhạc';
 $lang_module['mana_cc_files'] = 'Các tập tin lời bài hát';
 $lang_module['mana_cc_text'] = 'Lời bài hát dạng text';
 

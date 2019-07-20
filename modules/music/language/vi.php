@@ -46,6 +46,7 @@ $lang_module['hometown'] = 'Quê quán';
 $lang_module['listen_song'] = 'Nghe bài hát';
 $lang_module['listen_this_song'] = 'Nghe bài hát này';
 $lang_module['lyric'] = 'Lời bài hát';
+$lang_module['sheet'] = 'Sheet nhạc';
 $lang_module['more_info'] = 'Thông tin thêm';
 $lang_module['nation'] = 'Quốc gia';
 $lang_module['nickname'] = 'Tên thường gọi';

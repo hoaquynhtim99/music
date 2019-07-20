@@ -15,6 +15,7 @@
                             <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_file" data-type="file" data-path="{RESOURCE_PATH}" data-currentpath="{RESOURCE_CURRPATH}">{GLANG.browse_file}</button>
                         </div>
                     </div>
+                    <i class="form-text text-muted">{LANG.mana_cc_webvtt_help}.</i>
                 </div>
             </div>
             <div class="row">
@@ -26,6 +27,7 @@
                             <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_pdf" data-type="file" data-path="{RESOURCE_PATH}" data-currentpath="{RESOURCE_CURRPATH}">{GLANG.browse_file}</button>
                         </div>
                     </div>
+                    <i class="form-text text-muted">{LANG.mana_cc_pdf_help}.</i>
                 </div>
             </div>
         </div>

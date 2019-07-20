@@ -127,16 +127,50 @@ songplayer.on("complete", function(event) {
     <a href="{SONG.video.video_link}" class="btn btn-primary btn-xs"><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.view_video}</a>
     <!-- END: video -->
 </div>
-<div class="well ms-detailso-lrt">
-    <h3 class="ms-detailso-lrt-title">{LANG.lyric}: {SONG.song_name}</h3>
-    <div class="ms-detailso-lrt-body" id="detail-song-lrt">
-        {SONG.caption_text}
-    </div>
-    <div class="ms-detailso-lrt-control">
-        <a href="#" class="ms-detailso-lrt-control-f" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="F" data-unique="detail-song-lrt">{LANG.view_full}</a>
-        <a href="#" class="ms-detailso-lrt-control-h" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="H" data-unique="detail-song-lrt">{LANG.view_haft}</a>
+
+<!-- BEGIN: lrtsheet_tabs -->
+<div class="ms-detailso-lrt-sheet-tags">
+    <ul class="nav nav-tabs" role="tablist">
+        <!-- BEGIN: looptitle -->
+        <li role="presentation"{TABDATA_ACTIVE1}><a href="#ms-detailso-tab-{TABDATA.type}" aria-controls="ms-detailso-tab-{TABDATA.type}" role="tab" data-toggle="tab">{TABDATA.title}</a></li>
+        <!-- END: looptitle -->
+    </ul>
+    <div class="tab-content">
+        <!-- BEGIN: loopcontent -->
+        <div role="tabpanel" class="tab-pane{TABDATA_ACTIVE2}" id="ms-detailso-tab-{TABDATA.type}">
+            <!-- BEGIN: text -->
+            <div class="ms-detailso-lrt">
+                <h3 class="ms-detailso-lrt-title">{LANG.lyric}: {SONG.song_name}</h3>
+                <div class="ms-detailso-lrt-body" id="detail-song-lrt">
+                    {TABDATA.data}
+                </div>
+                <div class="ms-detailso-lrt-control">
+                    <a href="#" class="ms-detailso-lrt-control-f" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="F" data-unique="detail-song-lrt">{LANG.view_full}</a>
+                    <a href="#" class="ms-detailso-lrt-control-h" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="H" data-unique="detail-song-lrt">{LANG.view_haft}</a>
+                </div>
+            </div>
+            <!-- END: text -->
+            <!-- BEGIN: pdf -->
+            <div class="ms-detailso-responsive-iframe ipdf">
+                <div class="inner-fixed-height"></div>
+                <div class="inner-content">
+                    <iframe class="ms-detailso-iframe-lrt" frameborder="0" scrolling="no" src="{SONG.song_link_pdf}"></iframe>
+                </div>
+            </div>
+            <!-- END: pdf -->
+            <!-- BEGIN: iframe -->
+            <div class="ms-detailso-responsive-iframe">
+                <div class="inner-fixed-height"></div>
+                <div class="inner-content"><a rel=""></a>
+                    <iframe class="ms-detailso-iframe-lrt" frameborder="0" scrolling="no" src="{TABDATA.data}"></iframe>
+                </div>
+            </div>
+            <!-- END: iframe -->
+        </div>
+        <!-- END: loopcontent -->
     </div>
 </div>
+<!-- END: lrtsheet_tabs -->
 
 <!-- BEGIN: albums -->
 <div class="ms-title-section">
