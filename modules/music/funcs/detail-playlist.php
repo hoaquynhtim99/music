@@ -63,6 +63,7 @@ if (!empty($array_songids)) {
         }
         $row['singers'] = [];
         $row['song_link'] = '';
+        $row['song_link_pdf'] = '';
         $row['song_link_full'] = '';
         $row['resource_avatar_mode'] = 'song';
         $row['resource_cover_mode'] = 'song';
@@ -139,6 +140,7 @@ foreach ($array_songids as $song_id => $_tmpdata) {
             }
         }
         $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
+        $row['song_link_pdf'] = nv_get_detail_song_link($row, $row['singers'], true, 'sheet=1');
         $row['song_link_full'] = NV_MY_DOMAIN . nv_url_rewrite($row['song_link'], true);
 
         $row['filesdata'] = [];

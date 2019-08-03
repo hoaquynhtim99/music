@@ -10,13 +10,74 @@ var loadingHtml = '<div class="text-center"><i class="fa fa-spin fa-spinner fa-2
 var msAjaxURL = nv_base_siteurl + 'index.php?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&' + nv_fc_variable + '=ajax&nocache=' + new Date().getTime();
 var msAllPop = new Array();
 
-// Tải và hiển thị lời bài hát
-function msLoadLyric(soCode, soTitle, tokend, resTitle, resDoby) {
-    $(resTitle).html(soTitle);
-    $(resDoby).removeClass('open');
-    $(resDoby).html(loadingHtml);
-    $.post(msAjaxURL, 'getSongLyric=1&song_code=' + soCode + '&tokend=' + tokend, function(res) {
-        $(resDoby).html(res);
+/*
+ * Tải và hiển thị lời bài hát, sheet nhạc
+ * Tại phần
+ */
+function msLoadLyric(soCode, soTitle, tokend, sheetlink) {
+    $('#msAbSoLrtSheetAreaCtn').addClass('hidden');
+    $('#detail-song-lrt').removeClass('open');
+    $('#detail-song-lrt').html('');
+    $('[data-toggle="msSoIframeSheet"]').html('');
+    $('[data-toggle="msSoTabLrtSheetItem"]').removeClass('active');
+    $('#msAbSoLrtSheetAreaLoader').removeClass('hidden');
+
+    $('#tabctr-ms-detailso-tab-text').hide();
+    $('#tabctr-ms-detailso-tab-pdf').hide();
+    $('#tabctr-ms-detailso-tab-iframe').hide();
+
+    $('#solrtName').html(soTitle);
+
+    $.ajax({
+        type: 'POST',
+        url: msAjaxURL,
+        dataType: 'json',
+        data: {
+            'getSongLyric': 1,
+            'song_code':  soCode,
+            'tokend':  tokend
+        }
+    }).done(function(res) {
+        console.log(res);
+        $('#msAbSoLrtSheetAreaLoader').addClass('hidden');
+
+        if (res.status == 'SUCCESS' && (res.caption_text != '' || res.caption_file != '')) {
+            // Hiển thị tab khi có cả lời bài hát và sheet nhạc
+            if (res.caption_text != '' && res.caption_file != '') {
+                $('#tabctr-ms-detailso-tab-text').show();
+                if (res.caption_file_ext == 'pdf') {
+                    $('#tabctr-ms-detailso-tab-pdf').show();
+                } else {
+                    $('#tabctr-ms-detailso-tab-iframe').show();
+                }
+                $('#tabctr-ms-detailso-tab-text').addClass('active');
+            }
+
+            if (res.caption_text != '') {
+                $('#detail-song-lrt').html(res.caption_text);
+                $('#ms-detailso-tab-text').addClass('active');
+            }
+            if (res.caption_file != '') {
+                if (res.caption_file_ext == 'pdf') {
+                    $('#ms-detailso-tab-pdf').find('.inner-content').html('<iframe class="ms-detailso-iframe-lrt" frameborder="0" scrolling="no" src="' + sheetlink + '"></iframe>');
+                 // Hiển thị PDF khi không có lời bài hát
+                    if (res.caption_text == '') {
+                        $('#ms-detailso-tab-pdf').addClass('active');
+                    }
+                } else {
+                    $('#ms-detailso-tab-iframe').find('.inner-content').html('<iframe class="ms-detailso-iframe-lrt" frameborder="0" scrolling="no" src="' + sheetlink + '"></iframe>');
+                    // Hiển thị iframe khi không có lời bài hát
+                    if (res.caption_text == '') {
+                        $('#ms-detailso-tab-iframe').addClass('active');
+                    }
+                }
+            }
+
+            $('#msAbSoLrtSheetAreaCtn').removeClass('hidden');
+        }
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.log(jqXHR, textStatus, errorThrown);
+        $('#msAbSoLrtSheetAreaLoader').addClass('hidden');
     });
 }
 

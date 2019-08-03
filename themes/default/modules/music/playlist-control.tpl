@@ -45,7 +45,7 @@ $(document).on('nv.music.ready', function() {
         if ($('#soplaylists').data('mousein') == false) {
             jScrollPaneAPI.scrollToY(item.index * thisitem.outerHeight());
         }
-        msLoadLyric(thisitem.data('socode'), thisitem.data('sotitle'), thisitem.data('tokend'), '#solrtName', '#detail-song-lrt');
+        msLoadLyric(thisitem.data('socode'), thisitem.data('sotitle'), thisitem.data('tokend'), thisitem.data('sopdf'));
     });
     // Click vào tên một bài hát trong playlist
     $('#soplaylists [data-control="playsong"]').click(function(e) {

@@ -49,16 +49,7 @@
 {FILE "playlist-control.tpl"}
 <!-- END: player -->
 
-<div class="well ms-detailso-lrt">
-    <h3 class="ms-detailso-lrt-title">{LANG.lyric}: <span id="solrtName">...</span></h3>
-    <div class="ms-detailso-lrt-body" id="detail-song-lrt">
-        ...
-    </div>
-    <div class="ms-detailso-lrt-control">
-        <a href="#" class="ms-detailso-lrt-control-f" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="F" data-unique="detail-song-lrt">{LANG.view_full}</a>
-        <a href="#" class="ms-detailso-lrt-control-h" data-toggle="togglehview" data-target="#detail-song-lrt" data-mode="H" data-unique="detail-song-lrt">{LANG.view_haft}</a>
-    </div>
-</div>
+{FILE "playlist-lyric-sheet.tpl"}
 
 <!-- BEGIN: comment -->
 <div class="ms-title-section" id="comment-area">

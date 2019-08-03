@@ -254,6 +254,7 @@ if ($is_pdf_mode) {
         nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
     }
 
+    // Chặn index link sheet nhạc
     @header("X-Robots-Tag: noindex, nofollow", true);
 
     $contents = nv_theme_viewpdf($ms_detail_data['caption_file']);

@@ -21,8 +21,17 @@ $tokend = $nv_Request->get_title('tokend', 'post,get', '');
 if ($nv_Request->isset_request('getSongLyric', 'post')) {
     $song_code = $nv_Request->get_title('song_code', 'post', '');
 
+    $respon = [
+        'status' => 'ERROR',
+        'message' => '',
+        'caption_text' => '',
+        'caption_file' => '',
+        'caption_file_ext' => ''
+    ];
+
     if ($tokend !== md5($song_code . NV_CHECK_SESSION)) {
-        nv_htmlOutput('Access Denied!!!');
+        $respon['message'] = 'Access Denied!!!';
+        nv_jsonOutput($respon);
     }
 
     $sql = "SELECT song_id FROM " . NV_MOD_TABLE . "_songs WHERE song_code=:song_code AND status=1";
@@ -33,20 +42,36 @@ if ($nv_Request->isset_request('getSongLyric', 'post')) {
     if ($sth->rowCount()) {
         $song_id = $sth->fetchColumn();
         if (empty($song_id)) {
-            nv_htmlOutput('');
+            $respon['message'] = 'Song not found!!!';
+            nv_jsonOutput($respon);
         }
 
-        $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id=" . $song_id . " AND status=1 AND caption_data!=''");
-        $db->select("caption_data")->order("weight ASC")->limit(1);
-        $lyric = $db->query($db->sql())->fetchColumn();
+        $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id=" . $song_id . " AND status=1");
+        $db->select("caption_pdf, caption_data")->order("weight ASC")->limit(1);
+        $row = $db->query($db->sql())->fetch();
 
-        if (empty($lyric)) {
-            nv_htmlOutput(Config::getMsgNolyric());
+        $respon['status'] = 'SUCCESS';
+
+        if (empty($row) or empty($row['caption_data'])) {
+            $respon['message'] = Config::getMsgNolyric();
         }
-        nv_htmlOutput($lyric);
+        if (!empty($row)) {
+            $respon['caption_text'] = $row['caption_data'];
+
+            if (!empty($row['caption_pdf']) and file_exists(NV_UPLOADS_REAL_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf'])) {
+                $respon['caption_file'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf'];
+                $respon['caption_file_ext'] = nv_getextension(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf']);
+            } elseif (!empty($row['caption_pdf']) and nv_is_url($row['caption_pdf'])) {
+                $respon['caption_file'] = $row['caption_pdf'];
+                $respon['caption_file_ext'] = '';
+            }
+        }
+
+        nv_jsonOutput($respon);
     }
 
-    nv_htmlOutput('');
+    $respon['message'] = 'No Data Input!!!';
+    nv_jsonOutput($respon);
 }
 
 // Cập nhật số lượt chia sẻ bài hát

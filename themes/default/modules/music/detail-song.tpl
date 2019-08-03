@@ -161,7 +161,7 @@ songplayer.on("complete", function(event) {
             <!-- BEGIN: iframe -->
             <div class="ms-detailso-responsive-iframe">
                 <div class="inner-fixed-height"></div>
-                <div class="inner-content"><a rel=""></a>
+                <div class="inner-content">
                     <iframe class="ms-detailso-iframe-lrt" frameborder="0" scrolling="no" src="{TABDATA.data}"></iframe>
                 </div>
             </div>
