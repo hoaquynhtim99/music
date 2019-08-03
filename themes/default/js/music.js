@@ -38,7 +38,6 @@ function msLoadLyric(soCode, soTitle, tokend, sheetlink) {
             'tokend':  tokend
         }
     }).done(function(res) {
-        console.log(res);
         $('#msAbSoLrtSheetAreaLoader').addClass('hidden');
 
         if (res.status == 'SUCCESS' && (res.caption_text != '' || res.caption_file != '')) {
