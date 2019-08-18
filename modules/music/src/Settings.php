@@ -32,6 +32,11 @@ interface Settings
     const TABLE_CATEGORY = 'categories';
 
     /**
+     * Bảng thể loại BXH
+     */
+    const TABLE_CHART_CATEGORY = 'chart_categories';
+
+    /**
      * Bảng nghệ sĩ
      */
     const TABLE_ARTIST = 'artists';
@@ -65,6 +70,11 @@ interface Settings
      * Các thiết lập về bài hát
      */
     const CATEGORY_CODE_LENGTH = 4;
+
+    /**
+     * Độ dài alias BXH
+     */
+    const CHART_CATEGORY_CODE_LENGTH = 2;
 
     /**
      * Các thiết lập về nghệ sĩ

@@ -22,6 +22,7 @@ $allow_func = [
     'artist-list',
     'artist-content',
     'cat-manager',
+    'cat-chart-manager',
     'song-list',
     'song-content',
     'song-caption',
@@ -63,4 +64,5 @@ $submenu['cat-manager'] = $lang_module['cat_manager'];
 $submenu['nation-manager'] = $lang_module['nation_manager'];
 $submenu['quality-song-manager'] = $lang_module['qso_manager'];
 $submenu['quality-video-manager'] = $lang_module['qvd_manager'];
+$submenu['cat-chart-manager'] = $lang_module['chart_manager'];
 $submenu['config'] = $lang_module['config'];

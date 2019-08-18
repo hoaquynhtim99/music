@@ -140,6 +140,23 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
       DROP " . $lang . "_playlist_name,
       DROP " . $lang . "_playlist_introtext
     ";
+
+    $sql_drop_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_chart_categories
+      DROP " . $lang . "_cat_name,
+      DROP " . $lang . "_cat_alias,
+      DROP " . $lang . "_cat_absitetitle,
+      DROP " . $lang . "_cat_abintrotext,
+      DROP " . $lang . "_cat_abkeywords,
+      DROP " . $lang . "_cat_abbodytext,
+      DROP " . $lang . "_cat_mvsitetitle,
+      DROP " . $lang . "_cat_mvintrotext,
+      DROP " . $lang . "_cat_mvkeywords,
+      DROP " . $lang . "_cat_mvbodytext,
+      DROP " . $lang . "_cat_sositetitle,
+      DROP " . $lang . "_cat_sointrotext,
+      DROP " . $lang . "_cat_sokeywords,
+      DROP " . $lang . "_cat_sobodytext
+    ";
 } elseif ($op != "setup") {
     // Xóa hết bảng dữ liệu
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_categories";
@@ -163,6 +180,9 @@ if (in_array($lang, $array_lang_module_setup) and $num_module_exists > 1) {
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_albums";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_videos";
     $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_songs";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_charts";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_chart_categories";
+    $sql_drop_module[] = "DROP TABLE IF EXISTS " . $db_config['prefix'] . "_" . $module_data . "_chart_tmps";
 }
 
 $sql_create_module = $sql_drop_module;
@@ -518,6 +538,96 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   cat_id int(11) unsigned NOT NULL,
   PRIMARY KEY id (video_id, cat_id)
 ) ENGINE=MyISAM";
+
+/*
+ * Bảng lưu bảng xếp hạng bài hát, album, video chính thức
+ */
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_charts (
+  chart_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  chart_week smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Tuần',
+  chart_year smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Năm',
+  chart_time int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Unix timestamp tại thứ 2 của tuần',
+  cat_id smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Thể loại ví dụ Việt Nam, Âu Mĩ, Hàn Quốc',
+  object_name varchar(10) NOT NULL DEFAULT '' COMMENT 'Loại xếp hạng: song,album,video',
+  object_id int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID đối tượng',
+  view_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt nghe',
+  view_rate double unsigned NOT NULL DEFAULT '0' COMMENT 'Trọng số điểm nghe',
+  like_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt yêu thích',
+  like_rate double NOT NULL DEFAULT '0' COMMENT 'Trọng số yêu thích',
+  comment_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt bình luận',
+  comment_rate double NOT NULL DEFAULT '0' COMMENT 'Trọng số bình luận',
+  share_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt chia sẻ',
+  share_rate double NOT NULL DEFAULT '0' COMMENT 'Trọng số chia sẻ',
+  summary_scores double NOT NULL DEFAULT '0' COMMENT 'Tổng số điểm quy đổi',
+  summary_order smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Xếp hạng từ 1 đến 100',
+  PRIMARY KEY chart_id (chart_id),
+  KEY chart_week (chart_week),
+  KEY chart_year (chart_year),
+  KEY chart_time (chart_time),
+  KEY cat_id (cat_id),
+  KEY object_name (object_name),
+  KEY object_id (object_id),
+  KEY summary_scores (summary_scores),
+  KEY summary_order (summary_order)
+) ENGINE=MyISAM";
+
+/*
+ * Bảng lưu bảng xếp hạng bài hát, album, video lưu tạm trong một tuần
+ * Sang tuần sau thì đưa vào bảng chính và xóa toàn bộ để bắt đầu một thống kê mới
+ */
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_chart_tmps (
+  chart_id int(11) unsigned NOT NULL AUTO_INCREMENT,
+  chart_week smallint(3) unsigned NOT NULL DEFAULT '0' COMMENT 'Tuần',
+  chart_year smallint(5) unsigned NOT NULL DEFAULT '0' COMMENT 'Năm',
+  chart_time int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Unix timestamp tại thứ 2 của tuần',
+  cat_id smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Thể loại ví dụ Việt Nam, Âu Mĩ, Hàn Quốc',
+  object_name varchar(10) NOT NULL DEFAULT '' COMMENT 'Loại xếp hạng: song,album,video',
+  object_id int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID đối tượng',
+  view_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt nghe',
+  like_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt yêu thích',
+  comment_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt bình luận',
+  share_hits int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt chia sẻ',
+  summary_scores double NOT NULL DEFAULT '0' COMMENT 'Tổng số điểm quy đổi',
+  PRIMARY KEY chart_id (chart_id),
+  KEY chart_week (chart_week),
+  KEY chart_year (chart_year),
+  KEY chart_time (chart_time),
+  KEY cat_id (cat_id),
+  KEY object_name (object_name),
+  KEY object_id (object_id),
+  KEY summary_scores (summary_scores)
+) ENGINE=MyISAM";
+
+// Các loại bảng xếp hạng âm nhạc ví dụ: Việt Nam, Âu Mĩ, Hàn Quốc
+$sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_chart_categories (
+  cat_id smallint(4) unsigned NOT NULL AUTO_INCREMENT,
+  cat_code varchar(2) NOT NULL COMMENT 'Ký tự A-Z0-9. Độ dài 2 ký tự.',
+  resource_cover varchar(255) NOT NULL COMMENT 'Cover mặc định',
+  time_add int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Tạo lúc',
+  time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Cập nhật lúc',
+  cat_ids text NOT NULL COMMENT 'ID các thể loại thuộc BXH, phân cách bởi dấu phảy',
+  weight smallint(4) unsigned NOT NULL DEFAULT '0' COMMENT 'Sắp thứ tự',
+  status smallint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (cat_id),
+  UNIQUE KEY cat_code (cat_code),
+  KEY status (status)
+) ENGINE=MyISAM";
+$sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_chart_categories
+    ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_absitetitle varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_abintrotext text NOT NULL,
+    ADD " . $lang . "_cat_abkeywords text NOT NULL,
+    ADD " . $lang . "_cat_abbodytext text NOT NULL,
+    ADD " . $lang . "_cat_mvsitetitle varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_mvintrotext text NOT NULL,
+    ADD " . $lang . "_cat_mvkeywords text NOT NULL,
+    ADD " . $lang . "_cat_mvbodytext text NOT NULL,
+    ADD " . $lang . "_cat_sositetitle varchar(250) NOT NULL DEFAULT '',
+    ADD " . $lang . "_cat_sointrotext text NOT NULL,
+    ADD " . $lang . "_cat_sokeywords text NOT NULL,
+    ADD " . $lang . "_cat_sobodytext text NOT NULL
+";
 
 // Bảng cấu hình
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_config (
