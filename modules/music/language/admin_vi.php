@@ -365,3 +365,4 @@ $lang_module['chart_sobodytext'] = 'Giới thiệu chi tiết ở BXH bài hát'
 $lang_module['chart_err_exists'] = 'Thể loại BXH không tồn tại';
 $lang_module['chart_err_name'] = 'Vui lòng nhập tên thể loại BXH';
 $lang_module['chart_err_cat_ids'] = 'Vui lòng chọn ít nhất một thể loại';
+$lang_module['chart_delete_confirm'] = 'Lưu ý: Xóa thể loại BXH xẽ xóa hết dữ liệu BXH tương ứng và không thể khôi phục. Bạn có chắc thực hiện không?';

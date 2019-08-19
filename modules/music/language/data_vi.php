@@ -21,13 +21,13 @@ if (!defined('NV_ADMIN')) {
 // Xác định các ngôn ngữ đã cài đặt
 $_sql = "SELECT * FROM " . $db_config['prefix'] . "_setup_language WHERE setup=1";
 $_result = $db->query($_sql);
-$array_lang_setup = array();
+$array_lang_setup = [];
 while ($_row = $_result->fetch()) {
     $array_lang_setup[$_row['lang']] = $_row['lang'];
 }
 
 // Xác định các ngôn ngữ đã cài module
-$array_lang_module_setup = array();
+$array_lang_module_setup = [];
 foreach ($array_lang_setup as $_lang) {
     $is_setup = $db->query("SELECT COUNT(*) FROM " . $db_config['prefix'] . "_" . $_lang . "_modules WHERE module_data=" . $db->quote($module_data))->fetchColumn();
     if ($is_setup) {
@@ -35,24 +35,25 @@ foreach ($array_lang_setup as $_lang) {
     }
 }
 
-$array_quality_song = array(
-    1 => array('quality_name' => '128kbps', 'quality_alias' => '128kbps'),
-    2 => array('quality_name' => '320kbps', 'quality_alias' => '320kbps'),
-    3 => array('quality_name' => 'Lossless', 'quality_alias' => 'Lossless')
-);
-$array_quality_video = array(
-    1 => array('quality_name' => '360p', 'quality_alias' => '360p'),
-    2 => array('quality_name' => '480p', 'quality_alias' => '480p'),
-    3 => array('quality_name' => '720p', 'quality_alias' => '720p'),
-    4 => array('quality_name' => '1080p', 'quality_alias' => '1080p')
-);
+$array_quality_song = [
+    1 => ['quality_name' => '128kbps', 'quality_alias' => '128kbps'],
+    2 => ['quality_name' => '320kbps', 'quality_alias' => '320kbps'],
+    3 => ['quality_name' => 'Lossless', 'quality_alias' => 'Lossless']
+];
+$array_quality_video = [
+    1 => ['quality_name' => '360p', 'quality_alias' => '360p'],
+    2 => ['quality_name' => '480p', 'quality_alias' => '480p'],
+    3 => ['quality_name' => '720p', 'quality_alias' => '720p'],
+    4 => ['quality_name' => '1080p', 'quality_alias' => '1080p']
+];
 
 $array_fields_song_name = '';
-$array_fields_song_value = array();
+$array_fields_song_value = [];
 $array_fields_video_name = '';
-$array_fields_video_value = array();
+$array_fields_video_value = [];
 
-$array_fname_cat = $array_fvalue_cat = array();
+$array_fname_cat = $array_fvalue_cat = [];
+$array_fname_cat_chart = $array_fvalue_cat_chart = [];
 
 foreach ($array_lang_module_setup as $_lang) {
     $array_fields_song_name .= ', ' . $_lang . '_' . implode(', ' . $_lang . '_', array_keys($array_quality_song[1]));
@@ -80,6 +81,25 @@ foreach ($array_lang_module_setup as $_lang) {
         $array_fvalue_cat[] = '';
         $array_fvalue_cat[] = '';
         $array_fvalue_cat[] = '';
+
+        $array_fname_cat_chart[] = $lang . '_cat_abintrotext';
+        $array_fname_cat_chart[] = $lang . '_cat_abkeywords';
+        $array_fname_cat_chart[] = $lang . '_cat_abbodytext';
+        $array_fname_cat_chart[] = $lang . '_cat_mvintrotext';
+        $array_fname_cat_chart[] = $lang . '_cat_mvkeywords';
+        $array_fname_cat_chart[] = $lang . '_cat_mvbodytext';
+        $array_fname_cat_chart[] = $lang . '_cat_sointrotext';
+        $array_fname_cat_chart[] = $lang . '_cat_sokeywords';
+        $array_fname_cat_chart[] = $lang . '_cat_sobodytext';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
+        $array_fvalue_cat_chart[] = '';
     }
 }
 
@@ -127,4 +147,21 @@ $db->query("INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "
     (20, 'mkA', '', '', '', 0, 0, 0, 1494836392, 0, 0, 0, 19, 1, 'Chế - Hài hước', 'nhac-che-hai-huoc', '', '', '', '', '', ''" . $array_fvalue_cat . "),
     (21, 'obD', '', '', '', 0, 0, 0, 1494836392, 0, 0, 0, 20, 1, 'Blue/Jazz', 'nhac-blue-jazz', '', '', '', '', '', ''" . $array_fvalue_cat . "),
     (22, 'rR', '', '', '', 0, 0, 0, 1494836392, 0, 0, 0, 21, 1, 'Country', 'nhac-country', '', '', '', '', '', ''" . $array_fvalue_cat . "),
-    (23, '9w', '', '', '', 0, 0, 0, 1494836392, 0, 0, 0, 22, 1, 'Rap/Hiphop Việt', 'nhac-rap-hiphop-viet', '', '', '', '', '', ''" . $array_fvalue_cat . ")");
+    (23, '9w', '', '', '', 0, 0, 0, 1494836392, 0, 0, 0, 22, 1, 'Rap/Hiphop Việt', 'nhac-rap-hiphop-viet', '', '', '', '', '', ''" . $array_fvalue_cat . ")
+");
+
+// Thể loại bảng xếp hạng
+$array_fname_cat_chart = $array_fname_cat_chart ? (', ' . implode(', ', $array_fname_cat_chart)) : '';
+$array_fvalue_cat_chart = $array_fvalue_cat_chart ? (', \'' . implode('\', \'', $array_fvalue_cat_chart) . '\'') : '';
+
+$db->query("INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_chart_categories (
+    cat_id, cat_code, resource_cover, time_add, time_update, cat_ids, weight, status,
+    " . $lang . "_cat_name, " . $lang . "_cat_alias,
+    " . $lang . "_cat_absitetitle, " . $lang . "_cat_abintrotext, " . $lang . "_cat_abkeywords, " . $lang . "_cat_abbodytext,
+    " . $lang . "_cat_mvsitetitle, " . $lang . "_cat_mvintrotext, " . $lang . "_cat_mvkeywords, " . $lang . "_cat_mvbodytext,
+    " . $lang . "_cat_sositetitle, " . $lang . "_cat_sointrotext, " . $lang . "_cat_sokeywords, " . $lang . "_cat_sobodytext" . $array_fname_cat_chart . "
+) VALUES
+    (1, 'z0', '', 1566143180, 0, '9', 1, 1, 'Việt Nam', 'Viet-Nam', '', '', '', '', '', '', '', '', '', '', '', ''" . $array_fvalue_cat_chart . "),
+    (2, 'f9', '', 1566143206, 0, '8', 2, 1, 'Âu Mỹ', 'Au-My', '', '', '', '', '', '', '', '', '', '', '', ''" . $array_fvalue_cat_chart . "),
+    (3, 'm5', '', 1566143222, 0, '7', 3, 1, 'Hàn Quốc', 'Han-Quoc', '', '', '', '', '', '', '', '', '', '', '', ''" . $array_fvalue_cat_chart . ");
+");

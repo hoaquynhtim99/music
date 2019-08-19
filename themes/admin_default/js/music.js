@@ -750,7 +750,7 @@ $(document).ready(function() {
             submitID = btn.data('id');
         }
 
-        if (ajaction == 'delete' && !confirm(nv_is_del_confirm[0])) {
+        if (ajaction == 'delete' && !confirm($this.data('others') ? $this.data('others') : nv_is_del_confirm[0])) {
             return false;
         } else if (ajaction == 'edit' || ajaction == 'linkcc') {
             (msIsDebug && console.log('Link to ' + ajaction));
@@ -787,6 +787,11 @@ $(document).ready(function() {
                     if (res.datacheckbox) {
                         $.each(res.datacheckbox, function(k, v) {
                             $('[name="' + k + '"]', popupForm).prop('checked', v);
+                        });
+                    }
+                    if (res.datacheckboxid) {
+                        $.each(res.datacheckboxid, function(k, v) {
+                            $('#' + k, popupForm).prop('checked', v);
                         });
                     }
                     $('[name="id"]', popupForm).val(btn.data('id'));
@@ -1623,8 +1628,9 @@ function msGetPopoverContent(e) {
             // Xây dựng nội dung dạng các công cụ options
             var options = $(e).data('options').split('|');
             var langs = $(e).data('langs').split('|');
+            var others = $(e).data('others') ? $(e).data('others').split('|') : false;
             $.each(options, function(k, v) {
-                popContents.append('<li><a href="#" data-value="' + v + '">' + msIconSheets[v] + langs[k] + '</a></li>');
+                popContents.append('<li><a href="#" data-value="' + v + '"' + (others === false ? '' : (' data-others="' + others[k] + '"')) + '>' + msIconSheets[v] + langs[k] + '</a></li>');
             });
         }
     }

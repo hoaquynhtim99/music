@@ -16,7 +16,7 @@ use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Shared\ChartCategories;
 
-$page_title = $lang_module['cat_manager'];
+$page_title = $lang_module['chart_manager'];
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -43,8 +43,16 @@ if ($ajaction == 'delete') {
         $sql = "DELETE FROM " . NV_MOD_TABLE . "_chart_categories WHERE cat_id=" . $cat_id;
         $db->query($sql);
 
+        // Xóa dữ liệu BXH
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_charts WHERE cat_id=" . $cat_id;
+        $db->query($sql);
+
+        // Xóa dữ liệu BXH tạm thời
+        $sql = "DELETE FROM " . NV_MOD_TABLE . "_chart_tmps WHERE cat_id=" . $cat_id;
+        $db->query($sql);
+
         // Ghi nhật ký hệ thống
-        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_CAT', $cat_id . ':' . $global_array_cat_chart[$cat_id]['cat_name'], $admin_info['userid']);
+        nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_DELETE_CAT_CHART', $cat_id . ':' . $global_array_cat_chart[$cat_id]['cat_name'], $admin_info['userid']);
     }
 
     // Cập nhật lại thứ tự
@@ -150,35 +158,38 @@ if ($ajaction == 'ajedit') {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
-    if (!empty($array_cat['resource_avatar']) and !nv_is_url($array_cat['resource_avatar']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_avatar'], NV_UPLOADS_DIR . '/' . $module_upload)) {
-        $array_cat['resource_avatar'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_avatar'];
-    }
     if (!empty($array_cat['resource_cover']) and !nv_is_url($array_cat['resource_cover']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_cover'], NV_UPLOADS_DIR . '/' . $module_upload)) {
         $array_cat['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_cover'];
     }
-    if (!empty($array_cat['resource_video']) and !nv_is_url($array_cat['resource_video']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_video'], NV_UPLOADS_DIR . '/' . $module_upload)) {
-        $array_cat['resource_video'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array_cat['resource_video'];
-    }
 
     $response = [];
-    $response['resource_avatar'] = nv_unhtmlspecialchars($array_cat['resource_avatar']);
     $response['resource_cover'] = nv_unhtmlspecialchars($array_cat['resource_cover']);
-    $response['resource_video'] = nv_unhtmlspecialchars($array_cat['resource_video']);
     $response['cat_name'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_name']);
     $response['cat_alias'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_alias']);
+
     $response['cat_absitetitle'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_absitetitle']);
     $response['cat_abintrotext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_abintrotext']);
     $response['cat_abkeywords'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_abkeywords']);
+    $response['cat_abbodytext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_abbodytext']);
     $response['cat_mvsitetitle'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvsitetitle']);
     $response['cat_mvintrotext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvintrotext']);
     $response['cat_mvkeywords'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvkeywords']);
+    $response['cat_mvbodytext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_mvbodytext']);
+    $response['cat_sositetitle'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_sositetitle']);
+    $response['cat_sointrotext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_sointrotext']);
+    $response['cat_sokeywords'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_sokeywords']);
+    $response['cat_sobodytext'] = nv_unhtmlspecialchars($array_cat[NV_LANG_DATA . '_cat_sobodytext']);
+
+    $array_cat['cat_ids'] = Utils::arrayIntFromStrList($array_cat['cat_ids']);
 
     $response_checkbox = [];
-    $response_checkbox['show_inalbum'] = $array_cat['show_inalbum'];
-    $response_checkbox['show_invideo'] = $array_cat['show_invideo'];
+    $response_checkboxid = [];
+    foreach ($global_array_cat as $cat) {
+        $response_checkboxid['cat_ids_' . $cat['cat_id']] = in_array($cat['cat_id'], $array_cat['cat_ids']) ? 1 : 0;
+    }
 
     AjaxRespon::set('data', $response);
-    AjaxRespon::set('datacheckbox', $response_checkbox)->setSuccess()->respon();
+    AjaxRespon::set('datacheckboxid', $response_checkboxid)->setSuccess()->respon();
 }
 
 // Thêm, sửa
