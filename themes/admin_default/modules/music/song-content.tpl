@@ -15,7 +15,7 @@
                     <label for="cat_ids" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <div class="select2 required">
-                            <select class="form-control" name="cat_ids" id="cat_ids" multiple="multiple">
+                            <select class="form-control" name="cat_ids[]" id="cat_ids" multiple="multiple">
                                 <!-- BEGIN: cat -->
                                 <option value="{CAT.cat_id}"{CAT.selected}>{CAT.cat_name}</option>
                                 <!-- END: cat -->
@@ -26,7 +26,7 @@
                 <div class="form-group">
                     <label class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
-                        <div class="hiddeninputlist required">
+                        <div class="hiddeninputlist required clearfix">
                             <div class="btn-group pull-left">
                                 <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
                                 <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>

@@ -309,6 +309,7 @@ $lang_module['album_release_year'] = 'Năm phát hành';
 $lang_module['album_name'] = 'Tên album';
 $lang_module['album_description'] = 'Giới thiệu chi tiết về album';
 $lang_module['album_songs'] = 'Các bài hát trong album';
+$lang_module['album_err_cats'] = 'Vui lòng chọn ít nhất một thể loại';
 
 $lang_module['video_manager'] = 'Quản lý video';
 $lang_module['video_list'] = 'Danh sách video';
