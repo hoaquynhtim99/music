@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Shared\Charts;
 use NukeViet\Music\Shared\UserPlaylists;
 
 $tokend = $nv_Request->get_title('tokend', 'post,get', '');
@@ -96,6 +97,7 @@ if ($nv_Request->isset_request('updateSongShares', 'post')) {
         }
         unset($row['default_' . $f]);
     }
+    $row['cat_ids'] = explode(',', $row['cat_ids']);
 
     $cookie_stat = $nv_Request->get_string($module_data . '_share_song', 'cookie', '');
     $cookie_stat = empty($cookie_stat) ? [] : json_decode($cookie_stat, true);
@@ -108,6 +110,39 @@ if ($nv_Request->isset_request('updateSongShares', 'post')) {
         // Cập nhật số lượt chia sẻ
         $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_shares=stat_shares+1 WHERE song_id=" . $row['song_id'];
         $db->query($sql);
+
+        // Cập nhật bảng xếp hạng
+        $is_in_chart = [];
+        foreach ($global_array_cat_chart as $_tmp) {
+            $check = array_intersect($_tmp['cat_ids'], $row['cat_ids']);
+            if (!empty($check)) {
+                $is_in_chart[] = $_tmp['cat_id'];
+            }
+        }
+        if (!empty($is_in_chart)) {
+            $chart_time = Charts::getCurrentTime();
+            $chart_week = Charts::getCurrentWeek();
+            $chart_year = Charts::getCurrentYear();
+
+            foreach ($is_in_chart as $id_cat_chart) {
+                try {
+                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET share_hits=share_hits+1, summary_scores=summary_scores+" . Config::getChartShareRate() . "
+                    WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='song' AND object_id=" . $row['song_id'];
+                    if (!$db->exec($sql)) {
+                        // Cập nhật không có thì thêm mới
+                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            chart_week, chart_year, chart_time, cat_id, object_name, object_id, share_hits, summary_scores
+                        ) VALUES (
+                            " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
+                            'song', " . $row['song_id'] . ", 1, " . Config::getChartShareRate() . "
+                        )";
+                        $db->query($sql);
+                    }
+                } catch (PDOException $e) {
+                    trigger_error(print_r($e, true));
+                }
+            }
+        }
 
         // Thêm vào cookie
         $cookie_stat[$row['song_code']] = NV_CURRENTTIME;
@@ -521,6 +556,8 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
     } else {
         $respon['favorited'] = false;
     }
+
+    // Cập nhật số lượt LIKE của bài hát
 
     nv_jsonOutput($respon);
 }

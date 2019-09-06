@@ -30,6 +30,7 @@ require NV_ROOTDIR . '/modules/' . $module_file . '/vendor/autoload.php';
 use NukeViet\Music\Nation\DbLoader as NationDbLoader;
 use NukeViet\Music\Config;
 use NukeViet\Music\Resources;
+use NukeViet\Music\Utils;
 
 define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
 
@@ -117,6 +118,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $global_array_cat_chart_alias = [];
 
     while ($row = $result->fetch()) {
+        $row['cat_ids'] = Utils::arrayIntFromStrList($row['cat_ids']);
         foreach ($array_select_fields[1] as $f) {
             if (empty($row[$f]) and !empty($row['default_' . $f])) {
                 $row[$f] = $row['default_' . $f];
@@ -200,6 +202,15 @@ Config::setAutoOptimizeAlbumName(true);
 Config::setAutoOptimizeArtistName(true);
 Config::setAutoOptimizeSongName(true);
 Config::setAutoOptimizeVideoName(true);
+
+// FIXME Config cứng BXH tổng lại các mục là 1
+// Các thiết lập cứng cho BXH, tương lai cấu hình sau
+Config::setChartCommentRate(0.25);
+Config::setChartLikeRate(0.25);
+Config::setChartShareRate(0.25);
+Config::setChartViewRate(0.25);
+
+Config::setChartActive(1);
 
 /**
  * nv_get_album_select_fields()

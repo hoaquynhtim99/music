@@ -86,6 +86,12 @@ class Config
     const HOME_SONGS_WEIGHT = 'home_songs_weight';
     const HOME_VIDEOS_WEIGHT = 'home_videos_weight';
 
+    const CHART_VIEW_RATE = 'chart_view_rate';
+    const CHART_LIKE_RATE = 'chart_like_rate';
+    const CHART_COMMENT_RATE = 'chart_comment_rate';
+    const CHART_SHARE_RATE = 'chart_share_rate';
+    const CHART_ACTIVE = 'chart_active';
+
     private static $configData = [];
 
     /**
@@ -566,6 +572,46 @@ class Config
     }
 
     /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getChartCommentRate()
+    {
+        return self::get(self::CHART_COMMENT_RATE);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getChartLikeRate()
+    {
+        return self::get(self::CHART_LIKE_RATE);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getChartShareRate()
+    {
+        return self::get(self::CHART_SHARE_RATE);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getChartViewRate()
+    {
+        return self::get(self::CHART_VIEW_RATE);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getChartActive()
+    {
+        return self::get(self::CHART_ACTIVE);
+    }
+
+    /**
      * @param mixed $var
      */
     public static function setDetailSongAlbumsNums($var)
@@ -683,5 +729,45 @@ class Config
     public static function setGirdSingersNums($var)
     {
         self::$configData[self::GIRD_SINGERS_NUMS] = intval($var);
+    }
+
+    /**
+     * @param double $var
+     */
+    public static function setChartCommentRate($var)
+    {
+        self::$configData[self::CHART_COMMENT_RATE] = floatval($var);
+    }
+
+    /**
+     * @param double $var
+     */
+    public static function setChartLikeRate($var)
+    {
+        self::$configData[self::CHART_LIKE_RATE] = floatval($var);
+    }
+
+    /**
+     * @param double $var
+     */
+    public static function setChartShareRate($var)
+    {
+        self::$configData[self::CHART_SHARE_RATE] = floatval($var);
+    }
+
+    /**
+     * @param double $var
+     */
+    public static function setChartViewRate($var)
+    {
+        self::$configData[self::CHART_VIEW_RATE] = floatval($var);
+    }
+
+    /**
+     * @param integer $var
+     */
+    public static function setChartActive($var)
+    {
+        self::$configData[self::CHART_ACTIVE] = intval((bool)$var);
     }
 }
