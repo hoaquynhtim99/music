@@ -696,6 +696,7 @@ $default_config['res_default_album_avatar'] = 'albums/album-art-cover.jpg';
 $default_config['res_default_singer_avatar'] = 'artists/singer-art.jpg';
 $default_config['res_default_author_avatar'] = 'artists/singer-art.jpg';
 $default_config['res_default_video_avatar'] = 'videos/video-art-cover.jpg';
+$default_config['current_chart_time'] = '0';
 
 foreach ($default_config as $config_name => $config_value) {
     $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_config (config_name, config_value_default) VALUES('" . $config_name . "', '" . $config_value . "')";

@@ -31,6 +31,7 @@ use NukeViet\Music\Nation\DbLoader as NationDbLoader;
 use NukeViet\Music\Config;
 use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
+use NukeViet\Music\Shared\Charts;
 
 define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
 
@@ -829,4 +830,66 @@ function msUpdatePlaylistSongCountWeight($playlist_id)
     $num_songs = intval($num_songs);
 
     $db->query("UPDATE " . NV_MOD_TABLE . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
+}
+
+/*
+ * Xử lý BXH
+ * Vào đầu mỗi tuần, khi chưa xử lý BXH thì bắt đầu xử lý.
+ */
+if (Config::getChartActive()) {
+    $chart_current_time = Charts::getCurrentTime();
+    if ($chart_current_time != Config::getChartCurrentTime()) {
+        // BXH của tuần trước
+        $chart_time = $chart_current_time - (7 * 86400);
+        $chart_week = date('W', $chart_time);
+        $chart_year = date('Y', $chart_time);
+
+        // Lặp 3 loại BXH và từng thể loại của mỗi cái
+        $array_chart_object = ['song', 'album', 'video'];
+        foreach ($array_chart_object as $chart_object) {
+            foreach ($global_array_cat_chart as $_tmp) {
+                $array_insert = [];
+
+                // Lấy 40 đối tượng có điểm cao nhất
+                $sql = "SELECT * FROM " . NV_MOD_TABLE . "_chart_tmps WHERE chart_time=" . $chart_time . "
+                AND object_name='" . $chart_object . "' AND cat_id=" . $_tmp['cat_id'] . "
+                ORDER BY summary_scores DESC LIMIT 0,40";
+                $result = $db->query($sql);
+                $stt = 0;
+                while ($row = $result->fetch()) {
+                    $stt++;
+                    $array_insert[] = "(
+                        " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $_tmp['cat_id'] . ",
+                        '" . $chart_object . "', " . $row['object_id'] . ",
+                        " . $row['view_hits'] . ", " . Config::getChartViewRate() . ",
+                        " . $row['like_hits'] . ", " . Config::getChartLikeRate() . ",
+                        " . $row['comment_hits'] . ", " . Config::getChartCommentRate() . ",
+                        " . $row['share_hits'] . ", " . Config::getChartShareRate() . ",
+                        " . $row['summary_scores'] . ", " . $stt . "
+                    )";
+                }
+
+                // Lưu vào BXH chính thức
+                if (!empty($array_insert)) {
+                    $sql = "INSERT INTO " . NV_MOD_TABLE . "_charts (
+                        chart_week, chart_year, chart_time, cat_id, object_name, object_id, view_hits, view_rate, like_hits, like_rate, comment_hits, comment_rate,
+                        share_hits, share_rate, summary_scores, summary_order
+                    ) VALUES " . implode(', ', $array_insert);
+                    $db->query($sql);
+                }
+            }
+        }
+
+        // Xóa hết dữ liệu tạm
+        $sql = "TRUNCATE " . NV_MOD_TABLE . "_chart_tmps";
+        $db->query($sql);
+
+        // Cập nhật lại CSDL cấu hình
+        $sql = "UPDATE " . NV_MOD_TABLE . "_config SET config_value_default=" . $db->quote($chart_current_time) . " WHERE config_name='current_chart_time'";
+        $db->query($sql);
+
+        $nv_Cache->delMod($module_name);
+        unset($array_chart_object, $array_insert);
+    }
+    unset($chart_current_time);
 }

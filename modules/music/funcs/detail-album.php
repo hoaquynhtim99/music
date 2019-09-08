@@ -328,34 +328,36 @@ if (!isset($cookie_stat[$ms_detail_data['album_code']]) or $cookie_stat[$ms_deta
     msUpdateStatistics('album');
 
     // Cập nhật bảng xếp hạng
-    $is_in_chart = [];
-    foreach ($global_array_cat_chart as $_tmp) {
-        $check = array_intersect($_tmp['cat_ids'], $ms_detail_data['cat_ids']);
-        if (!empty($check)) {
-            $is_in_chart[] = $_tmp['cat_id'];
+    if (Config::getChartActive()) {
+        $is_in_chart = [];
+        foreach ($global_array_cat_chart as $_tmp) {
+            $check = array_intersect($_tmp['cat_ids'], $ms_detail_data['cat_ids']);
+            if (!empty($check)) {
+                $is_in_chart[] = $_tmp['cat_id'];
+            }
         }
-    }
-    if (!empty($is_in_chart)) {
-        $chart_time = Charts::getCurrentTime();
-        $chart_week = Charts::getCurrentWeek();
-        $chart_year = Charts::getCurrentYear();
+        if (!empty($is_in_chart)) {
+            $chart_time = Charts::getCurrentTime();
+            $chart_week = Charts::getCurrentWeek();
+            $chart_year = Charts::getCurrentYear();
 
-        foreach ($is_in_chart as $id_cat_chart) {
-            try {
-                $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET view_hits=view_hits+1, summary_scores=summary_scores+" . Config::getChartViewRate() . "
-                WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='album' AND object_id=" . $ms_detail_data['album_id'];
-                if (!$db->exec($sql)) {
-                    // Cập nhật không có thì thêm mới
-                    $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
-                        chart_week, chart_year, chart_time, cat_id, object_name, object_id, view_hits, summary_scores
-                    ) VALUES (
-                        " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
-                        'album', " . $ms_detail_data['album_id'] . ", 1, " . Config::getChartViewRate() . "
-                    )";
-                    $db->query($sql);
+            foreach ($is_in_chart as $id_cat_chart) {
+                try {
+                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET view_hits=view_hits+1, summary_scores=summary_scores+" . Config::getChartViewRate() . "
+                    WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='album' AND object_id=" . $ms_detail_data['album_id'];
+                    if (!$db->exec($sql)) {
+                        // Cập nhật không có thì thêm mới
+                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            chart_week, chart_year, chart_time, cat_id, object_name, object_id, view_hits, summary_scores
+                        ) VALUES (
+                            " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
+                            'album', " . $ms_detail_data['album_id'] . ", 1, " . Config::getChartViewRate() . "
+                        )";
+                        $db->query($sql);
+                    }
+                } catch (PDOException $e) {
+                    trigger_error(print_r($e, true));
                 }
-            } catch (PDOException $e) {
-                trigger_error(print_r($e, true));
             }
         }
     }

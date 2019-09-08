@@ -91,6 +91,7 @@ class Config
     const CHART_COMMENT_RATE = 'chart_comment_rate';
     const CHART_SHARE_RATE = 'chart_share_rate';
     const CHART_ACTIVE = 'chart_active';
+    const CHART_CURRENT_TIME = 'current_chart_time';
 
     private static $configData = [];
 
@@ -609,6 +610,14 @@ class Config
     public static function getChartActive()
     {
         return self::get(self::CHART_ACTIVE);
+    }
+
+    /**
+     * @return \NukeViet\Music\string~array
+     */
+    public static function getChartCurrentTime()
+    {
+        return self::get(self::CHART_CURRENT_TIME);
     }
 
     /**
