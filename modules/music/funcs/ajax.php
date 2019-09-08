@@ -449,6 +449,7 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
         }
         unset($row['default_' . $f]);
     }
+    $row['cat_ids'] = explode(',', $row['cat_ids']);
 
     $respon['status'] = 'SUCCESS';
 
@@ -458,6 +459,43 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
         $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_albums (userid, album_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['album_id'] . "," . NV_CURRENTTIME . ")";
         $db->query($sql);
         $respon['favorited'] = true;
+
+        /*
+         * Cập nhật bảng xếp hạng
+         * Chỉ cập nhật lúc thêm lần đầu tiên, việc bỏ đi rồi thêm lại
+         * sẽ không được tính điểm nữa
+         */
+        $is_in_chart = [];
+        foreach ($global_array_cat_chart as $_tmp) {
+            $check = array_intersect($_tmp['cat_ids'], $row['cat_ids']);
+            if (!empty($check)) {
+                $is_in_chart[] = $_tmp['cat_id'];
+            }
+        }
+        if (!empty($is_in_chart)) {
+            $chart_time = Charts::getCurrentTime();
+            $chart_week = Charts::getCurrentWeek();
+            $chart_year = Charts::getCurrentYear();
+
+            foreach ($is_in_chart as $id_cat_chart) {
+                try {
+                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
+                    WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='album' AND object_id=" . $row['album_id'];
+                    if (!$db->exec($sql)) {
+                        // Cập nhật không có thì thêm mới
+                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            chart_week, chart_year, chart_time, cat_id, object_name, object_id, like_hits, summary_scores
+                        ) VALUES (
+                            " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
+                            'album', " . $row['album_id'] . ", 1, " . Config::getChartLikeRate() . "
+                        )";
+                        $db->query($sql);
+                    }
+                } catch (PDOException $e) {
+                    trigger_error(print_r($e, true));
+                }
+            }
+        }
     } elseif (empty($array_favorite['is_removed'])) {
         $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_albums SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
         $db->query($sql);
@@ -519,6 +557,7 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
         }
         unset($row['default_' . $f]);
     }
+    $row['cat_ids'] = explode(',', $row['cat_ids']);
 
     $respon['status'] = 'SUCCESS';
 
@@ -528,6 +567,43 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
         $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_videos (userid, video_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['video_id'] . "," . NV_CURRENTTIME . ")";
         $db->query($sql);
         $respon['favorited'] = true;
+
+        /*
+         * Cập nhật bảng xếp hạng
+         * Chỉ cập nhật lúc thêm lần đầu tiên, việc bỏ đi rồi thêm lại
+         * sẽ không được tính điểm nữa
+         */
+        $is_in_chart = [];
+        foreach ($global_array_cat_chart as $_tmp) {
+            $check = array_intersect($_tmp['cat_ids'], $row['cat_ids']);
+            if (!empty($check)) {
+                $is_in_chart[] = $_tmp['cat_id'];
+            }
+        }
+        if (!empty($is_in_chart)) {
+            $chart_time = Charts::getCurrentTime();
+            $chart_week = Charts::getCurrentWeek();
+            $chart_year = Charts::getCurrentYear();
+
+            foreach ($is_in_chart as $id_cat_chart) {
+                try {
+                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
+                    WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='video' AND object_id=" . $row['video_id'];
+                    if (!$db->exec($sql)) {
+                        // Cập nhật không có thì thêm mới
+                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            chart_week, chart_year, chart_time, cat_id, object_name, object_id, like_hits, summary_scores
+                        ) VALUES (
+                            " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
+                            'video', " . $row['video_id'] . ", 1, " . Config::getChartLikeRate() . "
+                        )";
+                        $db->query($sql);
+                    }
+                } catch (PDOException $e) {
+                    trigger_error(print_r($e, true));
+                }
+            }
+        }
     } elseif (empty($array_favorite['is_removed'])) {
         $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_videos SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
         $db->query($sql);
@@ -589,6 +665,7 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
         }
         unset($row['default_' . $f]);
     }
+    $row['cat_ids'] = explode(',', $row['cat_ids']);
 
     $respon['status'] = 'SUCCESS';
 
@@ -598,6 +675,43 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
         $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_songs (userid, song_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['song_id'] . "," . NV_CURRENTTIME . ")";
         $db->query($sql);
         $respon['favorited'] = true;
+
+        /*
+         * Cập nhật bảng xếp hạng
+         * Chỉ cập nhật lúc thêm lần đầu tiên, việc bỏ đi rồi thêm lại
+         * sẽ không được tính điểm nữa
+         */
+        $is_in_chart = [];
+        foreach ($global_array_cat_chart as $_tmp) {
+            $check = array_intersect($_tmp['cat_ids'], $row['cat_ids']);
+            if (!empty($check)) {
+                $is_in_chart[] = $_tmp['cat_id'];
+            }
+        }
+        if (!empty($is_in_chart)) {
+            $chart_time = Charts::getCurrentTime();
+            $chart_week = Charts::getCurrentWeek();
+            $chart_year = Charts::getCurrentYear();
+
+            foreach ($is_in_chart as $id_cat_chart) {
+                try {
+                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
+                    WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='song' AND object_id=" . $row['song_id'];
+                    if (!$db->exec($sql)) {
+                        // Cập nhật không có thì thêm mới
+                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            chart_week, chart_year, chart_time, cat_id, object_name, object_id, like_hits, summary_scores
+                        ) VALUES (
+                            " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
+                            'song', " . $row['song_id'] . ", 1, " . Config::getChartLikeRate() . "
+                        )";
+                        $db->query($sql);
+                    }
+                } catch (PDOException $e) {
+                    trigger_error(print_r($e, true));
+                }
+            }
+        }
     } elseif (empty($array_favorite['is_removed'])) {
         $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_songs SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
         $db->query($sql);
