@@ -452,11 +452,32 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
 
     $respon['status'] = 'SUCCESS';
 
-    if (!$db->exec("DELETE FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'])) {
-        $db->query("INSERT INTO " . NV_MOD_TABLE . "_user_favorite_albums (userid, album_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['album_id'] . "," . NV_CURRENTTIME . ")");
+    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
+    $array_favorite = $db->query($sql)->fetch();
+    if (empty($array_favorite)) {
+        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_albums (userid, album_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['album_id'] . "," . NV_CURRENTTIME . ")";
+        $db->query($sql);
         $respon['favorited'] = true;
-    } else {
+    } elseif (empty($array_favorite['is_removed'])) {
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_albums SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
+        $db->query($sql);
         $respon['favorited'] = false;
+    } else {
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_albums SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
+        $db->query($sql);
+        $respon['favorited'] = true;
+    }
+
+    // Cập nhật số lượt LIKE của album
+    try {
+        if ($respon['favorited']) {
+            $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET stat_likes=stat_likes+1 WHERE album_id=" . $row['album_id'];
+        } else {
+            $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET stat_likes=stat_likes-1 WHERE album_id=" . $row['album_id'];
+        }
+        $db->query($sql);
+    } catch (PDOException $e) {
+        trigger_error(print_r($e, true));
     }
 
     nv_jsonOutput($respon);
@@ -501,11 +522,32 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
 
     $respon['status'] = 'SUCCESS';
 
-    if (!$db->exec("DELETE FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'])) {
-        $db->query("INSERT INTO " . NV_MOD_TABLE . "_user_favorite_videos (userid, video_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['video_id'] . "," . NV_CURRENTTIME . ")");
+    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
+    $array_favorite = $db->query($sql)->fetch();
+    if (empty($array_favorite)) {
+        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_videos (userid, video_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['video_id'] . "," . NV_CURRENTTIME . ")";
+        $db->query($sql);
         $respon['favorited'] = true;
-    } else {
+    } elseif (empty($array_favorite['is_removed'])) {
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_videos SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
+        $db->query($sql);
         $respon['favorited'] = false;
+    } else {
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_videos SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
+        $db->query($sql);
+        $respon['favorited'] = true;
+    }
+
+    // Cập nhật số lượt LIKE của video
+    try {
+        if ($respon['favorited']) {
+            $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_likes=stat_likes+1 WHERE video_id=" . $row['video_id'];
+        } else {
+            $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_likes=stat_likes-1 WHERE video_id=" . $row['video_id'];
+        }
+        $db->query($sql);
+    } catch (PDOException $e) {
+        trigger_error(print_r($e, true));
     }
 
     nv_jsonOutput($respon);
@@ -550,14 +592,33 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
 
     $respon['status'] = 'SUCCESS';
 
-    if (!$db->exec("DELETE FROM " . NV_MOD_TABLE . "_user_favorite_songs WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'])) {
-        $db->query("INSERT INTO " . NV_MOD_TABLE . "_user_favorite_songs (userid, song_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['song_id'] . "," . NV_CURRENTTIME . ")");
+    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_user_favorite_songs WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
+    $array_favorite = $db->query($sql)->fetch();
+    if (empty($array_favorite)) {
+        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_songs (userid, song_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['song_id'] . "," . NV_CURRENTTIME . ")";
+        $db->query($sql);
         $respon['favorited'] = true;
-    } else {
+    } elseif (empty($array_favorite['is_removed'])) {
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_songs SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
+        $db->query($sql);
         $respon['favorited'] = false;
+    } else {
+        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_songs SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
+        $db->query($sql);
+        $respon['favorited'] = true;
     }
 
     // Cập nhật số lượt LIKE của bài hát
+    try {
+        if ($respon['favorited']) {
+            $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_likes=stat_likes+1 WHERE song_id=" . $row['song_id'];
+        } else {
+            $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_likes=stat_likes-1 WHERE song_id=" . $row['song_id'];
+        }
+        $db->query($sql);
+    } catch (PDOException $e) {
+        trigger_error(print_r($e, true));
+    }
 
     nv_jsonOutput($respon);
 }

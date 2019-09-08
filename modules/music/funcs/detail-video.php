@@ -335,7 +335,7 @@ $ms_detail_data['require_login'] = true;
 $ms_detail_data['url_login'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=users&amp;' . NV_OP_VARIABLE . '=login&nv_redirect=' . nv_redirect_encrypt($client_info['selfurl']);
 if (defined('NV_IS_USER')) {
     $ms_detail_data['require_login'] = false;
-    if ($db->query("SELECT time_add FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $ms_detail_data['video_id'])->fetchColumn()) {
+    if ($db->query("SELECT time_add FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $ms_detail_data['video_id'] . " AND is_removed=0")->fetchColumn()) {
         $ms_detail_data['favorited'] = true;
     }
 }
