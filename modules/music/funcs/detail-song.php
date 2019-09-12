@@ -239,7 +239,7 @@ while ($row = $result->fetch()) {
         $ms_detail_data['caption_file_ext'] = nv_getextension(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/lyric/' . $row['caption_pdf']);
     } elseif (!empty($row['caption_pdf']) and nv_is_url($row['caption_pdf'])) {
         $ms_detail_data['caption_file'] = $row['caption_pdf'];
-        $ms_detail_data['caption_file_ext'] = '';
+        $ms_detail_data['caption_file_ext'] = preg_match('/\.pdf$/i', $row['caption_pdf']) ? 'pdf' : '';
     }
 }
 
