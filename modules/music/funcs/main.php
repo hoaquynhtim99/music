@@ -104,7 +104,7 @@ if (!empty(Config::getHomeSongsDisplay())) {
         $row['singer_ids'] = explode(',', $row['singer_ids']);
         $row['song_link'] = '';
         $row['song_link_full'] = '';
-        $row['resource_mode'] = 'song';
+        $row['resource_mode'] = !empty($row['resource_avatar']) ? 'song' : 'singer';
         $row['tokend'] = md5($row['song_code'] . NV_CHECK_SESSION);
         $row['redirect'] = $redirect;
 

@@ -217,7 +217,7 @@ if (!nv_function_exists('nv_block_detail_suggested_songs')) {
             $row['singers'] = [];
             $row['singer_ids'] = explode(',', $row['singer_ids']);
             $row['song_link'] = '';
-            $row['resource_mode'] = 'song';
+            $row['resource_mode'] = !empty($row['resource_avatar']) ? 'song' : 'singer';
 
             if (!empty($row['singer_ids'])) {
                 $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
