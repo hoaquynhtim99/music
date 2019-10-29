@@ -27,6 +27,7 @@ $ms_detail_data['singers'] = [];
 $ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
 $ms_detail_data['cats'] = [];
 $ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
+$ms_detail_data['cat_id'] = $ms_detail_data['cat_ids'] ? $ms_detail_data['cat_ids'][0] : 0;
 $ms_detail_data['authors'] = [];
 $ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
@@ -45,6 +46,13 @@ if (!empty($ms_detail_data['singer_ids'])) {
 if (!empty($ms_detail_data['author_ids'])) {
     $array_singer_ids = array_merge_recursive($array_singer_ids, $ms_detail_data['author_ids']);
 }
+
+// Breadcrumb danh sách MV
+$array_mod_title[] = [
+    'catid' => 0,
+    'title' => $module_info['funcs']['list-videos']['func_custom_name'],
+    'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos']
+];
 
 // Bài hát liên quan của video
 if (!empty($ms_detail_data['song_id'])) {
@@ -211,6 +219,18 @@ foreach ($filesdata as $_fileinfo) {
     ];
 }
 ksort($ms_detail_data['filesdata']);
+
+if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_data['cat_id']])) {
+    $ms_detail_data['cat_name'] = $global_array_cat[$ms_detail_data['cat_id']]['cat_name'];
+    $ms_detail_data['cat_videos_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
+
+    // Breadcrumb cho chuyên mục của danh sách album
+    $array_mod_title[] = [
+        'catid' => 0,
+        'title' => $ms_detail_data['cat_name'],
+        'link' => $ms_detail_data['cat_videos_link']
+    ];
+}
 
 // Các phần khác
 $ms_detail_data['video_link'] = nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers']);

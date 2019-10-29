@@ -45,6 +45,13 @@ if (empty($ms_detail_data['album_description'])) {
     $ms_detail_data['album_description'] = $ms_detail_data['album_introtext'];
 }
 
+// Breadcrumb danh sách albums
+$array_mod_title[] = [
+    'catid' => 0,
+    'title' => $module_info['funcs']['list-albums']['func_custom_name'],
+    'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums']
+];
+
 if (!empty($ms_detail_data['singer_id'])) {
     // Các album liên quan
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
@@ -77,6 +84,13 @@ if (!empty($ms_detail_data['singer_id'])) {
 if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_data['cat_id']])) {
     $ms_detail_data['cat_name'] = $global_array_cat[$ms_detail_data['cat_id']]['cat_name'];
     $ms_detail_data['cat_albums_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
+
+    // Breadcrumb cho chuyên mục của danh sách album
+    $array_mod_title[] = [
+        'catid' => 0,
+        'title' => $ms_detail_data['cat_name'],
+        'link' => $ms_detail_data['cat_albums_link']
+    ];
 
     // Album cùng chủ đề
     $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['cat_id'] . ", cat_ids)");
