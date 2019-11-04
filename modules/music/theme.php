@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 /**
@@ -206,14 +207,14 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
 
-    $xtpl->assign('NATION_ALL_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers']);
+    $xtpl->assign('NATION_ALL_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-singers']);
     if (empty($nation_id)) {
         $xtpl->parse('main.nav.all_active');
     }
 
     foreach ($global_array_nation as $nation) {
         $array = $nation->toArray();
-        $array['nation_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . $nation->getAlias() . '-' . $nation->getCode();
+        $array['nation_link'] = Resources::getModFullLinkEncode() . $module_info['alias']['list-singers'] . '/' . $nation->getAlias() . '-' . $nation->getCode();
         $xtpl->assign('NATION', $array);
 
         if ($nation->getId() == $nation_id) {
@@ -224,7 +225,7 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
     }
     $xtpl->parse('main.nav');
 
-    $base_alphabet_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'];
+    $base_alphabet_url = Resources::getModFullLinkEncode() . $module_info['alias']['list-singers'];
     if (!empty($nation_id)) {
         $base_alphabet_url .= '/' . $global_array_nation[$nation_id]->getAlias() . '-' . $global_array_nation[$nation_id]->getCode();
     }
@@ -390,14 +391,14 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     $contents = [];
 
     if (!empty($content_albums)) {
-        $xtpl->assign('ALBUMS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums']);
+        $xtpl->assign('ALBUMS_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-albums']);
         $xtpl->assign('ALBUMS_HTML', nv_theme_gird_albums($content_albums));
         $xtpl->parse('albums');
         $contents[Config::getHomeAlbumsWeight()] = $xtpl->text('albums');
     }
 
     if (!empty($content_singers)) {
-        $xtpl->assign('SINGERS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers']);
+        $xtpl->assign('SINGERS_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-singers']);
 
         $i = 0;
         foreach ($content_singers as $singer) {
@@ -465,7 +466,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
     }
 
     if (!empty($content_videos)) {
-        $xtpl->assign('VIDEOS_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos']);
+        $xtpl->assign('VIDEOS_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-videos']);
         $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($content_videos));
         $xtpl->parse('videos');
         $contents[Config::getHomeVideosWeight()] = $xtpl->text('videos');
@@ -499,7 +500,7 @@ function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_pag
         $xtpl->assign('ALBUMS_HTML', nv_theme_gird_albums($cat['albums']));
 
         if (empty($is_detail_cat)) {
-            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $cat['cat']['cat_alias'] . '-' . $codePrefix->getCat() . $cat['cat']['cat_code']);
+            $xtpl->assign('CAT_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-albums'] . '/' . $cat['cat']['cat_alias'] . '-' . $codePrefix->getCat() . $cat['cat']['cat_code']);
             $xtpl->parse('main.loopcat.cat_link');
         } else {
             $xtpl->parse('main.loopcat.cat_text');
@@ -540,7 +541,7 @@ function nv_theme_page_list_videos($array, $is_detail_cat = false, $generate_pag
         $xtpl->assign('VIDEOS_HTML', nv_theme_gird_videos($cat['videos']));
 
         if (empty($is_detail_cat)) {
-            $xtpl->assign('CAT_LINK', NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $cat['cat']['cat_alias'] . '-' . $codePrefix->getCat() . $cat['cat']['cat_code']);
+            $xtpl->assign('CAT_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-videos'] . '/' . $cat['cat']['cat_alias'] . '-' . $codePrefix->getCat() . $cat['cat']['cat_code']);
             $xtpl->parse('main.loopcat.cat_link');
         } else {
             $xtpl->parse('main.loopcat.cat_text');
@@ -1676,7 +1677,7 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
-    $xtpl->assign('TAB_LINK', NV_MOD_FULLLINK_AMP . $op);
+    $xtpl->assign('TAB_LINK', Resources::getModFullLinkEncode() . $op);
 
     $xtpl->assign('USER_FULL_NAME', $user_info['full_name']);
     $xtpl->assign('USER_USERNAME', $user_info['username']);

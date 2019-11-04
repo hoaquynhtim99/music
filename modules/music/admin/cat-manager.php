@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Shared\Categories;
 
@@ -40,7 +41,7 @@ if ($ajaction == 'delete') {
 
     foreach ($cat_ids as $cat_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $cat_id;
+        $sql = "DELETE FROM " . Resources::getTablePrefix() . "_categories WHERE cat_id=" . $cat_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
@@ -48,12 +49,12 @@ if ($ajaction == 'delete') {
     }
 
     // Cập nhật lại thứ tự
-    $sql = "SELECT cat_id FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
+    $sql = "SELECT cat_id FROM " . Resources::getTablePrefix() . "_categories ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
         ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $weight . " WHERE cat_id=" . $row['cat_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET weight=" . $weight . " WHERE cat_id=" . $row['cat_id'];
         $db->query($sql);
     }
 
@@ -84,7 +85,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     foreach ($cat_ids as $cat_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET status=" . $status . " WHERE cat_id=" . $cat_id;
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET status=" . $status . " WHERE cat_id=" . $cat_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
@@ -112,7 +113,7 @@ if ($ajaction == 'weight') {
         AjaxRespon::setMessage('Wrong Weight!!!')->respon();
     }
 
-    $sql = "SELECT cat_id FROM " . NV_MOD_TABLE . "_categories WHERE cat_id!=" . $cat_id . " ORDER BY weight ASC";
+    $sql = "SELECT cat_id FROM " . Resources::getTablePrefix() . "_categories WHERE cat_id!=" . $cat_id . " ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
@@ -120,11 +121,11 @@ if ($ajaction == 'weight') {
         if ($weight == $new_weight) {
             ++$weight;
         }
-        $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $weight . " WHERE cat_id=" . $row['cat_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET weight=" . $weight . " WHERE cat_id=" . $row['cat_id'];
         $db->query($sql);
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET weight=" . $new_weight . " WHERE cat_id=" . $cat_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET weight=" . $new_weight . " WHERE cat_id=" . $cat_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -147,7 +148,7 @@ if ($ajaction == 'activeinalbum' or $ajaction == 'unactiveinalbum') {
     }
 
     $show_inalbum = $ajaction == 'activeinalbum' ? 1 : 0;
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET show_inalbum=" . $show_inalbum . " WHERE cat_id=" . $cat_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET show_inalbum=" . $show_inalbum . " WHERE cat_id=" . $cat_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -169,7 +170,7 @@ if ($ajaction == 'activeinvideo' or $ajaction == 'unactiveinvideo') {
     }
 
     $show_invideo = $ajaction == 'activeinvideo' ? 1 : 0;
-    $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET show_invideo=" . $show_invideo . " WHERE cat_id=" . $cat_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET show_invideo=" . $show_invideo . " WHERE cat_id=" . $cat_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -189,7 +190,7 @@ if ($ajaction == 'ajedit') {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
-    $array_cat = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $cat_id)->fetch();
+    $array_cat = $db->query("SELECT * FROM " . Resources::getTablePrefix() . "_categories WHERE cat_id=" . $cat_id)->fetch();
     if (empty($array_cat)) {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
@@ -273,7 +274,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     // Kiểm tra tồn tại alias
     $is_exists = 0;
     try {
-        $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_categories WHERE " . NV_LANG_DATA . "_cat_alias=:cat_alias" . ($array['cat_id'] ? " AND cat_id!=" . $array['cat_id'] : "");
+        $sql = "SELECT COUNT(*) FROM " . Resources::getTablePrefix() . "_categories WHERE " . NV_LANG_DATA . "_cat_alias=:cat_alias" . ($array['cat_id'] ? " AND cat_id!=" . $array['cat_id'] : "");
         $sth = $db->prepare($sql);
         $sth->bindParam(':cat_alias', $array['cat_alias'], PDO::PARAM_STR);
         $sth->execute();
@@ -286,7 +287,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $array_old = [];
     $error_exists = false;
     if (!empty($array['cat_id'])) {
-        $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_categories WHERE cat_id=" . $array['cat_id'])->fetch();
+        $array_old = $db->query("SELECT * FROM " . Resources::getTablePrefix() . "_categories WHERE cat_id=" . $array['cat_id'])->fetch();
         if (empty($array_old)) {
             $error_exists = true;
         }
@@ -298,7 +299,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
         AjaxRespon::setMessage($lang_module['cat_err_name']);
     } else {
         if ($array['cat_id']) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_categories SET
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET
                 resource_avatar=:resource_avatar,
                 resource_cover=:resource_cover,
                 resource_video=:resource_video,
@@ -337,7 +338,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         } else {
-            $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_categories")->fetchColumn();
+            $weight = $db->query("SELECT MAX(weight) FROM " . Resources::getTablePrefix() . "_categories")->fetchColumn();
             $weight++;
 
             // Xác định các field theo ngôn ngữ không có dữ liệu
@@ -360,7 +361,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
             $cat_code = Categories::creatUniqueCode();
 
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_categories (
+            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_categories (
                 cat_code, resource_avatar, resource_cover, resource_video, time_add, show_inalbum, show_invideo, weight, status,
                 " . NV_LANG_DATA . "_cat_name, " . NV_LANG_DATA . "_cat_alias,
                 " . NV_LANG_DATA . "_cat_absitetitle, " . NV_LANG_DATA . "_cat_abintrotext, " . NV_LANG_DATA . "_cat_abkeywords,

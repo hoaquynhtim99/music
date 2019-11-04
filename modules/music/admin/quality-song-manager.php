@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 
@@ -40,7 +41,7 @@ if ($ajaction == 'delete') {
 
     foreach ($quality_ids as $quality_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $quality_id;
+        $sql = "DELETE FROM " . Resources::getTablePrefix() . "_quality_song WHERE quality_id=" . $quality_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
@@ -48,12 +49,12 @@ if ($ajaction == 'delete') {
     }
 
     // Cập nhật lại thứ tự
-    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_song ORDER BY weight ASC";
+    $sql = "SELECT quality_id FROM " . Resources::getTablePrefix() . "_quality_song ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
         ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
         $db->query($sql);
     }
 
@@ -84,7 +85,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     foreach ($quality_ids as $quality_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET status=" . $status . " WHERE quality_id=" . $quality_id;
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET status=" . $status . " WHERE quality_id=" . $quality_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
@@ -112,7 +113,7 @@ if ($ajaction == 'weight') {
         AjaxRespon::setMessage('Wrong Weight!!!')->respon();
     }
 
-    $sql = "SELECT quality_id FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id!=" . $quality_id . " ORDER BY weight ASC";
+    $sql = "SELECT quality_id FROM " . Resources::getTablePrefix() . "_quality_song WHERE quality_id!=" . $quality_id . " ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
@@ -120,11 +121,11 @@ if ($ajaction == 'weight') {
         if ($weight == $new_weight) {
             ++$weight;
         }
-        $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET weight=" . $weight . " WHERE quality_id=" . $row['quality_id'];
         $db->query($sql);
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET weight=" . $new_weight . " WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET weight=" . $new_weight . " WHERE quality_id=" . $quality_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -147,7 +148,7 @@ if ($ajaction == 'setonlinesupported' or $ajaction == 'unsetonlinesupported') {
     }
 
     $online_supported = $ajaction == 'setonlinesupported' ? 1 : 0;
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET online_supported=" . $online_supported . " WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET online_supported=" . $online_supported . " WHERE quality_id=" . $quality_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -168,9 +169,9 @@ if ($ajaction == 'setdefault') {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET is_default=0";
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET is_default=0";
     $db->query($sql);
-    $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET is_default=1 WHERE quality_id=" . $quality_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET is_default=1 WHERE quality_id=" . $quality_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -190,7 +191,7 @@ if ($ajaction == 'ajedit') {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
 
-    $array_quality = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $quality_id)->fetch();
+    $array_quality = $db->query("SELECT * FROM " . Resources::getTablePrefix() . "_quality_song WHERE quality_id=" . $quality_id)->fetch();
     if (empty($array_quality)) {
         AjaxRespon::setMessage('Wrong ID!!!')->respon();
     }
@@ -230,7 +231,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     // Kiểm tra tồn tại alias
     $is_exists = 0;
     try {
-        $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_quality_song WHERE " . NV_LANG_DATA . "_quality_alias=:quality_alias" . ($array['quality_id'] ? " AND quality_id!=" . $array['quality_id'] : "");
+        $sql = "SELECT COUNT(*) FROM " . Resources::getTablePrefix() . "_quality_song WHERE " . NV_LANG_DATA . "_quality_alias=:quality_alias" . ($array['quality_id'] ? " AND quality_id!=" . $array['quality_id'] : "");
         $sth = $db->prepare($sql);
         $sth->bindParam(':quality_alias', $array['quality_alias'], PDO::PARAM_STR);
         $sth->execute();
@@ -243,7 +244,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $array_old = array();
     $error_exists = false;
     if (!empty($array['quality_id'])) {
-        $array_old = $db->query("SELECT * FROM " . NV_MOD_TABLE . "_quality_song WHERE quality_id=" . $array['quality_id'])->fetch();
+        $array_old = $db->query("SELECT * FROM " . Resources::getTablePrefix() . "_quality_song WHERE quality_id=" . $array['quality_id'])->fetch();
         if (empty($array_old)) {
             $error_exists = true;
         }
@@ -255,7 +256,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
         AjaxRespon::setMessage($lang_module['qso_err_name']);
     } else {
         if ($array['quality_id']) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_quality_song SET
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_song SET
                 online_supported=" . $array['online_supported'] . ",
                 is_default=" . $array['is_default'] . ",
                 " . NV_LANG_DATA . "_quality_name=:quality_name,
@@ -276,10 +277,10 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         } else {
-            $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_quality_song")->fetchColumn();
+            $weight = $db->query("SELECT MAX(weight) FROM " . Resources::getTablePrefix() . "_quality_song")->fetchColumn();
             $weight++;
 
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_quality_song (
+            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_quality_song (
                 online_supported, is_default, time_add, weight, status,
                 " . NV_LANG_DATA . "_quality_name, " . NV_LANG_DATA . "_quality_alias
             ) VALUES (

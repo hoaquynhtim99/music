@@ -132,6 +132,18 @@ class Utils
     }
 
     /**
+     * @param array $array
+     * @param string $prefix
+     * @return array
+     */
+    public static function addPrefixToArray(array $array, string $prefix)
+    {
+        return array_map(function ($arrayValues) use ($prefix) {
+            return $prefix . $arrayValues;
+        }, $array);
+    }
+
+    /**
      * Utils::_maxPage()
      *
      * @param mixed $per_page

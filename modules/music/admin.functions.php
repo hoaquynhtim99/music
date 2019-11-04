@@ -13,6 +13,7 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE') or !defined('NV_IS_MODADMIN'
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 define('NV_IS_MUSIC_ADMIN', true);
 
@@ -107,10 +108,10 @@ function msUpdateNationStat($nation_id)
     global $db;
 
     // Số ca sĩ
-    $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_singers=(SELECT COUNT(artist_id) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=0 OR artist_type=2) AND nation_id=" . $nation_id . " AND status=1) WHERE nation_id=" . $nation_id);
+    $db->query("UPDATE " . Resources::getTablePrefix() . "_nations SET stat_singers=(SELECT COUNT(artist_id) FROM " . Resources::getTablePrefix() . "_artists WHERE (artist_type=0 OR artist_type=2) AND nation_id=" . $nation_id . " AND status=1) WHERE nation_id=" . $nation_id);
 
     // Số nhạc sĩ
-    $db->query("UPDATE " . NV_MOD_TABLE . "_nations SET stat_authors=(SELECT COUNT(artist_id) FROM " . NV_MOD_TABLE . "_artists WHERE (artist_type=1 OR artist_type=2) AND nation_id=" . $nation_id . " AND status=1) WHERE nation_id=" . $nation_id);
+    $db->query("UPDATE " . Resources::getTablePrefix() . "_nations SET stat_authors=(SELECT COUNT(artist_id) FROM " . Resources::getTablePrefix() . "_artists WHERE (artist_type=1 OR artist_type=2) AND nation_id=" . $nation_id . " AND status=1) WHERE nation_id=" . $nation_id);
 }
 
 /**
@@ -123,13 +124,13 @@ function msUpdateCatStat($cat_id)
     global $db;
 
     // Số albums
-    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_albums=(SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
+    $db->query("UPDATE " . Resources::getTablePrefix() . "_categories SET stat_albums=(SELECT COUNT(album_id) FROM " . Resources::getTablePrefix() . "_albums WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
 
     // Số bài hát
-    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_songs=(SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
+    $db->query("UPDATE " . Resources::getTablePrefix() . "_categories SET stat_songs=(SELECT COUNT(song_id) FROM " . Resources::getTablePrefix() . "_songs WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
 
     // Số video
-    $db->query("UPDATE " . NV_MOD_TABLE . "_categories SET stat_videos=(SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
+    $db->query("UPDATE " . Resources::getTablePrefix() . "_categories SET stat_videos=(SELECT COUNT(video_id) FROM " . Resources::getTablePrefix() . "_videos WHERE FIND_IN_SET(" . $cat_id . ", cat_ids) AND status=1) WHERE cat_id=" . $cat_id);
 }
 
 /**
@@ -144,19 +145,19 @@ function msUpdateArtistStat($artist_id, $is_singer = true)
 
     if ($is_singer) {
         // Số albums
-        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_singer_albums=(SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_artists SET stat_singer_albums=(SELECT COUNT(album_id) FROM " . Resources::getTablePrefix() . "_albums WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
 
         // Số bài hát
-        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_singer_songs=(SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_artists SET stat_singer_songs=(SELECT COUNT(song_id) FROM " . Resources::getTablePrefix() . "_songs WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
 
         // Số video
-        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_singer_videos=(SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_artists SET stat_singer_videos=(SELECT COUNT(video_id) FROM " . Resources::getTablePrefix() . "_videos WHERE FIND_IN_SET(" . $artist_id . ", singer_ids) AND status=1) WHERE artist_id=" . $artist_id);
     } else {
         // Số bài hát
-        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_author_songs=(SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs WHERE FIND_IN_SET(" . $artist_id . ", author_ids) AND status=1) WHERE artist_id=" . $artist_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_artists SET stat_author_songs=(SELECT COUNT(song_id) FROM " . Resources::getTablePrefix() . "_songs WHERE FIND_IN_SET(" . $artist_id . ", author_ids) AND status=1) WHERE artist_id=" . $artist_id);
 
         // Số video
-        $db->query("UPDATE " . NV_MOD_TABLE . "_artists SET stat_author_videos=(SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos WHERE FIND_IN_SET(" . $artist_id . ", author_ids) AND status=1) WHERE artist_id=" . $artist_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_artists SET stat_author_videos=(SELECT COUNT(video_id) FROM " . Resources::getTablePrefix() . "_videos WHERE FIND_IN_SET(" . $artist_id . ", author_ids) AND status=1) WHERE artist_id=" . $artist_id);
     }
 }
 
@@ -175,7 +176,7 @@ function msUpdateRandomSongs($cat_ids)
 
     foreach ($cat_ids as $cat_id) {
         // Xóa các bài hát trong list của thể loại này mà không còn phù hợp điều kiện (status, cat_ids, is_official) hoặc bài hát bị xóa
-        $sql = "DELETE tb1 FROM " . NV_MOD_TABLE . "_songs_random tb1 LEFT JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE
+        $sql = "DELETE tb1 FROM " . Resources::getTablePrefix() . "_songs_random tb1 LEFT JOIN " . Resources::getTablePrefix() . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE
         tb1.cat_id=" . $cat_id . " AND (
             tb2.song_id IS NULL OR (tb2.status!=1 OR tb2.is_official!=1 OR NOT FIND_IN_SET(" . $cat_id . ", tb2.cat_ids))
         )";
@@ -185,26 +186,26 @@ function msUpdateRandomSongs($cat_ids)
          * Xác định ID bài hát mới nhất thứ 1000 của thể loại này
          * ID nhỏ nhất là bài hát cũ nhất
          */
-        $sql = "SELECT MIN(song_id) FROM (SELECT song_id FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) ORDER BY time_add DESC LIMIT 0, 1000) AS tmptable";
+        $sql = "SELECT MIN(song_id) FROM (SELECT song_id FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) ORDER BY time_add DESC LIMIT 0, 1000) AS tmptable";
         $oldest_song_id = $db->query($sql)->fetchColumn();
 
         if ($oldest_song_id) {
             // Xóa hết các bài hát cũ hơn trong list. ID nhỏ hơn tức cũ hơn
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_songs_random WHERE cat_id=" . $cat_id . " AND song_id<" . $oldest_song_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_songs_random WHERE cat_id=" . $cat_id . " AND song_id<" . $oldest_song_id;
             $check = $db->exec($sql);
         }
 
         // Xác định số bài hát random còn lại trong list
-        $sql = "SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs_random WHERE cat_id=" . $cat_id;
+        $sql = "SELECT COUNT(song_id) FROM " . Resources::getTablePrefix() . "_songs_random WHERE cat_id=" . $cat_id;
         $num_songs_left = intval($db->query($sql)->fetchColumn());
 
         if ($num_songs_left < 1000) {
             $num_songs_add = 1000 - $num_songs_left;
 
             // Thêm vào cho đủ 1000 bài mới khác vô thể loại này
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_songs_random (song_id, cat_id) SELECT song_id, " . $cat_id . " FROM
-            " . NV_MOD_TABLE . "_songs WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) AND song_id NOT IN(
-                SELECT song_id FROM " . NV_MOD_TABLE . "_songs_random WHERE cat_id=" . $cat_id . "
+            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_songs_random (song_id, cat_id) SELECT song_id, " . $cat_id . " FROM
+            " . Resources::getTablePrefix() . "_songs WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) AND song_id NOT IN(
+                SELECT song_id FROM " . Resources::getTablePrefix() . "_songs_random WHERE cat_id=" . $cat_id . "
             ) ORDER BY time_add DESC LIMIT 0, " . $num_songs_add;
             $check = $db->exec($sql);
         }
@@ -226,7 +227,7 @@ function msUpdateRandomVideos($cat_ids)
 
     foreach ($cat_ids as $cat_id) {
         // Xóa các video trong list của thể loại này mà không còn phù hợp điều kiện (status, cat_ids, is_official) hoặc video bị xóa
-        $sql = "DELETE tb1 FROM " . NV_MOD_TABLE . "_videos_random tb1 LEFT JOIN " . NV_MOD_TABLE . "_videos tb2 ON tb1.video_id=tb2.video_id WHERE
+        $sql = "DELETE tb1 FROM " . Resources::getTablePrefix() . "_videos_random tb1 LEFT JOIN " . Resources::getTablePrefix() . "_videos tb2 ON tb1.video_id=tb2.video_id WHERE
         tb1.cat_id=" . $cat_id . " AND (
             tb2.video_id IS NULL OR (tb2.status!=1 OR tb2.is_official!=1 OR NOT FIND_IN_SET(" . $cat_id . ", tb2.cat_ids))
         )";
@@ -236,26 +237,26 @@ function msUpdateRandomVideos($cat_ids)
          * Xác định ID video mới nhất thứ 1000 của thể loại này
          * ID nhỏ nhất là video cũ nhất
          */
-        $sql = "SELECT MIN(video_id) FROM (SELECT video_id FROM " . NV_MOD_TABLE . "_videos WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) ORDER BY time_add DESC LIMIT 0, 1000) AS tmptable";
+        $sql = "SELECT MIN(video_id) FROM (SELECT video_id FROM " . Resources::getTablePrefix() . "_videos WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) ORDER BY time_add DESC LIMIT 0, 1000) AS tmptable";
         $oldest_video_id = $db->query($sql)->fetchColumn();
 
         if ($oldest_video_id) {
             // Xóa hết các video cũ hơn trong list. ID nhỏ hơn tức cũ hơn
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_videos_random WHERE cat_id=" . $cat_id . " AND video_id<" . $oldest_video_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_videos_random WHERE cat_id=" . $cat_id . " AND video_id<" . $oldest_video_id;
             $check = $db->exec($sql);
         }
 
         // Xác định số video random còn lại trong list
-        $sql = "SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos_random WHERE cat_id=" . $cat_id;
+        $sql = "SELECT COUNT(video_id) FROM " . Resources::getTablePrefix() . "_videos_random WHERE cat_id=" . $cat_id;
         $num_videos_left = intval($db->query($sql)->fetchColumn());
 
         if ($num_videos_left < 1000) {
             $num_videos_add = 1000 - $num_videos_left;
 
             // Thêm vào cho đủ 1000 bài mới khác vô thể loại này
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_videos_random (video_id, cat_id) SELECT video_id, " . $cat_id . " FROM
-            " . NV_MOD_TABLE . "_videos WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) AND video_id NOT IN(
-                SELECT video_id FROM " . NV_MOD_TABLE . "_videos_random WHERE cat_id=" . $cat_id . "
+            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_videos_random (video_id, cat_id) SELECT video_id, " . $cat_id . " FROM
+            " . Resources::getTablePrefix() . "_videos WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) AND video_id NOT IN(
+                SELECT video_id FROM " . Resources::getTablePrefix() . "_videos_random WHERE cat_id=" . $cat_id . "
             ) ORDER BY time_add DESC LIMIT 0, " . $num_videos_add;
             $check = $db->exec($sql);
         }
@@ -277,7 +278,7 @@ function msUpdateRandomAlbums($cat_ids)
 
     foreach ($cat_ids as $cat_id) {
         // Xóa các album trong list của thể loại này mà không còn phù hợp điều kiện (status, cat_ids, is_official) hoặc album bị xóa
-        $sql = "DELETE tb1 FROM " . NV_MOD_TABLE . "_albums_random tb1 LEFT JOIN " . NV_MOD_TABLE . "_albums tb2 ON tb1.album_id=tb2.album_id WHERE
+        $sql = "DELETE tb1 FROM " . Resources::getTablePrefix() . "_albums_random tb1 LEFT JOIN " . Resources::getTablePrefix() . "_albums tb2 ON tb1.album_id=tb2.album_id WHERE
         tb1.cat_id=" . $cat_id . " AND (
             tb2.album_id IS NULL OR (tb2.status!=1 OR tb2.is_official!=1 OR NOT FIND_IN_SET(" . $cat_id . ", tb2.cat_ids))
         )";
@@ -287,26 +288,26 @@ function msUpdateRandomAlbums($cat_ids)
          * Xác định ID album mới nhất thứ 1000 của thể loại này
          * ID nhỏ nhất là album cũ nhất
          */
-        $sql = "SELECT MIN(album_id) FROM (SELECT album_id FROM " . NV_MOD_TABLE . "_albums WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) ORDER BY time_add DESC LIMIT 0, 1000) AS tmptable";
+        $sql = "SELECT MIN(album_id) FROM (SELECT album_id FROM " . Resources::getTablePrefix() . "_albums WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) ORDER BY time_add DESC LIMIT 0, 1000) AS tmptable";
         $oldest_album_id = $db->query($sql)->fetchColumn();
 
         if ($oldest_album_id) {
             // Xóa hết các album cũ hơn trong list. ID nhỏ hơn tức cũ hơn
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums_random WHERE cat_id=" . $cat_id . " AND album_id<" . $oldest_album_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_albums_random WHERE cat_id=" . $cat_id . " AND album_id<" . $oldest_album_id;
             $check = $db->exec($sql);
         }
 
         // Xác định số album random còn lại trong list
-        $sql = "SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums_random WHERE cat_id=" . $cat_id;
+        $sql = "SELECT COUNT(album_id) FROM " . Resources::getTablePrefix() . "_albums_random WHERE cat_id=" . $cat_id;
         $num_albums_left = intval($db->query($sql)->fetchColumn());
 
         if ($num_albums_left < 1000) {
             $num_albums_add = 1000 - $num_albums_left;
 
             // Thêm vào cho đủ 1000 bài mới khác vô thể loại này
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_albums_random (album_id, cat_id) SELECT album_id, " . $cat_id . " FROM
-            " . NV_MOD_TABLE . "_albums WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) AND album_id NOT IN(
-                SELECT album_id FROM " . NV_MOD_TABLE . "_albums_random WHERE cat_id=" . $cat_id . "
+            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_albums_random (album_id, cat_id) SELECT album_id, " . $cat_id . " FROM
+            " . Resources::getTablePrefix() . "_albums WHERE status=1 AND is_official=1 AND FIND_IN_SET(" . $cat_id . ", cat_ids) AND album_id NOT IN(
+                SELECT album_id FROM " . Resources::getTablePrefix() . "_albums_random WHERE cat_id=" . $cat_id . "
             ) ORDER BY time_add DESC LIMIT 0, " . $num_albums_add;
             $check = $db->exec($sql);
         }
@@ -328,17 +329,17 @@ function msUpdateNumSongOfAlbumFromSongs($song_ids)
     global $db;
 
     // Xác định danh sách các album từ các bài hát này
-    $sql = "SELECT DISTINCT album_id FROM " . NV_MOD_TABLE . "_albums_data WHERE song_id IN(" . implode(',', $song_ids) . ")";
+    $sql = "SELECT DISTINCT album_id FROM " . Resources::getTablePrefix() . "_albums_data WHERE song_id IN(" . implode(',', $song_ids) . ")";
     $album_ids = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
 
     // Lấy và cập nhật số bài hát cho từng albums
     foreach ($album_ids as $album_id) {
-        $sql = "SELECT COUNT(tb1.song_id) FROM " . NV_MOD_TABLE . "_albums_data tb1
-        INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.album_id=" . $album_id . " AND tb2.status=1";
+        $sql = "SELECT COUNT(tb1.song_id) FROM " . Resources::getTablePrefix() . "_albums_data tb1
+        INNER JOIN " . Resources::getTablePrefix() . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.album_id=" . $album_id . " AND tb2.status=1";
         $num_songs = $db->query($sql)->fetchColumn();
         $num_songs = intval($num_songs);
 
-        $db->query("UPDATE " . NV_MOD_TABLE . "_albums SET num_songs=" . $num_songs . " WHERE album_id=" . $album_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_albums SET num_songs=" . $num_songs . " WHERE album_id=" . $album_id);
     }
 }
 
@@ -357,16 +358,16 @@ function msUpdateNumSongOfPlaylistFromSongs($song_ids)
     global $db;
 
     // Xác định danh sách các album từ các bài hát này
-    $sql = "SELECT DISTINCT playlist_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id IN(" . implode(',', $song_ids) . ")";
+    $sql = "SELECT DISTINCT playlist_id FROM " . Resources::getTablePrefix() . "_user_playlists_data WHERE song_id IN(" . implode(',', $song_ids) . ")";
     $playlist_ids = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
 
     // Lấy và cập nhật số bài hát cho từng playlist
     foreach ($playlist_ids as $playlist_id) {
-        $sql = "SELECT COUNT(tb1.song_id) FROM " . NV_MOD_TABLE . "_user_playlists_data tb1
-        INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";
+        $sql = "SELECT COUNT(tb1.song_id) FROM " . Resources::getTablePrefix() . "_user_playlists_data tb1
+        INNER JOIN " . Resources::getTablePrefix() . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";
         $num_songs = $db->query($sql)->fetchColumn();
         $num_songs = intval($num_songs);
 
-        $db->query("UPDATE " . NV_MOD_TABLE . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
+        $db->query("UPDATE " . Resources::getTablePrefix() . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
     }
 }

@@ -14,6 +14,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 
 use NukeViet\Music\Shared\Artists;
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 $set_active_op = 'artist-list';
@@ -25,7 +26,7 @@ if ($artist_id) {
     $page_title = $lang_module['artist_edit'];
 
     $array_select_fields = nv_get_artist_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_artists WHERE artist_id=" . $artist_id;
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_artists WHERE artist_id=" . $artist_id;
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -145,7 +146,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     // Lưu dữ liệu
     if ($artist_id) {
         // Sửa
-        $sql = "UPDATE " . NV_MOD_TABLE . "_artists SET
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_artists SET
             artist_type=" . $array['artist_type'] . ",
             artist_birthday=" . $array['artist_birthday'] . ",
             artist_birthday_lev=" . $array['artist_birthday_lev'] . ",
@@ -229,7 +230,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
         $artist_code = Artists::creatUniqueCode();
 
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_artists (
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_artists (
             artist_code, artist_type, artist_birthday, artist_birthday_lev, nation_id, resource_avatar, resource_cover, time_add, show_inhome, status,
             " . NV_LANG_DATA . "_artist_name, " . NV_LANG_DATA . "_artist_alias, " . NV_LANG_DATA . "_artist_alphabet, " . NV_LANG_DATA . "_artist_searchkey,
             " . NV_LANG_DATA . "_singer_nickname, " . NV_LANG_DATA . "_author_nickname, " . NV_LANG_DATA . "_author_prize, " . NV_LANG_DATA . "_author_info,

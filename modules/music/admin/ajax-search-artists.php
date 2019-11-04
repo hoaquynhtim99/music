@@ -12,6 +12,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
@@ -34,7 +35,7 @@ if ($array_search['submit']) {
     $per_page = 5;
     $page = Utils::getValidPage($nv_Request->get_int('page', 'get,post', 1), $per_page);
 
-    $db->sqlreset()->from(NV_MOD_TABLE . "_artists");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_artists");
 
     $where = [];
 

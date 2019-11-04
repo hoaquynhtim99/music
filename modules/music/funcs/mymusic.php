@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 // Yêu cầu đăng nhập thành viên
 if (!defined("NV_IS_USER")) {
@@ -25,12 +26,12 @@ $page_title = $lang_module['mymusic'];
 $array_mod_title[] = [
     'catid' => 0,
     'title' => $module_info['custom_title'],
-    'link' => NV_MOD_LINK_AMP
+    'link' => Resources::getModLinkEncode()
 ];
 $array_mod_title[] = [
     'catid' => 1,
     'title' => $page_title,
-    'link' => NV_MOD_FULLLINK_AMP . $op
+    'link' => Resources::getModFullLinkEncode() . $op
 ];
 
 $request_tab = '';
@@ -46,7 +47,7 @@ if (isset($array_op[1])) {
         }
     }
     if (empty($request_tab)) {
-        nv_redirect_location(NV_MOD_FULLLINK . $op);
+        nv_redirect_location(Resources::getModFullLink() . $op);
     }
 }
 
@@ -56,41 +57,41 @@ if (isset($array_op[2])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        nv_redirect_location(NV_MOD_FULLLINK . $op . ($request_tab ? ('/' . $request_tab) : ''));
+        nv_redirect_location(Resources::getModFullLink() . $op . ($request_tab ? ('/' . $request_tab) : ''));
     }
 }
 
 // Cấm tùy ý đặt link sai
 if (isset($array_op[3])) {
-    nv_redirect_location(NV_MOD_FULLLINK . $op . ($request_tab ? ('/' . $request_tab) : ''));
+    nv_redirect_location(Resources::getModFullLink() . $op . ($request_tab ? ('/' . $request_tab) : ''));
 }
 
 if ($request_tab == 'song') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_song'],
-        'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_song'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'album') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_album'],
-        'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_album'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'mv') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_video'],
-        'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_video'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'playlist') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_playlist'],
-        'link' => NV_MOD_FULLLINK_AMP . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_playlist'] . NV_TITLEBAR_DEFIS . $page_title;
 }
@@ -100,7 +101,7 @@ if ($page > 1) {
     $page_title = $page_text . NV_TITLEBAR_DEFIS . $page_title;
 }
 
-$base_url = NV_MOD_FULLLINK . $op . ($request_tab ? ('/' . $request_tab) : '');
+$base_url = Resources::getModFullLink() . $op . ($request_tab ? ('/' . $request_tab) : '');
 $all_pages = 0;
 $per_page = 1;
 
@@ -110,8 +111,8 @@ $array_singers = $array_singer_ids = [];
 // Lấy các album yêu thích
 if (empty($request_tab) or $request_tab == 'album') {
     $per_page = empty($request_tab) ? 5 : Config::getViewSingerDetailNumAlbums();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_user_favorite_albums tb1");
-    $db->join("INNER JOIN " . NV_MOD_TABLE . "_albums tb2 ON tb1.album_id=tb2.album_id");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_user_favorite_albums tb1");
+    $db->join("INNER JOIN " . Resources::getTablePrefix() . "_albums tb2 ON tb1.album_id=tb2.album_id");
     $db->where("tb2.status=1 AND tb1.userid=" . $user_info['userid']);
 
     if (!empty($request_tab)) {
@@ -147,8 +148,8 @@ if (empty($request_tab) or $request_tab == 'album') {
 // Lấy các bài hát yêu thích
 if (empty($request_tab) or $request_tab == 'song') {
     $per_page = empty($request_tab) ? 10 : Config::getViewSingerDetailNumSongs();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_user_favorite_songs tb1");
-    $db->join("INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_user_favorite_songs tb1");
+    $db->join("INNER JOIN " . Resources::getTablePrefix() . "_songs tb2 ON tb1.song_id=tb2.song_id");
     $db->where("tb2.status=1 AND tb1.userid=" . $user_info['userid']);
 
     if (!empty($request_tab)) {
@@ -186,8 +187,8 @@ if (empty($request_tab) or $request_tab == 'song') {
 // Lấy các video yêu thích
 if (empty($request_tab) or $request_tab == 'mv') {
     $per_page = empty($request_tab) ? 8 : Config::getViewSingerDetailNumVideos();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_user_favorite_videos tb1");
-    $db->join("INNER JOIN " . NV_MOD_TABLE . "_videos tb2 ON tb1.video_id=tb2.video_id");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_user_favorite_videos tb1");
+    $db->join("INNER JOIN " . Resources::getTablePrefix() . "_videos tb2 ON tb1.video_id=tb2.video_id");
     $db->where("tb2.status=1 AND tb1.userid=" . $user_info['userid']);
 
     if (!empty($request_tab)) {
@@ -223,7 +224,7 @@ if (empty($request_tab) or $request_tab == 'mv') {
 // Lấy các playlist đã tạo
 if (empty($request_tab) or $request_tab == 'playlist') {
     $per_page = empty($request_tab) ? 5 : Config::getViewSingerDetailNumAlbums();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_user_playlists");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_user_playlists");
     $db->where("userid=" . $user_info['userid']);
 
     if (!empty($request_tab)) {

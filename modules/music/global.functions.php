@@ -12,59 +12,17 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
-/*
-register_shutdown_function("fatal_handler");
-
-function fatal_handler() {
-    $error = error_get_last();
-    if ($error !== NULL) {
-        echo("<pre><code>");
-        print_r($error);
-        die("</code></pre>");
-    }
-}
-*/
-
-require NV_ROOTDIR . '/modules/' . $module_file . '/vendor/autoload.php';
-
-use NukeViet\Music\Nation\DbLoader as NationDbLoader;
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
-use NukeViet\Music\Shared\Charts;
-
-define('NV_MOD_TABLE', $db_config['prefix'] . '_' . $module_data);
-
-define('NV_MOD_LINK', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&' . NV_NAME_VARIABLE . '=' . $module_name);
-define('NV_MOD_LINK_AMP', NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name);
-define('NV_MOD_FULLLINK', NV_MOD_LINK . '&' . NV_OP_VARIABLE . '=');
-define('NV_MOD_FULLLINK_AMP', NV_MOD_LINK_AMP . '&amp;' . NV_OP_VARIABLE . '=');
-
 define('MS_COMMENT_AREA_SONG', 1);
 define('MS_COMMENT_AREA_ALBUM', 2);
 define('MS_COMMENT_AREA_VIDEO', 3);
 define('MS_COMMENT_AREA_PLAYLIST', 4);
 
-Resources::setLangData(NV_LANG_DATA);
-Resources::setLangInterface(NV_LANG_INTERFACE);
-Resources::setDb($db);
-Resources::setDbPrefix($db_config['prefix']);
-Resources::setTablePrefix(NV_MOD_TABLE);
+require NV_ROOTDIR . '/modules/' . $module_file . '/init.php';
 
-$array_alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
-
-$global_array_rule = [];
-$global_array_rule['nation_code'] = '/^[a-zA-Z0-9]{4}$/';
-
-// Cấu hình module
-$cacheFile = NV_LANG_DATA . '_config_' . NV_CACHE_PREFIX . '.cache';
-$cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
-
-if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
-    Config::loadConfig(unserialize($cache));
-} else {
-    $nv_Cache->setItem($module_name, $cacheFile, serialize(Config::getAllConfig()), $cacheTTL);
-}
+use NukeViet\Music\Nation\DbLoader as NationDbLoader;
+use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
+use NukeViet\Music\Shared\Charts;
 
 // Danh mục
 $cacheFile = NV_LANG_DATA . '_cats_' . NV_CACHE_PREFIX . '.cache';
@@ -76,7 +34,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $global_array_cat = $global_array_cat[0];
 } else {
     $array_select_fields = nv_get_cat_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_categories ORDER BY weight ASC";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_categories ORDER BY weight ASC";
     $result = $db->query($sql);
 
     $global_array_cat = [];
@@ -100,46 +58,6 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     }
 
     $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_cat, $global_array_cat_alias)), $cacheTTL);
-}
-
-// Danh mục bảng xếp hạng âm nhạc
-$cacheFile = NV_LANG_DATA . '_cat_charts_' . NV_CACHE_PREFIX . '.cache';
-$cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
-
-if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
-    $global_array_cat_chart = unserialize($cache);
-    $global_array_cat_chart_alias = $global_array_cat_chart[1];
-    $global_array_cat_chart = $global_array_cat_chart[0];
-} else {
-    $array_select_fields = nv_get_cat_chart_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_chart_categories ORDER BY weight ASC";
-    $result = $db->query($sql);
-
-    $global_array_cat_chart = [];
-    $global_array_cat_chart_alias = [];
-
-    while ($row = $result->fetch()) {
-        $row['cat_ids'] = Utils::arrayIntFromStrList($row['cat_ids']);
-        foreach ($array_select_fields[1] as $f) {
-            if (empty($row[$f]) and !empty($row['default_' . $f])) {
-                $row[$f] = $row['default_' . $f];
-            }
-            unset($row['default_' . $f]);
-        }
-        if (empty($row['cat_absitetitle'])) {
-            $row['cat_absitetitle'] = $row['cat_name'];
-        }
-        if (empty($row['cat_mvsitetitle'])) {
-            $row['cat_mvsitetitle'] = $row['cat_name'];
-        }
-        if (empty($row['cat_sositetitle'])) {
-            $row['cat_sositetitle'] = $row['cat_name'];
-        }
-        $global_array_cat_chart[$row['cat_id']] = $row;
-        $global_array_cat_chart_alias[$row['cat_code']] = $row['cat_id'];
-    }
-
-    $nv_Cache->setItem($module_name, $cacheFile, serialize([$global_array_cat_chart, $global_array_cat_chart_alias]), $cacheTTL);
 }
 
 // Tất cả các quốc gia trong hệ thống
@@ -173,11 +91,11 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
 }
 
 // Chất lượng bài hát
-$sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_song ORDER BY weight ASC";
+$sql = "SELECT * FROM " . Resources::getTablePrefix() . "_quality_song ORDER BY weight ASC";
 $global_array_soquality = $nv_Cache->db($sql, 'quality_id', $module_name);
 
 // Chất lượng video
-$sql = "SELECT * FROM " . NV_MOD_TABLE . "_quality_video ORDER BY weight ASC";
+$sql = "SELECT * FROM " . Resources::getTablePrefix() . "_quality_video ORDER BY weight ASC";
 $global_array_mvquality = $nv_Cache->db($sql, 'quality_id', $module_name);
 
 // Loại nghệ sĩ
@@ -248,46 +166,6 @@ function nv_get_album_select_fields($full_fields = false)
 
         $array_lang_fields[] = 'album_introtext';
         $array_lang_fields[] = 'album_keywords';
-    }
-
-    return array($array_select_fields, $array_lang_fields);
-}
-
-/**
- * nv_get_song_select_fields()
- *
- * @param bool $full_fields
- * @return
- */
-function nv_get_song_select_fields($full_fields = false)
-{
-    $array_select_fields = array('song_id', 'song_code', 'cat_ids', 'singer_ids', 'author_ids', 'album_ids', 'video_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'status');
-    $array_select_fields[] = NV_LANG_DATA . '_song_name song_name';
-    $array_select_fields[] = NV_LANG_DATA . '_song_alias song_alias';
-    $default_language = Config::getDefaultLang();
-    if (NV_LANG_DATA != $default_language) {
-        $array_select_fields[] = $default_language . '_song_name default_song_name';
-        $array_select_fields[] = $default_language . '_song_alias default_song_alias';
-    }
-
-    $array_lang_fields = array('song_name', 'song_alias');
-
-    if ($full_fields) {
-        $array_select_fields[] = 'uploader_id';
-        $array_select_fields[] = 'uploader_name';
-        $array_select_fields[] = 'time_add';
-        $array_select_fields[] = 'time_update';
-        $array_select_fields[] = 'is_official';
-        $array_select_fields[] = 'show_inhome';
-        $array_select_fields[] = NV_LANG_DATA . '_song_introtext song_introtext';
-        $array_select_fields[] = NV_LANG_DATA . '_song_keywords song_keywords';
-        if (NV_LANG_DATA != $default_language) {
-            $array_select_fields[] = $default_language . '_song_introtext default_song_introtext';
-            $array_select_fields[] = $default_language . '_song_keywords default_song_keywords';
-        }
-
-        $array_lang_fields[] = 'song_introtext';
-        $array_lang_fields[] = 'song_keywords';
     }
 
     return array($array_select_fields, $array_lang_fields);
@@ -368,63 +246,6 @@ function nv_get_cat_select_fields($full_fields = false)
 }
 
 /**
- * @param boolean $full_fields
- * @return string[][]
- */
-function nv_get_cat_chart_select_fields($full_fields = false)
-{
-    $default_language = Config::getDefaultLang();
-    $array_select_fields = [
-        'cat_id', 'cat_code', 'resource_cover', 'time_add', 'time_update', 'cat_ids', 'weight', 'status'
-    ];
-    $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
-
-    $array_select_fields[] = NV_LANG_DATA . '_cat_absitetitle cat_absitetitle';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_abintrotext cat_abintrotext';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_abkeywords cat_abkeywords';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_abbodytext cat_abbodytext';
-
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvsitetitle cat_mvsitetitle';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvintrotext cat_mvintrotext';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvkeywords cat_mvkeywords';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvbodytext cat_mvbodytext';
-
-    $array_select_fields[] = NV_LANG_DATA . '_cat_sositetitle cat_sositetitle';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_sointrotext cat_sointrotext';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_sokeywords cat_sokeywords';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_sobodytext cat_sobodytext';
-
-    if (NV_LANG_DATA != $default_language) {
-        $array_select_fields[] = $default_language . '_cat_name default_cat_name';
-        $array_select_fields[] = $default_language . '_cat_alias default_cat_alias';
-
-        $array_select_fields[] = $default_language . '_cat_absitetitle default_cat_absitetitle';
-        $array_select_fields[] = $default_language . '_cat_abintrotext default_cat_abintrotext';
-        $array_select_fields[] = $default_language . '_cat_abkeywords default_cat_abkeywords';
-        $array_select_fields[] = $default_language . '_cat_abbodytext default_cat_abbodytext';
-
-        $array_select_fields[] = $default_language . '_cat_mvsitetitle default_cat_mvsitetitle';
-        $array_select_fields[] = $default_language . '_cat_mvintrotext default_cat_mvintrotext';
-        $array_select_fields[] = $default_language . '_cat_mvkeywords default_cat_mvkeywords';
-        $array_select_fields[] = $default_language . '_cat_mvbodytext default_cat_mvbodytext';
-
-        $array_select_fields[] = $default_language . '_cat_sositetitle default_cat_sositetitle';
-        $array_select_fields[] = $default_language . '_cat_sointrotext default_cat_sointrotext';
-        $array_select_fields[] = $default_language . '_cat_sokeywords default_cat_sokeywords';
-        $array_select_fields[] = $default_language . '_cat_sobodytext default_cat_sobodytext';
-    }
-
-    $array_lang_fields = [
-        'cat_absitetitle', 'cat_abintrotext', 'cat_abkeywords', 'cat_abbodytext',
-        'cat_mvsitetitle', 'cat_mvintrotext', 'cat_mvkeywords', 'cat_mvbodytext',
-        'cat_sositetitle', 'cat_sointrotext', 'cat_sokeywords', 'cat_sobodytext',
-    ];
-
-    return [$array_select_fields, $array_lang_fields];
-}
-
-/**
  * nv_get_nation_select_fields()
  *
  * @param bool $full_fields
@@ -446,68 +267,6 @@ function nv_get_nation_select_fields($full_fields = false)
     }
 
     $array_lang_fields = array('nation_name', 'nation_alias', 'nation_introtext', 'nation_keywords');
-
-    return array($array_select_fields, $array_lang_fields);
-}
-
-/**
- * nv_get_artist_select_fields()
- *
- * @param bool $full_fields
- * @return
- */
-function nv_get_artist_select_fields($full_fields = false)
-{
-    $array_select_fields = array('artist_id', 'artist_code', 'artist_type', 'artist_birthday', 'artist_birthday_lev', 'nation_id', 'resource_avatar', 'resource_cover', 'stat_singer_albums', 'stat_singer_songs', 'stat_singer_videos', 'stat_author_songs', 'stat_author_videos', 'time_add', 'time_update', 'status');
-    $array_select_fields[] = NV_LANG_DATA . '_artist_name artist_name';
-    $array_select_fields[] = NV_LANG_DATA . '_artist_alias artist_alias';
-    $array_select_fields[] = NV_LANG_DATA . '_artist_realname artist_realname';
-    $array_select_fields[] = NV_LANG_DATA . '_singer_nickname singer_nickname';
-    $array_select_fields[] = NV_LANG_DATA . '_author_nickname author_nickname';
-    $default_language = Config::getDefaultLang();
-    if (NV_LANG_DATA != $default_language) {
-        $array_select_fields[] = $default_language . '_artist_name default_artist_name';
-        $array_select_fields[] = $default_language . '_artist_alias default_artist_alias';
-        $array_select_fields[] = $default_language . '_artist_realname default_artist_realname';
-        $array_select_fields[] = $default_language . '_singer_nickname default_singer_nickname';
-        $array_select_fields[] = $default_language . '_author_nickname default_author_nickname';
-    }
-
-    $array_lang_fields = array('artist_name', 'artist_alias', 'artist_realname', 'singer_nickname', 'author_nickname');
-
-    if ($full_fields) {
-        $array_select_fields[] = 'show_inhome';
-        $array_select_fields[] = NV_LANG_DATA . '_artist_hometown artist_hometown';
-        $array_select_fields[] = NV_LANG_DATA . '_singer_prize singer_prize';
-        $array_select_fields[] = NV_LANG_DATA . '_singer_info singer_info';
-        $array_select_fields[] = NV_LANG_DATA . '_singer_introtext singer_introtext';
-        $array_select_fields[] = NV_LANG_DATA . '_singer_keywords singer_keywords';
-        $array_select_fields[] = NV_LANG_DATA . '_author_prize author_prize';
-        $array_select_fields[] = NV_LANG_DATA . '_author_info author_info';
-        $array_select_fields[] = NV_LANG_DATA . '_author_introtext author_introtext';
-        $array_select_fields[] = NV_LANG_DATA . '_author_keywords author_keywords';
-        if (NV_LANG_DATA != $default_language) {
-            $array_select_fields[] = $default_language . '_artist_hometown default_artist_hometown';
-            $array_select_fields[] = $default_language . '_singer_prize default_singer_prize';
-            $array_select_fields[] = $default_language . '_singer_info default_singer_info';
-            $array_select_fields[] = $default_language . '_singer_introtext default_singer_introtext';
-            $array_select_fields[] = $default_language . '_singer_keywords default_singer_keywords';
-            $array_select_fields[] = $default_language . '_author_prize default_author_prize';
-            $array_select_fields[] = $default_language . '_author_info default_author_info';
-            $array_select_fields[] = $default_language . '_author_introtext default_author_introtext';
-            $array_select_fields[] = $default_language . '_author_keywords default_author_keywords';
-        }
-
-        $array_lang_fields[] = 'artist_hometown';
-        $array_lang_fields[] = 'singer_prize';
-        $array_lang_fields[] = 'singer_info';
-        $array_lang_fields[] = 'singer_introtext';
-        $array_lang_fields[] = 'singer_keywords';
-        $array_lang_fields[] = 'author_prize';
-        $array_lang_fields[] = 'author_info';
-        $array_lang_fields[] = 'author_introtext';
-        $array_lang_fields[] = 'author_keywords';
-    }
 
     return array($array_select_fields, $array_lang_fields);
 }
@@ -544,74 +303,6 @@ function nv_get_user_playlist_select_fields($full_fields = false)
 }
 
 /**
- * nv_get_artists()
- *
- * @param mixed $array_ids
- * @param bool $full_info
- * @param bool $get_by_code
- * @return
- */
-function nv_get_artists($array_ids, $full_info = false, $get_by_code = false)
-{
-    global $db;
-
-    $array_artists = [];
-
-    if (!is_array($array_ids)) {
-        $array_ids = array($array_ids);
-        $return_one = true;
-    } else {
-        $return_one = false;
-    }
-
-    $array_ids = array_filter(array_unique($array_ids));
-
-    if (!empty($array_ids)) {
-        $array_select_fields = nv_get_artist_select_fields((bool)$full_info);
-        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_artists WHERE status=1 AND ";
-        if (!$get_by_code) {
-            $sql .= "artist_id IN(" . implode(',', $array_ids) . ")";
-        } else {
-            $sql .= "artist_code IN('" . implode("', '", $array_ids) . "')";
-        }
-        $result = $db->query($sql);
-
-        while ($row = $result->fetch()) {
-            foreach ($array_select_fields[1] as $f) {
-                if (empty($row[$f]) and !empty($row['default_' . $f])) {
-                    $row[$f] = $row['default_' . $f];
-                }
-                unset($row['default_' . $f]);
-            }
-
-            $row['singer_link'] = nv_get_view_singer_link($row);
-
-            if ($return_one) {
-                return $row;
-            }
-
-            $array_artists[$row['artist_id']] = $row;
-        }
-    }
-
-    return $array_artists;
-}
-
-/**
- * nv_get_view_singer_link()
- *
- * @param mixed $singer
- * @param bool $amp
- * @param string $tab
- * @return
- */
-function nv_get_view_singer_link($singer, $amp = true, $tab = '')
-{
-    global $global_config, $module_info;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . $module_info['alias']['view-singer'] . '/' . $singer['artist_alias'] . '-' . Config::getCodePrefix()->getSinger() . $singer['artist_code'] . ($tab ? '/' . Config::getSingerTabsAlias()->getTabByKey($tab) : $global_config['rewrite_exturl']);
-}
-
-/**
  * nv_get_detail_album_link()
  *
  * @param mixed $album
@@ -635,7 +326,7 @@ function nv_get_detail_album_link($album, $singers = [], $amp = true, $query_str
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getAlbum() . $album['album_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getAlbum() . $album['album_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getAlbum() . $album['album_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getAlbum() . $album['album_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -647,7 +338,7 @@ function nv_get_detail_album_link($album, $singers = [], $amp = true, $query_str
 function nv_get_detail_playlist_link($playlist, $amp = true, $query_string = '')
 {
     global $global_config;
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getPlaylist() . (isset($playlist['playlist_alias']) ? $playlist['playlist_alias'] : change_alias($playlist['playlist_name'])) . '-' . Config::getCodePrefix()->getPlaylist() . $playlist['playlist_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getPlaylist() . (isset($playlist['playlist_alias']) ? $playlist['playlist_alias'] : change_alias($playlist['playlist_name'])) . '-' . Config::getCodePrefix()->getPlaylist() . $playlist['playlist_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -674,7 +365,7 @@ function nv_get_detail_song_link($song, $singers = [], $amp = true, $query_strin
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getSong() . $song['song_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getSong() . $song['song_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getSong() . $song['song_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getSong() . $song['song_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -701,7 +392,7 @@ function nv_get_detail_video_link($video, $singers = [], $amp = true, $query_str
     } else {
         $singer_alias = '';
     }
-    return ($amp ? NV_MOD_FULLLINK_AMP : NV_MOD_FULLLINK) . Config::getOpAliasPrefix()->getVideo() . $video['video_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getVideo() . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getVideo() . $video['video_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getVideo() . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**
@@ -812,24 +503,24 @@ function msUpdatePlaylistSongCountWeight($playlist_id)
 {
     global $db;
 
-    $sql = "SELECT song_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE playlist_id=" . $playlist_id . " ORDER BY weight ASC";
+    $sql = "SELECT song_id FROM " . Resources::getTablePrefix() . "_user_playlists_data WHERE playlist_id=" . $playlist_id . " ORDER BY weight ASC";
     $song_ids = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
 
     // Cập nhật lại thứ tự
     $weight = 0;
     foreach ($song_ids as $song_id) {
         $weight++;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_playlists_data SET weight=" . $weight . " WHERE playlist_id=" . $playlist_id . " AND song_id=" . $song_id;
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_playlists_data SET weight=" . $weight . " WHERE playlist_id=" . $playlist_id . " AND song_id=" . $song_id;
         $db->query($sql);
     }
 
     // Cập nhật thống kê số bài hát
-    $sql = "SELECT COUNT(tb1.song_id) FROM " . NV_MOD_TABLE . "_user_playlists_data tb1
-    INNER JOIN " . NV_MOD_TABLE . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";
+    $sql = "SELECT COUNT(tb1.song_id) FROM " . Resources::getTablePrefix() . "_user_playlists_data tb1
+    INNER JOIN " . Resources::getTablePrefix() . "_songs tb2 ON tb1.song_id=tb2.song_id WHERE tb1.playlist_id=" . $playlist_id . " AND tb2.status=1";
     $num_songs = $db->query($sql)->fetchColumn();
     $num_songs = intval($num_songs);
 
-    $db->query("UPDATE " . NV_MOD_TABLE . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
+    $db->query("UPDATE " . Resources::getTablePrefix() . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
 }
 
 /*
@@ -851,7 +542,7 @@ if (Config::getChartActive()) {
                 $array_insert = [];
 
                 // Lấy 40 đối tượng có điểm cao nhất
-                $sql = "SELECT * FROM " . NV_MOD_TABLE . "_chart_tmps WHERE chart_time=" . $chart_time . "
+                $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_chart_tmps WHERE chart_time=" . $chart_time . "
                 AND object_name='" . $chart_object . "' AND cat_id=" . $_tmp['cat_id'] . "
                 ORDER BY summary_scores DESC LIMIT 0,40";
                 $result = $db->query($sql);
@@ -871,7 +562,7 @@ if (Config::getChartActive()) {
 
                 // Lưu vào BXH chính thức
                 if (!empty($array_insert)) {
-                    $sql = "INSERT INTO " . NV_MOD_TABLE . "_charts (
+                    $sql = "INSERT INTO " . Resources::getTablePrefix() . "_charts (
                         chart_week, chart_year, chart_time, cat_id, object_name, object_id, view_hits, view_rate, like_hits, like_rate, comment_hits, comment_rate,
                         share_hits, share_rate, summary_scores, summary_order
                     ) VALUES " . implode(', ', $array_insert);
@@ -881,11 +572,11 @@ if (Config::getChartActive()) {
         }
 
         // Xóa hết dữ liệu tạm
-        $sql = "TRUNCATE " . NV_MOD_TABLE . "_chart_tmps";
+        $sql = "TRUNCATE " . Resources::getTablePrefix() . "_chart_tmps";
         $db->query($sql);
 
         // Cập nhật lại CSDL cấu hình
-        $sql = "UPDATE " . NV_MOD_TABLE . "_config SET config_value_default=" . $db->quote($chart_current_time) . " WHERE config_name='current_chart_time'";
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_config SET config_value_default=" . $db->quote($chart_current_time) . " WHERE config_name='current_chart_time'";
         $db->query($sql);
 
         $nv_Cache->delMod($module_name);

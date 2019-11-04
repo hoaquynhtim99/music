@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC'))  {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 $page_title = Config::getFuncsSitetitle()->getVideo();
 $key_words = Config::getFuncsKeywords()->getVideo();
@@ -41,15 +42,15 @@ if (isset($array_op[1])) {
     if (preg_match("/^([a-zA-Z0-9\-]+)\-" . nv_preg_quote($codePrefix->getCat()) . "([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
         $catcode = $m[2];
         if (!isset($global_array_cat_alias[$catcode])) {
-            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos']);
+            nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-videos']);
         }
 
         $catid = $global_array_cat_alias[$catcode];
         $catalias = $global_array_cat[$catid]['cat_alias'];
         $request_catalias = $m[1];
-        $base_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode;
+        $base_url = Resources::getModFullLinkEncode() . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode;
     } else {
-        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos']);
+        nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-videos']);
     }
 }
 
@@ -59,19 +60,19 @@ if (isset($array_op[2])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode);
+        nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode);
     }
 }
 
 // Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
 if (isset($array_op[3]) or $catalias != $request_catalias) {
-    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode . ($page > 1 ? '/page-' . $page : ''));
+    nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode . ($page > 1 ? '/page-' . $page : ''));
 }
 
 foreach ($global_array_cat as $cat) {
     if (!empty($cat['status']) and !empty($cat['show_invideo']) and (empty($catid) or $cat['cat_id'] == $catid)) {
         $per_page = empty($catid) ? Config::getGirdVideosPercatNums() : Config::getGirdVideosIncatNums();
-        $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $cat['cat_id'] . ", cat_ids)");
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $cat['cat_id'] . ", cat_ids)");
 
         if (!empty($catid)) {
             $db->select("COUNT(video_id)");
@@ -113,7 +114,7 @@ foreach ($global_array_cat as $cat) {
 
 // Xử lý nếu tùy ý đặt giá trị page sai
 if ($page > 1 and empty($array)) {
-    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode);
+    nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode);
 }
 
 // Xác định ca sĩ
@@ -137,7 +138,7 @@ foreach ($array as $id1 => $row1) {
 $array_mod_title[] = array(
     'catid' => 0,
     'title' => $module_info['funcs'][$op]['func_custom_name'],
-    'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos']
+    'link' => Resources::getModFullLinkEncode() . $module_info['alias']['list-videos']
 );
 
 // Phân trang, tiêu đề trang
@@ -150,7 +151,7 @@ if (!empty($catid)) {
     $array_mod_title[] = array(
         'catid' => 0,
         'title' => $global_array_cat[$catid]['cat_name'],
-        'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode
+        'link' => Resources::getModFullLinkEncode() . $module_info['alias']['list-videos'] . '/' . $catalias . '-' . $codePrefix->getCat() . $catcode
     );
 }
 

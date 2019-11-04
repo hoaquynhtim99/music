@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 
@@ -36,7 +37,7 @@ if ($ajaction == 'delete') {
     $array_select_fields = nv_get_video_select_fields();
 
     foreach ($video_ids as $video_id) {
-        $video = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $video_id)->fetch();
+        $video = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_videos WHERE video_id=" . $video_id)->fetch();
         if (!empty($video)) {
             foreach ($array_select_fields[1] as $f) {
                 if (empty($video[$f]) and !empty($video['default_' . $f])) {
@@ -46,15 +47,15 @@ if ($ajaction == 'delete') {
             }
 
             // Xóa video
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $video_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_videos WHERE video_id=" . $video_id;
             $db->query($sql);
 
             // Xóa file video
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $video_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_videos_data WHERE video_id=" . $video_id;
             $db->query($sql);
 
             // Xóa khỏi danh sách yêu thích của thành viên
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE video_id=" . $video_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_user_favorite_videos WHERE video_id=" . $video_id;
             $db->query($sql);
 
             // Cập nhật lại thống kê thể loại
@@ -78,7 +79,7 @@ if ($ajaction == 'delete') {
 
             // Cập nhật bài hát liên quan
             if ($video['song_id']) {
-                $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET video_id=0 WHERE song_id=" . $video['song_id'];
+                $sql = "UPDATE " . Resources::getTablePrefix() . "_songs SET video_id=0 WHERE song_id=" . $video['song_id'];
                 $db->query($sql);
             }
 
@@ -107,7 +108,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     // Xác định các bài hát
     $array_select_fields = nv_get_video_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE video_id IN(" . implode(',', $video_ids) . ")";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_videos WHERE video_id IN(" . implode(',', $video_ids) . ")";
     $result = $db->query($sql);
 
     $array = [];
@@ -128,7 +129,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     foreach ($video_ids as $video_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET status=" . $status . " WHERE video_id=" . $video_id;
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_videos SET status=" . $status . " WHERE video_id=" . $video_id;
         $db->query($sql);
 
         $video = $array[$video_id];
@@ -171,7 +172,7 @@ $array_search['c'] = $nv_Request->get_int('c', 'get', 0); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
 $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
-$db->sqlreset()->from(NV_MOD_TABLE . "_videos");
+$db->sqlreset()->from(Resources::getTablePrefix() . "_videos");
 
 $where = [];
 if (!empty($array_search['q'])) {

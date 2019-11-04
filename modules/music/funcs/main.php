@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];
@@ -26,7 +27,7 @@ $array_singer_ids = $array_singers = [];
 
 // Các albums
 if (!empty(Config::getHomeAlbumsDisplay())) {
-    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND show_inhome=1 AND status=1");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where("is_official=1 AND show_inhome=1 AND status=1");
     $db->order("album_id DESC")->limit(Config::getHomeAlbumsNums())->offset(0);
 
     $array_select_fields = nv_get_album_select_fields();
@@ -58,7 +59,7 @@ if (!empty(Config::getHomeAlbumsDisplay())) {
 
 // Các ca sĩ trên trang chủ
 if (!empty(Config::getHomeSingersDisplay())) {
-    $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where("show_inhome=1 AND status=1 AND (artist_type=0 OR artist_type=2)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_artists")->where("show_inhome=1 AND status=1 AND (artist_type=0 OR artist_type=2)");
     $db->order("RAND()")->limit(Config::getHomeSingersNums())->offset(0);
 
     $array_select_fields = nv_get_artist_select_fields();
@@ -84,7 +85,7 @@ if (!empty(Config::getHomeSingersDisplay())) {
 // Các bài hát trang chủ
 $redirect = nv_redirect_encrypt($client_info['selfurl']);
 if (!empty(Config::getHomeSongsDisplay())) {
-    $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_songs")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("song_id DESC")->limit(Config::getHomeSongsNums())->offset(0);
 
     $array_select_fields = nv_get_song_select_fields();
@@ -120,7 +121,7 @@ if (!empty(Config::getHomeSongsDisplay())) {
 
 // Các video trang chủ
 if (!empty(Config::getHomeVideosDisplay())) {
-    $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("show_inhome=1 AND status=1 AND is_official=1");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where("show_inhome=1 AND status=1 AND is_official=1");
     $db->order("video_id DESC")->limit(Config::getHomeVideosNums())->offset(0);
 
     $array_select_fields = nv_get_video_select_fields();

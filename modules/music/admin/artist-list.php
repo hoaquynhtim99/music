@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 $page_title = $lang_module['artist_list'];
@@ -39,7 +40,7 @@ if ($ajaction == 'delete') {
 
     foreach ($artist_ids as $artist_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_artists WHERE artist_id=" . $artist_id;
+        $sql = "DELETE FROM " . Resources::getTablePrefix() . "_artists WHERE artist_id=" . $artist_id;
         $db->query($sql);
 
         // Cập nhật lại quốc gia
@@ -71,7 +72,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     // Xác định các nghệ sĩ
     $array_select_fields = nv_get_artist_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $artist_ids) . ")";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_artists WHERE artist_id IN(" . implode(',', $artist_ids) . ")";
     $result = $db->query($sql);
 
     $array = [];
@@ -92,7 +93,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     foreach ($artist_ids as $artist_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_artists SET status=" . $status . " WHERE artist_id=" . $artist_id;
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_artists SET status=" . $status . " WHERE artist_id=" . $artist_id;
         $db->query($sql);
 
         // Cập nhật lại quốc gia
@@ -119,7 +120,7 @@ $array_search['tp'] = $nv_Request->get_int('tp', 'get', -1); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
 $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
-$db->sqlreset()->from(NV_MOD_TABLE . "_artists");
+$db->sqlreset()->from(Resources::getTablePrefix() . "_artists");
 
 $where = [];
 if (!empty($array_search['q'])) {

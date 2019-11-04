@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 $data_singer = [];
 $request_artist_alias = '';
@@ -27,7 +28,7 @@ if (isset($array_op[1])) {
 }
 
 if (empty($data_singer)) {
-    nv_redirect_location(NV_MOD_LINK);
+    nv_redirect_location(Resources::getModLink());
 }
 
 // Các tab
@@ -69,7 +70,7 @@ $array_singers = $array_singer_ids = [];
 // Lấy các album
 if (empty($request_tab) or $request_tab == 'album') {
     $per_page = empty($request_tab) ? Config::getViewSingerMainNumAlbums() : Config::getViewSingerDetailNumAlbums();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
 
     if (!empty($request_tab)) {
         $db->select("COUNT(album_id)");
@@ -104,7 +105,7 @@ if (empty($request_tab) or $request_tab == 'album') {
 // Lấy các bài hát
 if (empty($request_tab) or $request_tab == 'song') {
     $per_page = empty($request_tab) ? Config::getViewSingerMainNumSongs() : Config::getViewSingerDetailNumSongs();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_songs")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
 
     if (!empty($request_tab)) {
         $db->select("COUNT(song_id)");
@@ -141,7 +142,7 @@ if (empty($request_tab) or $request_tab == 'song') {
 // Lấy các video
 if (empty($request_tab) or $request_tab == 'video') {
     $per_page = empty($request_tab) ? Config::getViewSingerMainNumVideos() : Config::getViewSingerDetailNumVideos();
-    $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $data_singer['artist_id'] . ", singer_ids)");
 
     if (!empty($request_tab)) {
         $db->select("COUNT(video_id)");

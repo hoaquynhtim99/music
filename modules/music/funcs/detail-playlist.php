@@ -13,9 +13,10 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 if (!defined('NV_IS_DETAIL_PLAYLIST')) {
-    nv_redirect_location(NV_MOD_LINK);
+    nv_redirect_location(Resources::getModLink());
 }
 
 $array_singer_ids = $array_singers = [];
@@ -29,7 +30,7 @@ $ms_detail_data['creat_by'] = 'N/A';
 
 // Playlist không công khai thì chỉ có một mình nghe
 if (empty($ms_detail_data['privacy']) and ((!defined('NV_IS_USER') or $user_info['userid'] != $ms_detail_data['userid'])) and !defined('NV_IS_MODADMIN')) {
-    $base_url_rewrite = nv_url_rewrite(NV_MOD_LINK_AMP, true);
+    $base_url_rewrite = nv_url_rewrite(Resources::getModLinkEncode(), true);
     $redirect = '<meta http-equiv="Refresh" content="3;URL=' . $base_url_rewrite . '" />';
     nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] . $redirect, 404);
 }
@@ -44,7 +45,7 @@ if (!empty($creat_by)) {
 // Lấy các bài hát của playlist này
 $array_songids = $array_songs = $array_songs_resources = [];
 $array_song_captions = [];
-$db->sqlreset()->select('*')->from(NV_MOD_TABLE . "_user_playlists_data")->where("playlist_id=" . $ms_detail_data['playlist_id'] . " AND status=1")->order("weight ASC");
+$db->sqlreset()->select('*')->from(Resources::getTablePrefix() . "_user_playlists_data")->where("playlist_id=" . $ms_detail_data['playlist_id'] . " AND status=1")->order("weight ASC");
 $result = $db->query($db->sql());
 while ($row = $result->fetch()) {
     $array_songids[$row['song_id']] = $row;
@@ -52,7 +53,7 @@ while ($row = $result->fetch()) {
 if (!empty($array_songids)) {
     // Lấy chi tiết bài hát
     $array_select_fields = nv_get_song_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1";
     $result = $db->query($sql);
     while ($row = $result->fetch()) {
         if (!empty($row['singer_ids'])) {
@@ -73,7 +74,7 @@ if (!empty($array_songids)) {
 
     // Lấy hết đường dẫn của các bài hát
     if (!empty($array_songs)) {
-        $sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id IN(" . implode(',', array_keys($array_songs)) . ") AND status=1";
+        $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_songs_data WHERE song_id IN(" . implode(',', array_keys($array_songs)) . ") AND status=1";
         $result = $db->query($sql);
         $stt = [];
         while ($row = $result->fetch()) {
@@ -97,7 +98,7 @@ if (!empty($array_songids)) {
     }
 
     // Lấy lời của các bài hát
-    $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_songs_caption")->where("song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1");
     $db->select("*")->order("weight ASC");
     $result = $db->query($db->sql());
 
@@ -206,7 +207,7 @@ $timeout = NV_CURRENTTIME - (5 * 60); // Đếm tăng mỗi 5 phút
 
 if (!isset($cookie_stat[$ms_detail_data['playlist_code']]) or $cookie_stat[$ms_detail_data['playlist_code']] < $timeout) {
     // Cập nhật thống kê
-    $sql = "UPDATE " . NV_MOD_TABLE . "_user_playlists SET stat_views=stat_views+1 WHERE playlist_id=" . $ms_detail_data['playlist_id'];
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_user_playlists SET stat_views=stat_views+1 WHERE playlist_id=" . $ms_detail_data['playlist_id'];
     $db->query($sql);
 
     // Thêm vào cookie

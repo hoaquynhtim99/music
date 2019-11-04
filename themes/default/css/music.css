@@ -1751,3 +1751,66 @@ ul.ms-detailab-header-info h2 {
 .ms-mymusic-tab .nav-tabs {
     border-bottom: 0;
 }
+
+/* Block BXH */
+.ms-bchart {
+    margin-bottom: 15px;
+}
+
+.ms-bchart .btitle {
+    font-size: 20px;
+    line-height: 24px;
+    margin-bottom: 15px;
+}
+
+.ms-bchart .bcat {
+    list-style: none;
+    margin: 0 0 15px 0;
+    padding: 0;
+}
+
+.ms-bchart .bcat li {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
+.ms-bchart .bcat li:after {
+    content: "/";
+    display: inline-block;
+    margin: 0 5px;
+}
+
+.ms-bchart .bcat li:last-child:after {
+    display: none;
+}
+
+.ms-bchart .bcat li .active {
+    font-weight: 700;
+}
+
+.ms-bchart .ccontent {
+    position: relative;
+}
+
+.ms-bchart .ccontent .cloader {
+    text-align: center;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: 100%;
+    display: none;
+    transform: translateY(-50%);
+}
+
+.ms-bchart .ccontent .ccontent-inner {
+    height: 300px;
+}
+
+.ms-bchart .ccontent.loading .cloader {
+    display: block;
+}
+
+.ms-bchart .ccontent.loading .ccontent-inner {
+    opacity: 0.5;
+}

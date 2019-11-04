@@ -19,6 +19,34 @@ namespace NukeViet\Music;
 class Resources implements Settings
 {
     /**
+     * Thư mục chứa site kết thúc bằng ký tự /
+     *
+     * @var string
+     */
+    private static $baseSiteUrl = '/';
+
+    /**
+     * Khóa biến $_GET ngôn ngữ
+     *
+     * @var string
+     */
+    private static $langVariable = 'language';
+
+    /**
+     * Khóa biến $_GET module
+     *
+     * @var string
+     */
+    private static $nameVariable = 'nv';
+
+    /**
+     * Khóa biến $_GET func của module
+     *
+     * @var string
+     */
+    private static $opVariable = 'op';
+
+    /**
      * Ngôn ngữ giao diện đang xử lý.
      *
      * @var string
@@ -40,18 +68,32 @@ class Resources implements Settings
     private static $db = null;
 
     /**
-     * Đầu tố bảng dữ liệu của module.
-     *
-     * @var string
-     */
-    private static $tablePrefix = '';
-
-    /**
      * Đầu tố bảng dữ liệu của csdl site.
      *
      * @var string
      */
     private static $dbPrefix = '';
+
+    /**
+     * Tên module
+     *
+     * @var string
+     */
+    private static $moduleName = 'music';
+
+    /**
+     * Tên CSDL module
+     *
+     * @var string
+     */
+    private static $moduleData = 'music';
+
+    /**
+     * Thông tin module hệ thống
+     *
+     * @var string
+     */
+    private static $siteMods = [];
 
     /**
      * Resources::setLangInterface()
@@ -93,25 +135,89 @@ class Resources implements Settings
     }
 
     /**
-     * Resources::setTablePrefix()
-     *
-     * @param mixed $table
-     * @return
-     */
-    public static function setTablePrefix($table)
-    {
-        self::$tablePrefix = $table;
-
-        return true;
-    }
-
-    /**
      * @param string $prefix
      * @return boolean
      */
     public static function setDbPrefix($prefix)
     {
         self::$dbPrefix = $prefix;
+
+        return true;
+    }
+
+    /**
+     * @param string $string
+     * @return boolean
+     */
+    public static function setBaseSiteUrl(string $string)
+    {
+        self::$baseSiteUrl = $string;
+
+        return true;
+    }
+
+    /**
+     * @param string $string
+     * @return boolean
+     */
+    public static function setLangVariable(string $string)
+    {
+        self::$langVariable = $string;
+
+        return true;
+    }
+
+    /**
+     * @param string $string
+     * @return boolean
+     */
+    public static function setNameVariable(string $string)
+    {
+        self::$nameVariable = $string;
+
+        return true;
+    }
+
+    /**
+     * @param string $string
+     * @return boolean
+     */
+    public static function setOpVariable(string $string)
+    {
+        self::$opVariable = $string;
+
+        return true;
+    }
+
+    /**
+     * @param string $string
+     * @return boolean
+     */
+    public static function setModuleName(string $string)
+    {
+        self::$moduleName = $string;
+
+        return true;
+    }
+
+    /**
+     * @param string $string
+     * @return boolean
+     */
+    public static function setModuleData(string $string)
+    {
+        self::$moduleData = $string;
+
+        return true;
+    }
+
+    /**
+     * @param array $array
+     * @return boolean
+     */
+    public static function setSiteMods(array $array)
+    {
+        self::$siteMods = $array;
 
         return true;
     }
@@ -139,7 +245,7 @@ class Resources implements Settings
     /**
      * Resources::getDb()
      *
-     * @return
+     * @return object
      */
     public static function getDb()
     {
@@ -149,11 +255,11 @@ class Resources implements Settings
     /**
      * Resources::getTablePrefix()
      *
-     * @return
+     * @return string
      */
     public static function getTablePrefix()
     {
-        return self::$tablePrefix;
+        return self::$dbPrefix . '_' . self::$moduleData;
     }
 
     /**
@@ -162,5 +268,49 @@ class Resources implements Settings
     public static function getDbPrefix()
     {
         return self::$dbPrefix;
+    }
+
+    /**
+     * Link trả về có dấu = cuối cùng
+     *
+     * @return string
+     */
+    public static function getModFullLinkEncode()
+    {
+        return self::$baseSiteUrl . 'index.php?' . self::$langVariable . '=' . self::$langData . '&amp;' . self::$nameVariable . '=' . self::$moduleName . '&amp;' . self::$opVariable . '=';
+    }
+
+    /**
+     * @return string
+     */
+    public static function getModLinkEncode()
+    {
+        return self::$baseSiteUrl . 'index.php?' . self::$langVariable . '=' . self::$langData . '&amp;' . self::$nameVariable . '=' . self::$moduleName;
+    }
+
+    /**
+     * Link trả về có dấu = cuối cùng
+     *
+     * @return string
+     */
+    public static function getModFullLink()
+    {
+        return self::$baseSiteUrl . 'index.php?' . self::$langVariable . '=' . self::$langData . '&' . self::$nameVariable . '=' . self::$moduleName . '&' . self::$opVariable . '=';
+    }
+
+    /**
+     * @return string
+     */
+    public static function getModLink()
+    {
+        return self::$baseSiteUrl . 'index.php?' . self::$langVariable . '=' . self::$langData . '&' . self::$nameVariable . '=' . self::$moduleName;
+    }
+
+    /**
+     * @return array
+     */
+    public static function getModInfo()
+    {
+        return self::$siteMods[self::$moduleName];
     }
 }

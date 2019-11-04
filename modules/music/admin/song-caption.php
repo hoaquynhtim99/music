@@ -12,7 +12,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Shared\Songs;
+use NukeViet\Music\Resources;
 
 $set_active_op = 'song-list';
 $resource_path = msGetCurrentUploadFolder('lyric');
@@ -24,7 +24,7 @@ if (empty($song_id)) {
 
 // Lấy thông tin bài hát
 $array_select_fields = nv_get_song_select_fields(true);
-$sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id;
+$sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE song_id=" . $song_id;
 $result = $db->query($sql);
 $row = $result->fetch();
 if (empty($row)) {
@@ -39,7 +39,7 @@ foreach ($array_select_fields[1] as $f) {
 
 // Lấy lời bài hát
 $exists_db = false;
-$sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_caption WHERE song_id=" . $song_id . " AND caption_lang=" . $db->quote(NV_LANG_DATA);
+$sql = "SELECT * FROM " . Resources::getTablePrefix() . "_songs_caption WHERE song_id=" . $song_id . " AND caption_lang=" . $db->quote(NV_LANG_DATA);
 $result = $db->query($sql);
 if ($result->rowCount()) {
     $array = $result->fetch();
@@ -78,7 +78,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     // Lưu dữ liệu
     if ($exists_db) {
         // Cập nhật lại
-        $sql = "UPDATE " . NV_MOD_TABLE . "_songs_caption SET
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_songs_caption SET
             caption_file=:caption_file,
             caption_pdf=:caption_pdf,
             caption_data=:caption_data
@@ -98,7 +98,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
         }
     } else {
         // Thêm mới
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_songs_caption (
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_songs_caption (
             song_id, caption_lang, caption_file, caption_pdf, caption_data, is_default, weight, status
         ) VALUES (
             " . $song_id . ", " . $db->quote(NV_LANG_DATA) . ", :caption_file, :caption_pdf, :caption_data, 1, 1, 1

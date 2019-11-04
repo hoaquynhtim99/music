@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 use NukeViet\Music\Shared\Songs;
@@ -26,7 +27,7 @@ if ($song_id) {
     $page_title = $lang_module['song_edit'];
 
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id;
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE song_id=" . $song_id;
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -104,7 +105,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $array['author_ids'])));
     $array_artists = [];
     if (!empty($array_artist_ids)) {
-        $sql = "SELECT artist_id FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $array_artist_ids) . ")";
+        $sql = "SELECT artist_id FROM " . Resources::getTablePrefix() . "_artists WHERE artist_id IN(" . implode(',', $array_artist_ids) . ")";
         $result = $db->query($sql);
         while ($row = $result->fetch()) {
             $array_artists[$row['artist_id']] = $row['artist_id'];
@@ -126,7 +127,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
 
     // Video liên quan hợp lệ
-    if ($array['video_id'] and !$db->query("SELECT video_id FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $array['video_id'])->fetchColumn()) {
+    if ($array['video_id'] and !$db->query("SELECT video_id FROM " . Resources::getTablePrefix() . "_videos WHERE video_id=" . $array['video_id'])->fetchColumn()) {
         $array['video_id'] = 0;
     }
 
@@ -170,7 +171,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     // Lưu dữ liệu
     if ($song_id) {
         // Sửa
-        $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_songs SET
             cat_ids=" . $db->quote(implode(',', $array['cat_ids'])) . ",
             singer_ids=" . $db->quote(implode(',', $array['singer_ids'])) . ",
             author_ids=" . $db->quote(implode(',', $array['author_ids'])) . ",
@@ -220,7 +221,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
         $song_code = Songs::creatUniqueCode();
 
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_songs (
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_songs (
             song_code, cat_ids, singer_ids, author_ids, video_id, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, status,
             " . NV_LANG_DATA . "_song_name, " . NV_LANG_DATA . "_song_alias, " . NV_LANG_DATA . "_song_searchkey, " . NV_LANG_DATA . "_song_introtext,
             " . NV_LANG_DATA . "_song_keywords" . $array_fname . "
@@ -256,9 +257,9 @@ if ($nv_Request->isset_request('submit', 'post')) {
     }
 
     // Xóa các file bài hát và thêm lại
-    $db->query("DELETE FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id=" . $song_id);
+    $db->query("DELETE FROM " . Resources::getTablePrefix() . "_songs_data WHERE song_id=" . $song_id);
     foreach ($array['resource_path'] as $quality_id => $resource_path) {
-        $db->query("INSERT INTO " . NV_MOD_TABLE . "_songs_data (
+        $db->query("INSERT INTO " . Resources::getTablePrefix() . "_songs_data (
             song_id, quality_id, resource_server_id, resource_path, resource_duration, status
         ) VALUES (
             " . $song_id . ", " . $quality_id . ", " . $resource_path['resource_server_id'] . ", " . $db->quote($resource_path['resource_path']) . ", 0, 1
@@ -301,12 +302,12 @@ if ($nv_Request->isset_request('submit', 'post')) {
     if ($array_old['video_id'] != $array['video_id']) {
         // Set video liên quan có bài hát liên quan là bài hát này
         if ($array['video_id']) {
-            $db->query("UPDATE " . NV_MOD_TABLE . "_videos SET song_id=" . $song_id . " WHERE video_id=" . $array['video_id']);
+            $db->query("UPDATE " . Resources::getTablePrefix() . "_videos SET song_id=" . $song_id . " WHERE video_id=" . $array['video_id']);
         }
 
         // Dỡ bỏ bài hát liên quan của video trước đó
         if ($array_old['video_id']) {
-            $db->query("UPDATE " . NV_MOD_TABLE . "_videos SET song_id=0 WHERE video_id=" . $array_old['video_id']);
+            $db->query("UPDATE " . Resources::getTablePrefix() . "_videos SET song_id=0 WHERE video_id=" . $array_old['video_id']);
         }
     }
 
@@ -379,7 +380,7 @@ $song_artist_ids = [];
 $data_video = [];
 if (!empty($array['video_id'])) {
     $array_select_fields = nv_get_video_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE video_id=" . $array['video_id'];
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_videos WHERE video_id=" . $array['video_id'];
     $data_video = $db->query($sql)->fetch();
 
     if (!empty($data_video)) {
@@ -443,7 +444,7 @@ foreach ($global_array_cat as $cat) {
 // Chất lượng bài hát, các file bài hát ứng theo chất lượng
 $resource_paths = [];
 if ($song_id) {
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id=" . $song_id;
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_songs_data WHERE song_id=" . $song_id;
     $result = $db->query($sql);
     while ($row = $result->fetch()) {
         if ($row['resource_server_id'] == 0) {

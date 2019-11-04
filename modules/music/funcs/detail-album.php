@@ -13,10 +13,11 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Shared\Charts;
 
 if (!defined('NV_IS_DETAIL_ALBUM')) {
-    nv_redirect_location(NV_MOD_LINK);
+    nv_redirect_location(Resources::getModLink());
 }
 
 $array_singer_ids = $array_singers = [];
@@ -49,12 +50,12 @@ if (empty($ms_detail_data['album_description'])) {
 $array_mod_title[] = [
     'catid' => 0,
     'title' => $module_info['funcs']['list-albums']['func_custom_name'],
-    'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums']
+    'link' => Resources::getModFullLinkEncode() . $module_info['alias']['list-albums']
 ];
 
 if (!empty($ms_detail_data['singer_id'])) {
     // Các album liên quan
-    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_album_select_fields();
     $db->order("album_id DESC")->limit(Config::getDetailSongAlbumsNums());
@@ -83,7 +84,7 @@ if (!empty($ms_detail_data['singer_id'])) {
 
 if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_data['cat_id']])) {
     $ms_detail_data['cat_name'] = $global_array_cat[$ms_detail_data['cat_id']]['cat_name'];
-    $ms_detail_data['cat_albums_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
+    $ms_detail_data['cat_albums_link'] = Resources::getModFullLinkEncode() . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
 
     // Breadcrumb cho chuyên mục của danh sách album
     $array_mod_title[] = [
@@ -93,7 +94,7 @@ if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_dat
     ];
 
     // Album cùng chủ đề
-    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['cat_id'] . ", cat_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['cat_id'] . ", cat_ids)");
 
     $array_select_fields = nv_get_album_select_fields();
     $db->order("album_id DESC")->limit(Config::getDetailSongAlbumsNums());
@@ -123,7 +124,7 @@ if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_dat
 // Lấy các bài hát của album này
 $array_songids = $array_songs = $array_songs_resources = [];
 $array_song_captions = [];
-$db->sqlreset()->select('*')->from(NV_MOD_TABLE . "_albums_data")->where("album_id=" . $ms_detail_data['album_id'] . " AND status=1")->order("weight ASC");
+$db->sqlreset()->select('*')->from(Resources::getTablePrefix() . "_albums_data")->where("album_id=" . $ms_detail_data['album_id'] . " AND status=1")->order("weight ASC");
 $result = $db->query($db->sql());
 while ($row = $result->fetch()) {
     $array_songids[$row['song_id']] = $row;
@@ -131,7 +132,7 @@ while ($row = $result->fetch()) {
 if (!empty($array_songids)) {
     // Lấy chi tiết bài hát
     $array_select_fields = nv_get_song_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1";
     $result = $db->query($sql);
     while ($row = $result->fetch()) {
         if (!empty($row['singer_ids'])) {
@@ -152,7 +153,7 @@ if (!empty($array_songids)) {
 
     // Lấy hết đường dẫn của các bài hát
     if (!empty($array_songs)) {
-        $sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id IN(" . implode(',', array_keys($array_songs)) . ") AND status=1";
+        $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_songs_data WHERE song_id IN(" . implode(',', array_keys($array_songs)) . ") AND status=1";
         $result = $db->query($sql);
         $stt = [];
         while ($row = $result->fetch()) {
@@ -176,7 +177,7 @@ if (!empty($array_songids)) {
     }
 
     // Lấy lời của các bài hát
-    $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_songs_caption")->where("song_id IN(" . implode(',', array_keys($array_songids)) . ") AND status=1");
     $db->select("*")->order("weight ASC");
     $result = $db->query($db->sql());
 
@@ -234,7 +235,7 @@ if (isset($array_singers[$ms_detail_data['singer_id']])) {
 foreach ($ms_detail_data['cat_ids'] as $cid) {
     if (isset($global_array_cat[$cid])) {
         $ms_detail_data['cats'][$cid] = $global_array_cat[$cid];
-        $ms_detail_data['cats'][$cid]['cat_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$cid]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$cid]['cat_code'];
+        $ms_detail_data['cats'][$cid]['cat_link'] = Resources::getModFullLinkEncode() . $module_info['alias']['list-albums'] . '/' . $global_array_cat[$cid]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$cid]['cat_code'];
     }
 }
 
@@ -335,7 +336,7 @@ $timeout = NV_CURRENTTIME - (5 * 60); // Đếm tăng mỗi 5 phút
 
 if (!isset($cookie_stat[$ms_detail_data['album_code']]) or $cookie_stat[$ms_detail_data['album_code']] < $timeout) {
     // Cập nhật thống kê
-    $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET stat_views=stat_views+1 WHERE album_id=" . $ms_detail_data['album_id'];
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_albums SET stat_views=stat_views+1 WHERE album_id=" . $ms_detail_data['album_id'];
     $db->query($sql);
 
     // Cập nhật thống kê tổng quan
@@ -357,11 +358,11 @@ if (!isset($cookie_stat[$ms_detail_data['album_code']]) or $cookie_stat[$ms_deta
 
             foreach ($is_in_chart as $id_cat_chart) {
                 try {
-                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET view_hits=view_hits+1, summary_scores=summary_scores+" . Config::getChartViewRate() . "
+                    $sql = "UPDATE " . Resources::getTablePrefix() . "_chart_tmps SET view_hits=view_hits+1, summary_scores=summary_scores+" . Config::getChartViewRate() . "
                     WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='album' AND object_id=" . $ms_detail_data['album_id'];
                     if (!$db->exec($sql)) {
                         // Cập nhật không có thì thêm mới
-                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_chart_tmps (
                             chart_week, chart_year, chart_time, cat_id, object_name, object_id, view_hits, summary_scores
                         ) VALUES (
                             " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
@@ -396,7 +397,7 @@ $ms_detail_data['require_login'] = true;
 $ms_detail_data['url_login'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=users&amp;' . NV_OP_VARIABLE . '=login&nv_redirect=' . nv_redirect_encrypt($client_info['selfurl']);
 if (defined('NV_IS_USER')) {
     $ms_detail_data['require_login'] = false;
-    if ($db->query("SELECT time_add FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $ms_detail_data['album_id'] . " AND is_removed=0")->fetchColumn()) {
+    if ($db->query("SELECT time_add FROM " . Resources::getTablePrefix() . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $ms_detail_data['album_id'] . " AND is_removed=0")->fetchColumn()) {
         $ms_detail_data['favorited'] = true;
     }
 }

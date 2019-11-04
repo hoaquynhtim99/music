@@ -9,6 +9,7 @@
  */
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 
 if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
@@ -88,7 +89,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
     // Ảnh chia sẻ facebook
     $array['fb_share_image'] = $nv_Request->get_title('fb_share_image', 'post', '');
-    $default_fb_share_image = $db->query("SELECT config_value_default FROM " . NV_MOD_TABLE . "_config WHERE config_name='fb_share_image'")->fetchColumn();
+    $default_fb_share_image = $db->query("SELECT config_value_default FROM " . Resources::getTablePrefix() . "_config WHERE config_name='fb_share_image'")->fetchColumn();
 
     if (!empty($array['fb_share_image']) and $array['fb_share_image'] != $default_fb_share_image and !nv_is_file($array['fb_share_image'], NV_UPLOADS_DIR . '/' . $module_upload)) {
         AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error'])->respon();
@@ -129,7 +130,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $array[$_key] = $_val;
     }
 
-    $sth = $db->prepare("UPDATE " . NV_MOD_TABLE . "_config SET config_value_" . NV_LANG_DATA . "=:config_value WHERE config_name=:config_name");
+    $sth = $db->prepare("UPDATE " . Resources::getTablePrefix() . "_config SET config_value_" . NV_LANG_DATA . "=:config_value WHERE config_name=:config_name");
     foreach ($array as $config_name => $config_value) {
         $sth->bindParam(':config_value', $config_value, PDO::PARAM_STR);
         $sth->bindParam(':config_name', $config_name, PDO::PARAM_STR);
@@ -142,7 +143,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     AjaxRespon::reset()->setSuccess()->setMessage($lang_module['successfully_saved'])->respon();
 }
 
-$sql = "SELECT * FROM " . NV_MOD_TABLE . "_config";
+$sql = "SELECT * FROM " . Resources::getTablePrefix() . "_config";
 $result = $db->query($sql);
 
 while ($row = $result->fetch()) {

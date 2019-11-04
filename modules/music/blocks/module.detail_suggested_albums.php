@@ -13,6 +13,7 @@ if (!defined('NV_MAINFILE')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 if (!nv_function_exists('nv_block_detail_suggested_albums')) {
     /**
@@ -136,7 +137,7 @@ if (!nv_function_exists('nv_block_detail_suggested_albums')) {
                 $where[] = "cat_id=" . current($ms_detail_data['cat_ids']);
             }
 
-            $db->sqlreset()->select('album_id')->from(NV_MOD_TABLE . "_albums_random");
+            $db->sqlreset()->select('album_id')->from(Resources::getTablePrefix() . "_albums_random");
             $db->where(implode(' AND ', $where));
             $db->order('RAND()');
             $db->limit($block_config['numrows']);
@@ -146,7 +147,7 @@ if (!nv_function_exists('nv_block_detail_suggested_albums')) {
                 return '';
             }
 
-            $db->sqlreset()->from(NV_MOD_TABLE . "_albums");
+            $db->sqlreset()->from(Resources::getTablePrefix() . "_albums");
             $db->where("album_id IN(" . implode(',', $array_albumids) . ")");
         } else {
             // Random các album trên toàn bộ dữ liệu, hiệu suất thấp
@@ -167,7 +168,7 @@ if (!nv_function_exists('nv_block_detail_suggested_albums')) {
                 $where[] = "FIND_IN_SET(" . current($ms_detail_data['singer_ids']) . ", singer_ids)";
             }
 
-            $db->sqlreset()->from(NV_MOD_TABLE . "_albums");
+            $db->sqlreset()->from(Resources::getTablePrefix() . "_albums");
             $db->where(implode(' AND ', $where));
             $db->order('RAND()');
             $db->limit($block_config['numrows']);

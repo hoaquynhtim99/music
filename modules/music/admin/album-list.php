@@ -14,6 +14,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 $page_title = $lang_module['album_list'];
@@ -36,7 +37,7 @@ if ($ajaction == 'delete') {
     $array_select_fields = nv_get_album_select_fields();
 
     foreach ($album_ids as $album_id) {
-        $album = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE album_id=" . $album_id)->fetch();
+        $album = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_albums WHERE album_id=" . $album_id)->fetch();
         if (!empty($album)) {
             foreach ($array_select_fields[1] as $f) {
                 if (empty($album[$f]) and !empty($album['default_' . $f])) {
@@ -46,15 +47,15 @@ if ($ajaction == 'delete') {
             }
 
             // Xóa album
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums WHERE album_id=" . $album_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_albums WHERE album_id=" . $album_id;
             $db->query($sql);
 
             // Xóa bài hát trong album
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_albums_data WHERE album_id=" . $album_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_albums_data WHERE album_id=" . $album_id;
             $db->query($sql);
 
             // Xóa khỏi danh sách yêu thích của thành viên
-            $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE album_id=" . $album_id;
+            $sql = "DELETE FROM " . Resources::getTablePrefix() . "_user_favorite_albums WHERE album_id=" . $album_id;
             $db->query($sql);
 
             // Cập nhật lại thống kê thể loại
@@ -97,7 +98,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     // Xác định các album
     $array_select_fields = nv_get_album_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE album_id IN(" . implode(',', $album_ids) . ")";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_albums WHERE album_id IN(" . implode(',', $album_ids) . ")";
     $result = $db->query($sql);
 
     $array = [];
@@ -118,7 +119,7 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 
     foreach ($album_ids as $album_id) {
         // Cập nhật trạng thái
-        $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET status=" . $status . " WHERE album_id=" . $album_id;
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_albums SET status=" . $status . " WHERE album_id=" . $album_id;
         $db->query($sql);
 
         $album = $array[$album_id];
@@ -157,7 +158,7 @@ $array_search['c'] = $nv_Request->get_int('c', 'get', 0); // Thể loại
 $array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
 $array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
 
-$db->sqlreset()->from(NV_MOD_TABLE . "_albums");
+$db->sqlreset()->from(Resources::getTablePrefix() . "_albums");
 
 $where = [];
 if (!empty($array_search['q'])) {

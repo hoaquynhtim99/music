@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Shared\Charts;
 use NukeViet\Music\Shared\UserPlaylists;
 
@@ -35,7 +36,7 @@ if ($nv_Request->isset_request('getSongLyric', 'post')) {
         nv_jsonOutput($respon);
     }
 
-    $sql = "SELECT song_id FROM " . NV_MOD_TABLE . "_songs WHERE song_code=:song_code AND status=1";
+    $sql = "SELECT song_id FROM " . Resources::getTablePrefix() . "_songs WHERE song_code=:song_code AND status=1";
     $sth = $db->prepare($sql);
     $sth->bindParam(':song_code', $song_code, PDO::PARAM_STR);
     $sth->execute();
@@ -47,7 +48,7 @@ if ($nv_Request->isset_request('getSongLyric', 'post')) {
             nv_jsonOutput($respon);
         }
 
-        $db->sqlreset()->from(NV_MOD_TABLE . "_songs_caption")->where("song_id=" . $song_id . " AND status=1");
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_songs_caption")->where("song_id=" . $song_id . " AND status=1");
         $db->select("caption_pdf, caption_data")->order("weight ASC")->limit(1);
         $row = $db->query($db->sql())->fetch();
 
@@ -85,7 +86,7 @@ if ($nv_Request->isset_request('updateSongShares', 'post')) {
 
     // Xác định bài hát
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -108,7 +109,7 @@ if ($nv_Request->isset_request('updateSongShares', 'post')) {
 
     if (!isset($cookie_stat[$row['song_code']]) or $cookie_stat[$row['song_code']] < $timeout) {
         // Cập nhật số lượt chia sẻ
-        $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_shares=stat_shares+1 WHERE song_id=" . $row['song_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_songs SET stat_shares=stat_shares+1 WHERE song_id=" . $row['song_id'];
         $db->query($sql);
 
         // Cập nhật bảng xếp hạng
@@ -127,11 +128,11 @@ if ($nv_Request->isset_request('updateSongShares', 'post')) {
 
                 foreach ($is_in_chart as $id_cat_chart) {
                     try {
-                        $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET share_hits=share_hits+1, summary_scores=summary_scores+" . Config::getChartShareRate() . "
+                        $sql = "UPDATE " . Resources::getTablePrefix() . "_chart_tmps SET share_hits=share_hits+1, summary_scores=summary_scores+" . Config::getChartShareRate() . "
                         WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='song' AND object_id=" . $row['song_id'];
                         if (!$db->exec($sql)) {
                             // Cập nhật không có thì thêm mới
-                            $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_chart_tmps (
                                 chart_week, chart_year, chart_time, cat_id, object_name, object_id, share_hits, summary_scores
                             ) VALUES (
                                 " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
@@ -173,7 +174,7 @@ if ($nv_Request->isset_request('getDownloadSongHtml', 'post,get') or $nv_Request
 
     // Xác định bài hát
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -188,10 +189,10 @@ if ($nv_Request->isset_request('getDownloadSongHtml', 'post,get') or $nv_Request
 
     // Lấy các file của bài hát
     $array_resource = [];
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_songs_data WHERE song_id=" . $row['song_id'];
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_songs_data WHERE song_id=" . $row['song_id'];
     $result = $db->query($sql);
     while ($_row = $result->fetch()) {
-        $_row['link_download'] = NV_MOD_FULLLINK_AMP . $op . '&amp;downloadSong=1&amp;song_code=' . $row['song_code'] . '&amp;tokend=' . $tokend . '&amp;quality=' . $_row['quality_id'] . '&amp;download=1';
+        $_row['link_download'] = Resources::getModFullLinkEncode() . $op . '&amp;downloadSong=1&amp;song_code=' . $row['song_code'] . '&amp;tokend=' . $tokend . '&amp;quality=' . $_row['quality_id'] . '&amp;download=1';
         $array_resource[$_row['quality_id']] = $_row;
     }
 
@@ -209,7 +210,7 @@ if ($nv_Request->isset_request('getDownloadSongHtml', 'post,get') or $nv_Request
 
             if (!isset($cookie_stat[$row['song_code']]) or $cookie_stat[$row['song_code']] < $timeout) {
                 // Cập nhật thống kê bài hát
-                $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_downloads=stat_downloads+1 WHERE song_id=" . $row['song_id'];
+                $sql = "UPDATE " . Resources::getTablePrefix() . "_songs SET stat_downloads=stat_downloads+1 WHERE song_id=" . $row['song_id'];
                 $db->query($sql);
 
                 // Thêm vào cookie
@@ -279,7 +280,7 @@ if ($nv_Request->isset_request('getDownloadSongHtml', 'post,get') or $nv_Request
             die();
         }
 
-        nv_redirect_location(NV_MOD_LINK);
+        nv_redirect_location(Resources::getModLink());
     }
 
     $contents = nv_theme_popover_download_song($row, $array_resource);
@@ -299,7 +300,7 @@ if ($nv_Request->isset_request('getDownloadVideoHtml', 'post,get') or $nv_Reques
 
     // Xác định video
     $array_select_fields = nv_get_video_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE status=1 AND video_code=" . $db->quote($video_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_videos WHERE status=1 AND video_code=" . $db->quote($video_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -314,10 +315,10 @@ if ($nv_Request->isset_request('getDownloadVideoHtml', 'post,get') or $nv_Reques
 
     // Lấy các file của video
     $array_resource = [];
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $row['video_id'];
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_videos_data WHERE video_id=" . $row['video_id'];
     $result = $db->query($sql);
     while ($_row = $result->fetch()) {
-        $_row['link_download'] = NV_MOD_FULLLINK_AMP . $op . '&amp;downloadVideo=1&amp;video_code=' . $row['video_code'] . '&amp;tokend=' . $tokend . '&amp;quality=' . $_row['quality_id'] . '&amp;download=1';
+        $_row['link_download'] = Resources::getModFullLinkEncode() . $op . '&amp;downloadVideo=1&amp;video_code=' . $row['video_code'] . '&amp;tokend=' . $tokend . '&amp;quality=' . $_row['quality_id'] . '&amp;download=1';
         $array_resource[$_row['quality_id']] = $_row;
     }
 
@@ -335,7 +336,7 @@ if ($nv_Request->isset_request('getDownloadVideoHtml', 'post,get') or $nv_Reques
 
             if (!isset($cookie_stat[$row['video_code']]) or $cookie_stat[$row['video_code']] < $timeout) {
                 // Cập nhật thống kê video
-                $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_downloads=stat_downloads+1 WHERE video_id=" . $row['video_id'];
+                $sql = "UPDATE " . Resources::getTablePrefix() . "_videos SET stat_downloads=stat_downloads+1 WHERE video_id=" . $row['video_id'];
                 $db->query($sql);
 
                 // Thêm vào cookie
@@ -405,7 +406,7 @@ if ($nv_Request->isset_request('getDownloadVideoHtml', 'post,get') or $nv_Reques
             die();
         }
 
-        nv_redirect_location(NV_MOD_LINK);
+        nv_redirect_location(Resources::getModLink());
     }
 
     $contents = nv_theme_popover_download_video($row, $array_resource);
@@ -438,7 +439,7 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
 
     // Xác định album
     $array_select_fields = nv_get_album_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE status=1 AND album_code=" . $db->quote($album_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_albums WHERE status=1 AND album_code=" . $db->quote($album_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -455,10 +456,10 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
 
     $respon['status'] = 'SUCCESS';
 
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_user_favorite_albums WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
     $array_favorite = $db->query($sql)->fetch();
     if (empty($array_favorite)) {
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_albums (userid, album_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['album_id'] . "," . NV_CURRENTTIME . ")";
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_user_favorite_albums (userid, album_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['album_id'] . "," . NV_CURRENTTIME . ")";
         $db->query($sql);
         $respon['favorited'] = true;
 
@@ -482,11 +483,11 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
 
                 foreach ($is_in_chart as $id_cat_chart) {
                     try {
-                        $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
+                        $sql = "UPDATE " . Resources::getTablePrefix() . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
                         WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='album' AND object_id=" . $row['album_id'];
                         if (!$db->exec($sql)) {
                             // Cập nhật không có thì thêm mới
-                            $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_chart_tmps (
                                 chart_week, chart_year, chart_time, cat_id, object_name, object_id, like_hits, summary_scores
                             ) VALUES (
                                 " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
@@ -501,11 +502,11 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
             }
         }
     } elseif (empty($array_favorite['is_removed'])) {
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_albums SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_favorite_albums SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
         $db->query($sql);
         $respon['favorited'] = false;
     } else {
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_albums SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_favorite_albums SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND album_id=" . $row['album_id'];
         $db->query($sql);
         $respon['favorited'] = true;
     }
@@ -513,9 +514,9 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
     // Cập nhật số lượt LIKE của album
     try {
         if ($respon['favorited']) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET stat_likes=stat_likes+1 WHERE album_id=" . $row['album_id'];
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_albums SET stat_likes=stat_likes+1 WHERE album_id=" . $row['album_id'];
         } else {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET stat_likes=stat_likes-1 WHERE album_id=" . $row['album_id'];
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_albums SET stat_likes=stat_likes-1 WHERE album_id=" . $row['album_id'];
         }
         $db->query($sql);
     } catch (PDOException $e) {
@@ -548,7 +549,7 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
 
     // Xác định video
     $array_select_fields = nv_get_video_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_videos WHERE status=1 AND video_code=" . $db->quote($video_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_videos WHERE status=1 AND video_code=" . $db->quote($video_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -565,10 +566,10 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
 
     $respon['status'] = 'SUCCESS';
 
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
     $array_favorite = $db->query($sql)->fetch();
     if (empty($array_favorite)) {
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_videos (userid, video_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['video_id'] . "," . NV_CURRENTTIME . ")";
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_user_favorite_videos (userid, video_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['video_id'] . "," . NV_CURRENTTIME . ")";
         $db->query($sql);
         $respon['favorited'] = true;
 
@@ -592,11 +593,11 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
 
                 foreach ($is_in_chart as $id_cat_chart) {
                     try {
-                        $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
+                        $sql = "UPDATE " . Resources::getTablePrefix() . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
                         WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='video' AND object_id=" . $row['video_id'];
                         if (!$db->exec($sql)) {
                             // Cập nhật không có thì thêm mới
-                            $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_chart_tmps (
                                 chart_week, chart_year, chart_time, cat_id, object_name, object_id, like_hits, summary_scores
                             ) VALUES (
                                 " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
@@ -611,11 +612,11 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
             }
         }
     } elseif (empty($array_favorite['is_removed'])) {
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_videos SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_favorite_videos SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
         $db->query($sql);
         $respon['favorited'] = false;
     } else {
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_videos SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_favorite_videos SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND video_id=" . $row['video_id'];
         $db->query($sql);
         $respon['favorited'] = true;
     }
@@ -623,9 +624,9 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
     // Cập nhật số lượt LIKE của video
     try {
         if ($respon['favorited']) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_likes=stat_likes+1 WHERE video_id=" . $row['video_id'];
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_videos SET stat_likes=stat_likes+1 WHERE video_id=" . $row['video_id'];
         } else {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_likes=stat_likes-1 WHERE video_id=" . $row['video_id'];
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_videos SET stat_likes=stat_likes-1 WHERE video_id=" . $row['video_id'];
         }
         $db->query($sql);
     } catch (PDOException $e) {
@@ -658,7 +659,7 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
 
     // Xác định bài hát
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -675,10 +676,10 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
 
     $respon['status'] = 'SUCCESS';
 
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_user_favorite_songs WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_user_favorite_songs WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
     $array_favorite = $db->query($sql)->fetch();
     if (empty($array_favorite)) {
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_favorite_songs (userid, song_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['song_id'] . "," . NV_CURRENTTIME . ")";
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_user_favorite_songs (userid, song_id, time_add) VALUES (" . $user_info['userid'] . ", " . $row['song_id'] . "," . NV_CURRENTTIME . ")";
         $db->query($sql);
         $respon['favorited'] = true;
 
@@ -702,11 +703,11 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
 
                 foreach ($is_in_chart as $id_cat_chart) {
                     try {
-                        $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
+                        $sql = "UPDATE " . Resources::getTablePrefix() . "_chart_tmps SET like_hits=like_hits+1, summary_scores=summary_scores+" . Config::getChartLikeRate() . "
                         WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='song' AND object_id=" . $row['song_id'];
                         if (!$db->exec($sql)) {
                             // Cập nhật không có thì thêm mới
-                            $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_chart_tmps (
                                 chart_week, chart_year, chart_time, cat_id, object_name, object_id, like_hits, summary_scores
                             ) VALUES (
                                 " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
@@ -721,11 +722,11 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
             }
         }
     } elseif (empty($array_favorite['is_removed'])) {
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_songs SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_favorite_songs SET is_removed=1, time_removed=" . NV_CURRENTTIME . " WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
         $db->query($sql);
         $respon['favorited'] = false;
     } else {
-        $sql = "UPDATE " . NV_MOD_TABLE . "_user_favorite_songs SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_user_favorite_songs SET is_removed=0, time_removed=0 WHERE userid=" . $user_info['userid'] . " AND song_id=" . $row['song_id'];
         $db->query($sql);
         $respon['favorited'] = true;
     }
@@ -733,9 +734,9 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
     // Cập nhật số lượt LIKE của bài hát
     try {
         if ($respon['favorited']) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_likes=stat_likes+1 WHERE song_id=" . $row['song_id'];
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_songs SET stat_likes=stat_likes+1 WHERE song_id=" . $row['song_id'];
         } else {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_songs SET stat_likes=stat_likes-1 WHERE song_id=" . $row['song_id'];
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_songs SET stat_likes=stat_likes-1 WHERE song_id=" . $row['song_id'];
         }
         $db->query($sql);
     } catch (PDOException $e) {
@@ -755,7 +756,7 @@ if ($nv_Request->isset_request('getAddSongToPLHtml', 'post')) {
 
     // Xác định bài hát
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND song_code=" . $db->quote($song_code);
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -771,7 +772,7 @@ if ($nv_Request->isset_request('getAddSongToPLHtml', 'post')) {
 
     $redirect = nv_get_redirect('post');
     if (empty($redirect)) {
-        $redirect = nv_redirect_encrypt(nv_url_rewrite(NV_MOD_LINK, true));
+        $redirect = nv_redirect_encrypt(nv_url_rewrite(Resources::getModLink(), true));
     }
 
     // Lấy danh sách các playlist của thành viên nếu đã đăng nhập
@@ -779,7 +780,7 @@ if ($nv_Request->isset_request('getAddSongToPLHtml', 'post')) {
     $array_playlist_added = [];
 
     if (defined('NV_IS_USER')) {
-        $db->sqlreset()->from(NV_MOD_TABLE . "_user_playlists")->where("userid=" . $user_info['userid']);
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_user_playlists")->where("userid=" . $user_info['userid']);
         $db->order("time_add DESC");
 
         $array_select_fields = nv_get_user_playlist_select_fields();
@@ -799,7 +800,7 @@ if ($nv_Request->isset_request('getAddSongToPLHtml', 'post')) {
 
         // Xác định xem bài hát này đã thêm vào các playlist trên hay chưa
         if (!empty($array_playlist)) {
-            $sql = "SELECT playlist_id FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE song_id=" . $row['song_id'] . " AND playlist_id IN(" . implode(',', array_keys($array_playlist)) . ")";
+            $sql = "SELECT playlist_id FROM " . Resources::getTablePrefix() . "_user_playlists_data WHERE song_id=" . $row['song_id'] . " AND playlist_id IN(" . implode(',', array_keys($array_playlist)) . ")";
             $array_playlist_added = $db->query($sql)->fetchAll(PDO::FETCH_COLUMN);
         }
     }
@@ -846,7 +847,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
 
         // Xác định thông tin bài hát
         $array_select_fields = nv_get_song_select_fields(true);
-        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($request['song_code']);
+        $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND song_code=" . $db->quote($request['song_code']);
         $result = $db->query($sql);
         $row = $result->fetch();
         if (empty($row)) {
@@ -874,7 +875,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
     $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
     $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
 
-    $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_playlists (
+    $sql = "INSERT INTO " . Resources::getTablePrefix() . "_user_playlists (
         playlist_code, resource_avatar, resource_cover, userid, time_add, privacy, num_songs, " . NV_LANG_DATA . "_playlist_name,
         " . NV_LANG_DATA . "_playlist_introtext" . $array_fname . "
     ) VALUES (
@@ -894,7 +895,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
 
     // Thêm bài hát này vào playlist
     if ($request['auto_add_song']) {
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_user_playlists_data (playlist_id, song_id, weight, status) VALUES (
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_user_playlists_data (playlist_id, song_id, weight, status) VALUES (
             " . $new_playlist_id . ", " . $row['song_id'] . ", 1, 1
         )";
         $db->query($sql);
@@ -937,7 +938,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
 
     // Xác định thông tin bài hát
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE status=1 AND song_code=" . $db->quote($request['song_code']);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE status=1 AND song_code=" . $db->quote($request['song_code']);
     $result = $db->query($sql);
     $song = $result->fetch();
     if (empty($song)) {
@@ -953,7 +954,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
 
     // Xác định thông tin playlist
     $array_select_fields = nv_get_user_playlist_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_user_playlists WHERE userid=" . $user_info['userid'] . " AND playlist_code=" . $db->quote($request['playlist_code']);
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_user_playlists WHERE userid=" . $user_info['userid'] . " AND playlist_code=" . $db->quote($request['playlist_code']);
     $result = $db->query($sql);
     $playlist = $result->fetch();
     if (empty($playlist)) {
@@ -969,7 +970,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
 
     if ($request['is_add']) {
         // Thêm bài hát vào playlist
-        $sql = "INSERT IGNORE INTO " . NV_MOD_TABLE . "_user_playlists_data (
+        $sql = "INSERT IGNORE INTO " . Resources::getTablePrefix() . "_user_playlists_data (
             playlist_id, song_id, weight, status
         ) VALUES (
             " . $playlist['playlist_id'] . ", " . $song['song_id'] . ", 0, 1
@@ -977,7 +978,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
         $respon['message'] = sprintf($lang_module['addtolist_new_success_add'], $song['song_name'], $playlist['playlist_name']);
     } else {
         // Bỏ bài hát ra playlist
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_user_playlists_data WHERE playlist_id=" . $playlist['playlist_id'] . " AND song_id=" . $song['song_id'];
+        $sql = "DELETE FROM " . Resources::getTablePrefix() . "_user_playlists_data WHERE playlist_id=" . $playlist['playlist_id'] . " AND song_id=" . $song['song_id'];
         $respon['message'] = sprintf($lang_module['addtolist_remove_success'], $song['song_name'], $playlist['playlist_name']);
     }
 
@@ -988,4 +989,4 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
     nv_jsonOutput($respon);
 }
 
-nv_redirect_location(NV_MOD_LINK);
+nv_redirect_location(Resources::getModLink());

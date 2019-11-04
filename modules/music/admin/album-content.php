@@ -14,6 +14,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 
 use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Shared\Albums;
 
@@ -26,7 +27,7 @@ if ($album_id) {
     $page_title = $lang_module['album_edit'];
 
     $array_select_fields = nv_get_album_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_albums WHERE album_id=" . $album_id;
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_albums WHERE album_id=" . $album_id;
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
@@ -44,7 +45,7 @@ if ($album_id) {
 
     // Lấy các bài hát
     $row['song_ids'] = [];
-    $sql = "SELECT * FROM " . NV_MOD_TABLE . "_albums_data WHERE album_id=" . $album_id . " ORDER BY weight ASC";
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_albums_data WHERE album_id=" . $album_id . " ORDER BY weight ASC";
     $result = $db->query($sql);
     while ($_row = $result->fetch()) {
         $row['song_ids'][] = $_row['song_id'];
@@ -113,7 +114,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'])));
     $array_artists = [];
     if (!empty($array_artist_ids)) {
-        $sql = "SELECT artist_id FROM " . NV_MOD_TABLE . "_artists WHERE artist_id IN(" . implode(',', $array_artist_ids) . ")";
+        $sql = "SELECT artist_id FROM " . Resources::getTablePrefix() . "_artists WHERE artist_id IN(" . implode(',', $array_artist_ids) . ")";
         $result = $db->query($sql);
         while ($row = $result->fetch()) {
             $array_artists[$row['artist_id']] = $row['artist_id'];
@@ -138,7 +139,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['song_ids'] = [];
     $array['num_songs'] = 0;
     foreach ($song_ids as $song_id) {
-        $song = $db->query("SELECT song_id, status FROM " . NV_MOD_TABLE . "_songs WHERE song_id=" . $song_id)->fetch();
+        $song = $db->query("SELECT song_id, status FROM " . Resources::getTablePrefix() . "_songs WHERE song_id=" . $song_id)->fetch();
         if (!empty($song)) {
             $array['song_ids'][] = $song_id;
 
@@ -171,7 +172,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     // Lưu dữ liệu
     if ($album_id) {
         // Sửa
-        $sql = "UPDATE " . NV_MOD_TABLE . "_albums SET
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_albums SET
             cat_ids=" . $db->quote(implode(',', $array['cat_ids'])) . ",
             singer_ids=" . $db->quote(implode(',', $array['singer_ids'])) . ",
             release_year=" . $array['release_year'] . ",
@@ -225,7 +226,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
 
         $album_code = Albums::creatUniqueCode();
 
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_albums (
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_albums (
             album_code, cat_ids, singer_ids, release_year, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, num_songs, status,
             " . NV_LANG_DATA . "_album_name, " . NV_LANG_DATA . "_album_alias, " . NV_LANG_DATA . "_album_searchkey, " . NV_LANG_DATA . "_album_introtext,
             " . NV_LANG_DATA . "_album_description, " . NV_LANG_DATA . "_album_keywords" . $array_fname . "
@@ -286,11 +287,11 @@ if ($nv_Request->isset_request('submit', 'post')) {
     msUpdateRandomAlbums($diff2);
 
     // Các bài hát trong album: Xóa hết thêm lại
-    $db->query("DELETE FROM " . NV_MOD_TABLE . "_albums_data WHERE album_id=" . $album_id);
+    $db->query("DELETE FROM " . Resources::getTablePrefix() . "_albums_data WHERE album_id=" . $album_id);
     $weight = 0;
     foreach ($array['song_ids'] as $song_id) {
         $weight++;
-        $sql = "INSERT INTO " . NV_MOD_TABLE . "_albums_data (album_id, song_id, weight, status) VALUES (
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_albums_data (album_id, song_id, weight, status) VALUES (
             " . $album_id . ", " . $song_id . ", " . $weight . ", 1
         )";
         $db->query($sql);
@@ -377,7 +378,7 @@ $song_artist_ids = [];
 $data_songs = [];
 if (!empty($array['song_ids'])) {
     $array_select_fields = nv_get_song_select_fields(true);
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE song_id IN(" . implode(',', $array['song_ids']) . ")";
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE song_id IN(" . implode(',', $array['song_ids']) . ")";
     $result = $db->query($sql);
     while ($_row = $result->fetch()) {
         $_row['singers'] = [];

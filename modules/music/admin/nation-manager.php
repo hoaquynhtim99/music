@@ -13,6 +13,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 }
 
 use NukeViet\Music\AjaxRespon;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Nation\Nation;
 
@@ -43,7 +44,7 @@ if ($ajaction == 'delete') {
 
     foreach ($nation_ids as $nation_id) {
         // Xóa
-        $sql = "DELETE FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id;
+        $sql = "DELETE FROM " . Resources::getTablePrefix() . "_nations WHERE nation_id=" . $nation_id;
         $db->query($sql);
 
         // Ghi nhật ký hệ thống
@@ -51,12 +52,12 @@ if ($ajaction == 'delete') {
     }
 
     // Cập nhật lại thứ tự
-    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations ORDER BY weight ASC";
+    $sql = "SELECT nation_id FROM " . Resources::getTablePrefix() . "_nations ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
         ++$weight;
-        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
         $db->query($sql);
     }
 
@@ -86,7 +87,7 @@ if ($ajaction == 'weight') {
         AjaxRespon::respon();
     }
 
-    $sql = "SELECT nation_id FROM " . NV_MOD_TABLE . "_nations WHERE nation_id!=" . $nation_id . " ORDER BY weight ASC";
+    $sql = "SELECT nation_id FROM " . Resources::getTablePrefix() . "_nations WHERE nation_id!=" . $nation_id . " ORDER BY weight ASC";
     $result = $db->query($sql);
     $weight = 0;
     while ($row = $result->fetch()) {
@@ -94,11 +95,11 @@ if ($ajaction == 'weight') {
         if ($weight == $new_weight) {
             ++$weight;
         }
-        $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_nations SET weight=" . $weight . " WHERE nation_id=" . $row['nation_id'];
         $db->query($sql);
     }
 
-    $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET weight=" . $new_weight . " WHERE nation_id=" . $nation_id;
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_nations SET weight=" . $new_weight . " WHERE nation_id=" . $nation_id;
     $db->query($sql);
 
     $nv_Cache->delMod($module_name);
@@ -123,7 +124,7 @@ if ($ajaction == 'ajedit') {
     }
 
     $array_select_fields = nv_get_nation_select_fields(true);
-    $array_nation = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id)->fetch();
+    $array_nation = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_nations WHERE nation_id=" . $nation_id)->fetch();
     if (empty($array_nation)) {
         AjaxRespon::setMessage('Wrong ID!!!');
         AjaxRespon::respon();
@@ -178,7 +179,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $is_exists_code = 0;
     if (!empty($array['nation_code'])) {
         try {
-            $sql = "SELECT COUNT(*) FROM " . NV_MOD_TABLE . "_nations WHERE nation_code=:nation_code" . ($nation_id ? " AND nation_id!=" . $nation_id : "");
+            $sql = "SELECT COUNT(*) FROM " . Resources::getTablePrefix() . "_nations WHERE nation_code=:nation_code" . ($nation_id ? " AND nation_id!=" . $nation_id : "");
             $sth = $db->prepare($sql);
             $sth->bindParam(':nation_code', $array['nation_code'], PDO::PARAM_STR);
             $sth->execute();
@@ -193,7 +194,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     $error_exists = false;
     if (!empty($nation_id)) {
         $array_select_fields = nv_get_nation_select_fields(true);
-        $array_old = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_nations WHERE nation_id=" . $nation_id)->fetch();
+        $array_old = $db->query("SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_nations WHERE nation_id=" . $nation_id)->fetch();
         if (empty($array_old)) {
             $error_exists = true;
         }
@@ -211,7 +212,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
         AjaxRespon::setMessage($lang_module['nation_err_name']);
     } else {
         if ($nation_id) {
-            $sql = "UPDATE " . NV_MOD_TABLE . "_nations SET
+            $sql = "UPDATE " . Resources::getTablePrefix() . "_nations SET
                 nation_code=:nation_code,
                 " . NV_LANG_DATA . "_nation_name=:nation_name,
                 " . NV_LANG_DATA . "_nation_alias=:nation_alias,
@@ -236,7 +237,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
             }
         } else {
-            $weight = $db->query("SELECT MAX(weight) FROM " . NV_MOD_TABLE . "_nations")->fetchColumn();
+            $weight = $db->query("SELECT MAX(weight) FROM " . Resources::getTablePrefix() . "_nations")->fetchColumn();
             $weight++;
 
             // Xác định các field theo ngôn ngữ không có dữ liệu
@@ -253,7 +254,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
             $array_fname = $array_fname ? (', ' . implode(', ', $array_fname)) : '';
             $array_fvalue = $array_fvalue ? (', \'' . implode('\', \'', $array_fvalue) . '\'') : '';
 
-            $sql = "INSERT INTO " . NV_MOD_TABLE . "_nations (
+            $sql = "INSERT INTO " . Resources::getTablePrefix() . "_nations (
                 nation_code, time_add, weight, status,
                 " . NV_LANG_DATA . "_nation_name, " . NV_LANG_DATA . "_nation_alias, " . NV_LANG_DATA . "_nation_introtext, " . NV_LANG_DATA . "_nation_keywords" . $array_fname . "
             ) VALUES (

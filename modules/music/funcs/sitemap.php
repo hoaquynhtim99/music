@@ -12,9 +12,11 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Resources;
+
 $array_allowed_sitemap = ['album', 'mv', 'singer'];
 if ((!empty($array_op[1]) and !in_array($array_op[1], $array_allowed_sitemap)) or isset($array_op[2])) {
-    nv_redirect_location(NV_MOD_LINK);
+    nv_redirect_location(Resources::getModLink());
 }
 $cacheFilePrefix = !empty($array_op[1]) ? $array_op[1] : 'song';
 
@@ -29,7 +31,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
 
     if (empty($array_op[1])) {
         // Sitemap bài hát
-        $db->sqlreset()->from(NV_MOD_TABLE . "_songs")->where("status=1 AND is_official=1");
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_songs")->where("status=1 AND is_official=1");
         $db->order("song_id DESC")->limit(2000)->offset(0);
 
         $array_select_fields = nv_get_song_select_fields();
@@ -57,7 +59,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     } elseif ($array_op[1] == 'album') {
         // Sitemap album
         $array_select_fields = nv_get_album_select_fields();
-        $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1");
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where("is_official=1 AND status=1");
         $db->order("album_id DESC")->offset(0)->limit(2000);
         $db->select(implode(', ', $array_select_fields[0]));
 
@@ -83,7 +85,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     } elseif ($array_op[1] == 'mv') {
         // Sitemap MV
         $array_select_fields = nv_get_video_select_fields();
-        $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1");
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where("is_official=1 AND status=1");
         $db->order("video_id DESC")->offset(0)->limit(2000);
         $db->select(implode(', ', $array_select_fields[0]));
 
@@ -112,7 +114,7 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
         $array_where = [];
         $array_where[] = 'status=1';
 
-        $db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where(implode(' AND ', $array_where));
+        $db->sqlreset()->from(Resources::getTablePrefix() . "_artists")->where(implode(' AND ', $array_where));
         $db->order("artist_id DESC")->offset(0)->limit(5000);
         $db->select(implode(', ', $array_select_fields[0]));
 

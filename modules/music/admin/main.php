@@ -12,6 +12,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 $page_title = $lang_module['mainpage_title'];
@@ -28,10 +29,10 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     $array_stat_basic = unserialize($cache);
 } else {
     $array_stat_basic = [];
-    $array_stat_basic['num_songs'] = Utils::getFormatNumberView($db->query("SELECT COUNT(song_id) FROM " . NV_MOD_TABLE . "_songs")->fetchColumn());
-    $array_stat_basic['num_videos'] = Utils::getFormatNumberView($db->query("SELECT COUNT(video_id) FROM " . NV_MOD_TABLE . "_videos")->fetchColumn());
-    $array_stat_basic['num_albums'] = Utils::getFormatNumberView($db->query("SELECT COUNT(album_id) FROM " . NV_MOD_TABLE . "_albums")->fetchColumn());
-    $array_stat_basic['num_artists'] = Utils::getFormatNumberView($db->query("SELECT COUNT(artist_id) FROM " . NV_MOD_TABLE . "_artists")->fetchColumn());
+    $array_stat_basic['num_songs'] = Utils::getFormatNumberView($db->query("SELECT COUNT(song_id) FROM " . Resources::getTablePrefix() . "_songs")->fetchColumn());
+    $array_stat_basic['num_videos'] = Utils::getFormatNumberView($db->query("SELECT COUNT(video_id) FROM " . Resources::getTablePrefix() . "_videos")->fetchColumn());
+    $array_stat_basic['num_albums'] = Utils::getFormatNumberView($db->query("SELECT COUNT(album_id) FROM " . Resources::getTablePrefix() . "_albums")->fetchColumn());
+    $array_stat_basic['num_artists'] = Utils::getFormatNumberView($db->query("SELECT COUNT(artist_id) FROM " . Resources::getTablePrefix() . "_artists")->fetchColumn());
 
     $nv_Cache->setItem($module_name, $cacheFile, serialize($array_stat_basic), $cacheTTL);
 }
@@ -44,7 +45,7 @@ $xtpl->assign('LINK_ARTISTS', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-list');
 
 // Thống kê lượt nghe/xem tổng quan
 $array_overview = [];
-$sql = "SELECT stat_obj, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='all'";
+$sql = "SELECT stat_obj, stat_count FROM " . Resources::getTablePrefix() . "_statistics WHERE stat_type='all'";
 $result = $db->query($sql);
 while ($row = $result->fetch()) {
     $array_overview[$row['stat_obj']] = $row['stat_count'];
@@ -62,7 +63,7 @@ $xtpl->assign('OVERVIEW', $array_overview);
 $current_year = date('Y', NV_CURRENTTIME);
 $from_year = $current_year - 4;
 $array_byyear = [];
-$sql = "SELECT stat_obj, stat_val, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='year' AND stat_val>=" . $from_year . " AND stat_val<=" . $current_year;
+$sql = "SELECT stat_obj, stat_val, stat_count FROM " . Resources::getTablePrefix() . "_statistics WHERE stat_type='year' AND stat_val>=" . $from_year . " AND stat_val<=" . $current_year;
 $result = $db->query($sql);
 while ($row = $result->fetch()) {
     if (!isset($array_byyear[$row['stat_obj']])) {
@@ -93,7 +94,7 @@ $current_month_day = date('t', NV_CURRENTTIME);
 $from_day = intval($current_month . '01');
 $to_day = intval($current_month . $current_month_day);
 $array_byday = [];
-$sql = "SELECT stat_obj, stat_val, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='day' AND stat_val>=" . $from_day . " AND stat_val<=" . $to_day;
+$sql = "SELECT stat_obj, stat_val, stat_count FROM " . Resources::getTablePrefix() . "_statistics WHERE stat_type='day' AND stat_val>=" . $from_day . " AND stat_val<=" . $to_day;
 $result = $db->query($sql);
 while ($row = $result->fetch()) {
     if (!isset($array_byday[$row['stat_obj']])) {
@@ -124,7 +125,7 @@ $xtpl->assign('DAY_STAT_MONTH', nv_date('m/Y', NV_CURRENTTIME));
 $from_month = intval($current_year . '01');
 $to_month = intval($current_year . '12');
 $array_bymonth = [];
-$sql = "SELECT stat_obj, stat_val, stat_count FROM " . NV_MOD_TABLE . "_statistics WHERE stat_type='month' AND stat_val>=" . $from_month . " AND stat_val<=" . $to_month;
+$sql = "SELECT stat_obj, stat_val, stat_count FROM " . Resources::getTablePrefix() . "_statistics WHERE stat_type='month' AND stat_val>=" . $from_month . " AND stat_val<=" . $to_month;
 $result = $db->query($sql);
 while ($row = $result->fetch()) {
     if (!isset($array_bymonth[$row['stat_obj']])) {

@@ -12,12 +12,13 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-if (!defined('NV_IS_DETAIL_VIDEO')) {
-    nv_redirect_location(NV_MOD_LINK);
-}
-
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 use NukeViet\Music\Shared\Charts;
+
+if (!defined('NV_IS_DETAIL_VIDEO')) {
+    nv_redirect_location(Resources::getModLink());
+}
 
 $array_singer_ids = $array_singers = [];
 $array_videos = $array_albums = [];
@@ -51,14 +52,14 @@ if (!empty($ms_detail_data['author_ids'])) {
 $array_mod_title[] = [
     'catid' => 0,
     'title' => $module_info['funcs']['list-videos']['func_custom_name'],
-    'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos']
+    'link' => Resources::getModFullLinkEncode() . $module_info['alias']['list-videos']
 ];
 
 // Bài hát liên quan của video
 if (!empty($ms_detail_data['song_id'])) {
     $array_select_fields = nv_get_song_select_fields();
 
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . NV_MOD_TABLE . "_songs WHERE is_official=1 AND status=1 AND song_id=" . $ms_detail_data['song_id'];
+    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_songs WHERE is_official=1 AND status=1 AND song_id=" . $ms_detail_data['song_id'];
     $result = $db->query($sql);
     $song = $result->fetch();
 
@@ -83,7 +84,7 @@ if (!empty($ms_detail_data['song_id'])) {
 
 if (!empty($ms_detail_data['singer_id'])) {
     // Các album liên quan
-    $db->sqlreset()->from(NV_MOD_TABLE . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_album_select_fields();
     $db->order("album_id DESC")->limit(Config::getDetailSongAlbumsNums());
@@ -110,7 +111,7 @@ if (!empty($ms_detail_data['singer_id'])) {
     }
 
     // Các video liên quan
-    $db->sqlreset()->from(NV_MOD_TABLE . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where("is_official=1 AND status=1 AND FIND_IN_SET(" . $ms_detail_data['singer_id'] . ", singer_ids)");
 
     $array_select_fields = nv_get_video_select_fields();
     $db->order("video_id DESC")->limit(Config::getDetailSongVideosNums());
@@ -203,7 +204,7 @@ foreach ($ms_detail_data['cat_ids'] as $cid) {
 }
 
 // Xác định đường dẫn MV
-$sql = "SELECT * FROM " . NV_MOD_TABLE . "_videos_data WHERE video_id=" . $ms_detail_data['video_id'] . " AND status=1";
+$sql = "SELECT * FROM " . Resources::getTablePrefix() . "_videos_data WHERE video_id=" . $ms_detail_data['video_id'] . " AND status=1";
 $filesdata = $db->query($sql)->fetchAll();
 $stt = sizeof($global_array_mvquality);
 foreach ($filesdata as $_fileinfo) {
@@ -222,7 +223,7 @@ ksort($ms_detail_data['filesdata']);
 
 if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_data['cat_id']])) {
     $ms_detail_data['cat_name'] = $global_array_cat[$ms_detail_data['cat_id']]['cat_name'];
-    $ms_detail_data['cat_videos_link'] = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-videos'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
+    $ms_detail_data['cat_videos_link'] = Resources::getModFullLinkEncode() . $module_info['alias']['list-videos'] . '/' . $global_array_cat[$ms_detail_data['cat_id']]['cat_alias'] . '-' . Config::getCodePrefix()->getCat() . $global_array_cat[$ms_detail_data['cat_id']]['cat_code'];
 
     // Breadcrumb cho chuyên mục của danh sách album
     $array_mod_title[] = [
@@ -296,7 +297,7 @@ $timeout = NV_CURRENTTIME - (5 * 60); // Đếm tăng mỗi 5 phút
 
 if (!isset($cookie_stat[$ms_detail_data['video_code']]) or $cookie_stat[$ms_detail_data['video_code']] < $timeout) {
     // Cập nhật thống kê
-    $sql = "UPDATE " . NV_MOD_TABLE . "_videos SET stat_views=stat_views+1 WHERE video_id=" . $ms_detail_data['video_id'];
+    $sql = "UPDATE " . Resources::getTablePrefix() . "_videos SET stat_views=stat_views+1 WHERE video_id=" . $ms_detail_data['video_id'];
     $db->query($sql);
 
     // Cập nhật thống kê tổng quan
@@ -318,11 +319,11 @@ if (!isset($cookie_stat[$ms_detail_data['video_code']]) or $cookie_stat[$ms_deta
 
             foreach ($is_in_chart as $id_cat_chart) {
                 try {
-                    $sql = "UPDATE " . NV_MOD_TABLE . "_chart_tmps SET view_hits=view_hits+1, summary_scores=summary_scores+" . Config::getChartViewRate() . "
+                    $sql = "UPDATE " . Resources::getTablePrefix() . "_chart_tmps SET view_hits=view_hits+1, summary_scores=summary_scores+" . Config::getChartViewRate() . "
                     WHERE chart_week=" . $chart_week . " AND chart_year=" . $chart_year . " AND cat_id=" . $id_cat_chart . " AND object_name='video' AND object_id=" . $ms_detail_data['video_id'];
                     if (!$db->exec($sql)) {
                         // Cập nhật không có thì thêm mới
-                        $sql = "INSERT INTO " . NV_MOD_TABLE . "_chart_tmps (
+                        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_chart_tmps (
                             chart_week, chart_year, chart_time, cat_id, object_name, object_id, view_hits, summary_scores
                         ) VALUES (
                             " . $chart_week . ", " . $chart_year . ", " . $chart_time . ", " . $id_cat_chart . ",
@@ -357,7 +358,7 @@ $ms_detail_data['require_login'] = true;
 $ms_detail_data['url_login'] = NV_BASE_SITEURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=users&amp;' . NV_OP_VARIABLE . '=login&nv_redirect=' . nv_redirect_encrypt($client_info['selfurl']);
 if (defined('NV_IS_USER')) {
     $ms_detail_data['require_login'] = false;
-    if ($db->query("SELECT time_add FROM " . NV_MOD_TABLE . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $ms_detail_data['video_id'] . " AND is_removed=0")->fetchColumn()) {
+    if ($db->query("SELECT time_add FROM " . Resources::getTablePrefix() . "_user_favorite_videos WHERE userid=" . $user_info['userid'] . " AND video_id=" . $ms_detail_data['video_id'] . " AND is_removed=0")->fetchColumn()) {
         $ms_detail_data['favorited'] = true;
     }
 }

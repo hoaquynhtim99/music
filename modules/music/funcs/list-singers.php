@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 $page_title = Config::getFuncsSitetitle()->getSinger();
 $key_words = Config::getFuncsKeywords()->getSinger();
@@ -43,21 +44,21 @@ if (isset($array_op[1])) {
         // Phân trang
         $page = intval($m[1]);
         if ($page <= 1) {
-            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
+            nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers']);
         }
     } else {
         if (preg_match("/^([a-zA-Z0-9\-]+)\-([a-zA-Z0-9\-]+)$/", $array_op[1], $m)) {
             $nation_code = $m[2];
 
             if (!isset($global_array_nation_alias[$nation_code])) {
-                nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
+                nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers']);
             }
 
             $nation_id = $global_array_nation_alias[$nation_code];
             $nation_alias = $global_array_nation[$nation_id]->getAlias();
             $request_nation_alias = $m[1];
         } else {
-            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers']);
+            nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers']);
         }
     }
 }
@@ -67,12 +68,12 @@ if (isset($array_op[2])) {
     if (preg_match("/^page\-([0-9]{1,7})$/", $array_op[2], $m)) {
         $page = intval($m[1]);
         if ($page <= 1) {
-            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')));
+            nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')));
         }
     } elseif (in_array($array_op[2], $array_alphabets)) {
         $alphabet = $array_op[2];
     } else {
-        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')));
+        nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers'] . ($alphabet ? '/' . $alphabet : ($nation_id ? '/' . $nation_alias . '-' . $nation_code : '')));
     }
 }
 
@@ -80,19 +81,19 @@ if (isset($array_op[3])) {
     if (preg_match("/^page\-([0-9]{1,7})$/", $array_op[3], $m)) {
         $page = intval($m[1]);
         if ($page <= 1) {
-            nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
+            nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
         }
     } else {
-        nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
+        nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
     }
 }
 
 // Chỉnh lại đường dẫn nếu Alias thay đổi hoặc đặt page sai
 if (isset($array_op[4]) or $nation_alias != $request_nation_alias) {
-    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
+    nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
 }
 
-$base_url = NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : '');
+$base_url = Resources::getModFullLinkEncode() . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : '');
 $per_page = Config::getGirdSingersNums();
 $array_where = [];
 $array_where[] = 'status=1';
@@ -103,7 +104,7 @@ if ($alphabet) {
     $array_where[] = NV_LANG_DATA . "_artist_alphabet='" . $alphabet . "'";
 }
 
-$db->sqlreset()->from(NV_MOD_TABLE . "_artists")->where(implode(' AND ', $array_where));
+$db->sqlreset()->from(Resources::getTablePrefix() . "_artists")->where(implode(' AND ', $array_where));
 
 $db->select("COUNT(artist_id)");
 $all_pages = $db->query($db->sql())->fetchColumn();
@@ -128,14 +129,14 @@ while ($row = $result->fetch()) {
 
 // Xử lý nếu tùy ý đặt giá trị page sai
 if ($page > 1 and empty($array_singers)) {
-    nv_redirect_location(NV_MOD_FULLLINK . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
+    nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['list-singers'] . '/' . ($nation_id ? $nation_alias . '-' . $nation_code : '') . ($alphabet ? ($nation_id ? '/' : '') . $alphabet : ''));
 }
 
 // Breadcrumb
 $array_mod_title[] = array(
     'catid' => 0,
     'title' => $module_info['funcs'][$op]['func_custom_name'],
-    'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers']
+    'link' => Resources::getModFullLinkEncode() . $module_info['alias']['list-singers']
 );
 
 // Phân trang, tiêu đề trang
@@ -154,7 +155,7 @@ if (!empty($nation_id)) {
     $array_mod_title[] = array(
         'catid' => 0,
         'title' => $global_array_nation[$nation_id]->getName(),
-        'link' => NV_MOD_FULLLINK_AMP . $module_info['alias']['list-singers'] . '/' . $nation_alias . '-' . $nation_code
+        'link' => Resources::getModFullLinkEncode() . $module_info['alias']['list-singers'] . '/' . $nation_alias . '-' . $nation_code
     );
 }
 

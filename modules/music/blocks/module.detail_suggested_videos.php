@@ -13,6 +13,7 @@ if (!defined('NV_MAINFILE')) {
 }
 
 use NukeViet\Music\Config;
+use NukeViet\Music\Resources;
 
 if (!nv_function_exists('nv_block_detail_suggested_videos')) {
     /**
@@ -165,7 +166,7 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
                 $where[] = "cat_id=" . current($ms_detail_data['cat_ids']);
             }
 
-            $db->sqlreset()->select('video_id')->from(NV_MOD_TABLE . "_videos_random");
+            $db->sqlreset()->select('video_id')->from(Resources::getTablePrefix() . "_videos_random");
             $db->where(implode(' AND ', $where));
             $db->order('RAND()');
             $db->limit($block_config['numrows']);
@@ -175,7 +176,7 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
                 return '';
             }
 
-            $db->sqlreset()->from(NV_MOD_TABLE . "_videos");
+            $db->sqlreset()->from(Resources::getTablePrefix() . "_videos");
             $db->where("video_id IN(" . implode(',', $array_videoids) . ")");
         } else {
             // Random các MV trên toàn bộ dữ liệu, hiệu suất thấp
@@ -202,7 +203,7 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
                 $where[] = "FIND_IN_SET(" . current($ms_detail_data['author_ids']) . ", author_ids)";
             }
 
-            $db->sqlreset()->from(NV_MOD_TABLE . "_videos");
+            $db->sqlreset()->from(Resources::getTablePrefix() . "_videos");
             $db->where(implode(' AND ', $where));
             $db->order('RAND()');
             $db->limit($block_config['numrows']);
