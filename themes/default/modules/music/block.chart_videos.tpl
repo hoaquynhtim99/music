@@ -5,7 +5,7 @@
 <!-- BEGIN: main -->
 <div class="ms-bchart">
     <div class="btitle">
-        {LANG.chart_stitle_song}
+        {LANG.chart_stitle_video}
     </div>
     <ul class="bcat">
         <!-- BEGIN: cat_title -->
@@ -24,24 +24,21 @@
             <div class="alert alert-info mb-0">{LANG.chart_is_updating}</div>
             <!-- END: chart_empty -->
             <!-- BEGIN: chart_data -->
-            <ul class="chart-items">
+            <ul class="chart-video-items">
                 <!-- BEGIN: loop -->
                 <li class="clearfix">
-                    <!-- BEGIN: image -->
-                    <a href="{ROW.song_link}" class="item-image" style="background-image:url({ROW.resource_avatar_thumb});">
-                        <span><span>01</span></span>
+                    <a href="{ROW.video_link}" class="item-image" style="background-image:url({IMAGE});">
+                        <span class="item-rank">
+                            <span class="chart-no">{ROW.chart_order_show}</span>
+                            <!-- BEGIN: order_desc --><span class="chart-order chart-order-desc"></span><!-- END: order_desc -->
+                            <!-- BEGIN: order_asc --><span class="chart-order chart-order-asc"></span><!-- END: order_asc -->
+                            <!-- BEGIN: order_no --><span class="chart-order chart-order-no"></span><!-- END: order_no -->
+                            <!-- BEGIN: order_num --><span class="chart-order-num">{ORDER_NUM}</span><!-- END: order_num -->
+                        </span>
                     </a>
-                    <!-- END: image -->
-                    <div class="item-rank">
-                        <span class="chart-no">{ROW.chart_order_show}</span>
-                        <!-- BEGIN: order_desc --><span class="chart-order chart-order-desc"></span><!-- END: order_desc -->
-                        <!-- BEGIN: order_asc --><span class="chart-order chart-order-asc"></span><!-- END: order_asc -->
-                        <!-- BEGIN: order_no --><span class="chart-order chart-order-no"></span><!-- END: order_no -->
-                        <!-- BEGIN: order_num --><span class="chart-order-num">{ORDER_NUM}</span><!-- END: order_num -->
-                    </div>
                     <div class="item-info">
                         <h3 class="ms-ellipsis">
-                            <a href="{ROW.song_link}" class="ms-so" title="{ROW.song_name}">{ROW.song_name}</a>
+                            <a href="{ROW.video_link}" class="ms-so" title="{ROW.video_name}">{ROW.video_name}</a>
                         </h3>
                         <div class="artist ms-ellipsis">
                             <!-- BEGIN: show_singer -->
@@ -50,8 +47,8 @@
                             <!-- END: show_singer -->
 
                             <!-- BEGIN: va_singer -->
-                            <a href="#" data-toggle="show-va-singer-b{CONFIG.bid}" data-target="#{UNIQUEID}-blockchart-songs-singers-{ROW.song_code}" class="ms-sg">{VA_SINGERS}</a>
-                            <span class="hidden" id="{UNIQUEID}-blockchart-songs-singers-{ROW.song_code}" title="{LANG.singer_list}">
+                            <a href="#" data-toggle="show-va-singer-b{CONFIG.bid}" data-target="#{UNIQUEID}-blockchart-videos-singers-{ROW.video_code}" class="ms-sg">{VA_SINGERS}</a>
+                            <span class="hidden" id="{UNIQUEID}-blockchart-videos-singers-{ROW.video_code}" title="{LANG.singer_list}">
                                 <span class="list-group ms-singer-listgr-modal">
                                     <!-- BEGIN: loop -->
                                     <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.artist_name}</a>
@@ -89,7 +86,7 @@ $(document).ready(function() {
             type: 'POST',
             url: '{AJAX_URL}',
             data: {
-                'getBlockChartSongTab': 1,
+                'getBlockChartVideoTab': 1,
                 'cat_code': $this.data('code'),
             }
         }).done(function(res) {

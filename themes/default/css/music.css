@@ -71,7 +71,9 @@
 .ms-main-list-song-title h4 .ms-sg,
 .ms-detailab-solists .ctn > ul > li h4 .ms-sg,
 .ms-bchart .ccontent .ccontent-inner .chart-items li .artist,
-.ms-bchart .ccontent .ccontent-inner .chart-items li .artist a {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .artist a,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .artist,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .artist a {
     color: #888;
     font-weight: normal;
 }
@@ -118,7 +120,8 @@ ul.ms-singers-nation-nav li a:hover {
     background-color: #84acd0;
 }
 .ms-main-list-song-item article,
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-info {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-info,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li {
     border-color: #f2f2f2;
 }
 .ms-gird-albums-iconplay,
@@ -152,7 +155,8 @@ ul.ms-detailab-header-info h2 .tit {
 .ms-main-list-song-thumb,
 .ms-detailso-header-thumb,
 .ms-detailab-header-thumb,
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-image {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-image,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-image {
     background-color: #c4ccdf;
 }
 a.btn-default {
@@ -1759,7 +1763,7 @@ ul.ms-detailab-header-info h2 {
 
 /* Block BXH */
 .ms-bchart {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .ms-bchart .btitle {
@@ -1835,7 +1839,8 @@ ul.ms-detailab-header-info h2 {
     display: none;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-no {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-no,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-no {
     font-size: 16px;
     font-weight: 700;
     line-height: 16px;
@@ -1843,7 +1848,8 @@ ul.ms-detailab-header-info h2 {
     margin-top: 4px;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order {
     display: block;
     font: normal normal normal 16px/14px FontAwesome;
     text-rendering: auto;
@@ -1851,33 +1857,48 @@ ul.ms-detailab-header-info h2 {
     -moz-osx-font-smoothing: grayscale;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-no {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-no,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order.chart-order-no {
     color: #aaa;
     margin-bottom: -3.5px;
     margin-top: -3.5px;
     font-size: 12px;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-no:before {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-no:before,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order.chart-order-no:before {
     content: "\f068";
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-desc {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-desc,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order.chart-order-desc {
     color: #009900;
     margin-bottom: -7px;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-desc:before {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-desc:before,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order.chart-order-desc:before {
     content: "\f0de";
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-asc {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-asc,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order.chart-order-asc {
     color: #ff0000;
     margin-top: -7px;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-asc:before {
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-asc:before,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order.chart-order-asc:before {
     content: "\f0dd";
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-no,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-order-num {
+    color: #fff;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank .chart-no {
+    margin-top: 12px;
 }
 
 .ms-bchart .ccontent .ccontent-inner .chart-items li .item-info {
@@ -1935,7 +1956,8 @@ ul.ms-detailab-header-info h2 {
     line-height: 24px;
 }
 
-.ms-bchart .ccontent .ccontent-inner .chart-items li h3 {
+.ms-bchart .ccontent .ccontent-inner .chart-items li h3,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li h3 {
     font-weight: 400;
 }
 
@@ -1945,4 +1967,108 @@ ul.ms-detailab-header-info h2 {
 
 .ms-bchart .ccontent.loading .ccontent-inner {
     opacity: 0.5;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li {
+    position: relative;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding: 10px 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child {
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-image {
+    float: left;
+    width: 110px;
+    height: 62px;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-image {
+    display: block;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-rank {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow: hidden;
+    background: rgba(0, 0, 0, .2);
+    width: 25px;
+    text-align: center;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-info {
+    width: calc(100% - 120px);
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li .item-info h3 {
+    margin-bottom: 4px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-rank {
+    width: 100%;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-rank .chart-order,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-rank .chart-order-num {
+    display: none;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-rank .chart-no {
+    position: absolute;
+    margin-top: 0;
+    left: 13px;
+    bottom: 20px;
+    font-size: 24px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-info {
+    width: inherit;
+    top: inherit;
+    bottom: 10px;
+    transform: translateY(0);
+    right: 5px;
+    left: 50px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-info a,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .artist,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .artist a {
+    color: #fff;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-info h3 {
+    margin-bottom: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .item-info h3,
+.ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .artist {
+    font-size: 1.1em;
 }

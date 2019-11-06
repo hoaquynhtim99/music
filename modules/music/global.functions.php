@@ -132,86 +132,6 @@ Config::setChartViewRate(0.25);
 Config::setChartActive(1);
 
 /**
- * nv_get_album_select_fields()
- *
- * @param bool $full_fields
- * @return
- */
-function nv_get_album_select_fields($full_fields = false)
-{
-    $array_select_fields = ['album_id', 'album_code', 'cat_ids', 'singer_ids', 'release_year', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'time_update', 'status'];
-    $array_select_fields[] = NV_LANG_DATA . '_album_name album_name';
-    $array_select_fields[] = NV_LANG_DATA . '_album_alias album_alias';
-    $array_select_fields[] = NV_LANG_DATA . '_album_description album_description';
-    $default_language = Config::getDefaultLang();
-    if (NV_LANG_DATA != $default_language) {
-        $array_select_fields[] = $default_language . '_album_name default_album_name';
-        $array_select_fields[] = $default_language . '_album_alias default_album_alias';
-        $array_select_fields[] = $default_language . '_album_description default_album_description';
-    }
-
-    $array_lang_fields = ['album_name', 'album_alias', 'album_description'];
-
-    if ($full_fields) {
-        $array_select_fields[] = 'uploader_id';
-        $array_select_fields[] = 'uploader_name';
-        $array_select_fields[] = 'is_official';
-        $array_select_fields[] = 'show_inhome';
-        $array_select_fields[] = NV_LANG_DATA . '_album_introtext album_introtext';
-        $array_select_fields[] = NV_LANG_DATA . '_album_keywords album_keywords';
-        if (NV_LANG_DATA != $default_language) {
-            $array_select_fields[] = $default_language . '_album_introtext default_album_introtext';
-            $array_select_fields[] = $default_language . '_album_keywords default_album_keywords';
-        }
-
-        $array_lang_fields[] = 'album_introtext';
-        $array_lang_fields[] = 'album_keywords';
-    }
-
-    return array($array_select_fields, $array_lang_fields);
-}
-
-/**
- * nv_get_video_select_fields()
- *
- * @param bool $full_fields
- * @return
- */
-function nv_get_video_select_fields($full_fields = false)
-{
-    $array_select_fields = array('video_id', 'video_code', 'cat_ids', 'singer_ids', 'author_ids', 'song_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'status');
-    $array_select_fields[] = NV_LANG_DATA . '_video_name video_name';
-    $array_select_fields[] = NV_LANG_DATA . '_video_alias video_alias';
-    $default_language = Config::getDefaultLang();
-    if (NV_LANG_DATA != $default_language) {
-        $array_select_fields[] = $default_language . '_video_name default_video_name';
-        $array_select_fields[] = $default_language . '_video_alias default_video_alias';
-    }
-
-    $array_lang_fields = array('video_name', 'video_alias');
-
-    if ($full_fields) {
-        $array_select_fields[] = 'uploader_id';
-        $array_select_fields[] = 'uploader_name';
-        $array_select_fields[] = 'time_add';
-        $array_select_fields[] = 'time_update';
-        $array_select_fields[] = 'is_official';
-        $array_select_fields[] = 'show_inhome';
-        $array_select_fields[] = NV_LANG_DATA . '_video_introtext video_introtext';
-        $array_select_fields[] = NV_LANG_DATA . '_video_keywords video_keywords';
-        if (NV_LANG_DATA != $default_language) {
-            $array_select_fields[] = $default_language . '_video_introtext default_video_introtext';
-            $array_select_fields[] = $default_language . '_video_keywords default_video_keywords';
-        }
-
-        $array_lang_fields[] = 'video_introtext';
-        $array_lang_fields[] = 'video_keywords';
-    }
-
-    return array($array_select_fields, $array_lang_fields);
-}
-
-/**
  * nv_get_cat_select_fields()
  *
  * @param bool $full_fields
@@ -303,33 +223,6 @@ function nv_get_user_playlist_select_fields($full_fields = false)
 }
 
 /**
- * nv_get_detail_album_link()
- *
- * @param mixed $album
- * @param array $singers
- * @param bool $amp
- * @param string $query_string
- * @return
- */
-function nv_get_detail_album_link($album, $singers = [], $amp = true, $query_string = '')
-{
-    global $global_config, $module_info;
-    $num_singers = sizeof($singers);
-    if ($num_singers > Config::getLimitSingersDisplayed()) {
-        $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
-    } elseif ($num_singers > 0) {
-        $singer_alias = [];
-        foreach ($singers as $singer) {
-            $singer_alias[] = $singer['artist_alias'];
-        }
-        $singer_alias = '-' . implode('-', $singer_alias);
-    } else {
-        $singer_alias = '';
-    }
-    return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getAlbum() . $album['album_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getAlbum() . $album['album_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
-}
-
-/**
  * @param array $playlist
  * @param boolean $amp
  * @param string $query_string
@@ -339,33 +232,6 @@ function nv_get_detail_playlist_link($playlist, $amp = true, $query_string = '')
 {
     global $global_config;
     return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getPlaylist() . (isset($playlist['playlist_alias']) ? $playlist['playlist_alias'] : change_alias($playlist['playlist_name'])) . '-' . Config::getCodePrefix()->getPlaylist() . $playlist['playlist_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
-}
-
-/**
- * nv_get_detail_video_link()
- *
- * @param mixed $video
- * @param array $singers
- * @param bool $amp
- * @param string $query_string
- * @return
- */
-function nv_get_detail_video_link($video, $singers = [], $amp = true, $query_string = '')
-{
-    global $global_config, $module_info;
-    $num_singers = sizeof($singers);
-    if ($num_singers > Config::getLimitSingersDisplayed()) {
-        $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
-    } elseif ($num_singers > 0) {
-        $singer_alias = [];
-        foreach ($singers as $singer) {
-            $singer_alias[] = $singer['artist_alias'];
-        }
-        $singer_alias = '-' . implode('-', $singer_alias);
-    } else {
-        $singer_alias = '';
-    }
-    return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getVideo() . $video['video_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getVideo() . $video['video_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
 }
 
 /**

@@ -5,7 +5,7 @@
 <!-- BEGIN: main -->
 <div class="ms-bchart">
     <div class="btitle">
-        {LANG.chart_stitle_song}
+        {LANG.chart_stitle_album}
     </div>
     <ul class="bcat">
         <!-- BEGIN: cat_title -->
@@ -28,7 +28,7 @@
                 <!-- BEGIN: loop -->
                 <li class="clearfix">
                     <!-- BEGIN: image -->
-                    <a href="{ROW.song_link}" class="item-image" style="background-image:url({ROW.resource_avatar_thumb});">
+                    <a href="{ROW.album_link}" class="item-image" style="background-image:url({ROW.resource_avatar_thumb});">
                         <span><span>01</span></span>
                     </a>
                     <!-- END: image -->
@@ -41,7 +41,7 @@
                     </div>
                     <div class="item-info">
                         <h3 class="ms-ellipsis">
-                            <a href="{ROW.song_link}" class="ms-so" title="{ROW.song_name}">{ROW.song_name}</a>
+                            <a href="{ROW.album_link}" class="ms-so" title="{ROW.album_name}">{ROW.album_name}</a>
                         </h3>
                         <div class="artist ms-ellipsis">
                             <!-- BEGIN: show_singer -->
@@ -50,8 +50,8 @@
                             <!-- END: show_singer -->
 
                             <!-- BEGIN: va_singer -->
-                            <a href="#" data-toggle="show-va-singer-b{CONFIG.bid}" data-target="#{UNIQUEID}-blockchart-songs-singers-{ROW.song_code}" class="ms-sg">{VA_SINGERS}</a>
-                            <span class="hidden" id="{UNIQUEID}-blockchart-songs-singers-{ROW.song_code}" title="{LANG.singer_list}">
+                            <a href="#" data-toggle="show-va-singer-b{CONFIG.bid}" data-target="#{UNIQUEID}-blockchart-albums-singers-{ROW.album_code}" class="ms-sg">{VA_SINGERS}</a>
+                            <span class="hidden" id="{UNIQUEID}-blockchart-albums-singers-{ROW.album_code}" title="{LANG.singer_list}">
                                 <span class="list-group ms-singer-listgr-modal">
                                     <!-- BEGIN: loop -->
                                     <a href="{SINGER.singer_link}" class="list-group-item">{SINGER.artist_name}</a>
@@ -89,7 +89,7 @@ $(document).ready(function() {
             type: 'POST',
             url: '{AJAX_URL}',
             data: {
-                'getBlockChartSongTab': 1,
+                'getBlockChartAlbumTab': 1,
                 'cat_code': $this.data('code'),
             }
         }).done(function(res) {

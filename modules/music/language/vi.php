@@ -140,4 +140,6 @@ $lang_module['mymusic_playlist'] = 'Playlist của tôi';
 $lang_module['mymusic_playlist_empty'] = 'Chưa có playlist nào';
 
 $lang_module['chart_stitle_song'] = 'BXH Bài hát';
+$lang_module['chart_stitle_video'] = 'BXH MV';
+$lang_module['chart_stitle_album'] = 'BXH Album';
 $lang_module['chart_is_updating'] = 'Bảng xếp hạng đang tiến hành cập nhật dữ liệu, vui lòng xem lại sau ít phút';
