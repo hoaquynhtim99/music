@@ -34,8 +34,8 @@ function msLoadLyric(soCode, soTitle, tokend, sheetlink) {
         dataType: 'json',
         data: {
             'getSongLyric': 1,
-            'song_code':  soCode,
-            'tokend':  tokend
+            'song_code': soCode,
+            'tokend': tokend
         }
     }).done(function(res) {
         $('#msAbSoLrtSheetAreaLoader').addClass('hidden');
@@ -310,10 +310,10 @@ $(document).ready(function() {
                                 dataType: 'json',
                                 data: {
                                     'togglePlaylistSong': 1,
-                                    'song_code':  $(this).data('code'),
-                                    'tokend':  $(this).data('tokend'),
-                                    'playlist_code':  $(this).data('playlist'),
-                                    'is_add':  ($(this).is(':checked') ? 1 : 0)
+                                    'song_code': $(this).data('code'),
+                                    'tokend': $(this).data('tokend'),
+                                    'playlist_code': $(this).data('playlist'),
+                                    'is_add': ($(this).is(':checked') ? 1 : 0)
                                 }
                             }).done(function(res) {
                                 $('[data-toggle="addOrRemove"]', pop).prop('disabled', false);

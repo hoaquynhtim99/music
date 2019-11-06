@@ -1,7 +1,8 @@
-<!-- BEGIN: main -->
 <!-- BEGIN: css -->
 <link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}themes/{TEMPLATE_CSS}/css/{MODULE_THEME}.css">
 <!-- END: css -->
+
+<!-- BEGIN: main -->
 <div class="ms-bchart">
     <div class="btitle">
         {LANG.chart_stitle_song}
@@ -9,7 +10,7 @@
     <ul class="bcat">
         <!-- BEGIN: cat_title -->
         <li>
-            <a href="#" data-toggle="msLoadChartTab{CONFIG.bid}"<!-- BEGIN: active --> class="active"<!-- END: active -->>{CAT.cat_name}</a>
+            <a href="#" data-toggle="msLoadChartTab{CONFIG.bid}" data-code="{CAT.cat_code}"<!-- BEGIN: active --> class="active"<!-- END: active -->>{CAT.cat_name}</a>
         </li>
         <!-- END: cat_title -->
     </ul>
@@ -18,6 +19,7 @@
             <i class="fa fa-spinner fa-pulse fa-2x fa-fw"></i>
         </div>
         <div class="ccontent-inner" id="ms-bchart{CONFIG.bid}">
+            <!-- BEGIN: chart_content -->
             <!-- BEGIN: chart_empty -->
             <div class="alert alert-info mb-0">{LANG.chart_is_updating}</div>
             <!-- END: chart_empty -->
@@ -67,6 +69,7 @@
                 <!-- END: loop -->
             </ul>
             <!-- END: chart_data -->
+            <!-- END: chart_content -->
         </div>
     </div>
 </div>
@@ -78,16 +81,26 @@ $(document).ready(function() {
         var container = $('#ms-bchart{CONFIG.bid}');
         var wrapper = container.parent();
         if ($this.is('.active') || wrapper.is('.loading')) {
-            console.log("Busy");
             return false;
         }
         wrapper.addClass('loading');
         // AJAX để load tại đây
-        setTimeout(function() {
+        $.ajax({
+            type: 'POST',
+            url: '{AJAX_URL}',
+            data: {
+                'getBlockChartSongTab': 1,
+                'cat_code': $this.data('code'),
+            }
+        }).done(function(res) {
+            container.html(res);
             $('[data-toggle="msLoadChartTab{CONFIG.bid}"]').removeClass('active');
             $this.addClass('active');
             wrapper.removeClass('loading');
-        }, 2000);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR, textStatus, errorThrown);
+            wrapper.removeClass('loading');
+        });
     });
 
     // Hiển thị danh sách ca sĩ của bài hát có quá nhiều ca sĩ
