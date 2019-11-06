@@ -133,6 +133,7 @@ if (!nv_function_exists('nv_block_chart_videos')) {
         $xtpl->assign('LANG', $lang_module);
         $xtpl->assign('CONFIG', $block_config);
         $xtpl->assign('AJAX_URL', $client_info['selfurl']);
+        $xtpl->assign('UNIQUEID', nv_genpass(6));
 
         // HTML trả về của block
         $contents = '';
