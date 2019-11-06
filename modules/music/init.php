@@ -27,8 +27,6 @@ if (!defined('NV_MAINFILE')) {
 
 /*
  * Lưu ý: Để gọi file này cần chuẩn bị các biến sau
- * - $module_file
- * - $module_data
  * - $module_name
  * - $site_mods
  */
@@ -38,7 +36,7 @@ if (!defined('NV_MAINFILE')) {
  */
 global $db_config, $nv_Cache, $db;
 
-require NV_ROOTDIR . '/modules/' . $module_file . '/vendor/autoload.php';
+require NV_ROOTDIR . '/modules/' . $site_mods[$module_name]['module_file'] . '/vendor/autoload.php';
 
 use NukeViet\Music\Config;
 use NukeViet\Music\Utils;
@@ -54,7 +52,6 @@ Resources::setDb($db);
 Resources::setDbPrefix($db_config['prefix']);
 Resources::setSiteMods($site_mods);
 Resources::setModuleName($module_name);
-Resources::setModuleData($module_data);
 
 $array_alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -352,4 +349,98 @@ if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false)
     }
 
     $nv_Cache->setItem($module_name, $cacheFile, serialize([$global_array_cat_chart, $global_array_cat_chart_alias]), $cacheTTL);
+}
+
+if (!function_exists('nv_get_detail_song_link')) {
+    /**
+     * nv_get_detail_song_link()
+     *
+     * @param mixed $song
+     * @param array $singers
+     * @param bool $amp
+     * @param string $query_string
+     * @return
+     */
+    function nv_get_detail_song_link($song, $singers = [], $amp = true, $query_string = '')
+    {
+        global $global_config;
+
+        $num_singers = sizeof($singers);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $singer_alias = '-' . strtolower(change_alias(Config::getVariousArtists()));
+        } elseif ($num_singers > 0) {
+            $singer_alias = [];
+            foreach ($singers as $singer) {
+                $singer_alias[] = $singer['artist_alias'];
+            }
+            $singer_alias = '-' . implode('-', $singer_alias);
+        } else {
+            $singer_alias = '';
+        }
+        return ($amp ? Resources::getModFullLinkEncode() : Resources::getModFullLink()) . Config::getOpAliasPrefix()->getSong() . $song['song_alias'] . $singer_alias . '-' . Config::getCodePrefix()->getSong() . $song['song_code'] . $global_config['rewrite_exturl'] . ($query_string ? (($amp ? '&amp;' : '&') . $query_string) : '');
+    }
+}
+
+if (!function_exists('nv_get_resource_url')) {
+    /**
+     * nv_get_resource_url()
+     *
+     * @param mixed $orgSrc
+     * @param string $area
+     * @param bool $thumb
+     * @return
+     */
+    function nv_get_resource_url($orgSrc, $area = 'album', $thumb = false)
+    {
+        $module_upload = Resources::getModUpload();
+        $module_info = Resources::getModInfo();
+
+        /**
+         * $orgSrc có dạng folder/.../filename sao cho fullpath là NV_UPLOADS_REALDIR/module_name/$orgSrc
+         * Trả về đường dẫn có thể hiển thị trực tiếp
+         */
+
+        // Kiểm tra file tồn tại
+        if ($thumb and is_file(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $module_upload . '/' . $orgSrc)) {
+            return NV_BASE_SITEURL . NV_FILES_DIR . '/' . $module_upload . '/' . $orgSrc;
+        } elseif (is_file(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $orgSrc)) {
+            return NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $orgSrc;
+        }
+
+        // Lấy từ cấu hình
+        $map_cfg_data = [
+            'album' => Config::getDefaultAlbumAvatar(),
+            'singer' => Config::getDefaultSingerAvatar(),
+            'author' => Config::getDefaultAuthorAvatar(),
+            'video' => Config::getDefaultVideoAvatar()
+        ];
+
+        if (isset($map_cfg_data[$area]) and !empty($map_cfg_data[$area])) {
+            if ($thumb and is_file(NV_ROOTDIR . '/' . NV_FILES_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area])) {
+                return NV_BASE_SITEURL . NV_FILES_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area];
+            } elseif (is_file(NV_ROOTDIR . '/' . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area])) {
+                return NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $map_cfg_data[$area];
+            }
+        }
+
+        // Mặc định theo lập trình
+        $map_cfg_data = array(
+            'album' => 'album-art-cover.jpg',
+            'singer' => 'singer-art.jpg',
+            'author' => 'singer-art.jpg',
+            'video' => 'video-art-cover.jpg'
+        );
+
+        if (isset($map_cfg_data[$area])) {
+            if (is_file(NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
+                return NV_BASE_SITEURL . 'themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+            } elseif (is_file(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
+                return NV_BASE_SITEURL . 'themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+            } elseif (is_file(NV_ROOTDIR . '/themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
+                return NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+            }
+        }
+
+        return NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/pix.gif';
+    }
 }

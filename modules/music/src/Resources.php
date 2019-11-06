@@ -82,13 +82,6 @@ class Resources implements Settings
     private static $moduleName = 'music';
 
     /**
-     * Tên CSDL module
-     *
-     * @var string
-     */
-    private static $moduleData = 'music';
-
-    /**
      * Thông tin module hệ thống
      *
      * @var string
@@ -201,17 +194,6 @@ class Resources implements Settings
     }
 
     /**
-     * @param string $string
-     * @return boolean
-     */
-    public static function setModuleData(string $string)
-    {
-        self::$moduleData = $string;
-
-        return true;
-    }
-
-    /**
      * @param array $array
      * @return boolean
      */
@@ -259,7 +241,7 @@ class Resources implements Settings
      */
     public static function getTablePrefix()
     {
-        return self::$dbPrefix . '_' . self::$moduleData;
+        return self::$dbPrefix . '_' . self::$siteMods[self::$moduleName]['module_data'];
     }
 
     /**
@@ -312,5 +294,21 @@ class Resources implements Settings
     public static function getModInfo()
     {
         return self::$siteMods[self::$moduleName];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getModData()
+    {
+        return self::$siteMods[self::$moduleName]['module_data'];
+    }
+
+    /**
+     * @return array
+     */
+    public static function getModUpload()
+    {
+        return self::$siteMods[self::$moduleName]['module_upload'];
     }
 }

@@ -20,6 +20,8 @@ class Charts implements ITypeShare
     }
 
     /**
+     * Tuần hiện tại của năm
+     *
      * @return string
      */
     public static function getCurrentWeek()
@@ -28,6 +30,8 @@ class Charts implements ITypeShare
     }
 
     /**
+     * Năm hiện tại
+     *
      * @return string
      */
     public static function getCurrentYear()
@@ -36,6 +40,8 @@ class Charts implements ITypeShare
     }
 
     /**
+     * Unix timestamp tại thứ 2 của tuần hiện tại
+     *
      * @return number
      */
     public static function getCurrentTime()

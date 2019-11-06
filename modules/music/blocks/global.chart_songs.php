@@ -12,7 +12,9 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
+use NukeViet\Music\Config;
 use NukeViet\Music\Resources;
+use NukeViet\Music\Shared\Charts;
 
 if (!nv_function_exists('nv_block_chart_songs')) {
     /**
@@ -103,25 +105,17 @@ if (!nv_function_exists('nv_block_chart_songs')) {
             global $global_array_cat_chart, $lang_module;
         } else {
             // Block hiển thị ở vị trí khác thì gọi tài nguyên ra
-            global $module_file, $module_data;
-
-            $backup_module_file = $module_file;
-            $backup_module_data = $module_data;
             $backup_module_name = $module_name;
 
             $module_name = $module;
-            $module_file = $site_mods[$module]['module_file'];
-            $module_data = $site_mods[$module]['module_data'];;
 
             // Gọi file INIT
-            require NV_ROOTDIR . '/modules/' . $module_file . '/init.php';
+            require NV_ROOTDIR . '/modules/' . $site_mods[$module]['module_file'] . '/init.php';
 
             // Ngôn ngữ
-            require NV_ROOTDIR . '/modules/' . $module_file . '/language/' . NV_LANG_INTERFACE . '.php';
+            require NV_ROOTDIR . '/modules/' . $site_mods[$module]['module_file'] . '/language/' . NV_LANG_INTERFACE . '.php';
 
             // Trả lại các biến để xử lý khi ra ngoài block
-            $module_file = $backup_module_file;
-            $module_data = $backup_module_data;
             $module_name = $backup_module_name;
 
             $call_jscss = true;
@@ -209,10 +203,99 @@ if (!nv_function_exists('nv_block_chart_songs')) {
                     if (empty($array_songs)) {
                         $xtpl->parse('main.chart_empty');
                     } else {
+                        /*
+                         * Lấy BXH của những bài hát này tuần trước
+                         * để đối chứng tăng, giảm bao nhiêu bậc
+                         */
+                        $chart_before = Charts::getCurrentTime() - (7 * 86400);
+                        $sql = "SELECT object_id, summary_order FROM " . Resources::getTablePrefix() . "_charts
+                        WHERE chart_time=" . $chart_before . " AND cat_id=" . $cat_chart['cat_id'] . " AND object_name='song' AND object_id IN(" . implode(',', array_keys($array_songs)) . ")";
+
+                        $data_chart_before = [];
+                        $result = $db->query($sql);
+                        while ($row = $result->fetch()) {
+                            $data_chart_before[$row['object_id']] = $row['summary_order'];
+                        }
+
                         // Xác định ca sĩ
                         $array_singers = nv_get_artists($array_singer_ids);
 
-                        // FIXME
+                        foreach ($array_songs as $id => $row) {
+                            if (!empty($row['singer_ids'])) {
+                                foreach ($row['singer_ids'] as $singer_id) {
+                                    if (isset($array_singers[$singer_id])) {
+                                        $row['singers'][$singer_id] = $array_singers[$singer_id];
+                                        if (empty($row['resource_avatar']) and !empty($array_singers[$singer_id]['resource_avatar'])) {
+                                            $row['resource_avatar'] = $array_singers[$singer_id]['resource_avatar'];
+                                            $row['resource_mode'] = 'singer';
+                                        }
+                                    }
+                                }
+                            }
+                            $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
+                            $row['song_link_full'] = NV_MY_DOMAIN . nv_url_rewrite($row['song_link'], true);
+                            $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], $row['resource_mode'], true);
+                            $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], $row['resource_mode']);
+                            $row['chart_order_show'] = str_pad($row['chart_order'], 2, '0', STR_PAD_LEFT);
+
+                            $xtpl->assign('ROW', $row);
+
+                            // Xuất ảnh lớn cho bài hát đầu tiên
+                            if ($row['chart_order'] == 1) {
+                                //
+                                $xtpl->parse('main.chart_data.loop.image');
+                            }
+
+                            // Xử lý ca sĩ của bài hát
+                            $num_singers = sizeof($row['singers']);
+
+                            if ($num_singers > Config::getLimitSingersDisplayed()) {
+                                $xtpl->assign('VA_SINGERS', Config::getVariousArtists());
+
+                                foreach ($row['singers'] as $singer) {
+                                    $xtpl->assign('SINGER', $singer);
+                                    $xtpl->parse('main.chart_data.loop.va_singer.loop');
+                                }
+
+                                $xtpl->parse('main.chart_data.loop.va_singer');
+                            } elseif (!empty($row['singers'])) {
+                                $i = 0;
+                                foreach ($row['singers'] as $singer) {
+                                    $i++;
+                                    $xtpl->assign('SINGER', $singer);
+
+                                    if ($i > 1) {
+                                        $xtpl->parse('main.chart_data.loop.show_singer.loop.separate');
+                                    }
+                                    $xtpl->parse('main.chart_data.loop.show_singer.loop');
+                                }
+                                $xtpl->parse('main.chart_data.loop.show_singer');
+                            } else {
+                                $xtpl->assign('UNKNOW_SINGER', Config::getUnknowSinger());
+                                $xtpl->parse('main.chart_data.loop.no_singer');
+                            }
+
+                            // Xử lý tăng giảm thứ hạng
+                            $order_offset_value = isset($data_chart_before[$row['song_id']]) ? ($data_chart_before[$row['song_id']] - $row['chart_order']) : 0;
+                            if ($order_offset_value > 0) {
+                                // Tăng
+                                $xtpl->parse('main.chart_data.loop.order_desc');
+                            } elseif ($order_offset_value < 0) {
+                                // Giảm
+                                $xtpl->parse('main.chart_data.loop.order_asc');
+                            } else {
+                                // Không xác định hoặc giữ nguyên
+                                $xtpl->parse('main.chart_data.loop.order_no');
+                            }
+                            if ($order_offset_value != 0) {
+                                $xtpl->assign('ORDER_NUM', abs($order_offset_value));
+                                $xtpl->parse('main.chart_data.loop.order_num');
+                            }
+
+                            $xtpl->parse('main.chart_data.loop');
+                        }
+
+                        $xtpl->parse('main.chart_data');
                     }
                 }
                 $xtpl->parse('main.cat_title');

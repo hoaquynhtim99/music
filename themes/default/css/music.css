@@ -69,7 +69,9 @@
 .ms-third-title,
 .ms-third-title a,
 .ms-main-list-song-title h4 .ms-sg,
-.ms-detailab-solists .ctn > ul > li h4 .ms-sg {
+.ms-detailab-solists .ctn > ul > li h4 .ms-sg,
+.ms-bchart .ccontent .ccontent-inner .chart-items li .artist,
+.ms-bchart .ccontent .ccontent-inner .chart-items li .artist a {
     color: #888;
     font-weight: normal;
 }
@@ -115,7 +117,8 @@ ul.ms-singers-nation-nav li a:hover {
 .jw-skin-nvmsmv .jw-buffer {
     background-color: #84acd0;
 }
-.ms-main-list-song-item article {
+.ms-main-list-song-item article,
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-info {
     border-color: #f2f2f2;
 }
 .ms-gird-albums-iconplay,
@@ -138,7 +141,8 @@ ul.ms-detailab-header-info h2 .tit {
 }
 .ms-list-song-action ul li a,
 .ms-main-list-song-action ul li a,
-.ms-detailab-solists .ctn > ul > li ._actions ul li a {
+.ms-detailab-solists .ctn > ul > li ._actions ul li a,
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order-num {
     color: #c0c0c0;
 }
 .ms-gird-albums-thumb,
@@ -147,7 +151,8 @@ ul.ms-detailab-header-info h2 .tit {
 .ms-main-singer-thumb,
 .ms-main-list-song-thumb,
 .ms-detailso-header-thumb,
-.ms-detailab-header-thumb {
+.ms-detailab-header-thumb,
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-image {
     background-color: #c4ccdf;
 }
 a.btn-default {
@@ -1803,8 +1808,135 @@ ul.ms-detailab-header-info h2 {
     transform: translateY(-50%);
 }
 
-.ms-bchart .ccontent .ccontent-inner {
-    height: 300px;
+.ms-bchart .ccontent .ccontent-inner .chart-items {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li {
+    padding: 8px 0 0 0;
+    margin: 0;
+    position: relative;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li:first-child {
+    padding-top: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank {
+    width: 30px;
+    padding-right: 10px;
+    float: left;
+    text-align: center;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li:first-child .item-rank {
+    display: none;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-no {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    display: block;
+    margin-top: 4px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order {
+    display: block;
+    font: normal normal normal 16px/14px FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-no {
+    color: #aaa;
+    margin-bottom: -3.5px;
+    margin-top: -3.5px;
+    font-size: 12px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-no:before {
+    content: "\f068";
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-desc {
+    color: #009900;
+    margin-bottom: -7px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-desc:before {
+    content: "\f0de";
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-asc {
+    color: #ff0000;
+    margin-top: -7px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-rank .chart-order.chart-order-asc:before {
+    content: "\f0dd";
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-info {
+    width: calc(100% - 30px);
+    float: right;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    padding-bottom: 8px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li:first-child .item-info {
+    width: calc(100% - 120px);
+    float: none;
+    border-bottom: 0;
+    padding-bottom: 0;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li:first-child .item-info h3 {
+    margin-bottom: 5px;
+    font-size: 1.1em;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li:last-child .item-info {
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-image {
+    display: block;
+    width: 110px;
+    height: 110px;
+    background-size: cover;
+    background-position: center center;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-image > span {
+    background: url(../images/music/bg-overlay-home.png) repeat-x bottom;
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li .item-image > span > span {
+    position: absolute;
+    left: 7px;
+    bottom: 5px;
+    font-weight: 700;
+    font-size: 24px;
+    color: #fff;
+    line-height: 24px;
+}
+
+.ms-bchart .ccontent .ccontent-inner .chart-items li h3 {
+    font-weight: 400;
 }
 
 .ms-bchart .ccontent.loading .cloader {
