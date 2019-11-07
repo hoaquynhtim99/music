@@ -24,42 +24,6 @@ use NukeViet\Music\Config;
 use NukeViet\Music\Resources;
 use NukeViet\Music\Shared\Charts;
 
-// Danh mục
-$cacheFile = NV_LANG_DATA . '_cats_' . NV_CACHE_PREFIX . '.cache';
-$cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
-
-if (($cache = $nv_Cache->getItem($module_name, $cacheFile, $cacheTTL)) != false) {
-    $global_array_cat = unserialize($cache);
-    $global_array_cat_alias = $global_array_cat[1];
-    $global_array_cat = $global_array_cat[0];
-} else {
-    $array_select_fields = nv_get_cat_select_fields();
-    $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_categories ORDER BY weight ASC";
-    $result = $db->query($sql);
-
-    $global_array_cat = [];
-    $global_array_cat_alias = [];
-
-    while ($row = $result->fetch()) {
-        foreach ($array_select_fields[1] as $f) {
-            if (empty($row[$f]) and !empty($row['default_' . $f])) {
-                $row[$f] = $row['default_' . $f];
-            }
-            unset($row['default_' . $f]);
-        }
-        if (empty($row['cat_absitetitle'])) {
-            $row['cat_absitetitle'] = $row['cat_name'];
-        }
-        if (empty($row['cat_mvsitetitle'])) {
-            $row['cat_mvsitetitle'] = $row['cat_name'];
-        }
-        $global_array_cat[$row['cat_id']] = $row;
-        $global_array_cat_alias[$row['cat_code']] = $row['cat_id'];
-    }
-
-    $nv_Cache->setItem($module_name, $cacheFile, serialize(array($global_array_cat, $global_array_cat_alias)), $cacheTTL);
-}
-
 // Tất cả các quốc gia trong hệ thống
 $cacheFile = NV_LANG_DATA . '_nations_' . NV_CACHE_PREFIX . '.cache';
 $cacheTTL = 0; // Cache vĩnh viễn đến khi xóa
@@ -130,40 +94,6 @@ Config::setChartShareRate(0.25);
 Config::setChartViewRate(0.25);
 
 Config::setChartActive(1);
-
-/**
- * nv_get_cat_select_fields()
- *
- * @param bool $full_fields
- * @return
- */
-function nv_get_cat_select_fields($full_fields = false)
-{
-    $default_language = Config::getDefaultLang();
-    $array_select_fields = array('cat_id', 'cat_code', 'resource_avatar', 'resource_cover', 'resource_video', 'stat_albums', 'stat_songs', 'stat_videos', 'time_add', 'time_update', 'show_inalbum', 'show_invideo', 'weight', 'status');
-    $array_select_fields[] = NV_LANG_DATA . '_cat_name cat_name';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_alias cat_alias';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_absitetitle cat_absitetitle';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_abintrotext cat_abintrotext';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_abkeywords cat_abkeywords';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvsitetitle cat_mvsitetitle';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvintrotext cat_mvintrotext';
-    $array_select_fields[] = NV_LANG_DATA . '_cat_mvkeywords cat_mvkeywords';
-    if (NV_LANG_DATA != $default_language) {
-        $array_select_fields[] = $default_language . '_cat_name default_cat_name';
-        $array_select_fields[] = $default_language . '_cat_alias default_cat_alias';
-        $array_select_fields[] = $default_language . '_cat_absitetitle default_cat_absitetitle';
-        $array_select_fields[] = $default_language . '_cat_abintrotext default_cat_abintrotext';
-        $array_select_fields[] = $default_language . '_cat_abkeywords default_cat_abkeywords';
-        $array_select_fields[] = $default_language . '_cat_mvsitetitle default_cat_mvsitetitle';
-        $array_select_fields[] = $default_language . '_cat_mvintrotext default_cat_mvintrotext';
-        $array_select_fields[] = $default_language . '_cat_mvkeywords default_cat_mvkeywords';
-    }
-
-    $array_lang_fields = array('cat_absitetitle', 'cat_abintrotext', 'cat_abkeywords', 'cat_mvsitetitle', 'cat_mvintrotext', 'cat_mvkeywords');
-
-    return array($array_select_fields, $array_lang_fields);
-}
 
 /**
  * nv_get_nation_select_fields()
