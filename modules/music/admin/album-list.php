@@ -166,10 +166,7 @@ if (!empty($array_search['q'])) {
     $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
     $where[] = "(
         " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "%' OR
-        " . NV_LANG_DATA . "_album_searchkey LIKE '%" . $dblikekey . "%' OR
-        " . NV_LANG_DATA . "_album_introtext LIKE '%" . $dblike . "%' OR
-        " . NV_LANG_DATA . "_album_description LIKE '%" . $dblike . "%' OR
-        " . NV_LANG_DATA . "_album_keywords LIKE '%" . $dblike . "%'
+        " . NV_LANG_DATA . "_album_searchkey LIKE '%" . $dblikekey . "%'
     )";
     $base_url .= '&amp;q=' . urlencode($array_search['q']);
 }
@@ -204,7 +201,22 @@ if (!empty($where)) {
 $db->select("COUNT(*)");
 $all_pages = $db->query($db->sql())->fetchColumn();
 
-$db->order("time_add DESC")->offset(($page - 1) * $per_page)->limit($per_page);
+$db->offset(($page - 1) * $per_page)->limit($per_page);
+
+/*
+ * Sắp xếp kết quả tốt nhất (dạng đơn giản) nếu tìm từ khóa
+ * Nếu không thì sắp bài mới đăng lên đầu
+ */
+if (!empty($array_search['q'])) {
+    $db->order("CASE
+        WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "' THEN 1
+        WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "%' THEN 2
+        WHEN " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "' THEN 4
+        ELSE 3
+    END ASC");
+} else {
+    $db->order("time_add DESC");
+}
 
 $array_select_fields = nv_get_album_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));
