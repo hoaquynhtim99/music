@@ -311,6 +311,15 @@ if ($nv_Request->isset_request('submit', 'post')) {
         }
     }
 
+    /*
+     * Khi thêm bài hát, lưu lại danh sách ca sĩ, nhạc sĩ để thêm nhanh vào lần sau
+     * Khi sửa bài hát không lưu lại
+     */
+    if ($new_song_id) {
+        $nv_Request->set_Cookie($module_data . '_so_last_singers', json_encode($array['singer_ids']), NV_LIVE_COOKIE_TIME);
+        $nv_Request->set_Cookie($module_data . '_so_last_authors', json_encode($array['author_ids']), NV_LIVE_COOKIE_TIME);
+    }
+
     // Ghi nhật ký
     if ($song_id and empty($new_song_id)) {
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_SONG', $song_id . ':' . $array_old['song_name'], $admin_info['userid']);
@@ -393,7 +402,23 @@ if (!empty($array['video_id'])) {
     }
 }
 
-$array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $array['author_ids'], $song_artist_ids)));
+// Lấy ca sĩ, nhạc sĩ đã thêm lần trước
+$last_picked_singers = $nv_Request->get_string($module_data . '_so_last_singers', 'cookie', '');
+$last_picked_authors = $nv_Request->get_string($module_data . '_so_last_authors', 'cookie', '');
+$last_picked_singers = empty($last_picked_singers) ? [] : json_decode($last_picked_singers, true);
+$last_picked_authors = empty($last_picked_authors) ? [] : json_decode($last_picked_authors, true);
+if (is_array($last_picked_singers)) {
+    $last_picked_singers = array_map('intval', $last_picked_singers);
+} else {
+    $last_picked_singers = [];
+}
+if (is_array($last_picked_authors)) {
+    $last_picked_authors = array_map('intval', $last_picked_authors);
+} else {
+    $last_picked_authors = [];
+}
+
+$array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $array['author_ids'], $song_artist_ids, $last_picked_singers, $last_picked_authors)));
 $array_artists = nv_get_artists($array_artist_ids);
 
 // Xuất thông tin video đã chọn
@@ -474,6 +499,32 @@ foreach ($global_array_nation as $nation) {
 // Nút lưu và tiếp tục chỉ có khi thêm mới
 if (!$song_id) {
     $xtpl->parse('main.save_continue');
+}
+
+// Xuất ra các ca sĩ, nhạc sĩ đã chọn từ lần trước
+$num_last_singers = $num_last_authors = 0;
+foreach ($last_picked_singers as $singer_id) {
+    if (isset($array_artists[$singer_id])) {
+        $xtpl->assign('SINGER', $array_artists[$singer_id]);
+        $xtpl->parse('main.last_singers.loop');
+        $num_last_singers++;
+    }
+}
+if ($num_last_singers > 0) {
+    $xtpl->parse('main.choose_last_singers');
+    $xtpl->parse('main.last_singers');
+}
+
+foreach ($last_picked_authors as $author_id) {
+    if (isset($array_artists[$author_id])) {
+        $xtpl->assign('AUTHOR', $array_artists[$author_id]);
+        $xtpl->parse('main.last_authors.loop');
+        $num_last_authors++;
+    }
+}
+if ($num_last_authors > 0) {
+    $xtpl->parse('main.choose_last_author');
+    $xtpl->parse('main.last_authors');
 }
 
 $xtpl->parse('main');

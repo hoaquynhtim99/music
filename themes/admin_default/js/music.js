@@ -1580,6 +1580,14 @@ $(document).ready(function() {
         // Ẩn modal đi
         modalPickVideos.modal("hide");
     });
+
+    // Chọn ca sĩ, nhạc sĩ từ lần trước
+    $('[data-toggle="PickArtistFromLastTime"]').on('click', function(e) {
+        e.preventDefault();
+        var source = $($(this).data('source'));
+        var target = $($(this).data('target'));
+        target.html(source.html());
+    });
 });
 
 $(window).on('load', function() {

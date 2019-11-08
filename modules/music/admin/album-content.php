@@ -297,6 +297,14 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $db->query($sql);
     }
 
+    /*
+     * Khi thêm album, lưu lại danh sách ca sĩ để thêm nhanh vào lần sau
+     * Khi sửa album không lưu lại
+     */
+    if ($new_album_id) {
+        $nv_Request->set_Cookie($module_data . '_ab_last_singers', json_encode($array['singer_ids']), NV_LIVE_COOKIE_TIME);
+    }
+
     // Ghi nhật ký
     if ($album_id and empty($new_album_id)) {
         nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_ALBUM', $album_id . ':' . $array_old['album_name'], $admin_info['userid']);
@@ -392,7 +400,16 @@ if (!empty($array['song_ids'])) {
     }
 }
 
-$array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $song_artist_ids)));
+// Lấy ca sĩ đã thêm lần trước
+$last_picked_singers = $nv_Request->get_string($module_data . '_ab_last_singers', 'cookie', '');
+$last_picked_singers = empty($last_picked_singers) ? [] : json_decode($last_picked_singers, true);
+if (is_array($last_picked_singers)) {
+    $last_picked_singers = array_map('intval', $last_picked_singers);
+} else {
+    $last_picked_singers = [];
+}
+
+$array_artist_ids = array_filter(array_unique(array_merge_recursive($array['singer_ids'], $song_artist_ids, $last_picked_singers)));
 $array_artists = nv_get_artists($array_artist_ids);
 
 // Xuất các bài hát của album
@@ -444,6 +461,20 @@ foreach ($global_array_nation as $nation) {
 // Nút lưu và tiếp tục chỉ có khi thêm mới
 if (!$album_id) {
     $xtpl->parse('main.save_continue');
+}
+
+// Xuất ra các ca sĩ đã chọn từ lần trước
+$num_last_singers = $num_last_authors = 0;
+foreach ($last_picked_singers as $singer_id) {
+    if (isset($array_artists[$singer_id])) {
+        $xtpl->assign('SINGER', $array_artists[$singer_id]);
+        $xtpl->parse('main.last_singers.loop');
+        $num_last_singers++;
+    }
+}
+if ($num_last_singers > 0) {
+    $xtpl->parse('main.choose_last_singers');
+    $xtpl->parse('main.last_singers');
 }
 
 $xtpl->parse('main');

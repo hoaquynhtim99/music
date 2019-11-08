@@ -37,3 +37,27 @@
         </div>
     </div>
 </div>
+
+<!-- BEGIN: last_singers -->
+<ul class="hidden d-none hide" id="LastPickedSingers">
+    <!-- BEGIN: loop -->
+    <li>
+        <input type="hidden" name="singer_ids[]" value="{SINGER.artist_id}">
+        <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        <strong class="val ms-ellipsis">{SINGER.artist_name}</strong>
+    </li>
+    <!-- END: loop -->
+</ul>
+<!-- END: last_singers -->
+
+<!-- BEGIN: last_authors -->
+<ul class="hidden d-none hide" id="LastPickedAuthors">
+    <!-- BEGIN: loop -->
+    <li>
+        <input type="hidden" name="author_ids[]" value="{AUTHOR.artist_id}">
+        <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        <strong class="val ms-ellipsis">{AUTHOR.artist_name}</strong>
+    </li>
+    <!-- END: loop -->
+</ul>
+<!-- END: last_authors -->

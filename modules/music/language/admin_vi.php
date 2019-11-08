@@ -78,6 +78,7 @@ $lang_module['Year'] = 'Năm';
 $lang_module['Day'] = 'Ngày';
 $lang_module['Month'] = 'Tháng';
 $lang_module['apply_for'] = 'áp dụng cho';
+$lang_module['choose_from_last_time'] = 'Chọn từ lần trước';
 
 $lang_module['error_save'] = 'Lỗi lưu dữ liệu:';
 $lang_module['error_require_field'] = 'Trường này là bắt buộc';

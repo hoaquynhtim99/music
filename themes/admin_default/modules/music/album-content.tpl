@@ -32,6 +32,9 @@
                                 <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                     <li><a href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
+                                    <!-- BEGIN: choose_last_singers -->
+                                    <li><a href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedSingers" data-target="#PickedArtistsList"><i class="fa fa-history" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
+                                    <!-- END: choose_last_singers -->
                                 </ul>
                             </div>
                             <ul class="ms-content-picked-lists" id="PickedArtistsList">
