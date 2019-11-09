@@ -23,6 +23,7 @@ $lang_module['list-albums'] = 'Album';
 $lang_module['list-singers'] = 'Nghệ sĩ';
 $lang_module['list-videos'] = 'Video';
 
+$lang_module['artist'] = 'Nghệ sĩ';
 $lang_module['favorite'] = 'Yêu thích';
 $lang_module['add_to'] = 'Thêm vào';
 $lang_module['add_song_tolikelist'] = 'Thêm bài hát vào playlist';
@@ -143,3 +144,5 @@ $lang_module['chart_stitle_song'] = 'BXH Bài hát';
 $lang_module['chart_stitle_video'] = 'BXH MV';
 $lang_module['chart_stitle_album'] = 'BXH Album';
 $lang_module['chart_is_updating'] = 'Bảng xếp hạng đang tiến hành cập nhật dữ liệu, vui lòng xem lại sau ít phút';
+
+$lang_module['search_placeholder'] = 'Tìm kiếm bài hát, album, MV...';

@@ -2074,3 +2074,86 @@ ul.ms-detailab-header-info h2 {
 .ms-bchart .ccontent .ccontent-inner .chart-video-items li:first-child .artist {
     font-size: 1.1em;
 }
+
+/* Block Tìm kiếm bài hát */
+.ms-block-auto-search {
+    position: relative;
+    line-height: 1.42857;
+    color: #333;
+}
+
+.ms-block-auto-search a {
+    color: #333;
+}
+
+.ms-block-auto-search a:hover {
+    color: #666;
+}
+
+.ms-block-auto-search input[type="text"] {
+    padding-right: 40px;
+    min-width: 280px;
+    max-width: 100%!important;
+}
+
+.ms-block-auto-search button[type="submit"] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border-color: transparent;
+    background-color: transparent;
+    outline: 0;
+}
+
+.ms-block-auto-search button[type="submit"]:active,
+.ms-block-auto-search button[type="submit"]:active:focus,
+.ms-block-auto-search button[type="submit"]:focus {
+    box-shadow: none;
+    background-color: transparent;
+    outline: 0;
+    border-color: transparent;
+}
+
+.ms-block-auto-search .search-result {
+    position: absolute;
+    left: 0;
+    top: 100%;
+    width: 100%;
+    background-color: #fff;
+    z-index: 999999;
+    display: none;
+    border: 1px #DFDFDF solid;
+}
+
+.ms-block-auto-search .search-result .result-heading {
+    border-top: 1px #DFDFDF solid;
+    border-bottom: 1px #DFDFDF solid;
+    padding: 7px 10px;
+    background-color: #f2f2f2;
+}
+
+.ms-block-auto-search .search-result .result-heading .fa {
+    margin-right: 3px;
+}
+
+.ms-block-auto-search .search-result .result-body {
+    padding: 7px 0;
+}
+
+.ms-block-auto-search .search-result .result-body .body-item {
+    padding-left: 30px;
+    padding-right: 10px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    margin-bottom: -5px;
+    margin-top: -5px;
+}
+
+.ms-block-auto-search .search-result .result-body .body-item:hover,
+.ms-block-auto-search .search-result .result-body .body-item.hover {
+    background-color: #f4f4f4;
+}
+
+.ms-block-auto-search .search-result .result-body .body-item .ms-singer {
+    color: #999;
+}

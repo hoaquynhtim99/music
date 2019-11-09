@@ -989,4 +989,295 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
     nv_jsonOutput($respon);
 }
 
+// Tìm kiếm dạng AJAX ở block tìm kiếm
+if ($nv_Request->isset_request('autoCompleteSearch', 'post')) {
+    $respon = [
+        'status' => 'ERROR',
+        'message' => '',
+        'data_songs' => [],
+        'data_videos' => [],
+        'data_albums' => [],
+        'data_artists' => [],
+    ];
+    if ($tokend !== NV_CHECK_SESSION) {
+        $respon['message'] = 'Access Denied!!!';
+        nv_jsonOutput($respon);
+    }
+
+    $key = $nv_Request->get_title('key', 'post', '');
+    if (empty($key)) {
+        $respon['message'] = 'Empty search key!!!';
+        nv_jsonOutput($respon);
+    }
+
+    // Tìm kiếm
+    $dblike = $db->dblikeescape($key);
+    $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($key))));
+
+    $array_singer_ids = $array_singers = [];
+
+    /*
+     * Tìm nhanh bài hát
+     */
+    $where = [];
+    $where[] = "(
+        " . NV_LANG_DATA . "_song_name LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_song_searchkey LIKE '%" . $dblikekey . "%'
+    )";
+    $where[] = "status=1";
+    $where[] = "is_official=1";
+
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_songs")->where(implode(' AND ', $where));
+    $db->limit(4)->offset(0);
+    $db->order("CASE
+        WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "' THEN 1
+        WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "%' THEN 2
+        WHEN " . NV_LANG_DATA . "_song_name LIKE '%" . $dblike . "' THEN 4
+        ELSE 3
+    END ASC");
+
+    $array_select_fields = nv_get_song_select_fields();
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $array_songs = [];
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+
+        $row['singers'] = [];
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['song_link'] = '';
+
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+
+        $array_songs[$row['song_id']] = $row;
+    }
+
+    /*
+     * Tìm nhanh MV
+     */
+    $where = [];
+    $where[] = "(
+        " . NV_LANG_DATA . "_video_name LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_video_searchkey LIKE '%" . $dblikekey . "%'
+    )";
+    $where[] = "status=1";
+    $where[] = "is_official=1";
+
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where(implode(' AND ', $where));
+    $db->limit(4)->offset(0);
+    $db->order("CASE
+        WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "' THEN 1
+        WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "%' THEN 2
+        WHEN " . NV_LANG_DATA . "_video_name LIKE '%" . $dblike . "' THEN 4
+        ELSE 3
+    END ASC");
+
+    $array_select_fields = nv_get_video_select_fields();
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $array_videos = [];
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+
+        $row['singers'] = [];
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['video_link'] = '';
+
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+
+        $array_videos[$row['video_id']] = $row;
+    }
+
+    /*
+     * Tìm nhanh Album
+     */
+    $where = [];
+    $where[] = "(
+        " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_album_searchkey LIKE '%" . $dblikekey . "%'
+    )";
+    $where[] = "status=1";
+    $where[] = "is_official=1";
+
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where(implode(' AND ', $where));
+    $db->limit(4)->offset(0);
+    $db->order("CASE
+        WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "' THEN 1
+        WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "%' THEN 2
+        WHEN " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "' THEN 4
+        ELSE 3
+    END ASC");
+
+    $array_select_fields = nv_get_album_select_fields();
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $array_albums = [];
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+
+        $row['singers'] = [];
+        $row['singer_ids'] = explode(',', $row['singer_ids']);
+        $row['album_link'] = '';
+
+        if (!empty($row['singer_ids'])) {
+            $array_singer_ids = array_merge_recursive($array_singer_ids, $row['singer_ids']);
+        }
+
+        $array_albums[$row['album_id']] = $row;
+    }
+
+    /*
+     * Tìm nhanh nghệ sĩ
+     */
+    $where = [];
+    $where[] = "(
+        " . NV_LANG_DATA . "_artist_name LIKE '%" . $dblike . "%' OR
+        " . NV_LANG_DATA . "_artist_searchkey LIKE '%" . $dblikekey . "%'
+    )";
+    $where[] = "status=1";
+    $where[] = "(artist_type=0 OR artist_type=2)";
+
+    $db->sqlreset()->from(Resources::getTablePrefix() . "_artists")->where(implode(' AND ', $where));
+    $db->limit(4)->offset(0);
+    $db->order("CASE
+        WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "' THEN 1
+        WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "%' THEN 2
+        WHEN " . NV_LANG_DATA . "_artist_name LIKE '%" . $dblike . "' THEN 4
+        ELSE 3
+    END ASC");
+
+    $array_select_fields = nv_get_artist_select_fields();
+    $db->select(implode(', ', $array_select_fields[0]));
+
+    $result = $db->query($db->sql());
+    while ($row = $result->fetch()) {
+        foreach ($array_select_fields[1] as $f) {
+            if (empty($row[$f]) and !empty($row['default_' . $f])) {
+                $row[$f] = $row['default_' . $f];
+            }
+            unset($row['default_' . $f]);
+        }
+
+        $row['singer_link'] = nv_url_rewrite(nv_get_view_singer_link($row), true);
+
+        $respon['data_artists'][] = [
+            'title' => $row['artist_name'],
+            'link' => $row['singer_link']
+        ];
+    }
+
+    // Xác định ca sĩ
+    $array_singers = nv_get_artists($array_singer_ids);
+
+    // Xuất kết quả tìm kiếm
+    foreach ($array_songs as $id => $row) {
+        if (!empty($row['singer_ids'])) {
+            foreach ($row['singer_ids'] as $singer_id) {
+                if (isset($array_singers[$singer_id])) {
+                    $row['singers'][$singer_id] = $array_singers[$singer_id];
+                }
+            }
+        }
+        $row['song_link'] = nv_url_rewrite(nv_get_detail_song_link($row, $row['singers']), true);
+        $num_singers = sizeof($row['singers']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $singer_display = Config::getVariousArtists();
+        } elseif (!empty($row['singers'])) {
+            $singer_display = [];
+            foreach ($row['singers'] as $singer) {
+                $singer_display[] = $singer['artist_name'];
+            }
+            $singer_display = implode(', ', $singer_display);
+        } else {
+            $singer_display = Config::getUnknowSinger();
+        }
+        $respon['data_songs'][] = [
+            'title' => $row['song_name'],
+            'singer' => $singer_display,
+            'link' => $row['song_link'],
+        ];
+    }
+
+    foreach ($array_videos as $id => $row) {
+        if (!empty($row['singer_ids'])) {
+            foreach ($row['singer_ids'] as $singer_id) {
+                if (isset($array_singers[$singer_id])) {
+                    $row['singers'][$singer_id] = $array_singers[$singer_id];
+                }
+            }
+        }
+        $row['video_link'] = nv_url_rewrite(nv_get_detail_video_link($row, $row['singers']), true);
+        $num_singers = sizeof($row['singers']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $singer_display = Config::getVariousArtists();
+        } elseif (!empty($row['singers'])) {
+            $singer_display = [];
+            foreach ($row['singers'] as $singer) {
+                $singer_display[] = $singer['artist_name'];
+            }
+            $singer_display = implode(', ', $singer_display);
+        } else {
+            $singer_display = Config::getUnknowSinger();
+        }
+        $respon['data_videos'][] = [
+            'title' => $row['video_name'],
+            'singer' => $singer_display,
+            'link' => $row['video_link'],
+        ];
+    }
+
+    foreach ($array_albums as $id => $row) {
+        if (!empty($row['singer_ids'])) {
+            foreach ($row['singer_ids'] as $singer_id) {
+                if (isset($array_singers[$singer_id])) {
+                    $row['singers'][$singer_id] = $array_singers[$singer_id];
+                }
+            }
+        }
+        $row['album_link'] = nv_url_rewrite(nv_get_detail_album_link($row, $row['singers']), true);
+        $num_singers = sizeof($row['singers']);
+        if ($num_singers > Config::getLimitSingersDisplayed()) {
+            $singer_display = Config::getVariousArtists();
+        } elseif (!empty($row['singers'])) {
+            $singer_display = [];
+            foreach ($row['singers'] as $singer) {
+                $singer_display[] = $singer['artist_name'];
+            }
+            $singer_display = implode(', ', $singer_display);
+        } else {
+            $singer_display = Config::getUnknowSinger();
+        }
+        $respon['data_albums'][] = [
+            'title' => $row['album_name'],
+            'singer' => $singer_display,
+            'link' => $row['album_link'],
+        ];
+    }
+
+    $respon['status'] = 'SUCCESS';
+    nv_jsonOutput($respon);
+}
+
 nv_redirect_location(Resources::getModLink());
