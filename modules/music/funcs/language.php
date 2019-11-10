@@ -12,6 +12,8 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
+$nv_BotManager->setNoIndex()->setNoFollow();
+
 unset($sys_info['server_headers']['content-type'], $sys_info['server_headers']['content-length']);
 
 $file_lang = NV_ROOTDIR . '/modules/' . $module_file . '/language/' . NV_LANG_INTERFACE . '.php';

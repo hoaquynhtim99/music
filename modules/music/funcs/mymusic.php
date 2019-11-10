@@ -15,6 +15,8 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 use NukeViet\Music\Config;
 use NukeViet\Music\Resources;
 
+$nv_BotManager->setNoIndex()->setFollow();
+
 // Yêu cầu đăng nhập thành viên
 if (!defined("NV_IS_USER")) {
     $url = nv_url_rewrite(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=users&" . NV_OP_VARIABLE . "=login&nv_redirect=" . nv_redirect_encrypt($client_info['selfurl']), true);

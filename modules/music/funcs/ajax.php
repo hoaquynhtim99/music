@@ -17,6 +17,11 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Shared\Charts;
 use NukeViet\Music\Shared\UserPlaylists;
 
+/*
+ * Khu vực AJAX không cho index
+ */
+$nv_BotManager->setNoIndex()->setFollow()->printToHeaders();
+
 $tokend = $nv_Request->get_title('tokend', 'post,get', '');
 
 // Load lời bài hát

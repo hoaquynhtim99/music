@@ -1793,3 +1793,16 @@ function nv_theme_viewpdf($file_url)
 
     return $xtpl->text('main');
 }
+
+function nv_theme_music_search()
+{
+    global $lang_module, $lang_global, $module_info;
+
+    $xtpl = new XTemplate('search.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('UNIQUEID', nv_genpass(6));
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}

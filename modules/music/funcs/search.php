@@ -12,9 +12,14 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
+/*
+ * Khu vực tìm kiếm không index, cho follow
+ */
+$nv_BotManager->setNoIndex()->setFollow();
+
 $page_title = $module_info['site_title'];
 
-$contents = "";
+$contents = nv_theme_music_search();
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);
