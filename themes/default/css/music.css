@@ -379,6 +379,11 @@ a.btn-default {
     background-position: center top;
     margin-bottom: 8px;
 }
+
+.ms-gird-singers-thumb.ms-round {
+    border-radius: 50%;
+}
+
 .ms-gird-singers-fw img {
     width: 100%;
     height: auto;
@@ -397,6 +402,11 @@ a.btn-default {
 .ms-gird-singers-fw:hover .ms-gird-singers-mask {
     background: rgba(0, 0, 0, .3);
 }
+
+.ms-gird-singers-thumb.ms-round .ms-gird-singers-mask {
+    border-radius: 50%;
+}
+
 .ms-gird-singers-description h3 {
     margin: 0;
     text-align: center;
@@ -2156,4 +2166,56 @@ ul.ms-detailab-header-info h2 {
 
 .ms-block-auto-search .search-result .result-body .body-item .ms-singer {
     color: #999;
+}
+
+/* Trang tìm kiếm đầy đủ */
+.ms-full-search {
+
+}
+
+.ms-full-search .filter-list .f-item {
+    margin-bottom: 7px;
+}
+
+.ms-full-search .f-heading {
+    font-weight: 500;
+    font-size: 20px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+}
+
+.ms-full-search .search-tabs {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.ms-full-search .search-tabs .nav-tabs {
+    padding-right: 100px
+}
+
+.ms-full-search .search-tabs .sfilter {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.ms-full-search .result-wrapper {
+    margin-top: 20px;
+}
+
+.ms-full-search .search-conditions {
+    margin-bottom: 20px;
+    text-align: right;
+}
+
+.ms-full-search .search-conditions a.label {
+    color: #fff;
+}
+
+.ms-full-search .result-songs,
+.ms-full-search .result-videos,
+.ms-full-search .result-albums,
+.ms-full-search .result-artists {
+    margin-bottom: 20px;
 }

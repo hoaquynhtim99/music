@@ -1794,14 +1794,119 @@ function nv_theme_viewpdf($file_url)
     return $xtpl->text('main');
 }
 
-function nv_theme_music_search()
+/**
+ * @param array $array_search
+ * @param array $array_songs
+ * @param array $array_videos
+ * @param array $array_albums
+ * @param array $array_artists
+ * @param array $array_queries
+ * @return string
+ */
+function nv_theme_music_search($array_search, $array_songs, $array_videos, $array_albums, $array_artists, $array_queries)
 {
-    global $lang_module, $lang_global, $module_info;
+    global $lang_module, $lang_global, $module_info, $global_array_cat, $op;
 
     $xtpl = new XTemplate('search.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
+
+    $array_search['totals'] = Utils::getFormatNumberView($array_search['totals']);
+
+    $xtpl->assign('SEARCH', $array_search);
+
+    /*
+     * Xây dựng các TABs
+     */
+    $array_queries_tmp = $array_queries;
+    $array_tabs = [];
+    $array_tabs[] = [
+        'active' => empty($array_search['type']) ? true : false,
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries, '', '&amp;'),
+        'title' => $lang_module['search_top'],
+    ];
+    // Bài hát
+    $array_queries_tmp['type'] = 'song';
+    $array_tabs['song'] = [
+        'active' => $array_search['type'] == 'song' ? true : false,
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'title' => $lang_module['song'],
+    ];
+    // MV
+    $array_queries_tmp['type'] = 'mv';
+    $array_tabs['mv'] = [
+        'active' => $array_search['type'] == 'mv' ? true : false,
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'title' => $lang_module['video_alias'],
+    ];
+    // Album
+    $array_queries_tmp['type'] = 'album';
+    $array_tabs['album'] = [
+        'active' => $array_search['type'] == 'album' ? true : false,
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'title' => $lang_module['album'],
+    ];
+    // Nghệ sĩ
+    $array_queries_tmp['type'] = 'artist';
+    $array_tabs['artist'] = [
+        'active' => $array_search['type'] == 'artist' ? true : false,
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'title' => $lang_module['artist'],
+    ];
+
+    $xtpl->assign('ALL_TABS', $array_tabs);
+    foreach ($array_tabs as $tab) {
+        $xtpl->assign('TAB', $tab);
+        if ($tab['active']) {
+            $xtpl->parse('main.tab.active');
+        }
+        $xtpl->parse('main.tab');
+    }
+
+    /*
+     * Kết quả tìm kiếm bài hát
+     */
+    if (!empty($array_songs)) {
+        $xtpl->assign('SONG_HTML', nv_theme_list_songs($array_songs));
+        $xtpl->parse('main.result_songs');
+    }
+
+    /*
+     * Kết quả tìm kiếm MV
+     */
+    if (!empty($array_videos)) {
+        $xtpl->assign('VIDEO_HTML', nv_theme_gird_videos($array_videos));
+        $xtpl->parse('main.result_videos');
+    }
+
+    /*
+     * Kết quả tìm kiếm album
+     */
+    if (!empty($array_albums)) {
+        $xtpl->assign('ALBUM_HTML', nv_theme_gird_albums($array_albums));
+        $xtpl->parse('main.result_albums');
+    }
+
+    /*
+     * Kết quả tìm kiếm nghệ sĩ
+     */
+    if (!empty($array_artists)) {
+        foreach ($array_artists as $row) {
+            $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'singer', true);
+            $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'singer');
+
+            $xtpl->assign('ROW', $row);
+            $xtpl->parse('main.result_artists.loop');
+        }
+        $xtpl->parse('main.result_artists');
+    }
+
+    // Lọc theo thể loại
+    foreach ($global_array_cat as $cat) {
+        $xtpl->assign('CAT', $cat);
+        $xtpl->parse('main.cat');
+    }
 
     $xtpl->parse('main');
     return $xtpl->text('main');

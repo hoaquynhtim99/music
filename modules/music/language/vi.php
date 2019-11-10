@@ -146,3 +146,8 @@ $lang_module['chart_stitle_album'] = 'BXH Album';
 $lang_module['chart_is_updating'] = 'Bảng xếp hạng đang tiến hành cập nhật dữ liệu, vui lòng xem lại sau ít phút';
 
 $lang_module['search_placeholder'] = 'Tìm kiếm bài hát, album, MV...';
+$lang_module['search_sortby'] = 'Sắp xếp theo';
+$lang_module['search_result_filter'] = 'Lọc kết quả';
+$lang_module['search_result1'] = 'Tìm được';
+$lang_module['search_result2'] = 'kết quả với từ khóa';
+$lang_module['search_top'] = 'Top kết quả';
