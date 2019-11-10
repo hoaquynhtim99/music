@@ -1034,7 +1034,7 @@ if ($nv_Request->isset_request('autoCompleteSearch', 'post')) {
         WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "%' THEN 2
         WHEN " . NV_LANG_DATA . "_song_name LIKE '%" . $dblike . "' THEN 4
         ELSE 3
-    END ASC");
+    END ASC, song_id DESC");
 
     $array_select_fields = nv_get_song_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -1078,7 +1078,7 @@ if ($nv_Request->isset_request('autoCompleteSearch', 'post')) {
         WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "%' THEN 2
         WHEN " . NV_LANG_DATA . "_video_name LIKE '%" . $dblike . "' THEN 4
         ELSE 3
-    END ASC");
+    END ASC, video_id DESC");
 
     $array_select_fields = nv_get_video_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -1122,7 +1122,7 @@ if ($nv_Request->isset_request('autoCompleteSearch', 'post')) {
         WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "%' THEN 2
         WHEN " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "' THEN 4
         ELSE 3
-    END ASC");
+    END ASC, album_id DESC");
 
     $array_select_fields = nv_get_album_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -1166,7 +1166,7 @@ if ($nv_Request->isset_request('autoCompleteSearch', 'post')) {
         WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "%' THEN 2
         WHEN " . NV_LANG_DATA . "_artist_name LIKE '%" . $dblike . "' THEN 4
         ELSE 3
-    END ASC");
+    END ASC, artist_id DESC");
 
     $array_select_fields = nv_get_artist_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
