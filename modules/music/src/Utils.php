@@ -144,6 +144,20 @@ class Utils
     }
 
     /**
+     * @param array $array_queries
+     * @return string
+     */
+    public static function buildSearchQuery($array_queries)
+    {
+        if (!empty($array_queries['genre'])) {
+            $array_queries['genre'] = implode('-', $array_queries['genre']);
+        } elseif (isset($array_queries['genre'])) {
+            unset($array_queries['genre']);
+        }
+        return http_build_query($array_queries, '', '&amp;');
+    }
+
+    /**
      * Utils::_maxPage()
      *
      * @param mixed $per_page

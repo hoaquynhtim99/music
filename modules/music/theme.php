@@ -1819,39 +1819,41 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
     /*
      * Xây dựng các TABs
      */
-    $array_queries_tmp = $array_queries;
     $array_tabs = [];
+    $array_queries_tmp = $array_queries;
+    unset($array_queries_tmp['type']);
     $array_tabs[] = [
         'active' => empty($array_search['type']) ? true : false,
-        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries, '', '&amp;'),
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
         'title' => $lang_module['search_top'],
     ];
+    $array_queries_tmp = $array_queries;
     // Bài hát
     $array_queries_tmp['type'] = 'song';
     $array_tabs['song'] = [
         'active' => $array_search['type'] == 'song' ? true : false,
-        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
         'title' => $lang_module['song'],
     ];
     // MV
     $array_queries_tmp['type'] = 'mv';
     $array_tabs['mv'] = [
         'active' => $array_search['type'] == 'mv' ? true : false,
-        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
         'title' => $lang_module['video_alias'],
     ];
     // Album
     $array_queries_tmp['type'] = 'album';
     $array_tabs['album'] = [
         'active' => $array_search['type'] == 'album' ? true : false,
-        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
         'title' => $lang_module['album'],
     ];
     // Nghệ sĩ
     $array_queries_tmp['type'] = 'artist';
     $array_tabs['artist'] = [
         'active' => $array_search['type'] == 'artist' ? true : false,
-        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . http_build_query($array_queries_tmp, '', '&amp;'),
+        'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
         'title' => $lang_module['artist'],
     ];
 
@@ -1904,8 +1906,47 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
 
     // Lọc theo thể loại
     foreach ($global_array_cat as $cat) {
+        $array_queries_tmp = $array_queries;
+        if (!isset($array_queries_tmp['genre'])) {
+            $array_queries_tmp['genre'] = [];
+        }
+        $array_queries_tmp['genre'][$cat['cat_id']] = $cat['cat_code'];
+
+        $cat['link'] = Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp);
+
         $xtpl->assign('CAT', $cat);
+        if (!empty($array_queries['genre']) and isset($array_queries['genre'][$cat['cat_id']])) {
+            $xtpl->parse('main.cat.checked');
+        }
         $xtpl->parse('main.cat');
+    }
+
+    // Kiểu sắp xếp
+    $array_queries_tmp = $array_queries;
+    for ($i = 1; $i <= 3; $i++) {
+        $array_queries_tmp['sort'] = $i;
+        $xtpl->assign('SORT', [
+            'title' => $lang_module['search_sortby' . $i],
+            'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp)
+        ]);
+        if ((empty($array_queries['sort']) and $i == 1) or (!empty($array_queries['sort']) and $i == $array_queries['sort'])) {
+            $xtpl->parse('main.sort.checked');
+        }
+        $xtpl->parse('main.sort');
+    }
+
+    // Xuất các điều kiện lọc
+    if (!empty($array_queries['genre'])) {
+        foreach ($array_queries['genre'] as $cat_id => $cat_code) {
+            $array_queries_tmp = $array_queries;
+            unset($array_queries_tmp['genre'][$cat_id]);
+            $xtpl->assign('GENRE', [
+                'title' => $global_array_cat[$cat_id]['cat_name'],
+                'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp)
+            ]);
+            $xtpl->parse('main.genre.loop');
+        }
+        $xtpl->parse('main.genre');
     }
 
     $xtpl->parse('main');

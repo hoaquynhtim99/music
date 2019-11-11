@@ -13,6 +13,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 }
 
 use NukeViet\Music\Resources;
+use NukeViet\Music\Utils;
 
 /*
  * Khu vực tìm kiếm không index, cho follow
@@ -31,27 +32,64 @@ $page_title = $module_info['funcs'][$op]['func_site_title'];
 $array_search = [];
 $array_search['q'] = $nv_Request->get_title('q', 'get', '');
 $array_search['type'] = $nv_Request->get_title('type', 'get', '');
+$array_search['sort'] = $nv_Request->get_int('sort', 'get', 1);
+$array_search['genre'] = $nv_Request->get_title('genre', 'get', '');
 $array_search['totals'] = 0;
 $array_search['total_songs'] = 0;
 $array_search['total_videos'] = 0;
 $array_search['total_albums'] = 0;
 $array_search['total_artists'] = 0;
 
+if ($array_search['sort'] < 1 or $array_search['sort'] > 3) {
+    $array_search['sort'] = 1;
+}
+if (!empty($array_search['type']) and !in_array($array_search['type'], ['song', 'mv', 'album', 'artist'])) {
+    $array_search['type'] = '';
+}
+$array_search['genre'] = array_filter(array_unique(array_map('trim', explode('-', $array_search['genre']))));
+$genres = $array_search['genre'];
+$array_search['genre'] = [];
+foreach ($global_array_cat as $cat) {
+    if (in_array($cat['cat_code'], $genres)) {
+        $array_search['genre'][$cat['cat_id']] = $cat['cat_code'];
+    }
+}
+
 if (empty($array_search['q'])) {
     nv_redirect_location(Resources::getModLink());
 }
 
 $array_queries = [
-    'q' => urlencode($array_search['q'])
+    'q' => $array_search['q']
 ];
+if (!empty($array_search['type'])) {
+    $array_queries['type'] = $array_search['type'];
+}
+if (!empty($array_search['genre'])) {
+    $array_queries['genre'] = $array_search['genre'];
+}
+if ($array_search['sort'] > 0) {
+    $array_queries['sort'] = $array_search['sort'];
+}
 
-$base_url = Resources::getModFullLinkEncode() . $op;
+$base_url = Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries);
 $per_page = 20;
 $dblike = $db->dblikeescape($array_search['q']);
 $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
 
 $array_songs = $array_videos = $array_albums = $array_artists = [];
 $array_singer_ids = $array_singers = [];
+
+/*
+ * Build query tìm theo thể loại
+ */
+$sql_where_cat = [];
+if (!empty($array_search['genre'])) {
+    foreach ($array_search['genre'] as $cat_id => $cat_code) {
+        $sql_where_cat[] = "FIND_IN_SET(" . $cat_id . ", cat_ids)";
+    }
+}
+$sql_where_cat = !empty($sql_where_cat) ? ("(" . implode(' OR ', $sql_where_cat) . ")") : '';
 
 /*
  * Tìm kiếm bài hát
@@ -64,15 +102,28 @@ if (empty($array_search['type']) or $array_search['type'] == 'song') {
     )";
     $where[] = "status=1";
     $where[] = "is_official=1";
+    if (!empty($sql_where_cat)) {
+        $where[] = $sql_where_cat;
+    }
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_songs")->where(implode(' AND ', $where));
     $db->limit(5)->offset(0);
-    $db->order("CASE
-        WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "' THEN 1
-        WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "%' THEN 2
-        WHEN " . NV_LANG_DATA . "_song_name LIKE '%" . $dblike . "' THEN 4
-        ELSE 3
-    END ASC, song_id DESC");
+
+    if ($array_search['sort'] == 1) {
+        // Mặc định
+        $db->order("CASE
+            WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "' THEN 1
+            WHEN " . NV_LANG_DATA . "_song_name LIKE '" . $dblike . "%' THEN 2
+            WHEN " . NV_LANG_DATA . "_song_name LIKE '%" . $dblike . "' THEN 4
+            ELSE 3
+        END ASC, song_id DESC");
+    } elseif ($array_search['sort'] == 2) {
+        // Nghe nhiều
+        $db->order("stat_views DESC");
+    } else {
+        // Mới nhất
+        $db->order("song_id DESC");
+    }
 
     $db->select("COUNT(song_id)");
     $array_search['total_songs'] = $db->query($db->sql())->fetchColumn();
@@ -116,15 +167,27 @@ if (empty($array_search['type']) or $array_search['type'] == 'mv') {
     )";
     $where[] = "status=1";
     $where[] = "is_official=1";
+    if (!empty($sql_where_cat)) {
+        $where[] = $sql_where_cat;
+    }
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where(implode(' AND ', $where));
     $db->limit(8)->offset(0);
-    $db->order("CASE
-        WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "' THEN 1
-        WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "%' THEN 2
-        WHEN " . NV_LANG_DATA . "_video_name LIKE '%" . $dblike . "' THEN 4
-        ELSE 3
-    END ASC, video_id DESC");
+    if ($array_search['sort'] == 1) {
+        // Mặc định
+        $db->order("CASE
+            WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "' THEN 1
+            WHEN " . NV_LANG_DATA . "_video_name LIKE '" . $dblike . "%' THEN 2
+            WHEN " . NV_LANG_DATA . "_video_name LIKE '%" . $dblike . "' THEN 4
+            ELSE 3
+        END ASC, video_id DESC");
+    } elseif ($array_search['sort'] == 2) {
+        // Nghe nhiều
+        $db->order("stat_views DESC");
+    } else {
+        // Mới nhất
+        $db->order("video_id DESC");
+    }
 
     $db->select("COUNT(video_id)");
     $array_search['total_videos'] = $db->query($db->sql())->fetchColumn();
@@ -166,15 +229,27 @@ if (empty($array_search['type']) or $array_search['type'] == 'album') {
     )";
     $where[] = "status=1";
     $where[] = "is_official=1";
+    if (!empty($sql_where_cat)) {
+        $where[] = $sql_where_cat;
+    }
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where(implode(' AND ', $where));
     $db->limit(8)->offset(0);
-    $db->order("CASE
-        WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "' THEN 1
-        WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "%' THEN 2
-        WHEN " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "' THEN 4
-        ELSE 3
-    END ASC, album_id DESC");
+    if ($array_search['sort'] == 1) {
+        // Mặc định
+        $db->order("CASE
+            WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "' THEN 1
+            WHEN " . NV_LANG_DATA . "_album_name LIKE '" . $dblike . "%' THEN 2
+            WHEN " . NV_LANG_DATA . "_album_name LIKE '%" . $dblike . "' THEN 4
+            ELSE 3
+        END ASC, album_id DESC");
+    } elseif ($array_search['sort'] == 2) {
+        // Nghe nhiều
+        $db->order("stat_views DESC");
+    } else {
+        // Mới nhất
+        $db->order("album_id DESC");
+    }
 
     $db->select("COUNT(album_id)");
     $array_search['total_albums'] = $db->query($db->sql())->fetchColumn();
@@ -219,12 +294,19 @@ if (empty($array_search['type']) or $array_search['type'] == 'artist') {
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_artists")->where(implode(' AND ', $where));
     $db->limit(4)->offset(0);
-    $db->order("CASE
-        WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "' THEN 1
-        WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "%' THEN 2
-        WHEN " . NV_LANG_DATA . "_artist_name LIKE '%" . $dblike . "' THEN 4
-        ELSE 3
-    END ASC, artist_id DESC");
+
+    if ($array_search['sort'] == 3) {
+        // Mới nhất
+        $db->order("artist_id DESC");
+    } else {
+        // Mặc định
+        $db->order("CASE
+            WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "' THEN 1
+            WHEN " . NV_LANG_DATA . "_artist_name LIKE '" . $dblike . "%' THEN 2
+            WHEN " . NV_LANG_DATA . "_artist_name LIKE '%" . $dblike . "' THEN 4
+            ELSE 3
+        END ASC, artist_id DESC");
+    }
 
     $array_select_fields = nv_get_artist_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));

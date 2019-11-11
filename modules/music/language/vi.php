@@ -147,6 +147,9 @@ $lang_module['chart_is_updating'] = 'Bảng xếp hạng đang tiến hành cậ
 
 $lang_module['search_placeholder'] = 'Tìm kiếm bài hát, album, MV...';
 $lang_module['search_sortby'] = 'Sắp xếp theo';
+$lang_module['search_sortby1'] = 'Mặc định';
+$lang_module['search_sortby2'] = 'Nghe nhiều';
+$lang_module['search_sortby3'] = 'Mới nhất';
 $lang_module['search_result_filter'] = 'Lọc kết quả';
 $lang_module['search_result1'] = 'Tìm được';
 $lang_module['search_result2'] = 'kết quả với từ khóa';

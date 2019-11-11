@@ -1,11 +1,13 @@
 <!-- BEGIN: main -->
 <div class="ms-full-search">
     <div class="result-mess alert alert-info">{LANG.search_result1} {SEARCH.totals} {LANG.search_result2} <strong class="s-key">{SEARCH.q}</strong></div>
+    <!-- BEGIN: genre -->
     <div class="search-conditions">
-        <a href="#" class="label label-success">Nhạc Trẻ <i class="fa fa-times" aria-hidden="true"></i></a>
-        <a href="#" class="label label-success">Nghe nhiều <i class="fa fa-times" aria-hidden="true"></i></a>
-        <a href="#" class="label label-success">Nhạc Trẻ <i class="fa fa-times" aria-hidden="true"></i></a>
+        <!-- BEGIN: loop -->
+        <a href="{GENRE.link}" class="label label-success">{GENRE.title} <i class="fa fa-times" aria-hidden="true"></i></a>
+        <!-- END: loop -->
     </div>
+    <!-- END: genre -->
     <div class="search-tabs">
         <ul class="nav nav-tabs">
             <!-- BEGIN: tab -->
@@ -21,16 +23,16 @@
                 <div class="row">
                     <!-- BEGIN: cat -->
                     <div class="col-xs-12 col-sm-12 col-md-6">
-                        <div class="f-item"><a href="#" class="ms-ellipsis">{CAT.cat_name}</a></div>
+                        <div class="f-item"><a href="{CAT.link}" class="ms-ellipsis">{CAT.cat_name}<!-- BEGIN: checked --> <i class="fa fa-check text-success"></i><!-- END: checked --></a></div>
                     </div>
                     <!-- END: cat -->
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="f-heading">{LANG.search_sortby}</div>
-                <div class="f-item"><a href="#" class="ms-ellipsis">Mặc định</a></div>
-                <div class="f-item"><a href="#" class="ms-ellipsis">Nghe nhiều</a></div>
-                <div class="f-item"><a href="#" class="ms-ellipsis">Mới nhất</a></div>
+                <!-- BEGIN: sort -->
+                <div class="f-item"><a href="{SORT.link}" class="ms-ellipsis">{SORT.title}<!-- BEGIN: checked --> <i class="fa fa-check text-success"></i><!-- END: checked --></a></div>
+                <!-- END: sort -->
             </div>
         </div>
     </div>
