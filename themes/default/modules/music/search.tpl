@@ -91,4 +91,11 @@
         <!-- END: result_artists -->
     </div>
 </div>
+
+<!-- BEGIN: generate_page -->
+<div class="text-center">
+    {GENERATE_PAGE}
+</div>
+<!-- END: generate_page -->
+
 <!-- END: main -->

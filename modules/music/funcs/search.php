@@ -73,9 +73,23 @@ if ($array_search['sort'] > 0) {
 }
 
 $base_url = Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries);
-$per_page = 20;
 $dblike = $db->dblikeescape($array_search['q']);
 $dblikekey = $db->dblikeescape(str_replace('-', ' ', strtolower(change_alias($array_search['q']))));
+$page = $nv_Request->get_int('page', 'get', 1);
+if ($page < 1 or $page > 9999999) {
+    $page = 1;
+}
+if ($array_search['type'] == 'song') {
+    $per_page = 30;
+} elseif ($array_search['type'] == 'mv') {
+    $per_page = 40;
+} elseif ($array_search['type'] == 'album') {
+    $per_page = 40;
+} elseif ($array_search['type'] == 'artist') {
+    $per_page = 40;
+} else {
+    $page = $per_page = 1;
+}
 
 $array_songs = $array_videos = $array_albums = $array_artists = [];
 $array_singer_ids = $array_singers = [];
@@ -107,8 +121,16 @@ if (empty($array_search['type']) or $array_search['type'] == 'song') {
     }
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_songs")->where(implode(' AND ', $where));
-    $db->limit(5)->offset(0);
 
+    $db->select("COUNT(song_id)");
+    $array_search['total_songs'] = $db->query($db->sql())->fetchColumn();
+    $array_search['totals'] += $array_search['total_songs'];
+
+    if ($array_search['type'] == 'song') {
+        $db->limit($per_page)->offset(($page - 1) * $per_page);
+    } else {
+        $db->limit(5)->offset(0);
+    }
     if ($array_search['sort'] == 1) {
         // Mặc định
         $db->order("CASE
@@ -124,10 +146,6 @@ if (empty($array_search['type']) or $array_search['type'] == 'song') {
         // Mới nhất
         $db->order("song_id DESC");
     }
-
-    $db->select("COUNT(song_id)");
-    $array_search['total_songs'] = $db->query($db->sql())->fetchColumn();
-    $array_search['totals'] += $array_search['total_songs'];
 
     $array_select_fields = nv_get_song_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -172,7 +190,16 @@ if (empty($array_search['type']) or $array_search['type'] == 'mv') {
     }
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_videos")->where(implode(' AND ', $where));
-    $db->limit(8)->offset(0);
+
+    $db->select("COUNT(video_id)");
+    $array_search['total_videos'] = $db->query($db->sql())->fetchColumn();
+    $array_search['totals'] += $array_search['total_videos'];
+
+    if ($array_search['type'] == 'mv') {
+        $db->limit($per_page)->offset(($page - 1) * $per_page);
+    } else {
+        $db->limit(8)->offset(0);
+    }
     if ($array_search['sort'] == 1) {
         // Mặc định
         $db->order("CASE
@@ -188,10 +215,6 @@ if (empty($array_search['type']) or $array_search['type'] == 'mv') {
         // Mới nhất
         $db->order("video_id DESC");
     }
-
-    $db->select("COUNT(video_id)");
-    $array_search['total_videos'] = $db->query($db->sql())->fetchColumn();
-    $array_search['totals'] += $array_search['total_videos'];
 
     $array_select_fields = nv_get_video_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -234,7 +257,16 @@ if (empty($array_search['type']) or $array_search['type'] == 'album') {
     }
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_albums")->where(implode(' AND ', $where));
-    $db->limit(8)->offset(0);
+
+    $db->select("COUNT(album_id)");
+    $array_search['total_albums'] = $db->query($db->sql())->fetchColumn();
+    $array_search['totals'] += $array_search['total_albums'];
+
+    if ($array_search['type'] == 'album') {
+        $db->limit($per_page)->offset(($page - 1) * $per_page);
+    } else {
+        $db->limit(8)->offset(0);
+    }
     if ($array_search['sort'] == 1) {
         // Mặc định
         $db->order("CASE
@@ -250,10 +282,6 @@ if (empty($array_search['type']) or $array_search['type'] == 'album') {
         // Mới nhất
         $db->order("album_id DESC");
     }
-
-    $db->select("COUNT(album_id)");
-    $array_search['total_albums'] = $db->query($db->sql())->fetchColumn();
-    $array_search['totals'] += $array_search['total_albums'];
 
     $array_select_fields = nv_get_album_select_fields();
     $db->select(implode(', ', $array_select_fields[0]));
@@ -293,8 +321,16 @@ if (empty($array_search['type']) or $array_search['type'] == 'artist') {
     $where[] = "(artist_type=0 OR artist_type=2)";
 
     $db->sqlreset()->from(Resources::getTablePrefix() . "_artists")->where(implode(' AND ', $where));
-    $db->limit(4)->offset(0);
 
+    $db->select("COUNT(artist_id)");
+    $array_search['total_artists'] = $db->query($db->sql())->fetchColumn();
+    $array_search['totals'] += $array_search['total_artists'];
+
+    if ($array_search['type'] == 'artist') {
+        $db->limit($per_page)->offset(($page - 1) * $per_page);
+    } else {
+        $db->limit(4)->offset(0);
+    }
     if ($array_search['sort'] == 3) {
         // Mới nhất
         $db->order("artist_id DESC");
@@ -366,7 +402,12 @@ foreach ($array_albums as $id => $row) {
     $array_albums[$id] = $row;
 }
 
-$contents = nv_theme_music_search($array_search, $array_songs, $array_videos, $array_albums, $array_artists, $array_queries);
+if (!empty($array_search['type'])) {
+    $generate_page = nv_generate_page($base_url, $array_search['totals'], $per_page, $page);
+} else {
+    $generate_page = '';
+}
+$contents = nv_theme_music_search($array_search, $array_songs, $array_videos, $array_albums, $array_artists, $array_queries, $generate_page);
 
 include NV_ROOTDIR . '/includes/header.php';
 echo nv_site_theme($contents);

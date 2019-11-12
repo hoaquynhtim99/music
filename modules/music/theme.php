@@ -1801,9 +1801,10 @@ function nv_theme_viewpdf($file_url)
  * @param array $array_albums
  * @param array $array_artists
  * @param array $array_queries
+ * @param string $generate_page
  * @return string
  */
-function nv_theme_music_search($array_search, $array_songs, $array_videos, $array_albums, $array_artists, $array_queries)
+function nv_theme_music_search($array_search, $array_songs, $array_videos, $array_albums, $array_artists, $array_queries, $generate_page)
 {
     global $lang_module, $lang_global, $module_info, $global_array_cat, $op;
 
@@ -1947,6 +1948,12 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
             $xtpl->parse('main.genre.loop');
         }
         $xtpl->parse('main.genre');
+    }
+
+    // Phân trang
+    if (!empty($generate_page)) {
+        $xtpl->assign('GENERATE_PAGE', $generate_page);
+        $xtpl->parse('main.generate_page');
     }
 
     $xtpl->parse('main');
