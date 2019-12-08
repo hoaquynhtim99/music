@@ -18,7 +18,7 @@ use NukeViet\Music\Resources;
 $nv_BotManager->setNoIndex()->setFollow();
 
 // Yêu cầu đăng nhập thành viên
-if (!defined("NV_IS_USER")) {
+if (!defined('NV_IS_USER')) {
     $url = nv_url_rewrite(NV_BASE_SITEURL . "index.php?" . NV_LANG_VARIABLE . "=" . NV_LANG_DATA . "&" . NV_NAME_VARIABLE . "=users&" . NV_OP_VARIABLE . "=login&nv_redirect=" . nv_redirect_encrypt($client_info['selfurl']), true);
     nv_redirect_location($url);
 }
@@ -26,14 +26,9 @@ if (!defined("NV_IS_USER")) {
 // Meta: Phần này không cần vì trang này yêu cầu đăng nhập thành viên, không public
 $page_title = $lang_module['mymusic'];
 $array_mod_title[] = [
-    'catid' => 0,
-    'title' => $module_info['custom_title'],
-    'link' => Resources::getModLinkEncode()
-];
-$array_mod_title[] = [
     'catid' => 1,
-    'title' => $page_title,
-    'link' => Resources::getModFullLinkEncode() . $op
+    'title' => $module_info['funcs'][$op]['func_custom_name'],
+    'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic']
 ];
 
 $request_tab = '';
@@ -49,7 +44,7 @@ if (isset($array_op[1])) {
         }
     }
     if (empty($request_tab)) {
-        nv_redirect_location(Resources::getModFullLink() . $op);
+        nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['mymusic']);
     }
 }
 
@@ -59,41 +54,41 @@ if (isset($array_op[2])) {
         $page = intval($m[1]);
     }
     if ($page <= 1) {
-        nv_redirect_location(Resources::getModFullLink() . $op . ($request_tab ? ('/' . $request_tab) : ''));
+        nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['mymusic'] . ($request_tab ? ('/' . $request_tab) : ''));
     }
 }
 
 // Cấm tùy ý đặt link sai
 if (isset($array_op[3])) {
-    nv_redirect_location(Resources::getModFullLink() . $op . ($request_tab ? ('/' . $request_tab) : ''));
+    nv_redirect_location(Resources::getModFullLink() . $module_info['alias']['mymusic'] . ($request_tab ? ('/' . $request_tab) : ''));
 }
 
 if ($request_tab == 'song') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_song'],
-        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_song'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'album') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_album'],
-        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_album'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'mv') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_video'],
-        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_video'] . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'playlist') {
     $array_mod_title[] = [
         'catid' => 2,
         'title' => $lang_module['mymusic_playlist'],
-        'link' => Resources::getModFullLinkEncode() . $op . '/' . $request_tab
+        'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
     $page_title = $lang_module['mymusic_playlist'] . NV_TITLEBAR_DEFIS . $page_title;
 }
@@ -103,7 +98,7 @@ if ($page > 1) {
     $page_title = $page_text . NV_TITLEBAR_DEFIS . $page_title;
 }
 
-$base_url = Resources::getModFullLink() . $op . ($request_tab ? ('/' . $request_tab) : '');
+$base_url = Resources::getModFullLink() . $module_info['alias']['mymusic'] . ($request_tab ? ('/' . $request_tab) : '');
 $all_pages = 0;
 $per_page = 1;
 
@@ -247,7 +242,9 @@ if (empty($request_tab) or $request_tab == 'playlist') {
             unset($row['default_' . $f]);
         }
 
-        $row['playlist_link'] = nv_get_detail_playlist_link($row);
+        // Link chỗ này dẫn tới trang sửa
+        //$row['playlist_link'] = nv_get_detail_playlist_link($row);
+        $row['playlist_link'] = Resources::getModFullLinkEncode() . $module_info['alias']['manager-playlist'] . '&amp;code=' . $row['playlist_code'];
 
         $array_playlists[$row['playlist_id']] = $row;
     }

@@ -885,12 +885,13 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
         " . NV_LANG_DATA . "_playlist_introtext" . $array_fname . "
     ) VALUES (
         :playlist_code, '', '', " . $user_info['userid'] . ", " . NV_CURRENTTIME . ", " . $request['privacy'] . ", " . ($request['auto_add_song'] ? 1 : 0) . ",
-        :playlist_name, ''" . $array_fvalue . "
+        :playlist_name, :playlist_introtext" . $array_fvalue . "
     )";
 
     $array_insert = [];
     $array_insert['playlist_code'] = UserPlaylists::creatUniqueCode();
     $array_insert['playlist_name'] = $request['playlist_name'];
+    $array_insert['playlist_introtext'] = $request['playlist_name'];
 
     $new_playlist_id = $db->insert_id($sql, 'playlist_id', $array_insert);
     if (!$new_playlist_id) {

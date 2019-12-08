@@ -2219,3 +2219,114 @@ ul.ms-detailab-header-info h2 {
 .ms-full-search .result-artists {
     margin-bottom: 20px;
 }
+
+/* Trang quản lý playlist */
+.ms-manager-pl-head-row {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+}
+
+.ms-manager-pl-head-row > .ms-c-avatar {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.ms-manager-pl-head-row > .ms-c-info {
+    flex-grow: 1;
+    flex-shrink: 1;
+    padding-left: 30px;
+}
+
+@media (max-width: 599.98px) {
+    .ms-manager-pl-head-row > .ms-c-avatar {
+        width: 150px;
+    }
+}
+
+@media (max-width: 389.98px) {
+    .ms-manager-pl-head-row {
+        flex-wrap: wrap;
+    }
+
+    .ms-manager-pl-head-row > .ms-c-avatar {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .ms-manager-pl-head-row > .ms-c-info {
+        padding-left: 0;
+    }
+}
+
+.ms-manager-pl-avatar {
+    height: 0;
+    width: 100%;
+    padding-bottom: 100%;
+    background-size: cover;
+    background-position: center center;
+    position: relative;
+}
+
+.ms-manager-pl-avatar .ms-edit-icon {
+    background-color: #000;
+    opacity: 0.6;
+    border-top-left-radius: 5px;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    padding: 7px 15px;
+    color: #fff;
+    display: none;
+}
+
+.ms-manager-pl-avatar .ms-edit-icon:hover {
+    opacity: 0.7;
+}
+
+.ms-manager-pl-avatar .ms-edit-icon .fa {
+    margin-right: 5px;
+}
+
+.ms-manager-pl-avatar:hover .ms-edit-icon {
+    display: block;
+}
+
+.ms-manager-pl-head-row .ms-c-info .ms-introtext {
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+.ms-manager-pl-head-row .ms-c-info .ms-btns {
+    margin-top: 8px;
+}
+
+.ms-manager-pl-head-row .ms-c-info .ms-edit-icon {
+    display: none;
+    margin-left: 7px;
+}
+
+.ms-manager-pl-head-row .ms-c-info .ms-form {
+    position: relative;
+    display: none;
+}
+
+.ms-manager-pl-head-row .ms-c-info .ms-form .form-control {
+    padding-right: 40px;
+}
+
+.ms-manager-pl-head-row .ms-c-info .ms-form .ms-button {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+}
+
+.ms-manager-pl-head-row .ms-c-info h1:hover .ms-edit-icon,
+.ms-manager-pl-head-row .ms-c-info .ms-introtext .ms-val:hover .ms-edit-icon {
+    display: inline-block;
+}

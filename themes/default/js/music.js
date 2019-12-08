@@ -621,6 +621,127 @@ $(document).on('nv.music.ready', function() {
             });
         });
     });
+
+    // Xóa bỏ playlist của thành viên
+    $('[data-toggle="delMyPlaylist"]').on("click", function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        if ($this.data('busy')) {
+            return;
+        }
+        if (!confirm(MSLANG['mymusic_playlist_cdel'])) {
+            return;
+        }
+        $this.data('busy', true);
+        $.ajax({
+            type: 'POST',
+            url: $this.data('url'),
+            dataType: 'json',
+            data: {
+                'delete': 1,
+                'tokend': $this.data("tokend")
+            }
+        }).done(function(res) {
+            $this.data('busy', false);
+            if (res.status != 'SUCCESS') {
+                $.gritter.add({
+                    title: "",
+                    text: res.message,
+                    class_name: "color danger"
+                });
+                return;
+            }
+            location.reload();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            $this.data('busy', false);
+            $.gritter.add({
+                title: "",
+                text: MSLANG['unknow_error'],
+                class_name: "color danger"
+            });
+        });
+    });
+
+    /*
+     * Thao tác chỉnh sửa các thành phần của playlist
+     */
+    function cancelEditInlineForm(ele) {
+        var input = $(ele);
+        var ctn = input.parent().parent();
+        $('.ms-form', ctn).hide();
+        $('.ms-val', ctn).show();
+    }
+
+    function startEditInlineForm(ele) {
+        var input = $(ele);
+        var ctn = input.parent().parent();
+        $('.ms-val', ctn).hide();
+        $('.ms-form', ctn).show();
+        $('.ms-form [data-toggle="msInlineFormInput"]', ctn).select();
+    }
+
+    // Ấn nút sửa các trường dữ liệu của playlist
+    $('[data-toggle="editPlaylistField"]').on("click", function(e) {
+        e.preventDefault();
+        startEditInlineForm(this);
+    });
+
+    // Ấn phím tại các ô sửa ở playlist
+    $('[data-toggle="msInlineFormInput"]').on('keyup', function(e) {
+        if (e.which == 27) {
+            // Nút ESC
+            cancelEditInlineForm(this);
+        }
+    });
+
+    // Submit form sửa
+    $('[data-toggle="msInlineForm"]').on('submit', function(e) {
+        e.preventDefault();
+        var $this = $(this);
+        var field = $this.data('field');
+        var value = trim($('[data-toggle="msInlineFormInput"]', $this).val());
+        if ($this.data('busy')) {
+            return;
+        }
+        if (value == '') {
+            $.gritter.add({
+                title: "",
+                text: MSLANG['error_value_empty'],
+                class_name: "color danger"
+            });
+            return false;
+        }
+        $this.data('busy', true);
+        $.ajax({
+            type: 'POST',
+            url: $this.attr('action'),
+            dataType: 'json',
+            data: {
+                'updateField': 1,
+                'tokend': $this.data("tokend"),
+                'field': field,
+                'value': value
+            }
+        }).done(function(res) {
+            $this.data('busy', false);
+            if (res.status != 'SUCCESS') {
+                $.gritter.add({
+                    title: "",
+                    text: res.message,
+                    class_name: "color danger"
+                });
+                return;
+            }
+            location.reload();
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            $this.data('busy', false);
+            $.gritter.add({
+                title: "",
+                text: MSLANG['unknow_error'],
+                class_name: "color danger"
+            });
+        });
+    });
 });
 
 $(window).on('load', function() {

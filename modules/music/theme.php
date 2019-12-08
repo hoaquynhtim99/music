@@ -1959,3 +1959,25 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
     $xtpl->parse('main');
     return $xtpl->text('main');
 }
+
+/**
+ * @param array $array_playlist
+ * @return string
+ */
+function nv_theme_manager_playlist($array_playlist)
+{
+    global $lang_module, $lang_global, $module_info;
+
+    $xtpl = new XTemplate('manager-playlist.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
+    $xtpl->assign('LANG', $lang_module);
+    $xtpl->assign('GLANG', $lang_global);
+
+    $array_playlist['resource_avatar_thumb'] = nv_get_resource_url($array_playlist['resource_avatar'], 'album', true);
+    $array_playlist['resource_avatar'] = nv_get_resource_url($array_playlist['resource_avatar'], 'album');
+    $array_playlist['num_songs'] = Utils::getFormatNumberView($array_playlist['num_songs']);
+
+    $xtpl->assign('DATA', $array_playlist);
+
+    $xtpl->parse('main');
+    return $xtpl->text('main');
+}

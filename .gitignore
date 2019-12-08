@@ -26,6 +26,8 @@
 /modules/*
 /themes/*
 /tool
+/.github
+/README.md
 
 # Ignore fix module files and directories.
 !/modules/music

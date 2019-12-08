@@ -118,6 +118,7 @@ $lang_module['error_not_login'] = 'Lỗi chưa đăng nhập thành viên';
 $lang_module['error_video_notexists'] = 'Lỗi video không tồn tại';
 $lang_module['error_song_notexists'] = 'Lỗi bài hát không tồn tại';
 $lang_module['error_playlist_notexists'] = 'Lỗi playlist không tồn tại';
+$lang_module['error_value_empty'] = 'Vui lòng nhập nội dung vào ô';
 
 $lang_module['addtolist_require_login'] = 'Bạn cần đăng nhập để thêm bài hát này vào danh sách phát. Nhấp vào đây để đăng nhập. Lưu ý: Nhấp vào đây sẽ làm gián đoạn trình phát hiện tại đang chạy (nếu có)';
 $lang_module['addtolist_new'] = 'Tạo playlist mới';
@@ -139,6 +140,10 @@ $lang_module['mymusic_video'] = 'MV yêu thích';
 $lang_module['mymusic_video_empty'] = 'Chưa có MV yêu thích';
 $lang_module['mymusic_playlist'] = 'Playlist của tôi';
 $lang_module['mymusic_playlist_empty'] = 'Chưa có playlist nào';
+$lang_module['mymusic_playlist_manager'] = 'Quản lý playlist';
+$lang_module['mymusic_playlist_del'] = 'Xóa playlist';
+$lang_module['mymusic_playlist_play'] = 'Phát ngay';
+$lang_module['mymusic_playlist_cdel'] = 'Bạn có chắc chắn xóa playlist này không? Nếu xóa bạn sẽ không thể khôi phục lại!';
 
 $lang_module['chart_stitle_song'] = 'BXH Bài hát';
 $lang_module['chart_stitle_video'] = 'BXH MV';
