@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Language Tiếng Việt
@@ -13,7 +13,7 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
-$lang_translator['author'] = 'Phan Tan Dung (phantandung92@gmail.com)';
+$lang_translator['author'] = 'Phan Tan Dung (writeblabla@gmail.com)';
 $lang_translator['createdate'] = '04/03/2010, 15:22';
 $lang_translator['copyright'] = '@Copyright (C) 2011 Free Ware';
 $lang_translator['info'] = '';
@@ -319,7 +319,9 @@ $lang_module['video_add'] = 'Thêm video';
 $lang_module['video_edit'] = 'Sửa video';
 $lang_module['video_song_id'] = 'Bài hát liên quan';
 $lang_module['video_name'] = 'Tên video';
-$lang_module['video_files'] = 'Các file video';
+$lang_module['video_files'] = 'Các file và link của video';
+$lang_module['video_yt_link'] = 'Link Youtube';
+$lang_module['video_yt_link_help'] = 'Nếu nhập link Youtube, hệ thống sẽ dùng link Youtube để phát MV và bỏ qua đường dẫn bạn chọn bên trên. Lưu ý: Khi phát dạng Youtube thì một số chức năng sẽ không khả dụng ví dụ như tải video, lấy mã nhúng, tự động phát video tiếp theo...';
 $lang_module['video_err_cats'] = 'Vui lòng chọn ít nhất một thể loại';
 $lang_module['video_err_singers'] = 'Vui lòng chọn ít nhất một ca sĩ';
 

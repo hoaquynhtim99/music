@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
@@ -310,6 +310,9 @@ if ($nv_Request->isset_request('getDownloadVideoHtml', 'post,get') or $nv_Reques
     $row = $result->fetch();
     if (empty($row)) {
         nv_htmlOutput('Video not exists!!!');
+    }
+    if (!empty($row['resource_yt'])) {
+        nv_htmlOutput('Download is not allowed!!!');
     }
     foreach ($array_select_fields[1] as $f) {
         if (empty($row[$f]) and !empty($row['default_' . $f])) {

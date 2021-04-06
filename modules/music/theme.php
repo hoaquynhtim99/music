@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
@@ -1095,28 +1095,42 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         $xtpl->parse('main.nofavorite');
     }
 
-    // Xuất đường dẫn cho player
-    $i = 0;
-    foreach ($array['filesdata'] as $_fileinfo) {
-        $i++;
-        $_fileinfo['resource_path'] = str_replace('"', '\"', $_fileinfo['resource_path']);
-        $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
-        $xtpl->assign('FILESDATA', $_fileinfo);
-        if ($i > 1) {
-            $xtpl->parse('main.player.filesdata.comma');
+    if (empty($array['resource_yt'])) {
+        // Xuất đường dẫn cho jwplayer
+        $i = 0;
+        foreach ($array['filesdata'] as $_fileinfo) {
+            $i++;
+            $_fileinfo['resource_path'] = str_replace('"', '\"', $_fileinfo['resource_path']);
+            $_fileinfo['quality_name'] = str_replace('"', '\"', $_fileinfo['quality_name']);
+            $xtpl->assign('FILESDATA', $_fileinfo);
+            if ($i > 1) {
+                $xtpl->parse('main.player.filesdata.comma');
+            }
+            $xtpl->parse('main.player.filesdata');
         }
-        $xtpl->parse('main.player.filesdata');
-    }
 
-    if ($is_embed_mode) {
-        $xtpl->parse('main.player.embed');
-        $xtpl->parse('main.player.embedplayer');
+        if ($is_embed_mode) {
+            $xtpl->parse('main.player.embed');
+            $xtpl->parse('main.player.embedplayer');
+        } else {
+            $xtpl->parse('main.player.fullplayer');
+        }
+        $xtpl->parse('main.player');
+        if ($is_embed_mode) {
+            return $xtpl->text('main.player');
+        }
     } else {
-        $xtpl->parse('main.player.fullplayer');
-    }
-    $xtpl->parse('main.player');
-    if ($is_embed_mode) {
-        return $xtpl->text('main.player');
+        // Video từ Youtube
+        $yotube_code = '';
+        if (preg_match("/^(http(s)?\:)?\/\/([w]{3})?\.youtube[^\/]+\/watch\?v\=([^\&]+)\&?(.*?)$/is", $array['resource_yt'], $m)) {
+            $yotube_code = $m[4];
+        } else if (preg_match("/(http(s)?\:)?\/\/youtu?\.be[^\/]?\/([^\&]+)$/isU", $array['resource_yt'], $m)) {
+            $yotube_code = $m[3];
+        }
+        if (!empty($yotube_code)) {
+            $xtpl->assign('YOUTUBE_CODE', $yotube_code);
+            $xtpl->parse('main.player_youtube');
+        }
     }
 
     // Xuất các album liên quan
@@ -1142,6 +1156,12 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
         }
 
         $xtpl->parse('main.comment_btn');
+    }
+
+    // Cho phép nhúng, tải về
+    if (empty($array['resource_yt'])) {
+        $xtpl->parse('main.allowed_download');
+        $xtpl->parse('main.allowed_embed');
     }
 
     $xtpl->parse('main');

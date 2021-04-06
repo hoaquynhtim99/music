@@ -168,6 +168,12 @@
                     </div>
                 </div>
                 <!-- END: mvquality -->
+                <div class="form-group">
+                    <label for="resource_yt" class="control-label col-sm-8">{LANG.video_yt_link} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.video_yt_link_help}"><i class="fa fa-info-circle"></i></a>:</label>
+                    <div class="col-sm-16 col-md-10 col-lg-8">
+                        <input class="form-control" type="text" name="resource_yt" id="resource_yt" value="{DATA.resource_yt}" maxlength="255">
+                    </div>
+                </div>
             </div>
         </div>
         <div class="form-group">

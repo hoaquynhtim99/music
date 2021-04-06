@@ -36,6 +36,14 @@ videoplayer.on("complete", function(event) {
 </script>
 <!-- END: player -->
 
+<!-- BEGIN: player_youtube -->
+<div class="ms-video-player-youtube">
+    <div class="ms-video-player-youtube-inner">
+        <iframe src="https://www.youtube.com/embed/{YOUTUBE_CODE}?rel=0&amp;controls=1&amp;autoplay=1" title="{VIDEO.video_name}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
+<!-- END: player_youtube -->
+
 <div class="ms-detailmv-header clearfix">
     <h1 class="ms-detailmv-header-name">
         {VIDEO.video_name} -
@@ -100,18 +108,22 @@ videoplayer.on("complete", function(event) {
         <!-- BEGIN: comment_btn -->
         <a href="#" class="btn btn-default btn-xs" data-toggle="scrolltodiv" data-target="#comment-area"><i class="fa fa-comment" aria-hidden="true"></i> {LANG.comment}<!-- BEGIN: stat --> ({COMMENT_NUMS})<!-- END: stat --></a>
         <!-- END: comment_btn -->
+        <!-- BEGIN: allowed_download -->
         <a href="#" class="btn btn-default btn-xs" title="{LANG.download_this_video}" data-toggle="mscallpop" data-mode="downloadvideo" data-code="{VIDEO.video_code}" data-tokend="{VIDEO.tokend}"><i class="fa fa-download" aria-hidden="true"></i> {LANG.download}</a>
+        <!-- END: allowed_download -->
         <div class="btn-group">
             <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-cog" aria-hidden="true"></i> <span class="caret"></span>
             </button>
             <ul class="dropdown-menu dropdown-menu-right">
+                <!-- BEGIN: allowed_embed -->
                 <li>
                     <a href="#" data-toggle="show-va-singer" data-target="#ember-code-area"><i class="fa fa-code" aria-hidden="true"></i> {LANG.get_ember_code}</a>
                     <div class="hidden" id="ember-code-area" title="{LANG.ember_code}">
                         <textarea class="form-control ms-detailmv-ember-code" rows="5" data-toggle="select-all">&lt;iframe src=&quot;{VIDEO.video_link_ember}&quot; width=&quot;100%&quot; height=&quot;420&quot; border=&quot;0&quot; style=&quot;border:0px&quot; &gt;&lt;/iframe&gt;</textarea>
                     </div>
                 </li>
+                <!-- END: allowed_embed -->
                 <li><a href="#"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> {LANG.report}</a></li>
             </ul>
         </div>

@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
@@ -279,6 +279,7 @@ if (!function_exists('nv_get_video_select_fields')) {
             $array_select_fields[] = 'time_update';
             $array_select_fields[] = 'is_official';
             $array_select_fields[] = 'show_inhome';
+            $array_select_fields[] = 'resource_yt';
             $array_select_fields[] = NV_LANG_DATA . '_video_introtext video_introtext';
             $array_select_fields[] = NV_LANG_DATA . '_video_keywords video_keywords';
             if (NV_LANG_DATA != $default_language) {

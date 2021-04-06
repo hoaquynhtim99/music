@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
@@ -58,6 +58,7 @@ if ($video_id) {
     $array['song_id'] = 0;
     $array['resource_avatar'] = '';
     $array['resource_cover'] = '';
+    $array['resource_yt'] = '';
     $array['show_inhome'] = 1;
     $array['video_name'] = '';
     $array['video_alias'] = '';
@@ -79,6 +80,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
     $array['song_id'] = $nv_Request->get_int('song_id', 'post', 0);
     $array['resource_avatar'] = $nv_Request->get_title('resource_avatar', 'post', '');
     $array['resource_cover'] = $nv_Request->get_title('resource_cover', 'post', '');
+    $array['resource_yt'] = nv_substr($nv_Request->get_title('resource_yt', 'post', ''), 0, 255);
     $array['show_inhome'] = (int)$nv_Request->get_bool('show_inhome', 'post', false);
     $array['video_name'] = nv_substr($nv_Request->get_title('video_name', 'post', ''), 0, 250);
     $array['video_alias'] = nv_substr($nv_Request->get_title('video_alias', 'post', ''), 0, 250);
@@ -178,6 +180,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
             song_id=" . $array['song_id'] . ",
             resource_avatar=:resource_avatar,
             resource_cover=:resource_cover,
+            resource_yt=:resource_yt,
             show_inhome=" . $array['show_inhome'] . ",
             " . NV_LANG_DATA . "_video_name=:video_name,
             " . NV_LANG_DATA . "_video_alias=:video_alias,
@@ -191,6 +194,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
             $sth = $db->prepare($sql);
             $sth->bindParam(':resource_avatar', $array['resource_avatar'], PDO::PARAM_STR);
             $sth->bindParam(':resource_cover', $array['resource_cover'], PDO::PARAM_STR);
+            $sth->bindParam(':resource_yt', $array['resource_yt'], PDO::PARAM_STR);
             $sth->bindParam(':video_name', $array['video_name'], PDO::PARAM_STR);
             $sth->bindParam(':video_alias', $array['video_alias'], PDO::PARAM_STR);
             $sth->bindParam(':video_searchkey', $array['video_searchkey'], PDO::PARAM_STR);
@@ -222,12 +226,12 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $video_code = Videos::creatUniqueCode();
 
         $sql = "INSERT INTO " . Resources::getTablePrefix() . "_videos (
-            video_code, cat_ids, singer_ids, author_ids, song_id, resource_avatar, resource_cover, uploader_id, uploader_name, time_add, is_official, show_inhome, status,
+            video_code, cat_ids, singer_ids, author_ids, song_id, resource_avatar, resource_cover, resource_yt, uploader_id, uploader_name, time_add, is_official, show_inhome, status,
             " . NV_LANG_DATA . "_video_name, " . NV_LANG_DATA . "_video_alias, " . NV_LANG_DATA . "_video_searchkey, " . NV_LANG_DATA . "_video_introtext,
             " . NV_LANG_DATA . "_video_keywords" . $array_fname . "
         ) VALUES (
             :video_code, " . $db->quote(implode(',', $array['cat_ids'])) . ", " . $db->quote(implode(',', $array['singer_ids'])) . ",
-            " . $db->quote(implode(',', $array['author_ids'])) . ", " . $array['song_id'] . ", :resource_avatar, :resource_cover,
+            " . $db->quote(implode(',', $array['author_ids'])) . ", " . $array['song_id'] . ", :resource_avatar, :resource_cover, :resource_yt,
             " . $admin_info['admin_id'] . ", " . $db->quote($admin_info['full_name']) . ", " . NV_CURRENTTIME . ", 1, " . $array['show_inhome'] . ", 1,
             :video_name, :video_alias, :video_searchkey, :video_introtext, :video_keywords" . $array_fvalue . "
         )";
@@ -236,6 +240,7 @@ if ($nv_Request->isset_request('submit', 'post')) {
         $data_insert['video_code'] = $video_code;
         $data_insert['resource_avatar'] = $array['resource_avatar'];
         $data_insert['resource_cover'] = $array['resource_cover'];
+        $data_insert['resource_yt'] = $array['resource_yt'];
         $data_insert['video_name'] = $array['video_name'];
         $data_insert['video_alias'] = $array['video_alias'];
         $data_insert['video_searchkey'] = $array['video_searchkey'];

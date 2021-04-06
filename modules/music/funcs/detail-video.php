@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
@@ -246,6 +246,11 @@ if ($_SERVER['REQUEST_URI'] != $true_rewrite_url) {
 $canonicalUrl = NV_MAIN_DOMAIN . nv_url_rewrite(str_replace('&amp;', '&', $ms_detail_data['video_link']), true);
 
 $ms_detail_data['video_link_ember'] = NV_MY_DOMAIN . $ms_detail_data['video_link_ember'];
+
+// MV có link youtube thì không thể nhúng
+if (!empty($ms_detail_data['resource_yt']) and $is_embed_mode) {
+    nv_redirect_location($ms_detail_data['video_link']);
+}
 
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);

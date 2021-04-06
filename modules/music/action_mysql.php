@@ -2,7 +2,7 @@
 
 /**
  * @Project NUKEVIET MUSIC 4.X
- * @Author PHAN TAN DUNG <phantandung92@gmail.com>
+ * @Author PHAN TAN DUNG <writeblabla@gmail.com>
  * @Copyright (C) 2016 PHAN TAN DUNG. All rights reserved
  * @License GNU/GPL version 2 or any later version
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
@@ -482,8 +482,9 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   singer_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của ca sĩ có dạng id1,id2,id3,...',
   author_ids varchar(250) NOT NULL DEFAULT '' COMMENT 'Danh sách ID của nhạc sĩ có dạng id1,id2,id3,...',
   song_id int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID bài hát liên quan',
-  resource_avatar varchar(255) NOT NULL COMMENT 'Avatar',
-  resource_cover varchar(255) NOT NULL COMMENT 'Cover',
+  resource_avatar varchar(255) NOT NULL DEFAULT '' COMMENT 'Avatar',
+  resource_cover varchar(255) NOT NULL DEFAULT '' COMMENT 'Cover',
+  resource_yt varchar(255) NOT NULL DEFAULT '' COMMENT 'Link youtube',
   uploader_id int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'ID người đăng',
   uploader_name varchar(255) NOT NULL DEFAULT '' COMMENT 'Tên người đăng bài hát nếu là bài hát do khách upload',
   stat_views int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Số lượt xem',
