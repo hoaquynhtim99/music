@@ -170,6 +170,56 @@
                 <!-- END: soquality -->
             </div>
         </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="panel-title">
+                    <a class="d-block" role="button" data-toggle="collapse" href="#collapseSongAdv" aria-expanded="{SHOW_ADV_ACTIVE}" aria-controls="collapseSongAdv">{LANG.adv}</a>
+                </div>
+            </div>
+        </div>
+        <div class="collapse{SHOW_ADV_CLASS}" id="collapseSongAdv">
+            <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="caption_file" class="control-label col-sm-8">{LANG.mana_cc_webvtt}:</label>
+                        <div class="col-sm-16 col-md-10 col-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="caption_file" name="caption_file" value="{DATA.caption_file}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_file" data-type="file" data-path="{RESOURCE_CAPTION_PATH}" data-currentpath="{RESOURCE_CAPTION_CURRPATH}">{GLANG.browse_file}</button>
+                                </div>
+                            </div>
+                            <i class="form-text text-muted">{LANG.mana_cc_webvtt_help}.</i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="caption_pdf" class="control-label col-sm-8">{LANG.mana_cc_pdf}:</label>
+                        <div class="col-sm-16 col-md-10 col-lg-8">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="caption_pdf" name="caption_pdf" value="{DATA.caption_pdf}">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_pdf" data-type="file" data-path="{RESOURCE_CAPTION_PATH}" data-currentpath="{RESOURCE_CAPTION_CURRPATH}">{GLANG.browse_file}</button>
+                                </div>
+                            </div>
+                            <i class="form-text text-muted">{LANG.mana_cc_pdf_help}.</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_text} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div>
+                        <div>
+                            <div class="ckeditor required">
+                                {DATA.caption_data}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-sm-offset-8 col-sm-16">
                 <input type="hidden" name="submit" value="1"/>
@@ -177,6 +227,7 @@
                 <input name="submitcontinue" type="hidden" value="0" />
                 <input id="msBtnSubmit" type="submit" value="{GLANG.save}" class="btn btn-primary"/>
                 <!-- BEGIN: save_continue --><input id="msBtnSubmitCon" type="button" class="btn btn-success" value="{LANG.save_and_continue}"/><!-- END: save_continue -->
+                <input type="hidden" name="show_adv" value="{SHOW_ADV}"/>
             </div>
         </div>
     </div>
@@ -194,6 +245,12 @@ $(function() {
     $('#msBtnSubmitCon').click(function() {
         $('[name="submitcontinue"]').val(1);
         $('#msAjForm').submit();
+    });
+    $('#collapseSongAdv').on('hide.bs.collapse', function () {
+        $('[name="show_adv"]').val('0');
+    });
+    $('#collapseSongAdv').on('show.bs.collapse', function () {
+        $('[name="show_adv"]').val('1');
     });
 });
 </script>

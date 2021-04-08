@@ -10,8 +10,7 @@
     'use strict';
 
     var Validate = function(element, options) {
-        var self    = this,
-            editor  = false;
+        var self = this;
 
         this.$element = $(element);
         this.options = options;
@@ -694,6 +693,7 @@ $(document).ready(function() {
 
     function msDestroyAllPop() {
         $.each(msAllPop, function(k, v) {
+            k;
             $(v).popover('destroy');
             $(v).data('havepop', false);
         });
@@ -736,7 +736,7 @@ $(document).ready(function() {
         // Xử lý ID hoặc IDs
         if (btn.data('type') == 'actions') {
             submitID = new Array();
-            $($(btn.data('target'))).each(function(k, v) {
+            $($(btn.data('target'))).each(function() {
                 if ($(this).is(':checked')) {
                     submitID.push($(this).val());
                 }
@@ -857,7 +857,7 @@ $(document).ready(function() {
             cache: false
         }).done(function(data) {
             popupPostResult(data);
-        }).fail(function(data) {
+        }).fail(function() {
             popupPostResult({
                 status: 'error',
                 message: 'System error! Please try again!'
@@ -910,7 +910,7 @@ $(document).ready(function() {
      * Toggle trạng thái đối tượng 0:1 ví dụ đình chỉ/kích hoạt.
      * Mặc định là active:deactive hoặc cái gì đó tùy thiết lập
      */
-    msToggleActive.click(function(e) {
+    msToggleActive.click(function() {
         //e.preventDefault();
         var $this = $(this);
         if ($this.is(':disabled')) {
@@ -940,7 +940,7 @@ $(document).ready(function() {
             cache: false
         }).done(function(data) {
             msToggleActiveRes(data);
-        }).fail(function(data) {
+        }).fail(function() {
             msToggleActiveRes({
                 status: 'error',
                 message: 'System error! Please try again!'
@@ -1029,7 +1029,7 @@ $(document).ready(function() {
         }).done(function(data) {
             itemsCtn.html(data);
             loader.addClass("hidden");
-        }).fail(function(data) {
+        }).fail(function() {
             itemsCtn.html("Error!");
             loader.addClass("hidden");
         });
@@ -1226,7 +1226,7 @@ $(document).ready(function() {
         }).done(function(data) {
             itemsCtn.html(data);
             loader.addClass("hidden");
-        }).fail(function(data) {
+        }).fail(function() {
             itemsCtn.html("Error!");
             loader.addClass("hidden");
         });
@@ -1433,7 +1433,7 @@ $(document).ready(function() {
         }).done(function(data) {
             itemsCtn.html(data);
             loader.addClass("hidden");
-        }).fail(function(data) {
+        }).fail(function() {
             itemsCtn.html("Error!");
             loader.addClass("hidden");
         });

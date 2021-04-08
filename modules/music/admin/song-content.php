@@ -20,7 +20,13 @@ use NukeViet\Music\Shared\Songs;
 
 $set_active_op = 'song-list';
 
+$resource_path_caption = msGetCurrentUploadFolder('lyric');
+$resource_avatar_path = msGetCurrentUploadFolder('song');
+$resource_cover_path = msGetCurrentUploadFolder('song', 'cover');
+$resource_data_path = msGetCurrentUploadFolder('data');
+
 $song_id = $nv_Request->get_int('song_id', 'get', 0);
+$edit_caption = false;
 
 if ($song_id) {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;song_id=' . $song_id;
@@ -44,6 +50,22 @@ if ($song_id) {
     $row['singer_ids'] = Utils::arrayIntFromStrList($row['singer_ids']);
     $row['author_ids'] = Utils::arrayIntFromStrList($row['author_ids']);
 
+    // Lời bài hát
+    $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_songs_caption WHERE song_id=" . $song_id . " AND caption_lang=" . $db->quote(NV_LANG_DATA);
+    $result = $db->query($sql);
+    if ($result->rowCount()) {
+        $row_caption = $result->fetch();
+        $edit_caption = true;
+
+        $row['caption_file'] = $row_caption['caption_file'];
+        $row['caption_pdf'] = $row_caption['caption_pdf'];
+        $row['caption_data'] = nv_editor_br2nl($row_caption['caption_data']);
+    } else {
+        $row['caption_file'] = '';
+        $row['caption_pdf'] = '';
+        $row['caption_data'] = '';
+    }
+
     $array = $array_old = $row;
 
     $array['song_introtext'] = nv_br2nl($array['song_introtext']);
@@ -63,6 +85,9 @@ if ($song_id) {
     $array['song_alias'] = '';
     $array['song_introtext'] = '';
     $array['song_keywords'] = '';
+    $array['caption_file'] = '';
+    $array['caption_pdf'] = '';
+    $array['caption_data'] = '';
 
     $array_old['cat_ids'] = [];
     $array_old['singer_ids'] = [];
@@ -73,18 +98,26 @@ if ($song_id) {
 if ($nv_Request->isset_request('submit', 'post')) {
     AjaxRespon::reset();
 
+    // Cookie đóng mở chức năng nâng cao
+    $show_adv = (int) $nv_Request->get_bool('show_adv', 'post', false);
+    $nv_Request->set_Cookie($module_data . '_song_content_adv', $show_adv, NV_LIVE_COOKIE_TIME);
+
     $array['cat_ids'] = $nv_Request->get_typed_array('cat_ids', 'post', 'int', []);
     $array['singer_ids'] = $nv_Request->get_typed_array('singer_ids', 'post', 'int', []);
     $array['author_ids'] = $nv_Request->get_typed_array('author_ids', 'post', 'int', []);
     $array['video_id'] = $nv_Request->get_int('video_id', 'post', 0);
     $array['resource_avatar'] = $nv_Request->get_title('resource_avatar', 'post', '');
     $array['resource_cover'] = $nv_Request->get_title('resource_cover', 'post', '');
-    $array['show_inhome'] = (int)$nv_Request->get_bool('show_inhome', 'post', false);
+    $array['show_inhome'] = (int) $nv_Request->get_bool('show_inhome', 'post', false);
     $array['song_name'] = nv_substr($nv_Request->get_title('song_name', 'post', ''), 0, 250);
     $array['song_alias'] = nv_substr($nv_Request->get_title('song_alias', 'post', ''), 0, 250);
     $array['song_introtext'] = $nv_Request->get_textarea('song_introtext', '', NV_ALLOWED_HTML_TAGS);
     $array['song_keywords'] = $nv_Request->get_textarea('song_keywords', '', NV_ALLOWED_HTML_TAGS);
     $array['resource_path'] = $nv_Request->get_typed_array('resource_path', 'post', 'title', []);
+
+    $array['caption_file'] = $nv_Request->get_title('caption_file', 'post', '');
+    $array['caption_pdf'] = $nv_Request->get_title('caption_pdf', 'post', '');
+    $array['caption_data'] = $nv_Request->get_editor('caption_data', '', NV_ALLOWED_HTML_TAGS);
 
     // Xử lý qua các thông tin
     $array['cat_ids'] = array_intersect($array['cat_ids'], array_keys($global_array_cat));
@@ -149,6 +182,18 @@ if ($nv_Request->isset_request('submit', 'post')) {
             }
         }
     }
+
+    if (!nv_is_url($array['caption_file']) and nv_is_file($array['caption_file'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['caption_file'] = substr($array['caption_file'], strlen(NV_BASE_SITEURL . $resource_path_caption[0] . '/'));
+    } elseif (!nv_is_url($array['caption_file'])) {
+        $array['caption_file'] = '';
+    }
+    if (!nv_is_url($array['caption_pdf']) and nv_is_file($array['caption_pdf'], NV_UPLOADS_DIR . '/' . $module_upload) === true) {
+        $array['caption_pdf'] = substr($array['caption_pdf'], strlen(NV_BASE_SITEURL . $resource_path_caption[0] . '/'));
+    } elseif (!nv_is_url($array['caption_pdf'])) {
+        $array['caption_pdf'] = '';
+    }
+    $array['caption_data'] = nv_editor_nl2br($array['caption_data']);
 
     // Kiểm tra thông tin
     if (empty($array['cat_ids'])) {
@@ -266,6 +311,41 @@ if ($nv_Request->isset_request('submit', 'post')) {
         )");
     }
 
+    // Xử lý lời bài hát
+    if ($edit_caption) {
+        $sql = "UPDATE " . Resources::getTablePrefix() . "_songs_caption SET
+            caption_file=:caption_file,
+            caption_pdf=:caption_pdf,
+            caption_data=:caption_data
+        WHERE song_id=" . $song_id . " AND caption_lang=" . $db->quote(NV_LANG_DATA);
+
+        try {
+            $sth = $db->prepare($sql);
+            $sth->bindParam(':caption_file', $array['caption_file'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_pdf', $array['caption_pdf'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_data', $array['caption_data'], PDO::PARAM_STR, strlen($array['caption_data']));
+            $sth->execute();
+        } catch (PDOException $e) {
+            trigger_error(print_r($e, true));
+        }
+    } else {
+        $sql = "INSERT INTO " . Resources::getTablePrefix() . "_songs_caption (
+            song_id, caption_lang, caption_file, caption_pdf, caption_data, is_default, weight, status
+        ) VALUES (
+            " . $song_id . ", " . $db->quote(NV_LANG_DATA) . ", :caption_file, :caption_pdf, :caption_data, 1, 1, 1
+        )";
+
+        try {
+            $sth = $db->prepare($sql);
+            $sth->bindParam(':caption_file', $array['caption_file'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_pdf', $array['caption_pdf'], PDO::PARAM_STR);
+            $sth->bindParam(':caption_data', $array['caption_data'], PDO::PARAM_STR, strlen($array['caption_data']));
+            $sth->execute();
+        } catch (PDOException $e) {
+            trigger_error(print_r($e, true));
+        }
+    }
+
     // Cập nhật lại thống kê ca sĩ, nhạc sĩ
     $diff1 = array_diff($array_old['singer_ids'], $array['singer_ids']);
     foreach ($diff1 as $_id) {
@@ -359,16 +439,14 @@ $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 $xtpl->assign('LINK_ADD_ARTIST_SINGER', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-content&amp;artist_type=0');
 $xtpl->assign('LINK_ADD_ARTIST_AUTHOR', NV_ADMIN_MOD_FULLLINK_AMP . 'artist-content&amp;artist_type=1');
 
-$resource_avatar_path = msGetCurrentUploadFolder('song');
-$resource_cover_path = msGetCurrentUploadFolder('song', 'cover');
-$resource_data_path = msGetCurrentUploadFolder('data');
-
 $xtpl->assign('RESOURCE_AVATAR_PATH', $resource_avatar_path[0]);
 $xtpl->assign('RESOURCE_AVATAR_CURRPATH', $resource_avatar_path[1]);
 $xtpl->assign('RESOURCE_COVER_PATH', $resource_cover_path[0]);
 $xtpl->assign('RESOURCE_COVER_CURRPATH', $resource_cover_path[1]);
 $xtpl->assign('RESOURCE_DATA_PATH', $resource_data_path[0]);
 $xtpl->assign('RESOURCE_DATA_CURRPATH', $resource_data_path[1]);
+$xtpl->assign('RESOURCE_CAPTION_PATH', $resource_path_caption[0]);
+$xtpl->assign('RESOURCE_CAPTION_CURRPATH', $resource_path_caption[1]);
 
 $array['song_introtext'] = htmlspecialchars($array['song_introtext']);
 $array['song_keywords'] = htmlspecialchars($array['song_keywords']);
@@ -380,6 +458,25 @@ if (!empty($array['resource_avatar']) and !nv_is_url($array['resource_avatar']) 
 }
 if (!empty($array['resource_cover']) and !nv_is_url($array['resource_cover']) and nv_is_file(NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_cover'], NV_UPLOADS_DIR . '/' . $module_upload)) {
     $array['resource_cover'] = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/' . $array['resource_cover'];
+}
+
+if (defined('NV_EDITOR')) {
+    require_once NV_ROOTDIR . '/' . NV_EDITORSDIR . '/' . NV_EDITOR . '/nv.php';
+}
+
+$array['caption_data'] = htmlspecialchars($array['caption_data']);
+
+if (defined('NV_EDITOR') and nv_function_exists('nv_aleditor')) {
+    $array['caption_data'] = nv_aleditor('caption_data', '100%', '300px', $array['caption_data']);
+} else {
+    $array['caption_data'] = '<textarea class="form-control" style="width:100%;height:300px" name="caption_data">' . $array['caption_data'] . '</textarea>';
+}
+
+if (!empty($array['caption_file']) and !nv_is_url($array['caption_file']) and nv_is_file(NV_BASE_SITEURL . $resource_path_caption[0] . '/' . $array['caption_file'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+    $array['caption_file'] = NV_BASE_SITEURL . $resource_path_caption[0] . '/' . $array['caption_file'];
+}
+if (!empty($array['caption_pdf']) and !nv_is_url($array['caption_pdf']) and nv_is_file(NV_BASE_SITEURL . $resource_path_caption[0] . '/' . $array['caption_pdf'], NV_UPLOADS_DIR . '/' . $module_upload)) {
+    $array['caption_pdf'] = NV_BASE_SITEURL . $resource_path_caption[0] . '/' . $array['caption_pdf'];
 }
 
 $xtpl->assign('DATA', $array);
@@ -525,6 +622,17 @@ foreach ($last_picked_authors as $author_id) {
 if ($num_last_authors > 0) {
     $xtpl->parse('main.choose_last_author');
     $xtpl->parse('main.last_authors');
+}
+
+// Cookie đóng mở chức năng nâng cao
+$show_adv = (int) $nv_Request->get_bool($module_data . '_song_content_adv', 'cookie', false);
+$xtpl->assign('SHOW_ADV', $show_adv);
+if ($show_adv) {
+    $xtpl->assign('SHOW_ADV_ACTIVE', 'true');
+    $xtpl->assign('SHOW_ADV_CLASS', ' in');
+} else {
+    $xtpl->assign('SHOW_ADV_ACTIVE', 'false');
+    $xtpl->assign('SHOW_ADV_CLASS', '');
 }
 
 $xtpl->parse('main');
