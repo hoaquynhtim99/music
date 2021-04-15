@@ -26,7 +26,17 @@ class Charts implements ITypeShare
      */
     public static function getCurrentWeek()
     {
-        return date('W');
+        global $global_config;
+
+        if (NV_SITE_TIMEZONE_NAME != $global_config['statistics_timezone']) {
+            date_default_timezone_set($global_config['statistics_timezone']);
+        }
+        $week = date('W');
+        if (NV_SITE_TIMEZONE_NAME != $global_config['statistics_timezone']) {
+            date_default_timezone_set(NV_SITE_TIMEZONE_NAME);
+        }
+
+        return $week;
     }
 
     /**
@@ -36,7 +46,17 @@ class Charts implements ITypeShare
      */
     public static function getCurrentYear()
     {
-        return date('Y');
+        global $global_config;
+
+        if (NV_SITE_TIMEZONE_NAME != $global_config['statistics_timezone']) {
+            date_default_timezone_set($global_config['statistics_timezone']);
+        }
+        $year = date('Y');
+        if (NV_SITE_TIMEZONE_NAME != $global_config['statistics_timezone']) {
+            date_default_timezone_set(NV_SITE_TIMEZONE_NAME);
+        }
+
+        return $year;
     }
 
     /**
@@ -46,6 +66,16 @@ class Charts implements ITypeShare
      */
     public static function getCurrentTime()
     {
-        return (mktime(0, 0, 0, date('n'), date('j'), date('Y')) - ((date('N') - 1) * 86400));
+        global $global_config;
+
+        if (NV_SITE_TIMEZONE_NAME != $global_config['statistics_timezone']) {
+            date_default_timezone_set($global_config['statistics_timezone']);
+        }
+        $time = mktime(0, 0, 0, date('n'), date('j'), date('Y')) - ((date('N') - 1) * 86400);
+        if (NV_SITE_TIMEZONE_NAME != $global_config['statistics_timezone']) {
+            date_default_timezone_set(NV_SITE_TIMEZONE_NAME);
+        }
+
+        return $time;
     }
 }

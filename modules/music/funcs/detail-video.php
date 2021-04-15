@@ -25,12 +25,12 @@ $array_videos = $array_albums = [];
 
 // Thiết lập lại một số thông tin cho video
 $ms_detail_data['singers'] = [];
-$ms_detail_data['singer_ids'] = explode(',', $ms_detail_data['singer_ids']);
+$ms_detail_data['singer_ids'] = array_unique(array_filter(array_map('intval', explode(',', $ms_detail_data['singer_ids']))));
 $ms_detail_data['cats'] = [];
-$ms_detail_data['cat_ids'] = explode(',', $ms_detail_data['cat_ids']);
+$ms_detail_data['cat_ids'] = array_unique(array_filter(array_map('intval', explode(',', $ms_detail_data['cat_ids']))));
 $ms_detail_data['cat_id'] = $ms_detail_data['cat_ids'] ? $ms_detail_data['cat_ids'][0] : 0;
 $ms_detail_data['authors'] = [];
-$ms_detail_data['author_ids'] = explode(',', $ms_detail_data['author_ids']);
+$ms_detail_data['author_ids'] = array_unique(array_filter(array_map('intval', explode(',', $ms_detail_data['author_ids']))));
 $ms_detail_data['singer_id'] = $ms_detail_data['singer_ids'] ? $ms_detail_data['singer_ids'][0] : 0;
 $ms_detail_data['album_link'] = '';
 $ms_detail_data['song'] = [];
