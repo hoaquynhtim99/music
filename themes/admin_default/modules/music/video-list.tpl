@@ -46,9 +46,9 @@
     </div>
     <hr class="ms-search-hr"/>
 </form>
-<link href="{NV_BASE_SITEURL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
-<script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="{NV_BASE_SITEURL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/locales/bootstrap-datepicker.{NV_LANG_INTERFACE}.min.js"></script>
+<link href="{NV_STATIC_URL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
+<script type="text/javascript" src="{NV_STATIC_URL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="{NV_STATIC_URL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/locales/bootstrap-datepicker.{NV_LANG_INTERFACE}.min.js"></script>
 <script type="text/javascript">
 $(function() {
     $('#search_from,#search_to').datepicker({

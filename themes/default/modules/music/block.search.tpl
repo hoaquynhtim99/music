@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
 <!-- BEGIN: css -->
-<link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}themes/{TEMPLATE_CSS}/css/{MODULE_THEME}.css">
+<link rel="stylesheet" type="text/css" href="{NV_STATIC_URL}themes/{TEMPLATE_CSS}/css/{MODULE_THEME}.css">
 <!-- END: css -->
 <div class="ms-block-auto-search">
     <form method="get" action="{FORM_ACTION}" data-tokend="{TOKEND}" data-toggle="msAutoSearchForm{CONFIG.bid}">

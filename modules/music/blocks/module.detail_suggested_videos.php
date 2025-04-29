@@ -138,9 +138,9 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
         $xtpl->assign('MODULE_DATA', $module_data);
 
         if (is_file(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif')) {
-            $pix_image = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
+            $pix_image = NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
         } else {
-            $pix_image = NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
+            $pix_image = NV_STATIC_URL . 'themes/default/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
         }
         $xtpl->assign('PIX_IMAGE', $pix_image);
 

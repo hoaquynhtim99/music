@@ -52,7 +52,7 @@
         </div>
         <!-- END: loop -->
     </div>
-    <script src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/js/jquery/jquery.cookie.js"></script>
+    <script src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery/jquery.cookie.js"></script>
     <script>
     $(function() {
         var isAuto = $.cookie('{MODULE_DATA}_autoplay_suggesvideo');

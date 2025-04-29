@@ -1,5 +1,5 @@
 <!-- BEGIN: css -->
-<link rel="stylesheet" type="text/css" href="{NV_BASE_SITEURL}themes/{TEMPLATE_CSS}/css/{MODULE_THEME}.css">
+<link rel="stylesheet" type="text/css" href="{NV_STATIC_URL}themes/{TEMPLATE_CSS}/css/{MODULE_THEME}.css">
 <!-- END: css -->
 
 <!-- BEGIN: main -->

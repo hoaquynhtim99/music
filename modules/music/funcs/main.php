@@ -21,6 +21,8 @@ $description = $module_info['description'];
 
 // Các thẻ meta Open Graph
 nv_get_fb_share_image();
+$page_url = Resources::getModLinkEncode();
+$canonicalUrl = getCanonicalUrl($page_url);
 
 $content_albums = $content_videos = $content_singers = $content_songs = [];
 $array_singer_ids = $array_singers = [];

@@ -13,19 +13,6 @@ if (!defined('NV_MAINFILE')) {
 }
 
 /*
- register_shutdown_function("fatal_handler");
-
- function fatal_handler() {
- $error = error_get_last();
- if ($error !== NULL) {
- echo("<pre><code>");
- print_r($error);
- die("</code></pre>");
- }
- }
- */
-
-/*
  * Lưu ý: Để gọi file này cần chuẩn bị các biến sau
  * - $module_name
  * - $site_mods
@@ -537,6 +524,8 @@ if (!function_exists('nv_get_resource_url')) {
      */
     function nv_get_resource_url($orgSrc, $area = 'album', $thumb = false)
     {
+        global $global_config;
+
         $module_upload = Resources::getModUpload();
         $module_info = Resources::getModInfo();
 
@@ -578,15 +567,15 @@ if (!function_exists('nv_get_resource_url')) {
 
         if (isset($map_cfg_data[$area])) {
             if (is_file(NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
-                return NV_BASE_SITEURL . 'themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+                return NV_STATIC_URL . 'themes/' . $global_config['module_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
             } elseif (is_file(NV_ROOTDIR . '/themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
-                return NV_BASE_SITEURL . 'themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+                return NV_STATIC_URL . 'themes/' . $global_config['site_theme'] . '/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
             } elseif (is_file(NV_ROOTDIR . '/themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area])) {
-                return NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
+                return NV_STATIC_URL . 'themes/default/images/' . $module_info['module_theme'] . '/' . $map_cfg_data[$area];
             }
         }
 
-        return NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/pix.gif';
+        return NV_STATIC_URL . 'themes/default/images/' . $module_info['module_theme'] . '/pix.gif';
     }
 }
 

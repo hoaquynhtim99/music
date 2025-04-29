@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <div class="ms-detailab-header clearfix">
     <div class="ms-detailab-header-thumb" style="background-image:url({PLAYLIST.resource_avatar_thumb});">
-        <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
+        <img src="{NV_STATIC_URL}{NV_ASSETS_DIR}/images/pix.gif"/>
     </div>
     <h1 class="ms-detailab-header-name">
         {PLAYLIST.playlist_name}

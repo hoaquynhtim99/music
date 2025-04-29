@@ -6,7 +6,7 @@
             <div class="ms-gird-albums-thumb" style="background-image:url({ROW.resource_avatar_thumb});">
                 <a class="ms-gird-albums-fw" href="{ROW.album_link}" title="{ROW.album_name}">
                     <span class="ms-gird-albums-mask">
-                        <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
+                        <img src="{NV_STATIC_URL}{NV_ASSETS_DIR}/images/pix.gif"/>
                     </span>
                     <span class="ms-gird-albums-iconplay"><i class="fa fa-play-circle-o"></i></span>
                 </a>

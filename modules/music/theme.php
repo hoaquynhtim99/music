@@ -144,9 +144,9 @@ function nv_theme_gird_videos($array, $full_layout = false)
     $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
 
     if (is_file(NV_ROOTDIR . '/themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif')) {
-        $pix_image = NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
+        $pix_image = NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
     } else {
-        $pix_image = NV_BASE_SITEURL . 'themes/default/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
+        $pix_image = NV_STATIC_URL . 'themes/default/images/' . $module_info['module_theme'] . '/pix-16-9.gif';
     }
     $xtpl->assign('PIX_IMAGE', $pix_image);
 
@@ -754,7 +754,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('MODULE_DATA', $module_data);
 
-    $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
+    $xtpl->assign('PLAYER_DIR', NV_STATIC_URL . 'themes/default/images/' . $module_file . '/jwplayer/');
 
     $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'singer', true);
     $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'singer');
@@ -988,7 +988,7 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('MODULE_DATA', $module_data);
 
-    $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
+    $xtpl->assign('PLAYER_DIR', NV_STATIC_URL . 'themes/default/images/' . $module_file . '/jwplayer/');
 
     $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'video', true);
     $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'video');
@@ -1190,8 +1190,8 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('PLUNIQUEID', nv_genpass(6));
 
-    $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
-    $xtpl->assign('PLUGINS_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/');
+    $xtpl->assign('PLAYER_DIR', NV_STATIC_URL . 'themes/default/images/' . $module_file . '/jwplayer/');
+    $xtpl->assign('PLUGINS_DIR', NV_STATIC_URL . 'themes/default/images/' . $module_file . '/');
 
     $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'album', true);
     $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'album');
@@ -1405,8 +1405,8 @@ function nv_theme_detail_playlist($array, $array_captions, $content_comment)
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('PLUNIQUEID', nv_genpass(6));
 
-    $xtpl->assign('PLAYER_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/jwplayer/');
-    $xtpl->assign('PLUGINS_DIR', NV_BASE_SITEURL . 'themes/default/images/' . $module_file . '/');
+    $xtpl->assign('PLAYER_DIR', NV_STATIC_URL . 'themes/default/images/' . $module_file . '/jwplayer/');
+    $xtpl->assign('PLUGINS_DIR', NV_STATIC_URL . 'themes/default/images/' . $module_file . '/');
 
     $array['resource_avatar_thumb'] = nv_get_resource_url($array['resource_avatar'], 'album', true);
     $array['resource_avatar'] = nv_get_resource_url($array['resource_avatar'], 'album');
@@ -1702,7 +1702,7 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
     $xtpl->assign('USER_FULL_NAME', $user_info['full_name']);
     $xtpl->assign('USER_USERNAME', $user_info['username']);
     if (empty($user_info['photo'])) {
-        $xtpl->assign('USER_PHOTO', NV_BASE_SITEURL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/noavatar.png');
+        $xtpl->assign('USER_PHOTO', NV_STATIC_URL . 'themes/' . $module_info['template'] . '/images/' . $module_info['module_theme'] . '/noavatar.png');
     } else {
         $xtpl->assign('USER_PHOTO', NV_BASE_SITEURL . $user_info['photo']);
     }
@@ -1807,7 +1807,7 @@ function nv_theme_viewpdf($file_url)
     $xtpl = new XTemplate('viewer.tpl', NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/js/pdf.js');
     $xtpl->assign('LANG', $lang_module);
     $xtpl->assign('GLANG', $lang_global);
-    $xtpl->assign('PDF_JS_DIR', NV_BASE_SITEURL . NV_ASSETS_DIR . '/js/pdf.js/');
+    $xtpl->assign('PDF_JS_DIR', NV_STATIC_URL . NV_ASSETS_DIR . '/js/pdf.js/');
     $xtpl->assign('PDF_URL', $file_url);
     $xtpl->parse('main');
 

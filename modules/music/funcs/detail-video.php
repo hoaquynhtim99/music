@@ -27,7 +27,7 @@ $array_videos = $array_albums = [];
 $ms_detail_data['singers'] = [];
 $ms_detail_data['singer_ids'] = array_unique(array_filter(array_map('intval', explode(',', $ms_detail_data['singer_ids']))));
 $ms_detail_data['cats'] = [];
-$ms_detail_data['cat_ids'] = array_unique(array_filter(array_map('intval', explode(',', $ms_detail_data['cat_ids']))));
+$ms_detail_data['cat_ids'] = array_unique(array_filter(array_map('intval', explode(',', (string) $ms_detail_data['cat_ids']))));
 $ms_detail_data['cat_id'] = $ms_detail_data['cat_ids'] ? $ms_detail_data['cat_ids'][0] : 0;
 $ms_detail_data['authors'] = [];
 $ms_detail_data['author_ids'] = array_unique(array_filter(array_map('intval', explode(',', $ms_detail_data['author_ids']))));
@@ -237,13 +237,8 @@ if (!empty($ms_detail_data['cat_id']) and isset($global_array_cat[$ms_detail_dat
 $ms_detail_data['video_link'] = nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers']);
 $ms_detail_data['video_link_ember'] = nv_url_rewrite(nv_get_detail_video_link($ms_detail_data, $ms_detail_data['singers'], true, 'embed=1'), true);
 
-$true_rewrite_url = nv_url_rewrite(str_replace('&amp;', '&', $is_embed_mode ? $ms_detail_data['video_link_ember'] : $ms_detail_data['video_link']), true);
-
-// Kiểm tra để chuyển về URL có đuôi .html hoặc tương đương
-if ($_SERVER['REQUEST_URI'] != $true_rewrite_url) {
-    nv_redirect_location($true_rewrite_url);
-}
-$canonicalUrl = NV_MAIN_DOMAIN . nv_url_rewrite(str_replace('&amp;', '&', $ms_detail_data['video_link']), true);
+$page_url = $ms_detail_data['video_link'];
+$canonicalUrl = getCanonicalUrl($page_url);
 
 $ms_detail_data['video_link_ember'] = NV_MY_DOMAIN . $ms_detail_data['video_link_ember'];
 

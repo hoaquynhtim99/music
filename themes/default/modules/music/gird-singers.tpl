@@ -26,7 +26,7 @@
             <div class="ms-gird-singers-thumb" style="background-image:url({ROW.resource_avatar_thumb});">
                 <a class="ms-gird-singers-fw" href="{ROW.singer_link}" title="{ROW.artist_name}">
                     <span class="ms-gird-singers-mask">
-                        <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
+                        <img src="{NV_STATIC_URL}{NV_ASSETS_DIR}/images/pix.gif"/>
                     </span>
                 </a>
                 <img src="{ROW.resource_avatar_thumb}" class="ms-gird-singers-cover"/>

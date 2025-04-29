@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
 <div class="ms-detailso-header clearfix">
     <div class="ms-detailso-header-thumb" style="background-image:url({SONG.resource_avatar_thumb});">
-        <img src="{NV_BASE_SITEURL}{NV_ASSETS_DIR}/images/pix.gif"/>
+        <img src="{NV_STATIC_URL}{NV_ASSETS_DIR}/images/pix.gif"/>
     </div>
     <h1 class="ms-detailso-header-name">
         {SONG.song_name} -
