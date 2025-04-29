@@ -1,8 +1,12 @@
 # Ignore some static files and directories.
+/.buildpath
+/.settings
+/.project
 /.gitattributes
 /.htaccess
 /config.php
 /favicon.ico
+/error.php
 /index.php
 /LICENSE.txt
 /CHANGELOG.txt
@@ -21,6 +25,9 @@
 /composer.json
 /modules/*
 /themes/*
+/tool
+/.github
+/README.md
 
 # Ignore fix module files and directories.
 !/modules/music
@@ -54,3 +61,4 @@
 !/themes/admin_default/js/music.js
 !/themes/admin_default/images/music
 !/themes/admin_default/modules/music
+/api.php

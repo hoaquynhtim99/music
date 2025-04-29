@@ -1,110 +1,425 @@
 <!-- BEGIN: main -->
-<table class="table table-striped table-bordered table-hover">
-	<tbody>
-		<tr>
-			<td>
-				<form class="form-inline" id="filter-form" method="get" action="" onsubmit="return false;">
-					<input class="form-control music-input text size1" type="text" name="q" value="{DATA_SEARCH.q}" placeholder="{LANG.filter_song}"/>
-					<input class="form-control music-input text size1" type="text" name="singer" value="{DATA_SEARCH.singer}" placeholder="{LANG.filter_singer}"/>
-					<input class="form-control music-input text size1" type="text" name="author" value="{DATA_SEARCH.author}" placeholder="{LANG.filter_author}"/>
-					<select class="form-control text music-input size1" name="theloai">
-						<option value="-1">{LANG.filter_category}</option>
-						<!-- BEGIN: cat --><option value="{CAT.id}"{CAT.selected}>{CAT.title}</option><!-- END: cat -->
-					</select>
-					<input class="music-button" type="button" name="do" value="{LANG.filter_action}"/>
-					<input class="music-button" type="button" name="cancel" value="{LANG.filter_cancel}" onclick="window.location='{URL_CANCEL}';"{DATA_SEARCH.disabled}/>
-					<input class="music-button" type="button" name="clear" value="{LANG.filter_clear}"/>
-					<input class="music-button" type="button" value="{LANG.add_song}" onclick="window.location='{URL_ADD}';"/>
-					<input class="music-button" type="button" value="{LANG.addFromOtherSite_title}" onclick="window.location='{URL_ADD_OTHER}';"/>
-				</form>
-			</td>
-		</tr>
-	</tbody>
-</table>
-<script type="text/javascript">
-$(document).ready(function(){
-	$('input[name=clear]').click(function(){
-		$('[name="theloai"]').val(-1);
-		$('#filter-form .text').val('');
-	});
-	$('input[name=do]').click(function(){
-		var f_q = $('input[name=q]').val();
-		var f_singer = $('input[name=singer]').val();
-		var f_author = $('input[name=author]').val();
-		var f_theloai = $('select[name=theloai]').val();
-
-		if( f_q != '' || f_singer != '' || f_author != '' || f_theloai != '-1' ){
-			$('#filter-form input, #filter-form select').attr('disabled', 'disabled');
-			window.location = '{NV_BASE_ADMINURL}index.php?{NV_NAME_VARIABLE}={MODULE_NAME}&{NV_OP_VARIABLE}={OP}&q=' + f_q + '&singer=' + f_singer + '&author=' + f_author + '&theloai=' + f_theloai;	
-		}else{
-			alert ('{LANG.filter_err_submit}');
-		}
-	});
-});
-</script>
-<form class="form-inline" action="{FORM_ACTION}" method="post" name="levelnone" id="levelnone">
-	<table class="table table-striped table-bordered table-hover">
-		<thead>
-			<tr>
-				<td class="center col-check">
-					<input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
-				</td>
-				<td><a href="{DATA_ORDER.title.data.url}" title="{DATA_ORDER.title.data.title}" class="{DATA_ORDER.title.data.class}">{LANG.song_name}</a></td>
-				<td>{LANG.singer}</td>
-				<td>{LANG.author}</td>
-				<td>{LANG.album}</td>
-				<td>{LANG.filter_category}</td>
-				<td>{LANG.upboi}</td>
-				<td>{LANG.info}</td>
-				<td><a href="{DATA_ORDER.numview.data.url}" title="{DATA_ORDER.numview.data.title}" class="{DATA_ORDER.numview.data.class}">{LANG.song_numvew}</a></td>
-				<td class="aright col-date"><a href="{DATA_ORDER.dt.data.url}" title="{DATA_ORDER.dt.data.title}" class="{DATA_ORDER.dt.data.class}">{LANG.playlist_time}</a></td>
-				<td class="center col-status">{LANG.status}</td>
-				<td class="center col-feature">{LANG.feature}</td>
-			</tr>
-		</thead>
-		<tbody>
-		<!-- BEGIN: row -->
-			<tr class="topalign">
-				<td class="text-center">
-					<input type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.id}" name="idcheck[]" />
-				</td>
-				<td><a href="{ROW.link}" onclick="this.target='_blank'">{ROW.title}</a></td>
-				<td>{ROW.singers}</td>
-				<td>{ROW.authors}</td>
-				<td>{ROW.album}</td>
-				<td>{ROW.theloai}</td>
-				<td>{ROW.upload_name}</td>
-				<td>{ROW.bitrate} - {ROW.duration} - {ROW.size}</td>
-				<td><strong>{ROW.numview}</strong></td>
-				<td class="aright">{ROW.addtime}</td>
-				<td class="text-center">
-					<input name="status" id="change_status{ROW.id}" value="1" type="checkbox"{ROW.status} onclick="nv_change_song_status({ROW.id})" />
-				</td>
-				<td class="text-center">
-					<span class="edit-icon"><a class="nounderline" href="{ROW.url_edit}">{GLANG.edit}</a></span>
-					<span class="delete-icon"><a class="nounderline" href="javascript:void(0);" onclick="nv_delete_song({ROW.id});">{GLANG.delete}</a></span>
-				</td>
-			</tr>
-		<!-- END: row -->
-		</tbody>
-		<!-- BEGIN: generate_page -->
-		<tbody>
-			<tr>
-				<td colspan="12">
-					{GENERATE_PAGE}
-				</td>
-			</tr>
-		<!-- END: generate_page -->
-		</tbody>
-		<tfoot>
-			<tr>
-				<td colspan="12">
-					<!-- BEGIN: action -->
-					<span class="{ACTION.class}-icon"><a onclick="nv_song_action(document.getElementById('levelnone'), '{LANG.alert_check}', {ACTION.key});" href="javascript:void(0);" class="nounderline">{ACTION.title}</a>&nbsp;</span>
-					<!-- END: action -->
-				</td>
-			</tr>
-		</tfoot>
-	</table>
-</form>
+<div class="row">
+    <div class="col-sm-12 con-md-12 col-lg-6">
+        <div class="panel panel-main-music">
+            <div class="panel-body">
+                <div class="ms-main-couter">
+                    <div class="c-icon pull-left">
+                        <i class="fa fa-music" aria-hidden="true"></i>
+                    </div>
+                    <div class="c-val">
+                        <span class="c-number"><a href="{LINK_SONGS}">{STAT_BASIC.num_songs}</a></span>
+                        <span class="c-text"><a href="{LINK_SONGS}">{LANG.song}</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 con-md-12 col-lg-6">
+        <div class="panel panel-main-music">
+            <div class="panel-body">
+                <div class="ms-main-couter">
+                    <div class="c-icon pull-left">
+                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    </div>
+                    <div class="c-val">
+                        <span class="c-number"><a href="{LINK_VIDEOS}">{STAT_BASIC.num_videos}</a></span>
+                        <span class="c-text"><a href="{LINK_VIDEOS}">{LANG.video}</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 con-md-12 col-lg-6">
+        <div class="panel panel-main-music">
+            <div class="panel-body">
+                <div class="ms-main-couter">
+                    <div class="c-icon pull-left">
+                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    </div>
+                    <div class="c-val">
+                        <span class="c-number"><a href="{LINK_ALBUMS}">{STAT_BASIC.num_albums}</a></span>
+                        <span class="c-text"><a href="{LINK_ALBUMS}">{LANG.album}</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12 con-md-12 col-lg-6">
+        <div class="panel panel-main-music">
+            <div class="panel-body">
+                <div class="ms-main-couter">
+                    <div class="c-icon pull-left">
+                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                    </div>
+                    <div class="c-val">
+                        <span class="c-number"><a href="{LINK_ARTISTS}">{STAT_BASIC.num_artists}</a></span>
+                        <span class="c-text"><a href="{LINK_ARTISTS}">{LANG.artist}</a></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/chart/Chart.bundle.min.js"></script>
+<div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24">
+        <div class="panel panel-main-music">
+            <div class="panel-heading">
+                {LANG.mainpage_stat_overview}
+            </div>
+            <div class="panel-body">
+                <canvas id="chart-area-overview"></canvas>
+                <script>
+                $(window).on('load', function() {
+                    var config = {
+                        type: 'doughnut',
+                        data: {
+                            datasets: [{
+                                data: [
+                                    {OVERVIEW.song},
+                                    {OVERVIEW.video},
+                                    {OVERVIEW.album}
+                                ],
+                                backgroundColor: [
+                                    window.chartColors.red,
+                                    window.chartColors.orange,
+                                    window.chartColors.blue
+                                ],
+                                label: 'Datasets'
+                            }],
+                            labels: [
+                                '{LANG.song}: {OVERVIEW.song_display}',
+                                '{LANG.video}: {OVERVIEW.video_display}',
+                                '{LANG.album}: {OVERVIEW.album_display}'
+                            ]
+                        },
+                        options: {
+                            responsive: true,
+                            legend: {
+                                position: 'top',
+                            },
+                            title: {
+                                display: true,
+                                text: '{LANG.mainpage_stat_overview}: {OVERVIEW.total_display}'
+                            },
+                            animation: {
+                                animateScale: true,
+                                animateRotate: true
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false,
+                                titleMarginBottom: 5,
+                                callbacks: {
+                                    title: function(a, b) {
+                                        return b.labels[a[0].index].replace(/\: [0-9\.\,]+$/g, "");
+                                    },
+                                    label: function(a, b) {
+                                        return number_format(b.datasets[0].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                    }
+                                }
+                            },
+                        }
+                    };
+                    var ctx = document.getElementById('chart-area-overview').getContext('2d');
+                    var chart = new Chart(ctx, config);
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24">
+        <div class="panel panel-main-music">
+            <div class="panel-heading">
+                {LANG.mainpage_stat_byyear}
+            </div>
+            <div class="panel-body">
+                <canvas id="chart-area-byyear"></canvas>
+                <script>
+                $(window).on('load', function() {
+                    var config = {
+                        type: 'line',
+                        data: {
+                            labels: [{YEAR_VALUE}],
+                            datasets: [{
+                                label: '{LANG.song}',
+                                fill: false,
+                                backgroundColor: window.chartColors.red,
+                                borderColor: window.chartColors.red,
+                                data: [{YEAR_SONG}]
+                            }, {
+                                label: '{LANG.video}',
+                                fill: false,
+                                backgroundColor: window.chartColors.orange,
+                                borderColor: window.chartColors.orange,
+                                data: [{YEAR_VIDEO}]
+                            }, {
+                                label: '{LANG.album}',
+                                fill: false,
+                                backgroundColor: window.chartColors.blue,
+                                borderColor: window.chartColors.blue,
+                                data: [{YEAR_ALBUM}]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            title: {
+                                display: true,
+                                text: '{LANG.mainpage_stat_byyear_title}'
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false,
+                                titleMarginBottom: 5,
+                                callbacks: {
+                                    title: function(a, b) {
+                                        return '{LANG.Year} ' + b.labels[a[0].index];
+                                    },
+                                    label: function(a, b) {
+                                        return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                    }
+                                }
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '{LANG.Year}'
+                                    },
+                                    gridLines: {
+                                        display: true,
+                                        drawBorder: true,
+                                        drawOnChartArea: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '{LANG.Hits}'
+                                    },
+                                    gridLines: {
+                                        display: true,
+                                        drawBorder: true,
+                                        drawOnChartArea: false
+                                    },
+                                    ticks: {
+                                        callback: function(label, index, labels) {
+                                            return number_format(label, 0, ',', '.');
+                                        }
+                                    }
+                                }]
+                            }
+                        }
+                    };
+                    var ctx = document.getElementById('chart-area-byyear').getContext('2d');
+                    var chart = new Chart(ctx, config);
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-24">
+        <div class="panel panel-main-music">
+            <div class="panel-heading">
+                {LANG.mainpage_stat_byday}
+            </div>
+            <div class="panel-body">
+                <canvas id="chart-area-byday"></canvas>
+                <script>
+                $(window).on('load', function() {
+                    var config = {
+                        type: 'line',
+                        data: {
+                            labels: [{DAY_VALUE}],
+                            datasets: [{
+                                label: '{LANG.song}',
+                                fill: false,
+                                backgroundColor: window.chartColors.red,
+                                borderColor: window.chartColors.red,
+                                data: [{DAY_SONG}]
+                            }, {
+                                label: '{LANG.video}',
+                                fill: false,
+                                backgroundColor: window.chartColors.orange,
+                                borderColor: window.chartColors.orange,
+                                data: [{DAY_VIDEO}]
+                            }, {
+                                label: '{LANG.album}',
+                                fill: false,
+                                backgroundColor: window.chartColors.blue,
+                                borderColor: window.chartColors.blue,
+                                data: [{DAY_ALBUM}]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            aspectRatio: 3.8,
+                            title: {
+                                display: true,
+                                text: '{LANG.mainpage_stat_byday_title} {DAY_STAT_MONTH}'
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    title: function(a, b) {
+                                        return '{LANG.Day} ' + b.labels[a[0].index] + '/{DAY_STAT_MONTH}';
+                                    },
+                                    label: function(a, b) {
+                                        return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                    }
+                                }
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '{LANG.Day}'
+                                    },
+                                    gridLines: {
+                                        display: true,
+                                        drawBorder: true,
+                                        drawOnChartArea: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '{LANG.Hits}'
+                                    },
+                                    gridLines: {
+                                        display: true,
+                                        drawBorder: true,
+                                        drawOnChartArea: false
+                                    },
+                                    ticks: {
+                                        callback: function(label, index, labels) {
+                                            return number_format(label, 0, ',', '.');
+                                        }
+                                    }
+                                }]
+                            }
+                        }
+                    };
+                    var ctx = document.getElementById('chart-area-byday').getContext('2d');
+                    var chart = new Chart(ctx, config);
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-24">
+        <div class="panel panel-main-music">
+            <div class="panel-heading">
+                {LANG.mainpage_stat_bymonth}
+            </div>
+            <div class="panel-body">
+                <canvas id="chart-area-bymonth"></canvas>
+                <script>
+                $(window).on('load', function() {
+                    var config = {
+                        type: 'line',
+                        data: {
+                            labels: [{MONTH_VALUE}],
+                            datasets: [{
+                                label: '{LANG.song}',
+                                fill: false,
+                                backgroundColor: window.chartColors.red,
+                                borderColor: window.chartColors.red,
+                                data: [{MONTH_SONG}]
+                            }, {
+                                label: '{LANG.video}',
+                                fill: false,
+                                backgroundColor: window.chartColors.orange,
+                                borderColor: window.chartColors.orange,
+                                data: [{MONTH_VIDEO}]
+                            }, {
+                                label: '{LANG.album}',
+                                fill: false,
+                                backgroundColor: window.chartColors.blue,
+                                borderColor: window.chartColors.blue,
+                                data: [{MONTH_ALBUM}]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            aspectRatio: 3.8,
+                            title: {
+                                display: true,
+                                text: '{LANG.mainpage_stat_bymonth_title} {MONTH_STAT_YEAR}'
+                            },
+                            tooltips: {
+                                mode: 'index',
+                                intersect: false,
+                                callbacks: {
+                                    title: function(a, b) {
+                                        return '{LANG.Month} ' + b.labels[a[0].index] + '/{MONTH_STAT_YEAR}';
+                                    },
+                                    label: function(a, b) {
+                                        return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                    }
+                                }
+                            },
+                            hover: {
+                                mode: 'nearest',
+                                intersect: true
+                            },
+                            scales: {
+                                xAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '{LANG.Month}'
+                                    },
+                                    gridLines: {
+                                        display: true,
+                                        drawBorder: true,
+                                        drawOnChartArea: false
+                                    }
+                                }],
+                                yAxes: [{
+                                    display: true,
+                                    scaleLabel: {
+                                        display: true,
+                                        labelString: '{LANG.Hits}'
+                                    },
+                                    gridLines: {
+                                        display: true,
+                                        drawBorder: true,
+                                        drawOnChartArea: false
+                                    },
+                                    ticks: {
+                                        callback: function(label, index, labels) {
+                                            return number_format(label, 0, ',', '.');
+                                        }
+                                    }
+                                }]
+                            }
+                        }
+                    };
+                    var ctx = document.getElementById('chart-area-bymonth').getContext('2d');
+                    var chart = new Chart(ctx, config);
+                });
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- END: main -->
