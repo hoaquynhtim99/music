@@ -22,7 +22,7 @@
                         <input type="hidden" name="artist_id_selected" value="">
                         <input type="hidden" name="page" value="1">
                         <input type="hidden" name="mode" value="">
-                        <button type="button" name="submit" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
+                        <button type="button" name="submitform" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
                     </div>
                 </div>
                 <div class="item-lists"></div>

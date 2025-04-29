@@ -57,7 +57,7 @@ $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;song_id=' . $song_id;
 $page_title = $lang_module['mana_cc'] . ': ' . $row['song_name'];
 $error = '';
 
-if ($nv_Request->isset_request('submit', 'post')) {
+if ($nv_Request->isset_request('submitform', 'post')) {
     $array['caption_file'] = $nv_Request->get_title('caption_file', 'post', '');
     $array['caption_pdf'] = $nv_Request->get_title('caption_pdf', 'post', '');
     $array['caption_data'] = $nv_Request->get_editor('caption_data', '', NV_ALLOWED_HTML_TAGS);

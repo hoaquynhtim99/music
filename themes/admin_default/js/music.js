@@ -60,7 +60,7 @@
         });
     }
 
-    Validate.VERSION  = '4.3.00';
+    Validate.VERSION  = '5.0.00';
 
     Validate.DEFAULTS = {
         type   : 'normal'      // normal|ajax|file
@@ -1003,7 +1003,7 @@ $(document).ready(function() {
     });
 
     // Ấn nút tìm kiếm ca sĩ, nhạc sĩ
-    $('[name="submit"]', modalPickArtists).on("click", function(e) {
+    $('[name="submitform"]', modalPickArtists).on("click", function(e) {
         e.preventDefault();
         var $this = $(this);
         var loader = $this.find(".load");
@@ -1038,7 +1038,7 @@ $(document).ready(function() {
     // Ấn tìm kiếm khi ấn enter ở ô tìm
     $('[name="q"]', modalPickArtists).on("keyup", function(e) {
         if (e.which == 13) {
-            $('[name="submit"]', modalPickArtists).trigger("click");
+            $('[name="submitform"]', modalPickArtists).trigger("click");
         }
     });
 
@@ -1112,8 +1112,8 @@ $(document).ready(function() {
         $('[name="artist_id_selected"]', modalPickArtists).val(ids.join(","));
 
         // Cho phép submit trang ở nút submit + submit
-        $('[name="submit"]', modalPickArtists).data("allowedpage", true);
-        $('[name="submit"]', modalPickArtists).trigger("click");
+        $('[name="submitform"]', modalPickArtists).data("allowedpage", true);
+        $('[name="submitform"]', modalPickArtists).trigger("click");
     });
 
     // Xóa nghệ sĩ đã chọn (ngoài list)
@@ -1143,8 +1143,8 @@ $(document).ready(function() {
         }
         $('[name="page"]', modalPickArtists).val(page);
         // Cho phép submit trang ở nút submit + submit
-        $('[name="submit"]', modalPickArtists).data("allowedpage", true);
-        $('[name="submit"]', modalPickArtists).trigger("click");
+        $('[name="submitform"]', modalPickArtists).data("allowedpage", true);
+        $('[name="submitform"]', modalPickArtists).trigger("click");
     });
 
     // Xác nhận các nghệ sĩ đã chọn
@@ -1201,7 +1201,7 @@ $(document).ready(function() {
     });
 
     // Ấn nút tìm kiếm bài hát
-    $('[name="submit"]', modalPickSongs).on("click", function(e) {
+    $('[name="submitform"]', modalPickSongs).on("click", function(e) {
         e.preventDefault();
         var $this = $(this);
         var loader = $this.find(".load");
@@ -1235,7 +1235,7 @@ $(document).ready(function() {
     // Ấn tìm kiếm khi ấn enter ở ô tìm
     $('[name="q"]', modalPickSongs).on("keyup", function(e) {
         if (e.which == 13) {
-            $('[name="submit"]', modalPickSongs).trigger("click");
+            $('[name="submitform"]', modalPickSongs).trigger("click");
         }
     });
 
@@ -1319,8 +1319,8 @@ $(document).ready(function() {
         $('[name="song_id_selected"]', modalPickSongs).val(ids.join(","));
 
         // Cho phép submit trang ở nút submit + submit
-        $('[name="submit"]', modalPickSongs).data("allowedpage", true);
-        $('[name="submit"]', modalPickSongs).trigger("click");
+        $('[name="submitform"]', modalPickSongs).data("allowedpage", true);
+        $('[name="submitform"]', modalPickSongs).trigger("click");
     });
 
     // Xóa bài hát đã chọn (ngoài list)
@@ -1350,8 +1350,8 @@ $(document).ready(function() {
         }
         $('[name="page"]', modalPickSongs).val(page);
         // Cho phép submit trang ở nút submit + submit
-        $('[name="submit"]', modalPickSongs).data("allowedpage", true);
-        $('[name="submit"]', modalPickSongs).trigger("click");
+        $('[name="submitform"]', modalPickSongs).data("allowedpage", true);
+        $('[name="submitform"]', modalPickSongs).trigger("click");
     });
 
     // Xác nhận các bài hát đã chọn
@@ -1408,7 +1408,7 @@ $(document).ready(function() {
     });
 
     // Ấn nút tìm kiếm video
-    $('[name="submit"]', modalPickVideos).on("click", function(e) {
+    $('[name="submitform"]', modalPickVideos).on("click", function(e) {
         e.preventDefault();
         var $this = $(this);
         var loader = $this.find(".load");
@@ -1442,7 +1442,7 @@ $(document).ready(function() {
     // Ấn tìm kiếm khi ấn enter ở ô tìm
     $('[name="q"]', modalPickVideos).on("keyup", function(e) {
         if (e.which == 13) {
-            $('[name="submit"]', modalPickVideos).trigger("click");
+            $('[name="submitform"]', modalPickVideos).trigger("click");
         }
     });
 
@@ -1526,8 +1526,8 @@ $(document).ready(function() {
         $('[name="video_id_selected"]', modalPickVideos).val(ids.join(","));
 
         // Cho phép submit trang ở nút submit + submit
-        $('[name="submit"]', modalPickVideos).data("allowedpage", true);
-        $('[name="submit"]', modalPickVideos).trigger("click");
+        $('[name="submitform"]', modalPickVideos).data("allowedpage", true);
+        $('[name="submitform"]', modalPickVideos).trigger("click");
     });
 
     // Xóa video đã chọn (ngoài list)
@@ -1557,8 +1557,8 @@ $(document).ready(function() {
         }
         $('[name="page"]', modalPickVideos).val(page);
         // Cho phép submit trang ở nút submit + submit
-        $('[name="submit"]', modalPickVideos).data("allowedpage", true);
-        $('[name="submit"]', modalPickVideos).trigger("click");
+        $('[name="submitform"]', modalPickVideos).data("allowedpage", true);
+        $('[name="submitform"]', modalPickVideos).trigger("click");
     });
 
     // Xác nhận các bài hát đã chọn

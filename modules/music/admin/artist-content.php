@@ -72,7 +72,7 @@ if ($artist_id) {
     $array['artist_type'] = $artist_type;
 }
 
-if ($nv_Request->isset_request('submit', 'post')) {
+if ($nv_Request->isset_request('submitform', 'post')) {
     AjaxRespon::reset();
 
     $array['artist_type'] = $nv_Request->get_int('artist_type', 'post', 0);

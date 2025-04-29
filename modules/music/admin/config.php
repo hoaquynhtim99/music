@@ -20,7 +20,7 @@ $uploadPrefixDir = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/'
 $subStrResource = strlen($uploadPrefixDir);
 
 $array = [];
-if ($nv_Request->isset_request('submit', 'post')) {
+if ($nv_Request->isset_request('submitform', 'post')) {
     $array['home_albums_display'] = ($nv_Request->get_int('home_albums_display', 'post', 0) == 1 ? 1 : 0);
     $array['home_singers_display'] = ($nv_Request->get_int('home_singers_display', 'post', 0) == 1 ? 1 : 0);
     $array['home_songs_display'] = ($nv_Request->get_int('home_songs_display', 'post', 0) == 1 ? 1 : 0);

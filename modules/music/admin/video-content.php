@@ -71,7 +71,7 @@ if ($video_id) {
     $array_old['song_id'] = 0;
 }
 
-if ($nv_Request->isset_request('submit', 'post')) {
+if ($nv_Request->isset_request('submitform', 'post')) {
     AjaxRespon::reset();
 
     $array['cat_ids'] = $nv_Request->get_typed_array('cat_ids', 'post', 'int', []);

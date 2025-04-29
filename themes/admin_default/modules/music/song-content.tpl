@@ -212,7 +212,7 @@
                 <div class="panel-body">
                     <div>
                         <div>
-                            <div class="ckeditor required">
+                            <div class="ckeditor">
                                 {DATA.caption_data}
                             </div>
                         </div>
@@ -222,7 +222,7 @@
         </div>
         <div class="form-group">
             <div class="col-sm-offset-8 col-sm-16">
-                <input type="hidden" name="submit" value="1"/>
+                <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />
                 <input name="submitcontinue" type="hidden" value="0" />
                 <input id="msBtnSubmit" type="submit" value="{GLANG.save}" class="btn btn-primary"/>

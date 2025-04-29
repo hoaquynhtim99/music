@@ -40,7 +40,7 @@
     </div>
     <div class="form-group">
         <div class="text-center">
-            <input type="hidden" name="submit" value="1"/>
+            <input type="hidden" name="submitform" value="1"/>
             <input type="submit" value="{GLANG.save}" class="btn btn-primary"/>
         </div>
     </div>

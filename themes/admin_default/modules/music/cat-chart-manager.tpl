@@ -172,7 +172,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="submit" class="hidden" name="submit" value="submit"/>
+                    <input type="submit" class="hidden" name="submitform" value="submit"/>
                     <input type="hidden" name="id" value="0"/>
                     <input type="hidden" name="submittype" value="back"/>
                 </form>
