@@ -6,7 +6,7 @@
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="artist_type" class="col-form-label text-sm-end col-sm-4">{LANG.type}:</label>
@@ -74,7 +74,7 @@
             </div>
         </div>
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-        <div class="card">
+        <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="artist_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_name1}:</label>
@@ -182,7 +182,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row">
             <div class="offset-sm-4 col-sm-8">
                 <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />
