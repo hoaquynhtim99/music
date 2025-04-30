@@ -60,8 +60,8 @@ $(function() {
 });
 </script>
 <form>
-    <div class="table-responsive">
-        <table class="table ms-table ms-table-list-with-action-bottom">
+    <div class="table-responsive-lg">
+        <table class="table ms-table ms-table-list-with-action-bottom table-sticky">
             <thead>
                 <tr>
                     <th style="width:5%">

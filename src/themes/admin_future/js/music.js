@@ -650,8 +650,14 @@ $(document).ready(function() {
     // Scroll to div
     $('[data-toggle="msscrollto"]').click(function(e) {
         e.preventDefault();
+        let offsetTop = 0;
+        const header = $('header.header-outer');
+        if (header.length) {
+            offsetTop = header.innerHeight();
+        }
+
         $('html,body').animate({
-            scrollTop: $($(this).attr('href')).offset().top
+            scrollTop: $($(this).attr('href')).offset().top - offsetTop - 8
         }, 250);
     });
 

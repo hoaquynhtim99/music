@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
-<div class="table-responsive">
-    <table class="table ms-table">
+<div class="table-responsive-lg">
+    <table class="table ms-table table-sticky">
         <thead>
             <tr>
                 <th style="width: 80%;">{LANG.artist_name1}</th>
