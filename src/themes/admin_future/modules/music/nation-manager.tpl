@@ -77,7 +77,7 @@
                 <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}" data-msgedit="{LANG.nation_edit}"></span></h4>
             </div>
             <div class="modal-body">
-                <div class="alert alert-info" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
+                <div class="alert alert-info" role="alert" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
                     <div class="panel panel-default">

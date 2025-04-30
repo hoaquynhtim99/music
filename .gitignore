@@ -82,7 +82,7 @@
 /.github
 /build
 /tests
-/tools
+/tools/**
 /src/.htaccess
 /src/assets
 /src/data
@@ -138,9 +138,14 @@
 !/src/themes/admin_future/js
 !/src/themes/admin_future/images
 !/src/themes/admin_future/modules
-!/src/themes/admin_future/css/music.css
+!/src/themes/admin_future/css/music*.css
+!/src/themes/admin_future/css/music*.map
 !/src/themes/admin_future/js/music.js
 !/src/themes/admin_future/images/music
 !/src/themes/admin_future/images/music/**
 !/src/themes/admin_future/modules/music
 !/src/themes/admin_future/modules/music/**
+
+!/tools/music/
+!/tools/music/to5.0/
+!/tools/music/to5.0/**

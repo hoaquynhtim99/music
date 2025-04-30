@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
 <!-- BEGIN: error -->
-<div class="alert alert-danger">{ERROR}</div>
+<div class="alert alert-danger" role="alert">{ERROR}</div>
 <!-- END: error -->
 <form method="post" action="{FORM_ACTION}" class="form-horizontal" autocomplete="off">
     <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>

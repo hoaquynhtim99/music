@@ -1,5 +1,5 @@
 <!-- BEGIN: main -->
-<div class="alert alert-info">{CONFIG_NOTE}.</div>
+<div class="alert alert-info" role="alert">{CONFIG_NOTE}.</div>
 <div class="form-group">
     <div class="btn-group">
         <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -137,7 +137,7 @@
                 <div class="panel panel-info" id="config_urls_system">
                     <div class="panel-heading"><strong>{LANG.config_urls_system}</strong></div>
                     <div class="panel-body">
-                        <div class="alert alert-warning"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{LANG.config_alert_change}</div>
+                        <div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{LANG.config_alert_change}</div>
                         <div class="form-group">
                             <label for="arr_code_prefix_singer" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_singer}:</label>
                             <div class="col-sm-16">
@@ -427,7 +427,7 @@
                 <div class="panel panel-info" id="config_structre_data_page_title">
                     <div class="panel-heading"><strong>{LANG.config_structre_data_page_title}</strong></div>
                     <div class="panel-body">
-                        <div class="alert alert-warning"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>
+                        <div class="alert alert-warning" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>
                         <strong>{LANG.funcs_album}:</strong>
                         <hr class="sm"/>
                         <div class="form-group">

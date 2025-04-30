@@ -6,6 +6,13 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
+// Define variable
+@import "../functions";
+@import "variables";
+@import "variables-dark";
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
 /*--- CORE ---*/
 .ms-ellipsis {
     white-space: nowrap;

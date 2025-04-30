@@ -61,7 +61,7 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/chart/Chart.bundle.min.js"></script>
+<script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/chart/chart.min.js"></script>
 <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24">
         <div class="panel panel-main-music">
