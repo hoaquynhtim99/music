@@ -1,71 +1,73 @@
 <!-- BEGIN: main -->
-<form>
-    <div class="table-responsive-lg">
-        <table class="table ms-table ms-table-list-with-action-bottom table-sticky">
-            <thead>
-                <tr>
-                    <th style="width:5%">
-                        <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
-                    </th>
-                    <th style="width:10%">{LANG.weight}</th>
-                    <th style="width:25%">{LANG.title}</th>
-                    <th style="width:20%">{LANG.stat}</th>
-                    <th style="width:15%">{LANG.create}</th>
-                    <th style="width:15%">{LANG.update}</th>
-                    <th style="width:10%" class="text-right">{LANG.action}</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- BEGIN: loop -->
-                <tr>
-                    <td>
-                        <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
-                    </td>
-                    <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
-                            <span class="text" data-text="{ROW.weight}">{ROW.weight}</span>
-                            <span class="caret"></span>
-                        </button>
-                    </td>
-                    <td>
-                        <h3>{ROW.nation_name}</h3>
-                        <small class="text-muted">{ROW.nation_code}</small>
-                    </td>
-                    <td>
-                        <span title="{LANG.stat_singers}"><span class="text-muted">{LANG.acr_singer}</span>&nbsp;{ROW.stat_singers}</span><br />
-                        <span title="{LANG.stat_authors}"><span class="text-muted">{LANG.acr_author}</span>&nbsp;{ROW.stat_authors}</span>
-                    </td>
-                    <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
-                    <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
-                    <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.nation_id}" data-name="{ROW.nation_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
-                            <span class="text" data-text="{LANG.select}">{LANG.select}</span>
-                            <span class="caret"></span>
-                        </button>
-                    </td>
-                </tr>
-                <!-- END: loop -->
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="7" class="">
-                        <div class="row">
-                            <div class="col-sm-5 form-inline">
-                                <div class="form-group">
-                                    <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
-                                        <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
-                                        <span class="caret"></span>
-                                    </button>
-                                    <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+<form class="card">
+    <div class="card-body">
+        <div class="table-responsive-lg table-card">
+            <table class="table ms-table ms-table-list-with-action-bottom table-sticky mb-1 mt-1">
+                <thead>
+                    <tr>
+                        <th style="width:5%">
+                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                        </th>
+                        <th style="width:10%">{LANG.weight}</th>
+                        <th style="width:25%">{LANG.title}</th>
+                        <th style="width:20%">{LANG.stat}</th>
+                        <th style="width:15%">{LANG.create}</th>
+                        <th style="width:15%">{LANG.update}</th>
+                        <th style="width:10%" class="text-right">{LANG.action}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- BEGIN: loop -->
+                    <tr>
+                        <td>
+                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
+                        </td>
+                        <td>
+                            <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
+                                <span class="text" data-text="{ROW.weight}">{ROW.weight}</span>
+                                <span class="caret"></span>
+                            </button>
+                        </td>
+                        <td>
+                            <h3>{ROW.nation_name}</h3>
+                            <small class="text-muted">{ROW.nation_code}</small>
+                        </td>
+                        <td>
+                            <span title="{LANG.stat_singers}"><span class="text-muted">{LANG.acr_singer}</span>&nbsp;{ROW.stat_singers}</span><br />
+                            <span title="{LANG.stat_authors}"><span class="text-muted">{LANG.acr_author}</span>&nbsp;{ROW.stat_authors}</span>
+                        </td>
+                        <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
+                        <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
+                        <td class="text-right">
+                            <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.nation_id}" data-name="{ROW.nation_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
+                                <span class="text" data-text="{LANG.select}">{LANG.select}</span>
+                                <span class="caret"></span>
+                            </button>
+                        </td>
+                    </tr>
+                    <!-- END: loop -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="7" class="">
+                            <div class="row">
+                                <div class="col-sm-5 form-inline">
+                                    <div class="form-group">
+                                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
+                                            <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
+                                            <span class="caret"></span>
+                                        </button>
+                                        <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
                                 </div>
                             </div>
-                            <div class="col-sm-7">
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
     </div>
 </form>
 

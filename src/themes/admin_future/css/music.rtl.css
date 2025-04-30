@@ -10,6 +10,18 @@
   display: none !important;
 }
 
+.caret {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-right: 2px;
+  vertical-align: middle;
+  border-top: 4px dashed;
+  border-top: 4px solid;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+}
+
 /*--- CORE ---*/
 .ms-ellipsis {
   white-space: nowrap;
@@ -79,7 +91,8 @@ td.ms-ellipsis {
 }
 
 .modal {
-  z-index: 1080; /* Đặt lên để vượt qua cái tooltip */
+  z-index: 1080;
+  /* Đặt lên để vượt qua cái tooltip */
 }
 
 /*--- Fix Form ---*/
