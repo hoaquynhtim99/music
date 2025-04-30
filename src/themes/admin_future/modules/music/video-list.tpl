@@ -46,16 +46,19 @@
     </div>
     <hr class="ms-search-hr"/>
 </form>
-<link href="{NV_STATIC_URL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/css/bootstrap-datepicker3.min.css" rel="stylesheet"/>
-<script type="text/javascript" src="{NV_STATIC_URL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-<script type="text/javascript" src="{NV_STATIC_URL}themes/admin_default/images/{MODULE_FILE}/bootstrap-datepicker/locales/bootstrap-datepicker.{NV_LANG_INTERFACE}.min.js"></script>
+<link type="text/css" href="{ASSETS_STATIC_URL}/js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
+<script type="text/javascript" src="{ASSETS_STATIC_URL}/js/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="{ASSETS_STATIC_URL}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
 <script type="text/javascript">
 $(function() {
     $('#search_from,#search_to').datepicker({
-        format: "dd-mm-yyyy",
-        language: "{NV_LANG_INTERFACE}",
-        autoclose: true,
-        todayHighlight: true
+        dateFormat: nv_jsdate_get.replace('yyyy', 'yy'),
+        changeMonth: true,
+        changeYear: true,
+        showOtherMonths: true,
+        showButtonPanel: true,
+        showOn: 'focus',
+        isRTL: $('html').attr('dir') == 'rtl'
     });
 });
 </script>

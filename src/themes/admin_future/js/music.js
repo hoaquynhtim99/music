@@ -669,7 +669,7 @@ $(document).ready(function() {
             msAllPop.push(this);
             $(this).data('havepop', true);
             $(this).popover({
-                animation: "",
+                animation: true,
                 container: "body",
                 html: true,
                 placement: "bottom",
@@ -700,7 +700,7 @@ $(document).ready(function() {
     function msDestroyAllPop() {
         $.each(msAllPop, function(k, v) {
             k;
-            $(v).popover('destroy');
+            $(v).popover('dispose');
             $(v).data('havepop', false);
         });
         msAllPop = new Array();

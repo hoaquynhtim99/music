@@ -6,6 +6,10 @@
 * @License GNU/GPL version 2 or any later version
 * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
 */
+.hidden {
+  display: none !important;
+}
+
 /*--- CORE ---*/
 .ms-ellipsis {
   white-space: nowrap;
