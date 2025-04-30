@@ -11,7 +11,7 @@
             <!-- BEGIN: loop -->
             <tr>
                 <td>
-                    <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="pull-left ms-img"/>
+                    <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="float-start ms-img"/>
                     <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.artist_link}" class="ms-title" target="_blank">{ROW.artist_name}</a></h3></div>
                     <small class="text-muted">{ROW.real_artist_type}</small>
                 </td>
@@ -25,7 +25,7 @@
         <tfoot>
             <tr>
                 <td colspan="2">
-                    <div class="pull-right">
+                    <div class="float-end">
                         {GENERATE_PAGE}
                     </div>
                 </td>

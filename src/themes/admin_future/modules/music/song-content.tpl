@@ -27,7 +27,7 @@
                     <label class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="hiddeninputlist required clearfix">
-                            <div class="btn-group pull-left">
+                            <div class="btn-group float-start">
                                 <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
                                 <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <ul class="dropdown-menu">
@@ -52,7 +52,7 @@
                 <div class="row mb-3">
                     <label class="col-form-label text-sm-end col-sm-4">{LANG.artist_type_author}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
-                        <div class="btn-group pull-left">
+                        <div class="btn-group float-start">
                             <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
                             <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <ul class="dropdown-menu">
@@ -76,7 +76,7 @@
                 <div class="row mb-3">
                     <label class="col-form-label text-sm-end col-sm-4">{LANG.song_video_id}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
-                        <button tabindex="-1" type="button" class="btn btn-success pull-left" data-toggle="modalPickVideos" data-multiple="false" data-title="{LANG.select_video}" data-list="#PickedVideo" data-inputname="video_id">{LANG.select}</button>
+                        <button tabindex="-1" type="button" class="btn btn-success float-start" data-toggle="modalPickVideos" data-multiple="false" data-title="{LANG.select_video}" data-list="#PickedVideo" data-inputname="video_id">{LANG.select}</button>
                         <ul class="ms-content-picked-lists" id="PickedVideo">
                             <!-- BEGIN: video -->
                             <li>

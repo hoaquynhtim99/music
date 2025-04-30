@@ -37,7 +37,7 @@
                 <label for="search_submit">&nbsp;</label>
                 <div class="clearfix">
                     <input id="search_submit" type="submit" value="{GLANG.search}" class="btn btn-primary"/>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <button type="button" class="btn btn-info hidden">{LANG.adv}</button>
                     </div>
                 </div>

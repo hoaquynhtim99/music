@@ -117,7 +117,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <div class="pull-left">
+                <div class="float-start">
                      <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
                 </div>
                 <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>

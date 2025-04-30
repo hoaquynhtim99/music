@@ -37,7 +37,7 @@
                 <label for="search_submit">&nbsp;</label>
                 <div class="clearfix">
                     <input id="search_submit" type="submit" value="{GLANG.search}" class="btn btn-primary"/>
-                    <div class="pull-right">
+                    <div class="float-end">
                         <button type="button" class="btn btn-info hidden">{LANG.adv}</button>
                     </div>
                 </div>
@@ -85,7 +85,7 @@ $(function() {
                             <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.artist_id}" name="idcheck[]" />
                         </td>
                         <td>
-                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="pull-left ms-img"/>
+                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="float-start ms-img"/>
                             <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.artist_link}" class="ms-title" target="_blank">{ROW.artist_name}</a></h3></div>
                             <small class="text-muted">{ROW.real_artist_type}</small>
                         </td>

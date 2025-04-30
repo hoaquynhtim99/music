@@ -4,7 +4,7 @@
         <div class="card panel-main-music">
             <div class="card-body">
                 <div class="ms-main-couter">
-                    <div class="c-icon pull-left">
+                    <div class="c-icon float-start">
                         <i class="fa fa-music" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
@@ -19,7 +19,7 @@
         <div class="card panel-main-music">
             <div class="card-body">
                 <div class="ms-main-couter">
-                    <div class="c-icon pull-left">
+                    <div class="c-icon float-start">
                         <i class="fa fa-video-camera" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
@@ -34,7 +34,7 @@
         <div class="card panel-main-music">
             <div class="card-body">
                 <div class="ms-main-couter">
-                    <div class="c-icon pull-left">
+                    <div class="c-icon float-start">
                         <i class="fa fa-briefcase" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
@@ -49,7 +49,7 @@
         <div class="card panel-main-music">
             <div class="card-body">
                 <div class="ms-main-couter">
-                    <div class="c-icon pull-left">
+                    <div class="c-icon float-start">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">

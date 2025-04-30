@@ -33,7 +33,7 @@
         <tfoot>
             <tr>
                 <td colspan="2">
-                    <div class="pull-right">
+                    <div class="float-end">
                         {GENERATE_PAGE}
                     </div>
                 </td>
