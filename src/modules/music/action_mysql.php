@@ -206,7 +206,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   PRIMARY KEY (cat_id),
   UNIQUE KEY cat_code (cat_code),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_categories
     ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
@@ -231,7 +231,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   PRIMARY KEY (nation_id),
   UNIQUE KEY nation_code (nation_code),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_nations
     ADD " . $lang . "_nation_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_nation_alias varchar(250) NOT NULL DEFAULT '',
@@ -264,7 +264,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY nation_id (nation_id),
   KEY show_inhome (show_inhome),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_artists
     ADD " . $lang . "_artist_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_artist_alias varchar(250) NOT NULL DEFAULT '',
@@ -299,7 +299,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY is_default (is_default),
   KEY online_supported (online_supported),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_song
     ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
@@ -318,7 +318,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY is_default (is_default),
   KEY online_supported (online_supported),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_quality_video
     ADD " . $lang . "_quality_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_quality_alias varchar(250) NOT NULL DEFAULT ''
@@ -351,17 +351,17 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (song_id),
   UNIQUE KEY song_code (song_code),
-  KEY singer_ids (singer_ids),
-  KEY author_ids (author_ids),
-  KEY album_ids (album_ids),
+  KEY singer_ids (singer_ids(191)),
+  KEY author_ids (author_ids(191)),
+  KEY album_ids (album_ids(191)),
   KEY video_id (video_id),
-  KEY cat_ids (cat_ids),
+  KEY cat_ids (cat_ids(191)),
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
   KEY show_inhome (show_inhome),
-  KEY caption_supported (caption_supported),
+  KEY caption_supported (caption_supported(191)),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_songs
     ADD " . $lang . "_song_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_song_alias varchar(250) NOT NULL DEFAULT '',
@@ -384,7 +384,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   UNIQUE KEY song_id (song_id, caption_lang),
   KEY is_default (is_default),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Bảng lưu đường dẫn file nhạc theo định dạng
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_songs_data (
@@ -396,7 +396,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   UNIQUE KEY id (song_id, quality_id),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 /*
  * Bảng lưu ID bài hát để lấy random các bài hát khi nghe một bài hát
@@ -411,7 +411,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   song_id int(11) unsigned NOT NULL,
   cat_id int(11) unsigned NOT NULL,
   PRIMARY KEY id (song_id, cat_id)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Bảng albums
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_albums (
@@ -437,13 +437,13 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (album_id),
   UNIQUE KEY album_code (album_code),
-  KEY singer_ids (singer_ids),
-  KEY cat_ids (cat_ids),
+  KEY singer_ids (singer_ids(191)),
+  KEY cat_ids (cat_ids(191)),
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
   KEY show_inhome (show_inhome),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_albums
     ADD " . $lang . "_album_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_album_alias varchar(250) NOT NULL DEFAULT '',
@@ -462,7 +462,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   UNIQUE KEY id (album_id, song_id),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 /*
  * Bảng lưu ID album để lấy random các album khi nghe một album
@@ -472,7 +472,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   album_id int(11) unsigned NOT NULL,
   cat_id int(11) unsigned NOT NULL,
   PRIMARY KEY id (album_id, cat_id)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Bảng video
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_videos (
@@ -500,15 +500,15 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   PRIMARY KEY (video_id),
   UNIQUE KEY video_code (video_code),
-  KEY singer_ids (singer_ids),
-  KEY author_ids (author_ids),
+  KEY singer_ids (singer_ids(191)),
+  KEY author_ids (author_ids(191)),
   KEY song_id (song_id),
-  KEY cat_ids (cat_ids),
+  KEY cat_ids (cat_ids(191)),
   KEY uploader_id (uploader_id),
   KEY is_official (is_official),
   KEY show_inhome (show_inhome),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_videos
     ADD " . $lang . "_video_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_video_alias varchar(250) NOT NULL DEFAULT '',
@@ -528,7 +528,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   UNIQUE KEY id (video_id, quality_id),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 /*
  * Bảng lưu ID video để lấy random các video khi xem một video
@@ -538,7 +538,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   video_id int(11) unsigned NOT NULL,
   cat_id int(11) unsigned NOT NULL,
   PRIMARY KEY id (video_id, cat_id)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 /*
  * Bảng lưu bảng xếp hạng bài hát, album, video chính thức
@@ -570,7 +570,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY object_id (object_id),
   KEY summary_scores (summary_scores),
   KEY summary_order (summary_order)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 /*
  * Bảng lưu bảng xếp hạng bài hát, album, video lưu tạm trong một tuần
@@ -597,7 +597,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   KEY object_name (object_name),
   KEY object_id (object_id),
   KEY summary_scores (summary_scores)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Các loại bảng xếp hạng âm nhạc ví dụ: Việt Nam, Âu Mĩ, Hàn Quốc
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_chart_categories (
@@ -612,7 +612,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   PRIMARY KEY (cat_id),
   UNIQUE KEY cat_code (cat_code),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_chart_categories
     ADD " . $lang . "_cat_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_cat_alias varchar(250) NOT NULL DEFAULT '',
@@ -635,7 +635,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   config_name varchar(100) NOT NULL,
   config_value_default varchar(255) NOT NULL DEFAULT '',
   UNIQUE KEY config_name (config_name)
-)ENGINE=MyISAM";
+)ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_config ADD config_value_" . $lang . " varchar(255) NULL DEFAULT NULL";
 
 $default_config = [];
@@ -722,7 +722,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_update int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian cập nhật cuối',
   stat_count int(11) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY id (stat_obj, stat_type, stat_val)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Playlist của thành viên
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_playlists (
@@ -743,7 +743,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   UNIQUE KEY playlist_code (playlist_code),
   KEY userid (userid),
   KEY privacy (privacy)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 $sql_create_module[] = "ALTER TABLE " . $db_config['prefix'] . "_" . $module_data . "_user_playlists
     ADD " . $lang . "_playlist_name varchar(250) NOT NULL DEFAULT '',
     ADD " . $lang . "_playlist_introtext text NOT NULL
@@ -757,7 +757,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   status smallint(4) NOT NULL DEFAULT '0' COMMENT '0: Đang tạm dừng, 1: Đang hoạt động',
   UNIQUE KEY id (playlist_id, song_id),
   KEY status (status)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Bảng các album yêu thích của thành viên
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_albums (
@@ -768,7 +768,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_removed int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian loại bỏ',
   PRIMARY KEY id (userid, album_id),
   KEY is_removed (is_removed)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Bảng các video yêu thích của thành viên
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_videos (
@@ -779,7 +779,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_removed int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian loại bỏ',
   PRIMARY KEY id (userid, video_id),
   KEY is_removed (is_removed)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 // Bảng các bài hát yêu thích của thành viên
 $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_" . $module_data . "_user_favorite_songs (
@@ -790,7 +790,7 @@ $sql_create_module[] = "CREATE TABLE IF NOT EXISTS " . $db_config['prefix'] . "_
   time_removed int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'Thời gian loại bỏ',
   PRIMARY KEY id (userid, song_id),
   KEY is_removed (is_removed)
-) ENGINE=MyISAM";
+) ENGINE=InnoDB";
 
 $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('song', 'all', 0, " . NV_CURRENTTIME . ", 0)";
 $sql_create_module[] = "INSERT IGNORE INTO " . $db_config['prefix'] . "_" . $module_data . "_statistics (stat_obj, stat_type, stat_val, time_update, stat_count) VALUES('album', 'all', 0, " . NV_CURRENTTIME . ", 0)";
