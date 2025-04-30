@@ -1,27 +1,27 @@
 <!-- BEGIN: main -->
 <div class="alert alert-info" role="alert">{CONFIG_NOTE}.</div>
-<div class="form-group">
-    <div class="btn-group">
-        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+<div class="mb-3">
+    <div class="btn-group d-flex">
+        <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             {LANG.config_quick_select} <span class="caret"></span>
         </button>
         <ul class="dropdown-menu dropdown-menu-fullwidth">
-            <li><a href="#config_display" data-toggle="msscrollto">{LANG.config_display}</a></li>
-            <li><a href="#config_view_singer" data-toggle="msscrollto">{LANG.config_view_singer}</a></li>
-            <li><a href="#config_urls_system" data-toggle="msscrollto">{LANG.config_urls_system}</a></li>
-            <li><a href="#config_others" data-toggle="msscrollto">{LANG.config_others}</a></li>
-            <li><a href="#config_mainpage" data-toggle="msscrollto">{LANG.config_mainpage}</a></li>
-            <li><a href="#config_list_albums" data-toggle="msscrollto">{LANG.config_list_albums}</a></li>
-            <li><a href="#config_list_videos" data-toggle="msscrollto">{LANG.config_list_videos}</a></li>
-            <li><a href="#config_structre_data_page_title" data-toggle="msscrollto">{LANG.config_structre_data_page_title}</a></li>
+            <li><a class="dropdown-item" href="#config_display" data-toggle="msscrollto">{LANG.config_display}</a></li>
+            <li><a class="dropdown-item" href="#config_view_singer" data-toggle="msscrollto">{LANG.config_view_singer}</a></li>
+            <li><a class="dropdown-item" href="#config_urls_system" data-toggle="msscrollto">{LANG.config_urls_system}</a></li>
+            <li><a class="dropdown-item" href="#config_others" data-toggle="msscrollto">{LANG.config_others}</a></li>
+            <li><a class="dropdown-item" href="#config_mainpage" data-toggle="msscrollto">{LANG.config_mainpage}</a></li>
+            <li><a class="dropdown-item" href="#config_list_albums" data-toggle="msscrollto">{LANG.config_list_albums}</a></li>
+            <li><a class="dropdown-item" href="#config_list_videos" data-toggle="msscrollto">{LANG.config_list_videos}</a></li>
+            <li><a class="dropdown-item" href="#config_structre_data_page_title" data-toggle="msscrollto">{LANG.config_structre_data_page_title}</a></li>
         </ul>
     </div>
 </div>
 <form action="{FORM_ACTION}" method="post" role="form" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
-        <div class="row">
-            <div class="col-md-6 col-lg-6">
+        <div class="row g-3">
+            <div class="col-md-6 col-lg-6 vstack gap-3">
                 <div class="card" id="config_display">
                     <div class="card-header"><strong>{LANG.config_display}</strong></div>
                     <div class="card-body">
@@ -56,7 +56,7 @@
                     <div class="card-header"><strong>{LANG.config_view_singer}</strong></div>
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-sm-offset-8 col-sm-8">
+                            <div class="offset-sm-4 col-sm-8">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="view_singer_show_header" id="view_singer_show_header" value="1"{DATA.view_singer_show_header} /> {LANG.view_singer_show_header}
@@ -276,12 +276,12 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-lg-6">
+            <div class="col-md-6 col-lg-6 vstack gap-3">
                 <div class="card" id="config_mainpage">
                     <div class="card-header"><strong>{LANG.config_mainpage}</strong></div>
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-sm-offset-8 col-sm-8">
+                            <div class="offset-sm-4 col-sm-8">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="home_albums_display" id="home_albums_display" value="1"{DATA.home_albums_display} /> {LANG.home_albums_display}
@@ -290,7 +290,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-offset-8 col-sm-8">
+                            <div class="offset-sm-4 col-sm-8">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="home_singers_display" id="home_singers_display" value="1"{DATA.home_singers_display} /> {LANG.home_singers_display}
@@ -299,7 +299,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-offset-8 col-sm-8">
+                            <div class="offset-sm-4 col-sm-8">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="home_songs_display" id="home_songs_display" value="1"{DATA.home_songs_display} /> {LANG.home_songs_display}
@@ -308,7 +308,7 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-sm-offset-8 col-sm-8">
+                            <div class="offset-sm-4 col-sm-8">
                                 <div class="checkbox">
                                     <label>
                                         <input type="checkbox" name="home_videos_display" id="home_videos_display" value="1"{DATA.home_videos_display} /> {LANG.home_videos_display}
@@ -501,11 +501,9 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
-            <div class="col-sm-offset-8 col-sm-8">
-                <input type="hidden" name="submitform" value="1"/>
-                <input type="submit" value="{LANG.save}" class="btn btn-primary"/>
-            </div>
+        <div class="text-center mt-3">
+            <input type="hidden" name="submitform" value="1"/>
+            <input type="submit" value="{LANG.save}" class="btn btn-primary"/>
         </div>
     </div>
 </form>

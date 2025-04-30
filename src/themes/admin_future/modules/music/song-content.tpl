@@ -29,11 +29,11 @@
                         <div class="hiddeninputlist required clearfix">
                             <div class="btn-group pull-left">
                                 <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
-                                <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
+                                    <li><a class="dropdown-item" href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                                     <!-- BEGIN: choose_last_singers -->
-                                    <li><a href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedSingers" data-target="#PickedArtistsList"><i class="fa fa-history" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
+                                    <li><a class="dropdown-item" href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedSingers" data-target="#PickedArtistsList"><i class="fa fa-history" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
                                     <!-- END: choose_last_singers -->
                                 </ul>
                             </div>
@@ -54,11 +54,11 @@
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="btn-group pull-left">
                             <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
-                            <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                            <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="{LINK_ADD_ARTIST_AUTHOR}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
+                                <li><a class="dropdown-item" href="{LINK_ADD_ARTIST_AUTHOR}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                                 <!-- BEGIN: choose_last_author -->
-                                <li><a href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedAuthors" data-target="#PickedArtistsListAuthor"><i class="fa fa-history" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
+                                <li><a class="dropdown-item" href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedAuthors" data-target="#PickedArtistsListAuthor"><i class="fa fa-history" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
                                 <!-- END: choose_last_author -->
                             </ul>
                         </div>
@@ -112,7 +112,7 @@
                     </div>
                 </div>
                 <div class="row mb-3 ms-row mb-3-last">
-                    <div class="col-sm-offset-8 col-sm-8 col-md-5 col-lg-4">
+                    <div class="offset-sm-4 col-sm-8 col-md-5 col-lg-4">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="show_inhome" id="show_inhome" value="1"{DATA.show_inhome}/>
@@ -221,7 +221,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-sm-offset-8 col-sm-8">
+            <div class="offset-sm-4 col-sm-8">
                 <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />
                 <input name="submitcontinue" type="hidden" value="0" />

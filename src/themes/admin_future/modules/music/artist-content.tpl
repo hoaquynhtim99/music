@@ -68,7 +68,7 @@
                     </div>
                 </div>
                 <div class="row mb-3 ms-row mb-3-last">
-                    <div class="col-sm-offset-8 col-sm-8 col-md-5 col-lg-4">
+                    <div class="offset-sm-4 col-sm-8 col-md-5 col-lg-4">
                         <div class="checkbox">
                             <label>
                                 <input type="checkbox" name="show_inhome" id="show_inhome" value="1"{DATA.show_inhome}/>
@@ -108,7 +108,7 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <div class="col-sm-offset-8 col-sm-8">
+                    <div class="offset-sm-4 col-sm-8">
                         <h3><strong>{LANG.artist_info_as_singer}</strong></h3>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                 </div>
                 <hr />
                 <div class="row">
-                    <div class="col-sm-offset-8 col-sm-8">
+                    <div class="offset-sm-4 col-sm-8">
                         <h3><strong>{LANG.artist_info_as_author}</strong></h3>
                     </div>
                 </div>
@@ -189,7 +189,7 @@
             </div>
         </div>
         <div class="row mb-3">
-            <div class="col-sm-offset-8 col-sm-8">
+            <div class="offset-sm-4 col-sm-8">
                 <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />
                 <input name="submitcontinue" type="hidden" value="0" />
