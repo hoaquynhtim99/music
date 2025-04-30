@@ -22,6 +22,12 @@
   border-right: 4px solid transparent;
 }
 
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 /*--- CORE ---*/
 .ms-ellipsis {
   white-space: nowrap;

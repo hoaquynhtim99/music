@@ -29,7 +29,7 @@
                         <div class="hiddeninputlist required clearfix">
                             <div class="btn-group pull-left">
                                 <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
-                                <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <ul class="dropdown-menu">
                                     <li><a class="dropdown-item" href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                                     <!-- BEGIN: choose_last_singers -->
@@ -54,7 +54,7 @@
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="btn-group pull-left">
                             <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
-                            <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                            <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{LINK_ADD_ARTIST_AUTHOR}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
                                 <!-- BEGIN: choose_last_author -->
