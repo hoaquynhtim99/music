@@ -65,7 +65,7 @@ $(function() {
 <form class="card">
     <div class="card-body">
         <div class="table-responsive-lg table-card">
-            <table class="table ms-table ms-table-list-with-action-bottom table-sticky mb-1 mt-1">
+            <table class="table ms-table ms-table-list-with-action-bottom table-sticky mb-0 mt-1">
                 <thead>
                     <tr>
                         <th style="width:5%">
@@ -106,31 +106,25 @@ $(function() {
                     </tr>
                     <!-- END: loop -->
                 </tbody>
-                <tfoot>
-                    <tr>
-                        <td colspan="6" class="">
-                            <div class="row">
-                                <div class="col-sm-5 form-inline">
-                                    <div class="form-group">
-                                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
-                                            <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
-                                            <span class="caret"></span>
-                                        </button>
-                                        <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-7">
-                                    <div class="pull-right">
-                                        <!-- BEGIN: generate_page -->
-                                        {GENERATE_PAGE}
-                                        <!-- END: generate_page -->
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tfoot>
             </table>
+        </div>
+    </div>
+    <div class="card-footer border-top">
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="d-flex flex-wrap flex-sm-nowrap align-items-center">
+                <div class="form-group">
+                    <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
+                        <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
+                        <span class="caret"></span>
+                    </button>
+                    <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                </div>
+            </div>
+            <div class="pagination-wrap">
+                <!-- BEGIN: generate_page -->
+                {GENERATE_PAGE}
+                <!-- END: generate_page -->
+            </div>
         </div>
     </div>
 </form>

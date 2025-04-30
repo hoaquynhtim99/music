@@ -3,7 +3,7 @@
 <div class="mb-3">
     <div class="btn-group d-flex">
         <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {LANG.config_quick_select} <span class="caret"></span>
+            {LANG.config_quick_select}
         </button>
         <ul class="dropdown-menu dropdown-menu-fullwidth">
             <li><a class="dropdown-item" href="#config_display" data-toggle="msscrollto">{LANG.config_display}</a></li>
