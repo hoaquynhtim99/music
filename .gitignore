@@ -78,7 +78,7 @@
 
 # NukeViet Core Ignore
 /scripts
-/scss
+/scss/**
 /.github
 /build
 /tests
@@ -91,7 +91,7 @@
 /src/includes
 /src/install
 /src/uploads
-/src/themes
+/src/themes/**
 /codeception.dist.yml
 /composer.json
 /package.json
@@ -113,6 +113,9 @@
 /TODO.txt
 
 # Ignore fix module files and directories.
+!/scss/admin_future/
+!/scss/admin_future/music.scss
+
 !/src/modules/music/
 !/src/modules/music/**
 !/src/themes/default
@@ -130,17 +133,14 @@
 !/src/themes/default/images/music
 !/src/themes/default/modules/music
 
-!/src/themes/admin_default
-/src/themes/admin_default/*
-!/src/themes/admin_default/css
-!/src/themes/admin_default/js
-!/src/themes/admin_default/images
-!/src/themes/admin_default/modules
-/src/themes/admin_default/css/*
-/src/themes/admin_default/js/*
-/src/themes/admin_default/images/*
-/src/themes/admin_default/modules/*
-!/src/themes/admin_default/css/music.css
-!/src/themes/admin_default/js/music.js
-!/src/themes/admin_default/images/music
-!/src/themes/admin_default/modules/music
+!/src/themes/admin_future
+!/src/themes/admin_future/css
+!/src/themes/admin_future/js
+!/src/themes/admin_future/images
+!/src/themes/admin_future/modules
+!/src/themes/admin_future/css/music.css
+!/src/themes/admin_future/js/music.js
+!/src/themes/admin_future/images/music
+!/src/themes/admin_future/images/music/**
+!/src/themes/admin_future/modules/music
+!/src/themes/admin_future/modules/music/**
