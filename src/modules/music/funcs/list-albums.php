@@ -156,7 +156,7 @@ if (!empty($catid)) {
 }
 
 if ($page > 1) {
-    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_text = $nv_Lang->getGlobal('page') . ' ' . number_format($page, 0, ',', '.');
     $page_title .= NV_TITLEBAR_DEFIS . $page_text;
     if (!empty($description)) {
         $description = nv_clean60($description, $global_config['description_length'] - 20);

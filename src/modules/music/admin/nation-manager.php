@@ -17,7 +17,7 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Nation\Nation;
 
-$page_title = $lang_module['nation_manager'];
+$page_title = $nv_Lang->getModule('nation_manager');
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -201,15 +201,15 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     if ($error_exists) {
-        AjaxRespon::setMessage($lang_module['nation_err_exists']);
+        AjaxRespon::setMessage($nv_Lang->getModule('nation_err_exists'));
     } elseif (empty($array['nation_code'])) {
-        AjaxRespon::setMessage($lang_module['nation_err_code']);
+        AjaxRespon::setMessage($nv_Lang->getModule('nation_err_code'));
     } elseif ($is_exists_code) {
-        AjaxRespon::setMessage($lang_module['nation_err_exists_code']);
+        AjaxRespon::setMessage($nv_Lang->getModule('nation_err_exists_code'));
     } elseif (!preg_match($global_array_rule['nation_code'], $array['nation_code'])) {
-        AjaxRespon::setMessage($lang_module['nation_err_rule_code']);
+        AjaxRespon::setMessage($nv_Lang->getModule('nation_err_rule_code'));
     } elseif (empty($array['nation_name'])) {
-        AjaxRespon::setMessage($lang_module['nation_err_name']);
+        AjaxRespon::setMessage($nv_Lang->getModule('nation_err_name'));
     } else {
         if ($nation_id) {
             $sql = "UPDATE " . Resources::getTablePrefix() . "_nations SET
@@ -234,7 +234,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
                 AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         } else {
             $weight = $db->query("SELECT MAX(weight) FROM " . Resources::getTablePrefix() . "_nations")->fetchColumn();
@@ -275,7 +275,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
                 AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         }
     }
@@ -285,8 +285,8 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('OP', $op);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_nation));
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 

@@ -48,7 +48,7 @@ if ($area == MS_COMMENT_AREA_SONG) {
 }
 
 if (empty($ms_detail_data)) {
-    nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+    nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
 }
 
 $array_singer_ids = $array_singers = array();

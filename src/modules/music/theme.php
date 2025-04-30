@@ -25,11 +25,11 @@ use NukeViet\Music\Utils;
  */
 function nv_theme_gird_albums($array, $full_layout = false)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+    global $module_info, $module_upload, $op, $nv_Lang;
 
     $xtpl = new XTemplate('gird-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
 
@@ -79,11 +79,11 @@ function nv_theme_gird_albums($array, $full_layout = false)
  */
 function nv_theme_list_albums($array)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+    global $module_info, $module_upload, $op, $nv_Lang;
 
     $xtpl = new XTemplate('list-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
 
     foreach ($array as $row) {
@@ -135,11 +135,11 @@ function nv_theme_list_albums($array)
  */
 function nv_theme_gird_videos($array, $full_layout = false)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+    global $module_info, $module_upload, $op, $nv_Lang;
 
     $xtpl = new XTemplate('gird-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
 
@@ -201,11 +201,11 @@ function nv_theme_gird_videos($array, $full_layout = false)
  */
 function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $op, $global_array_nation, $array_alphabets;
+    global $module_info, $module_upload, $op, $global_array_nation, $array_alphabets, $nv_Lang;
 
     $xtpl = new XTemplate('gird-singers.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $xtpl->assign('NATION_ALL_LINK', Resources::getModFullLinkEncode() . $module_info['alias']['list-singers']);
     if (empty($nation_id)) {
@@ -273,11 +273,11 @@ function nv_theme_gird_singers($array_singers, $nation_id, $alphabet, $generate_
  */
 function nv_theme_list_songs($array)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload;
+    global $module_info, $module_upload, $nv_Lang;
 
     $xtpl = new XTemplate('list-songs.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
 
     foreach ($array as $row) {
@@ -323,11 +323,11 @@ function nv_theme_list_songs($array)
  */
 function nv_theme_list_playlists($array)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+    global $module_info, $module_upload, $op, $nv_Lang;
 
     $xtpl = new XTemplate('list-playlists.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
 
     foreach ($array as $row) {
@@ -350,11 +350,11 @@ function nv_theme_list_playlists($array)
  */
 function nv_theme_gird_playlists($array, $full_layout = false)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload, $op;
+    global $module_info, $module_upload, $op, $nv_Lang;
 
     $xtpl = new XTemplate('gird-playlists.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('CLASS_ITEM', $full_layout ? 'col-xs-12 col-sm-6 col-md-4' : 'col-xs-12 col-sm-8 col-md-6');
 
@@ -382,11 +382,11 @@ function nv_theme_gird_playlists($array, $full_layout = false)
  */
 function nv_theme_main($content_albums, $content_videos, $content_singers, $content_songs)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload;
+    global $module_info, $module_upload, $nv_Lang;
 
     $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $contents = [];
 
@@ -487,11 +487,11 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
  */
 function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info;
+    global $module_info, $nv_Lang;
 
     $xtpl = new XTemplate('page-list-albums.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $codePrefix = Config::getCodePrefix();
 
@@ -528,11 +528,11 @@ function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_pag
  */
 function nv_theme_page_list_videos($array, $is_detail_cat = false, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info;
+    global $module_info, $nv_Lang;
 
     $xtpl = new XTemplate('page-list-videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $codePrefix = Config::getCodePrefix();
 
@@ -572,11 +572,11 @@ function nv_theme_page_list_videos($array, $is_detail_cat = false, $generate_pag
  */
 function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_videos, $array_albums, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_nation, $op;
+    global $module_info, $global_array_nation, $op, $nv_Lang;
 
     $xtpl = new XTemplate('view-singer.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $xtpl->assign('SINGER', $data_singer);
 
@@ -630,7 +630,7 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
         }
 
         if (empty($num_info_had)) {
-            $xtpl->assign('EMPTY_MESSAGE', sprintf($lang_module['view_singer_empty_profile'], $data_singer['artist_name']));
+            $xtpl->assign('EMPTY_MESSAGE', sprintf($nv_Lang->getModule('view_singer_empty_profile'), $data_singer['artist_name']));
             $xtpl->parse('main.profile.empty');
         }
 
@@ -694,11 +694,11 @@ function nv_theme_view_singer($data_singer, $request_tab, $array_songs, $array_v
  */
 function nv_theme_view_singer_header($data_singer, $request_tab)
 {
-    global $lang_module, $lang_global, $module_info, $module_upload;
+    global $module_info, $module_upload, $nv_Lang;
 
     $xtpl = new XTemplate('view-singer-header.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $xtpl->assign('LINK_PROFILE_TAB', nv_get_view_singer_link($data_singer, true, 'profile'));
     $xtpl->assign('LINK_DEFAULT_TAB', nv_get_view_singer_link($data_singer));
@@ -744,11 +744,11 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
  */
 function nv_theme_detail_song($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode, $module_data;
+    global $module_file, $module_info, $module_upload, $is_embed_mode, $module_data, $nv_Lang;
 
     $xtpl = new XTemplate('detail-song.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
     $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
@@ -925,7 +925,7 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
     if (!empty($array['caption_text'])) {
         $array_tabs[] = [
             'type' => 'text',
-            'title' => $lang_module['lyric'],
+            'title' => $nv_Lang->getModule('lyric'),
             'data' => $array['caption_text']
         ];
     }
@@ -933,13 +933,13 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
         if ($array['caption_file_ext'] == 'pdf') {
             $array_tabs[] = [
                 'type' => 'pdf',
-                'title' => $lang_module['sheet'],
+                'title' => $nv_Lang->getModule('sheet'),
                 'data' => $array['caption_file']
             ];
         } else {
             $array_tabs[] = [
                 'type' => 'iframe',
-                'title' => $lang_module['sheet'],
+                'title' => $nv_Lang->getModule('sheet'),
                 'data' => $array['caption_file']
             ];
         }
@@ -978,11 +978,11 @@ function nv_theme_detail_song($array, $content_comment, $array_albums, $array_vi
  */
 function nv_theme_detail_video($array, $content_comment, $array_albums, $array_videos)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode, $module_data;
+    global $module_file, $module_info, $module_upload, $is_embed_mode, $module_data, $nv_Lang;
 
     $xtpl = new XTemplate('detail-video.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
     $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
@@ -1180,11 +1180,11 @@ function nv_theme_detail_video($array, $content_comment, $array_albums, $array_v
  */
 function nv_theme_detail_album($array, $array_captions, $content_comment, $array_singer_albums, $array_cat_albums)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
+    global $module_file, $module_info, $module_upload, $is_embed_mode, $nv_Lang;
 
     $xtpl = new XTemplate('detail-album.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
     $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
@@ -1395,11 +1395,11 @@ function nv_theme_detail_album($array, $array_captions, $content_comment, $array
 
 function nv_theme_detail_playlist($array, $array_captions, $content_comment)
 {
-    global $module_file, $lang_module, $lang_global, $module_info, $module_upload, $is_embed_mode;
+    global $module_file, $module_info, $module_upload, $is_embed_mode, $nv_Lang;
 
     $xtpl = new XTemplate('detail-playlist.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
     $xtpl->assign('NV_ASSETS_DIR', NV_ASSETS_DIR);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
@@ -1546,11 +1546,11 @@ function nv_theme_detail_playlist($array, $array_captions, $content_comment)
  */
 function nv_theme_popover_download_song($row, $array_resource)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_soquality;
+    global $module_info, $global_array_soquality, $nv_Lang;
 
     $xtpl = new XTemplate('download-song.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     if (empty($array_resource)) {
         $xtpl->parse('main.nothing');
@@ -1588,11 +1588,11 @@ function nv_theme_popover_download_song($row, $array_resource)
  */
 function nv_theme_popover_download_video($row, $array_resource)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_mvquality;
+    global $module_info, $global_array_mvquality, $nv_Lang;
 
     $xtpl = new XTemplate('download-video.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     if (empty($array_resource)) {
         $xtpl->parse('main.nothing');
@@ -1632,11 +1632,11 @@ function nv_theme_popover_download_video($row, $array_resource)
  */
 function nv_theme_popover_add_song_to_playlist($row, $array_playlist, $array_playlist_added, $redirect)
 {
-    global $lang_module, $lang_global, $module_info;
+    global $module_info, $nv_Lang;
 
     $xtpl = new XTemplate('add-song-to-playlist.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $xtpl->assign('SONG', $row);
 
@@ -1691,11 +1691,11 @@ function nv_theme_popover_add_song_to_playlist($row, $array_playlist, $array_pla
  */
 function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albums, $array_playlists, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $op, $user_info;
+    global $module_info, $op, $user_info, $nv_Lang;
 
     $xtpl = new XTemplate('mymusic.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
     $xtpl->assign('TAB_LINK', Resources::getModFullLinkEncode() . $op);
 
@@ -1802,11 +1802,11 @@ function nv_theme_mymusic($request_tab, $array_songs, $array_videos, $array_albu
  */
 function nv_theme_viewpdf($file_url)
 {
-    global $lang_module, $lang_global;
+    global $nv_Lang;
 
     $xtpl = new XTemplate('viewer.tpl', NV_ROOTDIR . '/' . NV_ASSETS_DIR . '/js/pdf.js');
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('PDF_JS_DIR', NV_STATIC_URL . NV_ASSETS_DIR . '/js/pdf.js/');
     $xtpl->assign('PDF_URL', $file_url);
     $xtpl->parse('main');
@@ -1826,11 +1826,11 @@ function nv_theme_viewpdf($file_url)
  */
 function nv_theme_music_search($array_search, $array_songs, $array_videos, $array_albums, $array_artists, $array_queries, $generate_page)
 {
-    global $lang_module, $lang_global, $module_info, $global_array_cat, $op;
+    global $module_info, $global_array_cat, $op, $nv_Lang;
 
     $xtpl = new XTemplate('search.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('UNIQUEID', nv_genpass(6));
 
     $array_search['totals'] = Utils::getFormatNumberView($array_search['totals']);
@@ -1846,7 +1846,7 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
     $array_tabs[] = [
         'active' => empty($array_search['type']) ? true : false,
         'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
-        'title' => $lang_module['search_top'],
+        'title' => $nv_Lang->getModule('search_top'),
     ];
     $array_queries_tmp = $array_queries;
     // Bài hát
@@ -1854,28 +1854,28 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
     $array_tabs['song'] = [
         'active' => $array_search['type'] == 'song' ? true : false,
         'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
-        'title' => $lang_module['song'],
+        'title' => $nv_Lang->getModule('song'),
     ];
     // MV
     $array_queries_tmp['type'] = 'mv';
     $array_tabs['mv'] = [
         'active' => $array_search['type'] == 'mv' ? true : false,
         'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
-        'title' => $lang_module['video_alias'],
+        'title' => $nv_Lang->getModule('video_alias'),
     ];
     // Album
     $array_queries_tmp['type'] = 'album';
     $array_tabs['album'] = [
         'active' => $array_search['type'] == 'album' ? true : false,
         'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
-        'title' => $lang_module['album'],
+        'title' => $nv_Lang->getModule('album'),
     ];
     // Nghệ sĩ
     $array_queries_tmp['type'] = 'artist';
     $array_tabs['artist'] = [
         'active' => $array_search['type'] == 'artist' ? true : false,
         'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp),
-        'title' => $lang_module['artist'],
+        'title' => $nv_Lang->getModule('artist'),
     ];
 
     $xtpl->assign('ALL_TABS', $array_tabs);
@@ -1986,11 +1986,11 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
  */
 function nv_theme_manager_playlist($array_playlist)
 {
-    global $lang_module, $lang_global, $module_info;
+    global $module_info, $nv_Lang;
 
     $xtpl = new XTemplate('manager-playlist.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
     $array_playlist['resource_avatar_thumb'] = nv_get_resource_url($array_playlist['resource_avatar'], 'album', true);
     $array_playlist['resource_avatar'] = nv_get_resource_url($array_playlist['resource_avatar'], 'album');

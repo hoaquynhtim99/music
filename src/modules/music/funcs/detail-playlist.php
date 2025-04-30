@@ -32,7 +32,7 @@ $ms_detail_data['creat_by'] = 'N/A';
 if (empty($ms_detail_data['privacy']) and ((!defined('NV_IS_USER') or $user_info['userid'] != $ms_detail_data['userid'])) and !defined('NV_IS_MODADMIN')) {
     $base_url_rewrite = nv_url_rewrite(Resources::getModLinkEncode(), true);
     $redirect = '<meta http-equiv="Refresh" content="3;URL=' . $base_url_rewrite . '" />';
-    nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'] . $redirect, 404);
+    nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content') . $redirect, 404);
 }
 
 // Lấy tên người tạo
@@ -164,7 +164,7 @@ $canonicalUrl = getCanonicalUrl($page_url);
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);
 
-$page_title = $ms_detail_data['playlist_name'] . ' ' . $lang_module['playlist'];
+$page_title = $ms_detail_data['playlist_name'] . ' ' . $nv_Lang->getModule('playlist');
 $description = strip_tags(preg_replace('/\<br[^\>]*\>/i', ' ', $ms_detail_data['playlist_introtext']));
 if (empty($description)) {
     $description = $page_title;

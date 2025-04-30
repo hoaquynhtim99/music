@@ -64,9 +64,9 @@ $global_array_mvquality = $nv_Cache->db($sql, 'quality_id', $module_name);
 
 // Loại nghệ sĩ
 $global_array_artist_type = [];
-$global_array_artist_type[0] = $lang_module['artist_type_singer'];
-$global_array_artist_type[1] = $lang_module['artist_type_author'];
-$global_array_artist_type[2] = $lang_module['artist_type_all'];
+$global_array_artist_type[0] = $nv_Lang->getModule('artist_type_singer');
+$global_array_artist_type[1] = $nv_Lang->getModule('artist_type_author');
+$global_array_artist_type[2] = $nv_Lang->getModule('artist_type_all');
 
 // Các cấu hình fix cứng, sau sẽ thêm vào cấu hình có thể tùy chỉnh được sau
 Config::setDetailSongAlbumsNums(12);

@@ -15,11 +15,11 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
-$page_title = $lang_module['mainpage_title'];
+$page_title = $nv_Lang->getModule('mainpage_title');
 
 $xtpl = new XTemplate('main.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 
 // Lấy thông tin thống kê, cache lại để truy vấn nhanh
 $cacheFile = NV_LANG_DATA . '_admin_stat_basic_' . NV_CACHE_PREFIX . '.cache';

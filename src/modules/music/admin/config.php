@@ -15,7 +15,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-$page_title = $lang_module['config'];
+$page_title = $nv_Lang->getModule('config');
 $uploadPrefixDir = NV_BASE_SITEURL . NV_UPLOADS_DIR . '/' . $module_upload . '/';
 $subStrResource = strlen($uploadPrefixDir);
 
@@ -46,7 +46,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     $array['arr_code_prefix_song'] = $nv_Request->get_title('arr_code_prefix_song', 'post', '');
 
     if (sizeof(array_unique(array($array['arr_code_prefix_singer'], $array['arr_code_prefix_playlist'], $array['arr_code_prefix_album'], $array['arr_code_prefix_video'], $array['arr_code_prefix_cat'], $array['arr_code_prefix_song']))) != 6) {
-        AjaxRespon::reset()->setError()->setInput('arr_code_prefix_singer')->setMessage($lang_module['arr_code_prefix_error'])->respon();
+        AjaxRespon::reset()->setError()->setInput('arr_code_prefix_singer')->setMessage($nv_Lang->getModule('arr_code_prefix_error'))->respon();
     }
 
     $array['arr_op_alias_prefix_song'] = $nv_Request->get_title('arr_op_alias_prefix_song', 'post', '');
@@ -67,7 +67,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     $array['arr_view_singer_tabs_alias_profile'] = $nv_Request->get_title('arr_view_singer_tabs_alias_profile', 'post', '');
 
     if (sizeof(array_unique(array($array['arr_view_singer_tabs_alias_song'], $array['arr_view_singer_tabs_alias_album'], $array['arr_view_singer_tabs_alias_video'], $array['arr_view_singer_tabs_alias_profile']))) != 4) {
-        AjaxRespon::reset()->setError()->setInput('arr_view_singer_tabs_alias_song')->setMessage($lang_module['arr_view_singer_tabs_alias_error'])->respon();
+        AjaxRespon::reset()->setError()->setInput('arr_view_singer_tabs_alias_song')->setMessage($nv_Lang->getModule('arr_view_singer_tabs_alias_error'))->respon();
     }
 
     $array['view_singer_main_num_songs'] = $nv_Request->get_int('view_singer_main_num_songs', 'post', 0);
@@ -92,7 +92,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     $default_fb_share_image = $db->query("SELECT config_value_default FROM " . Resources::getTablePrefix() . "_config WHERE config_name='fb_share_image'")->fetchColumn();
 
     if (!empty($array['fb_share_image']) and $array['fb_share_image'] != $default_fb_share_image and !nv_is_file($array['fb_share_image'], NV_UPLOADS_DIR . '/' . $module_upload)) {
-        AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error'])->respon();
+        AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($nv_Lang->getModule('fb_share_image_error'))->respon();
     }
 
     $array['fb_share_image_witdh'] = 0;
@@ -101,10 +101,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     if (!empty($array['fb_share_image'])) {
         $image_info = @getimagesize(NV_DOCUMENT_ROOT . $array['fb_share_image']);
         if (!isset($image_info[0]) or !isset($image_info[1]) or !isset($image_info['mime'])) {
-            AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error1'])->respon();
+            AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($nv_Lang->getModule('fb_share_image_error1'))->respon();
         }
         if ($image_info[0] < 600 or $image_info[1] < 315) {
-            AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($lang_module['fb_share_image_error2'])->respon();
+            AjaxRespon::reset()->setError()->setInput('fb_share_image')->setMessage($nv_Lang->getModule('fb_share_image_error2'))->respon();
         }
         $array['fb_share_image_witdh'] = $image_info[0];
         $array['fb_share_image_height'] = $image_info[1];
@@ -122,7 +122,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     foreach ($_keys as $_key) {
         $_val = $nv_Request->get_title($_key, 'post', '');
         if (!empty($_val) and !nv_is_file($_val, NV_UPLOADS_DIR . '/' . $module_upload)) {
-            AjaxRespon::reset()->setError()->setInput($_key)->setMessage($lang_module['fb_share_image_error'])->respon();
+            AjaxRespon::reset()->setError()->setInput($_key)->setMessage($nv_Lang->getModule('fb_share_image_error'))->respon();
         }
         if (!empty($_val)) {
             $_val = substr($_val, $subStrResource);
@@ -140,7 +140,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_CHANGE_CONFIG', '', $admin_info['userid']);
     $nv_Cache->delMod($module_name);
 
-    AjaxRespon::reset()->setSuccess()->setMessage($lang_module['successfully_saved'])->respon();
+    AjaxRespon::reset()->setSuccess()->setMessage($nv_Lang->getModule('successfully_saved'))->respon();
 }
 
 $sql = "SELECT * FROM " . Resources::getTablePrefix() . "_config";
@@ -155,7 +155,7 @@ while ($row = $result->fetch()) {
 }
 
 $xtpl = new XTemplate('config.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
 $xtpl->assign('FORM_ACTION', NV_BASE_ADMINURL . 'index.php?' . NV_LANG_VARIABLE . '=' . NV_LANG_DATA . '&amp;' . NV_NAME_VARIABLE . '=' . $module_name . '&amp;' . NV_OP_VARIABLE . '=' . $op);
 $xtpl->assign('UPLOAD_DIR', NV_UPLOADS_DIR . '/' . $module_upload);
 
@@ -183,7 +183,7 @@ $xtpl->assign('DATA', $array);
 $xtpl->assign('OPEN_BRACKET', '{');
 $xtpl->assign('CLOSE_BRACKET', '}');
 
-$xtpl->assign('CONFIG_NOTE', sprintf($lang_module['config_note'], $language_array[NV_LANG_DATA]['name']));
+$xtpl->assign('CONFIG_NOTE', sprintf($nv_Lang->getModule('config_note'), $language_array[NV_LANG_DATA]['name']));
 
 for ($i = 1; $i <= 4; $i++) {
     $xtpl->assign('WEIGHT', $i);

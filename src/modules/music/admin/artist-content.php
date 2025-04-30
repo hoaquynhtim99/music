@@ -23,7 +23,7 @@ $artist_id = $nv_Request->get_int('artist_id', 'get', 0);
 
 if ($artist_id) {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;artist_id=' . $artist_id;
-    $page_title = $lang_module['artist_edit'];
+    $page_title = $nv_Lang->getModule('artist_edit');
 
     $array_select_fields = nv_get_artist_select_fields(true);
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_artists WHERE artist_id=" . $artist_id;
@@ -48,7 +48,7 @@ if ($artist_id) {
     $array['singer_info'] = nv_editor_br2nl($array['singer_info']);
 } else {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op;
-    $page_title = $lang_module['artist_add'];
+    $page_title = $nv_Lang->getModule('artist_add');
 
     $array = $array_old = [];
 
@@ -128,7 +128,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Kiểm tra thông tin
     if (empty($array['artist_name'])) {
-        AjaxRespon::setInput('artist_name')->setMessage($lang_module['error_require_field'])->respon();
+        AjaxRespon::setInput('artist_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
@@ -195,10 +195,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             $sth->bindParam(':singer_keywords', $array['singer_keywords'], PDO::PARAM_STR, strlen($array['singer_keywords']));
 
             if (!$sth->execute()) {
-                $check_db = $lang_module['error_save'];
+                $check_db = $nv_Lang->getModule('error_save');
             }
         } catch (PDOException $e) {
-            $check_db = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $check_db = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
     } else {
         // Thêm
@@ -267,10 +267,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             $sth->bindParam(':singer_keywords', $array['singer_keywords'], PDO::PARAM_STR, strlen($array['singer_keywords']));
 
             if (!$sth->execute()) {
-                $check_db = $lang_module['error_save'];
+                $check_db = $nv_Lang->getModule('error_save');
             }
         } catch (PDOException $e) {
-            $check_db = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $check_db = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
     }
 
@@ -308,12 +308,12 @@ if ($nv_Request->isset_request('submitform', 'post')) {
         $redirect = NV_ADMIN_MOD_FULLLINK . 'artist-list';
     }
 
-    AjaxRespon::setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
+    AjaxRespon::setSuccess()->setMessage($nv_Lang->getModule('success_save'))->setRedirect($redirect)->respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
 $xtpl->assign('NV_LANG_INTERFACE', NV_LANG_INTERFACE);

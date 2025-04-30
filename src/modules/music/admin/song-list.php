@@ -17,7 +17,7 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 
-$page_title = $lang_module['song_list'];
+$page_title = $nv_Lang->getModule('song_list');
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -319,8 +319,8 @@ foreach ($array as $id => $row) {
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('UNIQUEID', nv_genpass(6));
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
@@ -426,10 +426,10 @@ foreach ($array as $row) {
 
     if (empty($row['status'])) {
         $xtpl->assign('ACTION_STATUS', 'active');
-        $xtpl->assign('LANG_STATUS', $lang_module['action_active']);
+        $xtpl->assign('LANG_STATUS', $nv_Lang->getModule('action_active'));
     } else {
         $xtpl->assign('ACTION_STATUS', 'deactive');
-        $xtpl->assign('LANG_STATUS', $lang_module['action_deactive']);
+        $xtpl->assign('LANG_STATUS', $nv_Lang->getModule('action_deactive'));
     }
 
     $xtpl->parse('main.loop');

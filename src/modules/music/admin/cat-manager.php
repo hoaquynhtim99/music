@@ -17,7 +17,7 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Shared\Categories;
 
-$page_title = $lang_module['cat_manager'];
+$page_title = $nv_Lang->getModule('cat_manager');
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -294,9 +294,9 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     if ($error_exists) {
-        AjaxRespon::setMessage($lang_module['cat_err_exists']);
+        AjaxRespon::setMessage($nv_Lang->getModule('cat_err_exists'));
     } elseif (empty($array['cat_name'])) {
-        AjaxRespon::setMessage($lang_module['cat_err_name']);
+        AjaxRespon::setMessage($nv_Lang->getModule('cat_err_name'));
     } else {
         if ($array['cat_id']) {
             $sql = "UPDATE " . Resources::getTablePrefix() . "_categories SET
@@ -335,7 +335,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
                 AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         } else {
             $weight = $db->query("SELECT MAX(weight) FROM " . Resources::getTablePrefix() . "_categories")->fetchColumn();
@@ -393,7 +393,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
                 AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         }
     }
@@ -403,8 +403,8 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('OP', $op);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_cat));
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 

@@ -17,7 +17,7 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 
-$page_title = $lang_module['qvd_manager'];
+$page_title = $nv_Lang->getModule('qvd_manager');
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -265,9 +265,9 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
     }
 
     if ($error_exists) {
-        AjaxRespon::setMessage($lang_module['qvd_err_exists']);
+        AjaxRespon::setMessage($nv_Lang->getModule('qvd_err_exists'));
     } elseif (empty($array['quality_name'])) {
-        AjaxRespon::setMessage($lang_module['qvd_err_name']);
+        AjaxRespon::setMessage($nv_Lang->getModule('qvd_err_name'));
     } else {
         if ($array['quality_id']) {
             $sql = "UPDATE " . Resources::getTablePrefix() . "_quality_video SET
@@ -288,7 +288,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
                 AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         } else {
             $weight = $db->query("SELECT MAX(weight) FROM " . Resources::getTablePrefix() . "_quality_video")->fetchColumn();
@@ -312,7 +312,7 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
                 AjaxRespon::setSuccess();
             } catch (PDOException $e) {
-                AjaxRespon::setMessage($lang_module['error_save'] . ' ' . $e->getMessage());
+                AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         }
     }
@@ -322,8 +322,8 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('OP', $op);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('MAX_WEIGHT', sizeof($global_array_mvquality));
 $xtpl->assign('LANG_DATA_NAME', $language_array[NV_LANG_DATA]['name']);
 
@@ -347,27 +347,27 @@ foreach ($global_array_mvquality as $row) {
     $array_action_key = array();
     $array_action_lang = array();
     $array_action_key[] = 'ajedit';
-    $array_action_lang[] = $lang_global['edit'];
+    $array_action_lang[] = $nv_Lang->getGlobal('edit');
 
     if (!empty($row['online_supported'])) {
         $xtpl->parse('main.loop.online_supported');
         $array_action_key[] = 'unsetonlinesupported';
-        $array_action_lang[] = $lang_module['action_unset_online_supported'];
+        $array_action_lang[] = $nv_Lang->getModule('action_unset_online_supported');
     } else {
         $xtpl->parse('main.loop.online_notsupported');
         $array_action_key[] = 'setonlinesupported';
-        $array_action_lang[] = $lang_module['action_set_online_supported'];
+        $array_action_lang[] = $nv_Lang->getModule('action_set_online_supported');
     }
     if (!empty($row['is_default'])) {
         $xtpl->parse('main.loop.is_default');
     } else {
         $xtpl->parse('main.loop.no_default');
         $array_action_key[] = 'setdefault';
-        $array_action_lang[] = $lang_module['action_set_default'];
+        $array_action_lang[] = $nv_Lang->getModule('action_set_default');
     }
 
     $array_action_key[] = 'delete';
-    $array_action_lang[] = $lang_global['delete'];
+    $array_action_lang[] = $nv_Lang->getGlobal('delete');
 
     $xtpl->assign('ACTION_KEY', implode('|', $array_action_key));
     $xtpl->assign('ACTION_LANG', implode('|', $array_action_lang));

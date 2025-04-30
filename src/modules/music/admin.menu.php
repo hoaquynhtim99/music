@@ -37,32 +37,32 @@ $allow_func = [
 ];
 
 $submenu['song-list'] = [
-    'title' => $lang_module['song_manager'],
+    'title' => $nv_Lang->getModule('song_manager'),
     'submenu' => [
-        'song-content' => $lang_module['song_add']
+        'song-content' => $nv_Lang->getModule('song_add')
     ]
 ];
 $submenu['album-list'] = [
-    'title' => $lang_module['album_manager'],
+    'title' => $nv_Lang->getModule('album_manager'),
     'submenu' => [
-        'album-content' => $lang_module['album_add']
+        'album-content' => $nv_Lang->getModule('album_add')
     ]
 ];
 $submenu['video-list'] = [
-    'title' => $lang_module['video_manager'],
+    'title' => $nv_Lang->getModule('video_manager'),
     'submenu' => [
-        'video-content' => $lang_module['video_add']
+        'video-content' => $nv_Lang->getModule('video_add')
     ]
 ];
 $submenu['artist-list'] = [
-    'title' => $lang_module['artist_manager'],
+    'title' => $nv_Lang->getModule('artist_manager'),
     'submenu' => [
-        'artist-content' => $lang_module['artist_add']
+        'artist-content' => $nv_Lang->getModule('artist_add')
     ]
 ];
-$submenu['cat-manager'] = $lang_module['cat_manager'];
-$submenu['nation-manager'] = $lang_module['nation_manager'];
-$submenu['quality-song-manager'] = $lang_module['qso_manager'];
-$submenu['quality-video-manager'] = $lang_module['qvd_manager'];
-$submenu['cat-chart-manager'] = $lang_module['chart_manager'];
-$submenu['config'] = $lang_module['config'];
+$submenu['cat-manager'] = $nv_Lang->getModule('cat_manager');
+$submenu['nation-manager'] = $nv_Lang->getModule('nation_manager');
+$submenu['quality-song-manager'] = $nv_Lang->getModule('qso_manager');
+$submenu['quality-video-manager'] = $nv_Lang->getModule('qvd_manager');
+$submenu['cat-chart-manager'] = $nv_Lang->getModule('chart_manager');
+$submenu['config'] = $nv_Lang->getModule('config');

@@ -250,7 +250,7 @@ if (!empty($ms_detail_data['resource_yt']) and $is_embed_mode) {
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);
 
-$page_title = $ms_detail_data['video_name'] . ' ' . $lang_module['video_alias'];
+$page_title = $ms_detail_data['video_name'] . ' ' . $nv_Lang->getModule('video_alias');
 if (!empty($ms_detail_data['singers'])) {
     $page_title .= NV_TITLEBAR_DEFIS;
     if (sizeof($ms_detail_data['singers']) > Config::getLimitSingersDisplayed()) {

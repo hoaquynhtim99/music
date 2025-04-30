@@ -441,7 +441,7 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
     ];
 
     if (!defined('NV_IS_USER')) {
-        $respon['message'] = $lang_module['error_not_login'];
+        $respon['message'] = $nv_Lang->getModule('error_not_login');
         nv_jsonOutput($respon);
     }
 
@@ -451,7 +451,7 @@ if ($nv_Request->isset_request('updateUserFavoriteAlbum', 'post')) {
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
-        $respon['message'] = $lang_module['error_album_notexists'];
+        $respon['message'] = $nv_Lang->getModule('error_album_notexists');
         nv_jsonOutput($respon);
     }
     foreach ($array_select_fields[1] as $f) {
@@ -551,7 +551,7 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
     ];
 
     if (!defined('NV_IS_USER')) {
-        $respon['message'] = $lang_module['error_not_login'];
+        $respon['message'] = $nv_Lang->getModule('error_not_login');
         nv_jsonOutput($respon);
     }
 
@@ -561,7 +561,7 @@ if ($nv_Request->isset_request('updateUserFavoriteVideo', 'post')) {
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
-        $respon['message'] = $lang_module['error_video_notexists'];
+        $respon['message'] = $nv_Lang->getModule('error_video_notexists');
         nv_jsonOutput($respon);
     }
     foreach ($array_select_fields[1] as $f) {
@@ -661,7 +661,7 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
     ];
 
     if (!defined('NV_IS_USER')) {
-        $respon['message'] = $lang_module['error_not_login'];
+        $respon['message'] = $nv_Lang->getModule('error_not_login');
         nv_jsonOutput($respon);
     }
 
@@ -671,7 +671,7 @@ if ($nv_Request->isset_request('updateUserFavoriteSong', 'post')) {
     $result = $db->query($sql);
     $row = $result->fetch();
     if (empty($row)) {
-        $respon['message'] = $lang_module['error_song_notexists'];
+        $respon['message'] = $nv_Lang->getModule('error_song_notexists');
         nv_jsonOutput($respon);
     }
     foreach ($array_select_fields[1] as $f) {
@@ -829,7 +829,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
 
     // Kiểm tra đăng nhập
     if (!defined('NV_IS_USER')) {
-        $respon['message'] = $lang_module['error_not_login'];
+        $respon['message'] = $nv_Lang->getModule('error_not_login');
         nv_jsonOutput($respon);
     }
 
@@ -844,7 +844,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
     $request['song_code'] = nv_substr($nv_Request->get_title('song_code', 'post', ''), 0, 200);
 
     if (empty($request['playlist_name'])) {
-        $respon['message'] = $lang_module['pl_error_name_new'];
+        $respon['message'] = $nv_Lang->getModule('pl_error_name_new');
         nv_jsonOutput($respon);
     }
     if ($request['auto_add_song']) {
@@ -859,7 +859,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
         $result = $db->query($sql);
         $row = $result->fetch();
         if (empty($row)) {
-            $respon['message'] = $lang_module['error_song_notexists'];
+            $respon['message'] = $nv_Lang->getModule('error_song_notexists');
             nv_jsonOutput($respon);
         }
         foreach ($array_select_fields[1] as $f) {
@@ -898,7 +898,7 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
 
     $new_playlist_id = $db->insert_id($sql, 'playlist_id', $array_insert);
     if (!$new_playlist_id) {
-        $respon['message'] = $lang_module['unknow_error'];
+        $respon['message'] = $nv_Lang->getModule('unknow_error');
         nv_jsonOutput($respon);
     }
 
@@ -911,13 +911,13 @@ if ($nv_Request->isset_request('creatNewPlaylist', 'post')) {
 
         // Thông báo đã thêm bài hát vào và kết thúc
         $respon['status'] = 'SUCCESS';
-        $respon['message'] = sprintf($lang_module['addtolist_new_success_add'], $row['song_name'], $request['playlist_name']);
+        $respon['message'] = sprintf($nv_Lang->getModule('addtolist_new_success_add'), $row['song_name'], $request['playlist_name']);
         nv_jsonOutput($respon);
     }
 
     // Thông báo đã tạo playlist và kết thúc
     $respon['status'] = 'SUCCESS';
-    $respon['message'] = sprintf($lang_module['pl_creat_success'], $request['playlist_name']);
+    $respon['message'] = sprintf($nv_Lang->getModule('pl_creat_success'), $request['playlist_name']);
     nv_jsonOutput($respon);
 }
 
@@ -930,7 +930,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
 
     // Kiểm tra đăng nhập
     if (!defined('NV_IS_USER')) {
-        $respon['message'] = $lang_module['error_not_login'];
+        $respon['message'] = $nv_Lang->getModule('error_not_login');
         nv_jsonOutput($respon);
     }
 
@@ -951,7 +951,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
     $result = $db->query($sql);
     $song = $result->fetch();
     if (empty($song)) {
-        $respon['message'] = $lang_module['error_song_notexists'];
+        $respon['message'] = $nv_Lang->getModule('error_song_notexists');
         nv_jsonOutput($respon);
     }
     foreach ($array_select_fields[1] as $f) {
@@ -967,7 +967,7 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
     $result = $db->query($sql);
     $playlist = $result->fetch();
     if (empty($playlist)) {
-        $respon['message'] = $lang_module['error_song_notexists'];
+        $respon['message'] = $nv_Lang->getModule('error_song_notexists');
         nv_jsonOutput($respon);
     }
     foreach ($array_select_fields[1] as $f) {
@@ -984,11 +984,11 @@ if ($nv_Request->isset_request('togglePlaylistSong', 'post')) {
         ) VALUES (
             " . $playlist['playlist_id'] . ", " . $song['song_id'] . ", 0, 1
         )";
-        $respon['message'] = sprintf($lang_module['addtolist_new_success_add'], $song['song_name'], $playlist['playlist_name']);
+        $respon['message'] = sprintf($nv_Lang->getModule('addtolist_new_success_add'), $song['song_name'], $playlist['playlist_name']);
     } else {
         // Bỏ bài hát ra playlist
         $sql = "DELETE FROM " . Resources::getTablePrefix() . "_user_playlists_data WHERE playlist_id=" . $playlist['playlist_id'] . " AND song_id=" . $song['song_id'];
-        $respon['message'] = sprintf($lang_module['addtolist_remove_success'], $song['song_name'], $playlist['playlist_name']);
+        $respon['message'] = sprintf($nv_Lang->getModule('addtolist_remove_success'), $song['song_name'], $playlist['playlist_name']);
     }
 
     $db->query($sql);

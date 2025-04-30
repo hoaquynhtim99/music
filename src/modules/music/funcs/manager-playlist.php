@@ -14,7 +14,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
 
 use NukeViet\Music\Resources;
 
-$page_title = $lang_module['mymusic_playlist_manager'];
+$page_title = $nv_Lang->getModule('mymusic_playlist_manager');
 $description = $key_words = 'no';
 
 $nv_BotManager->setNoIndex()->setFollow();
@@ -105,7 +105,7 @@ if ($nv_Request->isset_request('updateField', 'post')) {
     }
 
     if (empty($value)) {
-        $respon['message'] = $lang_module['error_value_empty'];
+        $respon['message'] = $nv_Lang->getModule('error_value_empty');
         nv_jsonOutput($respon);
     }
 
@@ -127,7 +127,7 @@ $array_mod_title[] = [
 ];
 $array_mod_title[] = [
     'catid' => 2,
-    'title' => $lang_module['mymusic_playlist'],
+    'title' => $nv_Lang->getModule('mymusic_playlist'),
     'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/playlist'
 ];
 $array_mod_title[] = [

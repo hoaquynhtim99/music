@@ -21,26 +21,27 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
      *
      * @param mixed $module
      * @param mixed $data_block
-     * @param mixed $lang_block
      * @return
      */
-    function nv_block_config_detail_suggested_videos($module, $data_block, $lang_block)
+    function nv_block_config_detail_suggested_videos($module, $data_block)
     {
+        global $nv_Lang;
+
         $html = '<div class="form-group">';
         $html .= '  <div class="col-sm-18 col-sm-offset-6">';
-        $html .= '    <span class="text-info">' . $lang_block['blocknote'] . '</span>';
+        $html .= '    <span class="text-info">' . $nv_Lang->getModule('blocknote') . '</span>';
         $html .= '  </div>';
         $html .= '</div>';
 
         $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $lang_block['numrows'] . ':</label>';
+        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('numrows') . ':</label>';
         $html .= '  <div class="col-sm-9">';
         $html .= '    <input type="number" name="config_numrows" value="' . $data_block['numrows'] . '" class="form-control">';
         $html .= '  </div>';
         $html .= '</div>';
 
         $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $lang_block['showtypecat'] . ':</label>';
+        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('showtypecat') . ':</label>';
         $html .= '  <div class="col-sm-9">';
         $html .= '    <select name="config_showtypecat" class="form-control">';
 
@@ -53,7 +54,7 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
         $html .= '</div>';
 
         $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $lang_block['showtypesinger'] . ':</label>';
+        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('showtypesinger') . ':</label>';
         $html .= '  <div class="col-sm-9">';
         $html .= '    <select name="config_showtypesinger" class="form-control">';
 
@@ -66,7 +67,7 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
         $html .= '</div>';
 
         $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $lang_block['showtypeauthor'] . ':</label>';
+        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('showtypeauthor') . ':</label>';
         $html .= '  <div class="col-sm-9">';
         $html .= '    <select name="config_showtypeauthor" class="form-control">';
 
@@ -85,10 +86,9 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
      * nv_block_config_detail_suggested_videos_submit()
      *
      * @param mixed $module
-     * @param mixed $lang_block
      * @return
      */
-    function nv_block_config_detail_suggested_videos_submit($module, $lang_block)
+    function nv_block_config_detail_suggested_videos_submit($module)
     {
         global $nv_Request;
         $return = [];
@@ -129,11 +129,11 @@ if (!nv_function_exists('nv_block_detail_suggested_videos')) {
             return '';
         }
 
-        global $module_info, $lang_module, $lang_global, $db, $ms_detail_data, $module_data;
+        global $module_info, $db, $ms_detail_data, $module_data, $nv_Lang;
 
         $xtpl = new XTemplate('block_detail_suggested_videos.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-        $xtpl->assign('LANG', $lang_module);
-        $xtpl->assign('GLANG', $lang_global);
+        $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+        $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
         $xtpl->assign('UNIQUEID', nv_genpass(6));
         $xtpl->assign('MODULE_DATA', $module_data);
 

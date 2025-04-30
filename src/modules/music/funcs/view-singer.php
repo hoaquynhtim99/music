@@ -229,32 +229,32 @@ if (!empty($data_singer['singer_introtext'])) {
 }
 
 if (empty($request_tab)) {
-    $page_title = sprintf($lang_module['site_title_singer'], $data_singer['artist_name'], $data_singer['artist_name']);
+    $page_title = sprintf($nv_Lang->getModule('site_title_singer'), $data_singer['artist_name'], $data_singer['artist_name']);
 } elseif ($request_tab == 'song') {
-    $page_title = sprintf($lang_module['site_title_singer_song'], $data_singer['artist_name'], $data_singer['artist_name']);
+    $page_title = sprintf($nv_Lang->getModule('site_title_singer_song'), $data_singer['artist_name'], $data_singer['artist_name']);
 } elseif ($request_tab == 'album') {
-    $page_title = sprintf($lang_module['site_title_singer_album'], $data_singer['artist_name'], $data_singer['artist_name']);
+    $page_title = sprintf($nv_Lang->getModule('site_title_singer_album'), $data_singer['artist_name'], $data_singer['artist_name']);
 } elseif ($request_tab == 'video') {
-    $page_title = sprintf($lang_module['site_title_singer_video'], $data_singer['artist_name'], $data_singer['artist_name']);
+    $page_title = sprintf($nv_Lang->getModule('site_title_singer_video'), $data_singer['artist_name'], $data_singer['artist_name']);
 } else {
-    $page_title = sprintf($lang_module['site_title_singer_profile'], $data_singer['artist_name'], $data_singer['artist_name']);
+    $page_title = sprintf($nv_Lang->getModule('site_title_singer_profile'), $data_singer['artist_name'], $data_singer['artist_name']);
 }
 
 if (!empty($description) and !empty($request_tab)) {
     $description = nv_clean60($description, $global_config['description_length'] - 50);
     if ($request_tab == 'song') {
-        $description .= $lang_module['des_singer_add_song'];
+        $description .= $nv_Lang->getModule('des_singer_add_song');
     } elseif ($request_tab == 'album') {
-        $description .= $lang_module['des_singer_add_album'];
+        $description .= $nv_Lang->getModule('des_singer_add_album');
     } elseif ($request_tab == 'video') {
-        $description .= $lang_module['des_singer_add_video'];
+        $description .= $nv_Lang->getModule('des_singer_add_video');
     } elseif ($request_tab == 'profile') {
-        $description .= $lang_module['des_singer_add_profile'];
+        $description .= $nv_Lang->getModule('des_singer_add_profile');
     }
 }
 
 if ($page > 1) {
-    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_text = $nv_Lang->getGlobal('page') . ' ' . number_format($page, 0, ',', '.');
     $page_title .= NV_TITLEBAR_DEFIS . $page_text;
     if (!empty($description)) {
         $description = nv_clean60($description, $global_config['description_length'] - 20);

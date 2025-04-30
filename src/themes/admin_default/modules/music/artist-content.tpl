@@ -83,7 +83,7 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="form-group">
-                    <label for="artist_name" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_name}:</label>
+                    <label for="artist_name" class="control-label col-sm-8"><i class="fa fa-asterisk"></i> {LANG.artist_name1}:</label>
                     <div class="col-sm-16 col-md-10 col-lg-8">
                         <input class="form-control required" type="text" name="artist_name" id="artist_name" value="{DATA.artist_name}" maxlength="250" />
                     </div>

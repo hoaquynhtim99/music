@@ -24,7 +24,7 @@ if (!defined('NV_IS_USER')) {
 }
 
 // Meta: Phần này không cần vì trang này yêu cầu đăng nhập thành viên, không public
-$page_title = $lang_module['mymusic'];
+$page_title = $nv_Lang->getModule('mymusic');
 $array_mod_title[] = [
     'catid' => 1,
     'title' => $module_info['funcs'][$op]['func_custom_name'],
@@ -66,35 +66,35 @@ if (isset($array_op[3])) {
 if ($request_tab == 'song') {
     $array_mod_title[] = [
         'catid' => 2,
-        'title' => $lang_module['mymusic_song'],
+        'title' => $nv_Lang->getModule('mymusic_song'),
         'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_song'] . NV_TITLEBAR_DEFIS . $page_title;
+    $page_title = $nv_Lang->getModule('mymusic_song') . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'album') {
     $array_mod_title[] = [
         'catid' => 2,
-        'title' => $lang_module['mymusic_album'],
+        'title' => $nv_Lang->getModule('mymusic_album'),
         'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_album'] . NV_TITLEBAR_DEFIS . $page_title;
+    $page_title = $nv_Lang->getModule('mymusic_album') . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'mv') {
     $array_mod_title[] = [
         'catid' => 2,
-        'title' => $lang_module['mymusic_video'],
+        'title' => $nv_Lang->getModule('mymusic_video'),
         'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_video'] . NV_TITLEBAR_DEFIS . $page_title;
+    $page_title = $nv_Lang->getModule('mymusic_video') . NV_TITLEBAR_DEFIS . $page_title;
 } elseif ($request_tab == 'playlist') {
     $array_mod_title[] = [
         'catid' => 2,
-        'title' => $lang_module['mymusic_playlist'],
+        'title' => $nv_Lang->getModule('mymusic_playlist'),
         'link' => Resources::getModFullLinkEncode() . $module_info['alias']['mymusic'] . '/' . $request_tab
     ];
-    $page_title = $lang_module['mymusic_playlist'] . NV_TITLEBAR_DEFIS . $page_title;
+    $page_title = $nv_Lang->getModule('mymusic_playlist') . NV_TITLEBAR_DEFIS . $page_title;
 }
 
 if ($page > 1) {
-    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_text = $nv_Lang->getGlobal('page') . ' ' . number_format($page, 0, ',', '.');
     $page_title = $page_text . NV_TITLEBAR_DEFIS . $page_title;
 }
 

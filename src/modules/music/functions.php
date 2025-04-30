@@ -27,7 +27,7 @@ if ($op == 'main' and isset($array_op[0])) {
     unset($m);
     $codePrefix = Config::getCodePrefix();
     if (isset($array_op[1]) or !preg_match('/^([a-zA-Z0-9\-]+)\-(' . $codePrefix->getAlbum() . '|' . $codePrefix->getVideo() . '|' . $codePrefix->getSong() . '|' . $codePrefix->getPlaylist() . ')([a-zA-Z0-9\-]+)$/', $array_op[0], $m)) {
-        nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+        nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
     }
 
     $ms_detail_op_alias = $m[1];
@@ -44,7 +44,7 @@ if ($op == 'main' and isset($array_op[0])) {
         $sth->execute();
 
         if ($sth->rowCount() != 1) {
-            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+            nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
         }
 
         $ms_detail_data = $sth->fetch();
@@ -59,7 +59,7 @@ if ($op == 'main' and isset($array_op[0])) {
         $sth->execute();
 
         if ($sth->rowCount() != 1) {
-            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+            nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
         }
 
         $ms_detail_data = $sth->fetch();
@@ -74,7 +74,7 @@ if ($op == 'main' and isset($array_op[0])) {
         $sth->execute();
 
         if ($sth->rowCount() != 1) {
-            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+            nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
         }
 
         $ms_detail_data = $sth->fetch();
@@ -89,14 +89,14 @@ if ($op == 'main' and isset($array_op[0])) {
         $sth->execute();
 
         if ($sth->rowCount() != 1) {
-            nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+            nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
         }
 
         $ms_detail_data = $sth->fetch();
         $op = 'detail-playlist';
         define('NV_IS_DETAIL_PLAYLIST', true);
     } else {
-        nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+        nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
     }
 
     unset($codePrefix);

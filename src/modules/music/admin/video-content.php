@@ -24,7 +24,7 @@ $video_id = $nv_Request->get_int('video_id', 'get', 0);
 
 if ($video_id) {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;video_id=' . $video_id;
-    $page_title = $lang_module['video_edit'];
+    $page_title = $nv_Lang->getModule('video_edit');
 
     $array_select_fields = nv_get_video_select_fields(true);
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_videos WHERE video_id=" . $video_id;
@@ -49,7 +49,7 @@ if ($video_id) {
     $array['video_introtext'] = nv_br2nl($array['video_introtext']);
 } else {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op;
-    $page_title = $lang_module['video_add'];
+    $page_title = $nv_Lang->getModule('video_add');
     $array = $array_old = [];
     $array['video_code'] = '';
     $array['cat_ids'] = [];
@@ -154,13 +154,13 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Kiểm tra thông tin
     if (empty($array['cat_ids'])) {
-        AjaxRespon::setInput('')->setMessage($lang_module['video_err_cats'])->respon();
+        AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('video_err_cats'))->respon();
     }
     if (empty($array['singer_ids'])) {
-        AjaxRespon::setInput('')->setMessage($lang_module['video_err_singers'])->respon();
+        AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('video_err_singers'))->respon();
     }
     if (empty($array['video_name'])) {
-        AjaxRespon::setInput('video_name')->setMessage($lang_module['error_require_field'])->respon();
+        AjaxRespon::setInput('video_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
@@ -202,10 +202,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             $sth->bindParam(':video_keywords', $array['video_keywords'], PDO::PARAM_STR, strlen($array['video_keywords']));
 
             if (!$sth->execute()) {
-                $check_db = $lang_module['error_save'];
+                $check_db = $nv_Lang->getModule('error_save');
             }
         } catch (PDOException $e) {
-            $check_db = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $check_db = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
     } else {
         // Thêm
@@ -250,7 +250,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
         $new_video_id = $db->insert_id($sql, 'video_id', $data_insert);
 
         if (empty($new_video_id)) {
-            $check_db = $lang_module['error_save'];
+            $check_db = $nv_Lang->getModule('error_save');
         } else {
             $video_id = $new_video_id;
         }
@@ -344,12 +344,12 @@ if ($nv_Request->isset_request('submitform', 'post')) {
         $redirect = NV_ADMIN_MOD_FULLLINK . 'video-list';
     }
 
-    AjaxRespon::setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
+    AjaxRespon::setSuccess()->setMessage($nv_Lang->getModule('success_save'))->setRedirect($redirect)->respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
 $xtpl->assign('NV_LANG_INTERFACE', NV_LANG_INTERFACE);

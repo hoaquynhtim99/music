@@ -283,7 +283,7 @@ $canonicalUrl = getCanonicalUrl($page_url);
 // Open Graph
 nv_get_fb_share_image($ms_detail_data);
 
-$page_title = $ms_detail_data['album_name'] . ' ' . $lang_module['album'];
+$page_title = $ms_detail_data['album_name'] . ' ' . $nv_Lang->getModule('album');
 if (!empty($ms_detail_data['singers'])) {
     $page_title .= NV_TITLEBAR_DEFIS;
     if (sizeof($ms_detail_data['singers']) > Config::getLimitSingersDisplayed()) {

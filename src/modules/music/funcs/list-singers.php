@@ -141,7 +141,7 @@ $array_mod_title[] = array(
 
 // Phân trang, tiêu đề trang
 if (!empty($nation_id)) {
-    $page_title = $lang_module['singers'] . ' ' . $global_array_nation[$nation_id]->getName();
+    $page_title = $nv_Lang->getModule('singers') . ' ' . $global_array_nation[$nation_id]->getName();
     if (!empty($key_words) and !empty($global_array_nation[$nation_id]->getKeywords())) {
         $key_words .= ', ';
     }
@@ -160,15 +160,15 @@ if (!empty($nation_id)) {
 }
 
 if (!empty($alphabet)) {
-    $page_title .= ' ' . sprintf($lang_module['singer_alphabet'], $alphabet);
+    $page_title .= ' ' . sprintf($nv_Lang->getModule('singer_alphabet'), $alphabet);
     if (!empty($description)) {
         $description = nv_clean60($description, $global_config['description_length'] - 10);
-        $description .= ' ' . sprintf($lang_module['singer_alphabet'], $alphabet);
+        $description .= ' ' . sprintf($nv_Lang->getModule('singer_alphabet'), $alphabet);
     }
 }
 
 if ($page > 1) {
-    $page_text = $lang_global['page'] . ' ' . number_format($page, 0, ',', '.');
+    $page_text = $nv_Lang->getGlobal('page') . ' ' . number_format($page, 0, ',', '.');
     $page_title .= NV_TITLEBAR_DEFIS . $page_text;
     if (!empty($description)) {
         $description = nv_clean60($description, $global_config['description_length'] - 20);

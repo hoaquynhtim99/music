@@ -15,11 +15,11 @@ if (!defined('NV_MAINFILE')) {
 global $op;
 
 if ($op == 'view-singer') {
-    global $data_singer, $request_tab, $lang_module, $lang_global, $module_info;
+    global $data_singer, $request_tab, $module_info, $nv_Lang;
 
     $xtpl = new XTemplate('block_view_singer_header.tpl', NV_ROOTDIR . '/themes/' . $module_info['template'] . '/modules/' . $module_info['module_theme']);
-    $xtpl->assign('LANG', $lang_module);
-    $xtpl->assign('GLANG', $lang_global);
+    $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+    $xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
     $xtpl->assign('SINGER_HEADER_HTML', nv_theme_view_singer_header($data_singer, $request_tab));
 
     $xtpl->parse('main');

@@ -22,12 +22,11 @@ if (!nv_function_exists('nv_block_chart_songs')) {
      *
      * @param mixed $module
      * @param mixed $data_block
-     * @param mixed $lang_block
      * @return
      */
-    function nv_block_config_chart_songs($module, $data_block, $lang_block)
+    function nv_block_config_chart_songs($module, $data_block)
     {
-        global $site_mods;
+        global $site_mods, $nv_Lang;
 
         $module_file = $site_mods[$module]['module_file'];
         $module_data = $site_mods[$module]['module_data'];
@@ -42,7 +41,7 @@ if (!nv_function_exists('nv_block_chart_songs')) {
         $html = '';
 
         $html .= '<div class="form-group">';
-        $html .= '<label class="control-label col-sm-6">' . $lang_block['catids'] . ':</label>';
+        $html .= '<label class="control-label col-sm-6">' . $nv_Lang->getModule('catids') . ':</label>';
         $html .= '<div class="col-sm-18">';
 
         foreach ($global_array_cat_chart as $cat_chart) {
@@ -54,7 +53,7 @@ if (!nv_function_exists('nv_block_chart_songs')) {
         $html .= '</div>';
 
         $html .= '<div class="form-group">';
-        $html .= '<label class="control-label col-sm-6">' . $lang_block['numrows'] . ':</label>';
+        $html .= '<label class="control-label col-sm-6">' . $nv_Lang->getModule('numrows') . ':</label>';
         $html .= '<div class="col-sm-9"><input type="text" class="form-control" name="config_numrows" value="' . $data_block['numrows'] . '"/></div>';
         $html .= '</div>';
 
@@ -65,10 +64,9 @@ if (!nv_function_exists('nv_block_chart_songs')) {
      * nv_block_config_chart_songs_submit()
      *
      * @param mixed $module
-     * @param mixed $lang_block
      * @return
      */
-    function nv_block_config_chart_songs_submit($module, $lang_block)
+    function nv_block_config_chart_songs_submit($module)
     {
         global $nv_Request;
 
@@ -102,7 +100,7 @@ if (!nv_function_exists('nv_block_chart_songs')) {
 
         if ($module_name == $module) {
             // Block hiển thị ở module music thì gọi các biến cần thiết
-            global $global_array_cat_chart, $lang_module;
+            global $global_array_cat_chart, $nv_Lang;
         } else {
             // Block hiển thị ở vị trí khác thì gọi tài nguyên ra
             $backup_module_name = $module_name;
@@ -130,7 +128,7 @@ if (!nv_function_exists('nv_block_chart_songs')) {
         $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
         $xtpl->assign('TEMPLATE', $block_theme);
         $xtpl->assign('MODULE_THEME', $module_theme);
-        $xtpl->assign('LANG', $lang_module);
+        $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
         $xtpl->assign('CONFIG', $block_config);
         $xtpl->assign('AJAX_URL', $client_info['selfurl']);
         $xtpl->assign('UNIQUEID', nv_genpass(6));

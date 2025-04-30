@@ -253,7 +253,7 @@ $ms_detail_data['song_link_pdf'] = nv_url_rewrite(nv_get_detail_song_link($ms_de
 $is_pdf_mode = ($nv_Request->get_int('sheet', 'get', 0) == 1 ? true : false);
 if ($is_pdf_mode) {
     if (empty($ms_detail_data['caption_file']) or $ms_detail_data['caption_file_ext'] != 'pdf') {
-        nv_info_die($lang_global['error_404_title'], $lang_global['error_404_title'], $lang_global['error_404_content'], 404);
+        nv_info_die($nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_title'), $nv_Lang->getGlobal('error_404_content'), 404);
     }
 
     // Chặn index link sheet nhạc

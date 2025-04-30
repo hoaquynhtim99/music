@@ -17,8 +17,8 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
 $xtpl->assign('NV_LANG_INTERFACE', NV_LANG_INTERFACE);
@@ -178,10 +178,10 @@ if ($array_search['submit']) {
 
         if (in_array($row['song_id'], $array_search['song_id_selected'])) {
             $xtpl->assign('ROW_SELECT1', 'true');
-            $xtpl->assign('ROW_SELECT2', $lang_module['selected']);
+            $xtpl->assign('ROW_SELECT2', $nv_Lang->getModule('selected'));
         } else {
             $xtpl->assign('ROW_SELECT1', 'false');
-            $xtpl->assign('ROW_SELECT2', $lang_module['select']);
+            $xtpl->assign('ROW_SELECT2', $nv_Lang->getModule('select'));
         }
 
         $xtpl->parse('main.loop');

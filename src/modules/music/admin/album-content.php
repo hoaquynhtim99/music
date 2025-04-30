@@ -24,7 +24,7 @@ $album_id = $nv_Request->get_int('album_id', 'get', 0);
 
 if ($album_id) {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;album_id=' . $album_id;
-    $page_title = $lang_module['album_edit'];
+    $page_title = $nv_Lang->getModule('album_edit');
 
     $array_select_fields = nv_get_album_select_fields(true);
     $sql = "SELECT " . implode(', ', $array_select_fields[0]) . " FROM " . Resources::getTablePrefix() . "_albums WHERE album_id=" . $album_id;
@@ -57,7 +57,7 @@ if ($album_id) {
     $array['album_description'] = nv_editor_br2nl($array['album_description']);
 } else {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op;
-    $page_title = $lang_module['album_add'];
+    $page_title = $nv_Lang->getModule('album_add');
     $array = $array_old = [];
     $array['album_code'] = '';
     $array['cat_ids'] = [];
@@ -152,13 +152,13 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Kiểm tra thông tin
     if (empty($array['cat_ids'])) {
-        AjaxRespon::setInput('')->setMessage($lang_module['album_err_cats'])->respon();
+        AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('album_err_cats'))->respon();
     }
     if (empty($array['singer_ids'])) {
-        AjaxRespon::setInput('')->setMessage($lang_module['album_err_singers'])->respon();
+        AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('album_err_singers'))->respon();
     }
     if (empty($array['album_name'])) {
-        AjaxRespon::setInput('album_name')->setMessage($lang_module['error_require_field'])->respon();
+        AjaxRespon::setInput('album_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
@@ -201,10 +201,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             $sth->bindParam(':album_keywords', $array['album_keywords'], PDO::PARAM_STR, strlen($array['album_keywords']));
 
             if (!$sth->execute()) {
-                $check_db = $lang_module['error_save'];
+                $check_db = $nv_Lang->getModule('error_save');
             }
         } catch (PDOException $e) {
-            $check_db = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $check_db = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
     } else {
         // Thêm
@@ -251,7 +251,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
         $new_album_id = $db->insert_id($sql, 'album_id', $data_insert);
 
         if (empty($new_album_id)) {
-            $check_db = $lang_module['error_save'];
+            $check_db = $nv_Lang->getModule('error_save');
         } else {
             $album_id = $new_album_id;
         }
@@ -324,12 +324,12 @@ if ($nv_Request->isset_request('submitform', 'post')) {
         $redirect = NV_ADMIN_MOD_FULLLINK . 'album-list';
     }
 
-    AjaxRespon::setSuccess()->setMessage($lang_module['success_save'])->setRedirect($redirect)->respon();
+    AjaxRespon::setSuccess()->setMessage($nv_Lang->getModule('success_save'))->setRedirect($redirect)->respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
 $xtpl->assign('NV_LANG_INTERFACE', NV_LANG_INTERFACE);

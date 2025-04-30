@@ -17,7 +17,7 @@ use NukeViet\Music\Config;
 use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
-$page_title = $lang_module['album_list'];
+$page_title = $nv_Lang->getModule('album_list');
 
 $ajaction = $nv_Request->get_title('ajaction', 'post', '');
 
@@ -265,8 +265,8 @@ foreach ($array as $id => $row) {
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('UNIQUEID', nv_genpass(6));
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
@@ -293,7 +293,7 @@ foreach ($array as $row) {
     $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'album-content&amp;album_id=' . $row['album_id'];
     $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'album', true);
     $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'album');
-    $row['release_year'] = empty($row['release_year']) ? '&nbsp;' : ($lang_module['year'] . ': ' . $row['release_year']);
+    $row['release_year'] = empty($row['release_year']) ? '&nbsp;' : ($nv_Lang->getModule('year') . ': ' . $row['release_year']);
 
     $xtpl->assign('ROW', $row);
 
@@ -346,10 +346,10 @@ foreach ($array as $row) {
 
     if (empty($row['status'])) {
         $xtpl->assign('ACTION_STATUS', 'active');
-        $xtpl->assign('LANG_STATUS', $lang_module['action_active']);
+        $xtpl->assign('LANG_STATUS', $nv_Lang->getModule('action_active'));
     } else {
         $xtpl->assign('ACTION_STATUS', 'deactive');
-        $xtpl->assign('LANG_STATUS', $lang_module['action_deactive']);
+        $xtpl->assign('LANG_STATUS', $nv_Lang->getModule('action_deactive'));
     }
 
     $xtpl->parse('main.loop');

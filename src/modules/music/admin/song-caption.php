@@ -54,7 +54,7 @@ if ($result->rowCount()) {
 }
 
 $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;song_id=' . $song_id;
-$page_title = $lang_module['mana_cc'] . ': ' . $row['song_name'];
+$page_title = $nv_Lang->getModule('mana_cc') . ': ' . $row['song_name'];
 $error = '';
 
 if ($nv_Request->isset_request('submitform', 'post')) {
@@ -91,10 +91,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             $sth->bindParam(':caption_data', $array['caption_data'], PDO::PARAM_STR, strlen($array['caption_data']));
 
             if (!$sth->execute()) {
-                $error = $lang_module['error_save'];
+                $error = $nv_Lang->getModule('error_save');
             }
         } catch (PDOException $e) {
-            $error = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $error = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
     } else {
         // Thêm mới
@@ -111,10 +111,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             $sth->bindParam(':caption_data', $array['caption_data'], PDO::PARAM_STR, strlen($array['caption_data']));
 
             if (!$sth->execute()) {
-                $error = $lang_module['error_save'];
+                $error = $nv_Lang->getModule('error_save');
             }
         } catch (PDOException $e) {
-            $error = $lang_module['error_save'] . ' ' . $e->getMessage();
+            $error = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
     }
 
@@ -155,8 +155,8 @@ if (!empty($array['caption_pdf']) and !nv_is_url($array['caption_pdf']) and nv_i
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
-$xtpl->assign('LANG', $lang_module);
-$xtpl->assign('GLANG', $lang_global);
+$xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
+$xtpl->assign('GLANG', \NukeViet\Core\Language::$lang_global);
 $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
 $xtpl->assign('MODULE_FILE', $module_file);
 $xtpl->assign('NV_LANG_INTERFACE', NV_LANG_INTERFACE);

@@ -36,7 +36,7 @@ if (!nv_function_exists('nv_block_music_search')) {
 
         if ($module_name == $module) {
             // Block hiển thị ở module music thì gọi các biến cần thiết
-            global $lang_module;
+            global $nv_Lang;
         } else {
             // Block hiển thị ở vị trí khác thì gọi tài nguyên ra
             $backup_module_name = $module_name;
@@ -64,7 +64,7 @@ if (!nv_function_exists('nv_block_music_search')) {
         $xtpl->assign('NV_BASE_SITEURL', NV_BASE_SITEURL);
         $xtpl->assign('TEMPLATE', $block_theme);
         $xtpl->assign('MODULE_THEME', $module_theme);
-        $xtpl->assign('LANG', $lang_module);
+        $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);
         $xtpl->assign('CONFIG', $block_config);
         $xtpl->assign('MODULE_NAME', $module);
 

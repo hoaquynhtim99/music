@@ -13,14 +13,14 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
 }
 
 $module_version = [
-    'name' => 'NukeViet Music',
+    'name' => 'Music',
     'modfuncs' => 'main,detail-song,detail-album,detail-playlist,detail-video,list-albums,list-singers,list-videos,search,view-singer,mymusic,manager-playlist',
     'change_alias' => 'detail-song,detail-album,detail-playlist,detail-video,list-albums,list-singers,list-videos,view-singer,mymusic,manager-playlist',
     'submenu' => '',
     'is_sysmod' => 0,
     'virtual' => 1,
-    'version' => '4.5.06',
-    'date' => 'Tuesday, April 29, 2025 20:58:16 PM GMT+07:00',
+    'version' => '5.0.00',
+    'date' => 'Wednesday, April 30, 2025 10:24:20 AM GMT+07:00',
     'author' => 'PHAN TAN DUNG <writeblabla@gmail.com>',
     'note' => '',
     'uploads_dir' => [
@@ -48,5 +48,6 @@ $module_version = [
         $module_name . '/songs_cover',
         $module_name . '/videos',
         $module_name . '/videos_cover'
-    ]
+    ],
+    'icon' => 'fa-solid fa-headphones-simple'
 ];

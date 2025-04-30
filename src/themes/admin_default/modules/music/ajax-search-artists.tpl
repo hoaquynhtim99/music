@@ -3,7 +3,7 @@
     <table class="table ms-table">
         <thead>
             <tr>
-                <th style="width: 80%;">{LANG.artist_name}</th>
+                <th style="width: 80%;">{LANG.artist_name1}</th>
                 <th style="width: 20%;" class="text-right">{LANG.action}</th>
             </tr>
         </thead>
