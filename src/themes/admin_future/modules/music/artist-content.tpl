@@ -6,8 +6,8 @@
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row mb-3">
                     <label for="artist_type" class="col-form-label text-sm-end col-sm-4">{LANG.type}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
@@ -80,8 +80,8 @@
             </div>
         </div>
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row mb-3">
                     <label for="artist_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_name1}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">

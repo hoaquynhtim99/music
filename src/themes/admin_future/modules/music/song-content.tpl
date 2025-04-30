@@ -9,8 +9,8 @@
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row mb-3">
                     <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
@@ -124,8 +124,8 @@
             </div>
         </div>
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row mb-3">
                     <label for="song_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.song_name}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
@@ -153,8 +153,8 @@
             </div>
         </div>
         <h2><i class="fa fa-file-audio-o" aria-hidden="true"></i> {LANG.song_files}:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <!-- BEGIN: soquality -->
                 <div class="row mb-3">
                     <label for="resource_path_{SOQUALITY.quality_id}" class="col-form-label text-sm-end col-sm-4">{SOQUALITY.quality_name}:</label>
@@ -170,17 +170,17 @@
                 <!-- END: soquality -->
             </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <div class="panel-title">
+        <div class="card">
+            <div class="card-header">
+                <div class="fs-5 fw-medium">
                     <a class="d-block" role="button" data-toggle="collapse" href="#collapseSongAdv" aria-expanded="{SHOW_ADV_ACTIVE}" aria-controls="collapseSongAdv">{LANG.adv}</a>
                 </div>
             </div>
         </div>
         <div class="collapse{SHOW_ADV_CLASS}" id="collapseSongAdv">
             <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-body">
                     <div class="row mb-3">
                         <label for="caption_file" class="col-form-label text-sm-end col-sm-4">{LANG.mana_cc_webvtt}:</label>
                         <div class="col-sm-8 col-md-5 col-lg-4">
@@ -208,8 +208,8 @@
                 </div>
             </div>
             <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_text} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
-            <div class="panel panel-default">
-                <div class="panel-body">
+            <div class="card">
+                <div class="card-body">
                     <div>
                         <div>
                             <div class="ckeditor">

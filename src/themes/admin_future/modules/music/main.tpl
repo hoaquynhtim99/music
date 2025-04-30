@@ -1,8 +1,8 @@
 <!-- BEGIN: main -->
 <div class="row">
     <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="panel panel-main-music">
-            <div class="panel-body">
+        <div class="card panel-main-music">
+            <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon pull-left">
                         <i class="fa fa-music" aria-hidden="true"></i>
@@ -16,8 +16,8 @@
         </div>
     </div>
     <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="panel panel-main-music">
-            <div class="panel-body">
+        <div class="card panel-main-music">
+            <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon pull-left">
                         <i class="fa fa-video-camera" aria-hidden="true"></i>
@@ -31,8 +31,8 @@
         </div>
     </div>
     <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="panel panel-main-music">
-            <div class="panel-body">
+        <div class="card panel-main-music">
+            <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon pull-left">
                         <i class="fa fa-briefcase" aria-hidden="true"></i>
@@ -46,8 +46,8 @@
         </div>
     </div>
     <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="panel panel-main-music">
-            <div class="panel-body">
+        <div class="card panel-main-music">
+            <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon pull-left">
                         <i class="fa fa-user-circle" aria-hidden="true"></i>
@@ -64,11 +64,11 @@
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/chart/chart.min.js"></script>
 <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-        <div class="panel panel-main-music">
-            <div class="panel-heading">
+        <div class="card panel-main-music">
+            <div class="card-header">
                 {LANG.mainpage_stat_overview}
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <canvas id="chart-area-overview"></canvas>
                 <script>
                 $(window).on('load', function() {
@@ -130,11 +130,11 @@
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-        <div class="panel panel-main-music">
-            <div class="panel-heading">
+        <div class="card panel-main-music">
+            <div class="card-header">
                 {LANG.mainpage_stat_byyear}
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <canvas id="chart-area-byyear"></canvas>
                 <script>
                 $(window).on('load', function() {
@@ -228,11 +228,11 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <div class="panel panel-main-music">
-            <div class="panel-heading">
+        <div class="card panel-main-music">
+            <div class="card-header">
                 {LANG.mainpage_stat_byday}
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <canvas id="chart-area-byday"></canvas>
                 <script>
                 $(window).on('load', function() {
@@ -326,11 +326,11 @@
 </div>
 <div class="row">
     <div class="col-12">
-        <div class="panel panel-main-music">
-            <div class="panel-heading">
+        <div class="card panel-main-music">
+            <div class="card-header">
                 {LANG.mainpage_stat_bymonth}
             </div>
-            <div class="panel-body">
+            <div class="card-body">
                 <canvas id="chart-area-bymonth"></canvas>
                 <script>
                 $(window).on('load', function() {

@@ -80,8 +80,8 @@
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="card">
+                        <div class="card-body">
                             <div class="form-group ms-form-group-last">
                                 <label for="nation_code" class="control-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <span class="help-block">{LANG.nation_code_rule}</span>
@@ -90,8 +90,8 @@
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="panel panel-default ms-form-group-last">
-                        <div class="panel-body">
+                    <div class="card ms-form-group-last">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label for="nation_name" class="control-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <input type="text" name="nation_name" id="nation_name" value="" class="form-control"/>

@@ -22,9 +22,9 @@
     <div class="form-element">
         <div class="row">
             <div class="col-md-6 col-lg-6">
-                <div class="panel panel-info" id="config_display">
-                    <div class="panel-heading"><strong>{LANG.config_display}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_display">
+                    <div class="card-header"><strong>{LANG.config_display}</strong></div>
+                    <div class="card-body">
                         <div class="row mb-3">
                             <label for="limit_singers_displayed" class="col-form-label text-sm-end col-sm-4">{LANG.limit_singers_displayed}:</label>
                             <div class="col-sm-8">
@@ -52,9 +52,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="config_view_singer">
-                    <div class="panel-heading"><strong>{LANG.config_view_singer}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_view_singer">
+                    <div class="card-header"><strong>{LANG.config_view_singer}</strong></div>
+                    <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-sm-offset-8 col-sm-8">
                                 <div class="checkbox">
@@ -134,9 +134,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="config_urls_system">
-                    <div class="panel-heading"><strong>{LANG.config_urls_system}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_urls_system">
+                    <div class="card-header"><strong>{LANG.config_urls_system}</strong></div>
+                    <div class="card-body">
                         <div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{LANG.config_alert_change}</div>
                         <div class="row mb-3">
                             <label for="arr_code_prefix_singer" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_singer}:</label>
@@ -200,9 +200,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="config_others">
-                    <div class="panel-heading"><strong>{LANG.config_others}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_others">
+                    <div class="card-header"><strong>{LANG.config_others}</strong></div>
+                    <div class="card-body">
                         <div class="row mb-3">
                             <label for="fb_share_image" class="col-form-label text-sm-end col-sm-4">{LANG.fb_share_image}:</label>
                             <div class="col-sm-8">
@@ -277,9 +277,9 @@
                 </div>
             </div>
             <div class="col-md-6 col-lg-6">
-                <div class="panel panel-info" id="config_mainpage">
-                    <div class="panel-heading"><strong>{LANG.config_mainpage}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_mainpage">
+                    <div class="card-header"><strong>{LANG.config_mainpage}</strong></div>
+                    <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-sm-offset-8 col-sm-8">
                                 <div class="checkbox">
@@ -386,9 +386,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="config_list_albums">
-                    <div class="panel-heading"><strong>{LANG.config_list_albums}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_list_albums">
+                    <div class="card-header"><strong>{LANG.config_list_albums}</strong></div>
+                    <div class="card-body">
                         <div class="row mb-3">
                             <label for="gird_albums_percat_nums" class="col-form-label text-sm-end col-sm-4">{LANG.gird_albums_percat_nums}:</label>
                             <div class="col-sm-8">
@@ -405,9 +405,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="config_list_videos">
-                    <div class="panel-heading"><strong>{LANG.config_list_videos}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_list_videos">
+                    <div class="card-header"><strong>{LANG.config_list_videos}</strong></div>
+                    <div class="card-body">
                         <div class="row mb-3">
                             <label for="gird_videos_percat_nums" class="col-form-label text-sm-end col-sm-4">{LANG.gird_videos_percat_nums}:</label>
                             <div class="col-sm-8">
@@ -424,9 +424,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="panel panel-info" id="config_structre_data_page_title">
-                    <div class="panel-heading"><strong>{LANG.config_structre_data_page_title}</strong></div>
-                    <div class="panel-body">
+                <div class="card" id="config_structre_data_page_title">
+                    <div class="card-header"><strong>{LANG.config_structre_data_page_title}</strong></div>
+                    <div class="card-body">
                         <div class="alert alert-warning" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>
                         <strong>{LANG.funcs_album}:</strong>
                         <hr class="sm"/>

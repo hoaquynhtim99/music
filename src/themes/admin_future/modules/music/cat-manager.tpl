@@ -91,8 +91,8 @@
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.cat_add_mgs}" data-msgedit="{LANG.cat_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-                    <div class="panel panel-default">
-                        <div class="panel-body">
+                    <div class="card">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label for="resource_avatar" class="control-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                                 <div class="input-group">
@@ -135,8 +135,8 @@
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="panel panel-default ms-form-group-last">
-                        <div class="panel-body">
+                    <div class="card ms-form-group-last">
+                        <div class="card-body">
                             <div class="form-group">
                                 <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>

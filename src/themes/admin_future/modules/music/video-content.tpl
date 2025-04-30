@@ -9,8 +9,8 @@
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row mb-3">
                     <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
@@ -124,8 +124,8 @@
             </div>
         </div>
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <div class="row mb-3">
                     <label for="video_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.video_name}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
@@ -153,8 +153,8 @@
             </div>
         </div>
         <h2><i class="fa fa-file-video-o" aria-hidden="true"></i> {LANG.video_files}:</h2>
-        <div class="panel panel-default">
-            <div class="panel-body">
+        <div class="card">
+            <div class="card-body">
                 <!-- BEGIN: mvquality -->
                 <div class="row mb-3">
                     <label for="resource_path_{MVQUALITY.quality_id}" class="col-form-label text-sm-end col-sm-4">{MVQUALITY.quality_name}:</label>
