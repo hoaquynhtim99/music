@@ -84,7 +84,7 @@
                         <div class="card-body">
                             <div class="form-group ms-form-group-last">
                                 <label for="nation_code" class="control-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                                <span class="help-block">{LANG.nation_code_rule}</span>
+                                <span class="form-text">{LANG.nation_code_rule}</span>
                                 <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
                             </div>
                         </div>

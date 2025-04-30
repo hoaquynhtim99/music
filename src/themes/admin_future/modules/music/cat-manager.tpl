@@ -147,7 +147,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="cat_absitetitle" class="control-label">{LANG.cat_absitetitle}:</label>
-                                <span class="help-block">{LANG.cat_get_default}</span>
+                                <span class="form-text">{LANG.cat_get_default}</span>
                                 <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
                             </div>
                             <div class="form-group">
@@ -160,7 +160,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="cat_mvsitetitle" class="control-label">{LANG.cat_mvsitetitle}:</label>
-                                <span class="help-block">{LANG.cat_get_default}</span>
+                                <span class="form-text">{LANG.cat_get_default}</span>
                                 <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
                             </div>
                             <div class="form-group">

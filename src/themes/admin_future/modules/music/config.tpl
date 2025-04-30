@@ -33,21 +33,21 @@
                                     <option value="{LIMIT_SINGERS_DISPLAYED.key}"{LIMIT_SINGERS_DISPLAYED.selected}>{LIMIT_SINGERS_DISPLAYED.title}</option>
                                     <!-- END: limit_singers_displayed -->
                                 </select>
-                                <i class="help-block">{LANG.limit_singers_displayed_help}</i>
+                                <i class="form-text">{LANG.limit_singers_displayed_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="various_artists" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.various_artists}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="various_artists" id="various_artists" value="{DATA.various_artists}"/>
-                                <i class="help-block">{LANG.various_artists_help}</i>
+                                <i class="form-text">{LANG.various_artists_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="unknow_singer" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.unknow_singer}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="unknow_singer" id="unknow_singer" value="{DATA.unknow_singer}"/>
-                                <i class="help-block">{LANG.unknow_singer_help}</i>
+                                <i class="form-text">{LANG.unknow_singer_help}</i>
                             </div>
                         </div>
                     </div>
@@ -62,14 +62,14 @@
                                         <input type="checkbox" name="view_singer_show_header" id="view_singer_show_header" value="1"{DATA.view_singer_show_header} /> {LANG.view_singer_show_header}
                                     </label>
                                 </div>
-                                <i class="help-block">{LANG.view_singer_show_header_help}</i>
+                                <i class="form-text">{LANG.view_singer_show_header_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="view_singer_headtext_length" class="col-form-label text-sm-end col-sm-4">{LANG.view_singer_headtext_length}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_headtext_length" id="view_singer_headtext_length" value="{DATA.view_singer_headtext_length}" data-pattern="^[0-9]+$" data-mess="{LANG.validate_number_min0}"/>
-                                <i class="help-block">{LANG.view_singer_headtext_length_help}</i>
+                                <i class="form-text">{LANG.view_singer_headtext_length_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -214,7 +214,7 @@
                                         <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
                                     </span>
                                 </div>
-                                <i class="help-block">{LANG.fb_share_image_help}</i>
+                                <i class="form-text">{LANG.fb_share_image_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -228,7 +228,7 @@
                                         <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_album_avatar" data-alt="" data-path="{UPLOAD_DIR}/albums" data-currentpath="{UPLOAD_DIR}/albums" data-type="image">{LANG.browse_server}</button>
                                     </span>
                                 </div>
-                                <i class="help-block">{LANG.res_default_help}</i>
+                                <i class="form-text">{LANG.res_default_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -242,7 +242,7 @@
                                         <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_singer_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
                                     </span>
                                 </div>
-                                <i class="help-block">{LANG.res_default_help}</i>
+                                <i class="form-text">{LANG.res_default_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -256,7 +256,7 @@
                                         <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_author_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
                                     </span>
                                 </div>
-                                <i class="help-block">{LANG.res_default_help}</i>
+                                <i class="form-text">{LANG.res_default_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -270,7 +270,7 @@
                                         <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_video_avatar" data-alt="" data-path="{UPLOAD_DIR}/videos" data-currentpath="{UPLOAD_DIR}/videos" data-type="image">{LANG.browse_server}</button>
                                     </span>
                                 </div>
-                                <i class="help-block">{LANG.res_default_help}</i>
+                                <i class="form-text">{LANG.res_default_help}</i>
                             </div>
                         </div>
                     </div>
@@ -360,28 +360,28 @@
                             <label for="home_albums_nums" class="col-form-label text-sm-end col-sm-4">{LANG.home_albums_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="home_albums_nums" id="home_albums_nums" value="{DATA.home_albums_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.config_available_if_choose}</i>
+                                <i class="form-text">{LANG.config_available_if_choose}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="home_singers_nums" class="col-form-label text-sm-end col-sm-4">{LANG.home_singers_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="home_singers_nums" id="home_singers_nums" value="{DATA.home_singers_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.config_available_if_choose}</i>
+                                <i class="form-text">{LANG.config_available_if_choose}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="home_songs_nums" class="col-form-label text-sm-end col-sm-4">{LANG.home_songs_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="home_songs_nums" id="home_songs_nums" value="{DATA.home_songs_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.config_available_if_choose}</i>
+                                <i class="form-text">{LANG.config_available_if_choose}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="home_videos_nums" class="col-form-label text-sm-end col-sm-4">{LANG.home_videos_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="home_videos_nums" id="home_videos_nums" value="{DATA.home_videos_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.config_available_if_choose}</i>
+                                <i class="form-text">{LANG.config_available_if_choose}</i>
                             </div>
                         </div>
                     </div>
@@ -393,14 +393,14 @@
                             <label for="gird_albums_percat_nums" class="col-form-label text-sm-end col-sm-4">{LANG.gird_albums_percat_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="gird_albums_percat_nums" id="gird_albums_percat_nums" value="{DATA.gird_albums_percat_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.gird_albums_percat_nums_help}</i>
+                                <i class="form-text">{LANG.gird_albums_percat_nums_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="gird_albums_incat_nums" class="col-form-label text-sm-end col-sm-4">{LANG.gird_albums_incat_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="gird_albums_incat_nums" id="gird_albums_incat_nums" value="{DATA.gird_albums_incat_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.gird_albums_incat_nums_help}</i>
+                                <i class="form-text">{LANG.gird_albums_incat_nums_help}</i>
                             </div>
                         </div>
                     </div>
@@ -412,14 +412,14 @@
                             <label for="gird_videos_percat_nums" class="col-form-label text-sm-end col-sm-4">{LANG.gird_videos_percat_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="gird_videos_percat_nums" id="gird_videos_percat_nums" value="{DATA.gird_videos_percat_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.gird_videos_percat_nums_help}</i>
+                                <i class="form-text">{LANG.gird_videos_percat_nums_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="gird_videos_incat_nums" class="col-form-label text-sm-end col-sm-4">{LANG.gird_videos_incat_nums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="gird_videos_incat_nums" id="gird_videos_incat_nums" value="{DATA.gird_videos_incat_nums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
-                                <i class="help-block">{LANG.gird_videos_incat_nums_help}</i>
+                                <i class="form-text">{LANG.gird_videos_incat_nums_help}</i>
                             </div>
                         </div>
                     </div>
@@ -434,21 +434,21 @@
                             <label for="arr_funcs_sitetitle_album" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_sitetitle}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_sitetitle_album" id="arr_funcs_sitetitle_album" value="{DATA.arr_funcs_sitetitle_album}"/>
-                                <i class="help-block">{LANG.funcs_sitetitle_help}</i>
+                                <i class="form-text">{LANG.funcs_sitetitle_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="arr_funcs_keywords_album" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_keywords}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_keywords_album" id="arr_funcs_keywords_album" value="{DATA.arr_funcs_keywords_album}"/>
-                                <i class="help-block">{LANG.funcs_keywords_help}</i>
+                                <i class="form-text">{LANG.funcs_keywords_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="arr_funcs_description_album" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_description}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_description_album" id="arr_funcs_description_album" value="{DATA.arr_funcs_description_album}"/>
-                                <i class="help-block">{LANG.funcs_description_help}</i>
+                                <i class="form-text">{LANG.funcs_description_help}</i>
                             </div>
                         </div>
                         <strong>{LANG.funcs_video}:</strong>
@@ -457,21 +457,21 @@
                             <label for="arr_funcs_sitetitle_video" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_sitetitle}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_sitetitle_video" id="arr_funcs_sitetitle_video" value="{DATA.arr_funcs_sitetitle_video}"/>
-                                <i class="help-block">{LANG.funcs_sitetitle_help}</i>
+                                <i class="form-text">{LANG.funcs_sitetitle_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="arr_funcs_keywords_video" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_keywords}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_keywords_video" id="arr_funcs_keywords_video" value="{DATA.arr_funcs_keywords_video}"/>
-                                <i class="help-block">{LANG.funcs_keywords_help}</i>
+                                <i class="form-text">{LANG.funcs_keywords_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="arr_funcs_description_video" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_description}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_description_video" id="arr_funcs_description_video" value="{DATA.arr_funcs_description_video}"/>
-                                <i class="help-block">{LANG.funcs_description_help}</i>
+                                <i class="form-text">{LANG.funcs_description_help}</i>
                             </div>
                         </div>
                         <strong>{LANG.funcs_singer}:</strong>
@@ -480,21 +480,21 @@
                             <label for="arr_funcs_sitetitle_singer" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_sitetitle}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_sitetitle_singer" id="arr_funcs_sitetitle_singer" value="{DATA.arr_funcs_sitetitle_singer}"/>
-                                <i class="help-block">{LANG.funcs_sitetitle_help}</i>
+                                <i class="form-text">{LANG.funcs_sitetitle_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="arr_funcs_keywords_singer" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_keywords}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_keywords_singer" id="arr_funcs_keywords_singer" value="{DATA.arr_funcs_keywords_singer}"/>
-                                <i class="help-block">{LANG.funcs_keywords_help}</i>
+                                <i class="form-text">{LANG.funcs_keywords_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <label for="arr_funcs_description_singer" class="col-form-label text-sm-end col-sm-4">{LANG.funcs_description}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control" type="text" name="arr_funcs_description_singer" id="arr_funcs_description_singer" value="{DATA.arr_funcs_description_singer}"/>
-                                <i class="help-block">{LANG.funcs_description_help}</i>
+                                <i class="form-text">{LANG.funcs_description_help}</i>
                             </div>
                         </div>
                     </div>
