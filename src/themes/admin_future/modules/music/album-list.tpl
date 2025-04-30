@@ -13,7 +13,7 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group">
                 <label for="search_cat">{LANG.cat}:</label>
-                <select class="form-control" name="c">
+                <select class="form-select" name="c">
                     <option value="0">--</option>
                     <!-- BEGIN: cat --><option value="{CAT.cat_id}"{CAT.selected}>{CAT.cat_name}</option><!-- END: cat -->
                 </select>

@@ -12,7 +12,7 @@
                             <input type="text" name="q" value="" class="form-control" placeholder="{LANG.enter_keyword}">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="nation_id" class="form-control">
+                            <select class="form-control" name="nation_id" class="form-select">
                                 <option value="0">{LANG.search_all_nation}</option>
                                 <!-- BEGIN: nation -->
                                 <option value="{NATION.nation_id}">{NATION.nation_name}</option>

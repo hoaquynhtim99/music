@@ -13,7 +13,7 @@
         <div class="col-sm-6 col-md-3">
             <div class="form-group">
                 <label for="search_cat">{LANG.type}:</label>
-                <select class="form-control" name="tp">
+                <select class="form-select" name="tp">
                     <option value="-1">--</option>
                     <!-- BEGIN: artist_type --><option value="{ARTIST_TYPE.key}"{ARTIST_TYPE.selected}>{ARTIST_TYPE.title}</option><!-- END: artist_type -->
                 </select>

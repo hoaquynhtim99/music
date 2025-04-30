@@ -11,7 +11,7 @@
                 <div class="row mb-3">
                     <label for="artist_type" class="col-form-label text-sm-end col-sm-4">{LANG.type}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
-                        <select class="form-control" name="artist_type" id="artist_type">
+                        <select class="form-select" name="artist_type" id="artist_type">
                             <!-- BEGIN: artist_type -->
                             <option value="{ARTIST_TYPE.key}"{ARTIST_TYPE.selected}>{ARTIST_TYPE.title}</option>
                             <!-- END: artist_type -->
@@ -27,7 +27,7 @@
                 <div class="row mb-3">
                     <label for="artist_birthday_lev" class="col-form-label text-sm-end col-sm-4">{LANG.artist_birthday_lev}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
-                        <select class="form-control" name="artist_birthday_lev" id="artist_birthday_lev">
+                        <select class="form-select" name="artist_birthday_lev" id="artist_birthday_lev">
                             <!-- BEGIN: artist_birthday_lev -->
                             <option value="{ARTIST_BIRTHDAY_LEV.key}"{ARTIST_BIRTHDAY_LEV.selected}>{ARTIST_BIRTHDAY_LEV.title}</option>
                             <!-- END: artist_birthday_lev -->
@@ -37,7 +37,7 @@
                 <div class="row mb-3">
                     <label for="nation_id" class="col-form-label text-sm-end col-sm-4">{LANG.nation}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
-                        <select class="form-control" name="nation_id" id="nation_id">
+                        <select class="form-select" name="nation_id" id="nation_id">
                             <option value="0">--</option>
                             <!-- BEGIN: nation -->
                             <option value="{NATION.nation_id}"{NATION.selected}>{NATION.nation_name}</option>

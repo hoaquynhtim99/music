@@ -15,7 +15,7 @@
                     <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="select2 required">
-                            <select class="form-control" name="cat_ids[]" id="cat_ids" multiple="multiple">
+                            <select class="form-select" name="cat_ids[]" id="cat_ids" multiple="multiple">
                                 <!-- BEGIN: cat -->
                                 <option value="{CAT.cat_id}"{CAT.selected}>{CAT.cat_name}</option>
                                 <!-- END: cat -->

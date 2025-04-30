@@ -28,7 +28,7 @@
                         <div class="row mb-3">
                             <label for="limit_singers_displayed" class="col-form-label text-sm-end col-sm-4">{LANG.limit_singers_displayed}:</label>
                             <div class="col-sm-8">
-                                <select name="limit_singers_displayed" id="limit_singers_displayed" class="form-control">
+                                <select name="limit_singers_displayed" id="limit_singers_displayed" class="form-select">
                                     <!-- BEGIN: limit_singers_displayed -->
                                     <option value="{LIMIT_SINGERS_DISPLAYED.key}"{LIMIT_SINGERS_DISPLAYED.selected}>{LIMIT_SINGERS_DISPLAYED.title}</option>
                                     <!-- END: limit_singers_displayed -->
@@ -319,7 +319,7 @@
                         <div class="row mb-3">
                             <label for="home_albums_weight" class="col-form-label text-sm-end col-sm-4">{LANG.home_albums_weight}:</label>
                             <div class="col-sm-8">
-                                <select name="home_albums_weight" id="home_albums_weight" class="form-control" data-toggle="mscfgmainweight" data-value="{DATA.home_albums_weight}">
+                                <select name="home_albums_weight" id="home_albums_weight" class="form-select" data-toggle="mscfgmainweight" data-value="{DATA.home_albums_weight}">
                                     <!-- BEGIN: home_albums_weight -->
                                     <option value="{WEIGHT}"{HOME_ALBUMS_WEIGHT}>{WEIGHT}</option>
                                     <!-- END: home_albums_weight -->
@@ -329,7 +329,7 @@
                         <div class="row mb-3">
                             <label for="home_singers_weight" class="col-form-label text-sm-end col-sm-4">{LANG.home_singers_weight}:</label>
                             <div class="col-sm-8">
-                                <select name="home_singers_weight" id="home_singers_weight" class="form-control" data-toggle="mscfgmainweight" data-value="{DATA.home_singers_weight}">
+                                <select name="home_singers_weight" id="home_singers_weight" class="form-select" data-toggle="mscfgmainweight" data-value="{DATA.home_singers_weight}">
                                     <!-- BEGIN: home_singers_weight -->
                                     <option value="{WEIGHT}"{HOME_SINGERS_WEIGHT}>{WEIGHT}</option>
                                     <!-- END: home_singers_weight -->
@@ -339,7 +339,7 @@
                         <div class="row mb-3">
                             <label for="home_songs_weight" class="col-form-label text-sm-end col-sm-4">{LANG.home_songs_weight}:</label>
                             <div class="col-sm-8">
-                                <select name="home_songs_weight" id="home_songs_weight" class="form-control" data-toggle="mscfgmainweight" data-value="{DATA.home_songs_weight}">
+                                <select name="home_songs_weight" id="home_songs_weight" class="form-select" data-toggle="mscfgmainweight" data-value="{DATA.home_songs_weight}">
                                     <!-- BEGIN: home_songs_weight -->
                                     <option value="{WEIGHT}"{HOME_SONGS_WEIGHT}>{WEIGHT}</option>
                                     <!-- END: home_songs_weight -->
@@ -349,7 +349,7 @@
                         <div class="row mb-3">
                             <label for="home_videos_weight" class="col-form-label text-sm-end col-sm-4">{LANG.home_videos_weight}:</label>
                             <div class="col-sm-8">
-                                <select name="home_videos_weight" id="home_videos_weight" class="form-control" data-toggle="mscfgmainweight" data-value="{DATA.home_videos_weight}">
+                                <select name="home_videos_weight" id="home_videos_weight" class="form-select" data-toggle="mscfgmainweight" data-value="{DATA.home_videos_weight}">
                                     <!-- BEGIN: home_videos_weight -->
                                     <option value="{WEIGHT}"{HOME_VIDEOS_WEIGHT}>{WEIGHT}</option>
                                     <!-- END: home_videos_weight -->

@@ -12,7 +12,7 @@
                             <input type="text" name="q" value="" class="form-control" placeholder="{LANG.enter_keyword}">
                         </div>
                         <div class="form-group">
-                            <select class="form-control" name="cat_id" class="form-control">
+                            <select class="form-control" name="cat_id" class="form-select">
                                 <option value="0">{LANG.search_all_cat}</option>
                                 <!-- BEGIN: cat1 -->
                                 <option value="{CAT.cat_id}">{CAT.cat_name}</option>
