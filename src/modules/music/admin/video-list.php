@@ -315,7 +315,7 @@ foreach ($array as $row) {
     $row['time_update'] = $row['time_update'] ? Utils::getFormatDateView($row['time_update']) : '';
     $row['stat_views'] = Utils::getFormatNumberView($row['stat_views']);
     $row['stat_comments'] = Utils::getFormatNumberView($row['stat_comments']);
-    $row['state'] = $lang_module['status_' . $row['status']];
+    $row['state'] = $nv_Lang->getModule('status_' . $row['status']);
     $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'video-content&amp;video_id=' . $row['video_id'];
     $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'video', true);
     $row['resource_avatar'] = nv_get_resource_url($row['resource_avatar'], 'video');

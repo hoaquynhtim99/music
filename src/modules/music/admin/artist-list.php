@@ -210,7 +210,7 @@ foreach ($array as $row) {
     $row['time_add'] = Utils::getFormatDateView($row['time_add']);
     $row['time_update'] = $row['time_update'] ? Utils::getFormatDateView($row['time_update']) : '';
     //$row['stat_views'] = Utils::getFormatNumberView($row['stat_views']);
-    $row['state'] = $lang_module['status_' . $row['status']];
+    $row['state'] = $nv_Lang->getModule('status_' . $row['status']);
     $row['url_edit'] = NV_ADMIN_MOD_FULLLINK_AMP . 'artist-content&amp;artist_id=' . $row['artist_id'];
 
     $xtpl->assign('ROW', $row);

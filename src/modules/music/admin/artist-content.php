@@ -380,7 +380,7 @@ foreach ($global_array_artist_type as $_key => $_val) {
 for ($i = 0; $i <= 3; ++$i) {
     $artist_birthday_lev = array(
         'key' => $i,
-        'title' => $lang_module['artist_birthday_lev' . $i],
+        'title' => $nv_Lang->getModule('artist_birthday_lev' . $i),
         'selected' => $i == $array['artist_birthday_lev'] ? ' selected="selected"' : ''
     );
     $xtpl->assign('ARTIST_BIRTHDAY_LEV', $artist_birthday_lev);

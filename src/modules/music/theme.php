@@ -709,7 +709,7 @@ function nv_theme_view_singer_header($data_singer, $request_tab)
     // Các TAB
     $allTabs = Config::getSingerTabsAlias()->getAllTabs();
     foreach ($allTabs as $tab_key => $tab_alias) {
-        $xtpl->assign('TAB_TITLE', $lang_module['view_singer_tab_' . $tab_key]);
+        $xtpl->assign('TAB_TITLE', $nv_Lang->getModule('view_singer_tab_' . $tab_key));
         $xtpl->assign('TAB_LINK', nv_get_view_singer_link($data_singer, true, $tab_key));
 
         if ($request_tab == $tab_key) {
@@ -1947,7 +1947,7 @@ function nv_theme_music_search($array_search, $array_songs, $array_videos, $arra
     for ($i = 1; $i <= 3; $i++) {
         $array_queries_tmp['sort'] = $i;
         $xtpl->assign('SORT', [
-            'title' => $lang_module['search_sortby' . $i],
+            'title' => $nv_Lang->getModule('search_sortby' . $i),
             'link' => Resources::getModFullLinkEncode() . $op . '&amp;' . Utils::buildSearchQuery($array_queries_tmp)
         ]);
         if ((empty($array_queries['sort']) and $i == 1) or (!empty($array_queries['sort']) and $i == $array_queries['sort'])) {
