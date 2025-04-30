@@ -50,7 +50,7 @@
                 <tr>
                     <td colspan="7" class="">
                         <div class="row">
-                            <div class="col-sm-10 form-inline">
+                            <div class="col-sm-5 form-inline">
                                 <div class="form-group">
                                     <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
@@ -59,7 +59,7 @@
                                     <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
                                 </div>
                             </div>
-                            <div class="col-sm-14">
+                            <div class="col-sm-7">
                             </div>
                         </div>
                     </td>

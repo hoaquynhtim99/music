@@ -1,6 +1,6 @@
 <!-- BEGIN: main -->
 <div class="row">
-    <div class="col-sm-12 con-md-12 col-lg-6">
+    <div class="col-sm-6 con-md-12 col-lg-3">
         <div class="panel panel-main-music">
             <div class="panel-body">
                 <div class="ms-main-couter">
@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12 con-md-12 col-lg-6">
+    <div class="col-sm-6 con-md-12 col-lg-3">
         <div class="panel panel-main-music">
             <div class="panel-body">
                 <div class="ms-main-couter">
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12 con-md-12 col-lg-6">
+    <div class="col-sm-6 con-md-12 col-lg-3">
         <div class="panel panel-main-music">
             <div class="panel-body">
                 <div class="ms-main-couter">
@@ -45,7 +45,7 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-12 con-md-12 col-lg-6">
+    <div class="col-sm-6 con-md-12 col-lg-3">
         <div class="panel panel-main-music">
             <div class="panel-body">
                 <div class="ms-main-couter">
@@ -63,7 +63,7 @@
 </div>
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/chart/chart.min.js"></script>
 <div class="row">
-    <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="panel panel-main-music">
             <div class="panel-heading">
                 {LANG.mainpage_stat_overview}
@@ -129,7 +129,7 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-12 col-md-12 col-sm-24 col-xs-24">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-12">
         <div class="panel panel-main-music">
             <div class="panel-heading">
                 {LANG.mainpage_stat_byyear}
@@ -227,7 +227,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-24">
+    <div class="col-12">
         <div class="panel panel-main-music">
             <div class="panel-heading">
                 {LANG.mainpage_stat_byday}
@@ -325,7 +325,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-24">
+    <div class="col-12">
         <div class="panel panel-main-music">
             <div class="panel-heading">
                 {LANG.mainpage_stat_bymonth}

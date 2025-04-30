@@ -4,13 +4,13 @@
     <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}"/>
     <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}"/>
     <div class="row">
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-6 col-md-3">
             <div class="form-group">
                 <label for="search_keyword">{LANG.keywords}:</label>
                 <input type="text" class="form-control" name="q" id="search_keyword" value="{SEARCH.q}"/>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-6 col-md-3">
             <div class="form-group">
                 <label for="search_cat">{LANG.cat}:</label>
                 <select class="form-control" name="c">
@@ -19,20 +19,20 @@
                 </select>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-6 col-md-3">
             <div class="form-group">
                 <label for="search_time">{LANG.time}:</label>
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-6">
                         <input type="text" class="form-control" name="f" id="search_from" value="{SEARCH.f}" placeholder="{LANG.from}" autocomplete="off"/>
                     </div>
-                    <div class="col-xs-12">
+                    <div class="col-6">
                         <input type="text" class="form-control" name="t" id="search_to" value="{SEARCH.t}" placeholder="{LANG.to}" autocomplete="off"/>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-6 col-md-3">
             <div class="form-group">
                 <label for="search_submit">&nbsp;</label>
                 <div class="clearfix">
@@ -158,7 +158,7 @@ $(function() {
                 <tr>
                     <td colspan="8" class="">
                         <div class="row">
-                            <div class="col-sm-10 form-inline">
+                            <div class="col-sm-5 form-inline">
                                 <div class="form-group">
                                     <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
@@ -167,7 +167,7 @@ $(function() {
                                     <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
                                 </div>
                             </div>
-                            <div class="col-sm-14">
+                            <div class="col-sm-7">
                                 <div class="pull-right">
                                     <!-- BEGIN: generate_page -->
                                     {GENERATE_PAGE}

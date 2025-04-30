@@ -7,8 +7,8 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="form-group">
-                <label for="caption_file" class="control-label col-sm-8">{LANG.mana_cc_webvtt}:</label>
-                <div class="col-sm-16 col-md-10 col-lg-8">
+                <label for="caption_file" class="control-label col-sm-4">{LANG.mana_cc_webvtt}:</label>
+                <div class="col-sm-8 col-md-5 col-lg-4">
                     <div class="input-group">
                         <input type="text" class="form-control" id="caption_file" name="caption_file" value="{DATA.caption_file}">
                         <div class="input-group-btn">
@@ -19,8 +19,8 @@
                 </div>
             </div>
             <div class="row">
-                <label for="caption_pdf" class="control-label col-sm-8">{LANG.mana_cc_pdf}:</label>
-                <div class="col-sm-16 col-md-10 col-lg-8">
+                <label for="caption_pdf" class="control-label col-sm-4">{LANG.mana_cc_pdf}:</label>
+                <div class="col-sm-8 col-md-5 col-lg-4">
                     <div class="input-group">
                         <input type="text" class="form-control" id="caption_pdf" name="caption_pdf" value="{DATA.caption_pdf}">
                         <div class="input-group-btn">

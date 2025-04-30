@@ -53,7 +53,7 @@
                 <tr>
                     <td colspan="7" class="">
                         <div class="row">
-                            <div class="col-sm-10 form-inline">
+                            <div class="col-sm-5 form-inline">
                                 <div class="form-group">
                                     <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}" data-others="||{LANG.chart_delete_confirm}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
@@ -62,7 +62,7 @@
                                     <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
                                 </div>
                             </div>
-                            <div class="col-sm-14">
+                            <div class="col-sm-7">
                             </div>
                         </div>
                     </td>
@@ -98,7 +98,7 @@
                                 <label class="control-label">{LANG.chart_choose_cat}:</label>
                                 <div class="row">
                                     <!-- BEGIN: cat -->
-                                    <div class="col-xs-12 col-sm-6">
+                                    <div class="col-6 col-sm-3">
                                         <label><input type="checkbox" name="cat_ids[]" id="cat_ids_{CAT.cat_id}" value="{CAT.cat_id}"> {CAT.cat_name}</label>
                                     </div>
                                     <!-- END: cat -->
