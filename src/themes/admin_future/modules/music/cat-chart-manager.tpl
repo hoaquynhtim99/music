@@ -89,9 +89,7 @@
                                 <label for="resource_cover" class="control-label">{LANG.chart_resource_cover}:</label>
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
-                                    </span>
+                                    <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
                                 </div>
                             </div>
                             <div class="form-group">

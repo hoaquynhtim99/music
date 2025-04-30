@@ -139,14 +139,14 @@
      */
     Validate.prototype.hideAllError = function() {
         $(".has-error", this.$element).removeClass("has-error");
-        $(".required", this.$element).tooltip("destroy");
+        $(".required", this.$element).tooltip("dispose");
     }
 
     /**
      * Ẩn thông báo lỗi ở một đối tượng
      */
     Validate.prototype.hideError = function(element) {
-        $(element).tooltip("destroy");
+        $(element).tooltip("dispose");
 
         if ($(element).parent().is('.input-group')) {
             $(element).parent().parent().parent().removeClass("has-error");

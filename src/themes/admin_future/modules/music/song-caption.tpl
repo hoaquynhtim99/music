@@ -11,9 +11,7 @@
                 <div class="col-sm-8 col-md-5 col-lg-4">
                     <div class="input-group">
                         <input type="text" class="form-control" id="caption_file" name="caption_file" value="{DATA.caption_file}">
-                        <div class="input-group-btn">
-                            <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_file" data-type="file" data-path="{RESOURCE_PATH}" data-currentpath="{RESOURCE_CURRPATH}">{GLANG.browse_file}</button>
-                        </div>
+                        <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_file" data-type="file" data-path="{RESOURCE_PATH}" data-currentpath="{RESOURCE_CURRPATH}">{GLANG.browse_file}</button>
                     </div>
                     <i class="form-text text-muted">{LANG.mana_cc_webvtt_help}.</i>
                 </div>
@@ -23,9 +21,7 @@
                 <div class="col-sm-8 col-md-5 col-lg-4">
                     <div class="input-group">
                         <input type="text" class="form-control" id="caption_pdf" name="caption_pdf" value="{DATA.caption_pdf}">
-                        <div class="input-group-btn">
-                            <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_pdf" data-type="file" data-path="{RESOURCE_PATH}" data-currentpath="{RESOURCE_CURRPATH}">{GLANG.browse_file}</button>
-                        </div>
+                        <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_pdf" data-type="file" data-path="{RESOURCE_PATH}" data-currentpath="{RESOURCE_CURRPATH}">{GLANG.browse_file}</button>
                     </div>
                     <i class="form-text text-muted">{LANG.mana_cc_pdf_help}.</i>
                 </div>

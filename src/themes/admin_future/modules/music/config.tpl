@@ -207,11 +207,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="fb_share_image" id="fb_share_image" value="{DATA.fb_share_image}" readonly="readonly"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
-                                    </span>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.fb_share_image_help}</i>
                             </div>
@@ -221,11 +219,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_album_avatar" id="res_default_album_avatar" value="{DATA.res_default_album_avatar}" readonly="readonly"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_album_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_album_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_album_avatar" data-alt="" data-path="{UPLOAD_DIR}/albums" data-currentpath="{UPLOAD_DIR}/albums" data-type="image">{LANG.browse_server}</button>
-                                    </span>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_album_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_album_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_album_avatar" data-alt="" data-path="{UPLOAD_DIR}/albums" data-currentpath="{UPLOAD_DIR}/albums" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
                             </div>
@@ -235,11 +231,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_singer_avatar" id="res_default_singer_avatar" value="{DATA.res_default_singer_avatar}" readonly="readonly"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_singer_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_singer_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_singer_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
-                                    </span>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_singer_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_singer_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_singer_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
                             </div>
@@ -249,11 +243,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_author_avatar" id="res_default_author_avatar" value="{DATA.res_default_author_avatar}" readonly="readonly"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_author_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_author_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_author_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
-                                    </span>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_author_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_author_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_author_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
                             </div>
@@ -263,11 +255,9 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_video_avatar" id="res_default_video_avatar" value="{DATA.res_default_video_avatar}" readonly="readonly"/>
-                                    <span class="input-group-btn">
-                                        <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_video_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                        <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_video_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
-                                        <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_video_avatar" data-alt="" data-path="{UPLOAD_DIR}/videos" data-currentpath="{UPLOAD_DIR}/videos" data-type="image">{LANG.browse_server}</button>
-                                    </span>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_video_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_video_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_video_avatar" data-alt="" data-path="{UPLOAD_DIR}/videos" data-currentpath="{UPLOAD_DIR}/videos" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
                             </div>
