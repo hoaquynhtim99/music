@@ -120,11 +120,9 @@
                                     </span>
                                 </div>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
-                                    {LANG.cat_show_inalbum}
-                                </label>
+                            <div class="form-check">
+                                <input class="form-check-input" id="checkr3H7dNLR" type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
+                                <label class="form-check-label" for="checkr3H7dNLR">{LANG.cat_show_inalbum}</label>
                             </div>
                             <div class="checkbox ms-form-group-last">
                                 <label>

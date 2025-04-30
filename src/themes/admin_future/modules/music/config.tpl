@@ -57,10 +57,9 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="offset-sm-4 col-sm-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="view_singer_show_header" id="view_singer_show_header" value="1"{DATA.view_singer_show_header} /> {LANG.view_singer_show_header}
-                                    </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="view_singer_show_header" id="view_singer_show_header" value="1"{DATA.view_singer_show_header} />
+                                    <label class="form-check-label" for="view_singer_show_header">{LANG.view_singer_show_header}</label>
                                 </div>
                                 <i class="form-text">{LANG.view_singer_show_header_help}</i>
                             </div>
@@ -282,37 +281,33 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="offset-sm-4 col-sm-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="home_albums_display" id="home_albums_display" value="1"{DATA.home_albums_display} /> {LANG.home_albums_display}
-                                    </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="home_albums_display" id="home_albums_display" value="1"{DATA.home_albums_display} />
+                                    <label class="form-check-label" for="home_albums_display">{LANG.home_albums_display}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="offset-sm-4 col-sm-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="home_singers_display" id="home_singers_display" value="1"{DATA.home_singers_display} /> {LANG.home_singers_display}
-                                    </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="home_singers_display" id="home_singers_display" value="1"{DATA.home_singers_display} />
+                                    <label class="form-check-label" for="home_singers_display">{LANG.home_singers_display}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="offset-sm-4 col-sm-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="home_songs_display" id="home_songs_display" value="1"{DATA.home_songs_display} /> {LANG.home_songs_display}
-                                    </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="home_songs_display" id="home_songs_display" value="1"{DATA.home_songs_display} />
+                                    <label class="form-check-label" for="home_songs_display">{LANG.home_songs_display}</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="offset-sm-4 col-sm-8">
-                                <div class="checkbox">
-                                    <label>
-                                        <input type="checkbox" name="home_videos_display" id="home_videos_display" value="1"{DATA.home_videos_display} /> {LANG.home_videos_display}
-                                    </label>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="home_videos_display" id="home_videos_display" value="1"{DATA.home_videos_display} />
+                                    <label class="form-check-label" for="home_videos_display">{LANG.home_videos_display}</label>
                                 </div>
                             </div>
                         </div>

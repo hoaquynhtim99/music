@@ -69,11 +69,9 @@
                 </div>
                 <div class="row mb-3 ms-row mb-3-last">
                     <div class="offset-sm-4 col-sm-8 col-md-5 col-lg-4">
-                        <div class="checkbox">
-                            <label>
-                                <input type="checkbox" name="show_inhome" id="show_inhome" value="1"{DATA.show_inhome}/>
-                                {LANG.show_inhome}.
-                            </label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="show_inhome" id="show_inhome" value="1"{DATA.show_inhome}/>
+                            <label class="form-check-label" for="show_inhome">{LANG.show_inhome}.</label>
                         </div>
                     </div>
                 </div>

@@ -86,17 +86,13 @@
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="online_supported" value="1" data-checked="1"/>
-                                    {LANG.qso_online_supported}
-                                </label>
+                            <div class="form-check">
+                                <input class="form-check-input" id="checkc606C73t" type="checkbox" name="online_supported" value="1" data-checked="1"/>
+                                <label class="form-check-label" for="checkc606C73t">{LANG.qso_online_supported}</label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="is_default" value="1" data-checked="0"/>
-                                    {LANG.qso_is_default}
-                                </label>
+                            <div class="form-check">
+                                <input class="form-check-input" id="checki4A9oj2I" type="checkbox" name="is_default" value="1" data-checked="0"/>
+                                <label class="form-check-label" for="checki4A9oj2I">{LANG.qso_is_default}</label>
                             </div>
                         </div>
                     </div>
