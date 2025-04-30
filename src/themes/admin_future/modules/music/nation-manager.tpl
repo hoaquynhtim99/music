@@ -22,7 +22,7 @@
                         <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
                     </td>
                     <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
                             <span class="text" data-text="{ROW.weight}">{ROW.weight}</span>
                             <span class="caret"></span>
                         </button>
@@ -38,7 +38,7 @@
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.nation_id}" data-name="{ROW.nation_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.nation_id}" data-name="{ROW.nation_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
                             <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                             <span class="caret"></span>
                         </button>
@@ -52,7 +52,7 @@
                         <div class="row">
                             <div class="col-sm-5 form-inline">
                                 <div class="form-group">
-                                    <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
+                                    <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="delete" data-langs="{GLANG.delete}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                                         <span class="caret"></span>
                                     </button>
@@ -121,7 +121,7 @@
                 </div>
                 <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
                 <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa fa-floppy-o" aria-hidden="true"></i> {LANG.save}</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
             </div>
         </div>
     </div>

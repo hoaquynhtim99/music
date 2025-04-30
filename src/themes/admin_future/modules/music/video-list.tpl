@@ -140,13 +140,13 @@ $(function() {
                     <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                     <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                     <td>
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.video_id}" data-name="{ROW.video_name}" data-options="{ACTION_STATUS}" data-langs="{LANG_STATUS}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.video_id}" data-name="{ROW.video_name}" data-options="{ACTION_STATUS}" data-langs="{LANG_STATUS}">
                             <span class="text" data-text="{ROW.state}">{ROW.state}</span>
                             <span class="caret"></span>
                         </button>
                     </td>
                     <td class="text-right">
-                        <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.video_id}" data-name="{ROW.video_name}" data-options="edit|delete" data-langs="{GLANG.edit}|{GLANG.delete}" data-urledit="{ROW.url_edit}">
+                        <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.video_id}" data-name="{ROW.video_name}" data-options="edit|delete" data-langs="{GLANG.edit}|{GLANG.delete}" data-urledit="{ROW.url_edit}">
                             <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                             <span class="caret"></span>
                         </button>
@@ -160,7 +160,7 @@ $(function() {
                         <div class="row">
                             <div class="col-sm-5 form-inline">
                                 <div class="form-group">
-                                    <button data-toggle="mscallpop" type="button" class="btn btn-default btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
+                                    <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
                                         <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                                         <span class="caret"></span>
                                     </button>

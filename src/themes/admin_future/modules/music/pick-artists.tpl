@@ -32,7 +32,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-toggle="completePickArtist">{LANG.save}</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">{LANG.close}</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">{LANG.close}</button>
             </div>
         </div>
     </div>
