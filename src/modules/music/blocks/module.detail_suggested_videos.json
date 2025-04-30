@@ -1,0 +1,36 @@
+{
+    "info": {
+        "name": "MV gợi ý khi xem một MV",
+        "author": "PHAN TAN DUNG",
+        "website": "https://writeblabla.com/",
+        "description": ""
+    },
+    "config": {
+        "numrows": "15",
+        "showtypecat": "1",
+        "showtypesinger": "0",
+        "showtypeauthor": "0"
+    },
+    "datafunction": "nv_block_config_detail_suggested_videos",
+    "submitfunction": "nv_block_config_detail_suggested_videos_submit",
+    "i18n": {
+        "vi": {
+            "language": {
+                "numrows": "Số MV hiển thị",
+                "showtypecat": "Phạm vi thể loại",
+                "showtypecat0": "Tất cả các MV",
+                "showtypecat1": "Các MV cùng thể loại",
+                "showtypesinger": "Phạm vi ca sĩ",
+                "showtypesinger0": "Tất cả",
+                "showtypesinger1": "Các MV cùng ca sĩ",
+                "showtypeauthor": "Phạm vi nhạc sĩ",
+                "showtypeauthor0": "Tất cả",
+                "showtypeauthor1": "Các MV cùng nhạc sĩ",
+                "blocknote": ""
+            },
+            "info": {
+                "name": "detail_suggested_videos"
+            }
+        }
+    }
+}

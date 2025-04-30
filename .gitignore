@@ -46,7 +46,7 @@
 /node_modules
 /package-lock.json
 
-#vendor test ignore 
+#vendor test ignore
 /src/includes/vendor/**/demo/
 /src/includes/vendor/**/example/
 /src/includes/vendor/**/examples/
@@ -87,7 +87,7 @@
 /src/assets
 /src/data
 /src/admin
-/src/modules
+/src/modules/**
 /src/includes
 /src/install
 /src/uploads
@@ -113,8 +113,8 @@
 /TODO.txt
 
 # Ignore fix module files and directories.
-!/src/modules/music
-
+!/src/modules/music/
+!/src/modules/music/**
 !/src/themes/default
 /src/themes/default/*
 !/src/themes/default/css

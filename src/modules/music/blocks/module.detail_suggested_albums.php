@@ -27,23 +27,23 @@ if (!nv_function_exists('nv_block_detail_suggested_albums')) {
     {
         global $nv_Lang;
 
-        $html = '<div class="form-group">';
-        $html .= '  <div class="col-sm-18 col-sm-offset-6">';
+        $html = '<div class="row mb-3">';
+        $html .= '  <div class="col-sm-9 col-sm-offset-6">';
         $html .= '    <span class="text-info">' . $nv_Lang->getModule('blocknote') . '</span>';
         $html .= '  </div>';
         $html .= '</div>';
 
-        $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('numrows') . ':</label>';
-        $html .= '  <div class="col-sm-9">';
+        $html .= '<div class="row mb-3">';
+        $html .= '  <label class="col-sm-3 col-form-label text-sm-end text-truncate fw-medium">' . $nv_Lang->getModule('numrows') . ':</label>';
+        $html .= '  <div class="col-sm-5">';
         $html .= '    <input type="number" name="config_numrows" value="' . $data_block['numrows'] . '" class="form-control">';
         $html .= '  </div>';
         $html .= '</div>';
 
-        $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('showtypecat') . ':</label>';
-        $html .= '  <div class="col-sm-9">';
-        $html .= '    <select name="config_showtypecat" class="form-control">';
+        $html .= '<div class="row mb-3">';
+        $html .= '  <label class="col-sm-3 col-form-label text-sm-end text-truncate fw-medium">' . $nv_Lang->getModule('showtypecat') . ':</label>';
+        $html .= '  <div class="col-sm-5">';
+        $html .= '    <select name="config_showtypecat" class="form-select">';
 
         for ($i = 0; $i <= 1; $i++) {
             $html .= '    <option value="' . $i . '"' . ($i == $data_block['showtypecat'] ? ' selected="selected"' : '') . '>' . $lang_block['showtypecat' . $i] . '</option>';
@@ -53,10 +53,10 @@ if (!nv_function_exists('nv_block_detail_suggested_albums')) {
         $html .= '  </div>';
         $html .= '</div>';
 
-        $html .= '<div class="form-group">';
-        $html .= '  <label class="control-label col-sm-6">' . $nv_Lang->getModule('showtypesinger') . ':</label>';
-        $html .= '  <div class="col-sm-9">';
-        $html .= '    <select name="config_showtypesinger" class="form-control">';
+        $html .= '<div class="row mb-3">';
+        $html .= '  <label class="col-sm-3 col-form-label text-sm-end text-truncate fw-medium">' . $nv_Lang->getModule('showtypesinger') . ':</label>';
+        $html .= '  <div class="col-sm-5">';
+        $html .= '    <select name="config_showtypesinger" class="form-select">';
 
         for ($i = 0; $i <= 1; $i++) {
             $html .= '    <option value="' . $i . '"' . ($i == $data_block['showtypesinger'] ? ' selected="selected"' : '') . '>' . $lang_block['showtypesinger' . $i] . '</option>';

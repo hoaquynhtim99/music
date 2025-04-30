@@ -1,0 +1,36 @@
+{
+    "info": {
+        "name": "Bài hát gợi ý khi nghe một bài hát",
+        "author": "PHAN TAN DUNG",
+        "website": "https://writeblabla.com/",
+        "description": ""
+    },
+    "config": {
+        "numrows": "15",
+        "showtypecat": "1",
+        "showtypesinger": "0",
+        "showtypeauthor": "0"
+    },
+    "datafunction": "nv_block_config_detail_suggested_songs",
+    "submitfunction": "nv_block_config_detail_suggested_songs_submit",
+    "i18n": {
+        "vi": {
+            "language": {
+                "numrows": "Số bài hát hiển thị",
+                "showtypecat": "Phạm vi thể loại",
+                "showtypecat0": "Tất cả các bài hát",
+                "showtypecat1": "Các bài hát cùng thể loại",
+                "showtypesinger": "Phạm vi ca sĩ",
+                "showtypesinger0": "Tất cả",
+                "showtypesinger1": "Các bài hát cùng ca sĩ",
+                "showtypeauthor": "Phạm vi nhạc sĩ",
+                "showtypeauthor0": "Tất cả",
+                "showtypeauthor1": "Các bài hát cùng nhạc sĩ",
+                "blocknote": ""
+            },
+            "info": {
+                "name": "detail_suggested_songs"
+            }
+        }
+    }
+}

@@ -40,9 +40,9 @@ if (!nv_function_exists('nv_block_chart_albums')) {
 
         $html = '';
 
-        $html .= '<div class="form-group">';
-        $html .= '<label class="control-label col-sm-6">' . $nv_Lang->getModule('catids') . ':</label>';
-        $html .= '<div class="col-sm-18">';
+        $html .= '<div class="row mb-3">';
+        $html .= '<label class="col-sm-3 col-form-label text-sm-end text-truncate fw-medium">' . $nv_Lang->getModule('catids') . ':</label>';
+        $html .= '<div class="col-sm-9">';
 
         foreach ($global_array_cat_chart as $cat_chart) {
             $checked = in_array($cat_chart['cat_id'], $data_block['catids']) ? ' checked="checked"' : '';
@@ -52,9 +52,9 @@ if (!nv_function_exists('nv_block_chart_albums')) {
         $html .= '</div>';
         $html .= '</div>';
 
-        $html .= '<div class="form-group">';
-        $html .= '<label class="control-label col-sm-6">' . $nv_Lang->getModule('numrows') . ':</label>';
-        $html .= '<div class="col-sm-9"><input type="text" class="form-control" name="config_numrows" value="' . $data_block['numrows'] . '"/></div>';
+        $html .= '<div class="row mb-3">';
+        $html .= '<label class="col-sm-3 col-form-label text-sm-end text-truncate fw-medium">' . $nv_Lang->getModule('numrows') . ':</label>';
+        $html .= '<div class="col-sm-5"><input type="text" class="form-control" name="config_numrows" value="' . $data_block['numrows'] . '"/></div>';
         $html .= '</div>';
 
         return $html;

@@ -1,0 +1,25 @@
+{
+    "info": {
+        "name": "Block Module Music",
+        "author": "PHAN TAN DUNG",
+        "website": "https://writeblabla.com/",
+        "description": ""
+    },
+    "config": {
+        "catids": "",
+        "numrows": "10"
+    },
+    "datafunction": "nv_block_config_chart_songs",
+    "submitfunction": "nv_block_config_chart_songs_submit",
+    "i18n": {
+        "vi": {
+            "language": {
+                "catids": "Hiển thị BXH",
+                "numrows": "Số mục hiển thị"
+            },
+            "info": {
+                "name": "chart_songs"
+            }
+        }
+    }
+}

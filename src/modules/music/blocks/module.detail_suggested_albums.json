@@ -1,0 +1,32 @@
+{
+    "info": {
+        "name": "Album gợi ý khi nghe một album",
+        "author": "PHAN TAN DUNG",
+        "website": "https://writeblabla.com/",
+        "description": ""
+    },
+    "config": {
+        "numrows": "15",
+        "showtypecat": "1",
+        "showtypesinger": "0"
+    },
+    "datafunction": "nv_block_config_detail_suggested_albums",
+    "submitfunction": "nv_block_config_detail_suggested_albums_submit",
+    "i18n": {
+        "vi": {
+            "language": {
+                "numrows": "Số album hiển thị",
+                "showtypecat": "Phạm vi thể loại",
+                "showtypecat0": "Tất cả các album",
+                "showtypecat1": "Các album cùng thể loại",
+                "showtypesinger": "Phạm vi ca sĩ",
+                "showtypesinger0": "Tất cả",
+                "showtypesinger1": "Các album cùng ca sĩ",
+                "blocknote": ""
+            },
+            "info": {
+                "name": "detail_suggested_albums"
+            }
+        }
+    }
+}
