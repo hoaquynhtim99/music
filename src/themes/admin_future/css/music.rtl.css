@@ -96,11 +96,6 @@ td.ms-ellipsis {
   display: block;
 }
 
-.modal {
-  z-index: 1080;
-  /* Đặt lên để vượt qua cái tooltip */
-}
-
 /*--- Fix Form ---*/
 .row > .col-form-label > .fa-asterisk {
   color: #ee3232;

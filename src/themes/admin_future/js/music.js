@@ -12,6 +12,12 @@
     var Validate = function(element, options) {
         var self = this;
 
+        options.offsetTop = 0;
+        const header = $('header.header-outer');
+        if (header.length) {
+            options.offsetTop = header.innerHeight() + 4;
+        }
+
         this.$element = $(element);
         this.options = options;
 
@@ -160,6 +166,7 @@
      * order: Lỗi xuất hiện thứ tự 1, 2, 3, 4...
      */
     Validate.prototype.showError = function(element, order) {
+        const self = this;
         var name;
 
         if ($(element).parent().is('.input-group')) {
@@ -187,7 +194,7 @@
                     }
                 } else if ($(element).is('.select2') || $(element).is('.hiddeninputlist')) {
                     // Select 2 thì chuyển màn hình về tại vị trí của nó
-                    $(window).scrollTop($(element).offset().top);
+                    $(window).scrollTop($(element).offset().top - self.options.offsetTop);
                 } else {
                     // Focus vào input đầu tiên nếu không select2
                     // Vì select2 tự mở gây rắc rối

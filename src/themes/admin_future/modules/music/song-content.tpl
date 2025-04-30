@@ -1,5 +1,4 @@
 <!-- BEGIN: main -->
-<link rel="stylesheet" type="text/css" href="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/select2/select2.min.css">
 <link rel="stylesheet" type="text/css" href="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.css">
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/select2/select2.min.js"></script>
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/select2/i18n/{NV_LANG_INTERFACE}.js"></script>
@@ -15,7 +14,7 @@
                     <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="select2 required">
-                            <select class="form-select" name="cat_ids[]" id="cat_ids" multiple="multiple">
+                            <select class="form-select" name="cat_ids[]" id="cat_ids" multiple="multiple" size="1">
                                 <!-- BEGIN: cat -->
                                 <option value="{CAT.cat_id}"{CAT.selected}>{CAT.cat_name}</option>
                                 <!-- END: cat -->
