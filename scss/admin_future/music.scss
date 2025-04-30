@@ -113,37 +113,13 @@ td.ms-ellipsis {
 }
 
 /*--- Fix Form ---*/
-.form-horizontal .control-label,
-#formmodalctn .control-label {
-  font-weight: 700;
-}
-
-.form-horizontal .control-label .fa-asterisk {
-  color: #B0171F;
-  font-weight: normal;
-  font-size: 10px;
-}
-
-.form-horizontal .ckeditor .control-label {
-  padding-top: 0;
-  margin-bottom: 7px;
-}
-
-.form-horizontal .ckeditor .control-label .fa-asterisk {
-  position: relative;
-  top: -1px;
-}
-
-.form-horizontal .checkbox input[type="checkbox"] {
-  margin-top: 1px;
-}
-
-.form-horizontal .help-block {
-  margin-bottom: 0;
-}
-
-.form-horizontal .loading {
-  display: none;
+.row {
+  >.col-form-label {
+    >.fa-asterisk {
+      color: $danger;
+      font-size: .8em;
+    }
+  }
 }
 
 .form-element div.tooltip.bottom {
@@ -165,7 +141,7 @@ td.ms-ellipsis {
 
 .has-error .select2-container--default.select2-container--focus .select2-selection--multiple,
 .has-error .select2-container--default .select2-selection--multiple {
-  border-color: #a94442;
+  border-color: $danger;
 }
 
 /*--- CAPTION ---*/
