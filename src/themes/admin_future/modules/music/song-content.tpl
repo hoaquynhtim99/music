@@ -5,14 +5,14 @@
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/select2/i18n/{NV_LANG_INTERFACE}.js"></script>
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
 
-<form id="msAjForm" method="post" action="{FORM_ACTION}" class="form-horizontal" autocomplete="off" data-toggle="validate" data-type="ajax">
+<form id="msAjForm" method="post" action="{FORM_ACTION}" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="form-group">
-                    <label for="cat_ids" class="control-label col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
+                <div class="row mb-3">
+                    <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="select2 required">
                             <select class="form-control" name="cat_ids[]" id="cat_ids" multiple="multiple">
@@ -23,8 +23,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
+                <div class="row mb-3">
+                    <label class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="hiddeninputlist required clearfix">
                             <div class="btn-group pull-left">
@@ -49,8 +49,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">{LANG.artist_type_author}:</label>
+                <div class="row mb-3">
+                    <label class="col-form-label text-sm-end col-sm-4">{LANG.artist_type_author}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="btn-group pull-left">
                             <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="author" data-title="{LANG.select_author}" data-list="#PickedArtistsListAuthor" data-inputname="author_ids[]">{LANG.select}</button>
@@ -73,8 +73,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4">{LANG.song_video_id}:</label>
+                <div class="row mb-3">
+                    <label class="col-form-label text-sm-end col-sm-4">{LANG.song_video_id}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <button tabindex="-1" type="button" class="btn btn-success pull-left" data-toggle="modalPickVideos" data-multiple="false" data-title="{LANG.select_video}" data-list="#PickedVideo" data-inputname="video_id">{LANG.select}</button>
                         <ul class="ms-content-picked-lists" id="PickedVideo">
@@ -89,8 +89,8 @@
                         </ul>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="resource_avatar" class="control-label col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_song_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                <div class="row mb-3">
+                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_song_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
@@ -100,8 +100,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="resource_cover" class="control-label col-sm-4">{LANG.resource_cover}:</label>
+                <div class="row mb-3">
+                    <label for="resource_cover" class="col-form-label text-sm-end col-sm-4">{LANG.resource_cover}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
@@ -111,7 +111,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group ms-form-group-last">
+                <div class="row mb-3 ms-row mb-3-last">
                     <div class="col-sm-offset-8 col-sm-8 col-md-5 col-lg-4">
                         <div class="checkbox">
                             <label>
@@ -126,26 +126,26 @@
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="form-group">
-                    <label for="song_name" class="control-label col-sm-4"><i class="fa fa-asterisk"></i> {LANG.song_name}:</label>
+                <div class="row mb-3">
+                    <label for="song_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.song_name}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control required" type="text" name="song_name" id="song_name" value="{DATA.song_name}" maxlength="250" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="song_alias" class="control-label col-sm-4">{LANG.alias}:</label>
+                <div class="row mb-3">
+                    <label for="song_alias" class="col-form-label text-sm-end col-sm-4">{LANG.alias}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control" type="text" name="song_alias" id="song_alias" value="{DATA.song_alias}" maxlength="250" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="song_introtext" class="control-label col-sm-4">{LANG.introtext}:</label>
+                <div class="row mb-3">
+                    <label for="song_introtext" class="col-form-label text-sm-end col-sm-4">{LANG.introtext}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <textarea class="form-control" name="song_introtext" id="song_introtext" rows="3">{DATA.song_introtext}</textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="song_keywords" class="control-label col-sm-4">{LANG.keywords}:</label>
+                <div class="row mb-3">
+                    <label for="song_keywords" class="col-form-label text-sm-end col-sm-4">{LANG.keywords}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control" type="text" name="song_keywords" id="song_keywords" value="{DATA.song_keywords}"/>
                     </div>
@@ -156,8 +156,8 @@
         <div class="panel panel-default">
             <div class="panel-body">
                 <!-- BEGIN: soquality -->
-                <div class="form-group">
-                    <label for="resource_path_{SOQUALITY.quality_id}" class="control-label col-sm-4">{SOQUALITY.quality_name}:</label>
+                <div class="row mb-3">
+                    <label for="resource_path_{SOQUALITY.quality_id}" class="col-form-label text-sm-end col-sm-4">{SOQUALITY.quality_name}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_path[{SOQUALITY.quality_id}]" id="resource_path_{SOQUALITY.quality_id}" value="{RESOURCE_PATH}" maxlength="255">
@@ -181,8 +181,8 @@
             <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <div class="form-group">
-                        <label for="caption_file" class="control-label col-sm-4">{LANG.mana_cc_webvtt}:</label>
+                    <div class="row mb-3">
+                        <label for="caption_file" class="col-form-label text-sm-end col-sm-4">{LANG.mana_cc_webvtt}:</label>
                         <div class="col-sm-8 col-md-5 col-lg-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="caption_file" name="caption_file" value="{DATA.caption_file}">
@@ -194,7 +194,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <label for="caption_pdf" class="control-label col-sm-4">{LANG.mana_cc_pdf}:</label>
+                        <label for="caption_pdf" class="col-form-label text-sm-end col-sm-4">{LANG.mana_cc_pdf}:</label>
                         <div class="col-sm-8 col-md-5 col-lg-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="caption_pdf" name="caption_pdf" value="{DATA.caption_pdf}">
@@ -220,7 +220,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="row mb-3">
             <div class="col-sm-offset-8 col-sm-8">
                 <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />

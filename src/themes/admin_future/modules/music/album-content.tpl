@@ -5,14 +5,14 @@
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/select2/i18n/{NV_LANG_INTERFACE}.js"></script>
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/jquery-ui/jquery-ui.min.js"></script>
 
-<form id="msAjForm" method="post" action="{FORM_ACTION}" class="form-horizontal" autocomplete="off" data-toggle="validate" data-type="ajax">
+<form id="msAjForm" method="post" action="{FORM_ACTION}" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="form-group">
-                    <label for="cat_ids" class="control-label col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
+                <div class="row mb-3">
+                    <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="select2 required">
                             <select class="form-control" name="cat_ids[]" id="cat_ids" multiple="multiple">
@@ -23,8 +23,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="control-label col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
+                <div class="row mb-3">
+                    <label class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="hiddeninputlist required clearfix">
                             <div class="btn-group pull-left">
@@ -49,14 +49,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="release_year" class="control-label col-sm-4">{LANG.album_release_year}:</label>
+                <div class="row mb-3">
+                    <label for="release_year" class="col-form-label text-sm-end col-sm-4">{LANG.album_release_year}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control" type="number" name="release_year" id="release_year" value="{DATA.release_year}" maxlength="4">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="resource_avatar" class="control-label col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_album_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                <div class="row mb-3">
+                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_album_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
@@ -66,8 +66,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="resource_cover" class="control-label col-sm-4">{LANG.resource_cover}:</label>
+                <div class="row mb-3">
+                    <label for="resource_cover" class="col-form-label text-sm-end col-sm-4">{LANG.resource_cover}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group ms-form-group-last">
+                <div class="row mb-3 ms-row mb-3-last">
                     <div class="col-sm-offset-8 col-sm-8 col-md-5 col-lg-4">
                         <div class="checkbox">
                             <label>
@@ -92,34 +92,34 @@
         <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
         <div class="panel panel-default">
             <div class="panel-body">
-                <div class="form-group">
-                    <label for="album_name" class="control-label col-sm-4"><i class="fa fa-asterisk"></i> {LANG.album_name}:</label>
+                <div class="row mb-3">
+                    <label for="album_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.album_name}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control required" type="text" name="album_name" id="album_name" value="{DATA.album_name}" maxlength="250" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="album_alias" class="control-label col-sm-4">{LANG.alias}:</label>
+                <div class="row mb-3">
+                    <label for="album_alias" class="col-form-label text-sm-end col-sm-4">{LANG.alias}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control" type="text" name="album_alias" id="album_alias" value="{DATA.album_alias}" maxlength="250" />
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="album_introtext" class="control-label col-sm-4">{LANG.introtext}:</label>
+                <div class="row mb-3">
+                    <label for="album_introtext" class="col-form-label text-sm-end col-sm-4">{LANG.introtext}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <textarea class="form-control" name="album_introtext" id="album_introtext" rows="3">{DATA.album_introtext}</textarea>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="album_keywords" class="control-label col-sm-4">{LANG.keywords}:</label>
+                <div class="row mb-3">
+                    <label for="album_keywords" class="col-form-label text-sm-end col-sm-4">{LANG.keywords}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control" type="text" name="album_keywords" id="album_keywords" value="{DATA.album_keywords}"/>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="row mb-3">
                     <div class="col-12">
                         <div class="ckeditor">
-                            <label class="control-label">{LANG.album_description}:</label>
+                            <label class="col-form-label text-sm-end">{LANG.album_description}:</label>
                             <div class="clearfix">
                                 {DATA.album_description}
                             </div>
@@ -131,7 +131,7 @@
         <h2><i class="fa fa-fw fa-music" aria-hidden="true"></i>{LANG.album_songs}:</h2>
         <div class="panel panel-default">
             <div class="panel-body">
-                <label class="control-label col-sm-4 pt-0">
+                <label class="col-form-label text-sm-end col-sm-4 pt-0">
                     <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickSongs" data-multiple="true" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_ids[]">{LANG.select}</button>
                 </label>
                 <div class="col-sm-8 col-md-5 col-lg-4">
@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="row mb-3">
             <div class="col-sm-offset-8 col-sm-8">
                 <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />
