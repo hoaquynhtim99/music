@@ -178,10 +178,6 @@ hr.sm {
   margin-top: 5px;
 }
 
-.ms-list-inline {
-  margin-bottom: 0 !important;
-}
-
 .ms-dropdown-tool-ctn {
   margin: 0 -14px;
   overflow: auto;
