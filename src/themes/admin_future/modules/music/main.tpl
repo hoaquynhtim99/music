@@ -1,7 +1,7 @@
 <!-- BEGIN: main -->
-<div class="row">
-    <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="card panel-main-music">
+<div class="row g-4 mb-4">
+    <div class="col-6 col-lg-3">
+        <div class="card">
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
@@ -15,8 +15,8 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="card panel-main-music">
+    <div class="col-6 col-lg-3">
+        <div class="card">
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
@@ -30,8 +30,8 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="card panel-main-music">
+    <div class="col-6 col-lg-3">
+        <div class="card">
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
@@ -45,8 +45,8 @@
             </div>
         </div>
     </div>
-    <div class="col-sm-6 con-md-12 col-lg-3">
-        <div class="card panel-main-music">
+    <div class="col-6 col-lg-3">
+        <div class="card">
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
@@ -62,14 +62,14 @@
     </div>
 </div>
 <script type="text/javascript" src="{NV_STATIC_URL}{NV_ASSETS_DIR}/js/chart/chart.min.js"></script>
-<div class="row">
+<div class="row g-4 mb-4">
     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-        <div class="card panel-main-music">
-            <div class="card-header">
+        <div class="card h-100">
+            <div class="card-header fs-5 fw-medium">
                 {LANG.mainpage_stat_overview}
             </div>
             <div class="card-body">
-                <canvas id="chart-area-overview"></canvas>
+                <canvas id="chart-area-overview" style="height: 220px;"></canvas>
                 <script>
                 $(window).on('load', function() {
                     var config = {
@@ -96,6 +96,7 @@
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: false,
                             legend: {
                                 position: 'top',
                             },
@@ -130,12 +131,12 @@
         </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-12 col-12">
-        <div class="card panel-main-music">
-            <div class="card-header">
+        <div class="card h-100">
+            <div class="card-header fs-5 fw-medium">
                 {LANG.mainpage_stat_byyear}
             </div>
             <div class="card-body">
-                <canvas id="chart-area-byyear"></canvas>
+                <canvas id="chart-area-byyear" style="height: 220px;"></canvas>
                 <script>
                 $(window).on('load', function() {
                     var config = {
@@ -164,6 +165,7 @@
                         },
                         options: {
                             responsive: true,
+                            maintainAspectRatio: false,
                             title: {
                                 display: true,
                                 text: '{LANG.mainpage_stat_byyear_title}'
@@ -226,10 +228,10 @@
         </div>
     </div>
 </div>
-<div class="row">
-    <div class="col-12">
-        <div class="card panel-main-music">
-            <div class="card-header">
+<div class="row g-4">
+    <div class="col-12 col-xxl-6">
+        <div class="card">
+            <div class="card-header fs-5 fw-medium">
                 {LANG.mainpage_stat_byday}
             </div>
             <div class="card-body">
@@ -323,11 +325,9 @@
             </div>
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-12">
-        <div class="card panel-main-music">
-            <div class="card-header">
+    <div class="col-12 col-xxl-6">
+        <div class="card">
+            <div class="card-header fs-5 fw-medium">
                 {LANG.mainpage_stat_bymonth}
             </div>
             <div class="card-body">
