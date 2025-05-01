@@ -79,9 +79,9 @@ $(function() {
                             <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.video_id}" name="idcheck[]" />
                         </td>
                         <td>
-                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="float-start ms-img"/>
+                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="36" class="float-start ms-img"/>
 
-                            <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.video_link}" class="ms-title" target="_blank">{ROW.video_name}</a></h3></div>
+                            <div data-toggle="ellipsis"><h5 data-toggle="items" class="mb-0"><a href="{ROW.video_link}" class="ms-title" target="_blank">{ROW.video_name}</a></h5></div>
                             <small class="text-muted">
                                 <!-- BEGIN: show_singer -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
@@ -103,7 +103,7 @@ $(function() {
                             </small>
                         </td>
                         <td>
-                            <h3>
+                            <h5 class="mb-0">
                                 <!-- BEGIN: show_author -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{AUTHOR.artist_name}<!-- END: loop -->
                                 <!-- END: show_author -->
@@ -120,7 +120,7 @@ $(function() {
                                 <!-- END: va_author -->
 
                                 <!-- BEGIN: no_author -->{UNKNOW_AUTHOR}<!-- END: no_author -->
-                            </h3>
+                            </h5>
                             <span class="text-muted">
                                 <!-- BEGIN: show_cat -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{CAT.cat_name}<!-- END: loop -->
@@ -130,8 +130,8 @@ $(function() {
                             </span>
                         </td>
                         <td>
-                            <h3><i class="fa fa-headphones fa-fw" aria-hidden="true"></i>{ROW.stat_views}</h3>
-                            <span class="text-muted"><i class="fa fa-comments fa-fw" aria-hidden="true"></i>{ROW.stat_comments}</span>
+                            <h5 class="mb-0 text-nowrap"><i class="fa fa-headphones fa-fw" aria-hidden="true"></i> {ROW.stat_views}</h5>
+                            <span class="text-muted text-nowrap"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> {ROW.stat_comments}</span>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                         <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>

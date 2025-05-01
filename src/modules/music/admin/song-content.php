@@ -627,7 +627,7 @@ $show_adv = (int) $nv_Request->get_bool($module_data . '_song_content_adv', 'coo
 $xtpl->assign('SHOW_ADV', $show_adv);
 if ($show_adv) {
     $xtpl->assign('SHOW_ADV_ACTIVE', 'true');
-    $xtpl->assign('SHOW_ADV_CLASS', ' in');
+    $xtpl->assign('SHOW_ADV_CLASS', ' show');
 } else {
     $xtpl->assign('SHOW_ADV_ACTIVE', 'false');
     $xtpl->assign('SHOW_ADV_CLASS', '');
