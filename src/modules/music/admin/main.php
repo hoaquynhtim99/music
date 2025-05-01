@@ -108,11 +108,18 @@ while ($row = $result->fetch()) {
 }
 
 $data_day_value = $data_day_song = $data_day_album = $data_day_video = [];
+$current_day = date('j', NV_CURRENTTIME);
 for ($i = 1; $i <= $current_month_day; $i++) {
     $data_day_value[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-    $data_day_song[] = isset($array_byday['song'][$i]) ? $array_byday['song'][$i]['value'] : 0;
-    $data_day_video[] = isset($array_byday['video'][$i]) ? $array_byday['video'][$i]['value'] : 0;
-    $data_day_album[] = isset($array_byday['album'][$i]) ? $array_byday['album'][$i]['value'] : 0;
+
+    $value = isset($array_byday['song'][$i]) ? $array_byday['song'][$i]['value'] : 0;
+    $data_day_song[] = $i > $current_day ? 'null' : $value;
+
+    $value = isset($array_byday['video'][$i]) ? $array_byday['video'][$i]['value'] : 0;
+    $data_day_video[] = $i > $current_day ? 'null' : $value;
+
+    $value = isset($array_byday['album'][$i]) ? $array_byday['album'][$i]['value'] : 0;
+    $data_day_album[] = $i > $current_day ? 'null' : $value;
 }
 
 $xtpl->assign('DAY_VALUE', "'" . implode("', '", $data_day_value) . "'");
@@ -139,11 +146,18 @@ while ($row = $result->fetch()) {
 }
 
 $data_month_value = $data_month_song = $data_month_album = $data_month_video = [];
+$current_month = date('n', NV_CURRENTTIME);
 for ($i = 1; $i <= 12; $i++) {
     $data_month_value[] = str_pad($i, 2, '0', STR_PAD_LEFT);
-    $data_month_song[] = isset($array_bymonth['song'][$i]) ? $array_bymonth['song'][$i]['value'] : 0;
-    $data_month_video[] = isset($array_bymonth['video'][$i]) ? $array_bymonth['video'][$i]['value'] : 0;
-    $data_month_album[] = isset($array_bymonth['album'][$i]) ? $array_bymonth['album'][$i]['value'] : 0;
+
+    $value = isset($array_bymonth['song'][$i]) ? $array_bymonth['song'][$i]['value'] : 0;
+    $data_month_song[] = $i > $current_month ? 'null' : $value;
+
+    $value = isset($array_bymonth['video'][$i]) ? $array_bymonth['video'][$i]['value'] : 0;
+    $data_month_video[] = $i > $current_month ? 'null' : $value;
+
+    $value = isset($array_bymonth['album'][$i]) ? $array_bymonth['album'][$i]['value'] : 0;
+    $data_month_album[] = $i > $current_month ? 'null' : $value;
 }
 
 $xtpl->assign('MONTH_VALUE', "'" . implode("', '", $data_month_value) . "'");

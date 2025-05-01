@@ -411,7 +411,8 @@
                                         }
                                     }
                                 }]
-                            }
+                            },
+                            spanGaps: false
                         }
                     };
                     var ctx = document.getElementById('chart-area-bymonth').getContext('2d');
