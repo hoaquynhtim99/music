@@ -97,30 +97,32 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            legend: {
-                                position: 'top',
-                            },
-                            title: {
-                                display: true,
-                                text: '{LANG.mainpage_stat_overview}: {OVERVIEW.total_display}'
-                            },
                             animation: {
                                 animateScale: true,
                                 animateRotate: true
                             },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: false,
-                                titleMarginBottom: 5,
-                                callbacks: {
-                                    title: function(a, b) {
-                                        return b.labels[a[0].index].replace(/\: [0-9\.\,]+$/g, "");
-                                    },
-                                    label: function(a, b) {
-                                        return number_format(b.datasets[0].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                            plugins: {
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false,
+                                    titleMarginBottom: 5,
+                                    callbacks: {
+                                        title: function(a, b) {
+                                            return b.labels[a[0].index].replace(/\: [0-9\.\,]+$/g, "");
+                                        },
+                                        label: function(a, b) {
+                                            return number_format(b.datasets[0].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                        }
                                     }
-                                }
-                            },
+                                },
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: '{LANG.mainpage_stat_overview}: {OVERVIEW.total_display}'
+                                },
+                            }
                         }
                     };
                     var ctx = document.getElementById('chart-area-overview').getContext('2d');
@@ -166,29 +168,31 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
-                            title: {
-                                display: true,
-                                text: '{LANG.mainpage_stat_byyear_title}'
-                            },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: false,
-                                titleMarginBottom: 5,
-                                callbacks: {
-                                    title: function(a, b) {
-                                        return '{LANG.Year} ' + b.labels[a[0].index];
-                                    },
-                                    label: function(a, b) {
-                                        return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                            plugins: {
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false,
+                                    titleMarginBottom: 5,
+                                    callbacks: {
+                                        title: function(a, b) {
+                                            return '{LANG.Year} ' + b.labels[a[0].index];
+                                        },
+                                        label: function(a, b) {
+                                            return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                        }
                                     }
-                                }
+                                },
+                                title: {
+                                    display: true,
+                                    text: '{LANG.mainpage_stat_byyear_title}'
+                                },
                             },
-                            hover: {
+                            interaction: {
                                 mode: 'nearest',
                                 intersect: true
                             },
                             scales: {
-                                xAxes: [{
+                                x: {
                                     display: true,
                                     scaleLabel: {
                                         display: true,
@@ -199,8 +203,8 @@
                                         drawBorder: true,
                                         drawOnChartArea: false
                                     }
-                                }],
-                                yAxes: [{
+                                },
+                                y: {
                                     display: true,
                                     scaleLabel: {
                                         display: true,
@@ -214,9 +218,10 @@
                                     ticks: {
                                         callback: function(label, index, labels) {
                                             return number_format(label, 0, ',', '.');
-                                        }
+                                        },
+                                        precision: 0
                                     }
-                                }]
+                                }
                             }
                         }
                     };
@@ -265,28 +270,30 @@
                         options: {
                             responsive: true,
                             aspectRatio: 3.8,
-                            title: {
-                                display: true,
-                                text: '{LANG.mainpage_stat_byday_title} {DAY_STAT_MONTH}'
-                            },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: false,
-                                callbacks: {
-                                    title: function(a, b) {
-                                        return '{LANG.Day} ' + b.labels[a[0].index] + '/{DAY_STAT_MONTH}';
-                                    },
-                                    label: function(a, b) {
-                                        return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                            plugins: {
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false,
+                                    callbacks: {
+                                        title: function(a, b) {
+                                            return '{LANG.Day} ' + b.labels[a[0].index] + '/{DAY_STAT_MONTH}';
+                                        },
+                                        label: function(a, b) {
+                                            return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                        }
                                     }
-                                }
+                                },
+                                title: {
+                                    display: true,
+                                    text: '{LANG.mainpage_stat_byday_title} {DAY_STAT_MONTH}'
+                                },
                             },
-                            hover: {
+                            interaction: {
                                 mode: 'nearest',
                                 intersect: true
                             },
                             scales: {
-                                xAxes: [{
+                                x: {
                                     display: true,
                                     scaleLabel: {
                                         display: true,
@@ -297,8 +304,8 @@
                                         drawBorder: true,
                                         drawOnChartArea: false
                                     }
-                                }],
-                                yAxes: [{
+                                },
+                                y: {
                                     display: true,
                                     scaleLabel: {
                                         display: true,
@@ -312,9 +319,10 @@
                                     ticks: {
                                         callback: function(label, index, labels) {
                                             return number_format(label, 0, ',', '.');
-                                        }
+                                        },
+                                        precision: 0
                                     }
-                                }]
+                                }
                             }
                         }
                     };
@@ -361,28 +369,30 @@
                         options: {
                             responsive: true,
                             aspectRatio: 3.8,
-                            title: {
-                                display: true,
-                                text: '{LANG.mainpage_stat_bymonth_title} {MONTH_STAT_YEAR}'
-                            },
-                            tooltips: {
-                                mode: 'index',
-                                intersect: false,
-                                callbacks: {
-                                    title: function(a, b) {
-                                        return '{LANG.Month} ' + b.labels[a[0].index] + '/{MONTH_STAT_YEAR}';
-                                    },
-                                    label: function(a, b) {
-                                        return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                            plugins: {
+                                tooltips: {
+                                    mode: 'index',
+                                    intersect: false,
+                                    callbacks: {
+                                        title: function(a, b) {
+                                            return '{LANG.Month} ' + b.labels[a[0].index] + '/{MONTH_STAT_YEAR}';
+                                        },
+                                        label: function(a, b) {
+                                            return b.datasets[a.datasetIndex].label + ' ' + number_format(b.datasets[a.datasetIndex].data[a.index], 0, ',', '.') + ' {LANG.hits}';
+                                        }
                                     }
-                                }
+                                },
+                                title: {
+                                    display: true,
+                                    text: '{LANG.mainpage_stat_bymonth_title} {MONTH_STAT_YEAR}'
+                                },
                             },
-                            hover: {
+                            interaction: {
                                 mode: 'nearest',
                                 intersect: true
                             },
                             scales: {
-                                xAxes: [{
+                                x: {
                                     display: true,
                                     scaleLabel: {
                                         display: true,
@@ -393,8 +403,8 @@
                                         drawBorder: true,
                                         drawOnChartArea: false
                                     }
-                                }],
-                                yAxes: [{
+                                },
+                                y: {
                                     display: true,
                                     scaleLabel: {
                                         display: true,
@@ -408,9 +418,10 @@
                                     ticks: {
                                         callback: function(label, index, labels) {
                                             return number_format(label, 0, ',', '.');
-                                        }
+                                        },
+                                        precision: 0
                                     }
-                                }]
+                                }
                             },
                             spanGaps: false
                         }
