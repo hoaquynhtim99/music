@@ -144,7 +144,7 @@
      * Ẩn toàn bộ các thông báo lỗi
      */
     Validate.prototype.hideAllError = function() {
-        $(".has-error", this.$element).removeClass("has-error");
+        $(".is-invalid", this.$element).removeClass("is-invalid");
         $(".required", this.$element).tooltip("dispose");
     }
 
@@ -157,7 +157,7 @@
         if ($(element).parent().is('.input-group')) {
             $(element).parent().parent().parent().removeClass("has-error");
         } else {
-            $(element).parent().parent().removeClass("has-error");
+            $(element).removeClass("is-invalid");
         }
     }
 
@@ -169,10 +169,12 @@
         const self = this;
         var name;
 
+        console.log($(element));
+
         if ($(element).parent().is('.input-group')) {
             $(element).parent().parent().parent().addClass("has-error");
         } else {
-            $(element).parent().parent().addClass("has-error");
+            $(element).addClass("is-invalid");
         }
 
         $(element).tooltip({
@@ -328,7 +330,7 @@
                     } else {
                         // Hiển thị thông báo lỗi lên đầu
                         $('.form-result', self.$element).html('<div class="alert alert-danger">' + res.message + '</div>').show();
-                        $("html, body").animate({ scrollTop: $('.form-result', self.$element).offset().top }, 200);
+                        $("html, body").animate({ scrollTop: $('.form-result', self.$element).offset().top - self.options.offsetTop }, 200);
                     }
 
                     return false;
@@ -346,7 +348,7 @@
                 // Thông báo và chuyển hướng
                 $('.form-result', self.$element).html('<div class="alert alert-success">' + res.message + '</div>').show();
 
-                $("html, body").animate({scrollTop: $('.form-result', self.$element).offset().top}, 200, function() {
+                $("html, body").animate({scrollTop: $('.form-result', self.$element).offset().top - self.options.offsetTop }, 200, function() {
                     setTimeout(function() {
                         $('.form-element', self.$element).slideUp(200);
                     }, 200);

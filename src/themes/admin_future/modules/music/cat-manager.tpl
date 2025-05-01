@@ -63,14 +63,12 @@
     </div>
     <div class="card-footer border-top">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="d-flex flex-wrap flex-sm-nowrap align-items-center">
-                <div class="form-group">
-                    <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
-                        <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
-                        <span class="caret"></span>
-                    </button>
-                    <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
-                </div>
+            <div class="d-flex flex-wrap flex-sm-nowrap align-items-center gap-2">
+                <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
+                    <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
+                    <span class="caret"></span>
+                </button>
+                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
             </div>
         </div>
     </div>

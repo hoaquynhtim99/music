@@ -1,51 +1,4 @@
 <!-- BEGIN: main -->
-<form method="get" action="{FORM_ACTION}">
-    <input type="hidden" name="{NV_LANG_VARIABLE}" value="{NV_LANG_DATA}"/>
-    <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}"/>
-    <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}"/>
-    <div class="row">
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group">
-                <label for="search_keyword">{LANG.keywords}:</label>
-                <input type="text" class="form-control" name="q" id="search_keyword" value="{SEARCH.q}"/>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group">
-                <label for="search_cat">{LANG.type}:</label>
-                <select class="form-select" name="tp">
-                    <option value="-1">--</option>
-                    <!-- BEGIN: artist_type --><option value="{ARTIST_TYPE.key}"{ARTIST_TYPE.selected}>{ARTIST_TYPE.title}</option><!-- END: artist_type -->
-                </select>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group">
-                <label for="search_time">{LANG.time}:</label>
-                <div class="row">
-                    <div class="col-6">
-                        <input type="text" class="form-control" name="f" id="search_from" value="{SEARCH.f}" placeholder="{LANG.from}" autocomplete="off"/>
-                    </div>
-                    <div class="col-6">
-                        <input type="text" class="form-control" name="t" id="search_to" value="{SEARCH.t}" placeholder="{LANG.to}" autocomplete="off"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-6 col-md-3">
-            <div class="form-group">
-                <label for="search_submit">&nbsp;</label>
-                <div class="clearfix">
-                    <input id="search_submit" type="submit" value="{GLANG.search}" class="btn btn-primary"/>
-                    <div class="float-end">
-                        <button type="button" class="btn btn-info hidden">{LANG.adv}</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr class="ms-search-hr"/>
-</form>
 <link type="text/css" href="{ASSETS_STATIC_URL}/js/jquery-ui/jquery-ui.min.css" rel="stylesheet">
 <script type="text/javascript" src="{ASSETS_STATIC_URL}/js/jquery-ui/jquery-ui.min.js"></script>
 <script type="text/javascript" src="{ASSETS_STATIC_URL}/js/language/jquery.ui.datepicker-{NV_LANG_INTERFACE}.js"></script>
@@ -62,8 +15,47 @@ $(function() {
     });
 });
 </script>
-<form class="card">
+<div class="card">
     <div class="card-body">
+        <form method="get" action="{FORM_ACTION}">
+            <input type="hidden" name="{NV_LANG_VARIABLE}" value="{NV_LANG_DATA}"/>
+            <input type="hidden" name="{NV_NAME_VARIABLE}" value="{MODULE_NAME}"/>
+            <input type="hidden" name="{NV_OP_VARIABLE}" value="{OP}"/>
+            <div class="row g-3 align-items-end">
+                <div class="col-sm-6 col-md-3">
+                    <label for="search_keyword" class="form-label">{LANG.keywords}:</label>
+                    <input type="text" class="form-control" name="q" id="search_keyword" value="{SEARCH.q}"/>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <label for="search_cat" class="form-label">{LANG.type}:</label>
+                    <select class="form-select" name="tp" id="search_cat">
+                        <option value="-1">--</option>
+                        <!-- BEGIN: artist_type --><option value="{ARTIST_TYPE.key}"{ARTIST_TYPE.selected}>{ARTIST_TYPE.title}</option><!-- END: artist_type -->
+                    </select>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <label for="search_from" class="form-label">{LANG.time}:</label>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="f" id="search_from" value="{SEARCH.f}" placeholder="{LANG.from}" autocomplete="off"/>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" class="form-control" name="t" id="search_to" value="{SEARCH.t}" placeholder="{LANG.to}" autocomplete="off"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="clearfix">
+                        <input id="search_submit" type="submit" value="{GLANG.search}" class="btn btn-primary"/>
+                        <div class="float-end">
+                            <button type="button" class="btn btn-info hidden">{LANG.adv}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <form class="card-body">
         <div class="table-responsive-lg table-card">
             <table class="table ms-table ms-table-list-with-action-bottom table-sticky mb-0 mt-1">
                 <thead>
@@ -108,17 +100,15 @@ $(function() {
                 </tbody>
             </table>
         </div>
-    </div>
+    </form>
     <div class="card-footer border-top">
         <div class="d-flex flex-wrap justify-content-between align-items-center">
-            <div class="d-flex flex-wrap flex-sm-nowrap align-items-center">
-                <div class="form-group">
-                    <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
-                        <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
-                        <span class="caret"></span>
-                    </button>
-                    <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
-                </div>
+            <div class="d-flex flex-wrap flex-sm-nowrap align-items-center gap-2">
+                <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm" data-type="actions" data-op="{OP}" data-msg="{LANG.error_check_row}" data-target="[name='idcheck[]']" data-options="active|deactive|delete" data-langs="{LANG.action_active}|{LANG.action_deactive}|{GLANG.delete}">
+                    <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
+                    <span class="caret"></span>
+                </button>
+                <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
             </div>
             <div class="pagination-wrap">
                 <!-- BEGIN: generate_page -->
@@ -127,6 +117,6 @@ $(function() {
             </div>
         </div>
     </div>
-</form>
+</div>
 
 <!-- END: main -->
