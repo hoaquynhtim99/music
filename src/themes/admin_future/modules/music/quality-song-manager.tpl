@@ -30,11 +30,11 @@
                         </td>
                         <td>
                             <h3>{ROW.quality_name}</h3>
-                            <ul class="list-unstyled list-inline ms-list-inline">
-                                <!-- BEGIN: online_supported --><li><small class="text-muted"><i title="{LANG.qso_online_supported}" class="fa fa-microphone"></i></small></li><!-- END: online_supported -->
-                                <!-- BEGIN: online_notsupported --><li><small class="text-muted"><i title="{LANG.qso_online_notsupported}" class="fa fa-microphone-slash"></i></small></li><!-- END: online_notsupported -->
-                                <!-- BEGIN: is_default --><li><small class="text-muted"><i title="{LANG.qso_is_default}" class="fa fa-check-circle"></i></small></li><!-- END: is_default -->
-                                <!-- BEGIN: no_default --><li><small class="text-muted"><i title="{LANG.qso_no_default}" class="fa fa-circle"></i></small></li><!-- END: no_default -->
+                            <ul class="list-inline">
+                                <!-- BEGIN: online_supported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_online_supported}" class="fa fa-microphone"></i></span></li><!-- END: online_supported -->
+                                <!-- BEGIN: online_notsupported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_online_notsupported}" class="fa fa-microphone-slash"></i></span></li><!-- END: online_notsupported -->
+                                <!-- BEGIN: is_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_is_default}" class="fa fa-check-circle"></i></span></li><!-- END: is_default -->
+                                <!-- BEGIN: no_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_no_default}" class="fa fa-circle"></i></span></li><!-- END: no_default -->
                             </ul>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
