@@ -61,7 +61,7 @@ $(function() {
                 <thead>
                     <tr>
                         <th style="width:5%">
-                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                            <input class="form-check-input" name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                         </th>
                         <th style="width:40%">{LANG.title}</th>
                         <th style="width:15%">{LANG.create}</th>
@@ -74,7 +74,7 @@ $(function() {
                     <!-- BEGIN: loop -->
                     <tr>
                         <td>
-                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.artist_id}" name="idcheck[]" />
+                            <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.artist_id}" name="idcheck[]" />
                         </td>
                         <td>
                             <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="float-start ms-img"/>

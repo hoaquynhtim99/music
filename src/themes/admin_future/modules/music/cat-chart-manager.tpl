@@ -6,7 +6,7 @@
                 <thead>
                     <tr>
                         <th style="width:5%">
-                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                            <input class="form-check-input" name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                         </th>
                         <th style="width:10%">{LANG.weight}</th>
                         <th style="width:25%">{LANG.title}</th>
@@ -20,7 +20,7 @@
                     <!-- BEGIN: loop -->
                     <tr>
                         <td>
-                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.cat_id}" name="idcheck[]" />
+                            <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.cat_id}" name="idcheck[]" />
                         </td>
                         <td>
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.cat_id}">
@@ -39,7 +39,7 @@
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                         <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                         <td class="text-center">
-                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
+                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list form-check-input" type="checkbox" value="1"{ROW.status}/>
                         </td>
                         <td class="text-end">
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.cat_id}" data-name="{ROW.cat_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}" data-others="|{LANG.chart_delete_confirm}">
@@ -78,89 +78,83 @@
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.chart_add_mgs}" data-msgedit="{LANG.chart_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
                     <div class="mb-3">
-                        <label for="resource_cover" class="control-label">{LANG.chart_resource_cover}:</label>
+                        <label for="resource_cover" class="form-label">{LANG.chart_resource_cover}:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
                             <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="control-label">{LANG.chart_choose_cat}:</label>
+                        <label class="form-label">{LANG.chart_choose_cat} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                         <div class="row">
                             <!-- BEGIN: cat -->
                             <div class="col-6 col-sm-3">
-                                <label><input type="checkbox" name="cat_ids[]" id="cat_ids_{CAT.cat_id}" value="{CAT.cat_id}"> {CAT.cat_name}</label>
+                                <label><input class="form-check-input" type="checkbox" name="cat_ids[]" id="cat_ids_{CAT.cat_id}" value="{CAT.cat_id}"> {CAT.cat_name}</label>
                             </div>
                             <!-- END: cat -->
                         </div>
                     </div>
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                                <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_alias" class="control-label">{LANG.alias}:</label>
-                                <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_absitetitle" class="control-label">{LANG.chart_absitetitle}:</label>
-                                <span class="form-text">{LANG.cat_get_default}</span>
-                                <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_abintrotext" class="control-label">{LANG.chart_abintrotext}:</label>
-                                <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_abkeywords" class="control-label">{LANG.chart_abkeywords}:</label>
-                                <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_abbodytext" class="control-label">{LANG.chart_abbodytext}:</label>
-                                <textarea name="cat_abbodytext" id="cat_abbodytext" class="form-control" rows="2"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="cat_mvsitetitle" class="control-label">{LANG.chart_mvsitetitle}:</label>
-                                <span class="form-text">{LANG.cat_get_default}</span>
-                                <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_mvintrotext" class="control-label">{LANG.chart_mvintrotext}:</label>
-                                <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_mvkeywords" class="control-label">{LANG.chart_mvkeywords}:</label>
-                                <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_mvbodytext" class="control-label">{LANG.chart_mvbodytext}:</label>
-                                <textarea name="cat_mvbodytext" id="cat_mvbodytext" class="form-control" rows="2"></textarea>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="cat_sositetitle" class="control-label">{LANG.chart_sositetitle}:</label>
-                                <span class="form-text">{LANG.cat_get_default}</span>
-                                <input type="text" name="cat_sositetitle" id="cat_sositetitle" value="" class="form-control"/>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_sointrotext" class="control-label">{LANG.chart_sointrotext}:</label>
-                                <textarea name="cat_sointrotext" id="cat_sointrotext" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_sokeywords" class="control-label">{LANG.chart_sokeywords}:</label>
-                                <textarea name="cat_sokeywords" id="cat_sokeywords" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <label for="cat_sobodytext" class="control-label">{LANG.chart_sobodytext}:</label>
-                                <textarea name="cat_sobodytext" id="cat_sobodytext" class="form-control" rows="2"></textarea>
-                            </div>
-                        </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <div class="mb-3">
+                        <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_alias" class="form-label">{LANG.alias}:</label>
+                        <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_absitetitle" class="form-label">{LANG.chart_absitetitle}:</label>
+                        <span class="form-text">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_abintrotext" class="form-label">{LANG.chart_abintrotext}:</label>
+                        <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_abkeywords" class="form-label">{LANG.chart_abkeywords}:</label>
+                        <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_abbodytext" class="form-label">{LANG.chart_abbodytext}:</label>
+                        <textarea name="cat_abbodytext" id="cat_abbodytext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_mvsitetitle" class="form-label">{LANG.chart_mvsitetitle}:</label>
+                        <span class="form-text">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_mvintrotext" class="form-label">{LANG.chart_mvintrotext}:</label>
+                        <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_mvkeywords" class="form-label">{LANG.chart_mvkeywords}:</label>
+                        <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_mvbodytext" class="form-label">{LANG.chart_mvbodytext}:</label>
+                        <textarea name="cat_mvbodytext" id="cat_mvbodytext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_sositetitle" class="form-label">{LANG.chart_sositetitle}:</label>
+                        <span class="form-text">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_sositetitle" id="cat_sositetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_sointrotext" class="form-label">{LANG.chart_sointrotext}:</label>
+                        <textarea name="cat_sointrotext" id="cat_sointrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_sokeywords" class="form-label">{LANG.chart_sokeywords}:</label>
+                        <textarea name="cat_sokeywords" id="cat_sokeywords" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-0">
+                        <label for="cat_sobodytext" class="form-label">{LANG.chart_sobodytext}:</label>
+                        <textarea name="cat_sobodytext" id="cat_sobodytext" class="form-control" rows="2"></textarea>
                     </div>
                     <input type="submit" class="hidden" name="submitform" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

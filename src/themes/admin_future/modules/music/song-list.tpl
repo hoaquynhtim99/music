@@ -61,7 +61,7 @@ $(function() {
                 <thead>
                     <tr>
                         <th style="width:5%">
-                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                            <input class="form-check-input" name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                         </th>
                         <th style="width:25%">{LANG.title}</th>
                         <th style="width:20%">{LANG.song_list_stcat}</th>
@@ -76,7 +76,7 @@ $(function() {
                     <!-- BEGIN: loop -->
                     <tr>
                         <td>
-                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.song_id}" name="idcheck[]" />
+                            <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.song_id}" name="idcheck[]" />
                         </td>
                         <td>
                             <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h3></div>

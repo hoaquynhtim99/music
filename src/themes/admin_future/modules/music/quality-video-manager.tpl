@@ -6,7 +6,7 @@
                 <thead>
                     <tr>
                         <th style="width:5%">
-                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                            <input class="form-check-input" name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                         </th>
                         <th style="width:10%">{LANG.weight}</th>
                         <th style="width:30%">{LANG.title}</th>
@@ -20,7 +20,7 @@
                     <!-- BEGIN: loop -->
                     <tr>
                         <td>
-                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.quality_id}" name="idcheck[]" />
+                            <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.quality_id}" name="idcheck[]" />
                         </td>
                         <td>
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.quality_id}">
@@ -40,7 +40,7 @@
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                         <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                         <td class="text-center">
-                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.quality_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
+                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.quality_id}" class="ms-check-in-list form-check-input" type="checkbox" value="1"{ROW.status}/>
                         </td>
                         <td class="text-end">
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.quality_id}" data-name="{ROW.quality_name}" data-options="{ACTION_KEY}" data-langs="{ACTION_LANG}">
@@ -95,12 +95,12 @@
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="quality_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                            <div class="mb-3">
+                                <label for="quality_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="quality_alias" class="control-label">{LANG.alias}:</label>
+                            <div class="mb-3">
+                                <label for="quality_alias" class="form-label">{LANG.alias}:</label>
                                 <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
                             </div>
                         </div>

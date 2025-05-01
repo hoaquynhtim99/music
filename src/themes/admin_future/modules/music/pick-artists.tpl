@@ -6,12 +6,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
+                <div class="mb-3">
                     <div class="form-inline">
-                        <div class="form-group">
+                        <div class="mb-3">
                             <input type="text" name="q" value="" class="form-control" placeholder="{LANG.enter_keyword}">
                         </div>
-                        <div class="form-group">
+                        <div class="mb-3">
                             <select class="form-control" name="nation_id" class="form-select">
                                 <option value="0">{LANG.search_all_nation}</option>
                                 <!-- BEGIN: nation -->

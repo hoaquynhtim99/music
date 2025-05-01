@@ -6,7 +6,7 @@
                 <thead>
                     <tr>
                         <th style="width:5%">
-                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                            <input class="form-check-input" name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                         </th>
                         <th style="width:10%">{LANG.weight}</th>
                         <th style="width:25%">{LANG.title}</th>
@@ -22,7 +22,7 @@
                     <!-- BEGIN: loop -->
                     <tr>
                         <td>
-                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.cat_id}" name="idcheck[]" />
+                            <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.cat_id}" name="idcheck[]" />
                         </td>
                         <td>
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.cat_id}">
@@ -41,13 +41,13 @@
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                         <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
                         <td class="text-center">
-                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" data-action="unactiveinalbum|activeinalbum" class="ms-check-in-list" type="checkbox" value="1"{ROW.show_inalbum}/>
+                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" data-action="unactiveinalbum|activeinalbum" class="ms-check-in-list form-check-input" type="checkbox" value="1"{ROW.show_inalbum}/>
                         </td>
                         <td class="text-center">
-                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" data-action="unactiveinvideo|activeinvideo" class="ms-check-in-list" type="checkbox" value="1"{ROW.show_invideo}/>
+                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" data-action="unactiveinvideo|activeinvideo" class="ms-check-in-list form-check-input" type="checkbox" value="1"{ROW.show_invideo}/>
                         </td>
                         <td class="text-center">
-                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
+                            <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list form-check-input" type="checkbox" value="1"{ROW.status}/>
                         </td>
                         <td class="text-end">
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.cat_id}" data-name="{ROW.cat_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
@@ -87,22 +87,22 @@
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="resource_avatar" class="control-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                            <div class="mb-3">
+                                <label for="resource_avatar" class="form-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
                                     <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="resource_cover" class="control-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                            <div class="mb-3">
+                                <label for="resource_cover" class="form-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
                                     <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="resource_video" class="control-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                            <div class="mb-3">
+                                <label for="resource_video" class="form-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="resource_video" id="resource_video" value="{DATA.resource_video}" maxlength="255" />
                                     <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_video" data-type="image" data-path="{RESOURCE_VIDEO_PATH}" data-currentpath="{RESOURCE_VIDEO_CURRPATH}">{GLANG.browse_image}</button>
@@ -112,49 +112,47 @@
                                 <input class="form-check-input" id="checkr3H7dNLR" type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
                                 <label class="form-check-label" for="checkr3H7dNLR">{LANG.cat_show_inalbum}</label>
                             </div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" name="show_invideo" value="1" data-checked="0"/>
-                                    {LANG.cat_show_invideo}
-                                </label>
+                            <div class="form-check">
+                                <input class="form-check-input" id="checkd51i579a" type="checkbox" name="show_invideo" value="1" data-checked="0"/>
+                                <label class="form-check-label" for="checkd51i579a">{LANG.cat_show_invideo}</label>
                             </div>
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                            <div class="mb-3">
+                                <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_alias" class="control-label">{LANG.alias}:</label>
+                            <div class="mb-3">
+                                <label for="cat_alias" class="form-label">{LANG.alias}:</label>
                                 <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_absitetitle" class="control-label">{LANG.cat_absitetitle}:</label>
+                            <div class="mb-3">
+                                <label for="cat_absitetitle" class="form-label">{LANG.cat_absitetitle}:</label>
                                 <span class="form-text">{LANG.cat_get_default}</span>
                                 <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_abintrotext" class="control-label">{LANG.cat_abintrotext}:</label>
+                            <div class="mb-3">
+                                <label for="cat_abintrotext" class="form-label">{LANG.cat_abintrotext}:</label>
                                 <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_abkeywords" class="control-label">{LANG.cat_abkeywords}:</label>
+                            <div class="mb-3">
+                                <label for="cat_abkeywords" class="form-label">{LANG.cat_abkeywords}:</label>
                                 <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_mvsitetitle" class="control-label">{LANG.cat_mvsitetitle}:</label>
+                            <div class="mb-3">
+                                <label for="cat_mvsitetitle" class="form-label">{LANG.cat_mvsitetitle}:</label>
                                 <span class="form-text">{LANG.cat_get_default}</span>
                                 <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_mvintrotext" class="control-label">{LANG.cat_mvintrotext}:</label>
+                            <div class="mb-3">
+                                <label for="cat_mvintrotext" class="form-label">{LANG.cat_mvintrotext}:</label>
                                 <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
                             </div>
-                            <div class="form-group">
-                                <label for="cat_mvkeywords" class="control-label">{LANG.cat_mvkeywords}:</label>
+                            <div class="mb-3">
+                                <label for="cat_mvkeywords" class="form-label">{LANG.cat_mvkeywords}:</label>
                                 <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
                             </div>
                         </div>

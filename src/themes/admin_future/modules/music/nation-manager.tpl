@@ -6,7 +6,7 @@
                 <thead>
                     <tr>
                         <th style="width:5%">
-                            <input name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
+                            <input class="form-check-input" name="check_all[]" type="checkbox" value="yes" onclick="nv_checkAll(this.form, 'idcheck[]', 'check_all[]',this.checked);" />
                         </th>
                         <th style="width:10%">{LANG.weight}</th>
                         <th style="width:25%">{LANG.title}</th>
@@ -20,7 +20,7 @@
                     <!-- BEGIN: loop -->
                     <tr>
                         <td>
-                            <input class="ms-check-in-list" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
+                            <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.nation_id}" name="idcheck[]" />
                         </td>
                         <td>
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm btn-block btn-changeweight ms-btn-in-list" data-type="weight" data-max="{MAX_WEIGHT}" data-value="{ROW.weight}" data-op="{OP}" data-id="{ROW.nation_id}">
@@ -81,8 +81,8 @@
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nation_code" class="control-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                            <div class="mb-3">
+                                <label for="nation_code" class="form-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <span class="form-text">{LANG.nation_code_rule}</span>
                                 <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
                             </div>
@@ -91,20 +91,20 @@
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group">
-                                <label for="nation_name" class="control-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                            <div class="mb-3">
+                                <label for="nation_name" class="form-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <input type="text" name="nation_name" id="nation_name" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="nation_alias" class="control-label">{LANG.alias}:</label>
+                            <div class="mb-3">
+                                <label for="nation_alias" class="form-label">{LANG.alias}:</label>
                                 <input type="text" name="nation_alias" id="nation_alias" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="nation_introtext" class="control-label">{LANG.introtext}:</label>
+                            <div class="mb-3">
+                                <label for="nation_introtext" class="form-label">{LANG.introtext}:</label>
                                 <input type="text" name="nation_introtext" id="nation_introtext" value="" class="form-control"/>
                             </div>
-                            <div class="form-group">
-                                <label for="nation_keywords" class="control-label">{LANG.keywords}:</label>
+                            <div class="mb-3">
+                                <label for="nation_keywords" class="form-label">{LANG.keywords}:</label>
                                 <input type="text" name="nation_keywords" id="nation_keywords" value="" class="form-control"/>
                             </div>
                         </div>
