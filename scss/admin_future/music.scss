@@ -38,7 +38,7 @@
   }
 }
 
-/*--- CORE ---*/
+// Core Music
 .ms-ellipsis {
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -49,45 +49,40 @@ td.ms-ellipsis {
   max-width: 0;
 }
 
-.pl-0 {
-  padding-left: 0 !important;
-}
-
 .ms-content-picked-lists {
   padding: 0;
   margin: 0;
   list-style: none;
   padding-left: 90px;
   width: 100%;
+
+  li {
+    display: block;
+    margin-bottom: 5px;
+    border: 1px var(--#{$prefix}border-color) solid;
+    border-radius: 3px;
+    padding: 6px 7px;
+    position: relative;
+    padding-left: 25px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .delitem {
+      position: absolute;
+      top: 7px;
+      left: 7px;
+    }
+
+    .val,
+    .sval {
+      display: block;
+    }
+  }
 }
 
-.ms-content-picked-lists li {
-  display: block;
-  margin-bottom: 5px;
-  border: 1px #ddd solid;
-  border-radius: 3px;
-  padding: 6px 7px;
-  ;
-  position: relative;
-  padding-left: 25px;
-}
-
-.ms-content-picked-lists li:last-child {
-  margin-bottom: 0;
-}
-
-.ms-content-picked-lists li .delitem {
-  position: absolute;
-  top: 7px;
-  left: 7px;
-}
-
-.ms-content-picked-lists li .val,
-.ms-content-picked-lists li .sval {
-  display: block;
-}
-
-/*--- Fix Form ---*/
+// Form
 .row {
   >.col-form-label {
     >.fa-asterisk {
@@ -97,12 +92,14 @@ td.ms-ellipsis {
   }
 }
 
-.form-element div.tooltip.bottom {
-  left: 5px !important;
-}
+.form-element {
+  div.tooltip.bottom {
+    left: 5px !important;
+  }
 
-.form-element div.tooltip.bottom div.tooltip-arrow {
-  left: 15px !important;
+  div.tooltip.bottom div.tooltip-arrow {
+    left: 15px !important;
+  }
 }
 
 // Polyfill CSS help-block
@@ -128,12 +125,12 @@ hr.sm {
   margin-bottom: 10px;
 }
 
-.text-muted>a {
-  color: #999 !important;
-}
-
 .ms-title {
-  color: #333 !important;
+  color: var(--#{$prefix}emphasis-color);
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .dropdown-menu-fullwidth {
@@ -161,16 +158,6 @@ hr.sm {
 
 .ms-table-list-with-action-bottom tfoot tr>td:first-child {
   padding-left: 0 !important;
-}
-
-@media (max-width: 767px) {
-  .ms-table-list-with-action-bottom tfoot tr>td:first-child {
-    padding-left: 10px !important;
-  }
-
-  .ms-table-list-with-action-bottom tfoot tr>td:first-child .form-group {
-    margin-bottom: 0;
-  }
 }
 
 .ms-table {
@@ -204,16 +191,16 @@ hr.sm {
     clear: both;
     font-weight: 400;
     line-height: 1.42857143;
-    color: #333;
+    color: var(--#{$prefix}emphasis-color);
     white-space: nowrap;
     text-align: left;
     min-width: 100px;
 
     &:hover,
     &.active {
-      color: #262626;
+      color: var(--#{$prefix}body-color);
       text-decoration: none;
-      background-color: #f5f5f5;
+      background-color: var(--#{$prefix}tertiary-bg);
     }
   }
 }
@@ -232,67 +219,67 @@ hr.sm {
   min-width: 320px;
   margin: -15px;
   display: block;
-}
 
-.ms-singer-listgr-modal .list-group-item,
-.ms-author-listgr-modal .list-group-item {
-  border-left: 0;
-  border-right: 0;
-}
+  .list-group-item {
+    border-left: 0;
+    border-right: 0;
 
-.ms-singer-listgr-modal .list-group-item:first-child,
-.ms-author-listgr-modal .list-group-item:first-child {
-  border-top: 0;
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
-}
+    &:first-child {
+      border-top: 0;
+      border-top-right-radius: 0;
+      border-top-left-radius: 0;
+    }
 
-.ms-singer-listgr-modal .list-group-item:last-child,
-.ms-author-listgr-modal .list-group-item:last-child {
-  border-bottom: 0;
-  border-bottom-right-radius: 6px;
-  border-bottom-left-radius: 6px;
+    &:last-child {
+      border-bottom: 0;
+      border-bottom-right-radius: 6px;
+      border-bottom-left-radius: 6px;
+    }
+  }
 }
 
 /* Các item đã chọn trong phần pick modal */
-.modalPickItems .item-selected {
-  padding: 0;
-  margin: 0;
-  list-style: none;
-}
+.modalPickItems {
+  .item-selected {
+    padding: 0;
+    margin: 0;
+    list-style: none;
 
-.modalPickItems .item-selected li .sval,
-.modalPickItems .item-selected li .sdes {
-  padding-left: 30px;
-  padding-right: 30px;
-}
+    li {
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
 
-.modalPickItems .item-selected li .sval strong {
-  display: block;
-}
+      .sval,
+      .sdes {
+        padding-left: 30px;
+        padding-right: 30px;
+      }
 
-.modalPickItems .item-selected li .sdes {
-  margin-top: 5px;
-}
+      .sval {
+        strong {
+          display: block;
+        }
+      }
 
-.modalPickItems .item-selected li .sdes small {
-  display: block;
-}
+      .sdes {
+        margin-top: 5px;
 
-.modalPickItems .item-selected li .ctn {
-  border: 1px #ddd solid;
-  border-radius: 2px;
-  background-color: #f2f2f2;
-  padding: 7px;
-  cursor: move;
-}
+        small {
+          display: block;
+        }
+      }
 
-.modalPickItems .item-selected li {
-  margin-bottom: 10px;
-}
-
-.modalPickItems .item-selected li:last-child {
-  margin-bottom: 0;
+      .ctn {
+        border: 1px var(--#{$prefix}border-color) solid;
+        border-radius: 2px;
+        background-color: var(--#{$prefix}tertiary-bg);
+        padding: 7px;
+        cursor: move;
+      }
+    }
+  }
 }
 
 /* Trang chủ của module */

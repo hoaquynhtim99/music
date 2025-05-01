@@ -11,7 +11,7 @@
             <!-- BEGIN: loop -->
             <tr>
                 <td>
-                    <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h3></div>
+                    <div data-toggle="ellipsis"><h5 data-toggle="items" class="mb-0"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h5></div>
                     <small class="text-muted">
                         <!-- BEGIN: show_singer -->
                         <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->

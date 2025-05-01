@@ -990,8 +990,8 @@ $(document).ready(function() {
         html += '<li>';
         html += '<input type="hidden" name="ids[]" data-title="' + title + '" value="' + id + '">';
         html += '<div class="ctn">';
-        html += '<div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
-        html += '<div class="sdel pull-right"><a href="#" data-toggle="delPickArtist"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sicon float-start"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
+        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickArtist"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
         html += '<div class="sval"><strong>' + title + '</strong></div>';
         html += '</div>';
         html += '</li>';
@@ -1187,8 +1187,8 @@ $(document).ready(function() {
         html += '<li>';
         html += '<input type="hidden" name="ids[]" data-title="' + title + '" data-des="' + des + '" value="' + id + '">';
         html += '<div class="ctn">';
-        html += '<div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
-        html += '<div class="sdel pull-right"><a href="#" data-toggle="delPickSong"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sicon float-start"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
+        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickSong"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
         html += '<div class="sval"><strong class="ms-ellipsis">' + title + '</strong></div>';
         html += '<div class="sdes"><small class="ms-ellipsis">' + des + '</small></div>';
         html += '</div>';
@@ -1394,8 +1394,8 @@ $(document).ready(function() {
         html += '<li>';
         html += '<input type="hidden" name="ids[]" data-title="' + title + '" data-des="' + des + '" value="' + id + '">';
         html += '<div class="ctn">';
-        html += '<div class="sicon pull-left"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
-        html += '<div class="sdel pull-right"><a href="#" data-toggle="delPickVideo"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sicon float-start"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
+        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickVideo"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
         html += '<div class="sval"><strong class="ms-ellipsis">' + title + '</strong></div>';
         html += '<div class="sdes"><small class="ms-ellipsis">' + des + '</small></div>';
         html += '</div>';

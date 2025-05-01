@@ -128,7 +128,7 @@
                     <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickSongs" data-multiple="true" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_ids[]">{LANG.select}</button>
                 </label>
                 <div class="col-sm-8 col-md-5 col-lg-4">
-                    <ul class="ms-content-picked-lists pl-0" id="PickedSong">
+                    <ul class="ms-content-picked-lists ps-0" id="PickedSong">
                         <!-- BEGIN: song -->
                         <li>
                             <input type="hidden" name="song_ids[]" value="{SONG.song_id}">

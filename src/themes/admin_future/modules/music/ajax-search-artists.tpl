@@ -11,8 +11,8 @@
             <!-- BEGIN: loop -->
             <tr>
                 <td>
-                    <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="float-start ms-img"/>
-                    <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.artist_link}" class="ms-title" target="_blank">{ROW.artist_name}</a></h3></div>
+                    <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="36" class="float-start ms-img"/>
+                    <div data-toggle="ellipsis"><h5 data-toggle="items" class="mb-0"><a href="{ROW.artist_link}" class="ms-title" target="_blank">{ROW.artist_name}</a></h5></div>
                     <small class="text-muted">{ROW.real_artist_type}</small>
                 </td>
                 <td class="text-end">

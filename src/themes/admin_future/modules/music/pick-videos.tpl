@@ -7,25 +7,29 @@
             </div>
             <div class="modal-body">
                 <div class="mb-3">
-                    <div class="form-inline">
-                        <div class="mb-3">
-                            <input type="text" name="q" value="" class="form-control" placeholder="{LANG.enter_keyword}">
+                    <div class="d-flex gap-2 align-items-center">
+                        <div class="flex-grow-1 row g-2">
+                            <div class="col">
+                                <input type="text" name="q" value="" class="form-control" placeholder="{LANG.enter_keyword}">
+                            </div>
+                            <div class="col">
+                                <select name="cat_id" class="form-select">
+                                    <option value="0">{LANG.search_all_cat}</option>
+                                    <!-- BEGIN: cat1 -->
+                                    <option value="{CAT.cat_id}">{CAT.cat_name}</option>
+                                    <!-- END: cat1 -->
+                                </select>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <select class="form-control" name="cat_id" class="form-select">
-                                <option value="0">{LANG.search_all_cat}</option>
-                                <!-- BEGIN: cat1 -->
-                                <option value="{CAT.cat_id}">{CAT.cat_name}</option>
-                                <!-- END: cat1 -->
-                            </select>
+                        <div>
+                            <input type="hidden" name="video_id_selected" value="">
+                            <input type="hidden" name="page" value="1">
+                            <button type="button" name="submitform" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
                         </div>
-                        <input type="hidden" name="video_id_selected" value="">
-                        <input type="hidden" name="page" value="1">
-                        <button type="button" name="submitform" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
                     </div>
                 </div>
                 <div class="item-lists"></div>
-                <h2>{LANG.picked_list}</h2>
+                <h5>{LANG.picked_list}</h5>
                 <p class="text-info"><i>{LANG.drag_and_drop_to_sort}</i></p>
                 <ul class="item-selected"></ul>
             </div>
