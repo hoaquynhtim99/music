@@ -68,12 +68,12 @@
     </div>
 </form>
 
-<div class="modal" tabindex="-1" role="dialog" id="formmodal" data-backdrop="static" data-changed="false">
+<div class="modal" tabindex="-1" role="dialog" id="formmodal" data-bs-backdrop="static" data-changed="false">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}" data-msgedit="{LANG.nation_edit}"></span></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
@@ -116,11 +116,11 @@
             </div>
             <div class="modal-footer">
                 <div class="float-start">
-                     <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
+                    <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
                 </div>
                 <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
                 <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa fa-floppy-o" aria-hidden="true"></i> {LANG.save}</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
             </div>
         </div>
     </div>

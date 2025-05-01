@@ -1,9 +1,9 @@
-<div class="modal modalPickItems" tabindex="-1" role="dialog" id="modalPickArtists" data-backdrop="static" data-changed="false" data-list="" data-inputname="">
+<div class="modal modalPickItems" tabindex="-1" role="dialog" id="modalPickArtists" data-bs-backdrop="static" data-changed="false" data-list="" data-inputname="">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="{LANG.close}"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
@@ -32,7 +32,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-toggle="completePickArtist">{LANG.save}</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">{LANG.close}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{LANG.close}</button>
             </div>
         </div>
     </div>
