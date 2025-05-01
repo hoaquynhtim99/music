@@ -7,8 +7,8 @@
 <form id="msAjForm" method="post" action="{FORM_ACTION}" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
-        <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-        <div class="card">
+        <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+        <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
@@ -82,8 +82,8 @@
                 </div>
             </div>
         </div>
-        <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-        <div class="card">
+        <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+        <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="album_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.album_name}:</label>
@@ -121,8 +121,8 @@
                 </div>
             </div>
         </div>
-        <h2><i class="fa fa-fw fa-music" aria-hidden="true"></i>{LANG.album_songs}:</h2>
-        <div class="card">
+        <h5><i class="fa fa-fw fa-music" aria-hidden="true"></i>{LANG.album_songs}:</h5>
+        <div class="card mb-3">
             <div class="card-body">
                 <label class="col-form-label text-sm-end col-sm-4 pt-0">
                     <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickSongs" data-multiple="true" data-title="{LANG.select_song}" data-list="#PickedSong" data-inputname="song_ids[]">{LANG.select}</button>
@@ -141,7 +141,7 @@
                 </div>
             </div>
         </div>
-        <div class="row mb-3">
+        <div class="row">
             <div class="offset-sm-4 col-sm-8">
                 <input type="hidden" name="submitform" value="1"/>
                 <input name="redirect" type="hidden" value="0" />

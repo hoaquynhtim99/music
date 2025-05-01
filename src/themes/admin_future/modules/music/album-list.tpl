@@ -81,7 +81,7 @@ $(function() {
                         <td>
                             <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" width="32" class="float-start ms-img"/>
 
-                            <div data-toggle="ellipsis"><h5 data-toggle="items"><a href="{ROW.album_link}" class="ms-title" target="_blank">{ROW.album_name}</a></h5></div>
+                            <div data-toggle="ellipsis"><h5 data-toggle="items" class="mb-0"><a href="{ROW.album_link}" class="ms-title" target="_blank">{ROW.album_name}</a></h5></div>
                             <small class="text-muted">
                                 <!-- BEGIN: show_singer -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->
@@ -103,7 +103,7 @@ $(function() {
                             </small>
                         </td>
                         <td>
-                            <h3>{ROW.release_year}</h3>
+                            <h5 class="mb-0">{ROW.release_year}</h5>
                             <span class="text-muted">
                                 <!-- BEGIN: show_cat -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->{CAT.cat_name}<!-- END: loop -->
@@ -113,8 +113,8 @@ $(function() {
                             </span>
                         </td>
                         <td>
-                            <h3><i class="fa fa-headphones fa-fw" aria-hidden="true"></i>{ROW.stat_views}</h3>
-                            <span class="text-muted"><i class="fa fa-comments fa-fw" aria-hidden="true"></i>{ROW.stat_comments}</span>
+                            <h5 class="mb-0 text-nowrap"><i class="fa fa-headphones fa-fw" aria-hidden="true"></i> {ROW.stat_views}</h5>
+                            <span class="text-muted text-nowrap"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> {ROW.stat_comments}</span>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                         <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
