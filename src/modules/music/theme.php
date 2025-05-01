@@ -485,7 +485,7 @@ function nv_theme_main($content_albums, $content_videos, $content_singers, $cont
  * @param mixed $generate_page
  * @return
  */
-function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_page)
+function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_page = '')
 {
     global $module_info, $nv_Lang;
 
@@ -526,7 +526,7 @@ function nv_theme_page_list_albums($array, $is_detail_cat = false, $generate_pag
  * @param mixed $generate_page
  * @return
  */
-function nv_theme_page_list_videos($array, $is_detail_cat = false, $generate_page)
+function nv_theme_page_list_videos($array, $is_detail_cat = false, $generate_page = '')
 {
     global $module_info, $nv_Lang;
 
