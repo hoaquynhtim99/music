@@ -69,7 +69,7 @@ $(function() {
                         <th style="width:10%">{LANG.create}</th>
                         <th style="width:10%">{LANG.update}</th>
                         <th style="width:10%">{LANG.state}</th>
-                        <th style="width:10%" class="text-right">{LANG.action}</th>
+                        <th style="width:10%" class="text-end">{LANG.action}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -139,7 +139,7 @@ $(function() {
                                 <span class="caret"></span>
                             </button>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.song_id}" data-name="{ROW.song_name}" data-options="edit|linkcc|delete" data-langs="{GLANG.edit}|{LANG.mana_cc}|{GLANG.delete}" data-urledit="{ROW.url_edit}" data-urllinkcc="{ROW.url_cc}">
                                 <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                                 <span class="caret"></span>

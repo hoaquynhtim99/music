@@ -4,7 +4,7 @@
         <thead>
             <tr>
                 <th style="width: 80%;">{LANG.video_name}</th>
-                <th style="width: 20%;" class="text-right">{LANG.action}</th>
+                <th style="width: 20%;" class="text-end">{LANG.action}</th>
             </tr>
         </thead>
         <tbody>
@@ -23,7 +23,7 @@
                         <!-- BEGIN: no_singer -->{UNKNOW_SINGER}<!-- END: no_singer -->
                     </small>
                 </td>
-                <td class="text-right">
+                <td class="text-end">
                     <a href="#" data-toggle="selPickVideo" data-selected="{ROW_SELECT1}" data-selected-mess="{LANG.selected}" data-id="{ROW.video_id}" data-title="{ROW.video_name}" data-des="{ROW_SINGER}" class="btn btn-success btn-sm ms-btn-in-list">{ROW_SELECT2}</a>
                 </td>
             </tr>

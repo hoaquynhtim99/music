@@ -13,7 +13,7 @@
                         <th style="width:15%">{LANG.create}</th>
                         <th style="width:15%">{LANG.update}</th>
                         <th style="width:15%" class="text-center">{LANG.status}</th>
-                        <th style="width:10%" class="text-right">{LANG.action}</th>
+                        <th style="width:10%" class="text-end">{LANG.action}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -42,7 +42,7 @@
                         <td class="text-center">
                             <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.quality_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.quality_id}" data-name="{ROW.quality_name}" data-options="{ACTION_KEY}" data-langs="{ACTION_LANG}">
                                 <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                                 <span class="caret"></span>

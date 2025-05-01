@@ -15,7 +15,7 @@
                         <th style="width:10%" class="text-center">{LANG.cat_s_show_inalbum}</th>
                         <th style="width:10%" class="text-center">{LANG.cat_s_show_invideo}</th>
                         <th style="width:10%" class="text-center">{LANG.status}</th>
-                        <th style="width:10%" class="text-right">{LANG.action}</th>
+                        <th style="width:10%" class="text-end">{LANG.action}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,7 +49,7 @@
                         <td class="text-center">
                             <input data-toggle="msactive" data-op="{OP}" data-id="{ROW.cat_id}" class="ms-check-in-list" type="checkbox" value="1"{ROW.status}/>
                         </td>
-                        <td class="text-right">
+                        <td class="text-end">
                             <button data-toggle="mscallpop" type="button" class="btn btn-secondary btn-sm ms-btn-in-list" data-type="action" data-op="{OP}" data-id="{ROW.cat_id}" data-name="{ROW.cat_name}" data-options="ajedit|delete" data-langs="{GLANG.edit}|{GLANG.delete}">
                                 <span class="text" data-text="{LANG.select}">{LANG.select}</span>
                                 <span class="caret"></span>
