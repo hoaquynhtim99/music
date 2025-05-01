@@ -79,29 +79,25 @@
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.chart_add_mgs}" data-msgedit="{LANG.chart_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-group">
-                                <label for="resource_cover" class="control-label">{LANG.chart_resource_cover}:</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
-                                    <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
-                                </div>
+                    <div class="mb-3">
+                        <label for="resource_cover" class="control-label">{LANG.chart_resource_cover}:</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="control-label">{LANG.chart_choose_cat}:</label>
+                        <div class="row">
+                            <!-- BEGIN: cat -->
+                            <div class="col-6 col-sm-3">
+                                <label><input type="checkbox" name="cat_ids[]" id="cat_ids_{CAT.cat_id}" value="{CAT.cat_id}"> {CAT.cat_name}</label>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label">{LANG.chart_choose_cat}:</label>
-                                <div class="row">
-                                    <!-- BEGIN: cat -->
-                                    <div class="col-6 col-sm-3">
-                                        <label><input type="checkbox" name="cat_ids[]" id="cat_ids_{CAT.cat_id}" value="{CAT.cat_id}"> {CAT.cat_name}</label>
-                                    </div>
-                                    <!-- END: cat -->
-                                </div>
-                            </div>
+                            <!-- END: cat -->
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card ms-form-group-last">
+                    <div class="card">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>

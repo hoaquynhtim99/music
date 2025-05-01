@@ -93,13 +93,13 @@
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card ms-form-group-last">
+                    <div class="card">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="quality_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
                             </div>
-                            <div class="form-group ms-form-group-last">
+                            <div class="form-group">
                                 <label for="quality_alias" class="control-label">{LANG.alias}:</label>
                                 <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
                             </div>

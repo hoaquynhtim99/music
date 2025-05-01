@@ -81,7 +81,7 @@
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
                     <div class="card">
                         <div class="card-body">
-                            <div class="form-group ms-form-group-last">
+                            <div class="form-group">
                                 <label for="nation_code" class="control-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
                                 <span class="form-text">{LANG.nation_code_rule}</span>
                                 <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
@@ -89,7 +89,7 @@
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card ms-form-group-last">
+                    <div class="card">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="nation_name" class="control-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
@@ -103,7 +103,7 @@
                                 <label for="nation_introtext" class="control-label">{LANG.introtext}:</label>
                                 <input type="text" name="nation_introtext" id="nation_introtext" value="" class="form-control"/>
                             </div>
-                            <div class="form-group ms-form-group-last">
+                            <div class="form-group">
                                 <label for="nation_keywords" class="control-label">{LANG.keywords}:</label>
                                 <input type="text" name="nation_keywords" id="nation_keywords" value="" class="form-control"/>
                             </div>

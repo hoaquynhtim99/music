@@ -112,7 +112,7 @@
                                 <input class="form-check-input" id="checkr3H7dNLR" type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
                                 <label class="form-check-label" for="checkr3H7dNLR">{LANG.cat_show_inalbum}</label>
                             </div>
-                            <div class="checkbox ms-form-group-last">
+                            <div class="checkbox">
                                 <label>
                                     <input type="checkbox" name="show_invideo" value="1" data-checked="0"/>
                                     {LANG.cat_show_invideo}
@@ -121,7 +121,7 @@
                         </div>
                     </div>
                     <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card ms-form-group-last">
+                    <div class="card">
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="cat_name" class="control-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
@@ -153,7 +153,7 @@
                                 <label for="cat_mvintrotext" class="control-label">{LANG.cat_mvintrotext}:</label>
                                 <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
                             </div>
-                            <div class="form-group ms-form-group-last">
+                            <div class="form-group">
                                 <label for="cat_mvkeywords" class="control-label">{LANG.cat_mvkeywords}:</label>
                                 <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
                             </div>
