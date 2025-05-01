@@ -93,7 +93,7 @@
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
-                            <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
                     </div>
                 </div>
@@ -102,7 +102,7 @@
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
-                            <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
                     </div>
                 </div>
@@ -154,7 +154,7 @@
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_path[{SOQUALITY.quality_id}]" id="resource_path_{SOQUALITY.quality_id}" value="{RESOURCE_PATH}" maxlength="255">
-                            <button class="btn btn-success" type="button" data-toggle="browse" data-area="resource_path_{SOQUALITY.quality_id}" data-type="file" data-path="{RESOURCE_DATA_PATH}" data-currentpath="{RESOURCE_DATA_CURRPATH}">{GLANG.browse_file}</button>
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_path_{SOQUALITY.quality_id}" data-type="file" data-path="{RESOURCE_DATA_PATH}" data-currentpath="{RESOURCE_DATA_CURRPATH}">{GLANG.browse_file}</button>
                         </div>
                     </div>
                 </div>
@@ -177,7 +177,7 @@
                         <div class="col-sm-8 col-md-5 col-lg-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="caption_file" name="caption_file" value="{DATA.caption_file}">
-                                <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_file" data-type="file" data-path="{RESOURCE_CAPTION_PATH}" data-currentpath="{RESOURCE_CAPTION_CURRPATH}">{GLANG.browse_file}</button>
+                                <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="caption_file" data-type="file" data-path="{RESOURCE_CAPTION_PATH}" data-currentpath="{RESOURCE_CAPTION_CURRPATH}">{GLANG.browse_file}</button>
                             </div>
                             <i class="form-text text-muted">{LANG.mana_cc_webvtt_help}.</i>
                         </div>
@@ -187,7 +187,7 @@
                         <div class="col-sm-8 col-md-5 col-lg-4">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="caption_pdf" name="caption_pdf" value="{DATA.caption_pdf}">
-                                <button class="btn btn-success" type="button" data-toggle="browse" data-area="caption_pdf" data-type="file" data-path="{RESOURCE_CAPTION_PATH}" data-currentpath="{RESOURCE_CAPTION_CURRPATH}">{GLANG.browse_file}</button>
+                                <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="caption_pdf" data-type="file" data-path="{RESOURCE_CAPTION_PATH}" data-currentpath="{RESOURCE_CAPTION_CURRPATH}">{GLANG.browse_file}</button>
                             </div>
                             <i class="form-text text-muted">{LANG.mana_cc_pdf_help}.</i>
                         </div>

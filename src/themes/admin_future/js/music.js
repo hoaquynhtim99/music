@@ -671,6 +671,9 @@ $(document).ready(function() {
     });
 
     // Điều khiển các popover
+    const allowList = bootstrap.Tooltip.Default.allowList;
+    allowList['*'].push(/^data-[\w-]*$/i);
+
     $(document).delegate('[data-toggle="mscallpop"]', 'click', function(e) {
         e.preventDefault();
         e.stopPropagation();
@@ -683,7 +686,8 @@ $(document).ready(function() {
                 html: true,
                 placement: "bottom",
                 content: msGetPopoverContent(this),
-                trigger: "manual"
+                trigger: "manual",
+                allowList: allowList,
             });
             $(this).on('shown.bs.popover', function() {
                 // Cuộn tới và đánh dấu current
@@ -715,7 +719,7 @@ $(document).ready(function() {
         msAllPop = new Array();
     }
 
-    $(document).delegate('div.popover', 'click', function(e) {
+    $('body').on('click', 'div.popover', function(e) {
         e.stopPropagation();
     });
 
@@ -732,7 +736,7 @@ $(document).ready(function() {
     var popupFubmitBack = $('#formmodalsaveandback');
     var msToggleActive = $('[data-toggle="msactive"]');
 
-    $(document).delegate('.ms-dropdown-tool a', 'click', function(e) {
+    $('body').on('click', '.ms-dropdown-tool a', function(e) {
         e.preventDefault();
         msDestroyAllPop();
         var $this = $(this);
@@ -974,16 +978,6 @@ $(document).ready(function() {
         modalShow($($(this).data('target')).attr('title'), $($(this).data('target')).html());
     });
     msEllipsisCheck();
-
-    // Duyệt ảnh, file trên server
-    $('[data-toggle="browse"]').click(function() {
-        var area = $(this).data('area');
-        var path = $(this).data('path');
-        var currentpath = $(this).data('currentpath');
-        var type = $(this).data('type');
-        var currentfile = $('#' + area).val();
-        nv_open_browse(script_name + "?" + nv_lang_variable + "=" + nv_lang_data + "&" + nv_name_variable + "=upload&popup=1&area=" + area + "&path=" + path + "&type=" + type + "&currentpath=" + currentpath + "&currentfile=" + currentfile, "NVImg", "850", "420", "resizable=no,scrollbars=no,toolbar=no,location=no,status=no");
-    });
 
     /*
      * Modal chọn ca sĩ, nhạc sĩ cho bài hát, video, album
