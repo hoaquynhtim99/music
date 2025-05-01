@@ -12,8 +12,8 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
 
 $page_title = $module_info['site_title'];
 $key_words = $module_info['keywords'];

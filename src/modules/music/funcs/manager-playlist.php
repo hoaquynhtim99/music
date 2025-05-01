@@ -12,7 +12,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Resources;
 
 $page_title = $nv_Lang->getModule('mymusic_playlist_manager');
 $description = $key_words = 'no';

@@ -12,8 +12,8 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
 
 if (!nv_function_exists('nv_block_detail_suggested_albums')) {
     /**

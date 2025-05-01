@@ -12,7 +12,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Resources;
 
 $resource_path = msGetCurrentUploadFolder('lyric');
 

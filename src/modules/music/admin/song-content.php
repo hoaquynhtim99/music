@@ -12,11 +12,11 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\AjaxRespon;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
-use NukeViet\Music\Config;
-use NukeViet\Music\Shared\Songs;
+use NukeViet\Module\music\AjaxRespon;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Shared\Songs;
 
 $resource_path_caption = msGetCurrentUploadFolder('lyric');
 $resource_avatar_path = msGetCurrentUploadFolder('song');

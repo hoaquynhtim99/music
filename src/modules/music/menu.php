@@ -12,8 +12,8 @@ if (!defined('NV_IS_FILE_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
 
 /*
  * Sử dụng biến $mod_name để lấy tên

@@ -12,9 +12,9 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
 
 /**
  * nv_theme_gird_albums()

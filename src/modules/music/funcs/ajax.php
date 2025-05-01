@@ -12,10 +12,10 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Shared\Charts;
-use NukeViet\Music\Shared\UserPlaylists;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Shared\Charts;
+use NukeViet\Module\music\Shared\UserPlaylists;
 
 /*
  * Khu vực AJAX không cho index

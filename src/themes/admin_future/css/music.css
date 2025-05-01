@@ -32,6 +32,8 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding-top: 2px;
+  transform: translateY(-2px);
 }
 
 td.ms-ellipsis {

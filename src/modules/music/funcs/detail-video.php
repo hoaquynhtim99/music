@@ -12,9 +12,9 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Shared\Charts;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Shared\Charts;
 
 if (!defined('NV_IS_DETAIL_VIDEO')) {
     nv_redirect_location(Resources::getModLink());

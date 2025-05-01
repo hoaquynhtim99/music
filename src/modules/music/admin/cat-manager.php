@@ -12,10 +12,10 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\AjaxRespon;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
-use NukeViet\Music\Shared\Categories;
+use NukeViet\Module\music\AjaxRespon;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
+use NukeViet\Module\music\Shared\Categories;
 
 $page_title = $nv_Lang->getModule('cat_manager');
 

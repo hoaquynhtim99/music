@@ -12,7 +12,7 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Resources;
 
 if (!nv_function_exists('nv_block_music_search')) {
     /**

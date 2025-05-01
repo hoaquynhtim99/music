@@ -12,11 +12,11 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\AjaxRespon;
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
-use NukeViet\Music\Shared\Albums;
+use NukeViet\Module\music\AjaxRespon;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
+use NukeViet\Module\music\Shared\Albums;
 
 $album_id = $nv_Request->get_int('album_id', 'get', 0);
 

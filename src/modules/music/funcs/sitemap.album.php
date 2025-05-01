@@ -12,6 +12,6 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Resources;
 
 nv_redirect_location(Resources::getModLink());

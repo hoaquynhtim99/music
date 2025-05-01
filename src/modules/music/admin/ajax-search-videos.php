@@ -12,9 +12,9 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);

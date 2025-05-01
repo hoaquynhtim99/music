@@ -12,7 +12,7 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Resources;
 
 $id = $nv_Request->get_int('id', 'get', 0);
 $area = $nv_Request->get_int('area', 'get', 0);

@@ -23,11 +23,9 @@ if (!defined('NV_MAINFILE')) {
  */
 global $db_config, $nv_Cache, $db;
 
-require NV_ROOTDIR . '/modules/' . $site_mods[$module_name]['module_file'] . '/vendor/autoload.php';
-
-use NukeViet\Music\Config;
-use NukeViet\Music\Utils;
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Utils;
+use NukeViet\Module\music\Resources;
 
 Resources::setBaseSiteUrl(NV_BASE_SITEURL);
 Resources::setLangVariable(NV_LANG_VARIABLE);

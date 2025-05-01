@@ -19,10 +19,10 @@ define('MS_COMMENT_AREA_PLAYLIST', 4);
 
 require NV_ROOTDIR . '/modules/' . $module_file . '/init.php';
 
-use NukeViet\Music\Nation\DbLoader as NationDbLoader;
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Shared\Charts;
+use NukeViet\Module\music\Nation\DbLoader as NationDbLoader;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Shared\Charts;
 
 // Tất cả các quốc gia trong hệ thống
 $cacheFile = NV_LANG_DATA . '_nations_' . NV_CACHE_PREFIX . '.cache';

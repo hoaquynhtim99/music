@@ -12,7 +12,7 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Resources;
 
 $array_allowed_sitemap = ['album', 'mv', 'singer'];
 if ((!empty($array_op[1]) and !in_array($array_op[1], $array_allowed_sitemap)) or isset($array_op[2])) {

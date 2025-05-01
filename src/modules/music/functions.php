@@ -16,8 +16,8 @@ define('NV_IS_MOD_MUSIC', true);
 
 require_once NV_ROOTDIR . '/modules/' . $module_file . '/global.functions.php';
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
 
 $array_mod_title = [];
 $is_embed_mode = ($nv_Request->get_int('embed', 'get', 0) == 1 ? true : false);

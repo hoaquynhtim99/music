@@ -12,9 +12,9 @@ if (!defined('NV_MAINFILE')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Config;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Shared\Charts;
+use NukeViet\Module\music\Config;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Shared\Charts;
 
 if (!nv_function_exists('nv_block_chart_albums')) {
     /**

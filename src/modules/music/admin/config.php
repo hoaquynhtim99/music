@@ -8,8 +8,8 @@
  * @Createdate Sun, 26 Feb 2017 14:04:32 GMT
  */
 
-use NukeViet\Music\AjaxRespon;
-use NukeViet\Music\Resources;
+use NukeViet\Module\music\AjaxRespon;
+use NukeViet\Module\music\Resources;
 
 if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');

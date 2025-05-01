@@ -12,10 +12,10 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Shared\Artists;
-use NukeViet\Music\AjaxRespon;
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
+use NukeViet\Module\music\Shared\Artists;
+use NukeViet\Module\music\AjaxRespon;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
 
 $artist_id = $nv_Request->get_int('artist_id', 'get', 0);
 

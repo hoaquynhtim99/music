@@ -12,8 +12,8 @@ if (!defined('NV_IS_MOD_MUSIC')) {
     die('Stop!!!');
 }
 
-use NukeViet\Music\Resources;
-use NukeViet\Music\Utils;
+use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Utils;
 
 /*
  * Khu vực tìm kiếm không index, cho follow
