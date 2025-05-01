@@ -30,7 +30,7 @@
                         </td>
                         <td>
                             <h3>{ROW.quality_name}</h3>
-                            <ul class="list-inline">
+                            <ul class="list-inline mb-0">
                                 <!-- BEGIN: online_supported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qvd_online_supported}" class="fa fa-microphone"></i></span></li><!-- END: online_supported -->
                                 <!-- BEGIN: online_notsupported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qvd_online_notsupported}" class="fa fa-microphone-slash"></i></span></li><!-- END: online_notsupported -->
                                 <!-- BEGIN: is_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qvd_is_default}" class="fa fa-check-circle"></i></span></li><!-- END: is_default -->

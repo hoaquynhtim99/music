@@ -1615,8 +1615,8 @@ $(window).on('resize', function() {
 var msIconSheets = {};
 msIconSheets.none = '<i class="fa fa-fw fa-angle-right"></i>';
 msIconSheets.edit = '<i class="fa fa-fw fa-pencil"></i>';
-msIconSheets.ajedit = '<i class="fa fa-fw fa-edit"></i>';
-msIconSheets.delete = '<i class="fa fa-fw fa-trash"></i>';
+msIconSheets.ajedit = '<i class="fa fa-fw fa-pencil"></i>';
+msIconSheets.delete = '<i class="fa fa-fw fa-trash text-danger"></i>';
 msIconSheets.active = '<i class="fa fa-fw fa-circle"></i>';
 msIconSheets.deactive = '<i class="fa fa-fw fa-circle-o"></i>';
 msIconSheets.setdefault = '<i class="fa fa-fw fa-check-circle"></i>';
