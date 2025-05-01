@@ -29,7 +29,7 @@
                             </button>
                         </td>
                         <td>
-                            <h3>{ROW.quality_name}</h3>
+                            <h5>{ROW.quality_name}</h5>
                             <ul class="list-inline mb-0">
                                 <!-- BEGIN: online_supported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qvd_online_supported}" class="fa fa-microphone"></i></span></li><!-- END: online_supported -->
                                 <!-- BEGIN: online_notsupported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qvd_online_notsupported}" class="fa fa-microphone-slash"></i></span></li><!-- END: online_notsupported -->
@@ -79,31 +79,25 @@
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.qvd_add_mgs}" data-msgedit="{LANG.qvd_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="form-check">
-                                <input class="form-check-input" id="checkz7Or1c3k" type="checkbox" name="online_supported" value="1" data-checked="1"/>
-                                <label class="form-check-label" for="checkz7Or1c3k">{LANG.qvd_online_supported}</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" id="checkg15381BC" type="checkbox" name="is_default" value="1" data-checked="0"/>
-                                <label class="form-check-label" for="checkg15381BC">{LANG.qvd_is_default}</label>
-                            </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" id="checkz7Or1c3k" type="checkbox" name="online_supported" value="1" data-checked="1"/>
+                            <label class="form-check-label" for="checkz7Or1c3k">{LANG.qvd_online_supported}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="checkg15381BC" type="checkbox" name="is_default" value="1" data-checked="0"/>
+                            <label class="form-check-label" for="checkg15381BC">{LANG.qvd_is_default}</label>
                         </div>
                     </div>
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="quality_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                                <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="quality_alias" class="form-label">{LANG.alias}:</label>
-                                <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
-                            </div>
-                        </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <div class="mb-3">
+                        <label for="quality_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-0">
+                        <label for="quality_alias" class="form-label">{LANG.alias}:</label>
+                        <input type="text" name="quality_alias" id="quality_alias" value="" class="form-control"/>
                     </div>
                     <input type="submit" class="hidden" name="submitform" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

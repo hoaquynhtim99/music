@@ -89,7 +89,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_song_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_song_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />

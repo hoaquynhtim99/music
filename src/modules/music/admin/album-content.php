@@ -18,8 +18,6 @@ use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 use NukeViet\Music\Shared\Albums;
 
-$set_active_op = 'album-list';
-
 $album_id = $nv_Request->get_int('album_id', 'get', 0);
 
 if ($album_id) {

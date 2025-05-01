@@ -182,7 +182,8 @@
             title: function() {
                 return (typeof $(this).data('current-mess') != 'undefined' && $(element).data('current-mess') != '') ? $(element).data('current-mess') : ('undefined' == typeof nv_required ? 'This field is required!' : nv_required);
             },
-            trigger: 'manual'
+            trigger: 'manual',
+            customClass: 'ms-validate-tooltip',
         });
 
         $(element).tooltip("show");

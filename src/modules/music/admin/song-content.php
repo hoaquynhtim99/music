@@ -18,8 +18,6 @@ use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 use NukeViet\Music\Shared\Songs;
 
-$set_active_op = 'song-list';
-
 $resource_path_caption = msGetCurrentUploadFolder('lyric');
 $resource_avatar_path = msGetCurrentUploadFolder('song');
 $resource_cover_path = msGetCurrentUploadFolder('song', 'cover');

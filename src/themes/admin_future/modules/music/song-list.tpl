@@ -79,7 +79,7 @@ $(function() {
                             <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.song_id}" name="idcheck[]" />
                         </td>
                         <td>
-                            <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h3></div>
+                            <div data-toggle="ellipsis"><h5 data-toggle="items"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h5></div>
                             <small class="text-muted">
                                 <!-- BEGIN: show_singer -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->

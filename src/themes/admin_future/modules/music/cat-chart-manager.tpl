@@ -29,7 +29,7 @@
                             </button>
                         </td>
                         <td>
-                            <h3>{ROW.cat_name}</h3>
+                            <h5>{ROW.cat_name}</h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_albums}" class="fa fa-fw fa-file-archive-o"></i>{ROW.stat_albums}</span></li>
                                 <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_songs}" class="fa fa-fw fa-file-audio-o"></i>{ROW.stat_songs}</span></li>

@@ -14,7 +14,6 @@ if (!defined('NV_IS_MUSIC_ADMIN')) {
 
 use NukeViet\Music\Resources;
 
-$set_active_op = 'song-list';
 $resource_path = msGetCurrentUploadFolder('lyric');
 
 $song_id = $nv_Request->get_int('song_id', 'get', 0);

@@ -18,8 +18,6 @@ use NukeViet\Music\Utils;
 use NukeViet\Music\Config;
 use NukeViet\Music\Shared\Videos;
 
-$set_active_op = 'video-list';
-
 $video_id = $nv_Request->get_int('video_id', 'get', 0);
 
 if ($video_id) {

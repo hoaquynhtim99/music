@@ -29,7 +29,7 @@
                             </button>
                         </td>
                         <td>
-                            <h3>{ROW.nation_name}</h3>
+                            <h5>{ROW.nation_name}</h5>
                             <small class="text-muted">{ROW.nation_code}</small>
                         </td>
                         <td>
@@ -78,36 +78,28 @@
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="nation_code" class="form-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                                <span class="form-text">{LANG.nation_code_rule}</span>
-                                <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
-                            </div>
-                        </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <div class="mb-3">
+                        <label for="nation_code" class="form-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <span class="form-text">{LANG.nation_code_rule}</span>
+                        <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
                     </div>
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="nation_name" class="form-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                                <input type="text" name="nation_name" id="nation_name" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nation_alias" class="form-label">{LANG.alias}:</label>
-                                <input type="text" name="nation_alias" id="nation_alias" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nation_introtext" class="form-label">{LANG.introtext}:</label>
-                                <input type="text" name="nation_introtext" id="nation_introtext" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nation_keywords" class="form-label">{LANG.keywords}:</label>
-                                <input type="text" name="nation_keywords" id="nation_keywords" value="" class="form-control"/>
-                            </div>
-                        </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <div class="mb-3">
+                        <label for="nation_name" class="form-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <input type="text" name="nation_name" id="nation_name" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nation_alias" class="form-label">{LANG.alias}:</label>
+                        <input type="text" name="nation_alias" id="nation_alias" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="nation_introtext" class="form-label">{LANG.introtext}:</label>
+                        <input type="text" name="nation_introtext" id="nation_introtext" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-0">
+                        <label for="nation_keywords" class="form-label">{LANG.keywords}:</label>
+                        <input type="text" name="nation_keywords" id="nation_keywords" value="" class="form-control"/>
                     </div>
                     <input type="submit" class="hidden" name="submitform" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

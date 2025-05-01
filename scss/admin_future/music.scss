@@ -105,29 +105,21 @@ td.ms-ellipsis {
   left: 15px !important;
 }
 
+// Polyfill CSS help-block
 .form-text {
   display: block;
-  margin-top: 5px;
 }
 
-.has-error .select2-container--default.select2-container--focus .select2-selection--multiple,
-.has-error .select2-container--default .select2-selection--multiple {
-  border-color: $danger;
+.is-invalid {
+  .select2-container--default.select2-container--focus .select2-selection--multiple,
+  .select2-container--default .select2-selection--multiple {
+    --#{$prefix}border-color: #{$danger};
+  }
 }
 
-/*--- CAPTION ---*/
-.page-title {
-  padding: 0 0 15px 0;
-}
-
-.page-title h1,
-.page-title h2,
-.page-title h3,
-.page-title h4,
-.page-title h5,
-.page-title h6,
-.table-responsive h3 {
-  margin: 0;
+.ms-validate-tooltip {
+  --#{$prefix}tooltip-zindex: 500;
+  --#{$prefix}tooltip-bg: #{$danger};
 }
 
 /* CUSTOM BOOTSTRAP */
@@ -181,14 +173,16 @@ hr.sm {
   }
 }
 
-.ms-table thead th,
-.ms-table thead td {
-  white-space: nowrap;
-}
+.ms-table {
+  thead {
+    th, td {
+      white-space: nowrap;
+    }
+  }
 
-.ms-table .ms-img {
-  margin-right: 10px;
-  margin-top: 5px;
+  .ms-img {
+    margin-right: .75rem;
+  }
 }
 
 .ms-dropdown-tool-ctn {
@@ -222,6 +216,10 @@ hr.sm {
       background-color: #f5f5f5;
     }
   }
+}
+
+.btn[data-toggle="mscallpop"] {
+  white-space: nowrap;
 }
 
 .datepicker-dropdown {

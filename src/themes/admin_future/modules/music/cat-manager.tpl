@@ -31,7 +31,7 @@
                             </button>
                         </td>
                         <td>
-                            <h3>{ROW.cat_name}</h3>
+                            <h5>{ROW.cat_name}</h5>
                             <ul class="list-inline mb-0">
                                 <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_albums}" class="fa fa-fw fa-file-archive-o"></i>{ROW.stat_albums}</span></li>
                                 <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_songs}" class="fa fa-fw fa-file-audio-o"></i>{ROW.stat_songs}</span></li>
@@ -84,78 +84,72 @@
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.cat_add_mgs}" data-msgedit="{LANG.cat_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="resource_avatar" class="form-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
-                                    <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="resource_cover" class="form-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
-                                    <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <label for="resource_video" class="form-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
-                                <div class="input-group">
-                                    <input class="form-control" type="text" name="resource_video" id="resource_video" value="{DATA.resource_video}" maxlength="255" />
-                                    <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_video" data-type="image" data-path="{RESOURCE_VIDEO_PATH}" data-currentpath="{RESOURCE_VIDEO_CURRPATH}">{GLANG.browse_image}</button>
-                                </div>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" id="checkr3H7dNLR" type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
-                                <label class="form-check-label" for="checkr3H7dNLR">{LANG.cat_show_inalbum}</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" id="checkd51i579a" type="checkbox" name="show_invideo" value="1" data-checked="0"/>
-                                <label class="form-check-label" for="checkd51i579a">{LANG.cat_show_invideo}</label>
-                            </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <div class="mb-3">
+                        <label for="resource_avatar" class="form-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
                     </div>
-                    <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="mb-3">
-                                <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
-                                <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_alias" class="form-label">{LANG.alias}:</label>
-                                <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_absitetitle" class="form-label">{LANG.cat_absitetitle}:</label>
-                                <span class="form-text">{LANG.cat_get_default}</span>
-                                <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_abintrotext" class="form-label">{LANG.cat_abintrotext}:</label>
-                                <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_abkeywords" class="form-label">{LANG.cat_abkeywords}:</label>
-                                <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_mvsitetitle" class="form-label">{LANG.cat_mvsitetitle}:</label>
-                                <span class="form-text">{LANG.cat_get_default}</span>
-                                <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_mvintrotext" class="form-label">{LANG.cat_mvintrotext}:</label>
-                                <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
-                            </div>
-                            <div class="mb-3">
-                                <label for="cat_mvkeywords" class="form-label">{LANG.cat_mvkeywords}:</label>
-                                <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
-                            </div>
+                    <div class="mb-3">
+                        <label for="resource_cover" class="form-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="resource_video" class="form-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="resource_video" id="resource_video" value="{DATA.resource_video}" maxlength="255" />
+                            <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_video" data-type="image" data-path="{RESOURCE_VIDEO_PATH}" data-currentpath="{RESOURCE_VIDEO_CURRPATH}">{GLANG.browse_image}</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" id="checkr3H7dNLR" type="checkbox" name="show_inalbum" value="1" data-checked="0"/>
+                            <label class="form-check-label" for="checkr3H7dNLR">{LANG.cat_show_inalbum}</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="checkd51i579a" type="checkbox" name="show_invideo" value="1" data-checked="0"/>
+                            <label class="form-check-label" for="checkd51i579a">{LANG.cat_show_invideo}</label>
+                        </div>
+                    </div>
+                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <div class="mb-3">
+                        <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_alias" class="form-label">{LANG.alias}:</label>
+                        <input type="text" name="cat_alias" id="cat_alias" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_absitetitle" class="form-label">{LANG.cat_absitetitle}:</label>
+                        <span class="form-text">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_absitetitle" id="cat_absitetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_abintrotext" class="form-label">{LANG.cat_abintrotext}:</label>
+                        <textarea name="cat_abintrotext" id="cat_abintrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_abkeywords" class="form-label">{LANG.cat_abkeywords}:</label>
+                        <textarea name="cat_abkeywords" id="cat_abkeywords" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_mvsitetitle" class="form-label">{LANG.cat_mvsitetitle}:</label>
+                        <span class="form-text">{LANG.cat_get_default}</span>
+                        <input type="text" name="cat_mvsitetitle" id="cat_mvsitetitle" value="" class="form-control"/>
+                    </div>
+                    <div class="mb-3">
+                        <label for="cat_mvintrotext" class="form-label">{LANG.cat_mvintrotext}:</label>
+                        <textarea name="cat_mvintrotext" id="cat_mvintrotext" class="form-control" rows="2"></textarea>
+                    </div>
+                    <div class="mb-0">
+                        <label for="cat_mvkeywords" class="form-label">{LANG.cat_mvkeywords}:</label>
+                        <textarea name="cat_mvkeywords" id="cat_mvkeywords" class="form-control" rows="2"></textarea>
                     </div>
                     <input type="submit" class="hidden" name="submitform" value="submit"/>
                     <input type="hidden" name="id" value="0"/>

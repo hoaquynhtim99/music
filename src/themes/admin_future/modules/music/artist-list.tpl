@@ -77,8 +77,8 @@ $(function() {
                             <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.artist_id}" name="idcheck[]" />
                         </td>
                         <td>
-                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="32" class="float-start ms-img"/>
-                            <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.artist_link}" class="ms-title" target="_blank">{ROW.artist_name}</a></h3></div>
+                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" height="40" class="float-start ms-img"/>
+                            <div data-toggle="ellipsis"><h5 data-toggle="items" class="mb-0"><a href="{ROW.artist_link}" class="ms-title" target="_blank">{ROW.artist_name}</a></h5></div>
                             <small class="text-muted">{ROW.real_artist_type}</small>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>

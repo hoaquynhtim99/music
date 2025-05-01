@@ -81,7 +81,7 @@ $(function() {
                         <td>
                             <img src="{ROW.resource_avatar_thumb}" alt="{ROW.album_name}" width="32" class="float-start ms-img"/>
 
-                            <div data-toggle="ellipsis"><h3 data-toggle="items"><a href="{ROW.album_link}" class="ms-title" target="_blank">{ROW.album_name}</a></h3></div>
+                            <div data-toggle="ellipsis"><h5 data-toggle="items"><a href="{ROW.album_link}" class="ms-title" target="_blank">{ROW.album_name}</a></h5></div>
                             <small class="text-muted">
                                 <!-- BEGIN: show_singer -->
                                 <!-- BEGIN: loop --><!-- BEGIN: separate -->, <!-- END: separate -->

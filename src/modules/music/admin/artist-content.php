@@ -17,8 +17,6 @@ use NukeViet\Music\AjaxRespon;
 use NukeViet\Music\Resources;
 use NukeViet\Music\Utils;
 
-$set_active_op = 'artist-list';
-
 $artist_id = $nv_Request->get_int('artist_id', 'get', 0);
 
 if ($artist_id) {

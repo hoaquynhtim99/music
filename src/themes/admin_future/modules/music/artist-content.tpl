@@ -5,7 +5,7 @@
 <form id="msAjForm" method="post" action="{FORM_ACTION}" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
-        <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h2>
+        <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="resource_cover" class="col-form-label text-sm-end col-sm-4">{LANG.resource_cover} <a href="javascript:void(0);" data-toggle="tooltip" data-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                    <label for="resource_cover" class="col-form-label text-sm-end col-sm-4">{LANG.resource_cover} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <h2><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h2>
+        <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
@@ -103,7 +103,7 @@
                 <hr />
                 <div class="row">
                     <div class="offset-sm-4 col-sm-8">
-                        <h3><strong>{LANG.artist_info_as_singer}</strong></h3>
+                        <h5><strong>{LANG.artist_info_as_singer}</strong></h5>
                     </div>
                 </div>
                 <div class="row mb-3">
@@ -143,7 +143,7 @@
                 <hr />
                 <div class="row">
                     <div class="offset-sm-4 col-sm-8">
-                        <h3><strong>{LANG.artist_info_as_author}</strong></h3>
+                        <h5><strong>{LANG.artist_info_as_author}</strong></h5>
                     </div>
                 </div>
                 <div class="row mb-3">
