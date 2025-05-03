@@ -10,10 +10,33 @@
 
 namespace NukeViet\Module\music\Song;
 
-class Song
+use NukeViet\Module\music\ITypeElement;
+
+class Song implements ITypeElement
 {
-    public function __construct()
+    use DBStruct;
+
+    private $data = [];
+    private $dataType = [];
+
+    public function __construct(array $data = [])
     {
-        //
+        $this->dataType = self::buildObjectKeys();
+        foreach ($this->dataType as $key => $dataType) {
+            $this->data[$key] = self::getDefaultValue($dataType);
+        }
+        $this->loadFromArray($data);
+    }
+
+    private function loadFromArray($data)
+    {
+        foreach ($data as $key => $value) {
+            if (isset($this->dataType[$key])) {
+                if (gettype($value) !== $this->dataType[$key]) {
+                    throw new Exception('Wrong type for ' . $key . '!!!');
+                }
+                $this->data[$key] = $value;
+            }
+        }
     }
 }

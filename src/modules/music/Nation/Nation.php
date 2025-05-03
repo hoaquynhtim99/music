@@ -10,9 +10,10 @@
 
 namespace NukeViet\Module\music\Nation;
 
+use NukeViet\Module\music\ITypeElement;
 use NukeViet\Module\music\Shared\Nations;
 
-class Nation
+class Nation implements ITypeElement
 {
     use DBStruct;
 
@@ -140,9 +141,10 @@ class Nation
         return $this->data;
     }
 
-    public function setName()
+    public function setName(string $name): Nation
     {
-        //
+        $this->data[self::$LANG_FIELD_NAME] = $name;
+        return $this;
     }
 
     public function setAlias()
