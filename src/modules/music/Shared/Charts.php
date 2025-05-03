@@ -62,7 +62,7 @@ class Charts implements ITypeShare
     /**
      * Unix timestamp tại thứ 2 của tuần hiện tại
      *
-     * @return number
+     * @return int
      */
     public static function getCurrentTime()
     {

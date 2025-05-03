@@ -3,8 +3,8 @@
 <div class="alert alert-danger" role="alert">{ERROR}</div>
 <!-- END: error -->
 <form method="post" action="{FORM_ACTION}" autocomplete="off">
-    <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
-    <div class="card">
+    <h5><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h5>
+    <div class="card mb-3">
         <div class="card-body">
             <div class="row mb-3">
                 <label for="caption_file" class="col-form-label text-sm-end col-sm-4">{LANG.mana_cc_webvtt}:</label>
@@ -28,17 +28,15 @@
             </div>
         </div>
     </div>
-    <h2><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_text} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h2>
-    <div class="card">
+    <h5><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_text} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h5>
+    <div class="card mb-3">
         <div class="card-body">
             {DATA.caption_data}
         </div>
     </div>
-    <div class="row mb-3">
-        <div class="text-center">
-            <input type="hidden" name="submitform" value="1"/>
-            <input type="submit" value="{GLANG.save}" class="btn btn-primary"/>
-        </div>
+    <div class="text-center">
+        <input type="hidden" name="submitform" value="1"/>
+        <input type="submit" value="{GLANG.save}" class="btn btn-primary"/>
     </div>
 </form>
 <!-- END: main -->

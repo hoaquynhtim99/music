@@ -12,6 +12,7 @@ namespace NukeViet\Module\music\Shared;
 
 use NukeViet\Module\music\Utils;
 use NukeViet\Module\music\Resources;
+use NukeViet\Module\music\Settings;
 use NukeViet\Module\music\Db\Db;
 use NukeViet\Module\music\Db\Condition;
 use NukeViet\Module\music\Song\DataFields;
@@ -30,7 +31,7 @@ class Songs implements ITypeShare
         $sql->setField(DataFields::FIELD_ID);
 
         while (true) {
-            $code = strtolower(Utils::genCode(Resources::SONG_CODE_LENGTH));
+            $code = strtolower(Utils::genCode(Settings::SONG_CODE_LENGTH));
             $condition = new Condition();
             $condition->add()->setField(DataFields::FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
             $sql->setCondition($condition);
@@ -49,6 +50,6 @@ class Songs implements ITypeShare
      */
     private static function _getTable()
     {
-        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_SONG;
+        return Resources::getTablePrefix() . Settings::TABLE_SEPARATOR_CHARACTER . Settings::TABLE_SONG;
     }
 }

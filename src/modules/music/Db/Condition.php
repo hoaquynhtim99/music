@@ -27,7 +27,7 @@ class Condition
     /**
      * Condition::add()
      *
-     * @return void
+     * @return Condition
      */
     public function add()
     {
@@ -40,7 +40,7 @@ class Condition
      * Condition::setField()
      *
      * @param mixed $field
-     * @return
+     * @return Condition
      */
     public function setField($field)
     {
@@ -52,7 +52,7 @@ class Condition
      * Condition::setOperator()
      *
      * @param mixed $operator
-     * @return
+     * @return Condition
      */
     public function setOperator($operator)
     {
@@ -64,7 +64,7 @@ class Condition
      * Condition::setText()
      *
      * @param mixed $text
-     * @return
+     * @return Condition
      */
     public function setText($text) {
         $db = Resources::getDb();
@@ -75,7 +75,7 @@ class Condition
     /**
      * Condition::toText()
      *
-     * @return
+     * @return string
      */
     public function toText()
     {
