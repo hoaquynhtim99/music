@@ -25,7 +25,7 @@
                             <input type="hidden" name="artist_id_selected" value="">
                             <input type="hidden" name="page" value="1">
                             <input type="hidden" name="mode" value="">
-                            <button type="button" name="submitform" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa fa-spin fa-spinner"></i> </span>{GLANG.search}</button>
+                            <button type="button" name="submitform" class="btn btn-primary" data-allowedpage="false"><span class="load hidden"><i class="fa-solid fa-spinner fa-spin"></i> </span>{GLANG.search}</button>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
     <!-- BEGIN: loop -->
     <li>
         <input type="hidden" name="singer_ids[]" value="{SINGER.artist_id}">
-        <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i></a>
         <strong class="val ms-ellipsis">{SINGER.artist_name}</strong>
     </li>
     <!-- END: loop -->
@@ -59,7 +59,7 @@
     <!-- BEGIN: loop -->
     <li>
         <input type="hidden" name="author_ids[]" value="{AUTHOR.artist_id}">
-        <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+        <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i></a>
         <strong class="val ms-ellipsis">{AUTHOR.artist_name}</strong>
     </li>
     <!-- END: loop -->

@@ -5,7 +5,7 @@
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
-                        <i class="fa fa-music" aria-hidden="true"></i>
+                        <i class="fa-solid fa-music" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
                         <span class="c-number"><a href="{LINK_SONGS}">{STAT_BASIC.num_songs}</a></span>
@@ -20,7 +20,7 @@
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
-                        <i class="fa fa-video-camera" aria-hidden="true"></i>
+                        <i class="fa-solid fa-video" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
                         <span class="c-number"><a href="{LINK_VIDEOS}">{STAT_BASIC.num_videos}</a></span>
@@ -35,7 +35,7 @@
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
-                        <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
                         <span class="c-number"><a href="{LINK_ALBUMS}">{STAT_BASIC.num_albums}</a></span>
@@ -50,7 +50,7 @@
             <div class="card-body">
                 <div class="ms-main-couter">
                     <div class="c-icon float-start">
-                        <i class="fa fa-user-circle" aria-hidden="true"></i>
+                        <i class="fa-solid fa-circle-user" aria-hidden="true"></i>
                     </div>
                     <div class="c-val">
                         <span class="c-number"><a href="{LINK_ARTISTS}">{STAT_BASIC.num_artists}</a></span>

@@ -57,7 +57,7 @@
                     <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                     <span class="caret"></span>
                 </button>
-                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa-solid fa-plus fa-fw"></i>{LANG.add_new}</a>
             </div>
             <div class="pagination-wrap">
                 <!-- BEGIN: generate_page -->
@@ -72,21 +72,21 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}" data-msgedit="{LANG.nation_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa-solid fa-pencil"></i> <span class="tit" data-msgadd="{LANG.nation_add}" data-msgedit="{LANG.nation_edit}"></span></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.nation_add_mgs}" data-msgedit="{LANG.nation_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_all}:</h5>
                     <div class="mb-3">
-                        <label for="nation_code" class="form-label">{LANG.nation_code} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <label for="nation_code" class="form-label">{LANG.nation_code} <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small>:</label>
                         <span class="form-text">{LANG.nation_code_rule}</span>
                         <input type="text" name="nation_code" id="nation_code" value="" class="form-control"/>
                     </div>
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
                     <div class="mb-3">
-                        <label for="nation_name" class="form-label">{LANG.nation_name} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <label for="nation_name" class="form-label">{LANG.nation_name} <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small>:</label>
                         <input type="text" name="nation_name" id="nation_name" value="" class="form-control"/>
                     </div>
                     <div class="mb-3">
@@ -108,11 +108,11 @@
             </div>
             <div class="modal-footer">
                 <div class="float-start">
-                    <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
+                    <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small> {LANG.is_required}.
                 </div>
-                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
-                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa fa-floppy-o" aria-hidden="true"></i> {LANG.save}</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
+                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa-solid fa-angles-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
+                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> {LANG.save}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> {LANG.close}</button>
             </div>
         </div>
     </div>

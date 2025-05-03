@@ -7,11 +7,11 @@
 <form id="msAjForm" method="post" action="{FORM_ACTION}" autocomplete="off" data-toggle="validate" data-type="ajax">
     <div class="form-result"></div>
     <div class="form-element">
-        <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+        <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_all}:</h5>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
-                    <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.cat}:</label>
+                    <label for="cat_ids" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.cat}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="select2 required">
                             <select class="form-select" name="cat_ids[]" id="cat_ids" multiple="multiple" size="1">
@@ -23,16 +23,16 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.artist_type_singer}:</label>
+                    <label class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.artist_type_singer}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="hiddeninputlist required clearfix">
                             <div class="btn-group float-start">
                                 <button tabindex="-1" type="button" class="btn btn-success" data-toggle="modalPickArtists" data-mode="singer" data-title="{LANG.select_singer}" data-list="#PickedArtistsList" data-inputname="singer_ids[]">{LANG.select}</button>
                                 <button tabindex="-1" type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                                 <ul class="dropdown-menu">
-                                    <li><a class="dropdown-item" href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa fa-plus-circle" aria-hidden="true"></i> {LANG.add_new}</a></li>
+                                    <li><a class="dropdown-item" href="{LINK_ADD_ARTIST_SINGER}" target="_blank"><i class="fa-solid fa-circle-plus" aria-hidden="true"></i> {LANG.add_new}</a></li>
                                     <!-- BEGIN: choose_last_singers -->
-                                    <li><a class="dropdown-item" href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedSingers" data-target="#PickedArtistsList"><i class="fa fa-history" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
+                                    <li><a class="dropdown-item" href="#" data-toggle="PickArtistFromLastTime" data-source="#LastPickedSingers" data-target="#PickedArtistsList"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i> {LANG.choose_from_last_time}</a></li>
                                     <!-- END: choose_last_singers -->
                                 </ul>
                             </div>
@@ -40,7 +40,7 @@
                                 <!-- BEGIN: singer -->
                                 <li>
                                     <input type="hidden" name="singer_ids[]" value="{SINGER.artist_id}">
-                                    <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                                    <a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i></a>
                                     <strong class="val ms-ellipsis">{SINGER.artist_name}</strong>
                                 </li>
                                 <!-- END: singer -->
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="row mb-3">
-                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_album_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                    <label for="resource_avatar" class="col-form-label text-sm-end col-sm-4">{LANG.resource_avatar} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_album_note}"><i class="fa-solid fa-circle-info"></i></a>:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
@@ -82,11 +82,11 @@
                 </div>
             </div>
         </div>
-        <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+        <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
-                    <label for="album_name" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.album_name}:</label>
+                    <label for="album_name" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.album_name}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
                         <input class="form-control required" type="text" name="album_name" id="album_name" value="{DATA.album_name}" maxlength="250" />
                     </div>
@@ -121,7 +121,7 @@
                 </div>
             </div>
         </div>
-        <h5><i class="fa fa-fw fa-music" aria-hidden="true"></i>{LANG.album_songs}:</h5>
+        <h5><i class="fa-solid fa-music fa-fw" aria-hidden="true"></i>{LANG.album_songs}:</h5>
         <div class="card mb-3">
             <div class="card-body">
                 <label class="col-form-label text-sm-end col-sm-4 pt-0">
@@ -132,7 +132,7 @@
                         <!-- BEGIN: song -->
                         <li>
                             <input type="hidden" name="song_ids[]" value="{SONG.song_id}">
-                            <a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a>
+                            <a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa-solid fa-circle-xmark" aria-hidden="true"></i></a>
                             <strong class="val ms-ellipsis">{SONG.song_name}</strong>
                             <small class="sval ms-ellipsis">{SONG_SINGER}</small>
                         </li>

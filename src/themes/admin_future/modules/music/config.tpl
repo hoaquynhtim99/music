@@ -37,14 +37,14 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="various_artists" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.various_artists}:</label>
+                            <label for="various_artists" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.various_artists}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="various_artists" id="various_artists" value="{DATA.various_artists}"/>
                                 <i class="form-text">{LANG.various_artists_help}</i>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="unknow_singer" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.unknow_singer}:</label>
+                            <label for="unknow_singer" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.unknow_singer}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="unknow_singer" id="unknow_singer" value="{DATA.unknow_singer}"/>
                                 <i class="form-text">{LANG.unknow_singer_help}</i>
@@ -72,61 +72,61 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_view_singer_tabs_alias_song" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_song}:</label>
+                            <label for="arr_view_singer_tabs_alias_song" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_song}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_view_singer_tabs_alias_song" id="arr_view_singer_tabs_alias_song" value="{DATA.arr_view_singer_tabs_alias_song}" data-pattern="^[a-z\-]{1,30}$" data-mess="{LANG.validate_alias_lowercase_min1max30}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_view_singer_tabs_alias_video" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_video}:</label>
+                            <label for="arr_view_singer_tabs_alias_video" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_video}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_view_singer_tabs_alias_video" id="arr_view_singer_tabs_alias_video" value="{DATA.arr_view_singer_tabs_alias_video}" data-pattern="^[a-z\-]{1,30}$" data-mess="{LANG.validate_alias_lowercase_min1max30}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_view_singer_tabs_alias_album" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_album}:</label>
+                            <label for="arr_view_singer_tabs_alias_album" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_album}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_view_singer_tabs_alias_album" id="arr_view_singer_tabs_alias_album" value="{DATA.arr_view_singer_tabs_alias_album}" data-pattern="^[a-z\-]{1,30}$" data-mess="{LANG.validate_alias_lowercase_min1max30}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_view_singer_tabs_alias_profile" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_profile}:</label>
+                            <label for="arr_view_singer_tabs_alias_profile" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_view_singer_tabs_alias_profile}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_view_singer_tabs_alias_profile" id="arr_view_singer_tabs_alias_profile" value="{DATA.arr_view_singer_tabs_alias_profile}" data-pattern="^[a-z\-]{1,30}$" data-mess="{LANG.validate_alias_lowercase_min1max30}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="view_singer_main_num_songs" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.view_singer_main_num_songs}:</label>
+                            <label for="view_singer_main_num_songs" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.view_singer_main_num_songs}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_main_num_songs" id="view_singer_main_num_songs" value="{DATA.view_singer_main_num_songs}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="view_singer_main_num_videos" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.view_singer_main_num_videos}:</label>
+                            <label for="view_singer_main_num_videos" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.view_singer_main_num_videos}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_main_num_videos" id="view_singer_main_num_videos" value="{DATA.view_singer_main_num_videos}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="view_singer_main_num_albums" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.view_singer_main_num_albums}:</label>
+                            <label for="view_singer_main_num_albums" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.view_singer_main_num_albums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_main_num_albums" id="view_singer_main_num_albums" value="{DATA.view_singer_main_num_albums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="view_singer_detail_num_songs" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.view_singer_detail_num_songs}:</label>
+                            <label for="view_singer_detail_num_songs" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.view_singer_detail_num_songs}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_detail_num_songs" id="view_singer_detail_num_songs" value="{DATA.view_singer_detail_num_songs}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="view_singer_detail_num_videos" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.view_singer_detail_num_videos}:</label>
+                            <label for="view_singer_detail_num_videos" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.view_singer_detail_num_videos}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_detail_num_videos" id="view_singer_detail_num_videos" value="{DATA.view_singer_detail_num_videos}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="view_singer_detail_num_albums" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.view_singer_detail_num_albums}:</label>
+                            <label for="view_singer_detail_num_albums" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.view_singer_detail_num_albums}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="view_singer_detail_num_albums" id="view_singer_detail_num_albums" value="{DATA.view_singer_detail_num_albums}" data-pattern="^(?!0)[0-9]+$" data-mess="{LANG.validate_number_min1}"/>
                             </div>
@@ -136,39 +136,39 @@
                 <div class="card" id="config_urls_system">
                     <div class="card-header"><strong>{LANG.config_urls_system}</strong></div>
                     <div class="card-body">
-                        <div class="alert alert-warning" role="alert"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;{LANG.config_alert_change}</div>
+                        <div class="alert alert-warning" role="alert"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>&nbsp;{LANG.config_alert_change}</div>
                         <div class="row mb-3">
-                            <label for="arr_code_prefix_singer" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_singer}:</label>
+                            <label for="arr_code_prefix_singer" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_code_prefix_singer}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_code_prefix_singer" id="arr_code_prefix_singer" value="{DATA.arr_code_prefix_singer}" data-pattern="^[a-z]{OPEN_BRACKET}2{CLOSE_BRACKET}$" data-mess="{LANG.validate_alias_lowercase_len2}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_code_prefix_playlist" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_playlist}:</label>
+                            <label for="arr_code_prefix_playlist" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_code_prefix_playlist}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_code_prefix_playlist" id="arr_code_prefix_playlist" value="{DATA.arr_code_prefix_playlist}" data-pattern="^[a-z]{OPEN_BRACKET}2{CLOSE_BRACKET}$" data-mess="{LANG.validate_alias_lowercase_len2}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_code_prefix_album" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_album}:</label>
+                            <label for="arr_code_prefix_album" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_code_prefix_album}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_code_prefix_album" id="arr_code_prefix_album" value="{DATA.arr_code_prefix_album}" data-pattern="^[a-z]{OPEN_BRACKET}2{CLOSE_BRACKET}$" data-mess="{LANG.validate_alias_lowercase_len2}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_code_prefix_video" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_video}:</label>
+                            <label for="arr_code_prefix_video" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_code_prefix_video}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_code_prefix_video" id="arr_code_prefix_video" value="{DATA.arr_code_prefix_video}" data-pattern="^[a-z]{OPEN_BRACKET}2{CLOSE_BRACKET}$" data-mess="{LANG.validate_alias_lowercase_len2}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_code_prefix_cat" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_cat}:</label>
+                            <label for="arr_code_prefix_cat" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_code_prefix_cat}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_code_prefix_cat" id="arr_code_prefix_cat" value="{DATA.arr_code_prefix_cat}" data-pattern="^[a-z]{OPEN_BRACKET}2{CLOSE_BRACKET}$" data-mess="{LANG.validate_alias_lowercase_len2}"/>
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <label for="arr_code_prefix_song" class="col-form-label text-sm-end col-sm-4"><i class="fa fa-asterisk"></i> {LANG.arr_code_prefix_song}:</label>
+                            <label for="arr_code_prefix_song" class="col-form-label text-sm-end col-sm-4"><i class="fa-solid fa-asterisk"></i> {LANG.arr_code_prefix_song}:</label>
                             <div class="col-sm-8">
                                 <input class="form-control required" type="text" name="arr_code_prefix_song" id="arr_code_prefix_song" value="{DATA.arr_code_prefix_song}" data-pattern="^[a-z]{OPEN_BRACKET}2{CLOSE_BRACKET}$" data-mess="{LANG.validate_alias_lowercase_len2}"/>
                             </div>
@@ -207,8 +207,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="fb_share_image" id="fb_share_image" value="{DATA.fb_share_image}" readonly="readonly"/>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#fb_share_image" data-title="{LANG.image}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#fb_share_image"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                     <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="fb_share_image" data-alt="" data-path="{UPLOAD_DIR}" data-currentpath="{UPLOAD_DIR}" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.fb_share_image_help}</i>
@@ -219,8 +219,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_album_avatar" id="res_default_album_avatar" value="{DATA.res_default_album_avatar}" readonly="readonly"/>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_album_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_album_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_album_avatar" data-title="{LANG.image}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_album_avatar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                     <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_album_avatar" data-alt="" data-path="{UPLOAD_DIR}/albums" data-currentpath="{UPLOAD_DIR}/albums" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
@@ -231,8 +231,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_singer_avatar" id="res_default_singer_avatar" value="{DATA.res_default_singer_avatar}" readonly="readonly"/>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_singer_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_singer_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_singer_avatar" data-title="{LANG.image}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_singer_avatar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                     <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_singer_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
@@ -243,8 +243,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_author_avatar" id="res_default_author_avatar" value="{DATA.res_default_author_avatar}" readonly="readonly"/>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_author_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_author_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_author_avatar" data-title="{LANG.image}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_author_avatar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                     <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_author_avatar" data-alt="" data-path="{UPLOAD_DIR}/artists" data-currentpath="{UPLOAD_DIR}/artists" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
@@ -255,8 +255,8 @@
                             <div class="col-sm-8">
                                 <div class="input-group">
                                     <input class="form-control" type="text" name="res_default_video_avatar" id="res_default_video_avatar" value="{DATA.res_default_video_avatar}" readonly="readonly"/>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_video_avatar" data-title="{LANG.image}"><i class="fa fa-search" aria-hidden="true"></i></button>
-                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_video_avatar"><i class="fa fa-times" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.view_image}" data-toggle="msviewimg" data-target="#res_default_video_avatar" data-title="{LANG.image}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i></button>
+                                    <button class="btn btn-secondary" type="button" title="{LANG.delete_value}" data-toggle="msclearval" data-target="#res_default_video_avatar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
                                     <button class="btn btn-success" type="button" data-toggle="msbrserver" data-area="res_default_video_avatar" data-alt="" data-path="{UPLOAD_DIR}/videos" data-currentpath="{UPLOAD_DIR}/videos" data-type="image">{LANG.browse_server}</button>
                                 </div>
                                 <i class="form-text">{LANG.res_default_help}</i>
@@ -412,7 +412,7 @@
                 <div class="card" id="config_structre_data_page_title">
                     <div class="card-header"><strong>{LANG.config_structre_data_page_title}</strong></div>
                     <div class="card-body">
-                        <div class="alert alert-warning" role="alert"><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>
+                        <div class="alert alert-warning" role="alert"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>&nbsp;{LANG.funcs_note}</div>
                         <strong>{LANG.funcs_album}:</strong>
                         <hr class="sm"/>
                         <div class="row mb-3">

@@ -31,9 +31,9 @@
                         <td>
                             <h5>{ROW.cat_name}</h5>
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_albums}" class="fa fa-fw fa-file-archive-o"></i>{ROW.stat_albums}</span></li>
-                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_songs}" class="fa fa-fw fa-file-audio-o"></i>{ROW.stat_songs}</span></li>
-                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_videos}" class="fa fa-fw fa-file-video-o"></i>{ROW.stat_videos}</span></li>
+                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_albums}" class="fa-solid fa-file-zipper fa-fw"></i>{ROW.stat_albums}</span></li>
+                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_songs}" class="fa-solid fa-file-audio fa-fw"></i>{ROW.stat_songs}</span></li>
+                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_videos}" class="fa-solid fa-file-video fa-fw"></i>{ROW.stat_videos}</span></li>
                             </ul>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
@@ -60,7 +60,7 @@
                     <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                     <span class="caret"></span>
                 </button>
-                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa-solid fa-plus fa-fw"></i>{LANG.add_new}</a>
             </div>
             <div class="pagination-wrap">
             </div>
@@ -72,13 +72,13 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.chart_add}" data-msgedit="{LANG.chart_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa-solid fa-pencil"></i> <span class="tit" data-msgadd="{LANG.chart_add}" data-msgedit="{LANG.chart_edit}"></span></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.chart_add_mgs}" data-msgedit="{LANG.chart_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_all}:</h5>
                     <div class="mb-3">
                         <label for="resource_cover" class="form-label">{LANG.chart_resource_cover}:</label>
                         <div class="input-group">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">{LANG.chart_choose_cat} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <label class="form-label">{LANG.chart_choose_cat} <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small>:</label>
                         <div class="row">
                             <!-- BEGIN: cat -->
                             <div class="col-6 col-sm-3">
@@ -96,9 +96,9 @@
                             <!-- END: cat -->
                         </div>
                     </div>
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
                     <div class="mb-3">
-                        <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small>:</label>
                         <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
                     </div>
                     <div class="mb-3">
@@ -163,11 +163,11 @@
             </div>
             <div class="modal-footer">
                 <div class="float-start">
-                     <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
+                     <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small> {LANG.is_required}.
                 </div>
-                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
-                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa fa-floppy-o" aria-hidden="true"></i> {LANG.save}</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
+                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa-solid fa-angles-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
+                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> {LANG.save}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> {LANG.close}</button>
             </div>
         </div>
     </div>

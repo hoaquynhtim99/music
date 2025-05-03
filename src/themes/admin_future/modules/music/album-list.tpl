@@ -113,8 +113,8 @@ $(function() {
                             </span>
                         </td>
                         <td>
-                            <h5 class="mb-0 text-nowrap"><i class="fa fa-headphones fa-fw" aria-hidden="true"></i> {ROW.stat_views}</h5>
-                            <span class="text-muted text-nowrap"><i class="fa fa-comments fa-fw" aria-hidden="true"></i> {ROW.stat_comments}</span>
+                            <h5 class="mb-0 text-nowrap"><i class="fa-solid fa-headphones fa-fw" aria-hidden="true"></i> {ROW.stat_views}</h5>
+                            <span class="text-muted text-nowrap"><i class="fa-solid fa-comments fa-fw" aria-hidden="true"></i> {ROW.stat_comments}</span>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
                         <td>{ROW.time_update}<br /><small class="text-muted">{ROW.time_update_time}</small></td>
@@ -143,7 +143,7 @@ $(function() {
                     <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                     <span class="caret"></span>
                 </button>
-                <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                <a href="{LINK_ADD}" class="btn btn-sm btn-success"><i class="fa-solid fa-plus fa-fw"></i>{LANG.add_new}</a>
             </div>
             <div class="pagination-wrap">
                 <!-- BEGIN: generate_page -->

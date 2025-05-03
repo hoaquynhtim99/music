@@ -31,10 +31,10 @@
                         <td>
                             <h5>{ROW.quality_name}</h5>
                             <ul class="list-inline mb-0">
-                                <!-- BEGIN: online_supported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_online_supported}" class="fa fa-microphone"></i></span></li><!-- END: online_supported -->
-                                <!-- BEGIN: online_notsupported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_online_notsupported}" class="fa fa-microphone-slash"></i></span></li><!-- END: online_notsupported -->
-                                <!-- BEGIN: is_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_is_default}" class="fa fa-check-circle"></i></span></li><!-- END: is_default -->
-                                <!-- BEGIN: no_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_no_default}" class="fa fa-circle"></i></span></li><!-- END: no_default -->
+                                <!-- BEGIN: online_supported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_online_supported}" class="fa-solid fa-microphone"></i></span></li><!-- END: online_supported -->
+                                <!-- BEGIN: online_notsupported --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_online_notsupported}" class="fa-solid fa-microphone-slash"></i></span></li><!-- END: online_notsupported -->
+                                <!-- BEGIN: is_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_is_default}" class="fa-solid fa-circle-check"></i></span></li><!-- END: is_default -->
+                                <!-- BEGIN: no_default --><li class="list-inline-item"><span class="text-muted"><i title="{LANG.qso_no_default}" class="fa-solid fa-circle"></i></span></li><!-- END: no_default -->
                             </ul>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
@@ -61,7 +61,7 @@
                     <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                     <span class="caret"></span>
                 </button>
-                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa-solid fa-plus fa-fw"></i>{LANG.add_new}</a>
             </div>
             <div class="pagination-wrap">
             </div>
@@ -73,13 +73,13 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.qso_add}" data-msgedit="{LANG.qso_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa-solid fa-pencil"></i> <span class="tit" data-msgadd="{LANG.qso_add}" data-msgedit="{LANG.qso_edit}"></span></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.qso_add_mgs}" data-msgedit="{LANG.qso_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_all}:</h5>
                     <div class="mb-3">
                         <div class="form-check">
                             <input class="form-check-input" id="checkc606C73t" type="checkbox" name="online_supported" value="1" data-checked="1"/>
@@ -90,9 +90,9 @@
                             <label class="form-check-label" for="checki4A9oj2I">{LANG.qso_is_default}</label>
                         </div>
                     </div>
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
                     <div class="mb-3">
-                        <label for="quality_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <label for="quality_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small>:</label>
                         <input type="text" name="quality_name" id="quality_name" value="" class="form-control"/>
                     </div>
                     <div class="mb-0">
@@ -106,11 +106,11 @@
             </div>
             <div class="modal-footer">
                 <div class="float-start">
-                     <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
+                     <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small> {LANG.is_required}.
                 </div>
-                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
-                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa fa-floppy-o" aria-hidden="true"></i> {LANG.save}</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
+                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa-solid fa-angles-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
+                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> {LANG.save}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> {LANG.close}</button>
             </div>
         </div>
     </div>

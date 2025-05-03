@@ -33,9 +33,9 @@
                         <td>
                             <h5>{ROW.cat_name}</h5>
                             <ul class="list-inline mb-0">
-                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_albums}" class="fa fa-fw fa-file-archive-o"></i>{ROW.stat_albums}</span></li>
-                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_songs}" class="fa fa-fw fa-file-audio-o"></i>{ROW.stat_songs}</span></li>
-                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_videos}" class="fa fa-fw fa-file-video-o"></i>{ROW.stat_videos}</span></li>
+                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_albums}" class="fa-solid fa-file-zipper fa-fw"></i>{ROW.stat_albums}</span></li>
+                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_songs}" class="fa-solid fa-file-audio fa-fw"></i>{ROW.stat_songs}</span></li>
+                                <li class="list-inline-item"><span class="text-muted"><i title="{LANG.stat_videos}" class="fa-solid fa-file-video fa-fw"></i>{ROW.stat_videos}</span></li>
                             </ul>
                         </td>
                         <td>{ROW.time_add}<br /><small class="text-muted">{ROW.time_add_time}</small></td>
@@ -68,7 +68,7 @@
                     <span class="text" data-text="{LANG.with_selected}">{LANG.with_selected}</span>
                     <span class="caret"></span>
                 </button>
-                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa fa-fw fa-plus"></i>{LANG.add_new}</a>
+                <a href="#" data-toggle="trigerformmodal" class="btn btn-sm btn-success"><i class="fa-solid fa-plus fa-fw"></i>{LANG.add_new}</a>
             </div>
         </div>
     </div>
@@ -78,29 +78,29 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title"><i class="fa fa-pencil"></i> <span class="tit" data-msgadd="{LANG.cat_add}" data-msgedit="{LANG.cat_edit}"></span></h4>
+                <h4 class="modal-title"><i class="fa-solid fa-pencil"></i> <span class="tit" data-msgadd="{LANG.cat_add}" data-msgedit="{LANG.cat_edit}"></span></h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{LANG.close}"></button>
             </div>
             <div class="modal-body">
                 <div class="alert alert-info" role="alert" data-msgadd="{LANG.cat_add_mgs}" data-msgedit="{LANG.cat_edit_mgs}">&nbsp;</div>
                 <form id="formmodalctn" action="" method="post" data-busy="false" data-op="{OP}">
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_all}:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_all}:</h5>
                     <div class="mb-3">
-                        <label for="resource_avatar" class="form-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_avatar_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                        <label for="resource_avatar" class="form-label">{LANG.resource_avatar_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_avatar_artist_note}"><i class="fa-solid fa-circle-info"></i></a>:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_avatar" id="resource_avatar" value="{DATA.resource_avatar}" maxlength="255" />
                             <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_avatar" data-type="image" data-path="{RESOURCE_AVATAR_PATH}" data-currentpath="{RESOURCE_AVATAR_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="resource_cover" class="form-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_cover_artist_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                        <label for="resource_cover" class="form-label">{LANG.resource_cover_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_cover_artist_note}"><i class="fa-solid fa-circle-info"></i></a>:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_cover" id="resource_cover" value="{DATA.resource_cover}" maxlength="255" />
                             <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_cover" data-type="image" data-path="{RESOURCE_COVER_PATH}" data-currentpath="{RESOURCE_COVER_CURRPATH}">{GLANG.browse_image}</button>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="resource_video" class="form-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_video_note}"><i class="fa fa-info-circle"></i></a>:</label>
+                        <label for="resource_video" class="form-label">{LANG.resource_video_cat} <a href="javascript:void(0);" data-bs-toggle="tooltip" data-bs-title="{LANG.resource_video_note}"><i class="fa-solid fa-circle-info"></i></a>:</label>
                         <div class="input-group">
                             <input class="form-control" type="text" name="resource_video" id="resource_video" value="{DATA.resource_video}" maxlength="255" />
                             <button class="btn btn-success" type="button" data-toggle="selectfile" data-target="resource_video" data-type="image" data-path="{RESOURCE_VIDEO_PATH}" data-currentpath="{RESOURCE_VIDEO_CURRPATH}">{GLANG.browse_image}</button>
@@ -116,9 +116,9 @@
                             <label class="form-check-label" for="checkd51i579a">{LANG.cat_show_invideo}</label>
                         </div>
                     </div>
-                    <h5><i class="fa fa-fw fa-info-circle"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
+                    <h5><i class="fa-solid fa-circle-info fa-fw"></i>{LANG.info_by_lang} <strong>{LANG_DATA_NAME}</strong>:</h5>
                     <div class="mb-3">
-                        <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small>:</label>
+                        <label for="cat_name" class="form-label">{LANG.title} <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small>:</label>
                         <input type="text" name="cat_name" id="cat_name" value="" class="form-control"/>
                     </div>
                     <div class="mb-3">
@@ -158,11 +158,11 @@
             </div>
             <div class="modal-footer">
                 <div class="float-start">
-                     <small class="text-danger">(<i class="fa fa-asterisk"></i>)</small> {LANG.is_required}.
+                     <small class="text-danger">(<i class="fa-solid fa-asterisk"></i>)</small> {LANG.is_required}.
                 </div>
-                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa fa-angle-double-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
-                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa fa-floppy-o" aria-hidden="true"></i> {LANG.save}</button>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa fa-times"></i> {LANG.close}</button>
+                <button type="button" class="btn btn-success" id="formmodalsaveandcon"><i class="fa-solid fa-angles-right" aria-hidden="true"></i> {LANG.save_and_continue}</button>
+                <button type="button" class="btn btn-primary" id="formmodalsaveandback"><i class="fa-solid fa-floppy-disk" aria-hidden="true"></i> {LANG.save}</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i> {LANG.close}</button>
             </div>
         </div>
     </div>

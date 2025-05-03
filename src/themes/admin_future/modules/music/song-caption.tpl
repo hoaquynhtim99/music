@@ -3,7 +3,7 @@
 <div class="alert alert-danger" role="alert">{ERROR}</div>
 <!-- END: error -->
 <form method="post" action="{FORM_ACTION}" autocomplete="off">
-    <h5><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h5>
+    <h5><i class="fa-solid fa-file" aria-hidden="true"></i> {LANG.mana_cc_files} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h5>
     <div class="card mb-3">
         <div class="card-body">
             <div class="row mb-3">
@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    <h5><i class="fa fa-file-o" aria-hidden="true"></i> {LANG.mana_cc_text} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h5>
+    <h5><i class="fa-solid fa-file" aria-hidden="true"></i> {LANG.mana_cc_text} ({LANG.apply_for} <strong>{LANG_DATA_NAME}</strong>):</h5>
     <div class="card mb-3">
         <div class="card-body">
             {DATA.caption_data}
