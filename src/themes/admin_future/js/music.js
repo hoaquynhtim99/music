@@ -779,7 +779,7 @@ $(document).ready(function() {
         }
 
         btn.prop('disabled', true);
-        btnText.html('<i class="fa fa-spinner fa-spin fa-fw"></i>' + $this.text());
+        btnText.html('<i class="fa-solid fa-spinner fa-spin fa-fw"></i>' + $this.text());
 
         // Xử lý dữ liệu
         $.ajax({
@@ -860,8 +860,8 @@ $(document).ready(function() {
         if ($(this).data('busy') == true) {
             return;
         }
-        popupFubmitNext.find('.fa').removeClass('fa-angle-double-right').addClass('fa-spinner').addClass('fa-spin');
-        popupFubmitBack.find('.fa').removeClass('fa-floppy-o').addClass('fa-spinner').addClass('fa-spin');
+        popupFubmitNext.find('.fa-solid').removeClass('fa-angles-right').addClass('fa-spinner').addClass('fa-spin');
+        popupFubmitBack.find('.fa-solid').removeClass('fa-floppy-disk').addClass('fa-spinner').addClass('fa-spin');
         $(this).data('busy', true);
 
         var data = $(this).serialize();
@@ -913,8 +913,8 @@ $(document).ready(function() {
     function popupPostResult(data) {
         popupForm.find('input').prop('disabled', false);
         popupForm.data('busy', false);
-        popupFubmitNext.find('.fa').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-angle-double-right');
-        popupFubmitBack.find('.fa').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-floppy-o');
+        popupFubmitNext.find('.fa-solid').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-angles-right');
+        popupFubmitBack.find('.fa-solid').removeClass('fa-spinner').removeClass('fa-spin').addClass('fa-floppy-disk');
         $(this).data('busy', true);
         if (data.status == 'ok') {
             if (data.mode == 'continue') {
@@ -990,8 +990,8 @@ $(document).ready(function() {
         html += '<li>';
         html += '<input type="hidden" name="ids[]" data-title="' + title + '" value="' + id + '">';
         html += '<div class="ctn">';
-        html += '<div class="sicon float-start"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
-        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickArtist"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sicon float-start"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>';
+        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickArtist"><i class="fa-solid fa-circle-minus"></i></a></div>';
         html += '<div class="sval"><strong>' + title + '</strong></div>';
         html += '</div>';
         html += '</li>';
@@ -1022,7 +1022,7 @@ $(document).ready(function() {
             return;
         }
         loader.removeClass("hidden");
-        itemsCtn.html('<div class="text-center"><i class="fa fa-spin fa-spinner"></i></div>');
+        itemsCtn.html('<div class="text-center"><i class="fa-solid fa-spin fa-spinner"></i></div>');
         var page = ($this.data("allowedpage") ? $('[name="page"]', modalPickArtists).val() : 1);
         $this.data("allowedpage", false);
         $.ajax({
@@ -1166,7 +1166,7 @@ $(document).ready(function() {
         $('[name="ids[]"]', modalPickArtists).each(function() {
             html += '<li>';
             html += '<input type="hidden" name="' + modalPickArtists.data("inputname") +'" value="' + $(this).val() + '">';
-            html += '<a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong>';
+            html += '<a class="delitem" href="#" data-toggle="delPickedArtist"><i class="fa-solid fa-circle-xmark"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong>';
             html += '</li>';
         });
 
@@ -1187,8 +1187,8 @@ $(document).ready(function() {
         html += '<li>';
         html += '<input type="hidden" name="ids[]" data-title="' + title + '" data-des="' + des + '" value="' + id + '">';
         html += '<div class="ctn">';
-        html += '<div class="sicon float-start"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
-        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickSong"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sicon float-start"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>';
+        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickSong"><i class="fa-solid fa-circle-minus"></i></a></div>';
         html += '<div class="sval"><strong class="ms-ellipsis">' + title + '</strong></div>';
         html += '<div class="sdes"><small class="ms-ellipsis">' + des + '</small></div>';
         html += '</div>';
@@ -1220,7 +1220,7 @@ $(document).ready(function() {
             return;
         }
         loader.removeClass("hidden");
-        itemsCtn.html('<div class="text-center"><i class="fa fa-spin fa-spinner"></i></div>');
+        itemsCtn.html('<div class="text-center"><i class="fa-solid fa-spin fa-spinner"></i></div>');
         var page = ($this.data("allowedpage") ? $('[name="page"]', modalPickSongs).val() : 1);
         $this.data("allowedpage", false);
         $.ajax({
@@ -1373,7 +1373,7 @@ $(document).ready(function() {
         $('[name="ids[]"]', modalPickSongs).each(function() {
             html += '<li>';
             html += '<input type="hidden" name="' + modalPickSongs.data("inputname") +'" value="' + $(this).val() + '">';
-            html += '<a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong><small class="sval ms-ellipsis">' + $(this).data("des") + '</small>';
+            html += '<a class="delitem" href="#" data-toggle="delPickedSong"><i class="fa-solid fa-circle-xmark"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong><small class="sval ms-ellipsis">' + $(this).data("des") + '</small>';
             html += '</li>';
         });
 
@@ -1394,8 +1394,8 @@ $(document).ready(function() {
         html += '<li>';
         html += '<input type="hidden" name="ids[]" data-title="' + title + '" data-des="' + des + '" value="' + id + '">';
         html += '<div class="ctn">';
-        html += '<div class="sicon float-start"><i class="fa fa-arrows" aria-hidden="true"></i></div>';
-        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickVideo"><i class="fa fa-minus-circle" aria-hidden="true"></i></a></div>';
+        html += '<div class="sicon float-start"><i class="fa-solid fa-arrows-up-down-left-right"></i></div>';
+        html += '<div class="sdel float-end"><a href="#" data-toggle="delPickVideo"><i class="fa-solid fa-circle-minus"></i></a></div>';
         html += '<div class="sval"><strong class="ms-ellipsis">' + title + '</strong></div>';
         html += '<div class="sdes"><small class="ms-ellipsis">' + des + '</small></div>';
         html += '</div>';
@@ -1427,7 +1427,7 @@ $(document).ready(function() {
             return;
         }
         loader.removeClass("hidden");
-        itemsCtn.html('<div class="text-center"><i class="fa fa-spin fa-spinner"></i></div>');
+        itemsCtn.html('<div class="text-center"><i class="fa-solid fa-spin fa-spinner"></i></div>');
         var page = ($this.data("allowedpage") ? $('[name="page"]', modalPickVideos).val() : 1);
         $this.data("allowedpage", false);
         $.ajax({
@@ -1580,7 +1580,7 @@ $(document).ready(function() {
         $('[name="ids[]"]', modalPickVideos).each(function() {
             html += '<li>';
             html += '<input type="hidden" name="' + modalPickVideos.data("inputname") +'" value="' + $(this).val() + '">';
-            html += '<a class="delitem" href="#" data-toggle="delPickedVideo"><i class="fa fa-times-circle-o" aria-hidden="true"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong><small class="sval ms-ellipsis">' + $(this).data("des") + '</small>';
+            html += '<a class="delitem" href="#" data-toggle="delPickedVideo"><i class="fa-solid fa-circle-xmark"></i></a><strong class="val ms-ellipsis">' + $(this).data("title") + '</strong><small class="sval ms-ellipsis">' + $(this).data("des") + '</small>';
             html += '</li>';
         });
 
@@ -1614,16 +1614,16 @@ $(window).on('resize', function() {
 });
 
 var msIconSheets = {};
-msIconSheets.none = '<i class="fa fa-fw fa-angle-right"></i>';
-msIconSheets.edit = '<i class="fa fa-fw fa-pencil"></i>';
-msIconSheets.ajedit = '<i class="fa fa-fw fa-pencil"></i>';
-msIconSheets.delete = '<i class="fa fa-fw fa-trash text-danger"></i>';
-msIconSheets.active = '<i class="fa fa-fw fa-circle"></i>';
-msIconSheets.deactive = '<i class="fa fa-fw fa-circle-o"></i>';
-msIconSheets.setdefault = '<i class="fa fa-fw fa-check-circle"></i>';
-msIconSheets.setonlinesupported = '<i class="fa fa-fw fa-microphone"></i>';
-msIconSheets.unsetonlinesupported = '<i class="fa fa-fw fa-microphone-slash"></i>';
-msIconSheets.linkcc = '<i class="fa fa-fw fa-file-audio-o" aria-hidden="true"></i>';
+msIconSheets.none = '<i class="fa-solid fa-fw fa-angle-right"></i>';
+msIconSheets.edit = '<i class="fa-solid fa-fw fa-pencil"></i>';
+msIconSheets.ajedit = '<i class="fa-solid fa-fw fa-pencil"></i>';
+msIconSheets.delete = '<i class="fa-solid fa-fw fa-trash text-danger"></i>';
+msIconSheets.active = '<i class="fa-solid fa-fw fa-circle"></i>';
+msIconSheets.deactive = '<i class="fa-regular fa-fw fa-circle"></i>';
+msIconSheets.setdefault = '<i class="fa-solid fa-fw fa-circle-check"></i>';
+msIconSheets.setonlinesupported = '<i class="fa-solid fa-fw fa-microphone"></i>';
+msIconSheets.unsetonlinesupported = '<i class="fa-solid fa-fw fa-microphone-slash"></i>';
+msIconSheets.linkcc = '<i class="fa-solid fa-fw fa-file-audio"></i>';
 
 function msGetPopoverContent(e) {
     var popKeys;
