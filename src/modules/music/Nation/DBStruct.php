@@ -26,19 +26,19 @@ trait DBStruct
      * Các trường dữ liệu
      *
      */
-    private static $FIELD_ID = 'nation_id';
-    private static $FIELD_CODE = 'nation_code';
-    private static $FIELD_SINGER_STAT = 'stat_singers';
-    private static $FIELD_AUTHOR_STAT = 'stat_authors';
-    private static $FIELD_ADDTIME = 'time_add';
-    private static $FIELD_UPDATETIME = 'time_update';
-    private static $FIELD_STATUS = 'status';
-    private static $FIELD_WEIGHT = 'weight';
+    const FIELD_ID = 'nation_id';
+    const FIELD_CODE = 'nation_code';
+    const FIELD_SINGER_STAT = 'stat_singers';
+    const FIELD_AUTHOR_STAT = 'stat_authors';
+    const FIELD_ADDTIME = 'time_add';
+    const FIELD_UPDATETIME = 'time_update';
+    const FIELD_STATUS = 'status';
+    const FIELD_WEIGHT = 'weight';
 
-    private static $LANG_FIELD_NAME = 'nation_name';
-    private static $LANG_FIELD_ALIAS = 'nation_alias';
-    private static $LANG_FIELD_INTROTEXT = 'nation_introtext';
-    private static $LANG_FIELD_KEYWORD = 'nation_keywords';
+    const LANG_FIELD_NAME = 'nation_name';
+    const LANG_FIELD_ALIAS = 'nation_alias';
+    const LANG_FIELD_INTROTEXT = 'nation_introtext';
+    const LANG_FIELD_KEYWORD = 'nation_keywords';
 
     /**
      * @param boolean $full
@@ -50,26 +50,26 @@ trait DBStruct
         $lang = Resources::getLangData();
 
         $sFields = [
-            self::$FIELD_ID,
-            self::$FIELD_CODE,
-            self::$FIELD_SINGER_STAT,
-            self::$FIELD_AUTHOR_STAT,
-            self::$FIELD_ADDTIME,
-            self::$FIELD_UPDATETIME,
-            self::$FIELD_STATUS,
-            self::$FIELD_WEIGHT
+            self::FIELD_ID,
+            self::FIELD_CODE,
+            self::FIELD_SINGER_STAT,
+            self::FIELD_AUTHOR_STAT,
+            self::FIELD_ADDTIME,
+            self::FIELD_UPDATETIME,
+            self::FIELD_STATUS,
+            self::FIELD_WEIGHT
         ];
 
-        $sFields[] = $lang . '_' . self::$LANG_FIELD_NAME . ' ' . self::$LANG_FIELD_NAME;
-        $sFields[] = $lang . '_' . self::$LANG_FIELD_ALIAS . ' ' . self::$LANG_FIELD_ALIAS;
-        $sFields[] = $lang . '_' . self::$LANG_FIELD_INTROTEXT . ' ' . self::$LANG_FIELD_INTROTEXT;
-        $sFields[] = $lang . '_' . self::$LANG_FIELD_KEYWORD . ' ' . self::$LANG_FIELD_KEYWORD;
+        $sFields[] = $lang . '_' . self::LANG_FIELD_NAME . ' ' . self::LANG_FIELD_NAME;
+        $sFields[] = $lang . '_' . self::LANG_FIELD_ALIAS . ' ' . self::LANG_FIELD_ALIAS;
+        $sFields[] = $lang . '_' . self::LANG_FIELD_INTROTEXT . ' ' . self::LANG_FIELD_INTROTEXT;
+        $sFields[] = $lang . '_' . self::LANG_FIELD_KEYWORD . ' ' . self::LANG_FIELD_KEYWORD;
 
         if ($lang != $dLang) {
-            $sFields[] = $dLang . '_nation_name default_nation_name';
-            $sFields[] = $dLang . '_nation_alias default_nation_alias';
-            $sFields[] = $dLang . '_nation_sitetitle default_nation_sitetitle';
-            $sFields[] = $dLang . '_nation_introtext default_nation_introtext';
+            $keys = self::getBasicLangField($full);
+            foreach ($keys as $key) {
+                $sFields[] = $dLang . '_' . $key . ' default_' . $key;
+            }
         }
 
         return $sFields;
@@ -90,10 +90,10 @@ trait DBStruct
     private static function getBasicLangField($full = false)
     {
         $lFields = [
-            self::$LANG_FIELD_NAME,
-            self::$LANG_FIELD_ALIAS,
-            self::$LANG_FIELD_INTROTEXT,
-            self::$LANG_FIELD_KEYWORD
+            self::LANG_FIELD_NAME,
+            self::LANG_FIELD_ALIAS,
+            self::LANG_FIELD_INTROTEXT,
+            self::LANG_FIELD_KEYWORD
         ];
         return $lFields;
     }
@@ -112,18 +112,18 @@ trait DBStruct
     private static function buildObjectKeys()
     {
         return [
-            self::$FIELD_ID => self::$TYPE_NUMBER,
-            self::$FIELD_CODE => self::$TYPE_TEXT,
-            self::$FIELD_SINGER_STAT => self::$TYPE_NUMBER,
-            self::$FIELD_AUTHOR_STAT => self::$TYPE_NUMBER,
-            self::$FIELD_ADDTIME => self::$TYPE_NUMBER,
-            self::$FIELD_UPDATETIME => self::$TYPE_NUMBER,
-            self::$FIELD_WEIGHT => self::$TYPE_NUMBER,
-            self::$FIELD_STATUS => self::$TYPE_NUMBER,
-            self::$LANG_FIELD_NAME => self::$TYPE_TEXT,
-            self::$LANG_FIELD_ALIAS => self::$TYPE_TEXT,
-            self::$LANG_FIELD_INTROTEXT => self::$TYPE_TEXT,
-            self::$LANG_FIELD_KEYWORD => self::$TYPE_TEXT
+            self::FIELD_ID => self::TYPE_NUMBER,
+            self::FIELD_CODE => self::TYPE_TEXT,
+            self::FIELD_SINGER_STAT => self::TYPE_NUMBER,
+            self::FIELD_AUTHOR_STAT => self::TYPE_NUMBER,
+            self::FIELD_ADDTIME => self::TYPE_NUMBER,
+            self::FIELD_UPDATETIME => self::TYPE_NUMBER,
+            self::FIELD_WEIGHT => self::TYPE_NUMBER,
+            self::FIELD_STATUS => self::TYPE_NUMBER,
+            self::LANG_FIELD_NAME => self::TYPE_TEXT,
+            self::LANG_FIELD_ALIAS => self::TYPE_TEXT,
+            self::LANG_FIELD_INTROTEXT => self::TYPE_TEXT,
+            self::LANG_FIELD_KEYWORD => self::TYPE_TEXT
         ];
     }
 }

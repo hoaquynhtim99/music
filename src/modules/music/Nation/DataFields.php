@@ -8,11 +8,9 @@
  * @Createdate Thursday, May 1, 2025 7:59:37 PM GMT+07:00
  */
 
-namespace NukeViet\Module\music;
+namespace NukeViet\Module\music\Nation;
 
-/**
- * Chuẩn của các class đối tương
- */
-interface ITypeElement
+class DataFields
 {
+    use DBStruct;
 }

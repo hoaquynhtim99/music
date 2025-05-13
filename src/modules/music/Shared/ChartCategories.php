@@ -15,6 +15,7 @@ use NukeViet\Module\music\Resources;
 use NukeViet\Module\music\ChartCategory\DataFields;
 use NukeViet\Module\music\Db\Db;
 use NukeViet\Module\music\Db\Condition;
+use NukeViet\Module\music\Settings;
 
 class ChartCategories implements ITypeShare
 {
@@ -30,7 +31,7 @@ class ChartCategories implements ITypeShare
         $sql->setField(DataFields::FIELD_ID);
 
         while (true) {
-            $code = strtolower(substr(Utils::genCode(8), 0, Resources::CHART_CATEGORY_CODE_LENGTH));
+            $code = strtolower(substr(Utils::genCode(8), 0, Settings::CHART_CATEGORY_CODE_LENGTH));
             $condition = new Condition();
             $condition->add()->setField(DataFields::FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
             $sql->setCondition($condition);
@@ -49,6 +50,6 @@ class ChartCategories implements ITypeShare
      */
     private static function _getTable()
     {
-        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_CHART_CATEGORY;
+        return Resources::getTablePrefix() . Settings::TABLE_SEPARATOR_CHARACTER . Settings::TABLE_CHART_CATEGORY;
     }
 }

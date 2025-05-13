@@ -15,6 +15,7 @@ use NukeViet\Module\music\Resources;
 use NukeViet\Module\music\UserPlaylist\DataFields;
 use NukeViet\Module\music\Db\Db;
 use NukeViet\Module\music\Db\Condition;
+use NukeViet\Module\music\Settings;
 
 class UserPlaylists implements ITypeShare
 {
@@ -30,7 +31,7 @@ class UserPlaylists implements ITypeShare
         $sql->setField(DataFields::FIELD_ID);
 
         while (true) {
-            $code = strtolower(Utils::genCode(Resources::USERPLAYLIST_CODE_LENGTH));
+            $code = strtolower(Utils::genCode(Settings::USERPLAYLIST_CODE_LENGTH));
             $condition = new Condition();
             $condition->add()->setField(DataFields::FIELD_CODE)->setOperator(Condition::OPERATOR_EQUAL)->setText($code);
             $sql->setCondition($condition);
@@ -49,6 +50,6 @@ class UserPlaylists implements ITypeShare
      */
     private static function _getTable()
     {
-        return Resources::getTablePrefix() . Resources::TABLE_SEPARATOR_CHARACTER . Resources::TABLE_USERPLAYLIST;
+        return Resources::getTablePrefix() . Settings::TABLE_SEPARATOR_CHARACTER . Settings::TABLE_USERPLAYLIST;
     }
 }

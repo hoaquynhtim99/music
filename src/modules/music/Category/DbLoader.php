@@ -8,7 +8,7 @@
  * @Createdate Thursday, May 1, 2025 7:59:37 PM GMT+07:00
  */
 
-namespace NukeViet\Module\music\Nation;
+namespace NukeViet\Module\music\Category;
 
 use NukeViet\Module\music\Db\Db;
 use NukeViet\Module\music\Db\Order;
@@ -18,12 +18,12 @@ class DbLoader
     use DBStruct;
 
     /**
-     * @return Nation[]
+     * @return Category[]
      */
     public static function loadAll(): array
     {
         $sql = new Db();
-        $sql->setTable(self::getTableNation());
+        $sql->setTable(self::getTableCategory());
         $sql->setField(self::getBasicFields());
 
         $order = new Order();
@@ -34,8 +34,8 @@ class DbLoader
         $array = [];
         $result = $sql->select();
         while ($row = $result->fetch()) {
-            $nation = new Nation($row);
-            $array[$nation->getId()] = $nation;
+            $cat = new Category($row);
+            $array[$cat->getId()] = $cat;
         }
 
         return $array;

@@ -52,6 +52,11 @@ interface Settings
     const TABLE_SONG = 'songs';
 
     /**
+     * Bảng quốc gia
+     */
+    const TABLE_NATION = 'nations';
+
+    /**
      * Bảng video
      */
     const TABLE_VIDEO = 'videos';

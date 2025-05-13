@@ -54,10 +54,25 @@ class Utils
             throw new Exception('Function not exists: nv_strtoupper, change_alias!!!');
         }
         $alphabet = substr(nv_strtoupper(change_alias($title)), 0, 1);
-        if (!in_array($alphabet, Resources::ALPHABETS_DATA)) {
+        if (!in_array($alphabet, Settings::ALPHABETS_DATA)) {
             return '';
         }
         return $alphabet;
+    }
+
+    /**
+     * Tạo liên kết tĩnh từ tiêu đề
+     *
+     * @param mixed $title
+     * @throws \NukeViet\Module\music\Exception
+     * @return string
+     */
+    public static function getSlug($title)
+    {
+        if (!function_exists('change_alias')) {
+            throw new Exception('Function not exists: change_alias!!!');
+        }
+        return strtolower(change_alias($title));
     }
 
     /**
@@ -119,7 +134,7 @@ class Utils
     }
 
     /**
-     * @param string $string
+     * @param string|array|int $string
      * @param string $sp
      * @return array
      */
@@ -128,7 +143,10 @@ class Utils
         if (empty($string)) {
             return [];
         }
-        return array_filter(array_unique(array_map("trim", explode($sp, $string))));
+        if (!is_array($string)) {
+            $string = array_map('trim', explode($sp, $string));
+        }
+        return array_filter(array_unique($string));
     }
 
     /**
@@ -169,5 +187,56 @@ class Utils
             return 1;
         }
         return round(2147483647 / $per_page);
+    }
+
+    /**
+     * Kiểm tra xem  file có tồn tại hay không một cách an toàn
+     *
+     * @param string $base_path Bắt đầu bằng NV_BASE_SITEURL
+     * @param string|array $allowed_dirs Ví dụ NV_UPLOADS_DIR
+     * @throws \NukeViet\Module\music\Exception
+     * @return bool
+     */
+    public static function isFile(string $base_path, string|array $allowed_dirs): bool
+    {
+        if (!function_exists('nv_is_file')) {
+            throw new Exception('Function not exists: nv_is_file!!!');
+        }
+        return nv_is_file($base_path, $allowed_dirs);
+    }
+
+    /**
+     * Kiểm tra xem chuỗi có phải là một đường dẫn url hay không
+     *
+     * @param string $string
+     * @throws \NukeViet\Module\music\Exception
+     * @return bool
+     */
+    public static function isUrl(string $string): bool
+    {
+        if (!function_exists('nv_is_url')) {
+            throw new Exception('Function not exists: nv_is_url!!!');
+        }
+        return nv_is_url($string);
+    }
+
+    /**
+     * Chuyển kí tự xuống dòng thành thẻ <br />
+     *
+     * @param mixed $text
+     * @param mixed $replacement
+     * @return string
+     */
+    public static function nl2br($text, $replacement = '<br />'): string
+    {
+        if (empty($text)) {
+            return '';
+        }
+
+        return strtr($text, [
+            "\r\n" => $replacement,
+            "\r" => $replacement,
+            "\n" => $replacement
+        ]);
     }
 }

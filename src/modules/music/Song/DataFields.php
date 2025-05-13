@@ -12,6 +12,5 @@ namespace NukeViet\Module\music\Song;
 
 class DataFields
 {
-    const FIELD_ID = 'song_id';
-    const FIELD_CODE = 'song_code';
+    use DBStruct;
 }

@@ -12,6 +12,5 @@ namespace NukeViet\Module\music\Category;
 
 class DataFields
 {
-    const FIELD_ID = 'cat_id';
-    const FIELD_CODE = 'cat_code';
+    use DBStruct;
 }

@@ -37,12 +37,13 @@ class Db
     }
 
     /**
-     * Db::setField()
+     * Đặt các trường trong truy vấn
      *
-     * @param mixed $fields
-     * @return void
+     * @param string|array $fields
+     * @return Db
      */
-    public function setField($fields) {
+    public function setField(string|array $fields): Db
+    {
         if (!empty($fields)) {
             if (is_array($fields)) {
                 $this->fields = array_merge_recursive($this->fields, $fields);
@@ -50,6 +51,7 @@ class Db
                 $this->fields[] = $fields;
             }
         }
+        return $this;
     }
 
     /**

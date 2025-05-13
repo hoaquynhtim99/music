@@ -37,6 +37,8 @@ Resources::setDb($db);
 Resources::setDbPrefix($db_config['prefix']);
 Resources::setSiteMods($site_mods);
 Resources::setModuleName($module_name);
+Resources::setModuleUpload($module_upload);
+Resources::setUploadDir(NV_UPLOADS_DIR);
 
 $array_alphabets = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
 
@@ -198,7 +200,23 @@ if (!function_exists('nv_get_song_select_fields')) {
      */
     function nv_get_song_select_fields($full_fields = false, $prefix = '')
     {
-        $array_select_fields = ['song_id', 'song_code', 'cat_ids', 'singer_ids', 'author_ids', 'album_ids', 'video_id', 'resource_avatar', 'resource_cover', 'stat_views', 'stat_likes', 'stat_comments', 'stat_hit', 'time_add', 'status'];
+        $array_select_fields = [
+            'song_id',
+            'song_code',
+            'cat_ids',
+            'singer_ids',
+            'author_ids',
+            'album_ids',
+            'video_id',
+            'resource_avatar',
+            'resource_cover',
+            'stat_views',
+            'stat_likes',
+            'stat_comments',
+            'stat_hit',
+            'time_add',
+            'status'
+        ];
         $array_select_fields[] = NV_LANG_DATA . '_song_name song_name';
         $array_select_fields[] = NV_LANG_DATA . '_song_alias song_alias';
         $default_language = Config::getDefaultLang();

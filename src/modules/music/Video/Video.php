@@ -10,10 +10,37 @@
 
 namespace NukeViet\Module\music\Video;
 
-class Video
+use NukeViet\Module\music\ElementIType;
+use NukeViet\Module\music\ElementTrait;
+
+class Video implements ElementIType
 {
-    public function __construct()
+    use DBStruct;
+    use ElementTrait;
+
+    public function create(array $data = []): int|false
     {
-        //
+        if (!empty($data)) {
+            $this->loadFromArray($data);
+        }
+
+        return 0;
+    }
+
+    public function update(int $id = 0, array $data = []): int|false
+    {
+        if (!empty($data)) {
+            $this->loadFromArray($data);
+        }
+
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return (int) $this->data[self::FIELD_ID];
     }
 }

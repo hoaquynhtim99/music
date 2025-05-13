@@ -10,43 +10,14 @@
 
 namespace NukeViet\Module\music\Nation;
 
-use NukeViet\Module\music\ITypeElement;
+use NukeViet\Module\music\ElementIType;
+use NukeViet\Module\music\ElementTrait;
 use NukeViet\Module\music\Shared\Nations;
 
-class Nation implements ITypeElement
+class Nation implements ElementIType
 {
     use DBStruct;
-
-    private $data = [];
-    private $dataType = [];
-
-    /**
-     * @param array $data
-     */
-    public function __construct($data = [])
-    {
-        $this->dataType = self::buildObjectKeys();
-        foreach ($this->dataType as $key => $dataType) {
-            $this->data[$key] = self::getDefaultValue($dataType);
-        }
-        $this->loadFromArray($data);
-    }
-
-    /**
-     * @param array $data
-     * @throws Exception
-     */
-    private function loadFromArray($data)
-    {
-        foreach ($data as $key => $value) {
-            if (isset($this->dataType[$key])) {
-                if (gettype($value) !== $this->dataType[$key]) {
-                    throw new Exception('Wrong type for ' . $key . '!!!');
-                }
-                $this->data[$key] = $value;
-            }
-        }
-    }
+    use ElementTrait;
 
     public function updateStat()
     {
@@ -54,11 +25,11 @@ class Nation implements ITypeElement
     }
 
     /**
-     * @return number
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
-        return $this->data[self::$FIELD_ID];
+        return (int) $this->data[self::FIELD_ID];
     }
 
     /**
@@ -66,7 +37,7 @@ class Nation implements ITypeElement
      */
     public function getName()
     {
-        return $this->data[self::$LANG_FIELD_NAME];
+        return $this->data[self::LANG_FIELD_NAME];
     }
 
     /**
@@ -74,7 +45,7 @@ class Nation implements ITypeElement
      */
     public function getAlias()
     {
-        return $this->data[self::$LANG_FIELD_ALIAS];
+        return $this->data[self::LANG_FIELD_ALIAS];
     }
 
     /**
@@ -82,7 +53,7 @@ class Nation implements ITypeElement
      */
     public function getCode()
     {
-        return $this->data[self::$FIELD_CODE];
+        return $this->data[self::FIELD_CODE];
     }
 
     /**
@@ -90,7 +61,7 @@ class Nation implements ITypeElement
      */
     public function getIntrotext()
     {
-        return $this->data[self::$LANG_FIELD_INTROTEXT];
+        return $this->data[self::LANG_FIELD_INTROTEXT];
     }
 
     /**
@@ -98,39 +69,39 @@ class Nation implements ITypeElement
      */
     public function getKeywords()
     {
-        return $this->data[self::$LANG_FIELD_KEYWORD];
+        return $this->data[self::LANG_FIELD_KEYWORD];
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getTimeAdd()
     {
-        return $this->data[self::$FIELD_ADDTIME];
+        return (int) $this->data[self::FIELD_ADDTIME];
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getTimeUpdate()
     {
-        return $this->data[self::$FIELD_UPDATETIME];
+        return (int) $this->data[self::FIELD_UPDATETIME];
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getStatSingers()
     {
-        return $this->data[self::$FIELD_SINGER_STAT];
+        return (int) $this->data[self::FIELD_SINGER_STAT];
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getStatAuthors()
     {
-        return $this->data[self::$FIELD_AUTHOR_STAT];
+        return (int) $this->data[self::FIELD_AUTHOR_STAT];
     }
 
     /**
@@ -143,12 +114,22 @@ class Nation implements ITypeElement
 
     public function setName(string $name): Nation
     {
-        $this->data[self::$LANG_FIELD_NAME] = $name;
+        $this->data[self::LANG_FIELD_NAME] = $name;
         return $this;
     }
 
     public function setAlias()
     {
         //
+    }
+
+    public function create(array $data = []): int|false
+    {
+        return 0;
+    }
+
+    public function update(int $id = 0, array $data = []): int|false
+    {
+        return 0;
     }
 }

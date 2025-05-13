@@ -12,6 +12,5 @@ namespace NukeViet\Module\music\Video;
 
 class DataFields
 {
-    const FIELD_ID = 'video_id';
-    const FIELD_CODE = 'video_code';
+    use DBStruct;
 }

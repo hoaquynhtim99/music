@@ -20,16 +20,27 @@ trait DBStruct
      * Các bảng dữ liệu
      *
      */
-    private static $TABLE_SEPARATOR_CHARACTER = '_';
-    private static $TABLE_ALBUM = 'albums';
-    private static $TABLE_ARTIST = 'artists';
-    private static $TABLE_CONFIG = 'config';
-    private static $TABLE_CATEGORY = 'categories';
-    private static $TABLE_NATION = 'nations';
+    const TABLE_SEPARATOR_CHARACTER = '_';
+    const TABLE_ALBUM = 'albums';
+    const TABLE_ARTIST = 'artists';
+    const TABLE_CONFIG = 'config';
+    const TABLE_CATEGORY = 'categories';
+    const TABLE_NATION = 'nations';
+    const TABLE_VIDEO = 'videos';
 
-    private static $TYPE_NUMBER = 'integer';
-    private static $TYPE_ARRAY = 'array';
-    private static $TYPE_TEXT = 'string';
+    const TYPE_NUMBER = 'integer';
+    const TYPE_ARRAY = 'array';
+    const TYPE_TEXT = 'string';
+
+    /**
+     * Bảng thể loại
+     *
+     * @return string
+     */
+    private static function getTableCategory()
+    {
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_CATEGORY;
+    }
 
     /**
      * Bảng quốc gia
@@ -38,7 +49,7 @@ trait DBStruct
      */
     private static function getTableNation()
     {
-        return Resources::getTablePrefix() . self::$TABLE_SEPARATOR_CHARACTER . self::$TABLE_NATION;
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_NATION;
     }
 
     /**
@@ -48,7 +59,7 @@ trait DBStruct
      */
     private static function getTableConfig()
     {
-        return Resources::getTablePrefix() . self::$TABLE_SEPARATOR_CHARACTER . self::$TABLE_CONFIG;
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_CONFIG;
     }
 
     /**
@@ -58,7 +69,27 @@ trait DBStruct
      */
     private static function getTableAlbum()
     {
-        return Resources::getTablePrefix() . self::$TABLE_SEPARATOR_CHARACTER . self::$TABLE_ALBUM;
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_ALBUM;
+    }
+
+    /**
+     * Bảng nghệ sĩ
+     *
+     * @return string
+     */
+    private static function getTableArtist()
+    {
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_ARTIST;
+    }
+
+    /**
+     * Bảng video
+     *
+     * @return string
+     */
+    private static function getTableVideo()
+    {
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_VIDEO;
     }
 
     /**
@@ -69,9 +100,9 @@ trait DBStruct
     private static function getDefaultValue($type)
     {
         switch ($type) {
-            case self::$TYPE_NUMBER: return 0;
-            case self::$TYPE_ARRAY: return [];
-            case self::$TYPE_TEXT: return '';
+            case self::TYPE_NUMBER: return 0;
+            case self::TYPE_ARRAY: return [];
+            case self::TYPE_TEXT: return '';
         }
         throw new Exception('Wrong type!!!');
     }
