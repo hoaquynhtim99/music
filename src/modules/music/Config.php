@@ -98,7 +98,7 @@ class Config
     /**
      * @param string $key
      * @throws Exception
-     * @return string~array
+     * @return string|array|int|bool
      */
     private static function get($key)
     {
@@ -165,7 +165,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getDefaultLang()
     {
@@ -173,7 +173,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getDefaultAlbumAvatar()
     {
@@ -181,7 +181,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getDefaultSingerAvatar()
     {
@@ -189,7 +189,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getDefaultAuthorAvatar()
     {
@@ -197,7 +197,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getDefaultVideoAvatar()
     {
@@ -205,7 +205,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getLimitSingersDisplayed()
     {
@@ -213,7 +213,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getLimitAuthorsDisplayed()
     {
@@ -221,7 +221,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getVariousArtists()
     {
@@ -229,7 +229,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getVariousArtistsAuthors()
     {
@@ -237,7 +237,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getUnknowSinger()
     {
@@ -245,7 +245,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getUnknowCat()
     {
@@ -253,7 +253,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getUnknowAuthor()
     {
@@ -261,7 +261,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getFbShareImage()
     {
@@ -269,7 +269,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getFbShareImageWidth()
     {
@@ -277,7 +277,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getFbShareImageHeight()
     {
@@ -285,7 +285,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getFbShareImageMime()
     {
@@ -293,7 +293,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeAlbumsDisplay()
     {
@@ -301,7 +301,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeAlbumsNums()
     {
@@ -309,7 +309,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeSingersDisplay()
     {
@@ -317,7 +317,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeSingersNums()
     {
@@ -325,7 +325,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeSongsDisplay()
     {
@@ -333,7 +333,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeSongsNums()
     {
@@ -341,7 +341,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeVideosDisplay()
     {
@@ -349,7 +349,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeVideosNums()
     {
@@ -357,7 +357,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeAlbumsWeight()
     {
@@ -365,7 +365,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeSingersWeight()
     {
@@ -373,7 +373,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeSongsWeight()
     {
@@ -381,7 +381,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getHomeVideosWeight()
     {
@@ -389,7 +389,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerShowHeader()
     {
@@ -397,7 +397,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerHeadtextLength()
     {
@@ -405,7 +405,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getGirdAlbumsPercatNums()
     {
@@ -413,7 +413,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getGirdAlbumsIncatNums()
     {
@@ -421,7 +421,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getGirdSingersNums()
     {
@@ -429,7 +429,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getGirdVideosPercatNums()
     {
@@ -437,7 +437,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getGirdVideosIncatNums()
     {
@@ -445,7 +445,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerMainNumAlbums()
     {
@@ -453,7 +453,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerDetailNumAlbums()
     {
@@ -461,7 +461,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerMainNumSongs()
     {
@@ -469,7 +469,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerDetailNumSongs()
     {
@@ -477,7 +477,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerMainNumVideos()
     {
@@ -485,7 +485,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getViewSingerDetailNumVideos()
     {
@@ -493,7 +493,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getDetailSongAlbumsNums()
     {
@@ -501,7 +501,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getUploadsFolder()
     {
@@ -509,7 +509,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getDetailSongVideosNums()
     {
@@ -517,7 +517,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return string
      */
     public static function getMsgNolyric()
     {
@@ -525,7 +525,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\Config\CodePrefix
+     * @return CodePrefix
      */
     public static function getCodePrefix()
     {
@@ -533,7 +533,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\Config\FuncsDescription
+     * @return FuncsDescription
      */
     public static function getFuncsDescription()
     {
@@ -541,7 +541,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\Config\FuncsKeywords
+     * @return FuncsKeywords
      */
     public static function getFuncsKeywords()
     {
@@ -549,7 +549,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\Config\FuncsSitetitle
+     * @return FuncsSitetitle
      */
     public static function getFuncsSitetitle()
     {
@@ -557,7 +557,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\Config\OpAliasPrefix
+     * @return OpAliasPrefix
      */
     public static function getOpAliasPrefix()
     {
@@ -565,7 +565,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\Config\SingerTabsAlias
+     * @return SingerTabsAlias
      */
     public static function getSingerTabsAlias()
     {
@@ -573,7 +573,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return float
      */
     public static function getChartCommentRate()
     {
@@ -581,7 +581,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return float
      */
     public static function getChartLikeRate()
     {
@@ -589,7 +589,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return float
      */
     public static function getChartShareRate()
     {
@@ -597,7 +597,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return float
      */
     public static function getChartViewRate()
     {
@@ -605,7 +605,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getChartActive()
     {
@@ -613,7 +613,7 @@ class Config
     }
 
     /**
-     * @return \NukeViet\Module\music\string~array
+     * @return int
      */
     public static function getChartCurrentTime()
     {
@@ -621,7 +621,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setDetailSongAlbumsNums($var)
     {
@@ -629,7 +629,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setDetailSongVideosNums($var)
     {
@@ -637,7 +637,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setLimitAuthorsDisplayed($var)
     {
@@ -645,7 +645,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int|string $var
      */
     public static function setVariousArtistsAuthors($var)
     {
@@ -653,7 +653,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int|string $var
      */
     public static function setUnknowAuthor($var)
     {
@@ -661,7 +661,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int|string $var
      */
     public static function setUnknowCat($var)
     {
@@ -669,7 +669,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int|string $var
      */
     public static function setShareport($var)
     {
@@ -677,7 +677,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param string $var
      */
     public static function setAddthisPubid($var)
     {
@@ -685,7 +685,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param string $var
      */
     public static function setUploadsFolder($var)
     {
@@ -693,7 +693,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param string $var
      */
     public static function setMsgNolyric($var)
     {
@@ -701,7 +701,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setAutoOptimizeArtistName($var)
     {
@@ -709,7 +709,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setAutoOptimizeVideoName($var)
     {
@@ -717,7 +717,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setAutoOptimizeSongName($var)
     {
@@ -725,7 +725,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setAutoOptimizeAlbumName($var)
     {
@@ -733,7 +733,7 @@ class Config
     }
 
     /**
-     * @param mixed $var
+     * @param int $var
      */
     public static function setGirdSingersNums($var)
     {
@@ -773,7 +773,7 @@ class Config
     }
 
     /**
-     * @param integer $var
+     * @param int $var
      */
     public static function setChartActive($var)
     {

@@ -27,6 +27,8 @@ trait DBStruct
     const TABLE_CATEGORY = 'categories';
     const TABLE_NATION = 'nations';
     const TABLE_VIDEO = 'videos';
+    const TABLE_QUALITY_VIDEO = 'quality_video';
+    const TABLE_QUALITY_SONG = 'quality_song';
 
     const TYPE_NUMBER = 'integer';
     const TYPE_ARRAY = 'array';
@@ -90,6 +92,26 @@ trait DBStruct
     private static function getTableVideo()
     {
         return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_VIDEO;
+    }
+
+    /**
+     * Bảng chất lượng video
+     *
+     * @return string
+     */
+    private static function getTableQualityVideo()
+    {
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_QUALITY_VIDEO;
+    }
+
+    /**
+     * Bảng chất lượng bài hát
+     *
+     * @return string
+     */
+    private static function getTableQualitySong()
+    {
+        return Resources::getTablePrefix() . self::TABLE_SEPARATOR_CHARACTER . self::TABLE_QUALITY_SONG;
     }
 
     /**

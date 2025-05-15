@@ -12,6 +12,7 @@ namespace NukeViet\Module\music\Song;
 
 use NukeViet\Module\music\Artist\DbLoader as DbLoaderArtist;
 use NukeViet\Module\music\Category\DbLoader as DbLoaderCategory;
+use NukeViet\Module\music\QualitySong\DbLoader as DbLoaderQuality;
 use NukeViet\Module\music\Video\DbLoader as DbLoaderVideo;
 use NukeViet\Module\music\ElementIType;
 use NukeViet\Module\music\ElementTrait;
@@ -26,6 +27,7 @@ class Song implements ElementIType
     protected function _validData()
     {
         $cats = DbLoaderCategory::loadAll();
+        $qualities = DbLoaderQuality::loadAll();
 
         $this->data[self::FIELD_CAT_IDS] = array_intersect($this->data[self::FIELD_CAT_IDS], array_keys($cats));
 
