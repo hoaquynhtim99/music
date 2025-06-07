@@ -20,6 +20,7 @@ class Resource
     private int $server_id;
 
     const SERVER_REMOTE = -1;
+    const SERVER_LOCAL = 0;
 
     /**
      * @param string $path

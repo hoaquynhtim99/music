@@ -17,6 +17,7 @@ use NukeViet\Module\music\Resources;
 use NukeViet\Module\music\Utils;
 use NukeViet\Module\music\Config;
 use NukeViet\Module\music\Shared\Songs;
+use NukeViet\Module\music\Song\Song;
 
 $resource_path_caption = msGetCurrentUploadFolder('lyric');
 $resource_avatar_path = msGetCurrentUploadFolder('song');
@@ -116,6 +117,16 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     $array['caption_file'] = $nv_Request->get_title('caption_file', 'post', '');
     $array['caption_pdf'] = $nv_Request->get_title('caption_pdf', 'post', '');
     $array['caption_data'] = $nv_Request->get_editor('caption_data', '', NV_ALLOWED_HTML_TAGS);
+
+    try {
+        $song = new Song($array);
+        $song->setCaption($array['caption_file'], $array['caption_pdf'], $array['caption_data']);
+        $song->setResources($array['resource_path']);
+        $song->create();
+    } catch (Throwable $e) {
+        trigger_error($e);
+        AjaxRespon::setInput('')->setMessage($e->getMessage())->respon();
+    }
 
     // Xử lý qua các thông tin
     $array['cat_ids'] = array_intersect($array['cat_ids'], array_keys($global_array_cat));

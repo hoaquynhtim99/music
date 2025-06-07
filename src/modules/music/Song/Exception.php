@@ -10,8 +10,10 @@
 
 namespace NukeViet\Module\music\Song;
 
+use NukeViet\Module\music\ElementExceptionTrait;
 use NukeViet\Module\music\Exception as GException;
 
 class Exception extends GException
 {
+    use ElementExceptionTrait;
 }

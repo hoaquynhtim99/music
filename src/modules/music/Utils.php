@@ -136,7 +136,7 @@ class Utils
     /**
      * @param string|array|int $string
      * @param string $sp
-     * @return array
+     * @return int[]
      */
     public static function arrayIntFromStrList($string, $sp = ',')
     {
@@ -144,9 +144,25 @@ class Utils
             return [];
         }
         if (!is_array($string)) {
-            $string = array_map('trim', explode($sp, $string));
+            $string = explode($sp, $string);
         }
-        return array_filter(array_unique($string));
+        return array_filter(array_unique(array_map('intval', $string)));
+    }
+
+    /**
+     * @param string|array|int $string
+     * @param string $sp
+     * @return string[]
+     */
+    public static function arrayStrFromStrList($string, $sp = ',')
+    {
+        if (empty($string)) {
+            return [];
+        }
+        if (!is_array($string)) {
+            $string = explode($sp, $string);
+        }
+        return array_filter(array_unique(array_map('trim', $string)));
     }
 
     /**
@@ -238,5 +254,19 @@ class Utils
             "\r" => $replacement,
             "\n" => $replacement
         ]);
+    }
+
+    /**
+     * Chuyển kí tự xuống dòng thành thẻ <br /> trong trình soạn thảo
+     *
+     * @param mixed $text
+     * @return string
+     */
+    public static function nl2brEditor($text): string
+    {
+        if (empty($text)) {
+            return '';
+        }
+        return self::nl2br($text, (defined('NV_EDITOR') ? '' : '<br />'));
     }
 }
