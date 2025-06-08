@@ -94,6 +94,12 @@ if ($song_id) {
     $array_old['video_id'] = 0;
 }
 
+// phpcs:disable
+if (defined('NV_REMOTE_API')) {
+    AjaxRespon::setResultHander($this->result);
+}
+// phpcs:enable
+
 if ($nv_Request->isset_request('submitform', 'post')) {
     AjaxRespon::reset();
 
@@ -117,16 +123,6 @@ if ($nv_Request->isset_request('submitform', 'post')) {
     $array['caption_file'] = $nv_Request->get_title('caption_file', 'post', '');
     $array['caption_pdf'] = $nv_Request->get_title('caption_pdf', 'post', '');
     $array['caption_data'] = $nv_Request->get_editor('caption_data', '', NV_ALLOWED_HTML_TAGS);
-
-    try {
-        $song = new Song($array);
-        $song->setCaption($array['caption_file'], $array['caption_pdf'], $array['caption_data']);
-        $song->setResources($array['resource_path']);
-        $song->create();
-    } catch (Throwable $e) {
-        trigger_error($e);
-        AjaxRespon::setInput('')->setMessage($e->getMessage())->respon();
-    }
 
     // Xử lý qua các thông tin
     $array['cat_ids'] = array_intersect($array['cat_ids'], array_keys($global_array_cat));
@@ -206,13 +202,13 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Kiểm tra thông tin
     if (empty($array['cat_ids'])) {
-        AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('song_err_cats'))->respon();
+        return AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('song_err_cats'))->respon();
     }
     if (empty($array['singer_ids'])) {
-        AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('song_err_singers'))->respon();
+        return AjaxRespon::setInput('')->setMessage($nv_Lang->getModule('song_err_singers'))->respon();
     }
     if (empty($array['song_name'])) {
-        AjaxRespon::setInput('song_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
+        return AjaxRespon::setInput('song_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
@@ -307,7 +303,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     if ($check_db !== '') {
         // Thất bại
-        AjaxRespon::setMessage($check_db)->respon();
+        return AjaxRespon::setMessage($check_db)->respon();
     }
 
     // Xóa các file bài hát và thêm lại
@@ -418,6 +414,14 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Xóa cache
     $nv_Cache->delMod($module_name);
+
+    // phpcs:disable
+    if (defined('NV_REMOTE_API')) {
+        $this->result->setSuccess();
+        $this->result->set('id', $song_id);
+        return $this->result->getResult();
+    }
+    // phpcs:enable
 
     // Chuyển về trang thêm mới
     $continue_add = ($nv_Request->get_int('submitcontinue', 'post', 0) and !$song_id);

@@ -15,6 +15,7 @@ if (!defined('NV_MAINFILE')) {
 /*
  * Lưu ý: Để gọi file này cần chuẩn bị các biến sau
  * - $module_name
+ * - $module_upload
  * - $site_mods
  */
 

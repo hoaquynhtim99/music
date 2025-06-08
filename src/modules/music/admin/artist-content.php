@@ -17,7 +17,7 @@ use NukeViet\Module\music\AjaxRespon;
 use NukeViet\Module\music\Resources;
 use NukeViet\Module\music\Utils;
 
-$artist_id = $nv_Request->get_int('artist_id', 'get', 0);
+$artist_id = $nv_Request->get_int('artist_id', 'get,post', 0);
 
 if ($artist_id) {
     $form_action = NV_ADMIN_MOD_FULLLINK_AMP . $op . '&amp;artist_id=' . $artist_id;
@@ -69,6 +69,12 @@ if ($artist_id) {
     }
     $array['artist_type'] = $artist_type;
 }
+
+// phpcs:disable
+if (defined('NV_REMOTE_API')) {
+    AjaxRespon::setResultHander($this->result);
+}
+// phpcs:enable
 
 if ($nv_Request->isset_request('submitform', 'post')) {
     AjaxRespon::reset();
@@ -126,7 +132,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Kiểm tra thông tin
     if (empty($array['artist_name'])) {
-        AjaxRespon::setInput('artist_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
+        return AjaxRespon::setInput('artist_name')->setMessage($nv_Lang->getModule('error_require_field'))->respon();
     }
 
     // Chuyển một số thông tin để lưu vào CSDL
@@ -143,6 +149,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Lưu dữ liệu
     if ($artist_id) {
+        $artist_id_db = $artist_id;
         // Sửa
         $sql = "UPDATE " . Resources::getTablePrefix() . "_artists SET
             artist_type=" . $array['artist_type'] . ",
@@ -267,6 +274,10 @@ if ($nv_Request->isset_request('submitform', 'post')) {
             if (!$sth->execute()) {
                 $check_db = $nv_Lang->getModule('error_save');
             }
+            $artist_id_db = $db->lastInsertId();
+            if (empty($artist_id_db)) {
+                $check_db = $nv_Lang->getModule('error_save');
+            }
         } catch (PDOException $e) {
             $check_db = $nv_Lang->getModule('error_save') . ' ' . $e->getMessage();
         }
@@ -274,7 +285,7 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     if ($check_db !== '') {
         // Thất bại
-        AjaxRespon::setMessage($check_db)->respon();
+        return AjaxRespon::setMessage($check_db)->respon();
     }
 
     // Cập nhật lại thống kê quốc gia
@@ -296,6 +307,14 @@ if ($nv_Request->isset_request('submitform', 'post')) {
 
     // Xóa cache
     $nv_Cache->delMod($module_name);
+
+    // phpcs:disable
+    if (defined('NV_REMOTE_API')) {
+        $this->result->setSuccess();
+        $this->result->set('id', $artist_id_db);
+        return $this->result->getResult();
+    }
+    // phpcs:enable
 
     // Chuyển về trang thêm mới
     $continue_add = ($nv_Request->get_int('submitcontinue', 'post', 0) and !$artist_id);

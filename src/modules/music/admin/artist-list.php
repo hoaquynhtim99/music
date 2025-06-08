@@ -110,15 +110,19 @@ if ($ajaction == 'active' or $ajaction == 'deactive') {
 }
 
 $base_url = NV_ADMIN_MOD_FULLLINK_AMP . $op;
-$per_page = 20;
-$page = Utils::getValidPage($nv_Request->get_int('page', 'get', 1), $per_page);
+$per_page = $nv_Request->get_page('per_page', 'get,post', 20);
+$page = Utils::getValidPage($nv_Request->get_int('page', 'get,post', 1), $per_page);
 
 // Dữ liệu tìm kiếm
 $array_search = [];
-$array_search['q'] = $nv_Request->get_title('q', 'get', ''); // Từ khóa
-$array_search['tp'] = $nv_Request->get_int('tp', 'get', -1); // Thể loại
-$array_search['f'] = $nv_Request->get_title('f', 'get', ''); // Từ
-$array_search['t'] = $nv_Request->get_title('t', 'get', ''); // Đến
+$array_search['q'] = $nv_Request->get_title('q', 'get,post', ''); // Từ khóa
+$array_search['tp'] = $nv_Request->get_int('tp', 'get,post', -1); // Thể loại
+$array_search['f'] = $nv_Request->get_title('f', 'get,post', ''); // Từ
+$array_search['t'] = $nv_Request->get_title('t', 'get,post', ''); // Đến
+
+// Tìm kiếm ẩn phục vụ API
+$array_search['is_singer'] = (int) $nv_Request->get_bool('is_singer', 'post', false);
+$array_search['artist_name'] = $nv_Request->get_title('artist_name', 'post', '');
 
 $db->sqlreset()->from(Resources::getTablePrefix() . "_artists");
 
@@ -156,6 +160,15 @@ if (!empty($array_search['t'])) {
         $where[] = "time_add<=" . ($stime + 86399);
     }
 }
+
+// Các điều kiện cho API
+if ($array_search['is_singer']) {
+    $where[] = "artist_type!=1";
+}
+if (!empty($array_search['artist_name'])) {
+    $where[] = NV_LANG_DATA . "_artist_name=" . $db->quote($array_search['artist_name']);
+}
+
 if (!empty($where)) {
     $db->where(implode(' AND ', $where));
 }
@@ -169,7 +182,7 @@ $array_select_fields = nv_get_artist_select_fields(true);
 $db->select(implode(', ', $array_select_fields[0]));
 
 $result = $db->query($db->sql());
-$array = $array_singer_ids = [];
+$array = [];
 while ($row = $result->fetch()) {
     foreach ($array_select_fields[1] as $f) {
         if (empty($row[$f]) and !empty($row['default_' . $f])) {
@@ -185,6 +198,15 @@ while ($row = $result->fetch()) {
 
     $array[$row['artist_id']] = $row;
 }
+
+// phpcs:disable
+if (defined('NV_REMOTE_API')) {
+    $this->result->setSuccess();
+    $this->result->set('data', $array);
+    $this->result->set('all_pages', $all_pages);
+    return $this->result->getResult();
+}
+// phpcs:enable
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);
 $xtpl->assign('LANG', \NukeViet\Core\Language::$lang_module);

@@ -19,14 +19,14 @@ if (!defined('NV_ADMIN') or !defined('NV_MAINFILE')) {
 }
 
 /**
- * Thêm và sửa bài hát
+ * Tìm kiếm bài hát
  *
  * @package NukeViet\Module\music\Api
  * @author PHAN TAN DUNG <writeblabla@gmail.com>
  * @copyright (C) 2016-2025 PHAN TAN DUNG. All rights reserved
  * @access public
  */
-class SongStore implements IApi
+class SongList implements IApi
 {
     private $result;
 
@@ -67,10 +67,17 @@ class SongStore implements IApi
         $module_info = Api::getModuleInfo();
         $module_data = $module_info['module_data'];
         $module_file = $module_info['module_file'];
+        $module_upload = $module_info['module_upload'];
+        $op = 'song-list';
         $admin_id = Api::getAdminId();
         $admin_lev = Api::getAdminLev();
+        $site_mods = nv_site_mods();
 
-        $array = [];
+        !defined('NV_IS_MODADMIN') && define('NV_IS_MODADMIN', true);
+        !defined('NV_ADMIN') && define('NV_ADMIN', true);
+
+        require NV_ROOTDIR . '/modules/' . $module_file . '/admin.functions.php';
+        require NV_ROOTDIR . '/modules/' . $module_file . '/admin/' . $op . '.php';
 
         return $this->result->getResult();
     }

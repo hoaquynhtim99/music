@@ -10,6 +10,8 @@
 
 namespace NukeViet\Module\music;
 
+use NukeViet\Api\ApiResult;
+
 class AjaxRespon
 {
     private static $jsonDefault = [
@@ -20,6 +22,18 @@ class AjaxRespon
     ];
 
     private static $json = [];
+
+    private static ?ApiResult $result = null;
+
+    /**
+     * @param \NukeViet\Api\ApiResult $result
+     * @return static
+     */
+    public static function setResultHander(ApiResult $result)
+    {
+        self::$result = $result;
+        return new static();
+    }
 
     /**
      * AjaxRespon::setMessage()
@@ -86,6 +100,16 @@ class AjaxRespon
     }
 
     /**
+     * Thành công hay không
+     *
+     * @return bool
+     */
+    public static function isSuccess()
+    {
+        return (self::$json['status'] ?? '') == 'ok';
+    }
+
+    /**
      * AjaxRespon::setError()
      *
      * @return
@@ -131,6 +155,12 @@ class AjaxRespon
     public static function respon()
     {
         self::$json = array_merge(self::$jsonDefault, self::$json);
+
+        if (self::$result) {
+            self::$result->setMessage(self::$json['message']);
+            return self::$result->getResult();
+        }
+
         Utils::jsonOutput(self::$json);
     }
 }

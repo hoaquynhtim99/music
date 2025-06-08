@@ -226,10 +226,16 @@ if ($ajaction == 'ajedit') {
     AjaxRespon::set('datacheckbox', $response_checkbox)->setSuccess()->respon();
 }
 
+// phpcs:disable
+if (defined('NV_REMOTE_API')) {
+    AjaxRespon::setResultHander($this->result);
+}
+// phpcs:enable
+
 // Thêm, sửa
-if ($nv_Request->isset_request('ajaxrequest', 'get')) {
+if ($nv_Request->isset_request('ajaxrequest', 'get,post')) {
     AjaxRespon::reset();
-    if (!defined('NV_IS_AJAX')) {
+    if (!defined('NV_IS_AJAX') and !defined('NV_REMOTE_API')) {
         AjaxRespon::setMessage('Wrong URL!!!')->respon();
     }
 
@@ -330,6 +336,8 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 $sth->bindParam(':cat_mvkeywords', $array['cat_mvkeywords'], PDO::PARAM_STR, strlen($array['cat_mvkeywords']));
                 $sth->execute();
 
+                $cat_id_db = $array['cat_id'];
+
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_EDIT_CAT', $array_old[NV_LANG_DATA . '_cat_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
@@ -388,17 +396,31 @@ if ($nv_Request->isset_request('ajaxrequest', 'get')) {
                 $sth->bindParam(':cat_mvkeywords', $array['cat_mvkeywords'], PDO::PARAM_STR, strlen($array['cat_mvkeywords']));
                 $sth->execute();
 
+                $cat_id_db = $db->lastInsertId();
+                if (empty($cat_id_db)) {
+                    throw new Exception('Error insert category');
+                }
+
                 nv_insert_logs(NV_LANG_DATA, $module_name, 'LOG_ADD_CAT', $array['cat_name'], $admin_info['userid']);
                 $nv_Cache->delMod($module_name);
 
                 AjaxRespon::setSuccess();
-            } catch (PDOException $e) {
+            } catch (Throwable $e) {
                 AjaxRespon::setMessage($nv_Lang->getModule('error_save') . ' ' . $e->getMessage());
             }
         }
     }
 
-    AjaxRespon::respon();
+    // phpcs:disable
+    if (AjaxRespon::isSuccess() and defined('NV_REMOTE_API')) {
+        $this->result->setSuccess();
+        $this->result->set('id', $cat_id_db);
+        $this->result->set('name', $array['cat_name']);
+        return $this->result->getResult();
+    }
+    // phpcs:enable
+
+    return AjaxRespon::respon();
 }
 
 $xtpl = new XTemplate($op . '.tpl', NV_ROOTDIR . '/themes/' . $global_config['module_theme'] . '/modules/' . $module_file);

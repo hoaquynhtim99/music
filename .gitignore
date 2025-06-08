@@ -149,3 +149,7 @@
 !/tools/music/
 !/tools/music/to5.0/
 !/tools/music/to5.0/**
+
+!/tools/music-scan/
+!/tools/music-scan/**
+/tools/music-scan/config.php

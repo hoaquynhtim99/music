@@ -159,6 +159,12 @@ class Song implements ElementIType
         return $this;
     }
 
+    /**
+     * Lưu mới vào CSDL
+     *
+     * @param array $data
+     * @return int
+     */
     public function create(array $data = []): int|false
     {
         if (!empty($data)) {
