@@ -40,6 +40,12 @@ $html5_audio_extensions = [
     'wav',   // Hỗ trợ đầy đủ, nhưng dung lượng lớn
 ];
 
+/**
+ * Liệt kê tất cả file trong thư mục và các thư mục con
+ *
+ * @param mixed $dir
+ * @return array
+ */
 function listFilesRecursive($dir)
 {
     $result = [];
@@ -62,6 +68,12 @@ function listFilesRecursive($dir)
     return $result;
 }
 
+/**
+ * Gọi API của NukeViet Music
+ *
+ * @param mixed $action
+ * @param mixed $data
+ */
 function callAPI($action, $data = [])
 {
     $ch = curl_init();
@@ -120,4 +132,31 @@ function callAPI($action, $data = [])
     }
 
     return $responsive;
+}
+
+/**
+ * Chuẩn hoá tên bài hát, thể loại, nghệ sĩ
+ *
+ * @param mixed $title
+ * @return string
+ */
+function normalizeTitle($title)
+{
+    // Thay thế - và _ thành khoảng trắng
+    $title = str_replace(['-', '_'], ' ', $title);
+
+    // Nén nhiều khoảng trắng liên tiếp thành 1 khoảng trắng
+    $title = preg_replace('/\s+/', ' ', $title);
+
+    // Cắt khoảng trắng đầu/cuối và chuyển thành chữ thường (UTF-8)
+    $title = mb_strtolower(trim($title), 'UTF-8');
+
+    // Viết hoa chữ cái đầu mỗi từ (UTF-8)
+    $title = implode(' ', array_map(function($word) {
+        $firstChar = mb_strtoupper(mb_substr($word, 0, 1, 'UTF-8'), 'UTF-8');
+        $rest = mb_substr($word, 1, null, 'UTF-8');
+        return $firstChar . $rest;
+    }, explode(' ', $title)));
+
+    return $title;
 }

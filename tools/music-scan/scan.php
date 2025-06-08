@@ -106,6 +106,10 @@ foreach ($source_files as $key => $filename) {
     empty($id3['artist']) && $id3['artist'] = 'Unknown Artist';
     empty($id3['genre']) && $id3['genre'] = 'Unknown Genre';
 
+    $id3['title'] = normalizeTitle($id3['title']);
+    $id3['artist'] = normalizeTitle($id3['artist']);
+    $id3['genre'] = normalizeTitle($id3['genre']);
+
     $new_name = strtolower(md5($filename) . '.' . preg_replace('/[^a-zA-Z0-9]/', '', pathinfo($filename, PATHINFO_FILENAME)) . '.' . $ext);
     // Chép file sang thư mục đích
     if (!file_exists($upload_dir . '/' . $new_name)) {
