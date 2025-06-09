@@ -119,6 +119,10 @@ foreach ($source_files as $key => $filename) {
         }
     }
 
+    // Một số dạng phân cách thường thấy của ca sĩ
+    $id3['artist'] = str_ireplace('Feat.', ',', $id3['artist']);
+    $id3['artist'] = str_ireplace('ft.', ',', $id3['artist']);
+
     $artists = array_filter(array_unique(array_map('trim', explode(',', $id3['artist']))));
     $genres = array_filter(array_unique(array_map('trim', explode(',', $id3['genre']))));
     $resource_relative = $upload_base_dir . '/' . $new_name;
