@@ -329,6 +329,8 @@ foreach ($array as $id => $row) {
             $row['cats'][$cid] = $global_array_cat[$cid];
         }
     }
+
+    $row['resource_avatar_thumb'] = nv_get_resource_url($row['resource_avatar'], 'singer', true);
     $row['song_link'] = nv_get_detail_song_link($row, $row['singers']);
     $array[$id] = $row;
 }

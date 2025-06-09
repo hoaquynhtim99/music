@@ -79,6 +79,7 @@ $(function() {
                             <input class="ms-check-in-list form-check-input" type="checkbox" onclick="nv_UncheckAll(this.form, 'idcheck[]', 'check_all[]', this.checked);" value="{ROW.song_id}" name="idcheck[]" />
                         </td>
                         <td>
+                            <img src="{ROW.resource_avatar_thumb}" alt="{ROW.song_name}" height="36" width="36" class="float-start ms-img">
                             <div data-toggle="ellipsis"><h5 data-toggle="items" class="mb-0"><a href="{ROW.song_link}" class="ms-title" target="_blank">{ROW.song_name}</a></h5></div>
                             <small class="text-muted">
                                 <!-- BEGIN: show_singer -->
