@@ -128,7 +128,10 @@
                 <div class="row mb-3">
                     <label for="song_alias" class="col-form-label text-sm-end col-sm-4">{LANG.alias}:</label>
                     <div class="col-sm-8 col-md-5 col-lg-4">
-                        <input class="form-control" type="text" name="song_alias" id="song_alias" value="{DATA.song_alias}" maxlength="250" />
+                        <div class="input-group">
+                            <input class="form-control" type="text" name="song_alias" id="song_alias" value="{DATA.song_alias}" maxlength="250" aria-describedby="song_alias_btn">
+                            <button class="btn btn-secondary" data-toggle="createAlias" data-source="#song_name" data-target="#song_alias" type="button" id="song_alias_btn" aria-label="{LANG.recreate}" data-bs-toggle="tooltip" data-bs-trigger="hover" data-bs-title="{LANG.recreate}"><i class="fa-solid fa-repeat" data-icon="fa-repeat"></i></button>
+                        </div>
                     </div>
                 </div>
                 <div class="row mb-3">

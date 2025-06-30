@@ -1598,6 +1598,41 @@ $(document).ready(function() {
         var target = $($(this).data('target'));
         target.html(source.html());
     });
+
+    // Lấy liên kết tĩnh
+    $('[data-toggle="createAlias"]').on('click', function(e) {
+        e.preventDefault();
+
+        const btn = $(this);
+        const icon = $('i', btn);
+        if (icon.is('.fa-spinner')) {
+            return;
+        }
+        icon.removeClass(icon.data('icon')).addClass('fa-spinner fa-spin-pulse');
+        $.ajax({
+            type: 'POST',
+            url: script_name + '?' + nv_lang_variable + '=' + nv_lang_data + '&' + nv_name_variable + '=' + nv_module_name + '&nocache=' + new Date().getTime(),
+            data: {
+                auto_create_alias: $('body').data('checksess'),
+                title: $(btn.data('source')).val()
+            },
+            dataType: 'json',
+            cache: false,
+            success: function (respon) {
+                icon.removeClass('fa-spinner fa-spin-pulse').addClass(icon.data('icon'));
+                if (!respon.success) {
+                    nvToast(respon.text, 'error');
+                    return;
+                }
+                $(btn.data('target')).val(respon.text);
+            },
+            error: function (xhr, text, err) {
+                icon.removeClass('fa-spinner fa-spin-pulse').addClass(icon.data('icon'));
+                nvToast(err, 'error');
+                console.log(xhr, text, err);
+            }
+        });
+    });
 });
 
 $(window).on('load', function() {

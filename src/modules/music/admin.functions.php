@@ -371,3 +371,12 @@ function msUpdateNumSongOfPlaylistFromSongs($song_ids)
         $db->query("UPDATE " . Resources::getTablePrefix() . "_user_playlists SET num_songs=" . $num_songs . " WHERE playlist_id=" . $playlist_id);
     }
 }
+
+// Tạo liên kết tĩnh
+if (isset($_POST['auto_create_alias']) and $nv_Request->get_title('auto_create_alias', 'post', '') === NV_CHECK_SESSION) {
+    $title = $nv_Request->get_title('title', 'post', '');
+    nv_jsonOutput([
+        'success' => 1,
+        'text' => change_alias($title)
+    ]);
+}

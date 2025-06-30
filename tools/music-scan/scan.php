@@ -50,7 +50,7 @@ foreach ($source_files as $key => $filename) {
 
     // Chỗ này xử lý sau
     if (!in_array($ext, $html5_audio_extensions)) {
-        echo "Không hỗ trợ HTML5 Audio: $ext\n";
+        echo "\033[1;31m[er]\033[0m Không hỗ trợ HTML5 Audio: $ext\n";
         exit(1);
     }
 
@@ -58,12 +58,12 @@ foreach ($source_files as $key => $filename) {
 
     $bitrate = isset($info['audio']['bitrate']) ? round($info['audio']['bitrate'] / 1000) : 0; // kbps
     if ($bitrate < 64) {
-        echo "Bitrate quá thấp: $bitrate kbps\n";
+        echo "\033[1;31m[er]\033[0m Bitrate quá thấp: $bitrate kbps\n";
         exit(1);
     }
     $bitrate < 320 && $bitrate = 128;
     if (!in_array($bitrate, [128, 320])) {
-        echo "Bitrate không xác định: $bitrate kbps\n";
+        echo "\033[1;31m[er]\033[0m Bitrate không xác định: $bitrate kbps\n";
         exit(1);
     }
 
@@ -110,13 +110,20 @@ foreach ($source_files as $key => $filename) {
     $id3['artist'] = normalizeTitle($id3['artist']);
     $id3['genre'] = normalizeTitle($id3['genre']);
 
-    $new_name = strtolower(md5($filename) . '.' . preg_replace('/[^a-zA-Z0-9]/', '', pathinfo($filename, PATHINFO_FILENAME)) . '.' . $ext);
+    $keyfile = md5(md5_file($filename) . md5($filename));
+    $new_name = strtolower($keyfile . '.' . preg_replace('/[^a-zA-Z0-9]/', '', pathinfo($filename, PATHINFO_FILENAME)) . '.' . $ext);
+    $new_path = $upload_dir . '/' . $new_name;
+
+    // File có ở thư mục đích rồi thì bỏ qua
+    if (file_exists($new_path)) {
+        echo "\033[1;34m[in]\033[0m File đã tồn tại: $new_name\n";
+        continue;
+    }
+
     // Chép file sang thư mục đích
-    if (!file_exists($upload_dir . '/' . $new_name)) {
-        if (!copy($filename, $upload_dir . '/' . $new_name)) {
-            echo "Lỗi khi sao chép file: $filename\n";
-            exit(1);
-        }
+    if (!copy($filename, $new_path)) {
+        echo "\033[1;31m[er]\033[0m Lỗi khi sao chép file: $filename\n";
+        exit(1);
     }
 
     // Một số dạng phân cách thường thấy của ca sĩ
@@ -150,7 +157,8 @@ foreach ($source_files as $key => $filename) {
         }
     }
     if (empty($singer_ids)) {
-        echo "Không tìm thấy ca sĩ nào phù hợp.\n";
+        echo "\033[1;31m[er]\033[0m Không tìm thấy ca sĩ nào phù hợp.\n";
+        unlink($new_path);
         exit(1);
     }
 
@@ -184,14 +192,15 @@ foreach ($source_files as $key => $filename) {
 
     if (!empty($song)) {
         $song = array_values($song)[0];
-        echo "Đã tìm thấy bài hát trùng: " . $song['song_name'] . " (ID: " . $song['song_id'] . ")\n";
+        echo "\033[1;34m[in]\033[0m Đã tìm thấy bài hát trùng: " . $song['song_name'] . " (ID: " . $song['song_id'] . ")\n";
     } else {
         // Tạo mới bài hát
-        echo "Tạo mới bài hát: " . $id3['title'] . "\n";
+        echo "\033[1;32m[ok]\033[0m Tạo mới bài hát: " . $id3['title'] . "\n";
 
         // Xử lý chất lượng
         if (!isset($array_qualities[$id3['bitrate']])) {
-            echo "Chất lượng không xác định: " . $id3['bitrate'] . " kbps\n";
+            echo "\033[1;31m[er]\033[0m Chất lượng không xác định: " . $id3['bitrate'] . " kbps\n";
+            unlink($new_path);
             exit(1);
         }
         $resource_path = [];
@@ -204,7 +213,8 @@ foreach ($source_files as $key => $filename) {
             if (!file_exists($cover_path)) {
                 $check = file_put_contents($cover_path, $cover_data, LOCK_EX);
                 if (!$check) {
-                    echo "Lỗi khi lưu ảnh bìa: $cover_name\n";
+                    echo "\033[1;31m[er]\033[0m Lỗi khi lưu ảnh bìa: $cover_name\n";
+                    unlink($new_path);
                     exit(1);
                 }
             }
