@@ -16,6 +16,34 @@ if (!defined('NV_CONSOLE_DIR')) {
 require NV_CONSOLE_DIR . '/config.php';
 require NV_CONSOLE_DIR . '/vendor/autoload.php';
 
+// Xử lý và kiểm tra các config
+$music_dir = rtrim($music_dir, '/');
+$upload_dir = rtrim($upload_dir, '/');
+$upload_base_dir = rtrim($upload_base_dir, '/');
+$cover_dir = rtrim($cover_dir, '/');
+$cover_base_dir = rtrim($cover_base_dir, '/');
+
+if (empty($music_dir) or !file_exists($music_dir)) {
+    echo "\$music_dir not config or not exists\n";
+    exit(1);
+}
+if (empty($upload_dir) or !file_exists($upload_dir)) {
+    echo "\$upload_dir not config or not exists\n";
+    exit(1);
+}
+if (empty($upload_base_dir) or !strpos($upload_dir, $upload_base_dir)) {
+    echo "\$upload_base_dir not config or not relative with \$upload_dir\n";
+    exit(1);
+}
+if (empty($cover_dir) or !file_exists($cover_dir)) {
+    echo "\$cover_dir not config or not exists\n";
+    exit(1);
+}
+if (empty($cover_base_dir) or !strpos($cover_dir, $cover_base_dir)) {
+    echo "\$cover_base_dir not config or not relative with \$cover_dir\n";
+    exit(1);
+}
+
 $audio_extensions = [
     'mp3',   // MPEG Layer 3
     'aac',   // Advanced Audio Coding

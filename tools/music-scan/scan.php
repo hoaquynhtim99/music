@@ -25,7 +25,7 @@ foreach ($categories as $category) {
     ];
 }
 
-// Lấy hết chât lượng nhạc có trong CSDL đổi sang bitrate
+// Lấy hết chất lượng nhạc có trong CSDL đổi sang bitrate
 $array_qualities = [];
 $qualities = callAPI('SongQualityList')['data'];
 foreach ($qualities as $quality) {
@@ -96,7 +96,7 @@ foreach ($source_files as $key => $filename) {
         'bitrate' => $bitrate
     ];
     foreach ($id3 as $key => $value) {
-        if (stripos($value, 'NhacCuaTui') !== false) {
+        if (stripos($value, 'NhacCuaTui') !== false or stripos($value, 'Zing') !== false) {
             $id3[$key] = '';
         }
     }
