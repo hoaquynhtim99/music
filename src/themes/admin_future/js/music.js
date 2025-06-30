@@ -741,8 +741,8 @@ $(document).ready(function() {
         e.preventDefault();
         msDestroyAllPop();
         var $this = $(this);
-        var ctn = $this.parent().parent();
-        var btn = ctn.parent().parent().parent().data('btn');
+        var ctn = $this.closest('.ms-dropdown-tool');
+        var btn = ctn.closest('.popover').data('btn');
         var btnText = btn.find('span.text');
         var submitID;
 
@@ -1683,7 +1683,11 @@ function msGetPopoverContent(e) {
             var langs = $(e).data('langs').split('|');
             var others = $(e).data('others') ? $(e).data('others').split('|') : false;
             $.each(options, function(k, v) {
-                popContents.append('<li><a href="#" data-value="' + v + '"' + (others === false ? '' : (' data-others="' + others[k] + '"')) + '>' + msIconSheets[v] + langs[k] + '</a></li>');
+                let link = '#';
+                if (v == 'edit' || v == 'linkcc') {
+                    link = $(e).data('url' + v);
+                }
+                popContents.append('<li><a href="' + link + '" data-value="' + v + '"' + (others === false ? '' : (' data-others="' + others[k] + '"')) + '>' + msIconSheets[v] + langs[k] + '</a></li>');
             });
         }
     }
